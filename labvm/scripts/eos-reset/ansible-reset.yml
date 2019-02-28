@@ -1,0 +1,11 @@
+---
+- hosts: all
+  gather_facts: no
+  tasks:
+    - name: Copy base Configs to EOS Devices
+      copy:
+        src: base_configlets/{{ inventory_hostname }}
+        dest: /mnt/flash/startup-config
+    - name: Reboot the EOS Devices
+      shell: /usr/sbin/shutdown now -r
+
