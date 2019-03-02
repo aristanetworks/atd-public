@@ -3,8 +3,8 @@ This directory will contain the necessary data/files needed to help modify the l
 
 Structure of the `labvm/` directory:
 
-- `services/` - This will contain services that will be packaged up and used to update the labvm.  
 - `scripts/` - This will contain any scripts to be added to the labvm.
+- `services/` - This will contain services that will be packaged up and used to update the labvm.  
 - `services/serviceUpdater.yml` - File used by `atdServiceUpdater.py to check and see which service should be checked for changes
 
 Example structure:
