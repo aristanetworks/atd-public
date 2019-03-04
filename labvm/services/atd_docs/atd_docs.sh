@@ -2,10 +2,7 @@
 
 rm -rf /var/www/html/atd/labguides/
 git clone https://github.com/aristanetworks/atd-public.git /tmp/atd
-cd /tmp/atd
-# Needed for testing purposes before it's merged into master
-git checkout labguides-migrate
-cd labguides
+cd /tmp/atd/labguides
 make html
 sphinx-build -b latex source build
 make latexpdf
