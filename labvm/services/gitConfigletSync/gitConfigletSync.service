@@ -1,0 +1,14 @@
+[Unit]
+Description=Automatically updates configlets
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=forking
+ExecStart=/usr/local/bin/gitConfigletSync.py
+User=arista
+TimeoutStartSec=180
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
