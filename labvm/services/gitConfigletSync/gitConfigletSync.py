@@ -5,15 +5,25 @@ import git
 import os
 import time
 import shutil
+import yaml
 import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
+try:
+   f = open('/etc/ACCESS_INFO.yaml')
+   accessinfo = yaml.safe_load(f)
+   f.close()
+   topology = accessinfo['topology']
+
+except:
+   topology = 'none'
+   
 # Temp path for where repo will be cloned to (include trailing /)
 gitTempPath = '/tmp/GitConfiglets/'
-gitRepo = 'https://github.com/aristanetworks/atd-public.git'
+gitRepo = 'https://www.github.com/aristanetworks/atd-public.git'
 gitBranch = 'master'
 # Relative path within the repo to the configlet directory
-configletPath = 'topologies/datacenter/configlets/'
+configletPath = 'topologies/' + topology + '/configlets/'
 ignoreConfiglets = ['readme.md']
 # cvpNodes can be a single item or a list of the cluster
 cvpNodes = ['192.168.0.5']
