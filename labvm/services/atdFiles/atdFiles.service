@@ -1,11 +1,11 @@
 [Unit]
-Description=Automatically downloads updated ATD Documentation
+Description=Automatically downloads updated ATD files and documentation
 After=network-online.target
 Wants=network-online.target
 
 [Service]
 Type=forking
-ExecStart=/usr/local/bin/atd_docs.sh
+ExecStart=/usr/local/bin/atdFiles.sh
 
 [Install]
 WantedBy=multi-user.target
