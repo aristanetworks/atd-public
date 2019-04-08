@@ -2,79 +2,19 @@
 
 
 from ruamel.yaml import YAML
+from cvprac.cvp_client import CvpClient
+
+
 import git, requests, json, syslog
 from time import sleep
+from pprint import pprint as pp
+
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 topo_file = '/etc/ACCESS_INFO.yaml'
 CVP_CONTAINERS = []
 
-# Class definition for working with CVP
-class CVPCON():
-    def __init__(self,cvp_url,c_user,c_pwd):
-        self.cvp_url = cvp_url
-        self.cvp_user = c_user
-        self.cvp_pwd = c_pwd
-        self.cvp_api = {
-            'authenticate': 'cvpservice/login/authenticate.do',
-            'searchTopo': 'cvpservice/provisioning/searchTopology.do',
-            'getContainer': 'cvpservice/inventory/containers?name=',
-            'addTempAction': 'cvpservice/provisioning/addTempAction.do',
-            'saveTopo': 'cvpservice/provisioning/v2/saveTopology.do'
-        }
-        self.headers = {
-            'Content-Type':'application/json',
-            'Accept':'application/json'
-        }
-        self.SID = self.getSID()
-        self.containers = {
-            'Tenant': {'name':'Tenant','key':self.getContainerId('Tenant')[0]["Key"]}
-        }
-
-    def _sendRequest(self,c_meth,url,payload={}):
-        response = requests.request(c_meth,"https://{}/".format(self.cvp_url) + url,json=payload,headers=self.headers,verify=False)
-        return(response.json())
-        
-    def getSID(self):
-        payload = {
-            'userId':self.cvp_user,
-            'password':self.cvp_pwd
-        }
-        response = self._sendRequest("POST",self.cvp_api['authenticate'],payload)
-        self.headers['Cookie'] = 'session_id={}'.format(response['sessionId'])
-        return(response['sessionId'])
-    
-    def saveTopo(self):
-        payload = []
-        response = self._sendRequest("POST",self.cvp_api['saveTopo'],payload)
-        return(response)
-    
-    def getContainerId(self,cnt_name):
-        response = self._sendRequest("GET",self.cvp_api['getContainer'] + cnt_name)
-        return(response)
-    
-    def addContainer(self,cnt_name,pnt_name):
-        msg = "Creating {0} container under the {1} container".format(cnt_name,pnt_name)
-        payload = {
-            'data': [
-                {
-                    'info': msg,
-                    'infoPreview': msg,
-                    'action': 'add',
-                    'nodeType': 'container',
-                    'nodeId': 'new_container',
-                    'toId': self.containers[pnt_name]["key"],
-                    'fromId': '',
-                    'nodeName': cnt_name,
-                    'fromName': '',
-                    'toName': self.containers[pnt_name]["name"],
-                    'childTasks': [],
-                    'parentTask': '',
-                    'toIdType': 'container'
-                }
-            ]
-        }
-        response = self._sendRequest("POST",self.cvp_api['addTempAction'] + "?format=topology&queryParam=&nodeId=root",payload)
-        return(response.json())
 
 def getTopoInfo():
     topoInfo = open(topo_file,'r')
@@ -92,7 +32,7 @@ def getEosDevice(topo,eosYaml):
         if 'spine' in dev['hostname']:
             EOS_DEV[dev['hostname']] = {'vx_ip':dev['vxlan_ip'],'container':'Spine'}
             checkContainer('Spine')
-        elif 'leaf' in dev['hostanme']:
+        elif 'leaf' in dev['hostname']:
             EOS_DEV[dev['hostname']] = {'vx_ip':dev['vxlan_ip'],'container':'Leaf'}
             checkContainer('Leaf')
         elif 'cvx' in dev['hostname']:
@@ -117,15 +57,37 @@ def main():
         if c_login['user'] == 'arista':
             while not cvp_clnt:
                 try:
-                    cvp_clnt = CVPCON(atd_yaml['nodes']['cvp'][0]['ip'],c_login['user'],c_login['pw'])
+                    cvp_clnt = CvpClient()
+                    cvp_clnt.connect([atd_yaml['nodes']['cvp'][0]['ip']],c_login['user'],c_login['pw'])
+                    # !! cvp_clnt = CVPCON(atd_yaml['nodes']['cvp'][0]['ip'],c_login['user'],c_login['pw'])
                 except:
                     pS("ERROR","CVP is currently unavailable....Retrying in 30 seconds.")
                     sleep(30)
     if cvp_clnt:
+        # Add new Containers to CVP
+        cur_cvp_cnts = cvp_clnt.api.get_containers()
         for p_cnt in CVP_CONTAINERS:
-            cvp_clnt.addContainer(p_cnt,"Tenant")
+            NEW_CNT = True
+            for e_cnt in cur_cvp_cnts['data']:
+                if e_cnt['Name'] == p_cnt:
+                    NEW_CNT = False
+            if NEW_CNT:
+                cvp_clnt.api.add_container(p_cnt,"Tenant",cvp_clnt.api.get_container_by_name("Tenant")['key'])
             pS("OK","Added {0} container".format(p_cnt))
-        cvp_clnt.saveTopo()
+        cur_cvp_veos = cvp_clnt.api.get_inventory()
+        for veos in eos_info:
+            if eos_info[veos]['container'] != "NONE":
+                NEW_VEOS = True
+                for e_veos in cur_cvp_veos:
+                    if veos == e_veos['hostname']:
+                        NEW_VEOS = False
+                if NEW_VEOS:
+                    print(eos_info[veos])
+                    print(cvp_clnt.api.get_container_by_name(eos_info[veos]['container'])['key'])
+                    cvp_clnt.api.add_device_to_inventory(eos_info[veos]['vx_ip'],eos_info[veos]['container'],cvp_clnt.api.get_container_by_name(eos_info[veos]['container'])['key'])
+        # !! Currently device addition is not creating task.
+        a = cvp_clnt.api.save_inventory()
+        print(a)
     else:
         pS("ERROR","Couldn't connect to CVP")
 
