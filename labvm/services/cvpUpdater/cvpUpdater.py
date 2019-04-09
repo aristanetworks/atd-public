@@ -88,6 +88,7 @@ def main():
         # !! Currently device addition is not creating task.
         a = cvp_clnt.api.save_inventory()
         print(a)
+        pp(cvp_clnt.api.get_all_temp_actions())
     else:
         pS("ERROR","Couldn't connect to CVP")
 
