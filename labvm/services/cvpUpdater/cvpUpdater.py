@@ -2,13 +2,16 @@
 
 
 from ruamel.yaml import YAML
-import git, requests, json, syslog
+import requests, json, syslog
+from os import path
 from time import sleep
+
 import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
 topo_file = '/etc/ACCESS_INFO.yaml'
+CVP_CONFIG_FIILE = '/home/arista/.cvpState.txt'
 CVP_CONTAINERS = []
 
 # ==================================
@@ -340,5 +343,12 @@ if __name__ == '__main__':
     syslog.openlog(logoption=syslog.LOG_PID)
     pS("OK","Starting...")
 
-    # Start the main Service
-    main()
+    if not path.exists(CVP_CONFIG_FIILE):
+        # Start the main Service
+        pS("OK","Initial ATD Topo Boot")
+        main()
+        with open(CVP_CONFIG_FIILE,'w') as tf:
+            tf.write("CVP_CONFIGURED")
+        pS("OK","Completed CVP Configuration")
+    else:
+        pS("OK","CVP is already configured")
