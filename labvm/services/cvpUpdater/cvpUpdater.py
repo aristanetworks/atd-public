@@ -56,7 +56,7 @@ class CVPCON():
             'checkSession': 'cvpservice/login/home.do',
             'checkVersion': 'cvpservice/cvpInfo/getCvpInfo.do',
             'searchTopo': 'cvpservice/provisioning/searchTopology.do',
-            'getContainer': 'cvpservice/inventory/containers?name=',
+            'getContainer': 'cvpservice/inventory/containers',
             'getContainerInfo': '/cvpservice/provisioning/getContainerInfoById.do',
             'addTempAction': 'cvpservice/provisioning/addTempAction.do',
             'deviceInventory': 'cvpservice/inventory/devices',
@@ -76,10 +76,8 @@ class CVPCON():
             'Accept':'application/json'
         }
         self.SID = self.getSID()
-        self.containers = {
-            'Tenant': {'name':'Tenant','key':self.getContainerId('Tenant')[0]["Key"]},
-            'Undefined': {'name':'Undefined','key':self.getContainerId('Undefined')[0]["Key"]}
-        }
+        self.containers = {}
+        self.getAllContainers()
         self.getDeviceInventory()
         self.getAllSnapshots()
 
@@ -145,13 +143,21 @@ class CVPCON():
         response = self._sendRequest("POST",self.cvp_api['saveTopo'],payload)
         return(response)
     
+    def getAllContainers(self):
+        """
+        Function to get all Configured containers in CVP.
+        """
+        response = self._sendRequest("GET",self.cvp_api['getContainer'])
+        for cnt in response:
+            self.containers[cnt['Name']] = cnt
+    
     def getContainerId(self,cnt_name):
         """
         Function to get the key for a container
         Parameters:
         cnt_name = container name (required)
         """
-        response = self._sendRequest("GET",self.cvp_api['getContainer'] + cnt_name)
+        response = self._sendRequest("GET",self.cvp_api['getContainer'] + "?name={0}".format(cnt_name))
         return(response)
     
     def getContainerInfo(self,cnt_key):
@@ -179,11 +185,11 @@ class CVPCON():
                     'action': 'add',
                     'nodeType': 'container',
                     'nodeId': 'new_container',
-                    'toId': self.containers[pnt_name]["key"],
+                    'toId': self.containers[pnt_name]["Key"],
                     'fromId': '',
                     'nodeName': cnt_name,
                     'fromName': '',
-                    'toName': self.containers[pnt_name]["name"],
+                    'toName': self.containers[pnt_name]["Name"],
                     'childTasks': [],
                     'parentTask': '',
                     'toIdType': 'container'
@@ -228,8 +234,8 @@ class CVPCON():
                     'action': 'update',
                     'nodeType': 'netelement',
                     'nodeId': eos_obj.sys_mac,
-                    'toId': self.containers[eos_obj.targetContainerName]["key"],
-                    'fromId': self.containers[eos_obj.parentContainer["name"]]["key"],
+                    'toId': self.containers[eos_obj.targetContainerName]["Key"],
+                    'fromId': self.containers[eos_obj.parentContainer["name"]]["Key"],
                     'nodeName': eos_obj.hostname,
                     'fromName': eos_obj.parentContainer["name"],
                     'toName': eos_obj.targetContainerName,
@@ -312,7 +318,7 @@ class CVPCON():
         """
         payload = {
             'netElementIds':[eos_obj.sys_mac],
-            'containerId': self.containers[eos_obj.targetContainerName]['key'],
+            'containerId': self.containers[eos_obj.targetContainerName]['Key'],
             'pageType': 'netelement'
         }
         tmp_cb = self.getTempConfigs(eos_obj,"Builder")
@@ -469,8 +475,9 @@ def main():
         for p_cnt in CVP_CONTAINERS:
             cvp_clnt.addContainer(p_cnt,"Tenant")
             cvp_clnt.saveTopo()
-            cvp_response = cvp_clnt.getContainerId(p_cnt)[0]
-            cvp_clnt.containers[p_cnt] = {"name":cvp_response['Name'],"key":cvp_response['Key']}
+            cvp_clnt.getAllContainers()
+            #cvp_response = cvp_clnt.getContainerId(p_cnt)[0]
+            #cvp_clnt.containers[p_cnt] = {"name":cvp_response['Name'],"key":cvp_response['Key']}
             pS("OK","Added {0} container".format(p_cnt))
         # Add devices to Inventory/Provisioning
         for eos in eos_info:
