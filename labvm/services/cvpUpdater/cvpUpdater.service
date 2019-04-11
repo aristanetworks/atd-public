@@ -1,0 +1,14 @@
+[Unit]
+Description=Automatically configures CVP with EOS devices depending on the topology
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=forking
+ExecStart=/usr/local/bin/cvpUpdater.py
+User=root
+TimeoutStartSec=240
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
