@@ -5,14 +5,16 @@ from ruamel.yaml import YAML
 import requests, json, syslog
 from os import path
 from time import sleep
-
+from pprint import pprint as pp
 import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-
 
 topo_file = '/etc/ACCESS_INFO.yaml'
 CVP_CONFIG_FIILE = '/home/arista/.cvpState.txt'
 CVP_CONTAINERS = []
+
+# Temporary file_path location for CVP Custom info
+cvp_file = '/home/arista/cvp_info.yaml'
 
 # ==================================
 # Class definition for EOS devices
@@ -50,6 +52,9 @@ class CVPCON():
         self.tasks = {}
         self.cvp_api = {
             'authenticate': 'cvpservice/login/authenticate.do',
+            'logout': 'cvpservice/login/logout.do',
+            'checkSession': 'cvpservice/login/home.do',
+            'checkVersion': 'cvpservice/cvpInfo/getCvpInfo.do',
             'searchTopo': 'cvpservice/provisioning/searchTopology.do',
             'getContainer': 'cvpservice/inventory/containers?name=',
             'getContainerInfo': '/cvpservice/provisioning/getContainerInfoById.do',
@@ -61,8 +66,11 @@ class CVPCON():
             'executeAllTasks': 'cvpservice/task/executeTask.do',
             'getTaskStatus': 'cvpservice/task/getTaskStatusById.do',
             'generateCB': 'cvpservice/configlet/autoConfigletGenerator.do',
-            'getTempConfigs': 'cvpservice/provisioning/getTempConfigsByNetElementId.do'
+            'getTempConfigs': 'cvpservice/provisioning/getTempConfigsByNetElementId.do',
+            'createSnapshot': 'cvpservice/snapshot/templates/schedule',
+            'getAllSnapshots': 'cvpservice/snapshot/templates'
         }
+
         self.headers = {
             'Content-Type':'application/json',
             'Accept':'application/json'
@@ -73,6 +81,7 @@ class CVPCON():
             'Undefined': {'name':'Undefined','key':self.getContainerId('Undefined')[0]["Key"]}
         }
         self.getDeviceInventory()
+        self.getAllSnapshots()
 
     def _sendRequest(self,c_meth,url,payload={}):
         """
@@ -83,7 +92,25 @@ class CVPCON():
         payload = data/payload required for the API call, if needed (optional)
         """
         response = requests.request(c_meth,"https://{}/".format(self.cvp_url) + url,json=payload,headers=self.headers,verify=False)
-        return(response)
+        return(response.json())
+    
+    def _checkSession(self):
+        if 'Cookie' in self.headers.keys():
+            pass
+        else:
+            pass
+        response = self._sendRequest("GET",self.cvp_api['checkSession'])
+        if type(response) == dict:
+            if response['data'] == 'success':
+                return(True)
+            else:
+                return(False)
+        else:
+            return(False)
+
+    def checkVersion(self):
+        if self._checkSession():
+            return(self._sendRequest("GET",self.cvp_api['cvpservice/checkVersion']))
     
     def saveTopology(self):
         """
@@ -104,6 +131,14 @@ class CVPCON():
         response = self._sendRequest("POST",self.cvp_api['authenticate'],payload)
         self.headers['Cookie'] = 'session_id={}'.format(response['sessionId'])
         return(response['sessionId'])
+    
+    def execLogout(self):
+        """
+        Function to terminate CVP Session
+        """
+        response = self._sendRequest("POST",self.cvp_api['logout'])
+        pS("OK","Logged out of CVP")
+        return(response)
     
     def saveTopo(self):
         payload = []
@@ -134,8 +169,8 @@ class CVPCON():
         Parameters:
         cnt_name = New Container to be created (required)
         pnt_name = Parent container where the new container should be nested within (required)
-        msg = "Creating {0} container under the {1} container".format(cnt_name,pnt_name)
         """
+        msg = "Creating {0} container under the {1} container".format(cnt_name,pnt_name)
         payload = {
             'data': [
                 {
@@ -326,7 +361,31 @@ class CVPCON():
         }
         response = self._sendRequest("POST",self.cvp_api['addTempAction'] + "?format=topology&queryParam=&nodeId=root",payload)
         return(response)
+    
+    def createSnapshot(self,snap_name,snap_cmds,snap_devices=[]):
+        """
+        Function that creates snapshot templates.
+        Parameters:
+        snap_name = Name of the snapshot (required)
+        snap_cmds = All commands to be included in snapshot (required)
+        snap_devices = Devices to be included on the snapshot (optional)
+        """
+        payload = {
+            'name': snap_name,
+            'commands': snap_cmds,
+            'deviceList': snap_devices,
+            'frequency': '300'
+        }
+        response = self._sendRequest("POST",self.cvp_api['createSnapshot'],payload)
+        self.getAllSnapshots()
+        return(response)
 
+    def getAllSnapshots(self):
+        """
+        Function to get all configured snapshots on CVP
+        """
+        response = self._sendRequest("GET",self.cvp_api['getAllSnapshots'] + "?startIndex=0&endIndex=0")
+        self.snapshots = response['templateKeys']
 
 # ==================================
 # End of Class Object declarations
@@ -335,11 +394,11 @@ class CVPCON():
 # ==================================
 # Start of Global Functions
 # ==================================
-def getTopoInfo():
+def getTopoInfo(yaml_file):
     """
-    Function that parses the ACCESS_INFO.yaml file to build the CVP topology.
+    Function that parses the supplied YAML file to build the CVP topology.
     """
-    topoInfo = open(topo_file,'r')
+    topoInfo = open(yaml_file,'r')
     topoYaml = YAML().load(topoInfo)
     topoInfo.close()
     return(topoYaml)
@@ -394,7 +453,8 @@ def main():
     Main Function if this is the initial deployment for the ATD/CVP
     """
     cvp_clnt = ""
-    atd_yaml = getTopoInfo()
+    atd_yaml = getTopoInfo(topo_file)
+    cvp_yaml = getTopoInfo(cvp_file)
     eos_info = getEosDevice(atd_yaml['topology'],atd_yaml['nodes']['veos'])
     for c_login in atd_yaml['login_info']['cvp']['shell']:
         if c_login['user'] == 'arista':
@@ -408,7 +468,7 @@ def main():
         # Add new containers into CVP
         for p_cnt in CVP_CONTAINERS:
             cvp_clnt.addContainer(p_cnt,"Tenant")
-            cvp_clnt.saveTopology()
+            cvp_clnt.saveTopo()
             cvp_response = cvp_clnt.getContainerId(p_cnt)[0]
             cvp_clnt.containers[p_cnt] = {"name":cvp_response['Name'],"key":cvp_response['Key']}
             pS("OK","Added {0} container".format(p_cnt))
@@ -421,12 +481,25 @@ def main():
                     eos.updateContainer(cvp_clnt)
                     if eos.targetContainerName != eos.parentContainer["name"]:
                         cvp_clnt.moveDevice(eos) 
+                        cvp_clnt.genConfigBuilders(eos)
                         cvp_clnt.applyConfiglets(eos)
             else:
                 pS("INFO","Skipping {}".format(eos.hostname))
         cvp_clnt.saveTopology()
         cvp_clnt.getAllTasks("pending")
         cvp_clnt.execAllTasks("pending")
+        if cvp_yaml['cvp_info']['snapshots']:
+            for p_snap in cvp_yaml['cvp_info']['snapshots']:
+                NEW_SNAP = True
+                for e_snap in cvp_clnt.snapshots:
+                    if p_snap['name'] == e_snap['name']:
+                        NEW_SNAP = False
+                if NEW_SNAP:
+                    cvp_clnt.createSnapshot(p_snap['name'],p_snap['commands'])
+                    pS("OK","Created {0} Snapshot".format(p_snap['name']))
+                else:
+                    pS("OK","Snapshot {0} already exists".format(p_snap['name']))
+        cvp_clnt.execLogout()
     else:
         pS("ERROR","Couldn't connect to CVP")
 
