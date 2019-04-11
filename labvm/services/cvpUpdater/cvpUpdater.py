@@ -29,6 +29,11 @@ class CVPSWITCH():
         self.configlets = {"keys":[],"names":[]}
     
     def updateContainer(self,CVPOBJ):
+        """
+        Function that updates the container information for the EOS device.
+        Parameters:
+        CVPOBJ = CVPCON class object that contains information about CVP (required)
+        """
         CVPOBJ.getDeviceInventory()
         self.sys_mac = CVPOBJ.inventory[self.hostname]["systemMacAddress"]
         self.parentContainer = CVPOBJ.getContainerInfo(CVPOBJ.inventory[self.hostname]["parentContainerKey"])
@@ -69,19 +74,29 @@ class CVPCON():
         }
         self.getDeviceInventory()
 
-    def _sendRequest(self,c_meth,url,payload={},ret_json=True):
+    def _sendRequest(self,c_meth,url,payload={}):
+        """
+        Generic function that will send the API call to CVP. 
+        Parameters:
+        c_meth = API method, ie "GET or "POST" (required)
+        url = The API url that is located in self.cvp_api (required)
+        payload = data/payload required for the API call, if needed (optional)
+        """
         response = requests.request(c_meth,"https://{}/".format(self.cvp_url) + url,json=payload,headers=self.headers,verify=False)
-        if ret_json:
-            return(response.json())
-        else:
-            return(response)
+        return(response)
     
     def saveTopology(self):
+        """
+        Function that saves all Temporary Provisioning Actions/Tasks
+        """
         payload = self._sendRequest("GET",self.cvp_api['getAllTemp'])['data']
         response = self._sendRequest("POST",self.cvp_api['saveTopo'],payload)
         return(response)
         
     def getSID(self):
+        """
+        Function that authenticates to CVP and stores the session_id cookie to the headers for future calls.
+        """
         payload = {
             'userId':self.cvp_user,
             'password':self.cvp_pwd
@@ -96,18 +111,31 @@ class CVPCON():
         return(response)
     
     def getContainerId(self,cnt_name):
+        """
+        Function to get the key for a container
+        Parameters:
+        cnt_name = container name (required)
+        """
         response = self._sendRequest("GET",self.cvp_api['getContainer'] + cnt_name)
         return(response)
     
     def getContainerInfo(self,cnt_key):
+        """
+        Function to get all information on a container.
+        Parameters:
+        cnt_key = Container key/id (required)
+        """
         response = self._sendRequest("GET",self.cvp_api['getContainerInfo'] + '?containerId={0}'.format(cnt_key))
         return(response)
 
-    def getDeviceId(self,vEOS):
-        pass
-    
     def addContainer(self,cnt_name,pnt_name):
+        """
+        Function to add a new container.
+        Parameters:
+        cnt_name = New Container to be created (required)
+        pnt_name = Parent container where the new container should be nested within (required)
         msg = "Creating {0} container under the {1} container".format(cnt_name,pnt_name)
+        """
         payload = {
             'data': [
                 {
@@ -131,6 +159,11 @@ class CVPCON():
         return(response)
 
     def addDeviceInventory(self,eos_ip):
+        """
+        Function that adds a device to inventory
+        Parameters:
+        eos_ip = MGMT IP address for the EOS device (required)
+        """
         payload = {
             "hosts": [eos_ip]
         }
@@ -138,11 +171,19 @@ class CVPCON():
         return(response)
     
     def getDeviceInventory(self):
+        """ 
+        Function that gets all Provisioned devices within CVP.
+        """
         response = self._sendRequest("GET",self.cvp_api['deviceInventory'] + "?provisioned=true")
         for res in response:
             self.inventory[res['hostname']] = {"fqdn":res['fqdn'],'ipAddress':res['ipAddress'],'parentContainerKey':res['parentContainerKey'],"systemMacAddress":res["systemMacAddress"]}
     
     def moveDevice(self,eos_obj):
+        """
+        Function that moves a device from one container to another container.
+        Parameters:
+        eos_obj = CVPSWITCH class object that contains relevant device info (required)
+        """
         msg = "Moving {0} device under the {1} container".format(eos_obj.hostname,eos_obj.targetContainerName)
         payload = {
             'data': [
@@ -167,10 +208,20 @@ class CVPCON():
         return(response)
 
     def getAllTasks(self,t_type):
+        """
+        Function that gets all Tasks.
+        Parameters:
+        t_type = Task type to query on, ie "Pending" (required)
+        """
         response = self._sendRequest("GET",self.cvp_api['getAllTasks'] + "?queryparam={0}&startIndex=0&endIndex=0".format(t_type))
         self.tasks[t_type] = response['data']
     
     def execAllTasks(self,t_type):
+        """
+        Function that executes all tasks
+        Parameters:
+        t_type = Task type to execute on, ie "Pending" (required)
+        """
         data = []
         if t_type in self.tasks.keys():
             if self.tasks[t_type]:
@@ -192,10 +243,21 @@ class CVPCON():
             return(response)
     
     def getTaskStatus(self,t_id):
+        """
+        Function to get teh status of a particular Task ID.
+        Parameters:
+        t_id = Task Id (required)
+        """
         response = self._sendRequest("GET",self.cvp_api['getTaskStatus'] + "?taskId={0}".format(t_id))
         return(response)
     
     def getTempConfigs(self,eos_obj,c_type):
+        """
+        Function that gets all configs assigned to a device.
+        Parameters:
+        eos_obj = CVPSWITCH class object that contains relevant EOS device info (required)
+        c_type = Configlet type, ie "Builder", "Static" (required)
+        """
         ret_configs = []
         cnvt_id = eos_obj.sys_mac.replace(":","%3A")
         response = self._sendRequest("GET",self.cvp_api['getTempConfigs'] + "?netElementId={0}".format(cnvt_id))
@@ -208,6 +270,11 @@ class CVPCON():
         return(ret_configs)
     
     def genConfigBuilders(self,eos_obj):
+        """
+        Function to generate all ConfigletBuilders assigned to a particular device.
+        Parameters:
+        eos_obj = CVPSWICH class object that contains all relevant EOS device info (required)
+        """
         payload = {
             'netElementIds':[eos_obj.sys_mac],
             'containerId': self.containers[eos_obj.targetContainerName]['key'],
@@ -222,6 +289,11 @@ class CVPCON():
         return(response)
     
     def applyConfiglets(self,eos_obj):
+        """ 
+        Function that applies all configlets assigned to a device.
+        Parameters:
+        eos_obj = CVPSWITCH class object that contails all relevant EOS device info (required)
+        """
         msg = "Applying configlets to {0}".format(eos_obj.hostname)
         payload = {
             'data': [
@@ -264,16 +336,30 @@ class CVPCON():
 # Start of Global Functions
 # ==================================
 def getTopoInfo():
+    """
+    Function that parses the ACCESS_INFO.yaml file to build the CVP topology.
+    """
     topoInfo = open(topo_file,'r')
     topoYaml = YAML().load(topoInfo)
     topoInfo.close()
     return(topoYaml)
 
 def checkContainer(cnt):
+    """
+    Function to check and see if the supplied container is already in the global container list.
+    Parameters:
+    cnt = Container to add if it does not exist in the list (required)
+    """
     if cnt not in CVP_CONTAINERS:
         CVP_CONTAINERS.append(cnt)
 
 def getEosDevice(topo,eosYaml):
+    """
+    Function that Parses through the YAML file and creates a CVPSWITCH class object for each EOS device in the topo file.
+    Parameters:
+    topo = Topology for the ATD (required)
+    eosYAML = vEOS portion of the ACCESS_INFO.yaml file (required)
+    """
     EOS_DEV = []
     for dev in eosYaml:
         if 'spine' in dev['hostname']:
@@ -296,11 +382,17 @@ def getEosDevice(topo,eosYaml):
 def pS(mstat,mtype):
     """
     Function to send output from service file to Syslog
+    Parameters:
+    mstat = Message Status, ie "OK", "INFO" (required)
+    mtype = Message to be sent/displayed (required)
     """
     mmes = "\t" + mtype
     syslog.syslog("[{0}] {1}".format(mstat,mmes.expandtabs(7 - len(mstat))))
 
 def main():
+    """
+    Main Function if this is the initial deployment for the ATD/CVP
+    """
     cvp_clnt = ""
     atd_yaml = getTopoInfo()
     eos_info = getEosDevice(atd_yaml['topology'],atd_yaml['nodes']['veos'])
@@ -316,7 +408,7 @@ def main():
         # Add new containers into CVP
         for p_cnt in CVP_CONTAINERS:
             cvp_clnt.addContainer(p_cnt,"Tenant")
-            cvp_clnt.saveTopo()
+            cvp_clnt.saveTopology()
             cvp_response = cvp_clnt.getContainerId(p_cnt)[0]
             cvp_clnt.containers[p_cnt] = {"name":cvp_response['Name'],"key":cvp_response['Key']}
             pS("OK","Added {0} container".format(p_cnt))
