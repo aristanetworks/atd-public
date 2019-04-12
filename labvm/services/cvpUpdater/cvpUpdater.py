@@ -550,6 +550,7 @@ def main():
                 pS("INFO","{0} container already exists....skipping".format(p_cnt))
             # Check and add configlets to containers
             if p_cnt in cvp_yaml['cvp_info']['configlets']['containers'].keys():
+                pS("OK","Configlets found for {0} container.  Will apply".format(p_cnt))
                 cvp_clnt.addContainerConfiglets(p_cnt,cvp_yaml['cvp_info']['configlets']['containers'][p_cnt])
                 cvp_clnt.applyConfigletsContainers(p_cnt)
                 cvp_clnt.saveTopology()
