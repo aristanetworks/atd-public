@@ -29,7 +29,6 @@ class CVPSWITCH():
         self.parentContainer = ""
         self.sys_mac = ""
         self.configlets = {"keys":[],"names":[]}
-        self.proposed_configlets = []
     
     def updateContainer(self,CVPOBJ):
         """
