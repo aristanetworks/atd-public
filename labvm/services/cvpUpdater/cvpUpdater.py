@@ -140,11 +140,6 @@ class CVPCON():
         pS("OK","Logged out of CVP")
         return(response)
     
-    def saveTopo(self):
-        payload = []
-        response = self._sendRequest("POST",self.cvp_api['saveTopo'],payload)
-        return(response)
-    
     def getAllContainers(self):
         """
         Function to get all Configured containers in CVP.
@@ -504,19 +499,15 @@ def getEosDevice(topo,eosYaml):
     for dev in eosYaml:
         if 'spine' in dev['hostname']:
             EOS_DEV.append(CVPSWITCH(dev['hostname'],dev['vxlan_ip'],'Spine'))
-            #EOS_DEV[dev['hostname']] = {'vx_ip':dev['vxlan_ip'],'container':'Spine','p_cnt_key':'','c_cnt_key':''}
             checkContainer('Spine')
         elif 'leaf' in dev['hostname']:
             EOS_DEV.append(CVPSWITCH(dev['hostname'],dev['vxlan_ip'],'Leaf'))
-            #EOS_DEV[dev['hostname']] = {'vx_ip':dev['vxlan_ip'],'container':'Leaf','p_cnt_key':'','c_cnt_key':''}
             checkContainer('Leaf')
         elif 'cvx' in dev['hostname']:
             EOS_DEV.append(CVPSWITCH(dev['hostname'],dev['vxlan_ip'],'CVX'))
-            #EOS_DEV[dev['hostname']] = {'vx_ip':dev['vxlan_ip'],'container':'CVX','p_cnt_key':'','c_cnt_key':''}
             checkContainer('CVX')
         else:
             EOS_DEV.append(CVPSWITCH(dev['hostname'],dev['vxlan_ip'],''))
-            #EOS_DEV[dev['hostname']] = {'vx_ip':dev['vxlan_ip'],'container':'NONE','p_cnt_key':'','c_cnt_key':''}
     return(EOS_DEV)
 
 def pS(mstat,mtype):
@@ -552,7 +543,7 @@ def main():
         for p_cnt in cvp_yaml['cvp_info']['containers']:
             if p_cnt not in cvp_clnt.containers.keys():
                 cvp_clnt.addContainer(p_cnt,"Tenant")
-                cvp_clnt.saveTopo()
+                cvp_clnt.saveTopology()
                 cvp_clnt.getAllContainers()
                 pS("OK","Added {0} container".format(p_cnt))
             else:
@@ -561,7 +552,7 @@ def main():
             if p_cnt in cvp_yaml['cvp_info']['configlets']['containers'].keys():
                 cvp_clnt.addContainerConfiglets(p_cnt,cvp_yaml['cvp_info']['configlets']['containers'][p_cnt])
                 cvp_clnt.applyConfigletsContainers(p_cnt)
-                cvp_clnt.saveTopo()
+                cvp_clnt.saveTopology()
         # ==========================================
         # Add devices to Inventory/Provisioning
         # ==========================================
