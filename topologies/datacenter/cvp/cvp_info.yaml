@@ -1,0 +1,26 @@
+cvp_info:
+  containers:
+    - Tenant
+    - Leaf
+    - Spine
+    - CVX
+  snapshots:
+    - name: Validate_Routing
+      commands:
+        - show ip route summary
+        - show ip bgp summary
+    - name: EOS_Upgrade
+      commands:
+        - show version
+        - show extensions
+  configlets:
+    containers:
+      Tenant:
+        - AAA
+        - VLANs
+        - SYS_TelemetryBuilder
+        - SYS_BaseConfig
+    netelements:
+      cvx01:
+        - cvx01-Controller
+        
