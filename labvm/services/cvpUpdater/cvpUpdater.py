@@ -29,6 +29,7 @@ class CVPSWITCH():
         self.parentContainer = ""
         self.sys_mac = ""
         self.configlets = {"keys":[],"names":[]}
+        self.proposed_configlets = []
     
     def updateContainer(self,CVPOBJ):
         """
@@ -49,6 +50,7 @@ class CVPCON():
         self.cvp_user = c_user
         self.cvp_pwd = c_pwd
         self.inventory = {}
+        self.containers = {}
         self.tasks = {}
         self.cvp_api = {
             'authenticate': 'cvpservice/login/authenticate.do',
@@ -67,6 +69,7 @@ class CVPCON():
             'getTaskStatus': 'cvpservice/task/getTaskStatusById.do',
             'generateCB': 'cvpservice/configlet/autoConfigletGenerator.do',
             'getTempConfigs': 'cvpservice/provisioning/getTempConfigsByNetElementId.do',
+            'getConfigletByName': 'cvpservice/configlet/getConfigletByName.do',
             'createSnapshot': 'cvpservice/snapshot/templates/schedule',
             'getAllSnapshots': 'cvpservice/snapshot/templates'
         }
@@ -76,7 +79,6 @@ class CVPCON():
             'Accept':'application/json'
         }
         self.SID = self.getSID()
-        self.containers = {}
         self.getAllContainers()
         self.getDeviceInventory()
         self.getAllSnapshots()
@@ -291,6 +293,43 @@ class CVPCON():
         """
         response = self._sendRequest("GET",self.cvp_api['getTaskStatus'] + "?taskId={0}".format(t_id))
         return(response)
+
+    def getConfigletByName(self,cfg):
+        """
+        Function to return the configlet information based off name:
+        Parameters:
+        cfg = Configlet name in CVP (required)
+        """
+        response = self._sendRequest("GET",self.cvp_api['getConfigletByName'] + "?name={0}".format(cfg))
+        return(response)
+    
+    def addContainerConfiglets(self,cnt_name,cfg_list):
+        """
+        Function to take a list of container specific config names, get the config Ids from CVP and add them to the container configlet list to be applied.
+        Parameters:
+        cfg_list = List of configlet names to be queried and added to the device (required)
+        """
+        self.containers[cnt_name]['configlets'] = {'keys':[],'names':[]}
+        for cfg in cfg_list:
+            response = self.getConfigletByName(cfg)
+            if 'key' in response.keys():
+                self.containers[cnt_name]['configlets']['keys'].append(response["key"])
+                self.containers[cnt_name]['configlets']['names'].append(response["name"])
+        return(True)
+    
+    def addDeviceConfiglets(self,eos_obj,cfg_list):
+        """
+        Function to take a list of device specific config names, get the config Ids from CVP and add them to the device configlet list to be applied.
+        Parameters:
+        eos_obj = CVPSWITCH class object that contains relevant EOS device info (required)
+        cfg_list = List of configlet names to be queried and added to the device (required)
+        """
+        for cfg in cfg_list:
+            response = self.getConfigletByName(cfg)
+            if 'key' in response.keys():
+                eos_obj.configlets["keys"].append(response["key"])
+                eos_obj.configlets['names'].append(response["name"])
+        return(True)
     
     def getTempConfigs(self,eos_obj,c_type):
         """
@@ -303,11 +342,10 @@ class CVPCON():
         cnvt_id = eos_obj.sys_mac.replace(":","%3A")
         response = self._sendRequest("GET",self.cvp_api['getTempConfigs'] + "?netElementId={0}".format(cnvt_id))
         for p_config in response['proposedConfiglets']:
+            eos_obj.configlets["keys"].append(p_config['key'])
+            eos_obj.configlets["names"].append(p_config['name'])
             if p_config['type'] == c_type:
                 ret_configs.append(p_config['key'])
-            if p_config['type'] != "Builder":
-                eos_obj.configlets["keys"].append(p_config['key'])
-                eos_obj.configlets["names"].append(p_config['name'])
         return(ret_configs)
     
     def genConfigBuilders(self,eos_obj):
@@ -362,6 +400,43 @@ class CVPCON():
                     'childTasks': [],
                     'parentTask': '',
                     'toIdType': 'netelement'
+                }
+            ]
+        }
+        response = self._sendRequest("POST",self.cvp_api['addTempAction'] + "?format=topology&queryParam=&nodeId=root",payload)
+        return(response)
+
+    def applyConfigletsContainers(self,cnt_name):
+        """ 
+        Function that applies all configlets assigned to a device.
+        Parameters:
+        eos_obj = CVPSWITCH class object that contails all relevant EOS device info (required)
+        """
+        msg = "Applying configlets to {0}".format(cnt_name)
+        payload = {
+            'data': [
+                {
+                    'info': msg,
+                    'infoPreview': msg,
+                    'action': 'associate',
+                    'nodeType': 'configlet',
+                    'configletList': self.containers[cnt_name]['configlets']['keys'],
+                    'configletNamesList': self.containers[cnt_name]['configlets']["names"],
+                    'ignoreConfigletNamesList': [],
+                    'ignoreConfigletList': [],
+                    'configletBuilderList': [],
+                    'configletBuilderNamesList': [],
+                    'ignoreConfigletBuilderList': [],
+                    'ignoreConfigletBuilderNamesList': [],
+                    'nodeId': '',
+                    'toId': self.containers[cnt_name]["Key"],
+                    'fromId': '',
+                    'nodeName': '',
+                    'fromName': '',
+                    'toName': self.containers[cnt_name]["Name"],
+                    'childTasks': [],
+                    'parentTask': '',
+                    'toIdType': 'container'
                 }
             ]
         }
@@ -471,15 +546,25 @@ def main():
                     pS("ERROR","CVP is currently unavailable....Retrying in 30 seconds.")
                     sleep(30)
     if cvp_clnt:
+        # ==========================================
         # Add new containers into CVP
-        for p_cnt in CVP_CONTAINERS:
-            cvp_clnt.addContainer(p_cnt,"Tenant")
-            cvp_clnt.saveTopo()
-            cvp_clnt.getAllContainers()
-            #cvp_response = cvp_clnt.getContainerId(p_cnt)[0]
-            #cvp_clnt.containers[p_cnt] = {"name":cvp_response['Name'],"key":cvp_response['Key']}
-            pS("OK","Added {0} container".format(p_cnt))
+        # ==========================================
+        for p_cnt in cvp_yaml['cvp_info']['containers']:
+            if p_cnt not in cvp_clnt.containers.keys():
+                cvp_clnt.addContainer(p_cnt,"Tenant")
+                cvp_clnt.saveTopo()
+                cvp_clnt.getAllContainers()
+                pS("OK","Added {0} container".format(p_cnt))
+            else:
+                pS("INFO","{0} container already exists....skipping".format(p_cnt))
+            # Check and add configlets to containers
+            if p_cnt in cvp_yaml['cvp_info']['configlets']['containers'].keys():
+                cvp_clnt.addContainerConfiglets(p_cnt,cvp_yaml['cvp_info']['configlets']['containers'][p_cnt])
+                cvp_clnt.applyConfigletsContainers(p_cnt)
+                cvp_clnt.saveTopo()
+        # ==========================================
         # Add devices to Inventory/Provisioning
+        # ==========================================
         for eos in eos_info:
             # Check to see if the device is already provisioned
             if eos.hostname not in cvp_clnt.inventory.keys():
@@ -489,12 +574,17 @@ def main():
                     if eos.targetContainerName != eos.parentContainer["name"]:
                         cvp_clnt.moveDevice(eos) 
                         cvp_clnt.genConfigBuilders(eos)
+                        if eos.hostname in cvp_yaml['cvp_info']['configlets']['netelements'].keys():
+                            cvp_clnt.addDeviceConfiglets(eos,cvp_yaml['cvp_info']['configlets']['netelements'][eos.hostname])
                         cvp_clnt.applyConfiglets(eos)
             else:
                 pS("INFO","Skipping {}".format(eos.hostname))
         cvp_clnt.saveTopology()
         cvp_clnt.getAllTasks("pending")
         cvp_clnt.execAllTasks("pending")
+        # ==========================================
+        # Creating Snapshots
+        # ==========================================
         if cvp_yaml['cvp_info']['snapshots']:
             for p_snap in cvp_yaml['cvp_info']['snapshots']:
                 NEW_SNAP = True
@@ -506,6 +596,7 @@ def main():
                     pS("OK","Created {0} Snapshot".format(p_snap['name']))
                 else:
                     pS("OK","Snapshot {0} already exists".format(p_snap['name']))
+        # Logout and close session to CVP
         cvp_clnt.execLogout()
     else:
         pS("ERROR","Couldn't connect to CVP")
