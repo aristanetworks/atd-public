@@ -4,7 +4,7 @@ Media OSPF Lab
 .. image:: images/media-OSPF.png
    :align: center
 
-.. note:: Did you know the OSPF algorithim is considered a  dykstra link-state protocol? it is a common protocol used in a number of widely deployed environments in various industries (media being one of them)
+.. **note**:: Did you know the OSPF algorithim is considered a  dykstra link-state protocol? it is a common protocol used in a number of widely deployed environments in various industries (media being one of them)
 
 **1.** Log into the **LabAccess** jumpserver:
 
