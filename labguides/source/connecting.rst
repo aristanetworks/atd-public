@@ -7,7 +7,7 @@ Connecting
 .. image:: images/cvp_configlet1.png
 
 2. SSH to the public IP address assigned to the LabAccess jumphost server (this is the IP address shown in the "Welcome to Arista's
-   Demo Cloud" picture above). The username is ``arista`` and the password is ``arista``:
+   Demo Cloud" picture above). The username is ``arista`` and the password is ``{REPLACE_PWD}``:
 
     .. code-block:: text
 
