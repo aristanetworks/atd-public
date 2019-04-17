@@ -19,7 +19,7 @@ wget https://github.com/aristanetworks/atd-public/raw/Broadcaster-Training/topol
 #HostFiles
 
 wget https://github.com/aristanetworks/atd-public/raw/Broadcaster-Training/topologies/datacenter/LabFiles/Broadcaster/default-host1.cfg
-wget https://github.com/aristanetworks/atd-public/raw/Broadcaster-Training/topologies/datacenter/LabFiles/Broadcaster/defualt-host2.cfg
+wget https://github.com/aristanetworks/atd-public/raw/Broadcaster-Training/topologies/datacenter/LabFiles/Broadcaster/default-host2.cfg
 wget https://github.com/aristanetworks/atd-public/raw/Broadcaster-Training/topologies/datacenter/LabFiles/Broadcaster/media-host1.cfg
 wget https://github.com/aristanetworks/atd-public/raw/Broadcaster-Training/topologies/datacenter/LabFiles/Broadcaster/media-host2.cfg
 wget https://github.com/aristanetworks/atd-public/raw/Broadcaster-Training/topologies/datacenter/LabFiles/Broadcaster/mcast.source.sh
