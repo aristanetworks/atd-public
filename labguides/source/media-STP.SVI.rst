@@ -84,7 +84,7 @@ Media STP and SVI Lab
 
         .. code-block:: text
 
-            ping 10.127.45.4
+            ping 10.127.46.4
             ping 10.127.15.5
 
       If all the SVI and STP settings have been completed correctly you should be able to ping the remote host as well as the SVI interface itself configured on **spine1** which is also the root bridge
