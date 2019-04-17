@@ -31,13 +31,13 @@ wget https://github.com/aristanetworks/atd-public/raw/Broadcaster-Training/topol
 
 #Move Files
 scp /home/arista/ConfigureTopology.py 192.168.0.5:
-mv /home/arista/media.py /usr/local/bin/media.py
-mv /home/arista/login.py /usr/local/bin/login.py
-chmod +x /usr/local/bin/media.py
-chmod +x /usr/local/bin/login.py
-chmod +x /home/arista/configletPushToCVP.sh
-chmod +x /home/arista/mcast.source.sh
-chmod +x /home/arista/mcast.receiver.sh
+sudo mv /home/arista/media.py /usr/local/bin/media.py
+sudo mv /home/arista/login.py /usr/local/bin/login.py
+sudo chmod +x /usr/local/bin/media.py
+sudo chmod +x /usr/local/bin/login.py
+sudo chmod +x /home/arista/configletPushToCVP.sh
+sudo chmod +x /home/arista/mcast.source.sh
+sudo chmod +x /home/arista/mcast.receiver.sh
 echo "pushing configlets to CVP"
 ./home/arista/configletPushToCVP.sh
 echo "Applied updated menus - re-login please"
