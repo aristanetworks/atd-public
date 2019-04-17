@@ -41,4 +41,5 @@ sudo chmod +x /home/arista/mcast.receiver.sh
 echo "pushing configlets to CVP"
 bash /home/arista/configletPushToCVP.sh
 echo "Applied updated menus - re-login please"
-exit
+
+exit 0
