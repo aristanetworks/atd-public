@@ -27,10 +27,10 @@ wget https://github.com/aristanetworks/atd-public/raw/Broadcaster-Training/topol
 
 #CVP Files
 
-wget https://github.com/aristanetworks/atd-public/raw/Broadcaster-Training/topologies/datacenter/LabFiles/Broadcaster/ConfigureTopology.py
+wget https://github.com/aristanetworks/atd-public/raw/Broadcaster-Training/topologies/datacenter/LabFiles/ConfigureTopology.py
 
 #Move Files
-scp /home/arista/ConfigureTopology.py 192.168.0.5:
+scp /home/arista/ConfigureTopology.py arista@192.168.0.5:
 sudo mv /home/arista/media.py /usr/local/bin/media.py
 sudo mv /home/arista/login.py /usr/local/bin/login.py
 sudo chmod +x /usr/local/bin/media.py
