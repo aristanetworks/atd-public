@@ -80,7 +80,7 @@ Device Menu:            Lab Controls
       quit()
     elif ans=="13" or ans=="reset":
       os.system("ssh 192.168.0.5 './ConfigureTopology.py'")
-      os.system("./pushHostDefaultConfig.sh")
+      os.system("sudo ./pushHostDefaultConfig.sh")
     elif ans=="14" or ans=="mlag":
       os.system("ssh 192.168.0.5 './ConfigureTopology.py -t mlag -e leaf4' >> /tmp/ConfigureTopology.log")
     elif ans=="15" or ans=="bgp":
@@ -94,8 +94,8 @@ Device Menu:            Lab Controls
     elif ans=="19" or ans=="cvp":
       os.system("ssh 192.168.0.5 './ConfigureTopology.py -t cvp' >> /tmp/ConfigureTopology.log")
     elif ans=="20" or ans=="media":
-      os.system("./pushHostMediaConfig.sh")
-      os.system("./media.py")
+      os.system("sudo ./pushHostMediaConfig.sh")
+      os.system("/usr/local/bin/media.py")
     elif ans=="exit":
       quit()
     elif ans !="":
