@@ -76,7 +76,7 @@ Device Menu:            Lab Controls
       os.system('/bin/bash')
     elif ans=="11" or ans=="reset":
       os.system("ssh 192.168.0.5 './ConfigureTopology.py'")
-      os.system("sudo ./pushHostMediaConfig.sh")
+      os.system("sudo /home/arista/pushHostMediaConfig.sh")
     elif ans=="12":
       quit()
     elif ans=="13" or ans=="return":
