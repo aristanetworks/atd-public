@@ -66,7 +66,22 @@ Media BGP Lab
 
       All the routing entries with a preceding "B" was learned by the BGP protocol on Spine2.
 
-2. Configure BGP on the **Leaf4** switch using the following criteria
+2. Configure Loopback 0 on **Leaf 4** with the following commands
+
+    1. Under Loopback 0 interface assign the ip.  This will be used to define the Router-id in the next step.  Loopbacks are used as as router-id addresses, as they are an always available interface that can be advertised reliably.
+
+        .. code-block:: text
+
+            configure
+            interface loopback 0
+            ip address 10.127.255.4/32
+
+            leaf4#configure
+            leaf4(config)#interface loopback 0
+            leaf4(config-if-Lo0)#ip address 10.127.255.4/32
+
+
+3. Configure BGP on the **Leaf4** switch using the following criteria
 
    1. Configure BGP router process (also the autonomous system number, ASN) on **Leaf4**. **Leaf 4** will be configured to communicate to adjacent BGP speakers (**Spine2** in this case).  The router-id is configured so it can be consistent and not randomly chosen (normally the peering interface if not specified).
 
@@ -137,6 +152,7 @@ Media BGP Lab
 
                     Network                Next Hop              Metric  LocPref Weight  Path
              * >     10.127.34.0/24         10.127.34.4           -       100     -       i
+             * >     10.127.255.4/32        10.127.34.4           -       100     -       i
              * >     172.16.46.0/24         10.127.34.4           -       100     -       i
              * >     192.168.0.0/24         10.127.34.4           -       100     -       i
 
@@ -154,7 +170,7 @@ Media BGP Lab
              * >     10.127.255.1/32        10.127.34.3           -       100     -       1 i
              * >     172.16.15.0/24         10.127.34.3           -       100     -       1 i
 
-3. We will now validate the end-to-end connectivity once BGP neighbor relationship has been established
+4. We will now validate the end-to-end connectivity once BGP neighbor relationship has been established
 
    1. Confirm the BGP neighbor relationship has been established and the routing table on **Leaf4** has been populated with the appropriate entries as shown on the outputs below
 
@@ -182,6 +198,7 @@ Media BGP Lab
                     Network                Next Hop              Metric  LocPref Weight  Path
              * >     10.127.34.0/24         -                     1       0       -       i
              * >     10.127.255.1/32        10.127.34.3           0       100     0       1 i
+             * >     10.127.255.4/32        -                     0       0       -       i
              * >     172.16.15.0/24         10.127.34.3           0       100     0       1 i
              * >     172.16.46.0/24         -                     1       0       -       i
              * >     192.168.0.0/24         -                     1       0       -       i
@@ -194,6 +211,7 @@ Media BGP Lab
 
              C      10.127.34.0/24 is directly connected, Ethernet3
              B I    10.127.255.1/32 [200/0] via 10.127.34.3, Ethernet3
+             C      10.127.255.4/32 is directly connected, Loopback
              B I    172.16.15.0/24 [200/0] via 10.127.34.3, Ethernet3
              C      172.16.46.0/24 is directly connected, Ethernet4
              C      192.168.0.0/24 is directly connected, Management1
