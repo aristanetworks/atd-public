@@ -10,20 +10,65 @@ Media BGP Lab
 
    1. Type ``media-bgp`` at the prompt. The script will configure the topology with the exception of **Leaf4**.
 
-   2. On **spine2**, verify BGP operation (it should not be operating correctly) and you will see all the routes currently in the enviroment
+   2. On **spine2**, verify the BGP operation (it should not be operating correctly) and current routing table and command outputs similar to the outputs below.
 
         .. code-block:: text
 
-            show ip bgp summery
+            show ip bgp summary
+
+            spine2#show ip bgp summary
+            BGP summary information for VRF default
+            Router identifier 10.127.255.3, local AS number 2
+            Neighbor Status Codes: m - Under maintenance
+              Neighbor         V  AS           MsgRcvd   MsgSent  InQ OutQ  Up/Down State  PfxRcd PfxAcc
+                10.127.23.2      4  1                  7         6    0    0 00:02:03 Estab  2      2
+                10.127.34.4      4  2                  0         0    0    0 00:02:10 Active
+
+
             show ip bgp
-            !
+
+            spine2#show ip bgp
+            BGP routing table information for VRF default
+            Router identifier 10.127.255.3, local AS number 2
+            Route status codes: s - suppressed, * - valid, > - active, # - not installed, E - ECMP head, e - ECMP
+                    S - Stale, c - Contributing to ECMP, b - backup, L - labeled-unicast
+            Origin codes: i - IGP, e - EGP, ? - incomplete
+            AS Path Attributes: Or-ID - Originator ID, C-LST - Cluster List, LL Nexthop - Link Local Nexthop
+
+                    Network                Next Hop              Metric  LocPref Weight  Path
+             * >     10.127.255.1/32        10.127.23.2           0       100     0       1 i
+             * >     172.16.15.0/24         10.127.23.2           0       100     0       1 i
+
             show ip route
 
-      All the route entries with a preceding "B" was learned by the OSPF protocol on Spine2
+            spine2#show ip route
+
+            VRF: default
+            Codes: C - connected, S - static, K - kernel,
+                   O - OSPF, IA - OSPF inter area, E1 - OSPF external type 1,
+                   E2 - OSPF external type 2, N1 - OSPF NSSA external type 1,
+                   N2 - OSPF NSSA external type2, B I - iBGP, B E - eBGP,
+                   R - RIP, I L1 - IS-IS level 1, I L2 - IS-IS level 2,
+                   O3 - OSPFv3, A B - BGP Aggregate, A O - OSPF Summary,
+                   NG - Nexthop Group Static Route, V - VXLAN Control Service,
+                   DH - DHCP client installed default route, M - Martian,
+                   DP - Dynamic Policy Route
+
+            Gateway of last resort:
+             S      0.0.0.0/0 [1/0] via 192.168.0.254, Management1
+
+             C      10.127.23.0/24 is directly connected, Ethernet1
+             C      10.127.34.0/24 is directly connected, Ethernet5
+             B E    10.127.255.1/32 [200/0] via 10.127.23.2, Ethernet1
+             C      10.127.255.3/32 is directly connected, Loopback0
+             B E    172.16.15.0/24 [200/0] via 10.127.23.2, Ethernet1
+             C      192.168.0.0/24 is directly connected, Management1
+
+      All the routing entries with a preceding "B" was learned by the BGP protocol on Spine2
 
 2. Configure BGP on the **Leaf4** switch using the following criteria
 
-   1. Configure BGP router process (also the autonamous-system) on **Leaf4** to be used for the communication to adjacent BGP speakers (spine2 in this case).  The router-id is configured so it can be consistent and not randomly chosen (normally the peering interface if not specified)
+   1. Configure BGP router process (also the autonomous system number, ASN) on **Leaf4** to be used for the communication to adjacent BGP speakers (spine2 in this case).  The router-id is configured so it can be consistent and not randomly chosen (normally the peering interface if not specified)
 
         .. code-block:: text
 
