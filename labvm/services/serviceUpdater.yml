@@ -4,3 +4,9 @@ serviceUpdaters:
   - atdFiles
   - gitConfigletSync
   # - atdModuleUpdater
+pipPackages:
+  Install:
+    - ruamel.yaml
+    - gitPython
+  Remove:
+    
