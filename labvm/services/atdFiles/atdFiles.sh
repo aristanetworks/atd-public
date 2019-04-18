@@ -12,6 +12,7 @@ cp -R /tmp/atd/topologies/$TOPO/files/* /home/arista
 
 # Update the Arista user password for connecting to the labvm
 sed -i "s/{REPLACE_PWD}/$ARISTA_PWD/g" /tmp/atd/labguides/source/connecting.rst
+sed -i "s/{REPLACE_PWD}/$ARISTA_PWD/g" /tmp/atd/labguides/source/programmability_connecting.rst
 
 # Build the lab guides html files
 cd /tmp/atd/labguides
