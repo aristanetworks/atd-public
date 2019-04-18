@@ -6,7 +6,7 @@ Media BGP Lab
 
 .. note:: The Border Gateway Protocol (BGP) makes routing decisions based on paths (protocol is classified as a path vector) and is widely used in the backbone of the internet to redistribute information
 
-**1.** Log into the **LabAccess** jumpserver:
+1. Log into the **LabAccess** jumpserver:
 
    1. Type ``media-bgp`` at the prompt. The script will configure the topology with the exception of **Leaf4**.
 
@@ -21,7 +21,7 @@ Media BGP Lab
 
       All the route entries with a preceding "B" was learned by the OSPF protocol on Spine2
 
-**2.** Configure BGP on the **Leaf4** switch using the following criteria
+2. Configure BGP on the **Leaf4** switch using the following criteria
 
    1. Configure BGP router process (also the autonamous-system) on **Leaf4** to be used for the communication to adjacent BGP speakers (spine2 in this case).  The router-id is configured so it can be consistent and not randomly chosen (normally the peering interface if not specified)
 
@@ -67,7 +67,7 @@ Media BGP Lab
             show ip bgp neighbors 10.127.34.3 received-routes
 
 
-**3.** Validate end-to-end connectivity once OSPF neighbor relationship has been established
+3. Validate end-to-end connectivity once OSPF neighbor relationship has been established
 
    1. Confirm the bgp neighbor relationship has been established and the route table on leaf4 has been populated with the appropriate entries
 
