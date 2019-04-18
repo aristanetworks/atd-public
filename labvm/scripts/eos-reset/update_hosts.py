@@ -1,13 +1,10 @@
 #!/usr/bin/env python
 
-# Example ovs output
-
-from pprint import pprint as pp
-from subprocess import Popen, call, PIPE
+from ruamel.yaml import YAML
 
 host_info = {}
-
-scmd = ["sudo","ovs-vsctl","show"]
+ACCESS = '/etc/ACCESS_INFO.yaml'
+#ACCESS = 'ACCESS_INFO.yaml'
 
 host_file = 'hosts'
 
@@ -20,19 +17,15 @@ hosts_base = [
     "[all]\n"
 ]
 
-ovs_res = Popen(scmd,stdout=PIPE)
-ovs_list = ovs_res.communicate()[0].split('\n')
+with open(ACCESS,'r') as a_yaml:
+    veos_yaml = YAML().load(a_yaml)['nodes']['veos']
 
-
-for entry in ovs_list:
-    if 'Interface' in entry and 'vx' in entry and not 'host' in entry and not 'cvp' in entry:
-        cur_intf = entry.split('"')[1]
-        cur_ind = ovs_list.index(entry)
-        host_info[entry.split('"')[1][3:]] = ovs_list[cur_ind + 2].split('"')[1]
-
+for node in veos_yaml:
+    if 'host' not in node['hostname']:
+        host_info[node['hostname']] = {'vxlan':node['ip'],'internal_ip':node['internal_ip']}
 
 with open(host_file,'w') as hw:
     hw.writelines("\n".join(hosts_base))
     for ehost in host_info.keys():
-        hw.write("{0} ansible_host={1}\n".format(ehost,host_info[ehost]))
+        hw.write("{0} ansible_host={1}\n".format(ehost,host_info[ehost]['vxlan']))
 

@@ -4,10 +4,17 @@ Script that will reset all EOS devices back to a base config
 """
 
 import requests, json, argparse
+from ruamel.yaml import YAML
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
 
 # Output directory:
 
 CFG_OUT = 'base_configlets/'
+ACCESS = '/etc/ACCESS_INFO.yaml'
+#ACCESS = 'ACCESS_INFO.yaml'
+
 
 ATD_CVP = "192.168.0.5"
 
@@ -18,15 +25,14 @@ BASE_CFGS = [
     ['SYS_Telem','Generated'],
     ['cvx01-Controller','Static']]
 
-eos_cfgs = {
-    '192.168.0.10': {'name': 'spine1','config': []},
-    '192.168.0.11': {'name': 'spine2','config': []},
-    '192.168.0.14': {'name': 'leaf1','config': []},
-    '192.168.0.15': {'name': 'leaf2','config': []},
-    '192.168.0.16': {'name': 'leaf3','config': []},
-    '192.168.0.17': {'name': 'leaf4','config': []},
-    '192.168.0.44': {'name': 'cvx01','config': []}
-}
+eos_cfgs = {}
+
+with open(ACCESS,'r') as a_yaml:
+    veos_yaml = YAML().load(a_yaml)['nodes']['veos']
+
+for node in veos_yaml:
+    if 'host' not in node['hostname']:
+        eos_cfgs[node['internal_ip']] = {'name':node['hostname'],'config':[],'vx_ip':node['ip']}
 
 
 class CVPSWITCH():
@@ -113,7 +119,6 @@ class CVPCON():
 
 def main(args):
     cvp = CVPCON(ATD_CVP,args.user,args.passwd)
-    print(cvp.cur_sid)
     cvp.getDevices()
     cfg_data = cvp.getConfiglets()
 
