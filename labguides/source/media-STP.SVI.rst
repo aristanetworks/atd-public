@@ -42,7 +42,7 @@ Media STP and SVI Lab
 
 
 
-   2. Once th vlan is created, we can assign the uplink ports as trunk links as well as allow vlan 100 to pass
+   2. Once the vlan is created, we can assign the uplink ports as trunk links as well as allow vlan 100 to pass
 
         .. code-block:: text
 

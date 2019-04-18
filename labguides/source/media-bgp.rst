@@ -235,9 +235,9 @@ Media BGP Lab
              B I    172.16.15.0/24 [200/0] via 10.127.34.3, Ethernet3
 
 
-        The routing table output should list all routing entries to ensure reachability between the 2 hosts
+    The routing table output should list all routing entries to ensure reachability between the 2 hosts
 
-   2. To confirm connectivity log into **Host 2** and execute a ping command to **Host 1**
+   2. To confirm connectivity, log into **Host 2** and execute a ping command to **Host 1**
 
         .. code-block:: text
 
