@@ -1,6 +1,6 @@
 ---
 serviceUpdaters:
   - atdServiceUpdater
-  - atd_docs
+  - atdFiles
   - gitConfigletSync
   # - atdModuleUpdater

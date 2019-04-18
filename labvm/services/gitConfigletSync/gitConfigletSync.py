@@ -1,19 +1,27 @@
 #!/usr/bin/python
 
 from cvprac.cvp_client import CvpClient
-import git
 import os
 import time
 import shutil
+import yaml
 import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
+try:
+   f = open('/etc/ACCESS_INFO.yaml')
+   accessinfo = yaml.safe_load(f)
+   f.close()
+   topology = accessinfo['topology']
+
+except:
+   topology = 'none'
+   
 # Temp path for where repo will be cloned to (include trailing /)
-gitTempPath = '/tmp/GitConfiglets/'
-gitRepo = 'https://github.com/aristanetworks/atd-public.git'
-gitBranch = 'master'
+gitTempPath = '/tmp/atd/'
+
 # Relative path within the repo to the configlet directory
-configletPath = 'topologies/datacenter/configlets/'
+configletPath = 'topologies/' + topology + '/configlets/'
 ignoreConfiglets = ['readme.md']
 # cvpNodes can be a single item or a list of the cluster
 cvpNodes = ['192.168.0.5']
@@ -58,14 +66,14 @@ def syncConfiglet(cvpClient,configletName,configletConfig):
 
 ##### End of syncConfiglet
 
-# Download/Update the repo
-try:
+# Check if the repo has been downloaded
+while True:
    if os.path.isdir(gitTempPath):
-      shutil.rmtree(gitTempPath)
-   repo = git.Repo.clone_from(gitRepo,gitTempPath,branch=gitBranch)
-except:
-   print "There was a problem downloading the files from the repo"
-   quit()
+      print("Local copy exists....continuing")
+      break
+   else:
+      print "Local copy is missing....Waiting 1 minute for it to become available"
+      time.sleep(60)
 
 configlets = os.listdir(gitTempPath + configletPath)
 
@@ -75,5 +83,4 @@ for configletName in configlets:
          configletConfig=configletData.read()
       syncConfiglet(clnt,configletName,configletConfig)
 
-if os.path.isdir(gitTempPath):
-   shutil.rmtree(gitTempPath)
+print("Configlet sync complete")
