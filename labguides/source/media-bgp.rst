@@ -64,11 +64,11 @@ Media BGP Lab
              B E    172.16.15.0/24 [200/0] via 10.127.23.2, Ethernet1
              C      192.168.0.0/24 is directly connected, Management1
 
-      All the routing entries with a preceding "B" was learned by the BGP protocol on Spine2
+      All the routing entries with a preceding "B" was learned by the BGP protocol on Spine2.
 
 2. Configure BGP on the **Leaf4** switch using the following criteria
 
-   1. Configure BGP router process (also the autonomous system number, ASN) on **Leaf4** to be used for the communication to adjacent BGP speakers (spine2 in this case).  The router-id is configured so it can be consistent and not randomly chosen (normally the peering interface if not specified)
+   1. Configure BGP router process (also the autonomous system number, ASN) on **Leaf4**. **Leaf 4** will be configured to communicate to adjacent BGP speakers (**Spine2** in this case).  The router-id is configured so it can be consistent and not randomly chosen (normally the peering interface if not specified).
 
         .. code-block:: text
 
@@ -76,11 +76,14 @@ Media BGP Lab
             router bgp 2
               router-id 10.127.255.4
 
+            leaf4(config)#configure
+            leaf4(config)#router bgp 2
+            leaf4(config-router-bgp)#router-id 10.127.255.4
 
       .. note::
-       The process for BGP is also the autonomous-system number the router is associated too and is globally significant.  These values should not be chosen randomly and should be part of a larger design scheme for the environment
+       The process number for BGP corresponds to the autonomous-system number (ASN) the router is associated with and is globally significant.  These values should not be chosen randomly and should be part of a larger design scheme for the environment.
 
-   2. BGP neighbours are normally specified so only the desired neighbors create a session with.  A TCP connection is established between the two peers (port 179) in which the routing information can be securely transported between them
+   2. BGP neighbours are explicitly defined so only the desired neighbors create a session with.  A TCP connection is established between the two peers (using port 179) in which the routing information can be securely transported between the peers.
 
         .. code-block:: text
 
@@ -88,13 +91,16 @@ Media BGP Lab
             router bgp 2
                 neighbor 10.127.34.3 remote-as 2
 
+            leaf4(config)#configure
+            leaf4(config)#router bgp 2
+            leaf4(config-router-bgp)#neighbor 10.127.34.3 remote-as 2
 
-      The session we are setting up on Leaf4 to Spin2 is considered a point-to-point iBGP (Internal BGP) connection because they are part of the same autonamous-system (AS).
+      The BGP session we are setting up on **Leaf4** to **Spine2** is considered a point-to-point iBGP (Internal BGP) connection because they are a part of the same autonomous-system (AS).
 
       .. note::
-        Although there are mechanisms to allow all incoming BGP sessions to be established, those are corner cases in which you will use that approach and it is best common practice to specify your desired neighbor to establish a session with along with a md5 hash password for an extral level of security
+        Although there are mechanisms to allow all incoming BGP sessions to be established, these are typically corner cases in which you will use that approach. It is best common practice to specify your desired neighbor to establish a session with along with a md5 hash password for an extra level of security.
 
-   3. By default the BGP protocol will only re-advertise what eBGP (external) prefixes it has leaned to its other iBGP / eBGP peers.  We need to tell the BGP process what to advertise by various methods.  In this session we want the router to advertise its connected (vlan) prefix
+   3. By default, the BGP protocol will only re-advertise eBGP (external) prefixes it has leaned to its other iBGP / eBGP peers.  We will need to tell the BGP process what to advertise by various methods.  In this lab we want the router to advertise its connected (vlan) prefix
 
         .. code-block:: text
 
@@ -102,36 +108,123 @@ Media BGP Lab
             router bgp 2
               redistribute connected
 
-      once the ``redistribute connected`` has been added, we can actually see the prefixes our switch (Leaf4) is receiving and advertising
+            leaf4#configure
+            leaf4(config)#router bgp 2
+            leaf4(config-router-bgp)#redistribute connected
 
-        .. code-block:: text
-
-            show ip bgp  summary
-            !
-            show ip bgp neighbors 10.127.34.3 advertised-routes
-            show ip bgp neighbors 10.127.34.3 received-routes
-
-
-3. Validate end-to-end connectivity once OSPF neighbor relationship has been established
-
-   1. Confirm the bgp neighbor relationship has been established and the route table on leaf4 has been populated with the appropriate entries
+        Once the ``redistribute connected`` command has been added, we can actually see the prefixes our switch (Leaf4) is receiving and advertising
 
         .. code-block:: text
 
             show ip bgp summary
-            show ip bgp
-            !
-            show ip route
-            show ip route bgp
 
-      The routing table output should all environment entries to ensure reachability between the 2 hosts
+            leaf4(config-router-bgp)#show ip bgp summary
+            BGP summary information for VRF default
+            Router identifier 10.127.255.4, local AS number 2
+            Neighbor Status Codes: m - Under maintenance
+              Neighbor         V  AS           MsgRcvd   MsgSent  InQ OutQ  Up/Down State  PfxRcd PfxAcc
+              10.127.34.3      4  2                 22        22    0    0 00:10:37 Estab  2      2
 
+            show ip bgp neighbors 10.127.34.3 advertised-routes
 
-   2. log into Host-2 and
+            leaf4(config-router-bgp)#show ip bgp neighbors 10.127.34.3 advertised-routes
+            BGP routing table information for VRF default
+            Router identifier 10.127.255.4, local AS number 2
+            Route status codes: s - suppressed, * - valid, > - active, # - not installed, E - ECMP head, e - ECMP
+                    S - Stale, c - Contributing to ECMP, b - backup, L - labeled-unicast
+            Origin codes: i - IGP, e - EGP, ? - incomplete
+            AS Path Attributes: Or-ID - Originator ID, C-LST - Cluster List, LL Nexthop - Link Local Nexthop
+
+                    Network                Next Hop              Metric  LocPref Weight  Path
+             * >     10.127.34.0/24         10.127.34.4           -       100     -       i
+             * >     172.16.46.0/24         10.127.34.4           -       100     -       i
+             * >     192.168.0.0/24         10.127.34.4           -       100     -       i
+
+            show ip bgp neighbors 10.127.34.3 received-routes
+
+            leaf4(config-router-bgp)#show ip bgp neighbors 10.127.34.3 received-routes
+            BGP routing table information for VRF default
+            Router identifier 10.127.255.4, local AS number 2
+            Route status codes: s - suppressed, * - valid, > - active, # - not installed, E - ECMP head, e - ECMP
+                    S - Stale, c - Contributing to ECMP, b - backup, L - labeled-unicast
+            Origin codes: i - IGP, e - EGP, ? - incomplete
+            AS Path Attributes: Or-ID - Originator ID, C-LST - Cluster List, LL Nexthop - Link Local Nexthop
+
+                    Network                Next Hop              Metric  LocPref Weight  Path
+             * >     10.127.255.1/32        10.127.34.3           -       100     -       1 i
+             * >     172.16.15.0/24         10.127.34.3           -       100     -       1 i
+
+3. We will now validate the end-to-end connectivity once BGP neighbor relationship has been established
+
+   1. Confirm the BGP neighbor relationship has been established and the routing table on **Leaf4** has been populated with the appropriate entries as shown on the outputs below
 
         .. code-block:: text
 
-            ping 10.127.15.5
+            show ip bgp summary
+
+            leaf4(config-router-bgp)#show ip bgp summary
+            BGP summary information for VRF default
+            Router identifier 10.127.255.4, local AS number 2
+            Neighbor Status Codes: m - Under maintenance
+              Neighbor         V  AS           MsgRcvd   MsgSent  InQ OutQ  Up/Down State  PfxRcd PfxAcc
+              10.127.34.3      4  2                 22        22    0    0 00:10:37 Estab  2      2
+
+            show ip bgp
+
+            leaf4(config-router-bgp)#show ip bgp
+            BGP routing table information for VRF default
+            Router identifier 10.127.255.4, local AS number 2
+            Route status codes: s - suppressed, * - valid, > - active, # - not installed, E - ECMP head, e - ECMP
+                                S - Stale, c - Contributing to ECMP, b - backup, L - labeled-unicast
+            Origin codes: i - IGP, e - EGP, ? - incomplete
+            AS Path Attributes: Or-ID - Originator ID, C-LST - Cluster List, LL Nexthop - Link Local Nexthop
+
+                    Network                Next Hop              Metric  LocPref Weight  Path
+             * >     10.127.34.0/24         -                     1       0       -       i
+             * >     10.127.255.1/32        10.127.34.3           0       100     0       1 i
+             * >     172.16.15.0/24         10.127.34.3           0       100     0       1 i
+             * >     172.16.46.0/24         -                     1       0       -       i
+             * >     192.168.0.0/24         -                     1       0       -       i
+
+            show ip route
+
+            leaf4(config-router-bgp)#show ip route | Begin Gateway
+            Gateway of last resort:
+             S      0.0.0.0/0 [1/0] via 192.168.0.254, Management1
+
+             C      10.127.34.0/24 is directly connected, Ethernet3
+             B I    10.127.255.1/32 [200/0] via 10.127.34.3, Ethernet3
+             B I    172.16.15.0/24 [200/0] via 10.127.34.3, Ethernet3
+             C      172.16.46.0/24 is directly connected, Ethernet4
+             C      192.168.0.0/24 is directly connected, Management1
+
+            show ip route bgp
+
+            leaf4(config-router-bgp)#show ip route bgp
+
+            VRF: default
+            Codes: C - connected, S - static, K - kernel,
+                   O - OSPF, IA - OSPF inter area, E1 - OSPF external type 1,
+                   E2 - OSPF external type 2, N1 - OSPF NSSA external type 1,
+                   N2 - OSPF NSSA external type2, B I - iBGP, B E - eBGP,
+                   R - RIP, I L1 - IS-IS level 1, I L2 - IS-IS level 2,
+                   O3 - OSPFv3, A B - BGP Aggregate, A O - OSPF Summary,
+                   NG - Nexthop Group Static Route, V - VXLAN Control Service,
+                   DH - DHCP client installed default route, M - Martian,
+                   DP - Dynamic Policy Route
+
+             B I    10.127.255.1/32 [200/0] via 10.127.34.3, Ethernet3
+             B I    172.16.15.0/24 [200/0] via 10.127.34.3, Ethernet3
+
+
+        The routing table output should list all routing entries to ensure reachability between the 2 hosts
+
+   2. To confirm connectivity log into **Host 2** and execute a ping command to **Host 1**
+
+        .. code-block:: text
+
+            ping 172.16.15.5
+
 
       If all the BGP settings have been done and the route table on leaf4 is correct then Host-1 should be reachable from Host-2
 
