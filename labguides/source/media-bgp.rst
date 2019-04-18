@@ -243,9 +243,15 @@ Media BGP Lab
 
             ping 172.16.15.5
 
+            host2(config)#ping 172.16.15.5
+            PING 172.16.15.5 (172.16.15.5) 72(100) bytes of data.
+            80 bytes from 172.16.15.5: icmp_seq=1 ttl=60 time=436 ms
+            80 bytes from 172.16.15.5: icmp_seq=2 ttl=60 time=433 ms
+            80 bytes from 172.16.15.5: icmp_seq=3 ttl=60 time=429 ms
+            80 bytes from 172.16.15.5: icmp_seq=4 ttl=60 time=425 ms
+            80 bytes from 172.16.15.5: icmp_seq=5 ttl=60 time=422 ms
 
-      If all the BGP settings have been done and the route table on leaf4 is correct then Host-1 should be reachable from Host-2
-
+      If all the BGP configuration have been applied successfully and the routing table on **Leaf 4** is correct then **Host 1** should be reachable from **Host 2**.
 
 
 **LAB COMPLETE!**

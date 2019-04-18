@@ -4,25 +4,26 @@ Media STP and SVI Lab
 .. image:: images/media-STP.&.SVI.png
    :align: center
 
-.. note:: The Spanning-Tree protocol (STP) was initially invented in 1985 and is one of the oldest protocols being used in layer 2 network topologies today. STP is classified as a network protocol that builds loop-free logical topology for Ethernet (initially bridged) networks.
+.. note:: The Spanning-Tree protocol (STP) was initially invented in 1985 and is one of the oldest networking protocols being used in Layer 2 network topologies today. STP is classified as a network protocol that builds loop-free logical topology for Ethernet (initially bridged) networks.
 
-**1.** Log into the **LabAccess** jumpserver:
+1. Log into the **LabAccess** jumpserver:
 
-   1. Type ``media - VLAN STP`` at the prompt. The script will configure the topology with the exception of **Leaf4**.
+   1. Type ``media-vlan`` at the prompt. The script will configure the topology with the exception of **Leaf 4**.
 
-   2. On **spine2**, verify spanning-tree operation in the enviroment, you should see **spine1** is the root bridge
+   2. On **Spine 2**, verify spanning-tree operation in the enviroment, you should see **spine1** is the root bridge.
 
         .. code-block:: text
 
-            !
             show spanning-tree
-            !
 
 
-**2.** Configure the proper VLAN and interface types on **leaf4** to allow the spanning-tree protocol to operate and have reachability for **host4**
 
 
-   1. on **leaf4** create the layer 2 existance of vlan 100 so it can partake in the spannig-tree process
+
+2. Configure the VLAN and interface types on **Leaf 4** to allow the spanning-tree protocol to operate and have reachability for **Host 2**.
+
+
+   1. On **Leaf 4** create the Layer 2 instance of vlan 100. Creating this vlan will add itself to the spanning-tree process.
 
         .. code-block:: text
 
@@ -31,16 +32,17 @@ Media STP and SVI Lab
                 name v100
 
 
-      once created, we can verify as well as see that there are no physical interfaces associated to the vlan
+      We can verify its creation with the following command.  This command can also show if there are any physical interfaces associated to the vlan.
 
         .. code-block:: text
 
-            !
              show vlan
-            !
 
 
-   2. once th vlan is created, we can assign the uplink ports as trunk links as well as allow vlan 100 to pass
+
+
+
+   2. Once th vlan is created, we can assign the uplink ports as trunk links as well as allow vlan 100 to pass
 
         .. code-block:: text
 
@@ -78,7 +80,7 @@ Media STP and SVI Lab
             !
 
 
-**3.** Validate end-to-end connectivity once SVI and STP has been setup and spanning tree has converged
+3. Validate end-to-end connectivity once SVI and STP has been setup and spanning tree has converged
 
    1. log into **host2** and verify you can reach the SVI for vlan 100 as well as reachability to **host1**
 
