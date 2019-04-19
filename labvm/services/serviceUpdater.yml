@@ -3,7 +3,7 @@ serviceUpdaters:
   - atdServiceUpdater
   - atdFiles
   - gitConfigletSync
-  # - atdModuleUpdater
+  - atdPipUpdater
 pipPackages:
   Install:
     - ruamel.yaml
