@@ -155,7 +155,7 @@ Media STP and SVI Lab
             leaf4(config-if-Et4)#switchport mode access
             leaf4(config-if-Et4)#switchport access vlan 100
 
-3. Validate end-to-end connectivity after the Switch Virtual Interface (SVI) and STP has been configured. Once the spanning tree has converged for the topology we can observe the results.
+3. Validate end-to-end connectivity after configuring the Layer 2 interfaces. Once the spanning tree has converged for the topology we can observe the results.
    
    1. Validate the vlan port association and spanning-tree topology is correct
    
@@ -216,13 +216,28 @@ Media STP and SVI Lab
 
         .. code-block:: text
 
-            ping 10.127.46.4
-            ping 10.127.15.5
+            SVI (Vlan 100 gateway on Spine 1)
+            ping 172.16.46.1
+
+            host2#ping 172.16.46.1
+            PING 172.16.46.1 (172.16.46.1) 72(100) bytes of data.
+            80 bytes from 172.16.46.1: icmp_seq=1 ttl=64 time=99.7 ms
+            80 bytes from 172.16.46.1: icmp_seq=2 ttl=64 time=94.8 ms
+            80 bytes from 172.16.46.1: icmp_seq=3 ttl=64 time=93.8 ms
+            80 bytes from 172.16.46.1: icmp_seq=4 ttl=64 time=92.7 ms
+            80 bytes from 172.16.46.1: icmp_seq=5 ttl=64 time=92.2 ms
+
+            --- 172.16.46.1 ping statistics ---
+            5 packets transmitted, 5 received, 0% packet loss, time 42ms
+            rtt min/avg/max/mdev = 92.269/94.701/99.721/2.690 ms, pipe 5, ipg/ewma 10.546/97.063 ms
+
+
+            Host 1
+            ping 172.16.15.5
 
 
 
-
-      If all the SVI and STP settings have been completed correctly you should be able to ping the remote host as well as the SVI interface itself configured on **spine1** which is also the root bridge
+      If all the SVI and STP settings have been completed correctly you should be able to ping the remote host as well as the SVI interface itself configured on **Spine 1** which is also the root bridge for this topology.
 
 
 **LAB COMPLETE!**
