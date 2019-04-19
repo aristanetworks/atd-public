@@ -10,14 +10,24 @@ Media STP and SVI Lab
 
    1. Type ``media-vlan`` at the prompt. The script will configure the topology with the exception of **Leaf 4**.
 
-   2. On **Spine 2**, verify spanning-tree operation in the enviroment, you should see **spine1** is the root bridge.
+   2. On **Spine 2**, verify spanning-tree operation with the topology, you should see **Spine 1** as the root bridge.
 
         .. code-block:: text
 
             show spanning-tree
 
+            spine2#show spanning-tree
+            MST0
+              Spanning tree enabled protocol mstp
+              Root ID    Priority    4096
+                         Address     2cc2.6056.df93
+                         Cost        0 (Ext) 2000 (Int)
+                         Port        1 (Ethernet1)
+                         Hello Time  2.000 sec  Max Age 20 sec  Forward Delay 15 sec
 
-
+              Bridge ID  Priority     8192  (priority 8192 sys-id-ext 0)
+                         Address     2cc2.6094.d76c
+                         Hello Time  2.000 sec  Max Age 20 sec  Forward Delay 15 sec
 
 
 2. Configure the VLAN and interface types on **Leaf 4** to allow the spanning-tree protocol to operate and have reachability for **Host 2**.
@@ -31,6 +41,9 @@ Media STP and SVI Lab
             vlan 100
                 name v100
 
+            leaf4#configure
+            leaf4(config)#vlan 100
+            leaf4(config-vlan-100)#name v100
 
       We can verify its creation with the following command.  This command can also show if there are any physical interfaces associated to the vlan.
 
@@ -38,11 +51,22 @@ Media STP and SVI Lab
 
              show vlan
 
+            leaf4(config-vlan-100)#show vlan
+            VLAN  Name                             Status    Ports
+            ----- -------------------------------- --------- -------------------------------
+            1     default                          active    Et2, Et3, Et4, Et6, Et7, Et8
+                                                             Et9, Et10, Et11, Et12, Et13
+                                                             Et14, Et15, Et16, Et17, Et18
+                                                             Et19, Et20, Et21, Et22, Et23
+                                                             Et24, Et25, Et26, Et27, Et28
+                                                             Et29, Et30, Et31, Et32
+            12    VLAN0012                         active
+            34    VLAN0034                         active
+            100   v100                             active
 
 
 
-
-   2. Once the vlan is created, we can assign the uplink ports as trunk links as well as allow vlan 100 to pass
+   2. Once the vlan is created, we can define on the uplink ports on **Leaf 4** as trunk links, as well allow vlan 100 to pass on the trunk.
 
         .. code-block:: text
 
@@ -56,6 +80,10 @@ Media STP and SVI Lab
               switchport mode trunk
             !
 
+            leaf4(config-vlan-100)#configure
+            leaf4(config)#interface ethernet 2-3
+            leaf4(config-if-Et2-3)#switchport mode trunk
+            leaf4(config-if-Et2-3)#switchport trunk allowed vlan 100
 
       .. note::
         By default once an interface is configured as a trunk, all vlans will be associated to it. It is good security practice to just associate the specific vlans to pass and take part in the spanning-tree process
@@ -82,62 +110,61 @@ Media STP and SVI Lab
 
 3. Validate end-to-end connectivity once SVI and STP has been setup and spanning tree has converged
    
-   1. validate the vlan port association and spanning-tree topology is correct
+   1. Validate the vlan port association and spanning-tree topology is correct
    
         .. code-block:: text
         
             show vlan
             leaf4(config-if-Et4)#show vlan
-VLAN  Name                             Status    Ports
------ -------------------------------- --------- -------------------------------
-1     default                          active    Et6, Et7, Et8, Et9, Et10, Et11
+            VLAN  Name                             Status    Ports
+            ----- -------------------------------- --------- -------------------------------
+            1     default                          active    Et6, Et7, Et8, Et9, Et10, Et11
                                                  Et12, Et13, Et14, Et15, Et16
                                                  Et17, Et18, Et19, Et20, Et21
                                                  Et22, Et23, Et24, Et25, Et26
                                                  Et27, Et28, Et29, Et30, Et31
                                                  Et32
-12    VLAN0012                         active   
-34    VLAN0034                         active   
-100   v100                             active    Et2, Et3, Et4
+            12    VLAN0012                         active
+            34    VLAN0034                         active
+            100   v100                             active    Et2, Et3, Et4
 
-leaf4(config-if-Et4)#
+            leaf4(config-if-Et4)#
 
             show spanning-tree
             
             leaf4(config-if-Et3)#show spanning-tree
-MST0
-  Spanning tree enabled protocol mstp
-  Root ID    Priority    4096
-             Address     2cc2.6056.df93
-             Cost        0 (Ext) 2000 (Int)
-             Port        2 (Ethernet2)
-             Hello Time  2.000 sec  Max Age 20 sec  Forward Delay 15 sec
+            MST0
+            Spanning tree enabled protocol mstp
+              Root ID    Priority    4096
+                         Address     2cc2.6056.df93
+                         Cost        0 (Ext) 2000 (Int)
+                         Port        2 (Ethernet2)
+                         Hello Time  2.000 sec  Max Age 20 sec  Forward Delay 15 sec
 
-  Bridge ID  Priority    32768  (priority 32768 sys-id-ext 0)
-             Address     2cc2.60b5.96d9
-             Hello Time  2.000 sec  Max Age 20 sec  Forward Delay 15 sec
+              Bridge ID  Priority    32768  (priority 32768 sys-id-ext 0)
+                         Address     2cc2.60b5.96d9
+                         Hello Time  2.000 sec  Max Age 20 sec  Forward Delay 15 sec
 
-Interface        Role       State      Cost      Prio.Nbr Type
----------------- ---------- ---------- --------- -------- --------------------
-Et2              root       forwarding 2000      128.2    P2p                           
-Et3              alternate  discarding 2000      128.3    P2p                           
-Et4              designated forwarding 2000      128.4    P2p Edge                      
-Et6              designated forwarding 2000      128.6    P2p Edge                      
-Et7              designated forwarding 2000      128.7    P2p Edge                      
-Et8              designated forwarding 2000      128.8    P2p Edge                      
-Et9              designated forwarding 2000      128.9    P2p Edge                      
-Et10             designated forwarding 2000      128.10   P2p Edge                      
-Et11             designated forwarding 2000      128.11   P2p Edge                      
-Et12             designated forwarding 2000      128.12   P2p Edge                      
-Et13             designated forwarding 2000      128.13   P2p Edge                      
-Et14             designated forwarding 2000      128.14   P2p Edge                      
-Et15             designated forwarding 2000      128.15   P2p Edge                      
-Et16             designated forwarding 2000      128.16   P2p Edge                      
-Et17             designated forwarding 2000      128.17   P2p Edge                      
-leaf4(config-if-Et3)#
+            Interface        Role       State      Cost      Prio.Nbr Type
+            ---------------- ---------- ---------- --------- -------- --------------------
+            Et2              root       forwarding 2000      128.2    P2p
+            Et3              alternate  discarding 2000      128.3    P2p
+            Et4              designated forwarding 2000      128.4    P2p Edge
+            Et6              designated forwarding 2000      128.6    P2p Edge
+            Et7              designated forwarding 2000      128.7    P2p Edge
+            Et8              designated forwarding 2000      128.8    P2p Edge
+            Et9              designated forwarding 2000      128.9    P2p Edge
+            Et10             designated forwarding 2000      128.10   P2p Edge
+            Et11             designated forwarding 2000      128.11   P2p Edge
+            Et12             designated forwarding 2000      128.12   P2p Edge
+            Et13             designated forwarding 2000      128.13   P2p Edge
+            Et14             designated forwarding 2000      128.14   P2p Edge
+            Et15             designated forwarding 2000      128.15   P2p Edge
+            Et16             designated forwarding 2000      128.16   P2p Edge
+            Et17             designated forwarding 2000      128.17   P2p Edge
 
 
-    you should see the root bridge is towards spine1 and vlan 100 should be associated to interfaces eth2, eth3 and eth4
+    You should see the root bridge is towards **Spine 1** and vlan 100 should be associated to interfaces eth2, eth3 and eth4
     
    2. log into **host2** and verify you can reach the SVI for vlan 100 as well as reachability to **host1**
 
