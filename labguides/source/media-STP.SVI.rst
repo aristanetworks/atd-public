@@ -86,18 +86,62 @@ Media STP and SVI Lab
             leaf4(config-if-Et2-3)#switchport trunk allowed vlan 100
 
       .. note::
-        By default once an interface is configured as a trunk, all vlans will be associated to it. It is good security practice to just associate the specific vlans to pass and take part in the spanning-tree process
+        By default once an interface is configured as a trunk, all vlans will be associated to it. It is good security practice to associate the specific vlans to pass on the trunk links and take part in the spanning-tree process
 
-      once the interface configuration has been completed for the trunk links, you can verify the spanning-tree topology and see the root bridge is **spine1** and the connection to **spine2** has been blocked for loop prevention
+      Once the interface configuration has been completed for the trunk links, you can verify the spanning-tree topology and see the root bridge is **Spine 1** and the connection to **Spine 2** has been blocked for loop prevention
 
         .. code-block:: text
 
-            !
             show spanning-tree
-            !
+
+            leaf4(config-if-Et2-3)#show spanning-tree
+            MST0
+              Spanning tree enabled protocol mstp
+              Root ID    Priority    4096
+                         Address     2cc2.6056.df93
+                         Cost        0 (Ext) 2000 (Int)
+                         Port        2 (Ethernet2)
+                         Hello Time  2.000 sec  Max Age 20 sec  Forward Delay 15 sec
+
+            Bridge ID  Priority    32768  (priority 32768 sys-id-ext 0)
+                         Address     2cc2.60b5.96d9
+                         Hello Time  2.000 sec  Max Age 20 sec  Forward Delay 15 sec
+
+            Interface        Role       State      Cost      Prio.Nbr Type
+            ---------------- ---------- ---------- --------- -------- --------------------
+            Et2              root       forwarding 2000      128.2    P2p
+            Et3              alternate  discarding 2000      128.3    P2p
+            Et4              designated forwarding 2000      128.4    P2p Edge
+            Et6              designated forwarding 2000      128.6    P2p Edge
+            Et7              designated forwarding 2000      128.7    P2p Edge
+            Et8              designated forwarding 2000      128.8    P2p Edge
+            Et9              designated forwarding 2000      128.9    P2p Edge
+            Et10             designated forwarding 2000      128.10   P2p Edge
+            Et11             designated forwarding 2000      128.11   P2p Edge
+            Et12             designated forwarding 2000      128.12   P2p Edge
+            Et13             designated forwarding 2000      128.13   P2p Edge
+            Et14             designated forwarding 2000      128.14   P2p Edge
+            Et15             designated forwarding 2000      128.15   P2p Edge
+            Et16             designated forwarding 2000      128.16   P2p Edge
+            Et17             designated forwarding 2000      128.17   P2p Edge
+            Et18             designated forwarding 2000      128.18   P2p Edge
+            Et19             designated forwarding 2000      128.19   P2p Edge
+            Et20             designated forwarding 2000      128.20   P2p Edge
+            Et21             designated forwarding 2000      128.21   P2p Edge
+            Et22             designated forwarding 2000      128.22   P2p Edge
+            Et23             designated forwarding 2000      128.23   P2p Edge
+            Et24             designated forwarding 2000      128.24   P2p Edge
+            Et25             designated forwarding 2000      128.25   P2p Edge
+            Et26             designated forwarding 2000      128.26   P2p Edge
+            Et27             designated forwarding 2000      128.27   P2p Edge
+            Et28             designated forwarding 2000      128.28   P2p Edge
+            Et29             designated forwarding 2000      128.29   P2p Edge
+            Et30             designated forwarding 2000      128.30   P2p Edge
+            Et31             designated forwarding 2000      128.31   P2p Edge
+            Et32             designated forwarding 2000      128.32   P2p Edge
 
 
-   3. Once the layer2 topology has been setup, we can configure the connection to our host as an access port to allow **host2** to pass traffic onto the topology
+   3. Once the Layer 2 topology has been setup, we can configure the connection to our host as an access port to allow **Host 2** to pass traffic onto the topology
 
         .. code-block:: text
 
@@ -105,30 +149,32 @@ Media STP and SVI Lab
             interface Ethernet4
               switchport access vlan 100
               switchport mode access
-            !
 
+            leaf4(config-if-Et2-3)#configure
+            leaf4(config)#interface ethernet 4
+            leaf4(config-if-Et4)#switchport mode access
+            leaf4(config-if-Et4)#switchport access vlan 100
 
-3. Validate end-to-end connectivity once SVI and STP has been setup and spanning tree has converged
+3. Validate end-to-end connectivity after the Switch Virtual Interface (SVI) and STP has been configured. Once the spanning tree has converged for the topology we can observe the results.
    
    1. Validate the vlan port association and spanning-tree topology is correct
    
         .. code-block:: text
         
             show vlan
+
             leaf4(config-if-Et4)#show vlan
             VLAN  Name                             Status    Ports
             ----- -------------------------------- --------- -------------------------------
             1     default                          active    Et6, Et7, Et8, Et9, Et10, Et11
-                                                 Et12, Et13, Et14, Et15, Et16
-                                                 Et17, Et18, Et19, Et20, Et21
-                                                 Et22, Et23, Et24, Et25, Et26
-                                                 Et27, Et28, Et29, Et30, Et31
-                                                 Et32
+                                                             Et12, Et13, Et14, Et15, Et16
+                                                             Et17, Et18, Et19, Et20, Et21
+                                                             Et22, Et23, Et24, Et25, Et26
+                                                             Et27, Et28, Et29, Et30, Et31
+                                                             Et32
             12    VLAN0012                         active
             34    VLAN0034                         active
             100   v100                             active    Et2, Et3, Et4
-
-            leaf4(config-if-Et4)#
 
             show spanning-tree
             
@@ -166,12 +212,15 @@ Media STP and SVI Lab
 
     You should see the root bridge is towards **Spine 1** and vlan 100 should be associated to interfaces eth2, eth3 and eth4
     
-   2. log into **host2** and verify you can reach the SVI for vlan 100 as well as reachability to **host1**
+   2. Log into **Host 2** and verify you can reach the SVI for vlan 100 as well as reachability to **Host 1**
 
         .. code-block:: text
 
             ping 10.127.46.4
             ping 10.127.15.5
+
+
+
 
       If all the SVI and STP settings have been completed correctly you should be able to ping the remote host as well as the SVI interface itself configured on **spine1** which is also the root bridge
 
