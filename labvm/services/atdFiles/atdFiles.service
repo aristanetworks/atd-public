@@ -6,7 +6,7 @@ Wants=network-online.target
 [Service]
 Type=forking
 ExecStart=/usr/local/bin/atdFiles.sh
-TimeoutStartSec=60
+TimeoutStartSec=180
 Restart=on-failure
 
 [Install]
