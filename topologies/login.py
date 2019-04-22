@@ -5,11 +5,11 @@ import signal
 import yaml
 from itertools import izip_longest
 
-f = open('access_info.yml')
+f = open('/etc/ACCESS_INFO.yaml')
 accessinfo = yaml.safe_load(f)
 f.close()
 
-f = open('menuoptions.yaml')
+f = open('/home/arista/MenuOptions.yaml')
 menuoptions = yaml.safe_load(f)
 f.close()
 
