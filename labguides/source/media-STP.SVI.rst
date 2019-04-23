@@ -192,25 +192,36 @@ Media STP and SVI Lab
         .. code-block:: text
 
             SVI (Vlan 100 gateway on Spine 1)
-            ping 172.16.46.1
+            ping 172.16.46.4
 
-            host2#ping 172.16.46.1
-            PING 172.16.46.1 (172.16.46.1) 72(100) bytes of data.
-            80 bytes from 172.16.46.1: icmp_seq=1 ttl=64 time=99.7 ms
-            80 bytes from 172.16.46.1: icmp_seq=2 ttl=64 time=94.8 ms
-            80 bytes from 172.16.46.1: icmp_seq=3 ttl=64 time=93.8 ms
-            80 bytes from 172.16.46.1: icmp_seq=4 ttl=64 time=92.7 ms
-            80 bytes from 172.16.46.1: icmp_seq=5 ttl=64 time=92.2 ms
+            host2#ping 172.16.46.4
+            PING 172.16.46.4 (172.16.46.4) 72(100) bytes of data.
+            80 bytes from 172.16.46.4: icmp_seq=1 ttl=64 time=35.3 ms
+            80 bytes from 172.16.46.4: icmp_seq=2 ttl=64 time=51.3 ms
+            80 bytes from 172.16.46.4: icmp_seq=3 ttl=64 time=49.9 ms
+            80 bytes from 172.16.46.4: icmp_seq=4 ttl=64 time=48.9 ms
+            80 bytes from 172.16.46.4: icmp_seq=5 ttl=64 time=35.6 ms
 
-            --- 172.16.46.1 ping statistics ---
-            5 packets transmitted, 5 received, 0% packet loss, time 42ms
-            rtt min/avg/max/mdev = 92.269/94.701/99.721/2.690 ms, pipe 5, ipg/ewma 10.546/97.063 ms
+            --- 172.16.46.4 ping statistics ---
+            5 packets transmitted, 5 received, 0% packet loss, time 73ms
+            rtt min/avg/max/mdev = 35.313/44.256/51.377/7.192 ms, pipe 4, ipg/ewma 18.302/39.598 ms
 
 
             Host 1
             ping 172.16.15.5
 
+            host2#ping 172.16.15.5
+            PING 172.16.15.5 (172.16.15.5) 72(100) bytes of data.
+            From 172.16.46.4: icmp_seq=1 Redirect Host(New nexthop: 172.16.15.5)
+            80 bytes from 172.16.15.5: icmp_seq=1 ttl=63 time=237 ms
+            80 bytes from 172.16.15.5: icmp_seq=2 ttl=63 time=233 ms
+            80 bytes from 172.16.15.5: icmp_seq=3 ttl=63 time=250 ms
+            80 bytes from 172.16.15.5: icmp_seq=4 ttl=63 time=257 ms
+            80 bytes from 172.16.15.5: icmp_seq=5 ttl=63 time=257 ms
 
+            --- 172.16.15.5 ping statistics ---
+            5 packets transmitted, 5 received, 0% packet loss, time 43ms
+            rtt min/avg/max/mdev = 233.030/247.345/257.699/10.206 ms, pipe 5, ipg/ewma 10.926/243.255 ms
 
       If all the SVI and STP settings have been completed correctly you should be able to ping the remote host as well as the SVI interface itself configured on **Spine 1** which is also the root bridge for this topology.
 
