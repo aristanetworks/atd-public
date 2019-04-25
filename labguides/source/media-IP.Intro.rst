@@ -132,5 +132,7 @@ Media Intro to IP Lab
   
 
 5. Food for Thought:
+  
+  - when **Leaf 4** recieves the incoming icmp packet from **host 2**, what would the peocess be for the switch to determine the path for the packet to be fowarded
 
 **LAB COMPLETE!**
