@@ -78,7 +78,8 @@ Device Menu:            Lab Controls
 
       sys.stdout.write("\n")
 
-    print "   99. Quit"
+    print "   98. Shell (bash)"
+    print "   99. Quit (quit/exit)"
     print ""
     ans=raw_input("What would you like to do? ")
     devicecount = counter
@@ -89,6 +90,8 @@ Device Menu:            Lab Controls
       if ans==str(counter) or ans==veos['hostname']:
         os.system("ssh "+veos['ip'])
         break
+      elif ans=="98" or ans=="bash" or ans=="shell":
+        os.system("/bin/bash")
       elif ans=="99" or ans=="quit" or ans=="exit":
         quit()
       elif ans!="" and counter==devicecount:
