@@ -136,4 +136,4 @@ Media Intro to IP Lab
 
 5. Test your knowledge:
   
-  - when **Leaf 4** recieves the incoming icmp packet from **host 2**, what would the process be for the switch to determine the path for the packet to be fowarded
+  - when **Leaf 4** recieves the incoming icmp packet from **host 2**, what would the process be for the switch to determine the path for the packet to be fowarded?
