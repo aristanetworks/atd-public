@@ -125,8 +125,8 @@ Media Intro to IP Lab
 
 4. During the lab you can use the different commands to verify connectivity and behaviour:
   
-  i. show ip route
-  ii. show ip arp
+  - show ip route
+  - show ip arp
   
 
 5. Food for Thought:
