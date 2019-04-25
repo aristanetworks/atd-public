@@ -123,7 +123,15 @@ Media Intro to IP Lab
 
       If all the IP address and routing settings have been completed correctly, then you should have reachability
 
-4. During the lab you can use the different commands to verify connectivity and behaviour for validation and troubleshooting purposes:
+4. Test your knowledge:
+  
+  - when **Leaf 4** recieves the incoming icmp packet from **host 2**, what would the process be for the switch to determine the path for the packet to be fowarded?
+  
+
+**LAB COMPLETE!**
+
+
+5. During the lab you can use the different commands to verify connectivity and behaviour for validation and troubleshooting purposes:
   
   - show ip route
   - show ip arp
@@ -131,9 +139,3 @@ Media Intro to IP Lab
   - show interface status
   
 
-**LAB COMPLETE!**
-
-
-5. Test your knowledge:
-  
-  - when **Leaf 4** recieves the incoming icmp packet from **host 2**, what would the process be for the switch to determine the path for the packet to be fowarded?
