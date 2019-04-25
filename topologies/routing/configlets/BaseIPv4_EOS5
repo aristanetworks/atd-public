@@ -1,0 +1,51 @@
+terminal length 0
+daemon TerminAttr
+   exec /usr/bin/TerminAttr -ingestgrpcurl=192.168.0.5:9910 -taillogs -ingestauth=key, -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -ingestvrf=default
+   no shutdown
+service routing protocols model multi-agent
+hostname eos5
+aaa authentication policy on-success log
+aaa authentication policy on-failure log
+aaa root secret sha512 $6$Yzu.V9t074LAUeXx$6sBnN0WCzbKM8jkEutd30Qv1A78AWPdJdiX/msIif70s0Tk8YV/ONFf1aq.yj124gFq/XUKdZMdusXeynntyk1
+username admin privilege 15 role network-admin secret sha512 $6$dgfORfgY7VR0nh5o$Soo5k/cRrpeBm1NYe4CHCd5n4OJlLuo/Y1Mb/nHlz5Eq43RGPiSYeh8/vOOdxOGYlozBCAFSOBpNlPX9gQj6N0
+username arista privilege 15 role network-admin secret sha512 $6$d/1TRCTkSg2KEVpF$IxcP9Vgu01D.V2gFHI.WUwZhbCkXE.R5DONOOB7f2iuFROjDvDtGFU762nJHlkiLSEdWGrJjMY.qarpkDZNTP/
+username cvpadmin privilege 15 secret sha512 $6$A6RbaVFGGOG2aLOs$Vbdz3q/0F.7iAfemPMakg8LZ8vL4KEiVYk8ud/oCiazQiLIa/1C/2ajGBAWTD/C67doPezflAlVNrMxwPvkJE1
+username ec2-user nopassword
+username ec2-user sshkey ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCHEDh9HDGbWA58rkYi6M6RTgVeSQl1ilIBOIhzJy6QSevBHtUUDijGIlbBOoGZl5JHRn8UvmdKQBN5ygAUbGOE4sbh9n8BPrlsg1osaN2pwE73JWMSI50pSLCQO/3HBpwHyQ3bo5ZYLj0MzpKEMatMe7gy5pkjF4P0AKU0s9/qo9ixXlWHDw/9DJCfucUk6zwBiTUJxPKTskTFWvDRr/Yo+GUz5of9i/jIA37ux/20RjVuedqy3+LoYbwD7jYUJlq525g+OAZwIY+07Nz8alpBayW+asYKBosD5kMDrf+kLmFGbsNxYXJCEjEuEmDw7fQt5Gscos2BRG4Egcik1T0p
+interface Ethernet1
+   description EOS4
+   no switchport
+   ip address 10.4.5.5/24
+interface Ethernet2
+   description EOS3
+   no switchport
+   ip address 10.3.5.5/24
+interface Ethernet3
+   description EOS2
+   no switchport
+   ip address 10.2.5.5/24
+interface Ethernet4
+   description EOS1
+   no switchport
+   ip address 10.1.5.5/24
+interface Ethernet5
+   description EOS6
+   no switchport
+   ip address 10.5.6.5/24
+interface Loopback0
+   ip address 5.5.5.5/32
+interface Management1
+   ip address 192.168.0.14/24
+   no lldp transmit
+event-handler ovs-restart
+   trigger on-boot
+   action bash sudo systemctl restart openvswitch
+   delay 30
+   asynchronous
+ip access-list ALL
+   permit ip any any
+ip routing
+control-plane
+   ip access-group ALL in
+management api http-commands
+   no shutdown

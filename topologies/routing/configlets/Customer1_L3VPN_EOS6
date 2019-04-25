@@ -1,0 +1,24 @@
+vrf definition A
+!
+ip routing vrf A
+!
+interface Ethernet2
+   isis metric 30
+!
+interface Ethernet3
+   description EOS13
+   no switchport
+   vrf forwarding A
+   ip address 10.6.13.6/24
+!
+router bgp 100
+maximum-paths 2
+  vrf A
+      rd 6.6.6.6:1
+      route-target import 1:1
+      route-target export 1:1
+      neighbor 10.6.13.13 remote-as 123
+      neighbor 10.6.13.13 maximum-routes 12000 
+      !
+      address-family ipv4
+         neighbor 10.6.13.13 activate

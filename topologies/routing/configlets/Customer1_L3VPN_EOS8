@@ -1,0 +1,24 @@
+vrf definition A
+!
+ip routing vrf A
+!
+interface Ethernet2
+   description EOS15
+   no switchport
+   vrf forwarding A
+   ip address 10.8.15.8/24
+!
+interface Ethernet3
+  isis metric 30
+!
+router bgp 100
+maximum-paths 2
+  vrf A
+      rd 8.8.8.8:1
+      route-target import 1:1
+      route-target export 1:1
+      neighbor 10.8.15.15 remote-as 15
+      neighbor 10.8.15.15 maximum-routes 12000 
+      !
+      address-family ipv4
+         neighbor 10.8.15.15 activate

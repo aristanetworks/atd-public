@@ -1,0 +1,5 @@
+mpls ip
+mpls ldp
+   router-id interface Loopback0
+   transport-address interface Loopback0
+   no shutdown

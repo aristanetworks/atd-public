@@ -1,0 +1,6 @@
+router bgp 200
+   router-id 19.19.19.19
+   neighbor 10.7.19.7 remote-as 100
+   neighbor 10.7.19.7 allowas-in 1
+   neighbor 10.7.19.7 maximum-routes 12000 
+   network 19.19.19.19/32
