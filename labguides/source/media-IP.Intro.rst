@@ -127,6 +127,8 @@ Media Intro to IP Lab
   
   - show ip route
   - show ip arp
+  - show ip interface brief
+  - show interface status
   
 
 5. Food for Thought:
