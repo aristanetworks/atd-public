@@ -1,0 +1,25 @@
+vlan 20
+name Customer2_E-LAN
+!
+interface Ethernet1
+   description EOS9
+   switchport
+   channel-group 9 mode active
+!
+interface Port-Channel9
+   description CE-EOS9
+   switchport access vlan 20
+   switchport
+   !
+   evpn ethernet-segment
+      identifier 0000:0200:0200:1000:0608
+      route-target import 00:02:00:01:00:20
+   lacp system-id 0000.0000.0034
+   spanning-tree portfast
+!
+router bgp 100
+maximum-paths 2
+   vlan 20
+      rd 4.4.4.4:20
+      route-target both 2:20
+      redistribute learned

@@ -1,0 +1,9 @@
+mpls ip
+!
+interface Loopback0
+   node-segment ipv4 index 3
+!
+router isis 100
+   segment-routing mpls
+      no shutdown
+   router-id 3.3.3.3

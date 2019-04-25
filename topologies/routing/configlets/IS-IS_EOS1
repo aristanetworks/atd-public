@@ -1,0 +1,24 @@
+interface Ethernet1
+   isis enable 100
+   isis circuit-type level-2
+   isis network point-to-point
+interface Ethernet2
+   isis enable 100
+   isis circuit-type level-2
+   isis network point-to-point
+interface Ethernet4
+   isis enable 100
+   isis circuit-type level-2
+   isis network point-to-point
+interface Ethernet5
+   isis enable 100
+   isis circuit-type level-2
+   isis network point-to-point
+interface Loopback0
+   isis enable 100
+   isis passive
+router isis 100
+   net 49.1111.0000.0001.00
+   is-type level-2
+   advertise passive-only
+   address-family ipv4 unicast

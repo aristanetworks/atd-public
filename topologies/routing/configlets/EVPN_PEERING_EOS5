@@ -1,0 +1,19 @@
+router bgp 100
+   router-id 5.5.5.5
+   no bgp default ipv4-unicast
+   neighbor PE-RRCLIENTS peer-group
+   neighbor PE-RRCLIENTS remote-as 100
+   neighbor PE-RRCLIENTS update-source Loopback0
+   neighbor PE-RRCLIENTS route-reflector-client
+   neighbor PE-RRCLIENTS send-community
+   neighbor PE-RRCLIENTS maximum-routes 12000 
+   neighbor 1.1.1.1 peer-group PE-RRCLIENTS
+   neighbor 3.3.3.3 peer-group PE-RRCLIENTS
+   neighbor 4.4.4.4 peer-group PE-RRCLIENTS
+   neighbor 6.6.6.6 peer-group PE-RRCLIENTS
+   neighbor 7.7.7.7 peer-group PE-RRCLIENTS
+   neighbor 8.8.8.8 peer-group PE-RRCLIENTS
+   !
+   address-family evpn
+      neighbor default encapsulation mpls
+      neighbor PE-RRCLIENTS activate
