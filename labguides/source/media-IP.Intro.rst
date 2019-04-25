@@ -8,7 +8,7 @@ Media Intro to IP Lab
 
 1. Log into the **LabAccess** jumpserver:
 
-   1. Type ``media-intro`` or ``14`` at the prompt. The script will configure the topology with the exception of **Leaf 4**. The main task is to configure the remaining device so there is connectivity between the two hosts.
+   1. Type ``14`` or ``media-intro`` at the prompt. The script will configure the topology with the exception of **Leaf 4**. The main task is to configure the remaining device so there is connectivity between the two hosts.
 
 
 
@@ -27,7 +27,9 @@ Media Intro to IP Lab
             interface Ethernet 4
                 no switchport
                 ip address 172.16.46.4/24
-
+            
+            Example:
+            
             leaf4#configure
             leaf4(config)#interface ethernet 3
             leaf4(config-if-Et3)#no switchport
@@ -46,6 +48,8 @@ Media Intro to IP Lab
              ping 10.127.34.3
              ping 172.16.46.6
 
+            Example:
+            
             leaf4# ping 10.127.34.3
             PING 10.127.34.3 (10.127.34.3) 72(100) bytes of data.
             80 bytes from 10.127.34.3: icmp_seq=1 ttl=64 time=17.0 ms
@@ -84,7 +88,9 @@ Media Intro to IP Lab
             !
             ip route 172.16.15.0/24 10.127.34.3
             !
-
+            
+            Example:
+            
             leaf4(config-if-Et4)#configure
             leaf4(config)#ip routing
             leaf4(config)#ip route 172.16.15.0/24 10.127.34.3
@@ -101,6 +107,8 @@ Media Intro to IP Lab
 
             ping 172.16.15.5
 
+            Example:
+            
             host2#ping 172.16.15.5
             PING 172.16.15.5 (172.16.15.5) 72(100) bytes of data.
             80 bytes from 172.16.15.5: icmp_seq=1 ttl=60 time=307 ms
