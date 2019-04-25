@@ -123,4 +123,12 @@ Media Intro to IP Lab
 
       If all the IP address and routing settings have been completed correctly, then you should have reachability
 
+4. During the lab you can use the different commands to verify connectivity and behaviour:
+  
+  i. show ip route
+  ii. show ip arp
+  
+
+5. Food for Thought:
+
 **LAB COMPLETE!**
