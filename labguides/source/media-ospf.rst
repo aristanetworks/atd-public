@@ -191,7 +191,9 @@ Media OSPF Lab
             show ip ospf database
             show ip route
 
-            **Example**
+       **Example**
+       
+         .. code-block:: text
             
             leaf4(config-if-Et4)#show ip ospf neighbor
             Neighbor ID     VRF      Pri State                  Dead Time   Address         Interface
@@ -283,7 +285,9 @@ Media OSPF Lab
 
             ping 172.16.15.5
 
-            **Example:**
+      **Example:**
+      
+        .. code-block:: text
             
             host2#ping 172.16.15.5
             PING 172.16.15.5 (172.16.15.5) 72(100) bytes of data.
