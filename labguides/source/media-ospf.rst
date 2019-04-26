@@ -312,6 +312,7 @@ Media OSPF Lab
 **LAB COMPLETE!**
 
 5. During the lab you can use the different commands to verify connectivity and behaviour for validation and troubleshooting purposes:
+
   
    - show ip ospf neighbor
    - show ip ospf interface
