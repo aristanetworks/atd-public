@@ -133,9 +133,9 @@ Media Intro to IP Lab
 
 5. During the lab you can use the different commands to verify connectivity and behaviour for validation and troubleshooting purposes:
   
-  - show ip route
-  - show ip arp
-  - show ip interface brief
-  - show interface status
+   - show ip route
+   - show ip arp
+   - show ip interface brief
+   - show interface status
   
 
