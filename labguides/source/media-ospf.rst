@@ -304,6 +304,15 @@ Media OSPF Lab
 
       If OSPF settings have been configured correctly and the routing table on **Leaf 4** has converged then **Host 1** should be reachable from **Host 2**.
 
-4. 
+4. Test your knowledge:
 
+  - when inspecting **Leaf 4** 
+  
 **LAB COMPLETE!**
+
+5. During the lab you can use the different commands to verify connectivity and behaviour for validation and troubleshooting purposes:
+  
+   - show ip ospf neighbor
+   - show ip ospf interface
+   - show ip ospf database
+   - show ip route
