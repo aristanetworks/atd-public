@@ -19,6 +19,8 @@ Media OSPF Lab
             show ip ospf database
             show ip route
 
+            **Example:**
+            
             spine2#show ip ospf neighbor
             Neighbor ID     VRF      Pri State                  Dead Time   Address         Interface
             10.127.255.2    default  1   FULL/BDR               00:00:35    10.127.23.2     Ethernet1
@@ -111,10 +113,13 @@ Media OSPF Lab
               no switchport
               ip address 10.127.34.4/24
             interface ethernet 4
+              no switchport
               ip address 172.16.46.4/24
             router ospf 100
               router-id 10.127.255.4
 
+            **Example:**
+            
             leaf4#configure
             leaf4(config)#int et 3
             leaf4(config-if-Et3)#no switchport
@@ -129,7 +134,7 @@ Media OSPF Lab
 
 
       .. note::
-       A *channel-group* is a group of interfaces on a single Arista switch. A *channel-group* is associated with a *port-channel* interface immediately upon its creation. The *channel-group* command implicitly creates the matching *port-channel* with the same ID, which is *10* in this case. The *switchport mode trunk* command allows all VLANs on *port-channel 10*.
+       All interfaces are point-to-point connections in the OSPF lab, no trunk or access ports
 
    2. Specify the network statement which encompasses all the interfaces that will take part in the OSPF process.
 
@@ -138,7 +143,10 @@ Media OSPF Lab
             configure
             router ospf 100
                network 10.127.0.0/16 area 0.0.0.0
-
+               network 172.16.46.0/24 area 0.0.0.0
+               
+            **Example:**
+            
             leaf4(config)#configure
             leaf4(config)#router ospf 100
             leaf4(config-router-ospf)#network 10.127.0.0/16 area 0.0.0.0
@@ -155,11 +163,13 @@ Media OSPF Lab
             configure
             router ospf 100
               passive interface loopback0
-              passive interface vlan 100
+              passive interface ethernet4
 
+            **Example:**
+            
             leaf4(config)#router ospf 100
             leaf4(config-router-ospf)#passive-interface loopback 0
-            leaf4(config-router-ospf)#passive-interface vlan 100
+            leaf4(config-router-ospf)#passive-interface ethernet4
 
 
    4. Confirm the OSPF neighbor relationship has been established and the routing table on **Leaf 4** has been populated with the appropriate entries.
@@ -171,6 +181,8 @@ Media OSPF Lab
             show ip ospf database
             show ip route
 
+            **Example**
+            
             leaf4(config-if-Et4)#show ip ospf neighbor
             Neighbor ID     VRF      Pri State                  Dead Time   Address         Interface
             10.127.255.3    default  1   FULL/DR                00:00:31    10.127.34.3     Ethernet3
@@ -261,6 +273,8 @@ Media OSPF Lab
 
             ping 172.16.15.5
 
+            **Example:**
+            
             host2#ping 172.16.15.5
             PING 172.16.15.5 (172.16.15.5) 72(100) bytes of data.
             80 bytes from 172.16.15.5: icmp_seq=1 ttl=60 time=99.5 ms
@@ -276,5 +290,6 @@ Media OSPF Lab
 
       If OSPF settings have been configured correctly and the routing table on **Leaf 4** has converged then **Host 1** should be reachable from **Host 2**.
 
+4. 
 
 **LAB COMPLETE!**
