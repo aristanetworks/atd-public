@@ -19,7 +19,11 @@ Media OSPF Lab
             show ip ospf database
             show ip route
 
-            **Example:**
+            
+            
+       **Example:**
+            
+         .. code-block:: text  
             
             spine2#show ip ospf neighbor
             Neighbor ID     VRF      Pri State                  Dead Time   Address         Interface
@@ -118,7 +122,9 @@ Media OSPF Lab
             router ospf 100
               router-id 10.127.255.4
 
-            **Example:**
+       **Example:**
+       
+         .. code-block:: text
             
             leaf4#configure
             leaf4(config)#int et 3
@@ -145,8 +151,10 @@ Media OSPF Lab
                network 10.127.0.0/16 area 0.0.0.0
                network 172.16.46.0/24 area 0.0.0.0
                
-            **Example:**
-            
+       **Example:**
+
+         .. code-block:: text
+         
             leaf4(config)#configure
             leaf4(config)#router ospf 100
             leaf4(config-router-ospf)#network 10.127.0.0/16 area 0.0.0.0
@@ -165,7 +173,9 @@ Media OSPF Lab
               passive interface loopback0
               passive interface ethernet4
 
-            **Example:**
+       **Example:**
+       
+         .. code-block:: text
             
             leaf4(config)#router ospf 100
             leaf4(config-router-ospf)#passive-interface loopback 0
