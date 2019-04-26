@@ -1,5 +1,8 @@
 ---
 options: 
+  reset:
+  -   command: "ssh 192.168.0.5 './ConfigureTopology.py'"
+      description: "Reset All Devices to Base (reset)"
   bgp: 
   -   command: "ssh 192.168.0.5 './ConfigureTopology.py -t bgp'"
       description: "BGP Lab (bgp)"

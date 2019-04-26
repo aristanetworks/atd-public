@@ -86,22 +86,23 @@ Device Menu:            Lab Controls
 
     counter = 0
     for veos in veosinfo:
-      counter = counter + 1
+      counter += 1
       if ans==str(counter) or ans==veos['hostname']:
         os.system("ssh "+veos['ip'])
         break
       elif ans=="98" or ans=="bash" or ans=="shell":
         os.system("/bin/bash")
+        break
       elif ans=="99" or ans=="quit" or ans=="exit":
         quit()
       elif ans!="" and counter==devicecount:
         #print("\n Not Valid Choice Try again")
-        break;
+        break
 
     counter2 = 20
     for labcontrol in labcontrols:
       optionValues = labcontrols[labcontrol][0]
-      counter2 = counter2 + 1
+      counter2 += 1
       if ans==str(counter2) or ans==labcontrol:
         os.system(optionValues['command'])
         break
