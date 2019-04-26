@@ -103,7 +103,7 @@ Device Menu:            Lab Controls
       optionValues = labcontrols[labcontrol][0]
       counter2 = counter2 + 1
       if ans==str(counter2) or ans==labcontrol:
-        print optionValues['command']
+        os.system(optionValues['command'])
         break
       elif ans > devicecount and ans < 20:
         print("\n Not Valid Choice Try again")
