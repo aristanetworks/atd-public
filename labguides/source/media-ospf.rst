@@ -306,7 +306,8 @@ Media OSPF Lab
 
 4. Test your knowledge:
 
-  - when inspecting **Leaf 4** 
+  - when inspecting the routing table on **Leaf 4**, why are all the infrastructure IP address in there? What are the positive and negative results of that?
+  
   
 **LAB COMPLETE!**
 
