@@ -83,6 +83,10 @@ Media BGP Lab
             interface loopback 0
             ip address 10.127.255.4/32
 
+      Example
+       
+        .. code-block:: text
+         
             leaf4#configure
             leaf4(config)#interface loopback 0
             leaf4(config-if-Lo0)#ip address 10.127.255.4/32
@@ -98,6 +102,10 @@ Media BGP Lab
             router bgp 2
               router-id 10.127.255.4
 
+      Example:
+      
+        .. code-block:: text
+        
             leaf4(config)#configure
             leaf4(config)#router bgp 2
             leaf4(config-router-bgp)#router-id 10.127.255.4
