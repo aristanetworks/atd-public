@@ -270,6 +270,7 @@ Media BGP Lab
 
     The routing table output should list all routing entries to ensure reachability between the 2 hosts
 
+
    2. To confirm connectivity, log into **Host 2** and execute a ping command to **Host 1**
 
         .. code-block:: text
@@ -290,5 +291,20 @@ Media BGP Lab
 
       If all the BGP configuration have been applied successfully and the routing table on **Leaf 4** is correct then **Host 1** should be reachable from **Host 2**.
 
+5. Test your knowledge:
+  
+  - when **Leaf 4** recieves the incoming routes from **Spine 2**, why can we not reach all the infrastructre IP addresses?
+  
 
 **LAB COMPLETE!**
+
+
+6. During the lab you can use the different commands to verify connectivity and behaviour for validation and troubleshooting purposes:
+  
+   - show ip route 
+   - show ip route bgp 
+   - show ip bgp summary
+   - show ip bgp 
+   - show ip bgp neighbors <neighbor address> advertised-routes
+   - show ip bgp neighbors <neighbor address> received-routes
+
