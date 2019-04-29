@@ -77,7 +77,7 @@ Media BGP Lab
 
     1. Under Loopback 0 interface assign the ip.  This will be used to define the Router-id in the next step.  Loopbacks are used as as router-id addresses, as they are an always available interface that can be advertised reliably.
 
-       .. code-block:: text
+        .. code-block:: text
 
             configure
             interface loopback 0
@@ -85,7 +85,7 @@ Media BGP Lab
 
       Example
        
-       .. code-block:: text
+        .. code-block:: text
          
             leaf4#configure
             leaf4(config)#interface loopback 0
@@ -96,7 +96,7 @@ Media BGP Lab
 
    1. Configure BGP router process (also the autonomous system number, ASN) on **Leaf4**. **Leaf 4** will be configured to communicate to adjacent BGP speakers (**Spine2** in this case).  The router-id is configured so it can be consistent and not randomly chosen (normally the peering interface if not specified).
 
-       .. code-block:: text
+        .. code-block:: text
 
             configure
             router bgp 2
@@ -104,13 +104,13 @@ Media BGP Lab
 
       Example:
       
-       .. code-block:: text
+        .. code-block:: text
         
             leaf4(config)#configure
             leaf4(config)#router bgp 2
             leaf4(config-router-bgp)#router-id 10.127.255.4
 
-      .. note::
+       .. note::
        The process number for BGP corresponds to the autonomous-system number (ASN) the router is associated with and is globally significant.  These values should not be chosen randomly and should be part of a larger design scheme for the environment.
 
    2. BGP neighbours are explicitly defined so only the desired neighbors create a session with.  A TCP connection is established between the two peers (using port 179) in which the routing information can be securely transported between the peers.
@@ -120,14 +120,17 @@ Media BGP Lab
             configure
             router bgp 2
                 neighbor 10.127.34.3 remote-as 2
-
+      Example:
+      
+        .. code-block:: text
+        
             leaf4(config)#configure
             leaf4(config)#router bgp 2
             leaf4(config-router-bgp)#neighbor 10.127.34.3 remote-as 2
 
       The BGP session we are setting up on **Leaf4** to **Spine2** is considered a point-to-point iBGP (Internal BGP) connection because they are a part of the same autonomous-system (AS).
 
-      .. note::
+        .. note::
         Although there are mechanisms to allow all incoming BGP sessions to be established, these are typically corner cases in which you will use that approach. It is best common practice to specify your desired neighbor to establish a session with along with a md5 hash password for an extra level of security.
 
    3. By default, the BGP protocol will only re-advertise eBGP (external) prefixes it has leaned to its other iBGP / eBGP peers.  We will need to tell the BGP process what to advertise by various methods.  In this lab we want the router to advertise its connected (vlan) prefix
@@ -137,7 +140,10 @@ Media BGP Lab
             configure
             router bgp 2
               redistribute connected
-
+      Example:
+        
+        .. code-block:: text
+        
             leaf4#configure
             leaf4(config)#router bgp 2
             leaf4(config-router-bgp)#redistribute connected
@@ -147,6 +153,12 @@ Media BGP Lab
         .. code-block:: text
 
             show ip bgp summary
+            show ip bgp neighbors 10.127.34.3 advertised-routes
+            show ip bgp neighbors 10.127.34.3 received-routes
+            
+      Example:      
+      
+        .. code-block:: text
 
             leaf4(config-router-bgp)#show ip bgp summary
             BGP summary information for VRF default
@@ -155,7 +167,7 @@ Media BGP Lab
               Neighbor         V  AS           MsgRcvd   MsgSent  InQ OutQ  Up/Down State  PfxRcd PfxAcc
               10.127.34.3      4  2                 22        22    0    0 00:10:37 Estab  2      2
 
-            show ip bgp neighbors 10.127.34.3 advertised-routes
+            
 
             leaf4(config-router-bgp)#show ip bgp neighbors 10.127.34.3 advertised-routes
             BGP routing table information for VRF default
@@ -171,7 +183,7 @@ Media BGP Lab
              * >     172.16.46.0/24         10.127.34.4           -       100     -       i
              * >     192.168.0.0/24         10.127.34.4           -       100     -       i
 
-            show ip bgp neighbors 10.127.34.3 received-routes
+            
 
             leaf4(config-router-bgp)#show ip bgp neighbors 10.127.34.3 received-routes
             BGP routing table information for VRF default
@@ -192,6 +204,13 @@ Media BGP Lab
         .. code-block:: text
 
             show ip bgp summary
+            show ip bgp
+            show ip route
+            show ip route bgp
+            
+      Example:
+      
+        .. code-block:: text
 
             leaf4(config-router-bgp)#show ip bgp summary
             BGP summary information for VRF default
@@ -200,7 +219,6 @@ Media BGP Lab
               Neighbor         V  AS           MsgRcvd   MsgSent  InQ OutQ  Up/Down State  PfxRcd PfxAcc
               10.127.34.3      4  2                 22        22    0    0 00:10:37 Estab  2      2
 
-            show ip bgp
 
             leaf4(config-router-bgp)#show ip bgp
             BGP routing table information for VRF default
@@ -218,7 +236,7 @@ Media BGP Lab
              * >     172.16.46.0/24         -                     1       0       -       i
              * >     192.168.0.0/24         -                     1       0       -       i
 
-            show ip route
+            
 
             leaf4(config-router-bgp)#show ip route | Begin Gateway
             Gateway of last resort:
@@ -231,7 +249,7 @@ Media BGP Lab
              C      172.16.46.0/24 is directly connected, Ethernet4
              C      192.168.0.0/24 is directly connected, Management1
 
-            show ip route bgp
+            
 
             leaf4(config-router-bgp)#show ip route bgp
 
@@ -258,6 +276,10 @@ Media BGP Lab
 
             ping 172.16.15.5
 
+      Example:
+      
+        .. code-block:: text
+        
             host2(config)#ping 172.16.15.5
             PING 172.16.15.5 (172.16.15.5) 72(100) bytes of data.
             80 bytes from 172.16.15.5: icmp_seq=1 ttl=60 time=436 ms
