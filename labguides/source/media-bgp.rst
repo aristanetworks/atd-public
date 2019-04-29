@@ -75,7 +75,7 @@ Media BGP Lab
 
 2. Configure Loopback 0 on **Leaf 4** with the following commands
 
-    1. Under Loopback 0 interface assign the ip.  This will be used to define the Router-id in the next step.  Loopbacks are used as as router-id addresses, as they are an always available interface that can be advertised reliably.
+   1. Under Loopback 0 interface assign the ip.  This will be used to define the Router-id in the next step.  Loopbacks are used as as router-id addresses, as they are an always available interface that can be advertised reliably.
 
         .. code-block:: text
 
