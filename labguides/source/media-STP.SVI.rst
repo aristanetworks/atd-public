@@ -14,6 +14,13 @@ Media STP and SVI Lab
 
         .. code-block:: text
 
+            show spanning-tree
+            
+            
+      Example:
+      
+         .. code-block:: text
+         
             spine2#show spanning-tree
             MST0
               Spanning tree enabled protocol mstp
@@ -45,7 +52,10 @@ Media STP and SVI Lab
             configure
             vlan 100
                 name v100
-
+      Example:
+        
+        .. code-block:: text
+        
             leaf4#configure
             leaf4(config)#vlan 100
             leaf4(config-vlan-100)#name v100
@@ -56,6 +66,10 @@ Media STP and SVI Lab
 
              show vlan
 
+      Example:
+        
+        .. code-block:: text
+        
             leaf4(config-vlan-100)#show vlan
             VLAN  Name                             Status    Ports
             ----- -------------------------------- --------- -------------------------------
@@ -85,6 +99,10 @@ Media STP and SVI Lab
               switchport mode trunk
             !
 
+      Example:
+      
+        .. code-block:: text
+        
             leaf4(config-vlan-100)#configure
             leaf4(config)#interface ethernet 2-3
             leaf4(config-if-Et2-3)#switchport mode trunk
@@ -99,6 +117,10 @@ Media STP and SVI Lab
 
             show spanning-tree
 
+      Example:
+      
+        .. code-block:: text
+        
             leaf4(config-if-Et2-3)#show spanning-tree
             MST0
               Spanning tree enabled protocol mstp
@@ -131,7 +153,11 @@ Media STP and SVI Lab
             configure
             interface Ethernet4
               switchport access vlan 100
-
+              
+      Example:
+      
+        .. code-block:: text
+        
             leaf4(config-if-Et2-3)#configure
             leaf4(config)#interface ethernet 4
             leaf4(config-if-Et4)#switchport access vlan 100
@@ -145,7 +171,10 @@ Media STP and SVI Lab
             show vlan
             show spanning-tree
 
-
+      Example:
+      
+        .. code-block:: text
+        
             leaf4(config-if-Et4)#show vlan
             VLAN  Name                             Status    Ports
             ----- -------------------------------- --------- -------------------------------
