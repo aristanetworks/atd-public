@@ -83,7 +83,7 @@ Media BGP Lab
             interface loopback 0
             ip address 10.127.255.4/32
 
-      Example
+      Example:
        
         .. code-block:: text
          
