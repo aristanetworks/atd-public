@@ -28,7 +28,9 @@ Media Intro to IP Lab
                 no switchport
                 ip address 172.16.46.4/24
             
-            Example:
+      Example:
+      
+         .. code-block:: text
             
             leaf4#configure
             leaf4(config)#interface ethernet 3
@@ -48,7 +50,9 @@ Media Intro to IP Lab
              ping 10.127.34.3
              ping 172.16.46.6
 
-            Example:
+      Example:
+      
+        .. code-block:: text
             
             leaf4# ping 10.127.34.3
             PING 10.127.34.3 (10.127.34.3) 72(100) bytes of data.
@@ -89,7 +93,9 @@ Media Intro to IP Lab
             ip route 172.16.15.0/24 10.127.34.3
             !
             
-            Example:
+      Example:
+      
+        .. code-block:: text
             
             leaf4(config-if-Et4)#configure
             leaf4(config)#ip routing
@@ -107,7 +113,9 @@ Media Intro to IP Lab
 
             ping 172.16.15.5
 
-            Example:
+      Example:
+      
+        .. code-block:: text
             
             host2#ping 172.16.15.5
             PING 172.16.15.5 (172.16.15.5) 72(100) bytes of data.
