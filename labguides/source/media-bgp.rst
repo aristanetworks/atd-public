@@ -77,7 +77,7 @@ Media BGP Lab
 
     1. Under Loopback 0 interface assign the ip.  This will be used to define the Router-id in the next step.  Loopbacks are used as as router-id addresses, as they are an always available interface that can be advertised reliably.
 
-        .. code-block:: text
+       .. code-block:: text
 
             configure
             interface loopback 0
@@ -85,7 +85,7 @@ Media BGP Lab
 
       Example
        
-        .. code-block:: text
+       .. code-block:: text
          
             leaf4#configure
             leaf4(config)#interface loopback 0
@@ -96,7 +96,7 @@ Media BGP Lab
 
    1. Configure BGP router process (also the autonomous system number, ASN) on **Leaf4**. **Leaf 4** will be configured to communicate to adjacent BGP speakers (**Spine2** in this case).  The router-id is configured so it can be consistent and not randomly chosen (normally the peering interface if not specified).
 
-        .. code-block:: text
+       .. code-block:: text
 
             configure
             router bgp 2
@@ -104,7 +104,7 @@ Media BGP Lab
 
       Example:
       
-        .. code-block:: text
+       .. code-block:: text
         
             leaf4(config)#configure
             leaf4(config)#router bgp 2
