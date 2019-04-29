@@ -15,7 +15,14 @@ Media BGP Lab
         .. code-block:: text
 
             show ip bgp summary
-
+            show ip bgp
+            show ip route
+            
+            
+      Example:
+        
+        .. code-block:: text
+        
             spine2#show ip bgp summary
             BGP summary information for VRF default
             Router identifier 10.127.255.3, local AS number 2
@@ -25,7 +32,7 @@ Media BGP Lab
                 10.127.34.4      4  2                  0         0    0    0 00:02:10 Active
 
 
-            show ip bgp
+       
 
             spine2#show ip bgp
             BGP routing table information for VRF default
@@ -39,7 +46,7 @@ Media BGP Lab
              * >     10.127.255.1/32        10.127.23.2           0       100     0       1 i
              * >     172.16.15.0/24         10.127.23.2           0       100     0       1 i
 
-            show ip route
+           
 
             spine2#show ip route
 
