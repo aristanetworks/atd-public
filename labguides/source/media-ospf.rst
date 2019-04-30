@@ -304,14 +304,14 @@ Media OSPF Lab
 
       If OSPF settings have been configured correctly and the routing table on **Leaf 4** has converged then **Host 1** should be reachable from **Host 2**.
 
-.. admonition:: Test your knowledge:
+.. admonition:: **Test your knowledge:**
 
     When inspecting the routing table on **Leaf 4**, why are all the infrastructure IP address in there? What are the positive and negative results of that?
   
   
 **LAB COMPLETE!**
 
-.. admonition:: Helpful Commands:
+.. admonition:: **Helpful Commands:**
 
     During the lab you can use the different commands to verify connectivity and behaviour for validation and troubleshooting purposes:
 
