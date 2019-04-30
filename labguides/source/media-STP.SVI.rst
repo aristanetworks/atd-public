@@ -10,7 +10,7 @@ Media STP and SVI Lab
 
    1. Type ``media-vlan`` or option ``15`` at the prompt. The script will configure the topology with the exception of **Leaf 4**.
 
-   2. On **Spine 2**, verify spanning-tree operation with the topology, you should see **Spine 1** as the root bridge.
+   2. On **Spine 2**, verify spanning-tree operation with the topology, you should see **Spine 1** as the root bridge by viewing the Bridge ID and the interfaces designated as a Root port.  Root ports points towards the root bridge, which in this case would be Spine 1.  When you run the following command which interfaces would you expect to be your root port(s)?
 
         .. code-block:: text
 
