@@ -19,7 +19,7 @@ Media BGP Lab
             show ip route
             
             
-      Example:
+      **Example:**
         
         .. code-block:: text
         
@@ -83,7 +83,7 @@ Media BGP Lab
             interface loopback 0
             ip address 10.127.255.4/32
 
-      Example:
+      **Example:**
        
         .. code-block:: text
          
@@ -102,7 +102,7 @@ Media BGP Lab
             router bgp 2
               router-id 10.127.255.4
 
-      Example:
+      **Example:**
       
         .. code-block:: text
         
@@ -120,7 +120,8 @@ Media BGP Lab
             configure
             router bgp 2
                 neighbor 10.127.34.3 remote-as 2
-      Example:
+
+      **Example:**
       
         .. code-block:: text
         
@@ -140,7 +141,8 @@ Media BGP Lab
             configure
             router bgp 2
               redistribute connected
-      Example:
+
+      **Example:**
         
         .. code-block:: text
         
@@ -156,7 +158,7 @@ Media BGP Lab
             show ip bgp neighbors 10.127.34.3 advertised-routes
             show ip bgp neighbors 10.127.34.3 received-routes
             
-      Example:      
+      **Example:**
       
         .. code-block:: text
 
@@ -208,7 +210,7 @@ Media BGP Lab
             show ip route
             show ip route bgp
             
-      Example:
+      **Example:**
       
         .. code-block:: text
 
@@ -277,7 +279,7 @@ Media BGP Lab
 
             ping 172.16.15.5
 
-      Example:
+      **Example:**
       
         .. code-block:: text
         

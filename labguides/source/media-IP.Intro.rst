@@ -32,7 +32,7 @@ Media Intro to IP Lab
                 no switchport
                 ip address 172.16.46.4/24
             
-      Example:
+      **Example:**
       
          .. code-block:: text
             
@@ -54,7 +54,7 @@ Media Intro to IP Lab
              ping 10.127.34.3
              ping 172.16.46.6
 
-      Example:
+      **Example:**
       
         .. code-block:: text
             
@@ -97,7 +97,7 @@ Media Intro to IP Lab
             ip route 172.16.15.0/24 10.127.34.3
             !
             
-      Example:
+      **Example:**
       
         .. code-block:: text
             
@@ -117,7 +117,7 @@ Media Intro to IP Lab
 
             ping 172.16.15.5
 
-      Example:
+      **Example:**
 
         .. code-block:: text
 

@@ -17,7 +17,7 @@ Media STP and SVI Lab
             show spanning-tree
             
             
-      Example:
+      **Example:**
       
          .. code-block:: text
          
@@ -52,7 +52,8 @@ Media STP and SVI Lab
             configure
             vlan 100
                 name v100
-      Example:
+
+      **Example:**
         
         .. code-block:: text
         
@@ -66,7 +67,7 @@ Media STP and SVI Lab
 
              show vlan
 
-      Example:
+      **Example:**
         
         .. code-block:: text
         
@@ -99,7 +100,7 @@ Media STP and SVI Lab
               switchport mode trunk
             !
 
-      Example:
+      **Example:**
       
         .. code-block:: text
         
@@ -117,7 +118,7 @@ Media STP and SVI Lab
 
             show spanning-tree
 
-      Example:
+      **Example:**
       
         .. code-block:: text
         
@@ -154,7 +155,7 @@ Media STP and SVI Lab
             interface Ethernet4
               switchport access vlan 100
               
-      Example:
+      **Example:**
       
         .. code-block:: text
         
@@ -171,7 +172,7 @@ Media STP and SVI Lab
             show vlan
             show spanning-tree
 
-      Example:
+      **Example:**
       
         .. code-block:: text
         
