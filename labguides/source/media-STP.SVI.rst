@@ -8,7 +8,7 @@ Media STP and SVI Lab
 
 1. Log into the **LabAccess** jumpserver:
 
-   1. Type ``media-vlan`` at the prompt. The script will configure the topology with the exception of **Leaf 4**.
+   1. Type ``media-vlan`` or option ``15`` at the prompt. The script will configure the topology with the exception of **Leaf 4**.
 
    2. On **Spine 2**, verify spanning-tree operation with the topology, you should see **Spine 1** as the root bridge.
 
@@ -255,15 +255,16 @@ Media STP and SVI Lab
       If all the SVI and STP settings have been completed correctly you should be able to ping the remote host as well as the SVI interface itself configured on **Spine 1** which is also the root bridge for this topology.
 
 
-4. Test your knowledge:
-  
-  - when you are verifying the spanning-tree topology from **Leaf 4**, what are some of the reasons for the root bridge selection?
+ .. admonition:: Test your knowledge:
+
+    When you are verifying the spanning-tree topology from **Leaf 4**, what are some of the reasons for the root bridge selection?
   
 
 **LAB COMPLETE!**
 
+.. admonition:: Helpful Commands:
 
-5. During the lab you can use the different commands to verify connectivity and behaviour for validation and troubleshooting purposes:
+    During the lab you can use the different commands to verify connectivity and behaviour for validation and troubleshooting purposes:
   
    - show vlan
    - show interfaces trunk 

@@ -8,7 +8,7 @@ Media Intro to IP Lab
 
 1. Log into the **LabAccess** jumpserver:
 
-   1. Type ``14`` or ``media-intro`` at the prompt. The script will configure the topology with the exception of **Leaf 4**. The main task is to configure the remaining device so there is connectivity between the two hosts.
+   1. Type ``media-intro`` or option ``14`` at the prompt. The script will configure the topology with the exception of **Leaf 4**. The main task is to configure the remaining device so there is connectivity between the two hosts
 
 
 
@@ -114,9 +114,9 @@ Media Intro to IP Lab
             ping 172.16.15.5
 
       Example:
-      
+
         .. code-block:: text
-            
+
             host2#ping 172.16.15.5
             PING 172.16.15.5 (172.16.15.5) 72(100) bytes of data.
             80 bytes from 172.16.15.5: icmp_seq=1 ttl=60 time=307 ms
@@ -131,15 +131,16 @@ Media Intro to IP Lab
 
       If all the IP address and routing settings have been completed correctly, then you should have reachability
 
-4. Test your knowledge:
+.. admonition:: Test your knowledge:
   
-  - when **Leaf 4** recieves the incoming icmp packet from **host 2**, what would the process be for the switch to determine the path for the packet to be fowarded?
+    When **Leaf 4** receives the incoming icmp packet from **Host 2**, what would the process be for the switch to determine the path for the packet to be fowarded?
   
 
 **LAB COMPLETE!**
 
+.. admonition:: Helpful Commands:
 
-5. During the lab you can use the different commands to verify connectivity and behaviour for validation and troubleshooting purposes:
+    During the lab you can use the different commands to verify connectivity and behaviour for validation and troubleshooting purposes:
   
    - show ip route
    - show ip arp

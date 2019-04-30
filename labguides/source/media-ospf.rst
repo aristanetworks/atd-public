@@ -8,7 +8,7 @@ Media OSPF Lab
 
 1. Log into the **Lab Access** jumpserver:
 
-   1. Type ``media-ospf`` at the prompt. The script will configure the topology with the exception of **Leaf 4**.
+   1. Type ``media-ospf`` or option ``16`` at the prompt. The script will configure the topology with the exception of **Leaf 4**.
 
    2. On **Spine 2**, verify OSPF operation (it should not be operating correctly) and you will see all the routes currently in the environment.
 
@@ -304,16 +304,17 @@ Media OSPF Lab
 
       If OSPF settings have been configured correctly and the routing table on **Leaf 4** has converged then **Host 1** should be reachable from **Host 2**.
 
-4. Test your knowledge:
+.. admonition:: Test your knowledge:
 
-  - when inspecting the routing table on **Leaf 4**, why are all the infrastructure IP address in there? What are the positive and negative results of that?
+    When inspecting the routing table on **Leaf 4**, why are all the infrastructure IP address in there? What are the positive and negative results of that?
   
   
 **LAB COMPLETE!**
 
-5. During the lab you can use the different commands to verify connectivity and behaviour for validation and troubleshooting purposes:
+.. admonition:: Helpful Commands:
 
-  
+    During the lab you can use the different commands to verify connectivity and behaviour for validation and troubleshooting purposes:
+
    - show ip ospf neighbor
    - show ip ospf interface
    - show ip ospf database

@@ -8,7 +8,7 @@ Media BGP Lab
 
 1. Log into the **LabAccess** jumpserver:
 
-   1. Type ``media-bgp`` at the prompt. The script will configure the topology with the exception of **Leaf4**.
+   1. Type ``media-bgp`` or option ``17`` at the prompt. The script will configure the topology with the exception of **Leaf4**.
 
    2. On **spine2**, verify the BGP operation (it should not be operating correctly) and current routing table and command outputs similar to the outputs below.
 
@@ -291,15 +291,16 @@ Media BGP Lab
 
       If all the BGP configuration have been applied successfully and the routing table on **Leaf 4** is correct then **Host 1** should be reachable from **Host 2**.
 
-5. Test your knowledge:
-  
-  - when **Leaf 4** recieves the incoming routes from **Spine 2**, why can we not reach all the infrastructre IP addresses?
+.. admonition:: Test your knowledge:
+
+    When **Leaf 4** receives the incoming routes from **Spine 2**, why can we not reach all the infrastructure IP addresses?
   
 
 **LAB COMPLETE!**
 
+.. admonition:: Helpful Commands:
 
-6. During the lab you can use the different commands to verify connectivity and behaviour for validation and troubleshooting purposes:
+    During the lab you can use the different commands to verify connectivity and behaviour for validation and troubleshooting purposes:
   
    - show ip route 
    - show ip route bgp 
