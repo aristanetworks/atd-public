@@ -11,8 +11,10 @@ Media Intro to IP Lab
    1. Type ``media-intro`` or option ``14`` at the prompt. The script will configure the topology with the exception of **Leaf 4**. The main task is to configure the remaining device so there is connectivity between the two hosts
 
 
+2. Connect to ``Leaf 4`` by selecting option ``6`` from the menu.  Once in the switch we are in the *Privigled EXEC* mode, denoted by the **#** preceding the device name.  This is similar to a admin user, in this mode can configure and view information on the switch. To configure devices we will need to go into the configure mode by typing *configure* at the prompt, in enable mode.  As you do the labs you will see this configure command to ensure that you are in the configure mode.  One prompt that you may come across is the **>** this denotes that you are in EXEC mode, where you can do basic tests and view system information.  EXEC mode is the default mode for all switches.
 
-2.  Configure the proper ip address on the interfaces along with the appropriate static routes to ensure there is end-to-end connectivity for the two end hosts to reach each other.  All interfaces in this lab are designed as point-to-point  connections
+
+3.  Configure the proper ip address on the interfaces along with the appropriate static routes to ensure there is end-to-end connectivity for the two end hosts to reach each other.  All interfaces in this lab are designed as point-to-point  connections
 
    1. On **Leaf 4** assign the appropriate ip address and ensure the adjacent devices can be reached
 
@@ -20,7 +22,7 @@ Media Intro to IP Lab
 
             configure
             !
-            interface Ethernet3
+            interface Ethernet 3
                 no switchport
                 ip address 10.127.34.4/24
             !
@@ -102,10 +104,10 @@ Media Intro to IP Lab
             leaf4(config)#ip route 172.16.15.0/24 10.127.34.3
 
       .. note::
-         We added the entire prefix for the static route but we could of also put the specific host address.  Normally your internal security policies will dictate which approach to take
+         We added the entire prefix for the static route but we could have also put the specific host address.  Normally your internal security policies will dictate which approach to take
 
 
-3. Validate end-to-end connectivity once IP addresses and static routes have been configured
+4. Validate end-to-end connectivity from the hosts once IP addresses and static routes have been configured from the previous steps
 
    1. Log into **Host 2** and verify there is reachability to **Host 1**
 
