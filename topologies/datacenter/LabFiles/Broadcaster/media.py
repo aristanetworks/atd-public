@@ -47,7 +47,7 @@ Device Menu:            Lab Controls
    5. Leaf3  (not used)   15. Media - VLAN STP (media-vlan)
    6. Leaf4               16. Media - OSPF (media-ospf)
    7. Host1               17. Media - BGP  (media-bgp)
-   8. Host2               18.
+   8. Host2               18. Media - Multicast (multicast)
    9. Screen (screen)     19.
    10. Shell (bash)       20.
    11. Reset All Devices to Base (reset)
