@@ -89,8 +89,8 @@ Device Menu:            Lab Controls
       os.system("ssh 192.168.0.5 './ConfigureTopology.py -t media-ospf' >> /tmp/ConfigureTopology.log")
     elif ans=="17" or ans=="media-bgp":
       os.system("ssh 192.168.0.5 './ConfigureTopology.py -t media-bgp' >> /tmp/ConfigureTopology.log")
-    elif ans=="18" or ans=="":
-      print("\n Lab not available")
+    elif ans=="18" or ans=="multicast":
+      os.system("ssh 192.168.0.5 './ConfigureTopology.py -t multicast' >> /tmp/ConfigureTopology.log")
     elif ans=="19" or ans=="":
       print("\n Lab not available")
     elif ans=="20" or ans=="":

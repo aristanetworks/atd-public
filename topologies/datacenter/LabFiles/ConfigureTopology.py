@@ -34,12 +34,12 @@ def resetDevices( server,topology,excludeList):
 
    # Define list of configlets/labs
 
-   s1 = [ "Spine1-MLAG-Lab","Spine1-BGP-Lab","Spine1-BGP-Lab","Spine1-L2EVPN-Lab","Spine1-L3EVPN-Lab","Spine1-BGP-Lab","media-spine1-IP-Intro-start","media-spine1-VLAN-STP-start","media-spine1-OSPF-start","media-spine1-BGP-start" ]
-   s2 = [ "Spine2-MLAG-Lab","Spine2-BGP-Lab","Spine2-BGP-Lab","Spine2-L2EVPN-Lab","Spine2-L3EVPN-Lab","Spine2-BGP-Lab","media-spine2-IP-Intro-start","media-spine2-VLAN-STP-start","media-spine2-OSPF-start","media-spine2-BGP-start" ]
-   l1 = [ "Leaf1-MLAG-Lab","Leaf1-BGP-Lab","Leaf1-VXLAN-Lab","Leaf1-L2EVPN-Lab","Leaf1-L3EVPN-Lab","Leaf1-BGP-Lab","media-leaf1-IP-Intro-start","media-leaf1-VLAN-STP-start","media-leaf1-OSPF-start","media-leaf1-BGP-start" ]
-   l2 = [ "Leaf2-MLAG-Lab","Leaf2-BGP-Lab","Leaf2-VXLAN-Lab","Leaf2-L2EVPN-Lab","Leaf2-L3EVPN-Lab","Leaf2-BGP-Lab","media-leaf2-IP-Intro-start","media-leaf2-VLAN-STP-start","media-leaf2-OSPF-start","media-leaf2-BGP-start" ]
-   l3 = [ "Leaf3-MLAG-Lab","Leaf3-BGP-Lab","Leaf3-VXLAN-Lab","Leaf3-L2EVPN-Lab","Leaf3-L3EVPN-Lab","Leaf3-BGP-Lab","media-leaf3-IP-Intro-start","media-leaf3-VLAN-STP-start","media-leaf3-OSPF-start","media-leaf3-BGP-start" ]
-   l4 = [ "Leaf4-MLAG-Lab","Leaf4-BGP-Lab","Leaf4-VXLAN-Lab","Leaf4-L2EVPN-Lab","Leaf4-L3EVPN-Lab","Leaf4-BGP-Lab-Full","media-leaf4-IP-Intro-start","media-leaf4-VLAN-STP-start","media-leaf4-OSPF-start","media-leaf4-BGP-start" ]
+   s1 = [ "Spine1-MLAG-Lab","Spine1-BGP-Lab","Spine1-BGP-Lab","Spine1-L2EVPN-Lab","Spine1-L3EVPN-Lab","Spine1-BGP-Lab","media-spine1-IP-Intro-start","media-spine1-VLAN-STP-start","media-spine1-OSPF-start","media-spine1-BGP-start","Spine1-Multicast-lab" ]
+   s2 = [ "Spine2-MLAG-Lab","Spine2-BGP-Lab","Spine2-BGP-Lab","Spine2-L2EVPN-Lab","Spine2-L3EVPN-Lab","Spine2-BGP-Lab","media-spine2-IP-Intro-start","media-spine2-VLAN-STP-start","media-spine2-OSPF-start","media-spine2-BGP-start","Spine2-Multicast-lab" ]
+   l1 = [ "Leaf1-MLAG-Lab","Leaf1-BGP-Lab","Leaf1-VXLAN-Lab","Leaf1-L2EVPN-Lab","Leaf1-L3EVPN-Lab","Leaf1-BGP-Lab","media-leaf1-IP-Intro-start","media-leaf1-VLAN-STP-start","media-leaf1-OSPF-start","media-leaf1-BGP-start","Leaf1-Multicast-lab" ]
+   l2 = [ "Leaf2-MLAG-Lab","Leaf2-BGP-Lab","Leaf2-VXLAN-Lab","Leaf2-L2EVPN-Lab","Leaf2-L3EVPN-Lab","Leaf2-BGP-Lab","media-leaf2-IP-Intro-start","media-leaf2-VLAN-STP-start","media-leaf2-OSPF-start","media-leaf2-BGP-start","Leaf2-Multicast-lab" ]
+   l3 = [ "Leaf3-MLAG-Lab","Leaf3-BGP-Lab","Leaf3-VXLAN-Lab","Leaf3-L2EVPN-Lab","Leaf3-L3EVPN-Lab","Leaf3-BGP-Lab","media-leaf3-IP-Intro-start","media-leaf3-VLAN-STP-start","media-leaf3-OSPF-start","media-leaf3-BGP-start","Leaf3-Multicast-lab" ]
+   l4 = [ "Leaf4-MLAG-Lab","Leaf4-BGP-Lab","Leaf4-VXLAN-Lab","Leaf4-L2EVPN-Lab","Leaf4-L3EVPN-Lab","Leaf4-BGP-Lab-Full","media-leaf4-IP-Intro-start","media-leaf4-VLAN-STP-start","media-leaf4-OSPF-start","media-leaf4-BGP-start","Leaf4-Multicast-lab" ]
 
    # Map the topology provided upon call to the above list
    if topology == 'mlag':
@@ -62,6 +62,8 @@ def resetDevices( server,topology,excludeList):
      lab = 8
    elif topology == 'media-bgp':
      lab = 9
+   elif topology == 'multicast':
+     lab = 10
 
    # Loop through devices
    devices = server.getDevices()
