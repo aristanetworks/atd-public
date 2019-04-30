@@ -131,14 +131,14 @@ Media Intro to IP Lab
 
       If all the IP address and routing settings have been completed correctly, then you should have reachability
 
-.. admonition:: Test your knowledge:
+.. admonition:: **Test your knowledge:**
   
     When **Leaf 4** receives the incoming icmp packet from **Host 2**, what would the process be for the switch to determine the path for the packet to be fowarded?
   
 
 **LAB COMPLETE!**
 
-.. admonition:: Helpful Commands:
+.. admonition:: **Helpful Commands:**
 
     During the lab you can use the different commands to verify connectivity and behaviour for validation and troubleshooting purposes:
   

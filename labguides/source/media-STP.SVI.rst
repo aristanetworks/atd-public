@@ -255,14 +255,14 @@ Media STP and SVI Lab
       If all the SVI and STP settings have been completed correctly you should be able to ping the remote host as well as the SVI interface itself configured on **Spine 1** which is also the root bridge for this topology.
 
 
- .. admonition:: Test your knowledge:
+ .. admonition:: **Test your knowledge:**
 
     When you are verifying the spanning-tree topology from **Leaf 4**, what are some of the reasons for the root bridge selection?
   
 
 **LAB COMPLETE!**
 
-.. admonition:: Helpful Commands:
+.. admonition:: **Helpful Commands:**
 
     During the lab you can use the different commands to verify connectivity and behaviour for validation and troubleshooting purposes:
   

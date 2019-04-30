@@ -291,14 +291,14 @@ Media BGP Lab
 
       If all the BGP configuration have been applied successfully and the routing table on **Leaf 4** is correct then **Host 1** should be reachable from **Host 2**.
 
-.. admonition:: Test your knowledge:
+.. admonition:: **Test your knowledge:**
 
     When **Leaf 4** receives the incoming routes from **Spine 2**, why can we not reach all the infrastructure IP addresses?
   
 
 **LAB COMPLETE!**
 
-.. admonition:: Helpful Commands:
+.. admonition:: **Helpful Commands:**
 
     During the lab you can use the different commands to verify connectivity and behaviour for validation and troubleshooting purposes:
   
