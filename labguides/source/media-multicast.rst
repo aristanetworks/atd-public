@@ -1,46 +1,129 @@
 Advanced Networking for Media Engineers
 =======================================
 
-.. image:: images/media_mcast_01.png
+.. image:: images/media_multicast.png
    :align: center
 
-.. note:: To simplify the training using our multicast topology, this exercise will disable Leaf2 and Leaf3.  We will be using CloudVision Portal (CVP) to deploy configlets to configure this topology.  This lab is a continuation of the concepts from the previous Broadcast Engineer Labs
+.. note:: To simplify the training using our multicast topology, this exercise will disable Leaf2 and Leaf3.  This lab is a continuation of the concepts from the previous Broadcast Engineer Labs
 
 1. Log into the **LabAccess** jumpserver:
     1. Type ``multicast`` or option ``18`` at the prompt. The script will pre-configure the topology with the exception of Leaf4 and Hosts 1 & 2
 
-2. Create Vlan 66 & SVI for host access vlan on **Leaf 4**.
+2. Create Vlan 46 & SVI for host access vlan on **Leaf 4**.
 
-    1. On **Leaf 4** we will create an SVI
+    1. On **Leaf 4** we will create an vlan and a SVI
 
         .. code-block:: text
 
-            interface Vlan66
+            vlan 46
+            !
+            interface Vlan46
                no autostate
-               ip address 172.16.66.1./24
+               ip address 172.16.46.4/24
 
-3. Create connectivity for Host 2 on Leaf 4
-
-    1.  On Leaf 4, interface Ethernet 5 is attached to Host 2, associate the port as access vlan 66.
+        **Example:**
 
         .. code-block:: text
 
-            interface Ethernet5
-               switchport access vlan 66
+            leaf4(config)#vlan 46
+            leaf4(config)#interface vlan 46
+            leaf4(config-if-Vl46)#no autostate
+            leaf4(config-if-Vl46)#ip address 172.16.46.4/24
 
-4. Create uplink connectivity to Spine 2
+        **Verification:**
 
-    1.  On Leaf 4, Ethernet 3 is connected to Spine 2. Create a routed port for uplink access
+        .. code-block:: text
+
+            leaf4(config)#show vlan
+            VLAN  Name                             Status    Ports
+            ----- -------------------------------- --------- -------------------------------
+            1     default                          active    Et6, Et7, Et8, Et9, Et10, Et11
+                                                             Et12, Et13, Et14, Et15, Et16
+                                                             Et17, Et18, Et19, Et20, Et21
+                                                             Et22, Et23, Et24, Et25, Et26
+                                                             Et27, Et28, Et29, Et30, Et31
+                                                             Et32
+            12    VLAN0012                         active
+            34    VLAN0034                         active
+            46    VLAN0046                         active    Cpu
+
+
+            leaf4(config)#show ip int brief
+            Interface              IP Address         Status     Protocol         MTU
+            Management1            192.168.0.17/24    down       notpresent      1500
+            Vlan46                 172.16.46.4/24     up         up              1500
+
+
+3. Create connectivity for **Host 2** on **Leaf 4**
+
+    1.  On **Leaf 4**, interface *Ethernet 4* is attached to **Host 2**, associate the port as access vlan 46.
+
+        .. code-block:: text
+
+            interface Ethernet4
+               switchport access vlan 46
+               no shutdown
+
+        **Example:**
+
+        .. code-block:: text
+
+            leaf4(config-if-Et4)#switchport access vlan 46
+            leaf4(config-if-Et4)#no shutdown
+
+        **Verification:**
+
+        .. code-block:: text
+
+            leaf4(config-if-Et4)#show vlan
+            VLAN  Name                             Status    Ports
+            ----- -------------------------------- --------- -------------------------------
+            1     default                          active    Et6, Et7, Et8, Et9, Et10, Et11
+                                                             Et12, Et13, Et14, Et15, Et16
+                                                             Et17, Et18, Et19, Et20, Et21
+                                                             Et22, Et23, Et24, Et25, Et26
+                                                             Et27, Et28, Et29, Et30, Et31
+                                                             Et32
+            12    VLAN0012                         active
+            34    VLAN0034                         active
+            46    VLAN0046                         active    Cpu, Et4
+
+
+4. Create uplink connectivity to **Spine 2**
+
+    1.  On **Leaf 4**, *Ethernet 3* is connected to **Spine 2**. Create a routed port for uplink access
 
         .. code-block:: text
 
            interface Ethernet3
               no switchport
               ip address 172.16.200.26/30
+              no shutdown
+
+
+        **Example:**
+
+        .. code-block:: text
+
+            leaf4(config-if-Et3)#interface ethernet 3
+            leaf4(config-if-Et3)#no switchport
+            leaf4(config-if-Et3)#ip address 172.16.200.26/30
+            leaf4(config-if-Et3)#no shutdown
+
+        **Verification:**
+
+        .. code-block:: text
+
+            leaf4#sh ip int br
+            Interface              IP Address         Status     Protocol         MTU
+            Ethernet3              172.16.200.26/30   up         up              1500
+            Management1            192.168.0.17/24    down       notpresent      1500
+            Vlan46                 172.16.46.4/24     up         up              1500
+
 
 5.  Enable OSPF & verify connectivity
 
-    1.  On Leaf 4, create a loopback interface & assign an IP to be used as the Router-ID. On Leaf 3, enable the OSPF routing process and assign the networks to be advertised
+    1.  On **Leaf 4**, create a loopback interface & assign an IP to be used as the Router-ID. On **Leaf 4**, enable the OSPF routing process and assign the networks to be advertised
 
         .. code-block:: text
 
@@ -50,19 +133,53 @@ Advanced Networking for Media Engineers
             router ospf 6500
                router-id 172.16.0.5
                passive-interface Loopback0
-               passive-interface Vlan66
+               passive-interface Vlan46
                network 172.16.0.0/24 area 0.0.0.0
-               network 172.16.66.0/24 area 0.0.0.0
+               network 172.16.46.0/24 area 0.0.0.0
                network 172.16.200.24/30 area 0.0.0.0
-               max-lsa 12000
 
-    2. Issue a ``show ip route`` command on Leaf 1.  Output should show the following networks from Leaf 4 being advertised and shows a Full/BR state with Leaf 4, its neighbor.
+        **Example:**
 
         .. code-block:: text
 
-            What would you like to do? 3
-            leaf1>ena
-            leaf1#show ip route
+            leaf4(config-if-Et3)#interface loopback 0
+            leaf4(config-if-Lo0)#ip address 172.16.0.5/32
+            leaf4(config-if-Lo0)#
+            leaf4(config-if-Lo0)#router ospf 6500
+            leaf4(config-router-ospf)#router-id 172.16.0.5
+            leaf4(config-router-ospf)#passive-interface loopback 0
+            leaf4(config-router-ospf)#passive-interface vlan46
+            leaf4(config-router-ospf)#network 172.16.0.0/24 area 0.0.0.0
+            leaf4(config-router-ospf)#network 172.16.46.0/24 area 0.0.0.0
+            leaf4(config-router-ospf)#network 172.16.200.24/30 area 0.0.0.0
+
+
+
+        **Verification:**
+
+        .. code-block:: text
+
+
+            leaf4(config-router-ospf)#show ip int br
+            Interface              IP Address         Status     Protocol         MTU
+            Ethernet3              172.16.200.26/30   up         up              1500
+            Loopback0              172.16.0.5/32      up         up             65535
+            Management1            192.168.0.17/24    down       notpresent      1500
+            Vlan46                 172.16.46.4/24     up         up              1500
+
+
+
+    2. Issue a ``show ip route`` command on Leaf 4.  Output should show the following networks from Leaf 1 being advertised and shows a Full/BR state with Leaf 1, its neighbor.
+
+
+        **Routing Table Example:**
+
+
+        .. code-block:: text
+
+            leaf4#show ip route
+
+            leaf4(config-router-ospf)#show ip route
 
             VRF: default
             Codes: C - connected, S - static, K - kernel,
@@ -72,26 +189,31 @@ Advanced Networking for Media Engineers
                    R - RIP, I L1 - IS-IS level 1, I L2 - IS-IS level 2,
                    O3 - OSPFv3, A B - BGP Aggregate, A O - OSPF Summary,
                    NG - Nexthop Group Static Route, V - VXLAN Control Service,
-                   DH - Dhcp client installed default route
+                   DH - DHCP client installed default route, M - Martian,
+                   DP - Dynamic Policy Route
 
             Gateway of last resort:
-            S      0.0.0.0/0 [1/0] via 192.168.0.254, Management1
+             S      0.0.0.0/0 [1/0] via 192.168.0.254, Management1
 
-            O      172.16.0.1/32 [110/20] via 172.16.200.1, Ethernet2
-            O      172.16.0.2/32 [110/30] via 172.16.200.1, Ethernet2
-            C      172.16.0.3/32 is directly connected, Loopback0
-            O      172.16.0.5/32 [110/40] via 172.16.200.1, Ethernet2
-            O      172.16.11.0/30 [110/20] via 172.16.200.1, Ethernet2
-            C      172.16.55.0/24 is directly connected, Vlan55
-            O      172.16.66.0/24 [110/40] via 172.16.200.1, Ethernet2
-            C      172.16.200.0/30 is directly connected, Ethernet2
-            O      172.16.200.24/30 [110/30] via 172.16.200.1, Ethernet2
-            C      192.168.0.0/24 is directly connected, Management1
+             O      172.16.0.1/32 [110/30] via 172.16.200.25, Ethernet3
+             O      172.16.0.2/32 [110/20] via 172.16.200.25, Ethernet3
+             O      172.16.0.3/32 [110/40] via 172.16.200.25, Ethernet3
+             C      172.16.0.5/32 is directly connected, Loopback0
+             O      172.16.11.0/24 [110/40] via 172.16.200.25, Ethernet3
+             C      172.16.46.0/24 is directly connected, Vlan46
+             O      172.16.200.0/30 [110/30] via 172.16.200.25, Ethernet3
+             C      172.16.200.24/30 is directly connected, Ethernet3
+             O      172.16.200.32/30 [110/20] via 172.16.200.25, Ethernet3
+             C      192.168.0.0/24 is directly connected, Management1
 
-            leaf1#show ip ospf neighbor
+
+        **OSPF Neighbor Example:**
+
+        .. code-block:: text
+
+            leaf4(config-router-ospf)#show ip ospf neighbor
             Neighbor ID     VRF      Pri State                  Dead Time   Address         Interface
-            172.16.0.1      default  1   FULL/BDR               00:00:32    172.16.200.1    Ethernet2
-            leaf1#
+            172.16.0.2      default  1   FULL/DR                00:00:35    172.16.200.25   Ethernet3
 
 
 6. Prepare Connectivity on Host 1 & Host 2
@@ -101,7 +223,6 @@ Advanced Networking for Media Engineers
     .. code-block:: text
 
 
-        host1(config)#no ip route 0.0.0.0/0 172.16.115.1
         host1(config)#ip route 0.0.0.0/0 172.16.55.1
         host1(config)#interface ethernet 3
         host1(config-if-Et3)#no switchport
@@ -110,40 +231,46 @@ Advanced Networking for Media Engineers
 
 
 
+
+
+
     2. On Host 2, we will need to setup a default route for the host to communicate. On Host 2 type the following commands to prepare the host
 
         .. code-block:: text
 
-            host2(config)#no ip route 0.0.0.0/0 172.16.115.1
-            host2(config)#ip route 0.0.0.0/0 172.16.66.1
+            host2(config)#ip route 0.0.0.0/0 172.16.46.1
             host2(config)#interface ethernet 4
             host2(config-if-Et4)#no switchport
-            host2(config-if-Et4)#ip address 172.16.66.2/24
+            host2(config-if-Et4)#ip address 172.16.46.5/24
             host2(config-if-Et4)#show ip route
 
-    3.	Issue a ping command from host2 in network 172.16.66.0/24 to host 1 on 172.16.55.0/2
+
+
+
+        **Verification:**
+
+
+
+
+    3.	Issue a ping command from host2 in network 172.16.46.0/24 to host 1 on 172.16.55.0/2
 
         .. code-block:: text
 
             What would you like to do? 7
             host2>enable
-            host2# ping 172.16.55.2
-            PING 172.16.55.2 (172.16.55.2) 72(100) bytes of data.
-            80 bytes from 172.16.55.2: icmp_seq=1 ttl=60 time=189 ms
-            80 bytes from 172.16.55.2: icmp_seq=2 ttl=60 time=185 ms
-            80 bytes from 172.16.55.2: icmp_seq=3 ttl=60 time=184 ms
-            80 bytes from 172.16.55.2: icmp_seq=4 ttl=60 time=210 ms
-            80 bytes from 172.16.55.2: icmp_seq=5 ttl=60 time=209 ms
+            host2# ping 172.16.15.5
 
-            --- 172.16.55.2 ping statistics ---
-            5 packets transmitted, 5 received, 0% packet loss, time 43ms
-            rtt min/avg/max/mdev = 184.314/196.045/210.805/11.583 ms, pipe 5, ipg/ewma 10.761/193.725 ms
+
+
+
+
+
+
 
 7.	Enable Multicast
 
     1.  On Leaf 4, enable multicast routing using the following commands;  We will be enabling multicast routing on Leaf 4 and assigning the interfaces to participate in multicast routing.  As well we will define the RP address on the switch.
 
-        .. code-block:: text
 
         .. code-block:: text
 
@@ -160,6 +287,21 @@ Advanced Networking for Media Engineers
             !
 
 
+        **Example:**
+        **Verification:**
+
+        .. code-block:: text
+
+            <TBD>
+
+        **Example:**
+        **Verification:**
+
+        .. code-block:: text
+
+            <TBD>
+
+
 8. Start Server on the Host 1
 
     1. Going back to the menu screen, select Host 1. Enter the bash prompt on from the CLI prompt and enable the source.  This will run for 1800 seconds
@@ -170,6 +312,22 @@ Advanced Networking for Media Engineers
             host1>ena
             host1#bash
             [arista@host1 ~]$ /mnt/flash/mcast.source.sh
+
+
+        **Example:**
+        **Verification:**
+
+        .. code-block:: text
+
+            <TBD>
+
+        **Example:**
+        **Verification:**
+
+        .. code-block:: text
+
+            <tbd>
+
 
 9. Start Receiver on Host 2
 
@@ -182,6 +340,21 @@ Advanced Networking for Media Engineers
             host2#conf t
             host2#bash
             [arista@host2 ~]$ /mnt/flash/mcast.receiver.sh
+
+        **Example:**
+        **Verification:**
+
+        .. code-block:: text
+
+            <TBD>
+
+        **Example:**
+        **Verification:**
+
+        .. code-block:: text
+
+            <TBD>
+
 
 10. Observe the multicast table on Leaf 1
 
@@ -219,6 +392,8 @@ Advanced Networking for Media Engineers
               172.16.55.2, 0:02:24, flags: SLN
                 Incoming interface: Vlan55
                 RPF route: [U] 172.16.55.0/24 [0/1]
+
+
 
 
 11. Observe the multicast table on Leaf 4
