@@ -1,0 +1,19 @@
+mpls ldp
+   router-id 4.4.4.4
+   transport-address interface Loopback0
+   no shutdown
+   !
+   pseudowires
+      mtu 9000
+      !
+      pseudowire PW1
+         neighbor 1.1.1.1
+         pseudowire-id 1617
+!
+patch panel
+   patch EOS1-PW1
+      connector 1 interface Ethernet6
+      connector 2 pseudowire ldp PW1
+!
+interface Ethernet6
+   no switchport

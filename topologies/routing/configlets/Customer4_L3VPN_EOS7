@@ -1,0 +1,24 @@
+vrf definition B
+!
+interface Ethernet4
+   description EOS19
+   no switchport
+   vrf forwarding B
+   ip address 10.7.19.7/24
+!
+ip routing vrf B
+!
+route-map RM-ASOVERRIDE permit 10
+   set as-path match all replacement 100
+!
+router bgp 100
+   vrf B
+      rd 7.7.7.7:2
+      route-target import 2:2
+      route-target export 2:2
+      neighbor 10.7.19.19 remote-as 200
+      neighbor 10.7.19.19 route-map RM-ASOVERRIDE out
+      neighbor 10.7.19.19 maximum-routes 12000 
+      !
+      address-family ipv4
+         neighbor 10.7.19.19 activate
