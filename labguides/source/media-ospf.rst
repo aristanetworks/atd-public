@@ -122,7 +122,7 @@ Media OSPF Lab
             router ospf 100
               router-id 10.127.255.4
 
-     **Example:**
+      **Example:**
        
          .. code-block:: text
             
@@ -144,16 +144,16 @@ Media OSPF Lab
 
    2. Specify the network statement which encompasses all the interfaces that will take part in the OSPF process.
 
-        .. code-block:: text
+         .. code-block:: text
 
             configure
             router ospf 100
                network 10.127.0.0/16 area 0.0.0.0
                network 172.16.46.0/24 area 0.0.0.0
                
-     **Example:**
+      **Example:**
 
-         .. code-block:: text
+          .. code-block:: text
          
             leaf4(config)#configure
             leaf4(config)#router ospf 100
