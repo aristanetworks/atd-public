@@ -21,7 +21,7 @@ Media OSPF Lab
 
             
             
-       **Example:**
+      **Example:**
             
          .. code-block:: text  
             
