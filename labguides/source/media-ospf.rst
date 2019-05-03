@@ -122,7 +122,7 @@ Media OSPF Lab
             router ospf 100
               router-id 10.127.255.4
 
-       **Example:**
+     **Example:**
        
          .. code-block:: text
             
@@ -151,7 +151,7 @@ Media OSPF Lab
                network 10.127.0.0/16 area 0.0.0.0
                network 172.16.46.0/24 area 0.0.0.0
                
-       **Example:**
+     **Example:**
 
          .. code-block:: text
          
@@ -173,7 +173,7 @@ Media OSPF Lab
               passive interface loopback0
               passive interface ethernet4
 
-       **Example:**
+     **Example:**
        
          .. code-block:: text
             
@@ -191,7 +191,7 @@ Media OSPF Lab
             show ip ospf database
             show ip route
 
-       **Example**
+     **Example**
        
          .. code-block:: text
             
@@ -285,7 +285,7 @@ Media OSPF Lab
 
             ping 172.16.15.5
 
-      **Example:**
+    **Example:**
       
         .. code-block:: text
             
