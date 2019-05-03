@@ -173,7 +173,7 @@ Media OSPF Lab
               passive interface loopback0
               passive interface ethernet4
 
-     **Example:**
+      **Example:**
        
          .. code-block:: text
             
@@ -191,7 +191,7 @@ Media OSPF Lab
             show ip ospf database
             show ip route
 
-     **Example**
+      **Example**
        
          .. code-block:: text
             
@@ -281,13 +281,13 @@ Media OSPF Lab
 
    1. Log into **Host 2** and verify connectivity with **Host 1**.
 
-        .. code-block:: text
+         .. code-block:: text
 
             ping 172.16.15.5
 
-    **Example:**
+      **Example:**
       
-        .. code-block:: text
+         .. code-block:: text
             
             host2#ping 172.16.15.5
             PING 172.16.15.5 (172.16.15.5) 72(100) bytes of data.
