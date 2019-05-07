@@ -1,16 +1,25 @@
 #!/bin/bash
 
-echo "enabling eAPI"
-#enable eAPI if host is disabled
-ssh -t 192.168.0.31 "bash FastCli -p15 -c $'enable\n config\n  management api http-commands\n no shut'"
-ssh -t 192.168.0.32 "bash FastCli -p15 -c $'enable\n config\n  management api http-commands\n no shut'"
+echo "Prepping host vms and enabling eAPI"
+ssh -t 192.168.0.31 "
+enable
+configure
+aaa authorization exec default local
+management api http-commands
+no shut"
+ssh -t 192.168.0.32 "
+enable
+configure
+aaa authorization exec default local
+management api http-commands
+no shut"
 
 echo "copying configs"
 #copy files over
-scp /home/arista/Broadcaster/default-host1.cfg 192.168.0.31:
-scp /home/arista/Broadcaster/default-host2.cfg 192.168.0.32:
+scp /home/arista/Broadcaster/default-host1.cfg 192.168.0.31:/mnt/flash
+scp /home/arista/Broadcaster/default-host2.cfg 192.168.0.32:/mnt/flash
 
 echo "Loading Configs"
 #config replace
-ssh -t 192.168.0.31 "bash FastCli -p15 -c $'enable\n configure replace flash:default-host1.cfg'"
-ssh -t 192.168.0.32 "bash FastCli -p15 -c $'enable\n configure replace flash:default-host2.cfg'"
+ssh -t 192.168.0.31 "configure replace flash:default-host1.cfg'"
+ssh -t 192.168.0.32 "configure replace flash:default-host2.cfg'"
