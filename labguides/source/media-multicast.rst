@@ -327,11 +327,8 @@ Advanced Networking for Media Engineers
 
     Open a new ssh session leaving the receiver script running
 
-
-
 10. Observe the multicast table on **Leaf 1**
-
-    1. On **Leaf 1**, observe the multicast table for the source.
+     1.  On **Leaf 1**, observe the multicast table for the source.
 
     .. code-block:: text
 
@@ -365,7 +362,7 @@ Advanced Networking for Media Engineers
                 RPF route: [U] 172.16.55.0/24 [0/1]
 
 11. Observe the multicast table on **Leaf 4**
-    1. On **Leaf 4**, observe the multicast table for the receiver using the CLI
+     1. On **Leaf 4**, observe the multicast table for the receiver using the CLI
 
         .. code-block:: text
 
