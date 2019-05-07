@@ -1,7 +1,7 @@
 ---
 options: 
   reset:
-  -   command: "ssh 192.168.0.5 './ConfigureTopology.py' && bash /home/arista/pushHostDefaultConfig.sh"
+  -   command: "ssh 192.168.0.5 './ConfigureTopology.py' && bash /home/arista/Broadcaster/pushHostDefaultConfig.sh"
       description: "Reset All Devices to Base (reset)"
   bgp: 
   -   command: "ssh 192.168.0.5 './ConfigureTopology.py -t bgp'"
