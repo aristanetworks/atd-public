@@ -4,7 +4,7 @@
 # wget from github file(s) if they do not exist
 # Configlet(s)
 
-wget https://github.com/aristanetworks/atd-public/raw/Broadcaster-Training/topologies/datacenter/configlets/Broadcaster.zip
+wget https://github.com/aristanetworks/atd-public/raw/Broadcaster-Training/topologies/datacenter/files/Broadcaster/Broadcaster.zip
 
 #Jump Host Files
 
