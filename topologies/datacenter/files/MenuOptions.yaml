@@ -1,8 +1,7 @@
 ---
 options: 
   reset:
-  -   command: "ssh 192.168.0.5 './ConfigureTopology.py'"
-  -   command: "bash /home/arista/pushHostDefaultConfig.sh"
+  -   command: "ssh 192.168.0.5 './ConfigureTopology.py' && bash /home/arista/pushHostDefaultConfig.sh"
       description: "Reset All Devices to Base (reset)"
   bgp: 
   -   command: "ssh 192.168.0.5 './ConfigureTopology.py -t bgp'"
@@ -24,8 +23,7 @@ options:
       description: "VXLAN Lab (vxlan) excludes leaf3 instead of leaf4"
 
   media:
-    - command: "bash /home/arista/pushHostMediaConfig.sh"
-    - command: "/usr/local/bin/media.py"
+  -   command: "bash /home/arista/Broadcaster/pushHostMediaConfig.sh && media.py"
       description: "Broadcast Engineer Training (media)"
 
 labconfiglets:
