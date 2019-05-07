@@ -7,8 +7,8 @@ ssh -t 192.168.0.32 "bash FastCli -p15 -c $'enable\n config\n  management api ht
 
 echo "copying configs"
 #copy files over
-scp /home/arista/default-host1.cfg 192.168.0.31:
-scp /home/arista/default-host2.cfg 192.168.0.32:
+scp /home/arista/Broadcaster/default-host1.cfg 192.168.0.31:
+scp /home/arista/Broadcaster/default-host2.cfg 192.168.0.32:
 
 echo "Loading Configs"
 #config replace
