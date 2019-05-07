@@ -12,6 +12,7 @@ chmod +x /home/arista/Broadcaster/mcast-source.sh
 chmod +x /home/arista/Broadcaster/mcast-receiver.sh
 
 echo "Moving media.py"
+#move vs copy? could error out this script on next run.
 sudo mv /home/arista/Broadcaster/media.py /usr/local/bin/
 
 echo "Pushing configlets to CVP"
