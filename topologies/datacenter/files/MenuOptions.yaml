@@ -21,6 +21,8 @@ options:
   vxlan: 
   -   command: "ssh 192.168.0.5 './ConfigureTopology.py -t vxlan'"
       description: "VXLAN Lab (vxlan) excludes leaf3 instead of leaf4"
+  media:
+  -   command: "bash /home/arista/pushHostMediaConfig.sh && media.py"
 labconfiglets:
   mlag:
     spine1:
