@@ -8,8 +8,8 @@ ssh -t 192.168.0.32 "bash FastCli -p15 -c $'enable\n config\n  management api ht
 echo "Updating File Permissions"
 chmod +x /home/arista/Broadcaster/media.py
 chmod +x /home/arista/Broadcaster/configletPushToCVP.sh
-chmod +x /home/arista/Broadcaster/mcast.source.sh
-chmod +x /home/arista/Broadcaster/mcast.receiver.sh
+chmod +x /home/arista/Broadcaster/mcast-source.sh
+chmod +x /home/arista/Broadcaster/mcast-receiver.sh
 
 echo "Moving media.py"
 sudo mv /home/arista/Broadcaster/media.py /usr/local/bin/
@@ -19,10 +19,10 @@ bash /home/arista/Broadcaster/configletPushToCVP.sh
 
 echo "Copying Configs"
 #copy files over
-scp /home/arista/media-host1.cfg 192.168.0.31:
-scp /home/arista/media-host2.cfg 192.168.0.32:
-scp /home/arista/mcast.source.sh 192.168.0.31:
-scp /home/arista/mcast.receiver.sh 192.168.0.32:
+scp /home/arista/Broadcaster/media-host1.cfg 192.168.0.31:
+scp /home/arista/Broadcaster/media-host2.cfg 192.168.0.32:
+scp /home/arista/Broadcaster/mcast-source.sh 192.168.0.31:
+scp /home/arista/Broadcaster/mcast-receiver.sh 192.168.0.32:
 
 echo "Loading Configs"
 #config replace

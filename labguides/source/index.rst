@@ -37,8 +37,8 @@ Welcome to the Arista ATD documentation!
    :maxdepth: 1
    :caption: Broadcaster Training
 
-   media-IP.Intro.rst
-   media-STP.SVI.rst
+   media-IP_Intro.rst
+   media-STP_SVI.rst
    media-ospf.rst
    media-bgp.rst
    media-multicast.rst
