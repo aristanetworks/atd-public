@@ -39,6 +39,6 @@ Welcome to the Arista ATD documentation!
 
    media-IP.Intro.rst
    media-STP.SVI.rst
-   media-osfp.rst
+   media-ospf.rst
    media-bgp.rst
    media-multicast.rst
