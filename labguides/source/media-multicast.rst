@@ -119,7 +119,7 @@ Advanced Networking for Media Engineers
         Vlan46                 172.16.46.4/24     up         up              1500
 
 
-5.  Enable OSPF & verify connectivity
+5. Enable OSPF & verify connectivity
     1.  On **Leaf 4**, create a loopback interface & assign an IP to be used as the Router-ID. On **Leaf 4**, enable the OSPF routing process and assign the networks to be advertised
 
     .. code-block:: text
@@ -149,8 +149,6 @@ Advanced Networking for Media Engineers
         leaf4(config-router-ospf)#network 172.16.0.0/24 area 0.0.0.0
         leaf4(config-router-ospf)#network 172.16.46.0/24 area 0.0.0.0
         leaf4(config-router-ospf)#network 172.16.200.24/30 area 0.0.0.0
-
-
 
     **Verification:**
 
@@ -329,7 +327,10 @@ Advanced Networking for Media Engineers
 
     Open a new ssh session leaving the receiver script running
 
+
+
 10. Observe the multicast table on **Leaf 1**
+
     1. On **Leaf 1**, observe the multicast table for the source.
 
     .. code-block:: text
