@@ -2,6 +2,10 @@
 #script to gather files for media lab from Github
 
 # wget from github file(s) if they do not exist
+# mkdir if does not exist., all files in /home/arista/Broadcaster/
+
+mkdir /home/arista/Broadcaster/
+
 # Configlet(s)
 
 wget  https://raw.githubusercontent.com/aristanetworks/atd-public/Broadcaster-Training/topologies/datacenter/files/Broadcaster/Broadcaster.zip -O /home/arista/Broadcaster/
