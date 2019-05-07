@@ -4,15 +4,14 @@
 # wget from github file(s) if they do not exist
 # Configlet(s)
 
-wget https://github.com/aristanetworks/atd-public/raw/Broadcaster-Training/topologies/datacenter/files/Broadcaster/Broadcaster.zip
-
+wget https://raw.githubusercontent.com/aristanetworks/atd-public/Broadcaster-Training/topologies/datacenter/files/Broadcaster/Broadcaster.zip
 #Jump Host Files
-
 
 wget https://raw.githubusercontent.com/aristanetworks/atd-public/Broadcaster-Training/topologies/datacenter/LabFiles/login.py
 wget https://raw.githubusercontent.com/aristanetworks/atd-public/Broadcaster-Training/topologies/datacenter/files/Broadcaster/media.py
 wget https://raw.githubusercontent.com/aristanetworks/atd-public/Broadcaster-Training/topologies/datacenter/files/Broadcaster/pushHostDefaultConfig.sh
 wget https://raw.githubusercontent.com/aristanetworks/atd-public/Broadcaster-Training/topologies/datacenter/files/Broadcaster/pushHostMediaConfig.sh
+wget https://raw.githubusercontent.com/aristanetworks/atd-public/Broadcaster-Training/topologies/datacenter/files/Broadcaster/configletPushToCVP.sh
 
 
 #HostFiles
@@ -35,8 +34,8 @@ sudo mv /home/arista/login.py /usr/local/bin/login.py
 sudo chmod +x /usr/local/bin/media.py
 sudo chmod +x /usr/local/bin/login.py
 sudo chmod +x /home/arista/configletPushToCVP.sh
-sudo chmod +x /home/arista/mcast.source.sh
-sudo chmod +x /home/arista/mcast.receiver.sh
+sudo chmod +x /home/arista/mcast-source.sh
+sudo chmod +x /home/arista/mcast-receiver.sh
 echo "pushing configlets to CVP"
 bash /home/arista/configletPushToCVP.sh
 echo "Applied updated menus - re-login please"
