@@ -8,7 +8,7 @@ mkdir /home/arista/Broadcaster/
 
 # Configlet(s)
 
-wget  https://raw.githubusercontent.com/aristanetworks/atd-public/Broadcaster-Training/topologies/datacenter/files/Broadcaster/Broadcaster.zip -O /home/arista/Broadcaster/
+wget -P /home/arista/Broadcaster/ https://raw.githubusercontent.com/aristanetworks/atd-public/Broadcaster-Training/topologies/datacenter/files/Broadcaster/Broadcaster.zip
 #Jump Host Files
 
 wget https://raw.githubusercontent.com/aristanetworks/atd-public/Broadcaster-Training/topologies/datacenter/LabFiles/login.py
