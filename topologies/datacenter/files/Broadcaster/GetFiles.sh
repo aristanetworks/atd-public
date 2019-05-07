@@ -1,5 +1,5 @@
 #!/bin/bash
-#script to gather files for lab from Github
+#script to gather files for media lab from Github
 
 # wget from github file(s) if they do not exist
 # Configlet(s)
