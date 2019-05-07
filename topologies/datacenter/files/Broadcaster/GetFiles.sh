@@ -8,26 +8,25 @@ wget https://github.com/aristanetworks/atd-public/raw/Broadcaster-Training/topol
 
 #Jump Host Files
 
-wget https://github.com/aristanetworks/atd-public/raw/Broadcaster-Training/topologies/datacenter/LabFiles/login.py
-wget https://github.com/aristanetworks/atd-public/raw/Broadcaster-Training/topologies/datacenter/LabFiles/Broadcaster/media.py
-wget https://github.com/aristanetworks/atd-public/raw/Broadcaster-Training/topologies/datacenter/LabFiles/Broadcaster/configletPushToCVP.sh
-wget https://github.com/aristanetworks/atd-public/raw/Broadcaster-Training/topologies/datacenter/LabFiles/Broadcaster/pushHostDefaultConfig.sh
-wget https://github.com/aristanetworks/atd-public/raw/Broadcaster-Training/topologies/datacenter/LabFiles/Broadcaster/pushHostMediaConfig.sh
 
+wget https://raw.githubusercontent.com/aristanetworks/atd-public/Broadcaster-Training/topologies/datacenter/LabFiles/login.py
+wget https://raw.githubusercontent.com/aristanetworks/atd-public/Broadcaster-Training/topologies/datacenter/files/Broadcaster/media.py
+wget https://raw.githubusercontent.com/aristanetworks/atd-public/Broadcaster-Training/topologies/datacenter/files/Broadcaster/pushHostDefaultConfig.sh
+wget https://raw.githubusercontent.com/aristanetworks/atd-public/Broadcaster-Training/topologies/datacenter/files/Broadcaster/pushHostMediaConfig.sh
 
 
 #HostFiles
 
-wget https://github.com/aristanetworks/atd-public/raw/Broadcaster-Training/topologies/datacenter/LabFiles/Broadcaster/default-host1.cfg
-wget https://github.com/aristanetworks/atd-public/raw/Broadcaster-Training/topologies/datacenter/LabFiles/Broadcaster/default-host2.cfg
-wget https://github.com/aristanetworks/atd-public/raw/Broadcaster-Training/topologies/datacenter/LabFiles/Broadcaster/media-host1.cfg
-wget https://github.com/aristanetworks/atd-public/raw/Broadcaster-Training/topologies/datacenter/LabFiles/Broadcaster/media-host2.cfg
-wget https://github.com/aristanetworks/atd-public/raw/Broadcaster-Training/topologies/datacenter/LabFiles/Broadcaster/mcast.source.sh
-wget https://github.com/aristanetworks/atd-public/raw/Broadcaster-Training/topologies/datacenter/LabFiles/Broadcaster/mcast.receiver.sh
+wget https://raw.githubusercontent.com/aristanetworks/atd-public/Broadcaster-Training/topologies/datacenter/files/Broadcaster/default-host1.cfg
+wget https://raw.githubusercontent.com/aristanetworks/atd-public/Broadcaster-Training/topologies/datacenter/files/Broadcaster/default-host2.cfg
+wget https://raw.githubusercontent.com/aristanetworks/atd-public/Broadcaster-Training/topologies/datacenter/files/Broadcaster/media-host1.cfg
+wget https://raw.githubusercontent.com/aristanetworks/atd-public/Broadcaster-Training/topologies/datacenter/files/Broadcaster/media-host2.cfg
+wget https://raw.githubusercontent.com/aristanetworks/atd-public/Broadcaster-Training/topologies/datacenter/files/Broadcaster/mcast-source.sh
+wget https://raw.githubusercontent.com/aristanetworks/atd-public/Broadcaster-Training/topologies/datacenter/files/Broadcaster/mcast-receiver.sh
 
 #CVP Files
 
-wget https://github.com/aristanetworks/atd-public/raw/Broadcaster-Training/topologies/datacenter/LabFiles/ConfigureTopology.py
+wget https://raw.githubusercontent.com/aristanetworks/atd-public/Broadcaster-Training/topologies/datacenter/LabFiles/ConfigureTopology.py
 
 #Move Files
 scp /home/arista/ConfigureTopology.py arista@192.168.0.5:
