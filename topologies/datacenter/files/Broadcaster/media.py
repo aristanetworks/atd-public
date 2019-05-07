@@ -48,9 +48,9 @@ Device Menu:            Lab Controls
    6. Leaf4               16. Media - OSPF (media-ospf)
    7. Host1               17. Media - BGP  (media-bgp)
    8. Host2               18. Media - Multicast (multicast)
-   9. Screen (screen)     19.
-   10. Shell (bash)       20.
-   11. Reset All Devices to Base (reset)
+   9. Screen (screen)     
+   10. Shell (bash)       
+   11. Reset All Devices to Broadcaster Base (reset)
    12. Exit/Quit & return to main menu (exit)
     """)
     ans=raw_input("What would you like to do? ")
@@ -76,7 +76,7 @@ Device Menu:            Lab Controls
       os.system('/bin/bash')
     elif ans=="11" or ans=="reset":
       os.system("ssh 192.168.0.5 './ConfigureTopology.py'")
-      os.system("bash /home/arista/pushHostMediaConfig.sh")
+      os.system("bash /home/arista/Broadcaster/pushHostMediaConfig.sh")
     elif ans=="12":
       quit()
     elif ans=="13" or ans=="return":
@@ -91,10 +91,6 @@ Device Menu:            Lab Controls
       os.system("ssh 192.168.0.5 './ConfigureTopology.py -t media-bgp' >> /tmp/ConfigureTopology.log")
     elif ans=="18" or ans=="multicast":
       os.system("ssh 192.168.0.5 './ConfigureTopology.py -t multicast' >> /tmp/ConfigureTopology.log")
-    elif ans=="19" or ans=="":
-      print("\n Lab not available")
-    elif ans=="20" or ans=="":
-      print("\n Lab not available")
     elif ans=="exit":
       quit()
     elif ans !="":
