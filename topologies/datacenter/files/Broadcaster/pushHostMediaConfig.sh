@@ -7,6 +7,7 @@ configure
 aaa authorization exec default local
 management api http-commands
 no shut"
+
 ssh -t 192.168.0.32 "
 enable
 configure
