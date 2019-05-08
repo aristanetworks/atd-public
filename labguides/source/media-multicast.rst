@@ -262,7 +262,7 @@ Advanced Networking for Media Engineers
 
         What would you like to do? 7
         host1#bash
-        [arista@host1 ~]$ /mnt/flash/mcast.source.sh
+        [arista@host1 ~]$ /mnt/flash/mcast-source.sh
 
     **Verification:**
 
@@ -306,7 +306,7 @@ Advanced Networking for Media Engineers
 
         What would you like to do? 8
         host2#bash
-        [arista@host2 ~]$ /mnt/flash/mcast.receiver.sh
+        [arista@host2 ~]$ /mnt/flash/mcast-receiver.sh
 
     **Verification:**
 
