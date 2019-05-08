@@ -227,7 +227,6 @@ Advanced Networking for Media Engineers
           ip pim sparse-mode
         !
 
-
     **Example:**
 
     .. code-block:: text
@@ -256,6 +255,8 @@ Advanced Networking for Media Engineers
 
 8. Start Server on the Host 1
     1. Going back to the menu screen, select **Host 1**. Enter the bash prompt on from the CLI prompt and enable the source.  This will run for 1800 seconds
+
+    **Example:**
 
     .. code-block:: text
 
@@ -299,6 +300,8 @@ Advanced Networking for Media Engineers
 9. Start Receiver on Host 2
     1. Going back to the menu screen, select Host 2. Enter the bash prompt on from the CLI prompt and enable the receiver.
 
+    **Example:**
+
     .. code-block:: text
 
         What would you like to do? 8
@@ -330,69 +333,73 @@ Advanced Networking for Media Engineers
 10. Observe the multicast table on **Leaf 1**
      1.  On **Leaf 1**, observe the multicast table for the source.
 
+    **Example:**
+
     .. code-block:: text
 
         leaf1#show ip mroute
 
-            RPF route: U - From unicast routing table
-                       M - From multicast routing table
-            239.103.1.1
-              0.0.0.0, 0:01:56, RP 172.16.0.3, flags: W
-                Incoming interface: Register
-                Outgoing interface list:
-                  Ethernet2
-              172.16.55.2, 0:02:24, flags: SLN
-                Incoming interface: Vlan55
-                RPF route: [U] 172.16.55.0/24 [0/1]
-                Outgoing interface list:
-                  Ethernet2
-            239.103.1.2
-              0.0.0.0, 0:01:56, RP 172.16.0.3, flags: W
-                Incoming interface: Register
-                Outgoing interface list:
-                  Ethernet2
-              172.16.55.2, 0:02:24, flags: SLN
-            Incoming interface: Vlan55
-                RPF route: [U] 172.16.55.0/24 [0/1]
-                Outgoing interface list:
-                  Ethernet2
-            239.103.1.3
-              172.16.55.2, 0:02:24, flags: SLN
-                Incoming interface: Vlan55
-                RPF route: [U] 172.16.55.0/24 [0/1]
+        RPF route: U - From unicast routing table
+                   M - From multicast routing table
+        239.103.1.1
+          0.0.0.0, 0:01:56, RP 172.16.0.1, flags: W
+            Incoming interface: Register
+            Outgoing interface list:
+              Ethernet2
+          172.16.15.5, 0:02:24, flags: SLN
+            Incoming interface: Vlan15
+            RPF route: [U] 172.16.15.0/24 [0/1]
+            Outgoing interface list:
+              Ethernet2
+        239.103.1.2
+          0.0.0.0, 0:01:56, RP 172.16.0.1, flags: W
+            Incoming interface: Register
+            Outgoing interface list:
+              Ethernet2
+          172.16.15.5, 0:02:24, flags: SLN
+            Incoming interface: Vlan15
+            RPF route: [U] 172.16.15.0/24 [0/1]
+            Outgoing interface list:
+              Ethernet2
+        239.103.1.3
+          172.16.15.5, 0:02:24, flags: SLN
+            Incoming interface: Vlan15
+            RPF route: [U] 172.16.15.0/24 [0/1]
+            Outgoing interface list:
+              Ethernet2
 
 11. Observe the multicast table on **Leaf 4**
      1. On **Leaf 4**, observe the multicast table for the receiver using the CLI
 
-        .. code-block:: text
+    **Example:**
 
-            What would you like to do? 6
-            leaf4>ena
-            leaf4#show ip mroute
+    .. code-block:: text
 
-            RPF route: U - From unicast routing table
-                       M - From multicast routing table
-            239.103.1.1
-              0.0.0.0, 0:00:17, RP 172.16.0.3, flags: W
-                Incoming interface: Ethernet3
-                RPF route: [U] 172.16.0.3/32 [110/40] via 172.16.200.25
-                Outgoing interface list:
-                  Vlan66
-              172.16.55.2, 0:00:13, flags: S
-                Incoming interface: Ethernet3
-                RPF route: [U] 172.16.55.0/24 [110/40] via 172.16.200.25
-                Outgoing interface list:
-                  Vlan66
-            239.103.1.2
-              0.0.0.0, 0:00:17, RP 172.16.0.3, flags: W
-                Incoming interface: Ethernet3
-                RPF route: [U] 172.16.0.3/32 [110/40] via 172.16.200.25
-                Outgoing interface list:
-                  Vlan66
-              172.16.55.2, 0:00:13, flags: S
-                Incoming interface: Ethernet3
-                RPF route: [U] 172.16.55.0/24 [110/40] via 172.16.200.25
-                Outgoing interface list:
-                  Vlan66
+        leaf4#show ip mroute
+
+        RPF route: U - From unicast routing table
+                   M - From multicast routing table
+        239.103.1.1
+          0.0.0.0, 0:00:17, RP 172.16.0.1, flags: W
+            Incoming interface: Ethernet3
+            RPF route: [U] 172.16.0.3/32 [110/40] via 172.16.200.25
+            Outgoing interface list:
+              Vlan46
+          172.16.15.5, 0:00:13, flags: S
+            Incoming interface: Ethernet3
+            RPF route: [U] 172.16.15.0/24 [110/40] via 172.16.200.25
+            Outgoing interface list:
+              Vlan46
+        239.103.1.2
+          0.0.0.0, 0:00:17, RP 172.16.0.1, flags: W
+            Incoming interface: Ethernet3
+            RPF route: [U] 172.16.0.3/32 [110/40] via 172.16.200.25
+            Outgoing interface list:
+              Vlan46
+          172.16.15.5, 0:00:13, flags: S
+            Incoming interface: Ethernet3
+            RPF route: [U] 172.16.15.0/24 [110/40] via 172.16.200.25
+            Outgoing interface list:
+              Vlan46
 
 **LAB COMPLETE**
