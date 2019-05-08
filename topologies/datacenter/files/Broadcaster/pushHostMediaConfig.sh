@@ -12,6 +12,7 @@ configure
 aaa authorization exec default local"
 
 echo "Updating File Permissions"
+sudo chown -R arista:arista /home/arista/Broadcaster/
 chmod +x /home/arista/Broadcaster/media.py
 chmod +x /home/arista/Broadcaster/configletPushToCVP.sh
 chmod +x /home/arista/Broadcaster/mcast-source.sh
