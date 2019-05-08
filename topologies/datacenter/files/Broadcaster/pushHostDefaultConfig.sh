@@ -21,5 +21,5 @@ scp /home/arista/Broadcaster/default-host2.cfg 192.168.0.32:/mnt/flash
 
 echo "Loading Configs"
 #config replace
-ssh -t 192.168.0.31 "configure replace flash:default-host1.cfg'"
-ssh -t 192.168.0.32 "configure replace flash:default-host2.cfg'"
+ssh -t 192.168.0.31 "configure replace flash:default-host1.cfg"
+ssh -t 192.168.0.32 "configure replace flash:default-host2.cfg"

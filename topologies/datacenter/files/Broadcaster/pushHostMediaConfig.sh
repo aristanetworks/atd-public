@@ -38,5 +38,5 @@ scp /home/arista/Broadcaster/mcast-receiver.sh 192.168.0.32:/mnt/flash
 echo "Loading Configs"
 #config replace
 ssh -t 192.168.0.31 "configure replace flash:media-host1.cfg"
-ssh -t 192.168.0.32 "configure replace flash:media-host1.cfg"
+ssh -t 192.168.0.32 "configure replace flash:media-host2.cfg"
 
