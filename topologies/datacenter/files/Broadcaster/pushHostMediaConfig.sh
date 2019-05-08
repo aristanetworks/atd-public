@@ -4,16 +4,12 @@ echo "Prepping host vms and enabling eAPI"
 ssh -t 192.168.0.31 "
 enable
 configure
-aaa authorization exec default local
-management api http-commands
-no shut"
+aaa authorization exec default local"
 
 ssh -t 192.168.0.32 "
 enable
 configure
-aaa authorization exec default local
-management api http-commands
-no shut"
+aaa authorization exec default local"
 
 echo "Updating File Permissions"
 chmod +x /home/arista/Broadcaster/media.py
