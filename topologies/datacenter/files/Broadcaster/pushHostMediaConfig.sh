@@ -26,13 +26,12 @@ echo "Moving media.py"
 # We'll move it back to a cp, it does error when a mv cmd.  However doesn't crash the script.
 sudo cp /home/arista/Broadcaster/media.py /usr/local/bin/
 
-echo "Pushing configlets to CVP"
-bash /home/arista/Broadcaster/configletPushToCVP.sh
-
 echo "Copying Configs"
 #copy files over
 scp /home/arista/Broadcaster/media-host1.cfg 192.168.0.31:/mnt/flash
 scp /home/arista/Broadcaster/media-host2.cfg 192.168.0.32:/mnt/flash
+scp /home/arista/Broadcaster/default-host1.cfg 192.168.0.31:/mnt/flash
+scp /home/arista/Broadcaster/default-host2.cfg 192.168.0.32:/mnt/flash
 scp /home/arista/Broadcaster/mcast-source.sh 192.168.0.31:/mnt/flash
 scp /home/arista/Broadcaster/mcast-receiver.sh 192.168.0.32:/mnt/flash
 

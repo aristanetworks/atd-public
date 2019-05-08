@@ -1,0 +1,12 @@
+interface Ethernet1
+   shutdown
+interface Ethernet2
+   shutdown
+interface Ethernet3
+   shutdown
+   no switchport
+interface Ethernet4
+   shutdown
+   no switchport
+interface Ethernet5
+   shutdown

@@ -1,0 +1,28 @@
+ip pim rp-address 172.16.0.1
+interface Ethernet1
+   mtu 9214
+   no switchport
+   ip address 172.16.200.34/30
+   ip pim sparse-mode
+interface Ethernet2
+   shutdown
+interface Ethernet3
+   shutdown
+interface Ethernet4
+   mtu 9214
+   no switchport
+   ip address 172.16.200.25/30
+   ip pim sparse-mode
+interface Ethernet5
+   shutdown
+interface Loopback0
+   ip address 172.16.0.3/32
+ip routing
+ip multicast-routing
+router ospf 6500
+   router-id 172.16.0.3
+   passive-interface Loopback0
+   network 172.16.0.0/24 area 0.0.0.0
+   network 172.16.200.24/30 area 0.0.0.0
+   network 172.16.200.32/30 area 0.0.0.0
+   max-lsa 12000
