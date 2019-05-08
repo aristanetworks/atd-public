@@ -111,7 +111,7 @@ Media BGP Lab
             leaf4(config-router-bgp)#router-id 10.127.255.4
 
        .. note::
-       The process number for BGP corresponds to the autonomous-system number (ASN) the router is associated with and is globally significant.  These values should not be chosen randomly and should be part of a larger design scheme for the environment.
+        The process number for BGP corresponds to the autonomous-system number (ASN) the router is associated with and is globally significant.  These values should not be chosen randomly and should be part of a larger design scheme for the environment.
 
    2. BGP neighbours are explicitly defined so only the desired neighbors create a session with.  A TCP connection is established between the two peers (using port 179) in which the routing information can be securely transported between the peers.
 
@@ -132,7 +132,7 @@ Media BGP Lab
       The BGP session we are setting up on **Leaf4** to **Spine2** is considered a point-to-point iBGP (Internal BGP) connection because they are a part of the same autonomous-system (AS).
 
         .. note::
-        Although there are mechanisms to allow all incoming BGP sessions to be established, these are typically corner cases in which you will use that approach. It is best common practice to specify your desired neighbor to establish a session with along with a md5 hash password for an extra level of security.
+          Although there are mechanisms to allow all incoming BGP sessions to be established, these are typically corner cases in which you will use that approach. It is best common practice to specify your desired neighbor to establish a session with along with a md5 hash password for an extra level of security.
 
    3. By default, the BGP protocol will only re-advertise eBGP (external) prefixes it has leaned to its other iBGP / eBGP peers.  We will need to tell the BGP process what to advertise by various methods.  In this lab we want the router to advertise its connected (vlan) prefix
 
