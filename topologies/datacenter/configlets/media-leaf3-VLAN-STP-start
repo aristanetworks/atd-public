@@ -8,3 +8,11 @@ interface Ethernet4
    shutdown
 interface Ethernet5
    shutdown
+!
+banner motd
+******************************
+*** Note Leaf Switch 3  is ***
+*** not used for this lab. ***
+*** Please return to menu  ***
+******************************
+EOF
