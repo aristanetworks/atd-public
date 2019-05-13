@@ -10,7 +10,7 @@ Layer 3 Leaf-Spine
 
 1. Log into the **LabAccess** jumpserver:
 
-   1. Type `bgp` at the prompt. The script will configure the datacenter with the exception of **Leaf4**.
+   1. Type ``bgp`` at the prompt. The script will configure the datacenter with the exception of **Leaf4**.
 
 2. Configure SVI and VARP Virtual IP on the **Leaf4** switch using the following criteria
 
