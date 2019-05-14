@@ -11,7 +11,7 @@ rm -rf /var/www/html/atd/labguides/
 cp -u /tmp/atd/topologies/all/login.py /usr/local/bin/login.py
 
 # Add files to arista home
-rysnc -av /tmp/atd/topologies/$TOPO/files/ /home/arista
+rsync -av /tmp/atd/topologies/$TOPO/files/ /home/arista
 
 # Update file permissions in /home/arista
 chown -R arista:arista /home/arista
