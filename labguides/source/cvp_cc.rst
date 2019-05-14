@@ -111,13 +111,13 @@ TASK 3: Rollback
 
 2. For Rollback Type, select 'Configuration Rollback'. 
 
-3. Select the 'Rollback to' drop down, a calendar will appear. Use the 'Time' scroll bar to 15mins prior to pushing the 'Add_Loopbacks' change control.
+3. Select the 'Rollback to' drop down, a calendar will appear. Use the 'Time' scroll bar to a time prior to pushing the 'Add_Loopbacks' change control.
 
 .. image:: images/cvp_cc15.png
 
 4. Select 'Submit' once the calendar pops up.
 
-5. Review the configuration of 'Rollback to' vs. 'Current Status', then select 'Create CC'.
+5. To review the configuration of 'Rollback to' vs. 'Current Status' select the icon for 'Telemetry' on the far right end of the `Rollback to` section, then select 'Create CC'.
 
 .. image:: images/cvp_cc16.png
    :align: center
