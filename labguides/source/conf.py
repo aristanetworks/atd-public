@@ -61,7 +61,7 @@ html_show_sourcelink = False
 # built documents.
 #
 # The short X.Y version.
-version = u'Version 2.6'
+version = u'Version 2.7'
 # The full version, including alpha/beta/rc tags.
 release = u'1'
 
