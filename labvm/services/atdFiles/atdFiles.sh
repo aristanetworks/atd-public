@@ -11,7 +11,7 @@ rm -rf /var/www/html/atd/labguides/
 cp -u /tmp/atd/topologies/all/login.py /usr/local/bin/login.py
 
 # Add files to arista home
-cp -R /tmp/atd/topologies/$TOPO/files/* /home/arista
+rysnc -av /tmp/atd/topologies/$TOPO/files/ /home/arista
 
 # Update the Arista user password for connecting to the labvm
 sed -i "s/{REPLACE_PWD}/$ARISTA_PWD/g" /tmp/atd/labguides/source/connecting.rst
