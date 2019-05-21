@@ -78,6 +78,7 @@ Device Menu:            Lab Controls
 
       sys.stdout.write("\n")
 
+    print "   97. Screen (screen)"
     print "   98. Shell (bash)"
     print "   99. Quit (quit/exit)"
     print ""
@@ -89,6 +90,9 @@ Device Menu:            Lab Controls
       counter += 1
       if ans==str(counter) or ans==veos['hostname']:
         os.system("ssh "+veos['ip'])
+        break
+      elif ans=="97" or ans=="screen":
+        os.system('/usr/bin/screen')
         break
       elif ans=="98" or ans=="bash" or ans=="shell":
         os.system("/bin/bash")
