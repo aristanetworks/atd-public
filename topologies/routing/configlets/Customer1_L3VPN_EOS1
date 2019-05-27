@@ -1,0 +1,22 @@
+vrf definition A
+!
+ip routing vrf A
+!
+interface Ethernet3
+   description EOS11
+   no switchport
+   vrf forwarding A
+   ip address 10.1.11.1/24
+!
+router bgp 100
+maximum-paths 2
+   vrf A
+      rd 1.1.1.1:1
+      route-target import 1:1
+      route-target export 1:1
+      neighbor 10.1.11.11 remote-as 123
+      neighbor 10.1.11.11 maximum-routes 12000 
+      !
+      address-family ipv4
+         neighbor 10.1.11.11 activate
+!

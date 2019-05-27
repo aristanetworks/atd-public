@@ -1,0 +1,105 @@
+---
+options: 
+  reset:
+  -   command: "ssh 192.168.0.5 './ConfigureTopology.py' && bash /home/arista/Broadcaster/pushHostDefaultConfig.sh"
+      description: "Reset All Devices to Base (reset)"
+  bgp: 
+  -   command: "ssh 192.168.0.5 './ConfigureTopology.py -t bgp'"
+      description: "BGP Lab (bgp)"
+  cvp: 
+  -   command: "ssh 192.168.0.5 './ConfigureTopology.py -t cvp'"
+      description: "CVP lab (cvp)"
+  l2evpn: 
+  -   command: "ssh 192.168.0.5 './ConfigureTopology.py -t l2evpn -e leaf3'"
+      description: "EVPN Type 2 Lab (l2evpn) excludes leaf3 instead of leaf4"
+  l3evpn: 
+  -   command: "ssh 192.168.0.5 './ConfigureTopology.py -t l3evpn -e leaf3'"
+      description: "EVPN Type 5 Lab (l3evpn) excludes leaf3 instead of leaf4"
+  mlag: 
+  -   command: "ssh 192.168.0.5 './ConfigureTopology.py -t mlag -e leaf4'"
+      description: "MLAG Lab (mlag)"
+  vxlan: 
+  -   command: "ssh 192.168.0.5 './ConfigureTopology.py -t vxlan'"
+      description: "VXLAN Lab (vxlan) excludes leaf3 instead of leaf4"
+  media:
+  -   command: "bash /home/arista/Broadcaster/pushHostMediaConfig.sh && media.py"
+      description: "Broadcast Engineer Training (media)"
+labconfiglets:
+  mlag:
+    spine1:
+      - "Spine1-MLAG-Lab"
+    spine2:
+      - "Spine2-MLAG-Lab"
+    leaf1:
+      - "Leaf1-MLAG-Lab"
+    leaf2:
+      - "Leaf2-MLAG-Lab"
+    leaf3:
+      - "Leaf3-MLAG-Lab"
+    leaf4:
+      - "Leaf4-MLAG-Lab"
+  bgp:
+    spine1:
+      - "Spine1-BGP-Lab"
+    spine2:
+      - "Spine2-BGP-Lab"
+    leaf1:
+      - "Leaf1-BGP-Lab"
+    leaf2:
+      - "Leaf2-BGP-Lab"
+    leaf3:
+      - "Leaf3-BGP-Lab"
+    leaf4:
+      - "Leaf4-BGP-Lab"
+  vxlan:
+    spine1:
+      - "Spine1-BGP-Lab"
+    spine2:
+      - "Spine2-BGP-Lab"
+    leaf1:
+      - "Leaf1-VXLAN-Lab"
+    leaf2:
+      - "Leaf2-VXLAN-Lab"
+    leaf3:
+      - "Leaf3-VXLAN-Lab"
+    leaf4:
+      - "Leaf4-VXLAN-Lab"
+  l2evpn:
+    spine1:
+      - "Spine1-L2EVPN-Lab"
+    spine2:
+      - "Spine2-L2EVPN-Lab"
+    leaf1:
+      - "Leaf1-L2EVPN-Lab"
+    leaf2:
+      - "Leaf2-L2EVPN-Lab"
+    leaf3:
+      - "Leaf3-L2EVPN-Lab"
+    leaf4:
+      - "Leaf4-L2EVPN-Lab"
+  l3evpn:
+    spine1:
+      - "Spine1-L3EVPN-Lab"
+    spine2:
+      - "Spine2-L3EVPN-Lab"
+    leaf1:
+      - "Leaf1-L3EVPN-Lab"
+    leaf2:
+      - "Leaf2-L3EVPN-Lab"
+    leaf3:
+      - "Leaf3-L3EVPN-Lab"
+    leaf4:
+      - "Leaf4-L3EVPN-Lab"
+  cvp:
+    spine1:
+      - "Spine1-BGP-Lab"
+    spine2:
+      - "Spine2-BGP-Lab"
+    leaf1:
+      - "Leaf1-BGP-Lab"
+    leaf2:
+      - "Leaf2-BGP-Lab"
+    leaf3:
+      - "Leaf3-BGP-Lab"
+    leaf4:
+      - "Leaf4-BGP-Lab-Full"
