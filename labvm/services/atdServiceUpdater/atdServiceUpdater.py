@@ -30,12 +30,12 @@ up_service_files = [] # Holds service file names to be restarted/started
 updater_file_name = 'atdServiceUpdater.service'
 
 # Temp path for where repo will be cloned to (include trailing /)
-GIT_TEMP_PATH = '/tmp/git-atd'
+GIT_TEMP_PATH = '/tmp/atd/'
 GIT_PATH = "https://github.com/aristanetworks/atd-public.git"
 GIT_BRANCH = "master"
 
 # Declaration for working directories
-LOCAL_GIT = "{0}/labvm/services".format(GIT_TEMP_PATH)
+LOCAL_GIT = "{0}labvm/services".format(GIT_TEMP_PATH)
 YAML_PATH = "{0}/serviceUpdater.yml".format(LOCAL_GIT)
 
 SERVICE_PATH = '/lib/systemd/system/'
@@ -307,10 +307,6 @@ def main():
         tmp_ser = SERVICES(ser)
         all_services.append(tmp_ser)
     
-    # Check if tmp directory exists, if so delete
-    if isdir(GIT_TEMP_PATH):
-        deleteLocalRepo()
-
     # Check if any files have changed and restart necessary services
     if up_service_files:
         pS("OK","Services to be Restarted: {}".format(", ".join(upser[0] for upser in up_service_files)))

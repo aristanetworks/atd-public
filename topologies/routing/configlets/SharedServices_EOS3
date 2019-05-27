@@ -1,0 +1,27 @@
+vrf definition SVC
+!
+interface Ethernet6
+   description EOS20
+   no switchport
+   vrf forwarding SVC
+   ip address 10.3.20.3/24
+!
+ip routing vrf SVC
+!
+ip prefix-list PL-ALLROUTES seq 10 permit 0.0.0.0/0 le 32
+!
+ip community-list expanded CL-CUST-SVC-IMPORT permit 500:500
+!
+route-map RM-IMPORT-CUST-SVC permit 10
+   match community CL-CUST-SVC-IMPORT exact-match
+!
+router bgp 100
+   vrf SVC
+      rd 3.3.3.3:3
+      route-target import evpn 500:500
+      route-target export 3:3
+      neighbor 10.3.20.20 remote-as 500
+      neighbor 10.3.20.20 maximum-routes 12000 
+      !
+      address-family ipv4
+         neighbor 10.3.20.20 activate

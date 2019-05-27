@@ -1,0 +1,19 @@
+interface Ethernet1
+   no switchport
+   ip address 10.127.23.3/24
+interface Ethernet2
+   shutdown
+interface Ethernet3
+   shutdown
+interface Ethernet4
+   shutdown
+interface Ethernet5
+   no switchport
+   ip address 10.127.34.3/24
+interface Loopback0
+   ip address 10.127.255.3/32
+router ospf 100
+   router-id 10.127.255.3
+   passive-interface Loopback0
+   network 10.127.0.0/16 area 0.0.0.0
+   max-lsa 12000

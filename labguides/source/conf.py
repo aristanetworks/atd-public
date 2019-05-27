@@ -22,6 +22,9 @@
 
 import sphinx_bootstrap_theme
 
+# Importing datetime module to auto update copyright year
+from datetime import date
+
 # -- General configuration ------------------------------------------------
 
 # If your documentation needs a minimal Sphinx version, state it here.
@@ -45,8 +48,9 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
+# Updating copyright var to auto update with current year
 project = u'Arista ATD'
-copyright = u'2019, Arista Networks'
+copyright = u'{0}, Arista Networks'.format(date.today().year)
 author = u'Arista ATD atd-help@arista.com'
 
 # Show Source
@@ -57,7 +61,7 @@ html_show_sourcelink = False
 # built documents.
 #
 # The short X.Y version.
-version = u'Version 2.6'
+version = u'Version 2.7'
 # The full version, including alpha/beta/rc tags.
 release = u'1'
 

@@ -1,0 +1,45 @@
+terminal length 0
+daemon TerminAttr
+   exec /usr/bin/TerminAttr -ingestgrpcurl=192.168.0.5:9910 -taillogs -ingestauth=key, -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -ingestvrf=default
+   no shutdown
+service routing protocols model multi-agent
+hostname eos7
+aaa authentication policy on-success log
+aaa authentication policy on-failure log
+aaa root secret sha512 $6$xvKkJigr3SLt23fw$eTLH9vWAGZH2JzxTdWJlbh/Bc7dzopetT.mXmmBQOgydSXE7LGevA.qGHaGSh7rrdNmzsqsB4GPHSquUqpS5g0
+username admin privilege 15 role network-admin secret sha512 $6$u8TzyADEPApe7ULy$BKaJv5rag8YW2ishA1t2ETWuINXZdefjwxqRMoXiynTSUW6btDrRI6PE4Ig4tzeHGEe3WbtEC1BihBiu0Z1t0/
+username arista privilege 15 role network-admin secret sha512 $6$oZdidujmIcSJhiXd$mOmLeJbY3u49JmFZSOKunH3Rws.7NGnrrFcjzTaLgSK0llB03xVEcYTKzPRs0ZbDzuV7QpDMZcwjxlHXJWQU3.
+username cvpadmin privilege 15 secret sha512 $6$qx23orQXpTktxB2s$PyooyETPhvJ69yow1WB.wqB3oOG9PCQaNSqgaW1PC9pG7IM0Gs6Lyt7ARKIMmwcTzRKGC9808OXcuigWRlBbn1
+username ec2-user nopassword
+username ec2-user sshkey ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCHEDh9HDGbWA58rkYi6M6RTgVeSQl1ilIBOIhzJy6QSevBHtUUDijGIlbBOoGZl5JHRn8UvmdKQBN5ygAUbGOE4sbh9n8BPrlsg1osaN2pwE73JWMSI50pSLCQO/3HBpwHyQ3bo5ZYLj0MzpKEMatMe7gy5pkjF4P0AKU0s9/qo9ixXlWHDw/9DJCfucUk6zwBiTUJxPKTskTFWvDRr/Yo+GUz5of9i/jIA37ux/20RjVuedqy3+LoYbwD7jYUJlq525g+OAZwIY+07Nz8alpBayW+asYKBosD5kMDrf+kLmFGbsNxYXJCEjEuEmDw7fQt5Gscos2BRG4Egcik1T0p
+interface Ethernet1
+   description EOS3
+   no switchport
+   ip address 10.3.7.7/24
+interface Ethernet2
+   description EOS10
+interface Ethernet3
+   description EOS1
+   no switchport
+   ip address 10.1.7.7/24
+interface Ethernet4
+   description EOS19
+   no switchport
+   ip address 10.7.19.7/24
+interface Loopback0
+   ip address 7.7.7.7/32
+interface Management1
+   ip address 192.168.0.16/24
+   no lldp transmit
+event-handler ovs-restart
+   trigger on-boot
+   action bash sudo systemctl restart openvswitch
+   delay 30
+   asynchronous
+ip access-list ALL
+   permit ip any any
+ip routing
+control-plane
+   ip access-group ALL in
+management api http-commands
+   no shutdown

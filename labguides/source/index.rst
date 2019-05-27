@@ -32,3 +32,13 @@ Welcome to the Arista ATD documentation!
    ansible_and_jinja_templates.rst
    day2_operations.rst
    rollback.rst
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Broadcaster Training
+
+   media-IP_Intro.rst
+   media-STP_SVI.rst
+   media-ospf.rst
+   media-bgp.rst
+   media-multicast.rst

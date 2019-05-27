@@ -5,7 +5,7 @@ Connecting to your lab machine
 If the environment was brought up fresh and you are starting from this point, you can skip step #1.
 
 SSH to the public IP address assigned to the LabAccess jumphost server (this is the IP address shown in the
-"Welcome to Arista's Demo Cloud" picture further below). The username is ``arista`` and the password is ``arista``:
+"Welcome to Arista's Demo Cloud" picture further below). The username is ``arista`` and the password is ``{REPLACE_PWD}``:
 
     .. code-block:: text
 

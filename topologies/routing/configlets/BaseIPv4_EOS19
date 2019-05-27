@@ -1,0 +1,35 @@
+terminal length 0
+daemon TerminAttr
+   exec /usr/bin/TerminAttr -ingestgrpcurl=192.168.0.5:9910 -taillogs -ingestauth=key, -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -ingestvrf=default
+   no shutdown
+service routing protocols model multi-agent
+hostname eos19
+aaa authentication policy on-success log
+aaa authentication policy on-failure log
+aaa root secret sha512 $6$yTF8XRcPz5BtNOl7$9GM4cZjoVZzddpCj9O8dG1KoHUIz4pQ3jsaKEo1EjJQPiRw3JZ6WtPJuJuE4a80hfRHkA/KeiPH.PFqJdIJAP/
+username admin privilege 15 role network-admin secret sha512 $6$ICywGB7ZvfG17aSf$FqRHiTFh4tyiB63sLOuUh4A1mg/CS7LrENzsyZHpPVJWf2v7w60bzJY42y4iktDM.DUwwyYqnflvYpARQTEin.
+username arista privilege 15 role network-admin secret sha512 $6$flCw.qT63FM6ayBA$V/0p1Zk/ZA9qKykPaQnqPKPR2JJXfk97KFmgzZ4PISq9o2IJR4zmgIBqxnu0ATjVDjacwyl5AA24pWZmuYXmG.
+username cvpadmin privilege 15 secret sha512 $6$uLD7zFPPfsO6tqau$KNxWilJ78YEIxKcSQVVhCPODEUB8TCdp5RTSNIYqCBJpooGVi0QHzfo2fIVioHyCVVPyQcG70Pw2tJsMv/m5.0
+username ec2-user nopassword
+username ec2-user sshkey ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCHEDh9HDGbWA58rkYi6M6RTgVeSQl1ilIBOIhzJy6QSevBHtUUDijGIlbBOoGZl5JHRn8UvmdKQBN5ygAUbGOE4sbh9n8BPrlsg1osaN2pwE73JWMSI50pSLCQO/3HBpwHyQ3bo5ZYLj0MzpKEMatMe7gy5pkjF4P0AKU0s9/qo9ixXlWHDw/9DJCfucUk6zwBiTUJxPKTskTFWvDRr/Yo+GUz5of9i/jIA37ux/20RjVuedqy3+LoYbwD7jYUJlq525g+OAZwIY+07Nz8alpBayW+asYKBosD5kMDrf+kLmFGbsNxYXJCEjEuEmDw7fQt5Gscos2BRG4Egcik1T0p
+interface Ethernet1
+   description EOS7
+   no switchport
+   ip address 10.7.19.19/24
+interface Loopback0
+   ip address 19.19.19.19/32
+interface Management1
+   ip address 192.168.0.28/24
+   no lldp transmit
+event-handler ovs-restart
+   trigger on-boot
+   action bash sudo systemctl restart openvswitch
+   delay 30
+   asynchronous
+ip access-list ALL
+   permit ip any any
+ip routing
+control-plane
+   ip access-group ALL in
+management api http-commands
+   no shutdown
