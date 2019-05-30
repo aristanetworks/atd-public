@@ -4,7 +4,6 @@ from ruamel.yaml import YAML
 
 host_info = {}
 ACCESS = '/etc/ACCESS_INFO.yaml'
-#ACCESS = 'ACCESS_INFO.yaml'
 
 host_file = 'hosts'
 
