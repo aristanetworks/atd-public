@@ -97,12 +97,17 @@ def main():
             pro_cfglt = listdir(configlet_location)
             for tmp_cfg in pro_cfglt:
                 if '.py' in tmp_cfg:
-                    pass
+                    pS("INFO","Adding/Updating {0} configlet builder.".format(tmp_cfg))
+                    cbname = tmp_cfg.replace('.py','')
+                    # !!! Add section to check for .form file to import form list options
+                    with open(configlet_location + tmp_cfg,'r') as cfglt:
+                        cvp_clnt.impConfiglet('builder',cbname,cfglt.read())
                 elif '.form' in tmp_cfg:
+                    # Ignoring .form files here
                     pass
                 else:
-                    pS("INFO","Adding/Updating {0} static configlet".format(tmp_cfg))
-                    with open(configlet_location + '/' + tmp_cfg,'r') as cfglt:
+                    pS("INFO","Adding/Updating {0} static configlet.".format(tmp_cfg))
+                    with open(configlet_location + tmp_cfg,'r') as cfglt:
                         cvp_clnt.impConfiglet('static',tmp_cfg,cfglt.read())
         else:
             pS("INFO","No Configlet directory found")
