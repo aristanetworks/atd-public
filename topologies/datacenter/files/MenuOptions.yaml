@@ -1,25 +1,25 @@
 ---
 options: 
   reset:
-  -   command: "/home/arista/ConfigureTopology.py' && bash /home/arista/Broadcaster/pushHostDefaultConfig.sh"
+  -   command: "/home/arista/ConfigureTopology.py && bash /home/arista/Broadcaster/pushHostDefaultConfig.sh"
       description: "Reset All Devices to Base (reset)"
   bgp: 
-  -   command: "/home/arista/ConfigureTopology.py -t bgp'"
+  -   command: "/home/arista/ConfigureTopology.py -t bgp"
       description: "BGP Lab (bgp)"
   cvp: 
-  -   command: "/home/arista/ConfigureTopology.py -t cvp'"
+  -   command: "/home/arista/ConfigureTopology.py -t cvp"
       description: "CVP lab (cvp)"
   l2evpn: 
-  -   command: "/home/arista/ConfigureTopology.py -t l2evpn -e leaf3'"
+  -   command: "/home/arista/ConfigureTopology.py -t l2evpn"
       description: "EVPN Type 2 Lab (l2evpn) excludes leaf3 instead of leaf4"
   l3evpn: 
-  -   command: "/home/arista/ConfigureTopology.py -t l3evpn -e leaf3'"
+  -   command: "/home/arista/ConfigureTopology.py -t l3evpn"
       description: "EVPN Type 5 Lab (l3evpn) excludes leaf3 instead of leaf4"
   mlag: 
-  -   command: "/home/arista/ConfigureTopology.py -t mlag -e leaf4'"
+  -   command: "/home/arista/ConfigureTopology.py -t mlag"
       description: "MLAG Lab (mlag)"
   vxlan: 
-  -   command: "/home/arista/ConfigureTopology.py -t vxlan'"
+  -   command: "/home/arista/ConfigureTopology.py -t vxlan"
       description: "VXLAN Lab (vxlan) excludes leaf3 instead of leaf4"
   media:
   -   command: "bash /home/arista/Broadcaster/pushHostMediaConfig.sh && media.py"
