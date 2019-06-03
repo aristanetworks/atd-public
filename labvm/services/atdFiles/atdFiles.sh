@@ -22,9 +22,6 @@ chown -R arista:arista /home/arista
 sed -i "s/{REPLACE_PWD}/$ARISTA_PWD/g" /tmp/atd/labguides/source/connecting.rst
 sed -i "s/{REPLACE_PWD}/$ARISTA_PWD/g" /tmp/atd/labguides/source/programmability_connecting.rst
 
-# Copy over ConfigureTopology to CVP
-scp /home/arista/ConfigureTopology.py arista@192.168.0.5/~/
-
 # Build the lab guides html files
 cd /tmp/atd/labguides
 make html
