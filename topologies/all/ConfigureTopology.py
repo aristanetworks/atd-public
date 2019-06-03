@@ -9,6 +9,7 @@ from cvprac.cvp_client_errors import CvpLoginError
 import yaml
 
 def remove_configlets(client, device):
+    # Removes all configlets except the ones defined here or starting with SYS_
     # Define base configlets that are to be untouched
     base_configlets = ['AAA', 'VLANs']
 
@@ -28,6 +29,7 @@ def remove_configlets(client, device):
     return
 
 def get_devices(client):
+    # Returns a list of devices
     devices = []
     containers = client.api.get_containers()
     container_list = containers['data']
@@ -41,19 +43,26 @@ def get_devices(client):
     return devices
 
 def update_topology(client, lab, configlets):
+    # Get all the devices in CVP
     devices = get_devices(client)
+    # Loop through all devices
     for device in devices:
+        # Get the actual name of the device
         device_name = device['fqdn'].split('.')[0]
-
+        
+        # Set everything back to the base
         remove_configlets(client, device)
         
+        # Only apply configlets if an actual 'lab' was defined
         if lab != 'reset' and device_name in configlets[lab]:
           lab_configlets = []
-
+        
+          # Define a list of configlets built off of the MenuOptions.yaml
           for configlet_name in configlets[lab][device_name]:
              lab_configlet = client.api.get_configlet_by_name(configlet_name)
              lab_configlets.append({'name': lab_configlet['name'], 'key': lab_configlet['key']})
 
+          # Apply the configlets to the device
           client.api.apply_configlets_to_device('ConfigureTopology', device, lab_configlets)
 
     return
@@ -88,6 +97,7 @@ def main(argv):
 
     lab = 'reset'
 
+    # Parse command arguments
     try:
         opts, args = getopt.getopt(argv,"ht:",["topology="])
     except getopt.GetOptError:
@@ -100,18 +110,23 @@ def main(argv):
         elif opt in ("-t", "--topology"):
             lab = arg
 
+    # List of configlets
     labconfiglets = menuoptions['labconfiglets']
 
+    # Topology from ADC
     topology = accessinfo['topology']
 
+    # CVP Info
     cvlogin = accessinfo['login_info']['cvp']['gui'][0]
     cvip = accessinfo['nodes']['cvp'][0]['internal_ip']
 
     user = 'arista' # someday should be cvlogin['user']
     pwd = 'arista' # cvlogin['pw']
 
+    # Setup the client
     cvp_client = cvprac.cvp_client.CvpClient()
 
+    # Attempt to connect to CVP
     try:
         cvp_client.connect([cvip], user, pwd)
     except CvpLoginError as e:
@@ -119,6 +134,7 @@ def main(argv):
         print e.msg
         sys.exit(2)
 
+    # Make sure option chosen is valid, then configure the topology
     if lab in menuoptions['options']:
       update_topology(cvp_client, lab, labconfiglets)
     else:
