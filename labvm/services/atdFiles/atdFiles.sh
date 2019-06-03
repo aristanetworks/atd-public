@@ -7,8 +7,9 @@ ARISTA_PWD=$(cat /etc/ACCESS_INFO.yaml | shyaml get-value login_info.jump_host.p
 # Clean up previous stuff to make sure it's current
 rm -rf /var/www/html/atd/labguides/
 
-# Make sure login.py is current
+# Make sure login.py and ConfigureTopology.py is current
 cp -u /tmp/atd/topologies/all/login.py /usr/local/bin/login.py
+cp -u /tmp/atd/topologies/all/ConfigureTopology.py /usr/local/bin/ConfigureTopology.py
 
 # Add files to arista home
 rsync -av /tmp/atd/topologies/$TOPO/files/ /home/arista
