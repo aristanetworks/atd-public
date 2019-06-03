@@ -4,6 +4,9 @@
 TOPO=$(cat /etc/ACCESS_INFO.yaml | shyaml get-value topology)
 ARISTA_PWD=$(cat /etc/ACCESS_INFO.yaml | shyaml get-value login_info.jump_host.pw)
 
+# Adding in temporary pip install for rCVP API
+pip install /tmp/atd/topologies/all/rcvp_api-1.4-py2-none-any.whl
+
 # Clean up previous stuff to make sure it's current
 rm -rf /var/www/html/atd/labguides/
 
