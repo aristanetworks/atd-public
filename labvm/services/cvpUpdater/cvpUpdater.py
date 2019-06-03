@@ -187,7 +187,7 @@ if __name__ == '__main__':
         pS("OK","Initial ATD Topo Boot")
         main()
         with open(CVP_CONFIG_FIILE,'w') as tf:
-            tf.write("CVP_CONFIGURED")
+            tf.write("CVP_CONFIGURED\n")
         pS("OK","Completed CVP Configuration")
     else:
         pS("OK","CVP is already configured")
