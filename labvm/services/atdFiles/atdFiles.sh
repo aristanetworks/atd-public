@@ -17,8 +17,8 @@ rsync -av /tmp/atd/topologies/$TOPO/files/ /home/arista
 chown -R arista:arista /home/arista
 
 # Update the Arista user password for connecting to the labvm
-sed -i "s/{REPLACE_PWD}/$ARISTA_PWD/g" /tmp/atd/labguides/source/connecting.rst
-sed -i "s/{REPLACE_PWD}/$ARISTA_PWD/g" /tmp/atd/labguides/source/programmability_connecting.rst
+sed -i "s/{REPLACE_PWD}/$ARISTA_PWD/g" /tmp/atd/topologies/$TOPO/labguides/source/connecting.rst
+sed -i "s/{REPLACE_PWD}/$ARISTA_PWD/g" /tmp/atd/topologies/$TOPO/labguides/source/programmability_connecting.rst
 
 # Copy over ConfigureTopology to CVP
 scp /home/arista/ConfigureTopology.py arista@192.168.0.5/~/
