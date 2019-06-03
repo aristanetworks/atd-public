@@ -8,7 +8,7 @@ import cvprac.cvp_client
 from cvprac.cvp_client_errors import CvpLoginError
 import yaml
 
-DEBUG = false
+DEBUG = False
 
 def remove_configlets(client, device):
     # Removes all configlets except the ones defined here or starting with SYS_
