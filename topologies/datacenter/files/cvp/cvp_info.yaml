@@ -1,9 +1,16 @@
 cvp_info:
   containers:
-    - Tenant
-    - Leaf
-    - Spine
-    - CVX
+    Tenant:
+    Leaf:
+      - leaf1
+      - leaf2
+      - leaf3
+      - leaf4
+    Spine:
+      - spine1
+      - spine2
+    CVX:
+      - cvx01
   snapshots:
     - name: Validate_Routing
       commands:

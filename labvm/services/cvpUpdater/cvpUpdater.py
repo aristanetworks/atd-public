@@ -37,27 +37,34 @@ def checkContainer(cnt):
     if cnt not in CVP_CONTAINERS:
         CVP_CONTAINERS.append(cnt)
 
-def getEosDevice(topo,eosYaml):
+def getEosDevice(topo,eosYaml,cvpMapper):
     """
     Function that Parses through the YAML file and creates a CVPSWITCH class object for each EOS device in the topo file.
     Parameters:
     topo = Topology for the ATD (required)
     eosYAML = vEOS portion of the ACCESS_INFO.yaml file (required)
+    cvpMapper = Dict that maps EOS device to container (required)
     """
     EOS_DEV = []
     for dev in eosYaml:
-        if 'spine' in dev['hostname']:
-            EOS_DEV.append(CVPSWITCH(dev['hostname'],dev['internal_ip'],'Spine'))
-            checkContainer('Spine')
-        elif 'leaf' in dev['hostname']:
-            EOS_DEV.append(CVPSWITCH(dev['hostname'],dev['internal_ip'],'Leaf'))
-            checkContainer('Leaf')
-        elif 'cvx' in dev['hostname']:
-            EOS_DEV.append(CVPSWITCH(dev['hostname'],dev['internal_ip'],'CVX'))
-            checkContainer('CVX')
-        else:
-            EOS_DEV.append(CVPSWITCH(dev['hostname'],dev['internal_ip'],''))
+        try:
+            EOS_DEV.append(CVPSWITCH(dev['hostname'],dev['internal_ip'],cvpMapper[dev['hostname']]))
+            checkContainer(cvpMapper[dev['hostname']])
+        except:
+            EOS_DEV.append(CVPSWITCH(dev['hostname'],dev['internal_ip']))
     return(EOS_DEV)
+
+def eosContainerMapper(cvpYaml):
+    """
+    Function that Parses through the YAML file and maps device to container.
+    Parameters:
+    cvpYaml = cvp containers portion of the cvp_info.yaml file (required)
+    """
+    eMap = {}
+    for cnt in cvpYaml.keys():
+        for eosD in cvpYaml[cnt]:
+            eMap[eosD] = cnt
+    return(eMap)
 
 def pS(mstat,mtype):
     """
@@ -77,7 +84,8 @@ def main():
     cvp_clnt = ""
     atd_yaml = getTopoInfo(topo_file)
     cvp_yaml = getTopoInfo(cvp_file)
-    eos_info = getEosDevice(atd_yaml['topology'],atd_yaml['nodes']['veos'])
+    eos_cnt_map = eosContainerMapper(cvp_yaml['cvp_info']['containers'])
+    eos_info = getEosDevice(atd_yaml['topology'],atd_yaml['nodes']['veos'],eos_cnt_map)
     configlet_location = '/tmp/atd/topologies/{0}/configlets/'.format(atd_yaml['topology'])
     for c_login in atd_yaml['login_info']['cvp']['shell']:
         if c_login['user'] == 'arista':
@@ -114,7 +122,7 @@ def main():
         # ==========================================
         # Add new containers into CVP
         # ==========================================
-        for p_cnt in cvp_yaml['cvp_info']['containers']:
+        for p_cnt in cvp_yaml['cvp_info']['containers'].keys():
             if p_cnt not in cvp_clnt.containers.keys():
                 cvp_clnt.addContainer(p_cnt,"Tenant")
                 cvp_clnt.saveTopology()
