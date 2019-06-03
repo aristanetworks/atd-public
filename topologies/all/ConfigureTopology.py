@@ -54,6 +54,8 @@ def update_topology(client, lab, configlets):
         remove_configlets(client, device)
         
         # Only apply configlets if an actual 'lab' was defined
+        # Only apply configlets to devices that are specified in the 'lab'
+        # If the device isn't specified in the MenuOptions.yaml, it'll be ignored
         if lab != 'reset' and device_name in configlets[lab]:
           lab_configlets = []
         
