@@ -28,16 +28,22 @@ labconfiglets:
   mlag:
     spine1:
       - "Spine1-MLAG-Lab"
+      - "VLANs"
     spine2:
       - "Spine2-MLAG-Lab"
+      - "VLANs"
     leaf1:
       - "Leaf1-MLAG-Lab"
+      - "VLANs"
     leaf2:
       - "Leaf2-MLAG-Lab"
+      - "VLANs"
     leaf3:
       - "Leaf3-MLAG-Lab"
+      - "VLANs"
     leaf4:
       - "Leaf4-MLAG-Lab"
+      - "VLANs"
   bgp:
     spine1:
       - "Spine1-BGP-Lab"
@@ -58,12 +64,16 @@ labconfiglets:
       - "Spine2-BGP-Lab"
     leaf1:
       - "Leaf1-VXLAN-Lab"
+      - "VLANs"
     leaf2:
       - "Leaf2-VXLAN-Lab"
+      - "VLANs"
     leaf3:
       - "Leaf3-VXLAN-Lab"
+      - "VLANs"
     leaf4:
       - "Leaf4-VXLAN-Lab"
+      - "VLANs"
     cvx01:
       - "cvx01-Controller"
   l2evpn:
@@ -73,12 +83,16 @@ labconfiglets:
       - "Spine2-L2EVPN-Lab"
     leaf1:
       - "Leaf1-L2EVPN-Lab"
+      - "VLANs"
     leaf2:
       - "Leaf2-L2EVPN-Lab"
+      - "VLANs"
     leaf3:
       - "Leaf3-L2EVPN-Lab"
+      - "VLANs"
     leaf4:
       - "Leaf4-L2EVPN-Lab"
+      - "VLANs"
   l3evpn:
     spine1:
       - "Spine1-L3EVPN-Lab"
