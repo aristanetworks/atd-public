@@ -9,13 +9,16 @@ from cvprac.cvp_client_errors import CvpLoginError
 import yaml
 
 def remove_configlets(client, device):
-    # Removes all configlets except ones starting with SYS_
+    # Removes all configlets except the ones defined here or starting with SYS_
+    # Define base configlets that are to be untouched
+    base_configlets = ['AAA']
+    
     configlets_to_remove = []
 
     device_id = device['systemMacAddress']
     configlets = client.api.get_configlets_by_device_id(device_id)
     for configlet in configlets:
-        if configlet['name'].startswith('SYS_'):
+        if configlet['name'] in base_configlets or configlet['name'].startswith('SYS_'):
             continue
         else:
             print 'Configlet %s not part of base on %s - Removing from device' % (configlet['name'], device['fqdn'])
