@@ -8,6 +8,8 @@ import cvprac.cvp_client
 from cvprac.cvp_client_errors import CvpLoginError
 import yaml
 
+DEBUG = false
+
 def remove_configlets(client, device):
     # Removes all configlets except the ones defined here or starting with SYS_
     # Define base configlets that are to be untouched
@@ -21,7 +23,8 @@ def remove_configlets(client, device):
         if configlet['name'] in base_configlets or configlet['name'].startswith('SYS_'):
             continue
         else:
-            print 'Configlet %s not part of base on %s - Removing from device' % (configlet['name'], device['fqdn'])
+            if DEBUG:
+               print 'Configlet %s not part of base on %s - Removing from device' % (configlet['name'], device['fqdn'])
             configlets_to_remove.append( {'name': configlet['name'], 'key': configlet['key']} )
 
     client.api.remove_configlets_from_device('ConfigureTopology', device, configlets_to_remove)
@@ -131,8 +134,9 @@ def main(argv):
     try:
         cvp_client.connect([cvip], user, pwd)
     except CvpLoginError as e:
-        print 'CvpLoginError has occured...Error Message:'
-        print e.msg
+        if DEBUG:
+           print 'CvpLoginError has occured...Error Message:'
+           print e.msg
         sys.exit(2)
 
     # Make sure option chosen is valid, then configure the topology
@@ -143,7 +147,8 @@ def main(argv):
 
     # Execute all tasks generated from reset_devices()
     execute_pending_tasks(cvp_client)
-    print 'Completed setting devices to topology: %s' % lab
+    if DEBUG:
+       print 'Completed setting devices to topology: %s' % lab
 
 if __name__ == '__main__':
     main(sys.argv[1:])
