@@ -99,17 +99,29 @@ def main(argv):
     menuoptions = yaml.safe_load(f)
     f.close()
 
+    options = menuoptions['options']
+    # Check to see if we need the media menu
+    enableControls2 = False
+    try:
+      with open("/home/arista/enable-media", 'r') as fh:
+        enableControls2 = True
+    except:
+      enableControls2 = False
+
+    if enableControls2:
+      options.update(menuoptions['media-options'])
+
     lab = 'reset'
 
     # Parse command arguments
     try:
         opts, args = getopt.getopt(argv,"ht:",["topology="])
     except getopt.GetOptError:
-        print_usage(menuoptions['options'])
+        print_usage(options)
         sys.exit(2)
     for opt, arg in opts:
         if opt == '-h':
-            print_usage(menuoptions['options'])
+            print_usage(options)
             sys.exit()
         elif opt in ("-t", "--topology"):
             lab = arg
@@ -140,10 +152,10 @@ def main(argv):
         sys.exit(2)
 
     # Make sure option chosen is valid, then configure the topology
-    if lab in menuoptions['options']:
+    if lab in options:
       update_topology(cvp_client, lab, labconfiglets)
     else:
-      print_usage(menuoptions['options'])
+      print_usage(options)
 
     # Execute all tasks generated from reset_devices()
     execute_pending_tasks(cvp_client)
