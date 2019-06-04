@@ -14,6 +14,15 @@ menuoptions = yaml.safe_load(f)
 f.close()
 
 labcontrols = menuoptions['options']
+labcontrols2 = menuoptions['media-options']
+
+# Check to see if we need the media menu
+enableControls2 = False
+try:
+  with open("/home/arista/enable-media", 'r') as fh:
+    enableControls2 = True
+except:
+  enableControls2 = False
 
 topology = accessinfo['topology']
 
@@ -63,7 +72,7 @@ Device Menu:            Lab Controls
 
     counter = 0
     for veos,labcontrol in izip_longest(veosinfo,labcontrols):
-      counter = counter + 1
+      counter += 1
       sys.stdout.write("   ")
       sys.stdout.write(str(counter))
       sys.stdout.write(". ")
@@ -78,9 +87,25 @@ Device Menu:            Lab Controls
 
       sys.stdout.write("\n")
 
-    print "   97. Screen (screen)"
-    print "   98. Shell (bash)"
-    print "   99. Quit (quit/exit)"
+    if enableControls2 and labcontrols2 != None:
+      #sys.stdout.write("\n")
+      counter = 0
+      sys.stdout.write("\n")
+      sys.stdout.write("  Media Controls")
+      for labcontrol2 in labcontrols2:
+         counter += 1
+         sys.stdout.write("\n")
+         sys.stdout.write("  ")
+         sys.stdout.write(str(counter+10))
+         sys.stdout.write(". ")
+         optionValues = labcontrols2[labcontrol2][0]
+         sys.stdout.write(optionValues['description'])
+      sys.stdout.write("\n")
+      sys.stdout.write("\n")
+
+    print "  97. Screen (screen)"
+    print "  98. Shell (bash)"
+    print "  99. Quit (quit/exit)"
     print ""
     ans=raw_input("What would you like to do? ")
     devicecount = counter
@@ -113,6 +138,18 @@ Device Menu:            Lab Controls
       elif ans > devicecount and ans < 20:
         print("\n Not Valid Choice Try again")
         break
+
+    if enableControls2:
+      counter3 = 10
+      for labcontrol2 in labcontrols2:
+        optionValues = labcontrols2[labcontrol2][0]
+        counter3 += 1
+        if ans==str(counter3) or ans==labcontrol2:
+          os.system(optionValues['command'])
+          break
+        elif ans > devicecount and ans < 10:
+          print("\n Not Valid Choice Try again")
+          break
 
 else:
   os.system("/usr/lib/openssh/sftp-server")
