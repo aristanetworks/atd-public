@@ -15,15 +15,9 @@ aaa authorization exec default local"
 
 echo "Updating File Permissions"
 #sudo chown -R arista:arista /home/arista/Broadcaster/
-chmod +x /home/arista/Broadcaster/media.py
 chmod +x /home/arista/Broadcaster/configletPushToCVP.sh
 chmod +x /home/arista/Broadcaster/mcast-source.sh
 chmod +x /home/arista/Broadcaster/mcast-receiver.sh
-
-echo "Moving media.py"
-#move vs copy? could error out this script on next run.
-# We'll move it back to a cp, it does error when a mv cmd.  However doesn't crash the script.
-sudo cp /home/arista/Broadcaster/media.py /usr/local/bin/
 
 echo "Copying Configs"
 #copy files over
