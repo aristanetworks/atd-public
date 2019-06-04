@@ -42,7 +42,6 @@ labconfiglets:
       - "Leaf3-MLAG-Lab"
       - "VLANs"
     leaf4:
-      - "Leaf4-MLAG-Lab"
       - "VLANs"
   bgp:
     spine1:
@@ -55,8 +54,6 @@ labconfiglets:
       - "Leaf2-BGP-Lab"
     leaf3:
       - "Leaf3-BGP-Lab"
-    leaf4:
-      - "Leaf4-BGP-Lab"
   vxlan:
     spine1:
       - "Spine1-BGP-Lab"
@@ -69,7 +66,6 @@ labconfiglets:
       - "Leaf2-VXLAN-Lab"
       - "VLANs"
     leaf3:
-      - "Leaf3-VXLAN-Lab"
       - "VLANs"
     leaf4:
       - "Leaf4-VXLAN-Lab"
@@ -88,7 +84,6 @@ labconfiglets:
       - "Leaf2-L2EVPN-Lab"
       - "VLANs"
     leaf3:
-      - "Leaf3-L2EVPN-Lab"
       - "VLANs"
     leaf4:
       - "Leaf4-L2EVPN-Lab"
@@ -102,8 +97,6 @@ labconfiglets:
       - "Leaf1-L3EVPN-Lab"
     leaf2:
       - "Leaf2-L3EVPN-Lab"
-    leaf3:
-      - "Leaf3-L3EVPN-Lab"
     leaf4:
       - "Leaf4-L3EVPN-Lab"
   cvp:
