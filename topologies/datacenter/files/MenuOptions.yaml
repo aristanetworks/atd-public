@@ -24,6 +24,18 @@ options:
   media:
   -   command: "bash /home/arista/Broadcaster/pushHostMediaConfig.sh && media.py"
       description: "Broadcast Engineer Training (media)"
+media-options:
+  vxlan: 
+  -   command: "/usr/local/bin/ConfigureTopology.py -t media-ip"
+      description: "Media - IP Intro (media-intro)"
+  -   command: "/usr/local/bin/ConfigureTopology.py -t media-vlan"
+      description: "Media - VLAN STP (media-vlan)"
+  -   command: "/usr/local/bin/ConfigureTopology.py -t media-ospf"
+      description: "Media - OSPF (media-ospf)"
+  -   command: "/usr/local/bin/ConfigureTopology.py -t media-bgp"
+      description: "Media - BGP  (media-bgp)"
+  -   command: "/usr/local/bin/ConfigureTopology.py -t media-mcast"
+      description: "Media - Multicast (media-mcast)"
 labconfiglets:
   mlag:
     spine1:
@@ -68,6 +80,7 @@ labconfiglets:
       - "Leaf2-VXLAN-Lab"
       - "VLANs"
     leaf3:
+      - "Leaf3-VXLAN-Lab"
       - "VLANs"
     leaf4:
       - "Leaf4-VXLAN-Lab"
@@ -114,3 +127,68 @@ labconfiglets:
       - "Leaf3-BGP-Lab"
     leaf4:
       - "Leaf4-BGP-Lab-Full"
+  media-intro:
+    spine1:
+      - "media-spine1-IP-Intro-start"
+    spine2:
+      - "media-spine2-IP-Intro-start"
+    leaf1:
+      - "media-leaf1-IP-Intro-start"
+    leaf2:
+      - "media-leaf2-IP-Intro-start"
+    leaf3:
+      - "media-leaf3-IP-Intro-start"
+    leaf4:
+      - "media-leaf4-IP-Intro-start"   
+  media-vlan:
+    spine1:
+      - "media-spine1-VLAN-STP-start"
+    spine2:
+      - "media-spine2-VLAN-STP-start"
+    leaf1:
+      - "media-leaf1-VLAN-STP-start"
+    leaf2:
+      - "media-leaf2-VLAN-STP-start"
+    leaf3:
+      - "media-leaf3-VLAN-STP-start"
+    leaf4:
+      - "media-leaf4-VLAN-STP-start"
+  media-ospf:
+    spine1:
+      - "media-spine1-OSPF-start"
+    spine2:
+      - "media-spine2-OSPF-start"
+    leaf1:
+      - "media-leaf1-OSPF-start"
+    leaf2:
+      - "media-leaf2-OSPF-start"
+    leaf3:
+      - "media-leaf3-OSPF-start"
+    leaf4:
+      - "media-leaf4-OSPF-start"
+  media-bgp:
+    spine1:
+      - "media-spine1-BGP-start"
+    spine2:
+      - "media-spine2-BGP-start"
+    leaf1:
+      - "media-leaf1-BGP-start"
+    leaf2:
+      - "media-leaf2-BGP-start"
+    leaf3:
+      - "media-leaf3-BGP-start"
+    leaf4:
+      - "media-leaf4-BGP-start"
+  media-mcast:
+    spine1:
+      - "media-spine1-Multicast-lab"
+    spine2:
+      - "media-spine2-Multicast-lab"
+    leaf1:
+      - "media-leaf1-Multicast-lab"
+    leaf2:
+      - "media-leaf2-Multicast-lab"
+    leaf3:
+      - "media-leaf3-Multicast-lab"
+    leaf4:
+      - "media-leaf4-Multicast-lab"
