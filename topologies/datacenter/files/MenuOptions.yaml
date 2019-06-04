@@ -25,15 +25,19 @@ options:
   -   command: "bash /home/arista/Broadcaster/pushHostMediaConfig.sh"
       description: "Broadcast Engineer Training (media)"
 media-options:
-  vxlan: 
+  media-intro: 
   -   command: "/usr/local/bin/ConfigureTopology.py -t media-ip"
       description: "Media - IP Intro (media-intro)"
+  media-vlan:
   -   command: "/usr/local/bin/ConfigureTopology.py -t media-vlan"
       description: "Media - VLAN STP (media-vlan)"
+  media-ospf:
   -   command: "/usr/local/bin/ConfigureTopology.py -t media-ospf"
       description: "Media - OSPF (media-ospf)"
+  media-bgp:
   -   command: "/usr/local/bin/ConfigureTopology.py -t media-bgp"
       description: "Media - BGP  (media-bgp)"
+  media-mcast:
   -   command: "/usr/local/bin/ConfigureTopology.py -t media-mcast"
       description: "Media - Multicast (media-mcast)"
 labconfiglets:
