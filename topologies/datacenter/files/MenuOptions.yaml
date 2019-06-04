@@ -54,6 +54,8 @@ labconfiglets:
       - "Leaf2-BGP-Lab"
     leaf3:
       - "Leaf3-BGP-Lab"
+    leaf4:
+      - "Leaf4-BGP-Lab"
   vxlan:
     spine1:
       - "Spine1-BGP-Lab"
