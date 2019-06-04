@@ -34,7 +34,6 @@ cvp_info:
     containers:
       Tenant:
         - AAA
-        - SYS_TelemetryBuilder
     netelements:
       eos1:
         - BaseIPv4_EOS1
