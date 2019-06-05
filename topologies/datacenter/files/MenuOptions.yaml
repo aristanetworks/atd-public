@@ -3,24 +3,24 @@ options:
   reset:
   -   command: "/usr/local/bin/ConfigureTopology.py && bash /home/arista/Broadcaster/pushHostDefaultConfig.sh"
       description: "Reset All Devices to Base ATD (reset)"
+  mlag: 
+  -   command: "/usr/local/bin/ConfigureTopology.py -t mlag"
+      description: "MLAG Lab (mlag)"
   bgp: 
   -   command: "/usr/local/bin/ConfigureTopology.py -t bgp"
       description: "BGP Lab (bgp)"
-  cvp: 
-  -   command: "/usr/local/bin/ConfigureTopology.py -t cvp"
-      description: "CVP lab (cvp)"
+  vxlan: 
+  -   command: "/usr/local/bin/ConfigureTopology.py -t vxlan"
+      description: "VXLAN Lab (vxlan) excludes leaf3 instead of leaf4"
   l2evpn: 
   -   command: "/usr/local/bin/ConfigureTopology.py -t l2evpn"
       description: "EVPN Type 2 Lab (l2evpn) excludes leaf3 instead of leaf4"
   l3evpn: 
   -   command: "/usr/local/bin/ConfigureTopology.py -t l3evpn"
       description: "EVPN Type 5 Lab (l3evpn) excludes leaf3 instead of leaf4"
-  mlag: 
-  -   command: "/usr/local/bin/ConfigureTopology.py -t mlag"
-      description: "MLAG Lab (mlag)"
-  vxlan: 
-  -   command: "/usr/local/bin/ConfigureTopology.py -t vxlan"
-      description: "VXLAN Lab (vxlan) excludes leaf3 instead of leaf4"
+  cvp: 
+  -   command: "/usr/local/bin/ConfigureTopology.py -t cvp"
+      description: "CVP lab (cvp)"
   media:
   -   command: "bash /home/arista/Broadcaster/pushHostMediaConfig.sh && login.py"
       description: "Broadcast Engineer Training (media)"
