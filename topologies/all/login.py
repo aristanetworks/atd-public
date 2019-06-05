@@ -2,17 +2,14 @@
 import os
 import sys
 import signal
-import yaml
 from ruamel.yaml import YAML
 from itertools import izip_longest
 
 f = open('/etc/ACCESS_INFO.yaml')
-#accessinfo = yaml.safe_load(f)
 accessinfo = YAML().load(f)
 f.close()
 
 f = open('/home/arista/MenuOptions.yaml')
-#menuoptions = yaml.safe_load(f)
 menuoptions = YAML().load(f)
 f.close()
 
