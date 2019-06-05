@@ -2,7 +2,7 @@
 options: 
   reset:
   -   command: "/usr/local/bin/ConfigureTopology.py && bash /home/arista/Broadcaster/pushHostDefaultConfig.sh"
-      description: "Reset All Devices to Base (reset)"
+      description: "Reset All Devices to Base ATD (reset)"
   bgp: 
   -   command: "/usr/local/bin/ConfigureTopology.py -t bgp"
       description: "BGP Lab (bgp)"
