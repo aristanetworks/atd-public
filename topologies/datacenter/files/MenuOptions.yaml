@@ -26,7 +26,7 @@ options:
       description: "Broadcast Engineer Training (media)"
 media-options:
   media-intro: 
-  -   command: "/usr/local/bin/ConfigureTopology.py -t media-ip"
+  -   command: "/usr/local/bin/ConfigureTopology.py -t media-intro"
       description: "Media - IP Intro (media-intro)"
   media-vlan:
   -   command: "/usr/local/bin/ConfigureTopology.py -t media-vlan"
@@ -42,7 +42,7 @@ media-options:
       description: "Media - Multicast (media-mcast)"
   media-reset:
   -   command: "/usr/local/bin/ConfigureTopology.py && bash /home/arista/Broadcaster/pushHostMediaConfig.sh"
-      description: "Reset All Devices to Broadcaster Base (media-reset)"
+      description: "Media - Reset All Devices to Broadcaster Base (media-reset)"
 labconfiglets:
   mlag:
     spine1:
