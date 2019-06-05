@@ -22,7 +22,7 @@ options:
   -   command: "/usr/local/bin/ConfigureTopology.py -t vxlan"
       description: "VXLAN Lab (vxlan) excludes leaf3 instead of leaf4"
   media:
-  -   command: "bash /home/arista/Broadcaster/pushHostMediaConfig.sh"
+  -   command: "bash /home/arista/Broadcaster/pushHostMediaConfig.sh && login.py"
       description: "Broadcast Engineer Training (media)"
 media-options:
   media-intro: 
@@ -40,6 +40,8 @@ media-options:
   media-mcast:
   -   command: "/usr/local/bin/ConfigureTopology.py -t media-mcast"
       description: "Media - Multicast (media-mcast)"
+  media-reset:
+  -   command: "/usr/local/bin/ConfigureTopology.py && bash /home/arista/Broadcaster/pushHostMediaConfig.sh"
 labconfiglets:
   mlag:
     spine1:
