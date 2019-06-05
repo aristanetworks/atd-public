@@ -42,6 +42,7 @@ media-options:
       description: "Media - Multicast (media-mcast)"
   media-reset:
   -   command: "/usr/local/bin/ConfigureTopology.py && bash /home/arista/Broadcaster/pushHostMediaConfig.sh"
+      description: "Reset All Devices to Broadcaster Base (media-reset)"
 labconfiglets:
   mlag:
     spine1:
