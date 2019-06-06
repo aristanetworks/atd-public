@@ -1,13 +1,14 @@
 [Unit]
 Description=Automatically checks local ATD Repo copy and installs/removes any Python PIP packages
-After=network-online.target
-Wants=network-online.target
+Required=atdServiceUpdater.service
+After=atdServiceUpdater.service
 
 [Service]
 Type=forking
 ExecStart=/usr/local/bin/atdPipUpdater.sh
 User=root
 Restart=on-failure
+RestartSec=60
 
 [Install]
 WantedBy=multi-user.target
