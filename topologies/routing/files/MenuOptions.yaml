@@ -1,31 +1,31 @@
 ---
 options: 
   reset:
-  -   command: "ssh 192.168.0.5 './ConfigureTopology.py'"
+  -   command: "/usr/local/bin/ConfigureTopology.py"
       description: "Reset All Devices to Base IPv4 (reset)"
   sr: 
-  -   command: "ssh 192.168.0.5 './ConfigureTopology.py -t sr'"
+  -   command: "/usr/local/bin/ConfigureTopology.py -t sr'"
       description: "Start at Section 2: Segment-Routing"
   evpn: 
-  -   command: "ssh 192.168.0.5 './ConfigureTopology.py -t evpn'"
+  -   command: "/usr/local/bin/ConfigureTopology.py -t evpn'"
       description: "Start at Section 3: EVPN Control-Plane"
   c1l3vpn: 
-  -   command: "ssh 192.168.0.5 './ConfigureTopology.py -t c1l3vpn'"
+  -   command: "/usr/local/bin/ConfigureTopology.py -t c1l3vpn'"
       description: "Start at Section 4: Customer-1 L3VPN"
   c2l2vpn: 
-  -   command: "ssh 192.168.0.5 './ConfigureTopology.py -t c2l2vpn'"
+  -   command: "/usr/local/bin/ConfigureTopology.py -t c2l2vpn'"
       description: "Start at Section 8: Customer-2 L2VPN"
   c3eline: 
-  -   command: "ssh 192.168.0.5 './ConfigureTopology.py -t c3eline'"
+  -   command: "/usr/local/bin/ConfigureTopology.py -t c3eline'"
       description: "Start at Section 10: Customer-3 E-LINE"
   c4l3vpn: 
-  -   command: "ssh 192.168.0.5 './ConfigureTopology.py -t c4l3vpn'"
+  -   command: "/usr/local/bin/ConfigureTopology.py -t c4l3vpn'"
       description: "Start at Section 11: Customer-4 L3VPN"
   centsvc: 
-  -   command: "ssh 192.168.0.5 './ConfigureTopology.py -t centsvc'"
+  -   command: "/usr/local/bin/ConfigureTopology.py -t centsvc'"
       description: "Start at Section 13: Centralized Services"
   complete: 
-  -   command: "ssh 192.168.0.5 './ConfigureTopology.py -t complete'"
+  -   command: "/usr/local/bin/ConfigureTopology.py -t complete'"
       description: "Complete all Sections"
 
 labconfiglets:
