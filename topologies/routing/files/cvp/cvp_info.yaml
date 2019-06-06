@@ -34,6 +34,7 @@ cvp_info:
     containers:
       Tenant:
         - AAA
+        - aws-infa
     netelements:
       eos1:
         - BaseIPv4_EOS1
