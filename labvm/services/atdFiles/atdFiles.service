@@ -4,12 +4,8 @@ Description=Automatically downloads updated ATD files and documentation
 [Service]
 Type=forking
 ExecStart=/usr/local/bin/atdFiles.sh
-TimeoutStartSec=120sec
 Restart=on-failure
-RestartSec=90
-
-[Timer]
-OnStartupSec=120sec
+RestartSec=60
 
 [Install]
 WantedBy=multi-user.target

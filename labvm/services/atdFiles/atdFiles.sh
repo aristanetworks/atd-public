@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Perform Check on tmp repo
+mv /tmp/atd/topologies/all/login.py /tmp/atd/topologies/all/login.py
+
 # Find out what topology is running
 TOPO=$(cat /etc/ACCESS_INFO.yaml | shyaml get-value topology)
 ARISTA_PWD=$(cat /etc/ACCESS_INFO.yaml | shyaml get-value login_info.jump_host.pw)
