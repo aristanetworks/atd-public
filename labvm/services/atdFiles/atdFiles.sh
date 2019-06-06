@@ -7,8 +7,10 @@ ARISTA_PWD=$(cat /etc/ACCESS_INFO.yaml | shyaml get-value login_info.jump_host.p
 # Clean up previous stuff to make sure it's current
 rm -rf /var/www/html/atd/labguides/
 
-# Make sure login.py is current
+# Make sure login.py and ConfigureTopology.py is current
 cp -u /tmp/atd/topologies/all/login.py /usr/local/bin/login.py
+cp -u /tmp/atd/topologies/all/ConfigureTopology.py /usr/local/bin/ConfigureTopology.py
+chmod +x /usr/local/bin/ConfigureTopology.py
 
 # Add files to arista home
 rsync -av /tmp/atd/topologies/$TOPO/files/ /home/arista
@@ -19,9 +21,6 @@ chown -R arista:arista /home/arista
 # Update the Arista user password for connecting to the labvm
 sed -i "s/{REPLACE_PWD}/$ARISTA_PWD/g" /tmp/atd/topologies/$TOPO/labguides/source/connecting.rst
 sed -i "s/{REPLACE_PWD}/$ARISTA_PWD/g" /tmp/atd/topologies/$TOPO/labguides/source/programmability_connecting.rst
-
-# Copy over ConfigureTopology to CVP
-scp /home/arista/ConfigureTopology.py arista@192.168.0.5/~/
 
 # Build the lab guides html files
 cd /tmp/atd/topologies/$TOPO/labguides
