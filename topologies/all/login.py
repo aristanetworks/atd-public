@@ -2,8 +2,27 @@
 import os
 import sys
 import signal
+import re
 from ruamel.yaml import YAML
 from itertools import izip_longest
+
+def atoi(text):
+  return int(text) if text.isdigit() else text
+
+def natural_keys(text):
+  return [ atoi(c) for c in re.split(r'(\d+)', text) ]
+  
+def sortVEOS(vd):
+  tmp_l = []
+  tmp_d = {}
+  fin_l = []
+  for tveos in vd:
+    tmp_l.append(tveos['hostname'])
+    tmp_d[tveos['hostname']] = tveos
+  tmp_l.sort(key=natural_keys)
+  for tveos in tmp_l:
+    fin_l.append(tmp_d[tveos])
+  return(fin_l)
 
 f = open('/etc/ACCESS_INFO.yaml')
 accessinfo = YAML().load(f)
@@ -12,9 +31,6 @@ f.close()
 f = open('/home/arista/MenuOptions.yaml')
 menuoptions = YAML().load(f)
 f.close()
-
-labcontrols = menuoptions['options']
-labcontrols2 = menuoptions['media-options']
 
 # Check to see if we need the media menu
 enableControls2 = False
@@ -30,6 +46,14 @@ login = accessinfo['login_info']
 nodes = accessinfo['nodes']
 tag = accessinfo['tag']
 
+labcontrols = menuoptions['options']
+# Check to see if this is the datacenter topo
+if topology == 'datacenter':
+  labcontrols2 = menuoptions['media-options']
+else:
+  # If topo other than datacenter, set to False
+  labcontrols2 = False
+
 cvplogin = login['cvp']
 veoslogin = login['veos'][0]
 
@@ -44,6 +68,8 @@ cvpinfo = nodes['cvp'][0]
 cvp = cvpinfo['ip']
 
 veosinfo = nodes['veos']
+# Sort the list naturally
+veosinfo = sortVEOS(veosinfo)
 
 if sys.stdout.isatty():
 
