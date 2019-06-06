@@ -8,7 +8,7 @@ TimeoutStartSec=180
 Restart=on-failure
 
 [Timer]
-OnStartupSec=180
+OnStartupSec=60sec
 
 [Install]
 WantedBy=multi-user.target
