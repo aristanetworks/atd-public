@@ -6,7 +6,7 @@ After=atdServiceUpdater.service
 [Service]
 Type=forking
 ExecStart=/usr/local/bin/atdFiles.sh
-TimeoutStartSec=120sec
+TimeoutStartSec=180
 Restart=on-failure
 RestartSec=60
 

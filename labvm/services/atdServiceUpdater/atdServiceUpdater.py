@@ -32,7 +32,7 @@ updater_file_name = 'atdServiceUpdater.service'
 # Temp path for where repo will be cloned to (include trailing /)
 GIT_TEMP_PATH = '/tmp/atd/'
 GIT_PATH = "https://github.com/aristanetworks/atd-public.git"
-GIT_BRANCH = "service-test"
+GIT_BRANCH = "master"
 
 # Declaration for working directories
 LOCAL_GIT = "{0}labvm/services".format(GIT_TEMP_PATH)
