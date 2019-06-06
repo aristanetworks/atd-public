@@ -9,5 +9,8 @@ ExecStart=/usr/local/bin/atdFiles.sh
 TimeoutStartSec=180
 Restart=on-failure
 
+[Timer]
+OnStartupSec=90
+
 [Install]
 WantedBy=multi-user.target
