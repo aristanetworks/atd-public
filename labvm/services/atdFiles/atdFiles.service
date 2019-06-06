@@ -1,7 +1,5 @@
 [Unit]
 Description=Automatically downloads updated ATD files and documentation
-After=network-online.target
-Wants=network-online.target
 
 [Service]
 Type=forking
@@ -10,7 +8,7 @@ TimeoutStartSec=180
 Restart=on-failure
 
 [Timer]
-OnStartupSec=90
+OnStartupSec=120
 
 [Install]
 WantedBy=multi-user.target
