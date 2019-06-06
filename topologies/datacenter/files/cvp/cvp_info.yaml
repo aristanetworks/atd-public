@@ -27,6 +27,7 @@ cvp_info:
         - VLANs
         - SYS_TelemetryBuilder
         - SYS_BaseConfig
+        - aws-infra
     netelements:
       cvx01:
         - cvx01-Controller
