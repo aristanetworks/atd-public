@@ -20,6 +20,11 @@ def sortVEOS(vd):
     tmp_l.append(tveos['hostname'])
     tmp_d[tveos['hostname']] = tveos
   tmp_l.sort(key=natural_keys)
+  # If cvx in list, move to end
+  if 'cvx' in tmp_l[0]:
+        tmp_cvx = tmp_l[0]
+        tmp_l.pop(0)
+        tmp_l.append(tmp_cvx)
   for tveos in tmp_l:
     fin_l.append(tmp_d[tveos])
   return(fin_l)
@@ -46,14 +51,6 @@ login = accessinfo['login_info']
 nodes = accessinfo['nodes']
 tag = accessinfo['tag']
 
-labcontrols = menuoptions['options']
-# Check to see if this is the datacenter topo
-if topology == 'datacenter':
-  labcontrols2 = menuoptions['media-options']
-else:
-  # If topo other than datacenter, set to False
-  labcontrols2 = False
-
 cvplogin = login['cvp']
 veoslogin = login['veos'][0]
 
@@ -68,8 +65,16 @@ cvpinfo = nodes['cvp'][0]
 cvp = cvpinfo['ip']
 
 veosinfo = nodes['veos']
-# Sort the list naturally
-veosinfo = sortVEOS(veosinfo)
+
+labcontrols = menuoptions['options']
+# Check to see if this is the datacenter topo
+if topology == 'datacenter':
+  labcontrols2 = menuoptions['media-options']
+else:
+  # If topo other than datacenter, set to False
+  labcontrols2 = False
+  # Sort the list naturally
+  veosinfo = sortVEOS(veosinfo)
 
 if sys.stdout.isatty():
 
