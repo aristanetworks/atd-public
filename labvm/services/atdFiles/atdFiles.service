@@ -6,6 +6,7 @@ Type=forking
 ExecStart=/usr/local/bin/atdFiles.sh
 TimeoutStartSec=120sec
 Restart=on-failure
+RestartSec=90
 
 [Timer]
 OnStartupSec=120sec
