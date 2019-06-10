@@ -13,7 +13,7 @@ DEBUG = False
 def remove_configlets(client, device):
     # Removes all configlets except the ones defined here or starting with SYS_
     # Define base configlets that are to be untouched
-    base_configlets = ['AAA']
+    base_configlets = ['AAA','aws-infa']
     
     configlets_to_remove = []
 
