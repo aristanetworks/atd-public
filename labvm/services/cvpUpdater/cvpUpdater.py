@@ -140,20 +140,30 @@ def main():
         # ==========================================
         # Add devices to Inventory/Provisioning
         # ==========================================
+        # Perform initial check and do a group add of devices
+        tmp_eos_add = []
         for eos in eos_info:
             # Check to see if the device is already provisioned
             if eos.hostname not in cvp_clnt.inventory.keys():
-                if eos.targetContainerName:
-                    cvp_clnt.addDeviceInventory(eos.ip)
-                    eos.updateContainer(cvp_clnt)
-                    if eos.targetContainerName != eos.parentContainer["name"]:
-                        cvp_clnt.moveDevice(eos) 
-                        cvp_clnt.genConfigBuilders(eos)
-                        if eos.hostname in cvp_yaml['cvp_info']['configlets']['netelements'].keys():
-                            cvp_clnt.addDeviceConfiglets(eos,cvp_yaml['cvp_info']['configlets']['netelements'][eos.hostname])
-                        cvp_clnt.applyConfiglets(eos)
+                pS("INFO","Adding {}".format(eos.hostname))
+                tmp_eos_add.append(eos.ip)
             else:
                 pS("INFO","Skipping {}".format(eos.hostname))
+        if tmp_eos_add:
+            # Import all devices not 
+            pS("INFO","Importing devices: {0}".format(", ".join(tmp_eos_add)))
+            cvp_clnt.addDeviceInventory(tmp_eos_add)
+        for eos in eos_info:
+            # Check to see if the device has a target container
+            if eos.targetContainerName:
+                eos.updateContainer(cvp_clnt)
+                if eos.targetContainerName != eos.parentContainer["name"]:
+                    cvp_clnt.moveDevice(eos) 
+                    cvp_clnt.genConfigBuilders(eos)
+                    if eos.hostname in cvp_yaml['cvp_info']['configlets']['netelements'].keys():
+                        cvp_clnt.addDeviceConfiglets(eos,cvp_yaml['cvp_info']['configlets']['netelements'][eos.hostname])
+                    cvp_clnt.applyConfiglets(eos)
+            
         cvp_clnt.saveTopology()
         cvp_clnt.getAllTasks("pending")
         cvp_clnt.execAllTasks("pending")
