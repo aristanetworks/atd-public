@@ -86,6 +86,8 @@ Device Menu:            Lab Controls
          sys.stdout.write(optionValues['description'])
 
       sys.stdout.write("\n")
+    
+    devicecount = counter
 
     if enableControls2 and labcontrols2 != None:
       #sys.stdout.write("\n")
@@ -108,7 +110,6 @@ Device Menu:            Lab Controls
     print "  99. Quit (quit/exit)"
     print ""
     ans=raw_input("What would you like to do? ")
-    devicecount = counter
 
     counter = 0
     for veos in veosinfo:
