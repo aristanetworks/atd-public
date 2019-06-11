@@ -15,6 +15,7 @@ CVP_CONTAINERS = []
 
 # Temporary file_path location for CVP Custom info
 cvp_file = '/home/arista/cvp/cvp_info.yaml'
+pDEBUG = False
 
 # ==================================
 # Start of Global Functions
@@ -76,7 +77,8 @@ def pS(mstat,mtype):
     """
     mmes = "\t" + mtype
     syslog.syslog("[{0}] {1}".format(mstat,mmes.expandtabs(7 - len(mstat))))
-    print("[{0}] {1}".format(mstat,mmes.expandtabs(7 - len(mstat))))
+    if pDEBUG:
+        print("[{0}] {1}".format(mstat,mmes.expandtabs(7 - len(mstat))))
 
 def main():
     """
