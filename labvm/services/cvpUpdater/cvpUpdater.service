@@ -1,7 +1,7 @@
 [Unit]
 Description=Automatically configures CVP with EOS devices depending on the topology
-Required=atdServiceUpdater.service
-After=atdServiceUpdater.service
+Required=atdFiles.service
+After=atdFiles.service
 
 [Service]
 Type=forking
