@@ -2,7 +2,7 @@
 
 
 from ruamel.yaml import YAML
-from rcvp_api.rcvpapi import *
+from rcvpapi.rcvpapi import *
 import requests, json, syslog
 from os import path, listdir
 from time import sleep
