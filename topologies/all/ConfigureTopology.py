@@ -20,7 +20,7 @@ def remove_configlets(client, device):
     device_id = device['systemMacAddress']
     configlets = client.api.get_configlets_by_device_id(device_id)
     for configlet in configlets:
-        if configlet['name'] in base_configlets or configlet['name'].startswith('SYS_'):
+        if configlet['name'] in base_configlets or configlet['name'].startswith('SYS_') or configlet['name'].startswith('BaseIPv4_'):
             continue
         else:
             if DEBUG:
