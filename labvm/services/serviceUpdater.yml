@@ -3,7 +3,7 @@ serviceUpdaters:
   - atdServiceUpdater
   - atdFiles
   - gitConfigletSync
-   - cvpUpdater
+  - cvpUpdater
   - atdPipUpdater
 pipPackages:
   Install:
