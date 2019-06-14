@@ -16,6 +16,9 @@ cp -u /tmp/atd/topologies/all/login.py /usr/local/bin/login.py
 cp -u /tmp/atd/topologies/all/ConfigureTopology.py /usr/local/bin/ConfigureTopology.py
 chmod +x /usr/local/bin/ConfigureTopology.py
 
+# Copy the updated guacamole user-mapping.xml file 
+cp /tmp/atd/topologies/$TOPO/files/infra/user-mapping.xml /etc/guacamole/
+
 # Add files to arista home
 rsync -av /tmp/atd/topologies/$TOPO/files/ /home/arista
 

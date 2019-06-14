@@ -1,0 +1,163 @@
+<user-mapping>
+
+    <!-- Per-user authentication and config information -->
+
+    <!-- A user using md5 to hash the password
+         arista user and its md5 hashed password below is used to
+             login to Guacamole Web UI-->
+    <authorize
+            username="arista"
+            password="dff0516218630b32d06657ba7cd13aa5"
+            encoding="md5">
+
+        <!-- Authorized connection -->
+        <connection name="devbox">
+            <protocol>vnc</protocol>
+            <param name="hostname">127.0.0.1</param>
+            <param name="port">6100</param>
+            <param name="password">@rista123</param>
+        </connection>
+        <connection name="eos1">
+            <protocol>ssh</protocol>
+            <param name="hostname">192.168.0.10</param>
+            <param name="port">22</param>
+            <param name="username">arista</param>
+            <param name="password">arista</param>
+        </connection>
+        <connection name="eos2">
+            <protocol>ssh</protocol>
+            <param name="hostname">192.168.0.11</param>
+            <param name="port">22</param>
+            <param name="username">arista</param>
+            <param name="password">arista</param>
+        </connection>
+        <connection name="eos3">
+            <protocol>ssh</protocol>
+            <param name="hostname">192.168.0.12</param>
+            <param name="port">22</param>
+            <param name="username">arista</param>
+            <param name="password">arista</param>
+        </connection>
+        <connection name="eos4">
+            <protocol>ssh</protocol>
+            <param name="hostname">192.168.0.13</param>
+            <param name="port">22</param>
+            <param name="username">arista</param>
+            <param name="password">arista</param>
+        </connection>
+        <connection name="eos5">
+            <protocol>ssh</protocol>
+            <param name="hostname">192.168.0.14</param>
+            <param name="port">22</param>
+            <param name="username">arista</param>
+            <param name="password">arista</param>
+        </connection>
+        <connection name="eos6">
+            <protocol>ssh</protocol>
+            <param name="hostname">192.168.0.15</param>
+            <param name="port">22</param>
+            <param name="username">arista</param>
+            <param name="password">arista</param>
+        </connection>
+        <connection name="eos7">
+            <protocol>ssh</protocol>
+            <param name="hostname">192.168.0.16</param>
+            <param name="port">22</param>
+            <param name="username">arista</param>
+            <param name="password">arista</param>
+        </connection>
+        <connection name="eos8">
+            <protocol>ssh</protocol>
+            <param name="hostname">192.168.0.17</param>
+            <param name="port">22</param>
+            <param name="username">arista</param>
+            <param name="password">arista</param>
+        </connection>
+        <connection name="eos9">
+            <protocol>ssh</protocol>
+            <param name="hostname">192.168.0.18</param>
+            <param name="port">22</param>
+            <param name="username">arista</param>
+            <param name="password">arista</param>
+        </connection>
+        <connection name="eos10">
+            <protocol>ssh</protocol>
+            <param name="hostname">192.168.0.19</param>
+            <param name="port">22</param>
+            <param name="username">arista</param>
+            <param name="password">arista</param>
+        </connection>
+        <connection name="eos11">
+            <protocol>ssh</protocol>
+            <param name="hostname">192.168.0.20</param>
+            <param name="port">22</param>
+            <param name="username">arista</param>
+            <param name="password">arista</param>
+        </connection>
+        <connection name="eos12">
+            <protocol>ssh</protocol>
+            <param name="hostname">192.168.0.21</param>
+            <param name="port">22</param>
+            <param name="username">arista</param>
+            <param name="password">arista</param>
+        </connection>
+        <connection name="eos13">
+            <protocol>ssh</protocol>
+            <param name="hostname">192.168.0.22</param>
+            <param name="port">22</param>
+            <param name="username">arista</param>
+            <param name="password">arista</param>
+        </connection>
+        <connection name="eos14">
+            <protocol>ssh</protocol>
+            <param name="hostname">192.168.0.23</param>
+            <param name="port">22</param>
+            <param name="username">arista</param>
+            <param name="password">arista</param>
+        </connection>
+        <connection name="eos15">
+            <protocol>ssh</protocol>
+            <param name="hostname">192.168.0.24</param>
+            <param name="port">22</param>
+            <param name="username">arista</param>
+            <param name="password">arista</param>
+        </connection>
+        <connection name="eos16">
+            <protocol>ssh</protocol>
+            <param name="hostname">192.168.0.25</param>
+            <param name="port">22</param>
+            <param name="username">arista</param>
+            <param name="password">arista</param>
+        </connection>
+        <connection name="eos17">
+            <protocol>ssh</protocol>
+            <param name="hostname">192.168.0.26</param>
+            <param name="port">22</param>
+            <param name="username">arista</param>
+            <param name="password">arista</param>
+        </connection>
+        <connection name="eos18">
+            <protocol>ssh</protocol>
+            <param name="hostname">192.168.0.27</param>
+            <param name="port">22</param>
+            <param name="username">arista</param>
+            <param name="password">arista</param>
+        </connection>
+        <connection name="eos19">
+            <protocol>ssh</protocol>
+            <param name="hostname">192.168.0.28</param>
+            <param name="port">22</param>
+            <param name="username">arista</param>
+            <param name="password">arista</param>
+        </connection>
+        <connection name="eos20">
+            <protocol>ssh</protocol>
+            <param name="hostname">192.168.0.29</param>
+            <param name="port">22</param>
+            <param name="username">arista</param>
+            <param name="password">arista</param>
+        </connection>
+
+    </authorize>
+
+</user-mapping>
