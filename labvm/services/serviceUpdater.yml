@@ -3,6 +3,7 @@ serviceUpdaters:
   - atdServiceUpdater
   - atdFiles
   - gitConfigletSync
+   - cvpUpdater
   - atdPipUpdater
 pipPackages:
   Install:
@@ -10,3 +11,4 @@ pipPackages:
     - gitPython
   Remove:
     
+ 

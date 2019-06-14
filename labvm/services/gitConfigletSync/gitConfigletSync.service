@@ -1,7 +1,7 @@
 [Unit]
 Description=Automatically updates configlets
-After=network-online.target
-Wants=network-online.target
+Required=atdServiceUpdater.service
+After=atdServiceUpdater.service
 
 [Service]
 Type=forking
@@ -9,6 +9,7 @@ ExecStart=/usr/local/bin/gitConfigletSync.py
 User=arista
 TimeoutStartSec=180
 Restart=on-failure
+RestartSec=60
 
 [Install]
 WantedBy=multi-user.target
