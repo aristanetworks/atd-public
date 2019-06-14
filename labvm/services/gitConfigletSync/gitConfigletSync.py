@@ -102,6 +102,7 @@ for configletName in configlets:
          res = cvp_clnt.impConfiglet("builder",new_configletName,configletConfig)
          print("{0} Configlet Builder: {1}".format(res[0],new_configletName))
       else:
-         syncConfiglet(clnt,configletName,configletConfig)
+         res = cvp_clnt.impConfiglet("static",configletName,configletConfig)
+         print("{0} Configlet: {1}".format(res[0],configletName))
 
 print("Configlet sync complete")
