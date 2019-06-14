@@ -9,6 +9,7 @@ pipPackages:
   Install:
     - ruamel.yaml
     - gitPython
+    - rcvpapi
   Remove:
     
  
