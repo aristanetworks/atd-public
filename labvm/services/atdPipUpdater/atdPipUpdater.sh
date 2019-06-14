@@ -11,7 +11,7 @@ then
     # Grab full list and install all packages
     N_PIP_PKGS=$(cat /tmp/atd/labvm/services/serviceUpdater.yml | shyaml get-values pipPackages.Install)
     echo "Packages to be Added: " $N_PIP_PKGS
-    pip install $N_PIP_PKGS
+    pip install --upgrade $N_PIP_PKGS
 else
     echo "Nothing to be added."
 fi
