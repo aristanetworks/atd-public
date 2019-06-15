@@ -147,7 +147,7 @@ Layer 3 Leaf-Spine
 
         configure
         router bgp 65002
-          neighbor fall-over bfd
+          neighbor <neighbor_ip> fall-over bfd
     
 7. Troubleshooting BGP:
 
