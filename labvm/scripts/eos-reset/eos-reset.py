@@ -124,7 +124,6 @@ def main(vdevs):
         # Push bare config to remote startup-config and reboot device
         pushBareConfig(cur_veos,re_veos[cur_veos]['ip'],tmp_veos_config)
     pS("OK","Configs pushed to: {0}".format(", ".join(vdevs)))
-    pS("INFO","Devices Rebooting...This can take several minutes")
     # Create connection to CVP
     cvp_clnt = conCVP()
     eos_cnt_map = eosContainerMapper(cvp_yaml['cvp_info']['containers'])
@@ -141,7 +140,6 @@ def main(vdevs):
                     cvp_clnt.addDeviceConfiglets(eos,cvp_yaml['cvp_info']['configlets']['netelements'][eos.hostname])
                 cvp_clnt.applyConfiglets(eos)
             else:
-                pS("INFO","No container Move")
                 cvp_clnt.genConfigBuilders(eos)
                 if eos.hostname in cvp_yaml['cvp_info']['configlets']['netelements'].keys():
                     cvp_clnt.addDeviceConfiglets(eos,cvp_yaml['cvp_info']['configlets']['netelements'][eos.hostname])
