@@ -56,8 +56,9 @@ with open(ACCESS,'r') as atdyaml:
     TOPO = atd_yaml['topology']
 
 for veos in veos_devs:
-    dev_list.append(veos['hostname'])
-    re_veos[veos['hostname']] = {'hostname':veos['hostname'],'internal_ip':veos['internal_ip'],'ip':veos['ip'],'cvpobj':""}
+    if 'host' not in veos['hostname']:
+        dev_list.append(veos['hostname'])
+        re_veos[veos['hostname']] = {'hostname':veos['hostname'],'internal_ip':veos['internal_ip'],'ip':veos['ip'],'cvpobj':""}
 
 # Loading cvp_info.yaml
 with open(CVPINFO,'r') as ci:
