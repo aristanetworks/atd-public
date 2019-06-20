@@ -23,3 +23,16 @@ Connecting
 3. The LabAccess menu allows users to connect to each device and specify
    lab topology. It is recommended to open multiple SSH sessions or use
    the Screen option to jump between devices rapidly.
+
+4. If at any point a device is unreachable: due to removing configlets, management IP address, modifying an existing configlet, etc.  From option ``99. Shell (bash)`` use the ``eos-reset.py`` command.  Below are examples.
+
+    .. code-block:: text
+
+        # To restore only the eos1 vEos device:
+        eos-reset.py -d eos1 
+
+        # To restore eos1, eos5 and eos15 devices enter:
+        eos-reset.py -d eos1 eos5 eos15
+
+        # To restore all devices:
+        eos-reset.py -d all
