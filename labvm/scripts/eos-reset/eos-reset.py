@@ -5,13 +5,16 @@ from rcvpapi.rcvpapi import *
 from time import sleep
 from sys import exit
 import paramiko, argparse, syslog, urllib3
+import warnings
+warnings.filterwarnings(action='ignore',module='.*paramiko.*')
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 ACCESS = '/etc/ACCESS_INFO.yaml'
 CVPINFO = '/home/arista/cvp/cvp_info.yaml'
 BARE_CFGS = ['AAA']
+CVP_CONTAINERS = []
 pDEBUG = True
-DELAYTIMER = 180
+DELAYTIMER = 30
 # List object to list available devices
 dev_list = []
 # Dict object to keep track of veos devices
@@ -82,7 +85,7 @@ def conCVP():
         if c_login['user'] == 'arista':
             while not cvp_clnt:
                 try:
-                    cvp_clnt = CVPCON(atd_yaml['nodes']['cvp'][0]['ip'],c_login['user'],c_login['pw'])
+                    cvp_clnt = CVPCON(atd_yaml['nodes']['cvp'][0]['internal_ip'],c_login['user'],c_login['pw'])
                     pS("OK","Connected to CVP at {0}".format(atd_yaml['nodes']['cvp'][0]['ip']))
                     return(cvp_clnt)
                 except:
@@ -102,6 +105,15 @@ def eosContainerMapper(cvpYaml):
                 eMap[eosD] = cnt
     return(eMap)
 
+def checkContainer(cnt):
+    """
+    Function to check and see if the supplied container is already in the global container list.
+    Parameters:
+    cnt = Container to add if it does not exist in the list (required)
+    """
+    if cnt not in CVP_CONTAINERS:
+        CVP_CONTAINERS.append(cnt)
+
 def getEosDevice(topo,eosYaml,cvpMapper,veos_reset):
     """
     Function that Parses through the YAML file and creates a CVPSWITCH class object for each EOS device in the topo file.
@@ -109,6 +121,7 @@ def getEosDevice(topo,eosYaml,cvpMapper,veos_reset):
     topo = Topology for the ATD (required)
     eosYAML = vEOS portion of the ACCESS_INFO.yaml file (required)
     cvpMapper = Dict that maps EOS device to container (required)
+    veos_reset = List of devices to be reset (required)
     """
     EOS_DEV = []
     for dev in eosYaml:
@@ -119,6 +132,32 @@ def getEosDevice(topo,eosYaml,cvpMapper,veos_reset):
             except:
                 EOS_DEV.append(CVPSWITCH(dev['hostname'],dev['internal_ip']))
     return(EOS_DEV)
+
+def provisionDevice(cvp_clnt,eos):
+    """
+    Function to provision an EOS devices.
+    """
+    # Check to see if the device has a target container
+    if eos.targetContainerName:
+        # Update EOS Object with container information
+        eos.updateContainer(cvp_clnt)
+        # Check if device is in target container
+        print("Target: {0}\nParent: {1}".format(eos.targetContainerName,eos.parentContainer['name']))
+        if eos.targetContainerName != eos.parentContainer["name"]:
+            # Move device to target container, generate and apply any configlets
+            print("Move Status: {}".format(cvp_clnt.moveDevice(eos)))
+            cvp_clnt.genConfigBuilders(eos)
+            if eos.hostname in cvp_yaml['cvp_info']['configlets']['netelements'].keys():
+                cvp_clnt.addDeviceConfiglets(eos,cvp_yaml['cvp_info']['configlets']['netelements'][eos.hostname])
+            cvp_clnt.applyConfiglets(eos)
+        else:
+            # If already in target container, generate any configlets and apply configlets
+            cvp_clnt.genConfigBuilders(eos)
+            if eos.hostname in cvp_yaml['cvp_info']['configlets']['netelements'].keys():
+                cvp_clnt.addDeviceConfiglets(eos,cvp_yaml['cvp_info']['configlets']['netelements'][eos.hostname])
+            cvp_clnt.applyConfiglets(eos)
+    else:
+        pS("iBerg","No target container found for {0}".format(eos.hostname))
 
 def pS(mstat,mtype):
     """
@@ -136,6 +175,7 @@ def main(vdevs):
     DEVREBOOT = False
     pS("INFO","Device{0} to be reset: {1}".format("s" if len(vdevs) > 1 else "",", ".join(vdevs)))
     bare_veos = ""
+    dev_reboot_status = {}
     # Used to store a list of IPs to be used for import into CVP
     tmp_veos_ips = []
     for b_cfg in BARE_CFGS:
@@ -148,13 +188,27 @@ def main(vdevs):
         # Push bare config to remote startup-config and reboot device
         if pushBareConfig(cur_veos,re_veos[cur_veos]['ip'],tmp_veos_config):
             DEVREBOOT = True
+            dev_reboot_status[cur_veos] = {"status":False,"IP":re_veos[cur_veos]['internal_ip']}
     pS("OK","Configs pushed to: {0}".format(", ".join(vdevs)))
     if DEVREBOOT:
         pS("INFO","Devices rebooting, waiting for devices to come back online")
-        sleep(DELAYTIMER)
-        pS("OK","Device wait timer finished...Continuing")
+        #sleep(DELAYTIMER)
+        #pS("OK","Device wait timer finished...Continuing")
     # Create connection to CVP
     cvp_clnt = conCVP()
+    # Check for failed tasks and cancel them.
+    cvp_clnt.getAllTasks("failed")
+    cvp_clnt.cancelTasks("failed")
+    # Check to verify all devices to be reset have booted up
+    for vdevR in dev_reboot_status.keys():
+        while not dev_reboot_status[vdevR]['status']:
+            ip_res = cvp_clnt.ipConnectivityTest(dev_reboot_status[vdevR]['IP'])
+            if 'data' in ip_res:
+                pS("OK","{0} is back online".format(vdevR))
+                dev_reboot_status[vdevR]['status'] = True
+            else:
+                pS("INFO","Waiting for {0} to comeback online... Checking again in {1} seconds.".format(vdevR,DELAYTIMER))
+                sleep(DELAYTIMER)
     # Grab container mappings
     eos_cnt_map = eosContainerMapper(cvp_yaml['cvp_info']['containers'])
     # Get EOS info for devices needing to be updated
@@ -163,30 +217,36 @@ def main(vdevs):
     cvp_clnt.addDeviceInventory(tmp_veos_ips)
     # Iterate through EOS Objects that need to be reset
     for eos in eos_info:
-        # Check to see if the device has a target container
-        if eos.targetContainerName:
-            # Update EOS Object with container information
-            eos.updateContainer(cvp_clnt)
-            # Check if device is in target container
-            if eos.targetContainerName != eos.parentContainer["name"]:
-                # Move device to target container, generate and apply any configlets
-                cvp_clnt.moveDevice(eos) 
-                cvp_clnt.genConfigBuilders(eos)
-                if eos.hostname in cvp_yaml['cvp_info']['configlets']['netelements'].keys():
-                    cvp_clnt.addDeviceConfiglets(eos,cvp_yaml['cvp_info']['configlets']['netelements'][eos.hostname])
-                cvp_clnt.applyConfiglets(eos)
-            else:
-                # If already in target container, generate any configlets and apply configlets
-                cvp_clnt.genConfigBuilders(eos)
-                if eos.hostname in cvp_yaml['cvp_info']['configlets']['netelements'].keys():
-                    cvp_clnt.addDeviceConfiglets(eos,cvp_yaml['cvp_info']['configlets']['netelements'][eos.hostname])
-                cvp_clnt.applyConfiglets(eos)
-        else:
-            pS("iBerg","No target container found for {0}".format(eos.hostname))
+        provisionDevice(cvp_clnt,eos)
 
     cvp_clnt.saveTopology()
     cvp_clnt.getAllTasks("pending")
     cvp_clnt.execAllTasks("pending")
+
+    # All tasks should complete successfully, but need to check for failed tasks
+    f_vdevs = [] # List to contain failed devices
+    cvp_clnt.getAllTasks("failed")
+    if cvp_clnt.tasks['failed']:
+        tmp_veos_ips = []
+        # Iterate through list of failed tasks, remove device and add hostname to f_vdevs for re-provisioning
+        for ftask in cvp_clnt.tasks['failed']:
+            cvp_clnt.deleteDevices(ftask['netElementId'])
+            f_hostname = ftask['workOrderDetails']['netElementHostName'].split('.')[0]
+            f_vdevs.append(f_hostname)
+            tmp_veos_ips.append(re_veos[f_hostname]['internal_ip'])
+        pS("INFO","Tasks failed for the following devices: {0}...Retrying".format(", ".join(f_vdevs)))
+        cvp_clnt.saveTopology()
+        # Get EOS info for devices needing to be re-added
+        eos_info = getEosDevice(atd_yaml['topology'],atd_yaml['nodes']['veos'],eos_cnt_map,f_vdevs)
+        # Re-Add all devices that previously failed back into CVP
+        cvp_clnt.addDeviceInventory(tmp_veos_ips)
+        # Iterate through EOS Objects that need to be re-added
+        for eos in eos_info:
+            provisionDevice(cvp_clnt,eos)
+        cvp_clnt.saveTopology()
+        cvp_clnt.getAllTasks("pending")
+        cvp_clnt.execAllTasks("pending")
+
     
 if __name__ == '__main__':
     syslog.openlog(logoption=syslog.LOG_PID)
