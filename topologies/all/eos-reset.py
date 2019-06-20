@@ -4,6 +4,7 @@ from ruamel.yaml import YAML
 from rcvpapi.rcvpapi import *
 from time import sleep
 from sys import exit
+from os import path, listdir
 import paramiko, argparse, syslog, urllib3
 import warnings
 warnings.filterwarnings(action='ignore',module='.*paramiko.*')
@@ -133,6 +134,26 @@ def getEosDevice(topo,eosYaml,cvpMapper,veos_reset):
                 EOS_DEV.append(CVPSWITCH(dev['hostname'],dev['internal_ip']))
     return(EOS_DEV)
 
+def restoreConfiglets(cvp_clnt,configlet_location):
+    if path.exists(configlet_location):
+        pS("OK","Configlet directory exists")
+        pro_cfglt = listdir(configlet_location)
+        pS("OK","Restoring all Configlets in CVP")
+        for tmp_cfg in pro_cfglt:
+            if '.py' in tmp_cfg:
+                cbname = tmp_cfg.replace('.py','')
+                # !!! Add section to check for .form file to import form list options
+                with open(configlet_location + tmp_cfg,'r') as cfglt:
+                    cvp_clnt.impConfiglet('builder',cbname,cfglt.read())
+            elif '.form' in tmp_cfg:
+                # Ignoring .form files here
+                pass
+            else:
+                with open(configlet_location + tmp_cfg,'r') as cfglt:
+                    cvp_clnt.impConfiglet('static',tmp_cfg,cfglt.read())
+    else:
+        pS("INFO","No Configlet directory found")
+
 def provisionDevice(cvp_clnt,eos):
     """
     Function to provision an EOS devices.
@@ -175,6 +196,7 @@ def main(vdevs):
     pS("INFO","Device{0} to be reset: {1}".format("s" if len(vdevs) > 1 else "",", ".join(vdevs)))
     bare_veos = ""
     dev_reboot_status = {}
+    configlet_location = '/tmp/atd/topologies/{0}/configlets/'.format(atd_yaml['topology'])
     # Used to store a list of IPs to be used for import into CVP
     tmp_veos_ips = []
     for b_cfg in BARE_CFGS:
@@ -195,6 +217,15 @@ def main(vdevs):
         #pS("OK","Device wait timer finished...Continuing")
     # Create connection to CVP
     cvp_clnt = conCVP()
+    # Restore CVP Configlets back to repo base
+    restoreConfiglets(cvp_clnt,configlet_location)
+    cvp_clnt.saveTopology()
+    # Check for any pending tasks from configlet restore
+    cvp_clnt.getAllTasks("pending")
+    if cvp_clnt.tasks['pending']:
+        pS("OK","Executing all tasks")
+        cvp_clnt.execAllTasks("pending")
+        pS("OK","Tasks executed")
     # Check for failed tasks and cancel them.
     cvp_clnt.getAllTasks("failed")
     if cvp_clnt.tasks['failed']:
@@ -221,6 +252,7 @@ def main(vdevs):
         provisionDevice(cvp_clnt,eos)
     cvp_clnt.saveTopology()
     cvp_clnt.getAllTasks("pending")
+    pS("OK","Executing all tasks")
     cvp_clnt.execAllTasks("pending")
     pS("OK","Tasks executed")
     sleep(5)
@@ -252,6 +284,8 @@ def main(vdevs):
         cvp_clnt.execAllTasks("pending")
     else:
         pS("OK","No failed tasks found.")
+    cvp_clnt.execLogout()
+    pS("OK","Closed connection to CVP")
 
     
 if __name__ == '__main__':
