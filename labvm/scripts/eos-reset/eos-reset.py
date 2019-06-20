@@ -86,7 +86,7 @@ def conCVP():
             while not cvp_clnt:
                 try:
                     cvp_clnt = CVPCON(atd_yaml['nodes']['cvp'][0]['internal_ip'],c_login['user'],c_login['pw'])
-                    pS("OK","Connected to CVP at {0}".format(atd_yaml['nodes']['cvp'][0]['ip']))
+                    pS("OK","Connected to CVP at {0}".format(atd_yaml['nodes']['cvp'][0]['internal_ip']))
                     return(cvp_clnt)
                 except:
                     pS("ERROR","CVP is currently unavailable....Retrying in 30 seconds.")
@@ -142,10 +142,9 @@ def provisionDevice(cvp_clnt,eos):
         # Update EOS Object with container information
         eos.updateContainer(cvp_clnt)
         # Check if device is in target container
-        print("Target: {0}\nParent: {1}".format(eos.targetContainerName,eos.parentContainer['name']))
         if eos.targetContainerName != eos.parentContainer["name"]:
             # Move device to target container, generate and apply any configlets
-            print("Move Status: {}".format(cvp_clnt.moveDevice(eos)))
+            cvp_clnt.moveDevice(eos)
             cvp_clnt.genConfigBuilders(eos)
             if eos.hostname in cvp_yaml['cvp_info']['configlets']['netelements'].keys():
                 cvp_clnt.addDeviceConfiglets(eos,cvp_yaml['cvp_info']['configlets']['netelements'][eos.hostname])
@@ -198,7 +197,9 @@ def main(vdevs):
     cvp_clnt = conCVP()
     # Check for failed tasks and cancel them.
     cvp_clnt.getAllTasks("failed")
-    cvp_clnt.cancelTasks("failed")
+    if cvp_clnt.tasks['failed']:
+        pS("OK","Cancelling previously failed tasks")
+        cvp_clnt.cancelTasks("failed")
     # Check to verify all devices to be reset have booted up
     for vdevR in dev_reboot_status.keys():
         while not dev_reboot_status[vdevR]['status']:
@@ -218,15 +219,17 @@ def main(vdevs):
     # Iterate through EOS Objects that need to be reset
     for eos in eos_info:
         provisionDevice(cvp_clnt,eos)
-
     cvp_clnt.saveTopology()
     cvp_clnt.getAllTasks("pending")
     cvp_clnt.execAllTasks("pending")
-
+    pS("OK","Tasks executed")
+    sleep(5)
     # All tasks should complete successfully, but need to check for failed tasks
     f_vdevs = [] # List to contain failed devices
-    cvp_clnt.getAllTasks("failed")
+    cvp_clnt.getAllTasks("failed")    
+    pS("OK","Checking for failed tasks") 
     if cvp_clnt.tasks['failed']:
+        pS("INFO","Found failed tasks")
         tmp_veos_ips = []
         # Iterate through list of failed tasks, remove device and add hostname to f_vdevs for re-provisioning
         for ftask in cvp_clnt.tasks['failed']:
@@ -234,6 +237,7 @@ def main(vdevs):
             f_hostname = ftask['workOrderDetails']['netElementHostName'].split('.')[0]
             f_vdevs.append(f_hostname)
             tmp_veos_ips.append(re_veos[f_hostname]['internal_ip'])
+        cvp_clnt.cancelTasks("failed")
         pS("INFO","Tasks failed for the following devices: {0}...Retrying".format(", ".join(f_vdevs)))
         cvp_clnt.saveTopology()
         # Get EOS info for devices needing to be re-added
@@ -246,6 +250,8 @@ def main(vdevs):
         cvp_clnt.saveTopology()
         cvp_clnt.getAllTasks("pending")
         cvp_clnt.execAllTasks("pending")
+    else:
+        pS("OK","No failed tasks found.")
 
     
 if __name__ == '__main__':
@@ -261,3 +267,4 @@ if __name__ == '__main__':
     else:
         res_dev = vdevs
     main(res_dev)
+    pS("OK","Restore completed for {0}".format(", ".join(res_dev)))
