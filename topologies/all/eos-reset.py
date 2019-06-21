@@ -155,6 +155,26 @@ def restoreConfiglets(cvp_clnt,configlet_location):
     else:
         pS("INFO","No Configlet directory found")
 
+def restoreContainers(cvp_clnt):
+    """
+    Function to restore all containers into CVP and to re-apply and applied configlets
+    """
+    cvp_clnt.getAllContainers()
+    for p_cnt in cvp_yaml['cvp_info']['containers'].keys():
+        if p_cnt not in cvp_clnt.containers.keys():
+            cvp_clnt.addContainer(p_cnt,"Tenant")
+            cvp_clnt.saveTopology()
+            cvp_clnt.getAllContainers()
+            pS("OK","Added {0} container".format(p_cnt))
+        else:
+            pS("INFO","{0} container already exists....skipping".format(p_cnt))
+        # Check and add configlets to containers
+        if p_cnt in cvp_yaml['cvp_info']['configlets']['containers'].keys():
+            pS("OK","Configlets found for {0} container.  Will apply".format(p_cnt))
+            cvp_clnt.addContainerConfiglets(p_cnt,cvp_yaml['cvp_info']['configlets']['containers'][p_cnt])
+            cvp_clnt.applyConfigletsContainers(p_cnt)
+            cvp_clnt.saveTopology()
+
 def provisionDevice(cvp_clnt,eos):
     """
     Function to provision an EOS devices.
@@ -214,12 +234,11 @@ def main(vdevs):
     pS("OK","Configs pushed to: {0}".format(", ".join(vdevs)))
     if DEVREBOOT:
         pS("INFO","Devices rebooting, waiting for devices to come back online")
-        #sleep(DELAYTIMER)
-        #pS("OK","Device wait timer finished...Continuing")
     # Create connection to CVP
     cvp_clnt = conCVP()
     # Restore CVP Configlets back to repo base
     restoreConfiglets(cvp_clnt,configlet_location)
+    restoreContainers(cvp_clnt)
     cvp_clnt.saveTopology()
     # Check for any pending tasks from configlet restore
     cvp_clnt.getAllTasks("pending")
