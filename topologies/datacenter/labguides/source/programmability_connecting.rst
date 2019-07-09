@@ -20,7 +20,7 @@ You will be greeted with the following menu:
 
 |
 
-Select option **13** (**Reset All Devices to Base**), wait til the command has completed, then log out.
+Select option **21** (**Reset All Devices to Base ATD**), wait til the command has completed, then log out.
 
 |
 
