@@ -123,6 +123,26 @@ Layer 3 Leaf-Spine
     .. code-block:: text
 
         ping 172.16.116.100
+        traceroute 172.16.116.100
+        
+    Verify Leaf4 IP address is in the traceroute path 172.16.200.14 via spine1 or 172.16.200.30 via spine2
+    If traffic is hashing via leaf3 172.16.200.10 or 172.16.200.26 perform optional step below on **Leaf3**
+        
+    .. code-block:: text
+
+        configure
+        router bgp 65002
+          neighbor 172.16.200.9 shutdown
+          neighbor 172.16.200.25 shutdown
+        
+    Rerun traceroute/verification from **Host1** to **Host2** then revert change on **Leaf3**
+     
+    .. code-block:: text
+
+        configure
+        router bgp 65002
+          no neighbor 172.16.200.9 shutdown
+          no neighbor 172.16.200.25 shutdown
 
 6. Other BGP features to play with if you have time:
 
