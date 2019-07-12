@@ -33,7 +33,7 @@ interface Ethernet5
 interface Ethernet6
    description EOS20
    no switchport
-   ip address 10.3.20.2/24
+   ip address 10.3.20.3/24
 interface Loopback0
    ip address 3.3.3.3/32
 interface Management1
