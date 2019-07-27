@@ -6,7 +6,13 @@ MLAG
 
 .. note:: Did you know the “mlag” script is composed of Python code that
           uses the CloudVision Portal REST API to automate the provisioning of
-          CVP Configlets.
+          CVP Configlets. The configlets that are configured via the REST API
+          are ``Spine1-MLAG-Lab``, ``Spine2-MLAG-Lab``, ``Leaf1-MLAG-Lab``,
+          ``Leaf2-MLAG-Lab``, ``Leaf3-MLAG-Lab``. In addition each switch also
+          gets the ``VLANs`` configlet.
+
+.. note:: The manually-entered commands below that are part of this lab are
+          equivalent to ``Leaf4-MLAG-Lab``.
 
 1. Log into the **LabAccess** jumpserver:
 
@@ -18,7 +24,7 @@ MLAG
             show mlag
             show mlag detail
             show mlag interfaces
-   
+
 2. Configure MLAG on the **Leaf4** switch using the following criteria
 
    1. Configure Port-channel on **Leaf4** to used for MLAG communication between **Leaf3** & **Leaf4**.
@@ -27,8 +33,8 @@ MLAG
 
             configure
             interface port-channel 10
-              switchport mode trunk   
-            
+              switchport mode trunk
+
             interface ethernet 1
               switchport mode trunk
               channel-group 10 mode active
@@ -47,24 +53,24 @@ MLAG
       .. note::
        Each switch is assigned a globally unique sysID by concatenating the 16-bit system priority to a 48-bit MAC address of one of the switch's physical ports. This sysID is used by peer devices when forming an aggregation to verify that all links are from the same switch - for environments where the MLAG peer link contains multiple physical links - which it does NOT in this example. A *trunk group* is the set of physical interfaces that comprise the trunk and the collection of VLANs whose traffic is carried on the trunk. The traffic of a VLAN that belongs to one or more trunk groups is carried only on ports that are members of trunk groups to which the VLAN belongs, i.e., VLANs configured in a *trunk group* are ‘pruned’ off all ports that are not associated with the trunk group. The spanning-tree protocol (STP) is disabled for the peer-link VLAN 4094 to prevent any potential STP disruption on the interpeer communications link. Since VLAN 4094 has been restricted to only be on the peer-link (Po10) by *trunk group MLAGPEER* & *switchport trunk group MLAGPEER* (see step #2.3) the chance of a loop is eliminated. To prevent loops do NOT add this *trunk group MLAGPEER* to any other interface links.
 
-   3. Configure the MLAG VLAN (both Layer 2 and Layer 3). 
+   3. Configure the MLAG VLAN (both Layer 2 and Layer 3).
 
         .. code-block:: text
 
             configure
             vlan 4094
               trunk group MLAGPEER
-            
+
             interface port-channel 10
               switchport trunk group MLAGPEER
               exit
-            
+
             no spanning-tree vlan 4094
-            
+
             interface vlan 4094
               description MLAG PEER LINK
               ip address 172.16.34.2/30
-            
+
             ping 172.16.34.1
 
       .. note::
@@ -105,12 +111,12 @@ MLAG
             interface port-channel 4
               switchport access vlan 12
               mlag 4
-            
+
             interface ethernet 4
               channel-group 4 mode active
-            
+
             interface ethernet5
-              shutdown 
+              shutdown
 
 3. Validate MLAG on the **Leaf4** switch using the following:
 

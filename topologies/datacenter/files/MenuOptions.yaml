@@ -1,31 +1,31 @@
 ---
-options: 
+options:
   reset:
   -   command: "/usr/local/bin/ConfigureTopology.py && bash /home/arista/Broadcaster/pushHostDefaultConfig.sh"
       description: "Reset All Devices to Base ATD (reset)"
-  mlag: 
+  mlag:
   -   command: "/usr/local/bin/ConfigureTopology.py -t mlag"
       description: "MLAG Lab (mlag)"
-  bgp: 
+  bgp:
   -   command: "/usr/local/bin/ConfigureTopology.py -t bgp"
       description: "BGP Lab (bgp)"
-  vxlan: 
+  vxlan:
   -   command: "/usr/local/bin/ConfigureTopology.py -t vxlan"
       description: "VXLAN Lab (vxlan) excludes leaf3 instead of leaf4"
-  l2evpn: 
+  l2evpn:
   -   command: "/usr/local/bin/ConfigureTopology.py -t l2evpn"
       description: "EVPN Type 2 Lab (l2evpn) excludes leaf3 instead of leaf4"
-  l3evpn: 
+  l3evpn:
   -   command: "/usr/local/bin/ConfigureTopology.py -t l3evpn"
       description: "EVPN Type 5 Lab (l3evpn) excludes leaf3 instead of leaf4"
-  cvp: 
+  cvp:
   -   command: "/usr/local/bin/ConfigureTopology.py -t cvp"
       description: "CVP lab (cvp)"
   media:
   -   command: "bash /home/arista/Broadcaster/pushHostMediaConfig.sh && login.py"
       description: "Broadcast Engineer Training (media)"
 media-options:
-  media-intro: 
+  media-intro:
   -   command: "/usr/local/bin/ConfigureTopology.py -t media-intro"
       description: "Media - IP Intro (media-intro)"
   media-vlan:
@@ -92,8 +92,6 @@ labconfiglets:
     leaf4:
       - "Leaf4-VXLAN-Lab"
       - "VLANs"
-    cvx01:
-      - "cvx01-Controller"
   l2evpn:
     spine1:
       - "Spine1-L2EVPN-Lab"
@@ -146,7 +144,7 @@ labconfiglets:
     leaf3:
       - "media-leaf3-IP-Intro-start"
     leaf4:
-      - "media-leaf4-IP-Intro-start"   
+      - "media-leaf4-IP-Intro-start"
   media-vlan:
     spine1:
       - "media-spine1-VLAN-STP-start"
