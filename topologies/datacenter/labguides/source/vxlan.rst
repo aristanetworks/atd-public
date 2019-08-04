@@ -53,7 +53,7 @@ VxLAN
         show ip interface brief
         show ip bgp summary
 
-.. note:: ``show ip bgp summary`` will show that the BGP neighbors have moved to ``Estab`` state. Note the iBGP peering between Leaf3 & Leaf4. Also note the route to the shared loopback1 of Leaf1 & Leaf2. This is the remote vVTEP on the other side of the leaf-spine network.
+.. note:: ``show ip bgp summary`` will show that the BGP neighbors have moved to ``Estab`` state. Note the iBGP peering between Leaf3 & Leaf4. Also note the route to the shared loopback1 of Leaf1 & Leaf2. This is the remote VTEP on the other side of the leaf-spine network.
 
 5. Create Loopback 1 and the VXLAN VTEP (VTI) interfaces on **Leaf3**
 
@@ -85,6 +85,7 @@ VxLAN
 
         .. code-block:: text
 
+            enable
             ping 172.16.112.1
             ping 172.16.112.202
 
@@ -99,6 +100,7 @@ VxLAN
 
         .. code-block:: text
 
+            enable
             show interface po1 | grep -i Hardware
             show arp
 
@@ -108,6 +110,7 @@ VxLAN
 
         .. code-block:: text
 
+            enable
             ping 172.16.112.1
             ping 172.16.112.201
 
@@ -124,6 +127,7 @@ VxLAN
 
         .. code-block:: text
 
+            enable
             show interface po1 | grep -i Hardware
             show arp
 

@@ -34,7 +34,7 @@ CVX
 
             show cvx
 
-3. On **Leaf3**, perform these commands to complete the southbound MLAG to HOST2 and configure the vVTEP & loopback1 IP address:
+3. On **Leaf3**, perform these commands to complete the southbound MLAG to HOST2 and configure the VTEP & loopback1 IP address:
 
         .. code-block:: text
 
@@ -91,6 +91,7 @@ CVX
 
         .. code-block:: text
 
+            enable
             ping 172.16.112.202
 
 5. Verify that **CVX01** has established connections and is receiving VxLAN advertisements
