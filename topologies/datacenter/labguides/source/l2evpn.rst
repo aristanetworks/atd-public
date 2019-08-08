@@ -9,10 +9,10 @@ L2 EVPN
           Multi-homing via MLAG is unsupported. As such, this lab exercise will
           not enable MLAG.
 
-1. Log into the  **LabAccess**  jumpserver:  
+1. Log into the  **LabAccess**  jumpserver:
 
    1. Type ``l2evpn`` at the prompt. The script will configure the datacenter with the exception of **leaf3**
-    
+
 2. On **leaf3**, configure ArBGP.
 
     .. code-block:: html
@@ -113,7 +113,7 @@ L2 EVPN
             show bgp evpn summary
 
 8. Configure L2EVPN
-    
+
    1. On **leaf3**: add VLAN 12, and interface vxlan1
 
         .. code-block:: html
@@ -140,7 +140,7 @@ L2 EVPN
             !
 
 9. Verify VXLAN and L2EVPN
-    
+
    1. On **leaf1** and **leaf3** verify the IMET table
 
         .. code-block:: text
@@ -152,6 +152,7 @@ L2 EVPN
 
         .. code-block:: text
 
+            enable
             ping 172.16.112.202
 
    3. On **leaf1** and **leaf3**

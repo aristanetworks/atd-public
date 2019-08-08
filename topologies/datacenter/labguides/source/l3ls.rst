@@ -6,7 +6,13 @@ Layer 3 Leaf-Spine
 
 .. note:: Did you know the “bgp” script is composed of Python code that
           uses the CloudVision Portal REST API to automate the provisioning of
-          CVP Configlets.
+          CVP Configlets. The configlets that are configured via the REST API
+          are ``Spine1-BGP-Lab``, ``Spine2-BGP-Lab``, ``Leaf1-BGP-Lab``,
+          ``Leaf2-BGP-Lab``, ``Leaf3-BGP-Lab``, ``Leaf4-BGP-Lab``.
+
+.. note:: The manually-entered commands below that are part of this lab are
+          equivalent to ``Leaf4-BGP-Lab-Full``.
+
 
 1. Log into the **LabAccess** jumpserver:
 
@@ -20,7 +26,7 @@ Layer 3 Leaf-Spine
 
             configure
             ip virtual-router mac-address 00:1c:73:00:00:34
-    
+
    2. Create the SVI and the Virtual Router Address
 
         .. code-block:: text
@@ -61,7 +67,7 @@ Layer 3 Leaf-Spine
 
             show ip interface brief
 
-   3. Based on the diagram, turn on BGP and configure the neighbor 
+   3. Based on the diagram, turn on BGP and configure the neighbor
       relationships on **Leaf4**. eBGP to **Spine1/Spine2** and iBGP to **Leaf3**.
 
         .. code-block:: text
@@ -74,6 +80,15 @@ Layer 3 Leaf-Spine
               neighbor 172.16.34.1 remote-as 65002
               neighbor 172.16.34.1 next-hop-self
 
+      .. note:: Since ``neighbor 172.16.34.1 remote-as 65002`` specifies an iBGP
+       peering relationship (because the ASN is the same as this switch
+       ``65002``) the receiving switch may not have a route to networks more
+       than 1 hop away, hence the switches should each advertise that they are
+       the next hop via the ``neighbor 172.16.34.1 next-hop-self`` statement. While this scenario is
+       only 2 iBGP peers, in a network fabric with several iBGP peers, a
+       switch inside an AS (and not on an edge) may not have a route to a
+       switch in any external AS.
+
    4. Validate the configuration and neighbor establishment
 
         .. code-block:: text
@@ -83,7 +98,7 @@ Layer 3 Leaf-Spine
 
 4. Configure networks on **Leaf4** to advertise to **Spine1/Spine2**
 
-   1. Add the following network to BGP announcements on **Leaf4**:
+   1. Add the following networks to BGP announcements on **Leaf4**:
 
         .. code-block:: text
 
@@ -116,59 +131,67 @@ Layer 3 Leaf-Spine
             show ip route
             show ip route bgp
 
-.. note:: ECMP is now working - notice the new status code in the `show ip bgp` output
+      .. note:: ECMP is now working - notice the new status code in the `show ip bgp` output
 
-5. Validate connectivity from **Host1** to **Host2**
+5. Validate connectivity from **Host1** to **Host2**. From **Host1** execute:
 
-    .. code-block:: text
+        .. code-block:: text
 
-        ping 172.16.116.100
-        traceroute 172.16.116.100
-        
-    Verify Leaf4 IP address is in the traceroute path 172.16.200.14 via spine1 or 172.16.200.30 via spine2
-    If traffic is hashing via leaf3 172.16.200.10 or 172.16.200.26 perform optional step below on **Leaf3**
-        
-    .. code-block:: text
+            enable
+            ping 172.16.116.100
+            traceroute 172.16.116.100
 
-        configure
-        router bgp 65002
-          neighbor 172.16.200.9 shutdown
-          neighbor 172.16.200.25 shutdown
-        
-    Rerun traceroute/verification from **Host1** to **Host2** then revert change on **Leaf3**
-     
-    .. code-block:: text
+   1. Verify Leaf4's IP address is in the traceroute path, either interface 172.16.200.14 via spine1 or  interface 172.16.200.30 via spine2.
+      If traffic is hashing via leaf3's 172.16.200.10 or 172.16.200.26 interfaces perform the optional ``shutdown`` steps below on **Leaf3**
 
-        configure
-        router bgp 65002
-          no neighbor 172.16.200.9 shutdown
-          no neighbor 172.16.200.25 shutdown
+        .. code-block:: text
+
+            configure
+            router bgp 65002
+              neighbor 172.16.200.9 shutdown
+              neighbor 172.16.200.25 shutdown
+
+   2. Rerun traceroute/verification from **Host1** to **Host2** then revert the ``shutdown`` changes on **Leaf3**
+
+        .. code-block:: text
+
+            configure
+            router bgp 65002
+              no neighbor 172.16.200.9 shutdown
+              no neighbor 172.16.200.25 shutdown
 
 6. Other BGP features to play with if you have time:
 
-   Route Redistribution:
+   1. Route Redistribution: For fun do a ``watch 1 diff show ip route | begin
+      Gateway`` on **Leaf1** & **Leaf2** and let those run while you execute the
+      command ``redistribute connected`` below on **Leaf3**. You will see new routes being
+      injected into the route tables of **Leaf1** & **Leaf2**.
 
-    .. code-block:: text
-    
-        configure
-        router bgp 65002
-          redistribute connected
+        .. code-block:: text
 
-   Route Maps:
+            configure
+            router bgp 65002
+              redistribute connected
 
-    .. code-block:: text
+   2. Route Maps:
 
-        configure
-        route-map <name> etc
-            
-   BFD:
+        .. code-block:: text
 
-    .. code-block:: text
+            configure
+              route-map <name> etc
 
-        configure
-        router bgp 65002
-          neighbor <neighbor_ip> fall-over bfd
-    
+   3. BFD: BFD is a low-overhead, protocol-independent mechanism which adjacent
+      systems can use instead for faster detection of faults in the path between
+      them. BFD is a simple mechanism which detects the liveness of a connection
+      between adjacent systems, allowing it to quickly detect failure of any
+      element in the connection.
+
+        .. code-block:: text
+
+            configure
+            router bgp 65002
+              neighbor <neighbor_ip> fall-over bfd
+
 7. Troubleshooting BGP:
 
     .. code-block:: text

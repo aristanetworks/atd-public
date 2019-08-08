@@ -15,12 +15,12 @@ Media STP and SVI Lab
         .. code-block:: text
 
             show spanning-tree
-            
-            
+
+
       **Example:**
-      
+
          .. code-block:: text
-         
+
             spine2#show spanning-tree
             MST0
               Spanning tree enabled protocol mstp
@@ -54,9 +54,9 @@ Media STP and SVI Lab
                 name v100
 
       **Example:**
-        
+
         .. code-block:: text
-        
+
             leaf4#configure
             leaf4(config)#vlan 100
             leaf4(config-vlan-100)#name v100
@@ -68,9 +68,9 @@ Media STP and SVI Lab
              show vlan
 
       **Example:**
-        
+
         .. code-block:: text
-        
+
             leaf4(config-vlan-100)#show vlan
             VLAN  Name                             Status    Ports
             ----- -------------------------------- --------- -------------------------------
@@ -101,9 +101,9 @@ Media STP and SVI Lab
             !
 
       **Example:**
-      
+
         .. code-block:: text
-        
+
             leaf4(config-vlan-100)#configure
             leaf4(config)#interface ethernet 2-3
             leaf4(config-if-Et2-3)#switchport mode trunk
@@ -119,9 +119,9 @@ Media STP and SVI Lab
             show spanning-tree
 
       **Example:**
-      
+
         .. code-block:: text
-        
+
             leaf4(config-if-Et2-3)#show spanning-tree
             MST0
               Spanning tree enabled protocol mstp
@@ -154,28 +154,28 @@ Media STP and SVI Lab
             configure
             interface Ethernet4
               switchport access vlan 100
-              
+
       **Example:**
-      
+
         .. code-block:: text
-        
+
             leaf4(config-if-Et2-3)#configure
             leaf4(config)#interface ethernet 4
             leaf4(config-if-Et4)#switchport access vlan 100
 
 3. Validate end-to-end connectivity after configuring the Layer 2 interfaces. Once the spanning tree has converged for the topology we can observe the results.
-   
+
    1. Validate the vlan port association and spanning-tree topology is correct
-   
+
         .. code-block:: text
-        
+
             show vlan
             show spanning-tree
 
       **Example:**
-      
+
         .. code-block:: text
-        
+
             leaf4(config-if-Et4)#show vlan
             VLAN  Name                             Status    Ports
             ----- -------------------------------- --------- -------------------------------
@@ -216,7 +216,7 @@ Media STP and SVI Lab
 
 
     You should see the root bridge is towards **Spine 1** and vlan 100 should be associated to interfaces eth2, eth3 and eth4
-    
+
    2. Log into **Host 2** and verify you can reach the SVI for vlan 100 as well as reachability to **Host 1**
 
         .. code-block:: text
@@ -224,7 +224,8 @@ Media STP and SVI Lab
             SVI (Vlan 100 gateway on Spine 1)
             ping 172.16.46.4
 
-            host2#ping 172.16.46.4
+            host2> enable
+            host2# ping 172.16.46.4
             PING 172.16.46.4 (172.16.46.4) 72(100) bytes of data.
             80 bytes from 172.16.46.4: icmp_seq=1 ttl=64 time=35.3 ms
             80 bytes from 172.16.46.4: icmp_seq=2 ttl=64 time=51.3 ms
@@ -240,7 +241,8 @@ Media STP and SVI Lab
             Host 1
             ping 172.16.15.5
 
-            host2#ping 172.16.15.5
+            host2> enable
+            host2# ping 172.16.15.5
             PING 172.16.15.5 (172.16.15.5) 72(100) bytes of data.
             From 172.16.46.4: icmp_seq=1 Redirect Host(New nexthop: 172.16.15.5)
             80 bytes from 172.16.15.5: icmp_seq=1 ttl=63 time=237 ms
@@ -259,15 +261,15 @@ Media STP and SVI Lab
  .. admonition:: **Test your knowledge:**
 
     When you are verifying the spanning-tree topology from **Leaf 4**, what are some of the reasons for the root bridge selection?
-  
+
 
 **LAB COMPLETE!**
 
 .. admonition:: **Helpful Commands:**
 
     During the lab you can use the different commands to verify connectivity and behaviour for validation and troubleshooting purposes:
-  
+
    - show vlan
-   - show interfaces trunk 
+   - show interfaces trunk
    - show interfaces status
    - show spanning-tree

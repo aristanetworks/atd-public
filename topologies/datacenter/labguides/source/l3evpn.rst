@@ -6,7 +6,7 @@ L3 EVPN
 
 .. note:: Based on limitations in vEOS-LAB data plane, EVPN with Multi-homing via MLAG is unsupported.  As such, this lab exercise will not enable MLAG.
 
-1. Log into the  **LabAccess**  jumpserver:  
+1. Log into the  **LabAccess**  jumpserver:
 
    1. Type ``l3evpn`` at the prompt. The script will configure the datacenter with the exception of **leaf3**
 
@@ -166,12 +166,13 @@ L3 EVPN
 
         .. code-block:: text
 
+            enable
             ping 172.16.116.100
 
    3. On **leaf1** and **leaf3**
 
         .. code-block:: text
-            
+
             show ip route vrf vrf1
             show mac address-table dynamic
 
