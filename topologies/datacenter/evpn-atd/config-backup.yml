@@ -1,0 +1,15 @@
+---
+
+- name: Backup the EOS device configuration
+  hosts: evpn
+  gather_facts: no
+
+  tasks:
+    - name: Gather Facts
+      eos_facts:
+
+    - name: Backup Configs
+      eos_config:
+        backup: yes
+        backup_options:
+          filename: "{{ inventory_hostname }}-evpn-base.cfg"
