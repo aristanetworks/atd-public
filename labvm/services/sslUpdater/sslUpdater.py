@@ -74,3 +74,5 @@ if __name__ == '__main__':
     # Open Syslog
     syslog.openlog(logoption=syslog.LOG_PID)
     pS("OK","Starting...")
+    main()
+    
