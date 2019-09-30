@@ -9,6 +9,7 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 # Globals
 PDEBUG = False
 TOPO_FILE = '/etc/ACCESS_INFO.yaml'
+CERT_DAYS = 14
 
 # ==================================
 # Start of Global Functions
@@ -62,17 +63,19 @@ def main():
         # If connected to CVP, grab ssl information
         cvpSSL = cvp_clnt.getCerts()
         # Check if the SSL cert expires within 14 days
-        if time.time() >= ((cvpSSL['validTill'] / 1000) - convertDaysToSeconds(14)):
+        if time.time() >= ((cvpSSL['validTill'] / 1000) - convertDaysToSeconds(CERT_DAYS)):
+            pS("INFO","Cert expires within {} Days, renewing...".format(CERT_DAYS))
             try:
                 cvp_clnt.generateCert('ATD CVP', 'Arista', 'CloudVision', 'ATD CVP', 365)
                 cvp_clnt.installCert()
                 pS("INFO","Created and imported new CVP Cert.")
             except:
                 pS("ERROR","There was an issue creating and importing a new cert")
+        else:
+            pS("INFO","Cert is still valid and not expiring within the next {} days".format(CERT_DAYS))
 
 if __name__ == '__main__':
     # Open Syslog
     syslog.openlog(logoption=syslog.LOG_PID)
     pS("OK","Starting...")
     main()
-    
