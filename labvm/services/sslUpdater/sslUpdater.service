@@ -1,7 +1,7 @@
 [Unit]
 Description=Automatically updates the CVP self-signed cert
-Required=atdServiceUpdater.service
-After=atdServiceUpdater.service
+Required=atdFiles.service
+After=atdFiles.service
 
 [Service]
 Type=forking
