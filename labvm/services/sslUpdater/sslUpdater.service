@@ -1,0 +1,14 @@
+[Unit]
+Description=Automatically updates the CVP self-signed cert
+Required=atdServiceUpdater.service
+After=atdServiceUpdater.service
+
+[Service]
+Type=forking
+ExecStart=/usr/local/bin/sslUpdater.py
+TimeoutStartSec=180
+Restart=on-failure
+RestartSec=60
+
+[Install]
+WantedBy=multi-user.target
