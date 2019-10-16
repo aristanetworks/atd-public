@@ -1,10 +1,10 @@
 topologies: [
     { Topology_Name: 'Data Center',
-      Topology_File: 'https://github.com/aristanetworks/atd-public/blob/nestor/topologies/datacenter/ADCATDBluePrint.yml'
+      Topology_File: 'https://github.com/aristanetworks/atd-public/blob/nestor/topologies/datacenter/ADCATDBluePrint.yml',
       Topology_Access: 'standard'
     },
     { Topology_Name: 'Advanced Routing',
-      Topology_File: 'https://github.com/aristanetworks/atd-public/blob/nestor/topologies/routing/Routing.yml'
+      Topology_File: 'https://github.com/aristanetworks/atd-public/blob/nestor/topologies/routing/Routing.yml',
       Topology_Access: 'admin'
     }
 ]
