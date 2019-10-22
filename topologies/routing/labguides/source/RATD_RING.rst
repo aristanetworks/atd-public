@@ -1,7 +1,7 @@
 Routing ATD Lab Guide
 =====================
 
-.. image:: images/RATD_RING-Topo-Image No Arista Logo.png
+.. image:: images/RATD_RING-Topo-ImageNoAristaLogo.png
    :align: center
 
 1.	Deploy IS-IS as the Service Provider Underlay IGP
