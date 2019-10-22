@@ -1,7 +1,7 @@
 [Unit]
 Description=Automatically updates configlets
-Required=atdServiceUpdater.service
-After=atdServiceUpdater.service
+Required=cvpUpdater.service
+After=cvpUpdater.service
 
 [Service]
 Type=forking
