@@ -34,7 +34,7 @@ options:
   -   command: "/usr/local/bin/ConfigureTopology.py -t sr-ring"
       description: "Start at Section 2: Segment-Routing (sr-ring)"
   evpn-ring: 
-  -   command: "/usr/local/bin/ConfigureTopology.py -t evpn"-ring
+  -   command: "/usr/local/bin/ConfigureTopology.py -t evpn-ring"
       description: "Start at Section 3: EVPN Control-Plane (evpn-ring)"
   c1l3vpn-ring: 
   -   command: "/usr/local/bin/ConfigureTopology.py -t c1l3vpn-ring"
