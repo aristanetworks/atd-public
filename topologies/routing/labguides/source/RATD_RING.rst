@@ -1,5 +1,5 @@
-Routing ATD Lab Guide
-=====================
+Routing ATD Lab Guide - Ring Topology
+==========================================
 
 .. image:: images/RATD_RING-Topo-ImageNoAristaLogo.png
    :align: center
