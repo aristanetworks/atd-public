@@ -22,7 +22,7 @@ def remove_configlets(client, device):
         if configlet['name'] in base_configlets or configlet['name'].startswith('SYS_') or configlet['name'].startswith('BaseIPv4_'):
             configlets_to_remain.append(configlet['name'])
         else:
-            pS("INFO", "Configlet {0} not part of base on {1} - Removing from device".format(configlet['name'], device['fqdn']))
+            pS("INFO", "Configlet {0} not part of base on {1} - Removing from device".format(configlet['name'], device.hostname))
             configlets_to_remove.append(configlet)
     device.removeConfiglets(client, configlets_to_remove)
     client.addDeviceConfiglets(device, configlets_to_remain)
