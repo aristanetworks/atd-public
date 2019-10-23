@@ -54,7 +54,7 @@ while 1:
 while not cvp_clnt:
    try:
       cvp_clnt = CVPCON(accessinfo['nodes']['cvp'][0]['internal_ip'],cvpUsername,cvpPassword)
-      print("[OK] Connected to CVP at {0}".format(accessinfo['nodes']['cvp'][0]['ip']))
+      print("[OK] Connected to CVP at {0}".format(accessinfo['nodes']['cvp'][0]['internal_ip']))
    except:
       print("[ERROR] CVP is currently unavailable....Retrying in 30 seconds.")
       sleep(30)
