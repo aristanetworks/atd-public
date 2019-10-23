@@ -23,11 +23,10 @@ def remove_configlets(client, device):
             configlets_to_remain.append(configlet['name'])
         else:
             pS("INFO", "Configlet {0} not part of base on {1} - Removing from device".format(configlet['name'], device.hostname))
-            configlets_to_remove.append(configlet)
+            configlets_to_remove.append(configlet['name'])
     device.removeConfiglets(client, configlets_to_remove)
     client.addDeviceConfiglets(device, configlets_to_remain)
     client.applyConfiglets(device)
-    client.saveTopology()
     return
 
 def getDeviceInfo(client):
