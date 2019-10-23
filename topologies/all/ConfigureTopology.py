@@ -4,9 +4,10 @@ import getopt
 import sys
 import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+from rcvpapi.rcvpapi import *
 import cvprac.cvp_client
 from cvprac.cvp_client_errors import CvpLoginError
-import yaml
+import yaml, syslog, time
 
 DEBUG = False
 
@@ -17,9 +18,10 @@ def remove_configlets(client, device):
     
     configlets_to_remove = []
 
-    device_id = device['systemMacAddress']
-    configlets = client.api.get_configlets_by_device_id(device_id)
-    for configlet in configlets:
+    # device_id = device['systemMacAddress']
+    # configlets = client.api.get_configlets_by_device_id(device_id)
+    configlets = client.getConfigletsByNetElementId(device)
+    for configlet in configlets['configletList']:
         if configlet['name'] in base_configlets or configlet['name'].startswith('SYS_') or configlet['name'].startswith('BaseIPv4_'):
             continue
         else:
@@ -44,13 +46,26 @@ def get_devices(client):
 
     return devices
 
+def getDeviceInfo(client):
+    eos_devices = []
+    for dev in client.inventory:
+        tmp_eos = client.inventory[dev]
+        tmp_eos_sw = CVPSWITCH(dev, tmp_eos['ipAddress'])
+        tmp_eos_sw.updateDevice(client)
+        eos_devices.append(tmp_eos_sw)
+    return(eos_devices)
+
+
 def update_topology(client, lab, configlets):
     # Get all the devices in CVP
-    devices = get_devices(client)
+    # devices = get_devices(client)
+    devices = getDeviceInfo(client)
     # Loop through all devices
+    # for device in devices:
     for device in devices:
         # Get the actual name of the device
-        device_name = device['fqdn'].split('.')[0]
+        # device_name = device['fqdn'].split('.')[0]
+        device_name = device.hostname
         
         # Set everything back to the base
         remove_configlets(client, device)
@@ -89,6 +104,18 @@ def print_usage(topologies):
     print ', '.join(topologies)
     print ''
     quit()
+
+def pS(mstat,mtype):
+    """
+    Function to send output from service file to Syslog
+    Parameters:
+    mstat = Message Status, ie "OK", "INFO" (required)
+    mtype = Message to be sent/displayed (required)
+    """
+    mmes = "\t" + mtype
+    syslog.syslog("[{0}] {1}".format(mstat,mmes.expandtabs(7 - len(mstat))))
+    if DEBUG:
+        print("[{0}] {1}".format(mstat,mmes.expandtabs(7 - len(mstat))))
 
 def main(argv):
     f = open('/etc/ACCESS_INFO.yaml')
@@ -142,6 +169,18 @@ def main(argv):
     # Setup the client
     cvp_client = cvprac.cvp_client.CvpClient()
 
+    # Adding new connection to CVP via rcvpapi
+    cvp_clnt = ''
+    for c_login in accessinfo['login_info']['cvp']['shell']:
+        if c_login['user'] == 'arista':
+            while not cvp_clnt:
+                try:
+                    cvp_clnt = CVPCON(accessinfo['nodes']['cvp'][0]['internal_ip'],c_login['user'],c_login['pw'])
+                    pS("OK","Connected to CVP at {0}".format(accessinfo['nodes']['cvp'][0]['internal_ip']))
+                except:
+                    print("[ERROR] CVP is currently unavailable....Retrying in 30 seconds.")
+                    time.sleep(30)
+
     # Attempt to connect to CVP
     try:
         cvp_client.connect([cvip], user, pwd)
@@ -153,7 +192,8 @@ def main(argv):
 
     # Make sure option chosen is valid, then configure the topology
     if lab in options:
-      update_topology(cvp_client, lab, labconfiglets)
+        update_topology(cvp_clnt, lab, labconfiglets)
+        # update_topology(cvp_client, lab, labconfiglets)
     else:
       print_usage(options)
 
@@ -163,4 +203,5 @@ def main(argv):
        print 'Completed setting devices to topology: %s' % lab
 
 if __name__ == '__main__':
+    syslog.openlog(logoption=syslog.LOG_PID)
     main(sys.argv[1:])

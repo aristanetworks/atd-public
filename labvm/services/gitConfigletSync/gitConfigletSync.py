@@ -57,7 +57,7 @@ while not cvp_clnt:
       print("[OK] Connected to CVP at {0}".format(accessinfo['nodes']['cvp'][0]['internal_ip']))
    except:
       print("[ERROR] CVP is currently unavailable....Retrying in 30 seconds.")
-      sleep(30)
+      time.sleep(30)
 
 # Function to sync configlet to CVP
 def syncConfiglet(cvpClient,configletName,configletConfig):

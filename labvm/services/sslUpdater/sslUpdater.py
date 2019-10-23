@@ -58,7 +58,7 @@ def main():
                     pS("OK","Connected to CVP at {0}".format(atd_yaml['nodes']['cvp'][0]['internal_ip']))
                 except:
                     pS("ERROR","CVP is currently unavailable....Retrying in 30 seconds.")
-                    sleep(30)
+                    time.sleep(30)
     if cvp_clnt:
         # If connected to CVP, grab ssl information
         cvpSSL = cvp_clnt.getCerts()
