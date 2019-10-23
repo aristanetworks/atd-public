@@ -146,6 +146,7 @@ def main(argv):
 
     # Make sure option chosen is valid, then configure the topology
     if lab in options:
+        pS("INFO", "Setting {0} topology to {1} setup".format(accessinfo['topology'], lab))
         update_topology(cvp_clnt, lab, labconfiglets)
     else:
       print_usage(options)
