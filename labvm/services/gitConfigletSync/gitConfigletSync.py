@@ -5,6 +5,7 @@ import os
 import time
 import shutil
 import yaml
+from rcvpapi.rcvpapi import *
 import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
@@ -23,10 +24,16 @@ gitTempPath = '/tmp/atd/'
 # Relative path within the repo to the configlet directory
 configletPath = 'topologies/' + topology + '/configlets/'
 ignoreConfiglets = ['readme.md']
+
 # cvpNodes can be a single item or a list of the cluster
 cvpNodes = ['192.168.0.5']
-cvpUsername = 'arista'
-cvpPassword = 'arista'
+for urole in accessinfo['login_info']['cvp']['shell']:
+   if urole['user'] == 'arista':
+      cvpUsername = urole['user']
+      cvpPassword = urole['pw']
+
+# rcvpapi clnt var container
+cvp_clnt = ""
 
 # Initialize the client
 clnt = CvpClient()
@@ -43,6 +50,14 @@ while 1:
       print "Cannot connect to CVP waiting 1 minute attempt",attempts
       time.sleep(60)
 
+# Adding new connection to CVP via rcvpapi
+while not cvp_clnt:
+   try:
+      cvp_clnt = CVPCON(accessinfo['nodes']['cvp'][0]['internal_ip'],cvpUsername,cvpPassword)
+      print("[OK] Connected to CVP at {0}".format(accessinfo['nodes']['cvp'][0]['ip']))
+   except:
+      print("[ERROR] CVP is currently unavailable....Retrying in 30 seconds.")
+      sleep(30)
 
 # Function to sync configlet to CVP
 def syncConfiglet(cvpClient,configletName,configletConfig):
@@ -81,6 +96,13 @@ for configletName in configlets:
    if configletName not in ignoreConfiglets:
       with open(gitTempPath + configletPath + configletName, 'r') as configletData:
          configletConfig=configletData.read()
-      syncConfiglet(clnt,configletName,configletConfig)
+      # Add check for ConfigletBuilder
+      if '.py' in configletName:
+         new_configletName = configletName.replace(".py","")
+         res = cvp_clnt.impConfiglet("builder",new_configletName,configletConfig)
+         print("{0} Configlet Builder: {1}".format(res[0],new_configletName))
+      else:
+         res = cvp_clnt.impConfiglet("static",configletName,configletConfig)
+         print("{0} Configlet: {1}".format(res[0],configletName))
 
 print("Configlet sync complete")
