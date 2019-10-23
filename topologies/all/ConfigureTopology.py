@@ -17,19 +17,24 @@ def remove_configlets(client, device):
     base_configlets = ['AAA','aws-infa']
     
     configlets_to_remove = []
+    configlets_to_remain = []
 
     # device_id = device['systemMacAddress']
     # configlets = client.api.get_configlets_by_device_id(device_id)
     configlets = client.getConfigletsByNetElementId(device)
     for configlet in configlets['configletList']:
         if configlet['name'] in base_configlets or configlet['name'].startswith('SYS_') or configlet['name'].startswith('BaseIPv4_'):
-            continue
+            configlets_to_remain.append(configlet['name'])
         else:
             if DEBUG:
                print 'Configlet %s not part of base on %s - Removing from device' % (configlet['name'], device['fqdn'])
-            configlets_to_remove.append( {'name': configlet['name'], 'key': configlet['key']} )
-
-    client.api.remove_configlets_from_device('ConfigureTopology', device, configlets_to_remove)
+            # configlets_to_remove.append( {'name': configlet['name'], 'key': configlet['key']} )
+            configlets_to_remove.append(configlet)
+    device.removeConfiglets(client, configlets_to_remove)
+    client.addDeviceConfiglets(device, configlets_to_remain)
+    client.applyConfiglets(device)
+    client.saveTopology()
+    # client.api.remove_configlets_from_device('ConfigureTopology', device, configlets_to_remove)
     return
 
 def get_devices(client):
@@ -78,11 +83,15 @@ def update_topology(client, lab, configlets):
         
           # Define a list of configlets built off of the MenuOptions.yaml
           for configlet_name in configlets[lab][device_name]:
-             lab_configlet = client.api.get_configlet_by_name(configlet_name)
-             lab_configlets.append({'name': lab_configlet['name'], 'key': lab_configlet['key']})
+              lab_configlets.append(configlet_name)
+            #  lab_configlet = client.api.get_configlet_by_name(configlet_name)
+            #  lab_configlets.append({'name': lab_configlet['name'], 'key': lab_configlet['key']})
 
           # Apply the configlets to the device
-          client.api.apply_configlets_to_device('ConfigureTopology', device, lab_configlets)
+          client.addDeviceConfiglets(device, lab_configlets)
+          client.applyConfiglets(device)
+          client.saveTopology()
+        #   client.api.apply_configlets_to_device('ConfigureTopology', device, lab_configlets)
 
     return
 
@@ -198,7 +207,9 @@ def main(argv):
       print_usage(options)
 
     # Execute all tasks generated from reset_devices()
-    execute_pending_tasks(cvp_client)
+    # execute_pending_tasks(cvp_client)
+    cvp_clnt.getAllTasks("pending")
+    cvp_clnt.execAllTasks("pending")
     if DEBUG:
        print 'Completed setting devices to topology: %s' % lab
 
