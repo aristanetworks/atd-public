@@ -44,13 +44,13 @@ interface Vlan12
    ip address 172.16.112.4/24
    ip virtual-router address 172.16.112.1
 !
-ip virtual-router mac-address 00:1c:73:00:00:ff
+ip virtual-router mac-address 00:1c:73:00:00:12
 !
 router bgp 65002
    router-id 172.16.0.5
    maximum-paths 4 ecmp 4
    neighbor 172.16.200.9 remote-as 65000
-   neighbor 172.16.200.9 maximum-routes 12000
+   neighbor 172.16.200.9 maximum-routes 12000 
    neighbor 172.16.200.25 remote-as 65000
    neighbor 172.16.200.25 maximum-routes 12000
    neighbor 172.16.34.2 remote-as 65002

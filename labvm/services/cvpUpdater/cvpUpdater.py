@@ -94,8 +94,8 @@ def main():
         if c_login['user'] == 'arista':
             while not cvp_clnt:
                 try:
-                    cvp_clnt = CVPCON(atd_yaml['nodes']['cvp'][0]['ip'],c_login['user'],c_login['pw'])
-                    pS("OK","Connected to CVP at {0}".format(atd_yaml['nodes']['cvp'][0]['ip']))
+                    cvp_clnt = CVPCON(atd_yaml['nodes']['cvp'][0]['internal_ip'],c_login['user'],c_login['pw'])
+                    pS("OK","Connected to CVP at {0}".format(atd_yaml['nodes']['cvp'][0]['internal_ip']))
                 except:
                     pS("ERROR","CVP is currently unavailable....Retrying in 30 seconds.")
                     sleep(30)
@@ -162,13 +162,16 @@ def main():
                 if eos.targetContainerName != eos.parentContainer["name"]:
                     cvp_clnt.moveDevice(eos) 
                     cvp_clnt.genConfigBuilders(eos)
-                    if eos.hostname in cvp_yaml['cvp_info']['configlets']['netelements'].keys():
-                        cvp_clnt.addDeviceConfiglets(eos,cvp_yaml['cvp_info']['configlets']['netelements'][eos.hostname])
+                    if cvp_yaml['cvp_info']['configlets']['netelements']:
+                        if eos.hostname in cvp_yaml['cvp_info']['configlets']['netelements'].keys():
+                            cvp_clnt.addDeviceConfiglets(eos,cvp_yaml['cvp_info']['configlets']['netelements'][eos.hostname])
                     cvp_clnt.applyConfiglets(eos)
             
         cvp_clnt.saveTopology()
+        pS("OK", "Topology saved")
         cvp_clnt.getAllTasks("pending")
         cvp_clnt.execAllTasks("pending")
+        pS("OK", "All pending tasks are executing")
         # ==========================================
         # Creating Snapshots
         # ==========================================

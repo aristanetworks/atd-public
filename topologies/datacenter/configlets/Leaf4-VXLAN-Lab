@@ -36,7 +36,7 @@ interface Ethernet4
 !
 interface Ethernet5
    shutdown
-!
+!  
 interface Vlan4094
    description MLAG PEER LINK
    ip address 172.16.34.2/30
@@ -62,15 +62,15 @@ interface Vxlan1
    vxlan vlan 12 vni 1212
    vxlan flood vtep 172.16.0.34
 !
-ip virtual-router mac-address 00:1c:73:00:00:ff
+ip virtual-router mac-address 00:1c:73:00:00:12
 !
 router bgp 65002
    router-id 172.16.0.6
    maximum-paths 4 ecmp 4
    neighbor 172.16.200.13 remote-as 65000
-   neighbor 172.16.200.13 maximum-routes 12000
+   neighbor 172.16.200.13 maximum-routes 12000 
    neighbor 172.16.200.29 remote-as 65000
-   neighbor 172.16.200.29 maximum-routes 12000
+   neighbor 172.16.200.29 maximum-routes 12000 
    neighbor 172.16.34.1 remote-as 65002
    neighbor 172.16.34.1 next-hop-self
    network 172.16.0.6/32
