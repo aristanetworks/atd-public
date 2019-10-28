@@ -25,7 +25,7 @@ options:
   -   command: "/usr/local/bin/ConfigureTopology.py -t centsvc"
       description: "Start at Section 13: Centralized Services (centsvc)"
   complete: 
-  -   command: "/usr/local/bin/ConfigureTopology.py -t complete"
+  -   command: "/usr/local/bin/ConfigureTopology.py -t complete\n"
       description: "Complete all Sections (complete)"
   reset-ring:
   -   command: "/usr/local/bin/ConfigureTopology.py -t reset-ring"
