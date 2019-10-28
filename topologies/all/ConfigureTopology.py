@@ -10,9 +10,12 @@ import yaml
 
 DEBUG = False
 
-def remove_configlets(client, device):
-    # Removes all configlets except the ones defined here or starting with SYS_
-    # Define base configlets that are to be untouched
+def remove_configlets(client, device, mext=None):
+    """
+    Removes all configlets except the ones defined here or starting with SYS_
+    Define base configlets that are to be untouched
+    mext = lab type to keep track of which base configlets to keep.  Added for RATD and RATD-Ring
+    """
     base_configlets = ['AAA','aws-infa']
     
     configlets_to_remove = []
@@ -21,6 +24,12 @@ def remove_configlets(client, device):
     configlets = client.api.get_configlets_by_device_id(device_id)
     for configlet in configlets:
         if configlet['name'] in base_configlets or configlet['name'].startswith('SYS_') or configlet['name'].startswith('BaseIPv4_'):
+            # Do further evaluation on RATD topo to distinguish between standard RATD and RATD-Ring modules
+            if configlet['name'].startswith('BaseIPv4_'):
+                if mext and '_RING' not in configlet['name']:
+                    configlets_to_remove.append( {'name': configlet['name'], 'key': configlet['key']} )
+                elif not mext and '_RING' in configlet['name']:
+                    configlets_to_remove.append( {'name': configlet['name'], 'key': configlet['key']} )
             continue
         else:
             if DEBUG:
@@ -52,8 +61,13 @@ def update_topology(client, lab, configlets):
         # Get the actual name of the device
         device_name = device['fqdn'].split('.')[0]
         
-        # Set everything back to the base
-        remove_configlets(client, device)
+        # Check to see if this is a RATD-Ring topo:
+        if '-ring' in lab:
+            # Set it back to RATD-Ring Base
+            remove_configlets(client, device, lab)
+        else:
+            # Set everything back to the base
+            remove_configlets(client, device)
         
         # Only apply configlets if an actual 'lab' was defined
         # Only apply configlets to devices that are specified in the 'lab'
