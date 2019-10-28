@@ -25,8 +25,8 @@ options:
   -   command: "/usr/local/bin/ConfigureTopology.py -t centsvc"
       description: "Start at Section 13: Centralized Services (centsvc)"
   complete: 
-  -   command: "/usr/local/bin/ConfigureTopology.py -t complete\n"
-      description: "Complete all Sections (complete)"
+  -   command: "/usr/local/bin/ConfigureTopology.py -t complete"
+      description: "Complete all Sections (complete)\n"
   reset-ring:
   -   command: "/usr/local/bin/ConfigureTopology.py -t reset-ring"
       description: "Reset All Devices to Base IPv4 for Ring Topo (reset-ring)"
