@@ -62,7 +62,7 @@ def update_topology(client, lab, configlets):
         device_name = device['fqdn'].split('.')[0]
         
         # Check to see if this is a RATD-Ring topo:
-        if '-ring' in lab:
+        if 'ring' in lab:
             # Set it back to RATD-Ring Base
             remove_configlets(client, device, lab)
         else:
