@@ -304,10 +304,11 @@ def main(vdevs):
         tmp_veos_ips = []
         # Iterate through list of failed tasks, remove device and add hostname to f_vdevs for re-provisioning
         for ftask in cvp_clnt.tasks['failed']:
-            cvp_clnt.deleteDevices(ftask['netElementId'])
             f_hostname = ftask['workOrderDetails']['netElementHostName'].split('.')[0]
-            f_vdevs.append(f_hostname)
-            tmp_veos_ips.append(re_veos[f_hostname]['internal_ip'])
+            if f_hostname in vdevs:
+                cvp_clnt.deleteDevices(ftask['netElementId'])
+                f_vdevs.append(f_hostname)
+                tmp_veos_ips.append(re_veos[f_hostname]['internal_ip'])
         cvp_clnt.cancelTasks("failed")
         pS("INFO", "Tasks failed for the following devices: {0}...Retrying".format(", ".join(f_vdevs)))
         cvp_clnt.saveTopology()
