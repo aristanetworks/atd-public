@@ -29,31 +29,31 @@ options:
       description: "Complete all Sections (complete)"
   reset-ring:
   -   command: "/usr/local/bin/ConfigureTopology.py -t reset-ring"
-      description: "Ring Topo: Reset All Devices to Base IPv4 (reset-ring)"
+      description: "RING TOPOLOGY - Reset All Devices to Base IPv4 (reset-ring)"
   sr-ring: 
   -   command: "/usr/local/bin/ConfigureTopology.py -t sr-ring"
-      description: "Ring Topo: Start at Section 2: Segment-Routing (sr-ring)"
+      description: "RING TOPOLOGY - Start at Section 2: Segment-Routing (sr-ring)"
   evpn-ring: 
   -   command: "/usr/local/bin/ConfigureTopology.py -t evpn-ring"
-      description: "Ring Topo: Start at Section 3: EVPN Control-Plane (evpn-ring)"
+      description: "RING TOPOLOGY - Start at Section 3: EVPN Control-Plane (evpn-ring)"
   c1l3vpn-ring: 
   -   command: "/usr/local/bin/ConfigureTopology.py -t c1l3vpn-ring"
-      description: "Ring Topo: Start at Section 4: Customer-1 L3VPN (c1l3vpn-ring)"
+      description: "RING TOPOLOGY - Start at Section 4: Customer-1 L3VPN (c1l3vpn-ring)"
   c2l2vpn-ring: 
   -   command: "/usr/local/bin/ConfigureTopology.py -t c2l2vpn-ring"
-      description: "Ring Topo: Start at Section 8: Customer-2 L2VPN (c2l2vpn-ring)"
+      description: "RING TOPOLOGY - Start at Section 8: Customer-2 L2VPN (c2l2vpn-ring)"
   c3eline-ring: 
   -   command: "/usr/local/bin/ConfigureTopology.py -t c3eline-ring"
-      description: "Ring Topo: Start at Section 10: Customer-3 E-LINE (c3eline-ring)"
+      description: "RING TOPOLOGY - Start at Section 10: Customer-3 E-LINE (c3eline-ring)"
   c4l3vpn-ring: 
   -   command: "/usr/local/bin/ConfigureTopology.py -t c4l3vpn-ring"
-      description: "Ring Topo: Start at Section 11: Customer-4 L3VPN (c4l3vpn-ring)"
+      description: "RING TOPOLOGY - Start at Section 11: Customer-4 L3VPN (c4l3vpn-ring)"
   centsvc-ring: 
   -   command: "/usr/local/bin/ConfigureTopology.py -t centsvc-ring"
-      description: "Ring Topo: Start at Section 13: Centralized Services (centsvc-ring)"
+      description: "RING TOPOLOGY - Start at Section 13: Centralized Services (centsvc-ring)"
   complete-ring: 
   -   command: "/usr/local/bin/ConfigureTopology.py -t complete-ring"
-      description: "Ring Topo: Complete all Sections (complete-ring)"
+      description: "RING TOPOLOGY - Complete all Sections (complete-ring)"
 
 labconfiglets:
   reset:
