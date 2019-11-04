@@ -1,0 +1,70 @@
+!
+no spanning-tree vlan 4094
+!
+vlan 4094
+   trunk group MLAGPEER
+!
+interface Port-Channel5
+   description MLAG - HOST1
+   switchport mode access
+   switchport access vlan 12
+   mlag 5
+!
+interface Port-Channel10
+   description MLAG PEER LINK - LEAF1
+   switchport mode trunk
+   switchport trunk group MLAGPEER
+!
+interface Ethernet1
+   description MLAG PEER LINK - LEAF1
+   switchport mode trunk
+   channel-group 10 mode active
+!
+interface Ethernet2
+   description SPINE1
+   no switchport
+   ip address 172.16.200.6/30
+!
+interface Ethernet3
+   description SPINE2
+   no switchport
+   ip address 172.16.200.22/30
+!
+interface Ethernet4
+   shutdown
+!  
+interface Ethernet5
+   description HOST1
+   channel-group 5 mode active
+! 
+interface Vlan4094
+   description MLAG PEER LINK
+   ip address 172.16.12.2/30
+!
+mlag configuration
+   domain-id MLAG12
+   local-interface Vlan4094
+   peer-address 172.16.12.1
+   peer-link Port-Channel10
+!
+interface Loopback0
+   ip address 172.16.0.4/32
+!
+interface Vlan12
+   ip address 172.16.115.3/24
+   ip virtual-router address 172.16.115.1
+!
+ip virtual-router mac-address 00:1c:73:00:00:12
+!
+router bgp 65001
+   router-id 172.16.0.4
+   maximum-paths 4 ecmp 4
+   neighbor 172.16.200.5 remote-as 65000
+   neighbor 172.16.200.5 maximum-routes 12000 
+   neighbor 172.16.200.21 remote-as 65000
+   neighbor 172.16.200.21 maximum-routes 12000 
+   neighbor 172.16.12.1 remote-as 65001
+   neighbor 172.16.12.1 next-hop-self
+   network 172.16.0.4/32
+   network 172.16.115.0/24
+!
