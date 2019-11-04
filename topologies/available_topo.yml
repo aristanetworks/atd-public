@@ -6,9 +6,5 @@ topologies: [
     { Topology_Name: 'Advanced Routing',
       Topology_File: 'https://github.com/aristanetworks/atd-public/blob/nestor/topologies/routing/Routing.yml',
       Topology_Access: 'admin'
-    },
-    { Topology_Name: 'FOBAR Routing
-      Topology_File: 'https://github.com/aristanetworks/atd-public/blob/nestor/topologies/routing/Routing.yml',
-      Topology_Access: 'admin'
     }
 ]
