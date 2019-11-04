@@ -7,7 +7,7 @@ topologies: [
       Topology_File: 'https://github.com/aristanetworks/atd-public/blob/nestor/topologies/routing/Routing.yml',
       Topology_Access: 'admin'
     },
-    { Topology_Name: 'JRC Routing
+    { Topology_Name: 'FOBAR Routing
       Topology_File: 'https://github.com/aristanetworks/atd-public/blob/nestor/topologies/routing/Routing.yml',
       Topology_Access: 'admin'
     }
