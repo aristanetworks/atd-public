@@ -1,7 +1,7 @@
 topologies: [
     { Topology_Name: 'Data Center',
       Topology_File: 'https://github.com/aristanetworks/atd-public/blob/nestor/topologies/datacenter/ADCATDBluePrint.yml',
-      Topology_Access: 'standard',
+      Topology_Access: 'standard'
       Topology_Desc: 'Two Spines, Four Leafs. Focused on EOS fundamentals within the Data Center.'
     },
     { Topology_Name: 'Advanced Routing',
