@@ -1,6 +1,6 @@
 topologies: [
     { Topology_Name: 'Data Center',
-      Topology_File: 'ADCATDBluePrint.yml',
+      Topology_File: '/datacenter/ADCATDBluePrint.yml',
       Topology_Access: 'standard',
       Topology_Desc: 'Two Spines, Four Leafs. Focused on EOS fundamentals within the Data Center.'
     },
