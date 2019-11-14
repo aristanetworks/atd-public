@@ -2,11 +2,11 @@ topologies: [
     { Topology_Name: 'Data Center',
       Topology_File: '/datacenter/ADCATDBluePrint.yml',
       Topology_Access: 'standard',
-      Topology_Desc: 'Two Spines, Four Leafs. Focused on EOS fundamentals within the Data Center.'
+      Topology_Desc: 'Two Spines, Four Leafs. Focused on EOS fundamentals within the Data Center'
     },
     { Topology_Name: 'Advanced Routing',
       Topology_File: '/routing/Routing.yml',
       Topology_Access: 'admin',
-      Topology_Desc: 'Twenty nodes. Focused on advanced routing, L2VPN and L3VPN topics.'
+      Topology_Desc: 'Twenty nodes. Focused on advanced routing, L2VPN and L3VPN topics'
     }
 ]
