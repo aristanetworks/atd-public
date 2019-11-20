@@ -1,3 +1,4 @@
+cloud_service: aws-adc
 default_interfaces: 8
 default_subnet:  "{{ provider.aws['adc_private_m1'].private_subnet }}"
 default_ami_name: EOS-4.20.7M.vxlan.32.img 
@@ -8,6 +9,9 @@ cvp_version: cvp-2018.2.2.adc.atd.topo.3
 eni_s_d_check: false
 deployment_type: "adc-atd"
 topology_name: 'datacenter'
+custom_ami_names: true
+preconfigured: true
+topology_link: true
 
 nodes:
   - spine1:
@@ -185,5 +189,5 @@ nodes:
       neighbors: []
       ami_name: "adc-atd-labvm.i-0e295ae444a9483f3"
       ip_addr: 192.168.0.4
-      subnet: "{{ provider.aws['adc_public_jump_host'].private_subnet }}"
-      sg: "{{ provider.aws['adc_public_jump_host'].security_group }}"
+      # subnet: "{{ provider.aws['adc_public_jump_host'].private_subnet }}"
+      # sg: "{{ provider.aws['adc_public_jump_host'].security_group }}"
