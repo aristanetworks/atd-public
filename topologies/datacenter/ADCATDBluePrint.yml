@@ -1,4 +1,4 @@
-cloud_service: aws-adc
+cloud_service: aws:adc
 default_interfaces: 8
 default_subnet:  "{{ provider.aws['adc_private_m1'].private_subnet }}"
 default_ami_name: EOS-4.20.7M.vxlan.32.img 
