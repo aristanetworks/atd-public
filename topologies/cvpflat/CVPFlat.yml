@@ -6,7 +6,7 @@ default_ami_name: 4.21.2F
 cvp_instance: singlenode
 cvp_version: 2019.1.0
 
-custom_ami_names: true
+custom_ami_names: false
 preconfigured: false
 topology_link: false
 
