@@ -1,13 +1,19 @@
+cloud_service: aws:adc
+
 default_interfaces: 8
-default_subnet:  "{{ provider.aws['adc_private_m2'].private_subnet }}"
-default_ami_name: EOS-4.21.2F.vxlan.32.img 
-default_sg: "{{ provider.aws['adc_private_m1'].security_group }}"
+default_ami_name: cloud-deploy-veos-4.21.2F
+
 cvp_instance: singlenode
 cvp_version: cvp-2018.2.2.adc.base
+
 eni_s_d_check: false
-deployment_type: "adc"
 topology_name: routing
+
 only_add_to_inventory: true
+
+custom_ami_names: true
+preconfigured: true
+topology_link: false
 
 nodes:
   - eos1:
@@ -297,9 +303,6 @@ nodes:
           port: Ethernet1
 
   - atd_jump_host:
-      type: jump_host
       neighbors: []
       ami_name: "adc-atd-labvm.i-0e295ae444a9483f3"
-      subnet: "{{ provider.aws['adc_public_jump_host'].private_subnet }}"
-      sg: "{{ provider.aws['adc_public_jump_host'].security_group }}"
       ip_addr: "192.168.0.4"
