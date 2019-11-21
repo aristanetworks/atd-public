@@ -8,5 +8,10 @@ topologies: [
       Topology_File: '/routing/Routing.yml',
       Topology_Access: 'admin',
       Topology_Desc: 'Twenty nodes. Focused on advanced routing, L2VPN and L3VPN topics'
+    },
+    { Topology_Name: 'CVP Flat',
+      Topology_File: '/cvpflat/CVPFlat.yml',
+      Topology_Access: 'admin',
+      Topology_Desc: 'Simple two node flat topology.'
     }
 ]
