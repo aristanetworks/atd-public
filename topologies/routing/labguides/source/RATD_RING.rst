@@ -1,13 +1,13 @@
-Routing ATD Lab Guide
-=====================
+Routing ATD Lab Guide - Ring Topology
+==========================================
 
-.. image:: images/RATD-Topo-Image.png
+.. image:: images/RATD_RING-Topo-ImageNoAristaLogo.png
    :align: center
 
 1.	Deploy IS-IS as the Service Provider Underlay IGP
 ==========================================================
 
-   .. image:: images/RATD-Section1+2-Image.png
+   .. image:: images/RATD_RING-Section1+2-Image.png
       :align: center
   
    a.	IS-IS will be leveraged to carry underlay IPv4 prefix reachability information
@@ -33,7 +33,7 @@ Routing ATD Lab Guide
  
       i.	For example, EOS1 should have a Node SID of 900,001
    
-   d.	Review IS-IS adjacency SIDs on EOS2 and EOS5
+   d.	Review IS-IS adjacency SIDs on EOS7 and EOS8
  
       i.	Is there overlap?
  
@@ -58,7 +58,7 @@ Routing ATD Lab Guide
 3.	Prepare to offer VPN services to customers via MP-BGP EVPN control-plane
 ==================================================================================
 
-   .. image:: images/RATD-Section3-Image.png
+   .. image:: images/RATD_RING-Section3-Image.png
       :align: center
  
    a.	BGP Autonomous System 100 is leveraged by the Service Provider
@@ -75,7 +75,7 @@ Routing ATD Lab Guide
   
       iv.	A full mesh of peerings must not be used to accomplish this task
   
-      v.	EOS5 should act as the peering point for all PE nodes
+      v.	EOS8 should act as the peering point for all PE nodes
   
       vi.	Disable any unnecessary BGP AFI/SAFI peerings
   
@@ -84,7 +84,7 @@ Routing ATD Lab Guide
 4.	Prepare for Customer-1 Layer3 VPN Services
 ===================================================================================
 
-   .. image:: images/RATD-Section4+5+6+7-Image.png
+   .. image:: images/RATD_RING-Section4+5+6+7-Image.png
       :align: center
    
    a.	Customer-1 CE Nodes: EOS11, EOS13, EOS15
@@ -152,13 +152,13 @@ Routing ATD Lab Guide
   
    c.	EOS8 should have the following output from a ‘show ip route vrf A 12.12.12.12’ command (label may vary, this is ok):
   
-      .. image:: images/RATD_Section7_Task_C.png
+      .. image:: images/RATD_RING_Section7_Task_C.png
          :align: center   
 
 8.	Prepare for Customer-2 Layer2 VPN E-LAN Services
 =========================================================================
 
-   .. image:: images/RATD-Section8+9.png
+   .. image:: images/RATD_RING-Section8+9.png
       :align: center
    
    a.	Customer-2 CE Nodes: EOS9, EOS10, EOS14
@@ -211,7 +211,7 @@ Routing ATD Lab Guide
 10. Configure Customer-3 E-LINE Service
 =========================================================================
 
-   .. image:: images/RATD-Section10-Image.png
+   .. image:: images/RATD_RING-Section10-Image.png
       :align: center
 
    a.	Customer-3 requires that EOS16 and EOS17 appear as directly Layer2 adjacent to each other
@@ -225,7 +225,7 @@ Routing ATD Lab Guide
 11.	Prepare for Customer-4 Layer3 VPN Services
 =========================================================================
 
-   .. image:: images/RATD-Section11+12-Image.png
+   .. image:: images/RATD_RING-Section11+12-Image.png
       :align: center
   
    a.	Customer-4 CE Nodes: EOS18, EOS19
@@ -262,7 +262,7 @@ Routing ATD Lab Guide
 13.	Offer Centralized Services to L3VPN Customers
 =========================================================================
 
-   .. image:: images/RATD-Section13-Image.png
+   .. image:: images/RATD_RING-Section13-Image.png
       :align: center
   
    a.	EOS20 is providing a centralized service to L3VPN customers
