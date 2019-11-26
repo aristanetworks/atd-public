@@ -1,16 +1,12 @@
 cloud_service: aws:adc
 default_interfaces: 8
-default_subnet:  "{{ provider.aws['adc_private_m1'].private_subnet }}"
 default_ami_name: 4.23.0.1F
-default_sg: "{{ provider.aws['adc_private_m1'].security_group }}"
 cvp_instance: singlenode
 cvp_version: 2019.1.0
-#cvp_version: cvp-2018.2.3.vxlan.rpm.atd.adc
 eni_s_d_check: false
-deployment_type: "adc-atd"
 topology_name: 'datacenter-latest'
-custom_ami_names: true
-preconfigured: true
+custom_ami_names: false
+preconfigured: false
 topology_link: true
 
 nodes:
@@ -176,8 +172,3 @@ nodes:
       ip_addr: 192.168.0.44
       neighbors: []
 
-  - atd_jump_host:
-      neighbors: []
-      ip_addr: 192.168.0.4
-      # subnet: "{{ provider.aws['adc_public_jump_host'].private_subnet }}"
-      # sg: "{{ provider.aws['adc_public_jump_host'].security_group }}"
