@@ -1,0 +1,34 @@
+cvp_info:
+  containers:
+    Tenant:
+    Leaf:
+      - leaf1
+      - leaf2
+      - leaf3
+      - leaf4
+    Spine:
+      - spine1
+      - spine2
+    CVX:
+      - cvx01
+  snapshots:
+    - name: Validate_Routing
+      commands:
+        - show ip route summary
+        - show ip bgp summary
+    - name: EOS_Upgrade
+      commands:
+        - show version
+        - show extensions
+  configlets:
+    containers:
+      Tenant:
+        - AAA
+        - VLANs
+        - SYS_TelemetryBuilder
+        - SYS_BaseConfig
+        - aws-infra
+    netelements:
+      cvx01:
+        - cvx01-Controller
+        
