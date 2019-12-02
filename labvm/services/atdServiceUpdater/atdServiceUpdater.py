@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 """
-Version: 1.2
+Version: 2.0
 Author: @networkRob
 
 Notes/Improvements:
@@ -13,14 +13,15 @@ Notes/Improvements:
 
 """
 
-from ruamel.yaml import YAML
 import git
+import argparse
+import hashlib
+import syslog
+from ruamel.yaml import YAML
 from os import listdir, stat, chmod
 from os.path import isdir
 from shutil import rmtree, copy2
-import hashlib
 from subprocess import Popen
-import syslog
 
 # Lists for service all service files found and which ones need to be updated
 all_services = [] # Holds Service Class objects
@@ -31,6 +32,7 @@ updater_file_name = 'atdServiceUpdater.service'
 
 # Temp path for where repo will be cloned to (include trailing /)
 GIT_TEMP_PATH = '/tmp/atd/'
+GIT_BRANCH_PATH= '/etc/repo.yaml' # Persistent location to check for branch to test reboot
 GIT_PATH = "https://github.com/aristanetworks/atd-public.git"
 GIT_BRANCH = "master"
 
@@ -317,6 +319,17 @@ if __name__ == "__main__":
     syslog.openlog(logoption=syslog.LOG_PID)
     pS("OK","Starting...")
 
+    # Parse through arguments
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-b", "--branch", type=str, help="Branch to pull and test against",default=None, required=False)
+    args = parser.parse_args()
+    if args.branch:
+        GIT_BRANCH = args.branch
+    elif path.exists(GIT_BRANCH_PATH):
+        tmp_repo_info = open(GIT_BRANCH_PATH, 'r')
+        tmp_repo = YAML().load(tmp_repo_info)
+        GIT_BRANCH = tmp_repo['atd-public']['branch']
+        tmp_repo_info.close()
     # Start the main Service
     main()
 

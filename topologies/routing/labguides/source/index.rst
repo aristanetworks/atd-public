@@ -12,3 +12,9 @@ Welcome to the Arista Routing ATD documentation!
    :caption: Routing
 
    RATD.rst
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Routing Ring Topology
+
+   RATD_RING.rst

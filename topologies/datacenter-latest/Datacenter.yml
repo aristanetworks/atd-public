@@ -1,0 +1,174 @@
+cloud_service: aws:adc
+default_interfaces: 8
+default_ami_name: 4.23.0.1F
+cvp_instance: singlenode
+cvp_version: 2019.1.0
+eni_s_d_check: false
+topology_name: 'datacenter-latest'
+custom_ami_names: false
+preconfigured: false
+topology_link: true
+
+nodes:
+  - spine1:
+      # interfaces: 8
+      ip_addr: 192.168.0.10
+      neighbors:
+        - neighborDevice: spine2
+          neighborPort: Ethernet1
+          port: Ethernet1
+        - neighborDevice: leaf1
+          neighborPort: Ethernet2
+          port: Ethernet2
+        - neighborDevice: leaf2
+          neighborPort: Ethernet2
+          port: Ethernet3
+        - neighborDevice: leaf3
+          neighborPort: Ethernet2
+          port: Ethernet4
+        - neighborDevice: leaf4
+          neighborPort: Ethernet2
+          port: Ethernet5
+
+  - spine2:
+      # interfaces: 8
+      ip_addr: 192.168.0.11
+      neighbors:
+        - neighborDevice: spine1
+          neighborPort: Ethernet1
+          port: Ethernet1
+        - neighborDevice: leaf1
+          neighborPort: Ethernet3
+          port: Ethernet2
+        - neighborDevice: leaf2
+          neighborPort: Ethernet3
+          port: Ethernet3
+        - neighborDevice: leaf3
+          neighborPort: Ethernet3
+          port: Ethernet4
+        - neighborDevice: leaf4
+          neighborPort: Ethernet3
+          port: Ethernet5
+
+  - leaf1:
+      # interfaces: 8
+      ip_addr: 192.168.0.14
+      neighbors:
+        - neighborDevice: leaf2
+          neighborPort: Ethernet1
+          port: Ethernet1
+        - neighborDevice: spine1
+          neighborPort: Ethernet2
+          port: Ethernet2
+        - neighborDevice: spine2
+          neighborPort: Ethernet2
+          port: Ethernet3
+        - neighborDevice: host1
+          neighborPort: Ethernet1
+          port: Ethernet4
+        - neighborDevice: host1
+          neighborPort: Ethernet3
+          port: Ethernet5
+
+
+  - leaf2:
+      # interfaces: 8
+      ip_addr: 192.168.0.15
+      neighbors:
+        - neighborDevice: leaf1
+          neighborPort: Ethernet1
+          port: Ethernet1
+        - neighborDevice: spine1
+          neighborPort: Ethernet3
+          port: Ethernet2
+        - neighborDevice: spine2
+          neighborPort: Ethernet3
+          port: Ethernet3
+        - neighborDevice: host1 
+          neighborPort: Ethernet2
+          port: Ethernet4
+        - neighborDevice: host1
+          neighborPort: Ethernet4
+          port: Ethernet5
+
+
+  - leaf3:
+      # interfaces: 8
+      ip_addr: 192.168.0.16
+      neighbors:
+        - neighborDevice: leaf4
+          neighborPort: Ethernet1
+          port: Ethernet1
+        - neighborDevice: spine1
+          neighborPort: Ethernet4
+          port: Ethernet2
+        - neighborDevice: spine2
+          neighborPort: Ethernet4
+          port: Ethernet3
+        - neighborDevice: host2
+          neighborPort: Ethernet1
+          port: Ethernet4
+        - neighborDevice: host2
+          neighborPort: Ethernet3
+          port: Ethernet5
+
+
+  - leaf4:
+      # interfaces: 8
+      ip_addr: 192.168.0.17
+      neighbors:
+        - neighborDevice: leaf3
+          neighborPort: Ethernet1
+          port: Ethernet1
+        - neighborDevice: spine1
+          neighborPort: Ethernet5
+          port: Ethernet2
+        - neighborDevice: spine2
+          neighborPort: Ethernet5
+          port: Ethernet3
+        - neighborDevice: host2
+          neighborPort: Ethernet2
+          port: Ethernet4
+        - neighborDevice: host2
+          neighborPort: Ethernet4
+          port: Ethernet5
+
+
+  - host1:
+      # interfaces: 8
+      ip_addr: 192.168.0.31
+      neighbors:
+        - neighborDevice: leaf1
+          neighborPort: Ethernet4
+          port: Ethernet1
+        - neighborDevice: leaf2
+          neighborPort: Ethernet4
+          port: Ethernet2
+        - neighborDevice: leaf1
+          neighborPort: Ethernet5
+          port: Ethernet3
+        - neighborDevice: leaf2
+          neighborPort: Ethernet5
+          port: Ethernet4
+
+  - host2:
+      # interfaces: 8
+      ip_addr: 192.168.0.32
+      neighbors:
+        - neighborDevice: leaf3
+          neighborPort: Ethernet4
+          port: Ethernet1
+        - neighborDevice: leaf4
+          neighborPort: Ethernet4
+          port: Ethernet2
+        - neighborDevice: leaf3
+          neighborPort: Ethernet5
+          port: Ethernet3
+        - neighborDevice: leaf4
+          neighborPort: Ethernet5
+          port: Ethernet4
+
+  - cvx01:
+      ip_addr: 192.168.0.44
+      neighbors: []
+

@@ -1,7 +1,7 @@
 ---
 options: 
   reset:
-  -   command: "/usr/local/bin/ConfigureTopology.py"
+  -   command: "/usr/local/bin/ConfigureTopology.py -t reset"
       description: "Reset All Devices to Base IPv4 (reset)"
   sr: 
   -   command: "/usr/local/bin/ConfigureTopology.py -t sr"
@@ -27,6 +27,33 @@ options:
   complete: 
   -   command: "/usr/local/bin/ConfigureTopology.py -t complete"
       description: "Complete all Sections (complete)"
+  reset-ring:
+  -   command: "/usr/local/bin/ConfigureTopology.py -t reset-ring"
+      description: "RING TOPOLOGY - Reset All Devices to Base IPv4 (reset-ring)"
+  sr-ring: 
+  -   command: "/usr/local/bin/ConfigureTopology.py -t sr-ring"
+      description: "RING TOPOLOGY - Start at Section 2: Segment-Routing (sr-ring)"
+  evpn-ring: 
+  -   command: "/usr/local/bin/ConfigureTopology.py -t evpn-ring"
+      description: "RING TOPOLOGY - Start at Section 3: EVPN Control-Plane (evpn-ring)"
+  c1l3vpn-ring: 
+  -   command: "/usr/local/bin/ConfigureTopology.py -t c1l3vpn-ring"
+      description: "RING TOPOLOGY - Start at Section 4: Customer-1 L3VPN (c1l3vpn-ring)"
+  c2l2vpn-ring: 
+  -   command: "/usr/local/bin/ConfigureTopology.py -t c2l2vpn-ring"
+      description: "RING TOPOLOGY - Start at Section 8: Customer-2 L2VPN (c2l2vpn-ring)"
+  c3eline-ring: 
+  -   command: "/usr/local/bin/ConfigureTopology.py -t c3eline-ring"
+      description: "RING TOPOLOGY - Start at Section 10: Customer-3 E-LINE (c3eline-ring)"
+  c4l3vpn-ring: 
+  -   command: "/usr/local/bin/ConfigureTopology.py -t c4l3vpn-ring"
+      description: "RING TOPOLOGY - Start at Section 11: Customer-4 L3VPN (c4l3vpn-ring)"
+  centsvc-ring: 
+  -   command: "/usr/local/bin/ConfigureTopology.py -t centsvc-ring"
+      description: "RING TOPOLOGY - Start at Section 13: Centralized Services (centsvc-ring)"
+  complete-ring: 
+  -   command: "/usr/local/bin/ConfigureTopology.py -t complete-ring"
+      description: "RING TOPOLOGY - Complete all Sections (complete-ring)"
 
 labconfiglets:
   reset:
@@ -508,6 +535,460 @@ labconfiglets:
       - "SR_EOS8"
       - "EVPN_PEERING_EOS8"
       - "Customer1_L3VPN_EOS8"
+      - "Customer2_L2VPN_EOS8"
+      - "Customer4_L3VPN_EOS8"
+      - "SharedServices_EOS8"
+    eos9:
+      - "BaseIPv4_EOS9"
+      - "Customer2_L2VPN_EOS9"
+    eos10:
+      - "BaseIPv4_EOS10"
+      - "Customer2_L2VPN_EOS10"
+    eos11:
+      - "BaseIPv4_EOS11"
+      - "Customer1_L3VPN_EOS11"
+    eos12:
+      - "BaseIPv4_EOS12"
+      - "Customer1_L3VPN_EOS12"
+    eos13:
+      - "BaseIPv4_EOS13"
+      - "Customer1_L3VPN_EOS13"
+    eos14:
+      - "BaseIPv4_EOS14"
+      - "Customer2_L2VPN_EOS14"
+    eos15:
+      - "BaseIPv4_EOS15"
+      - "Customer1_L3VPN_EOS15"
+    eos16:
+      - "BaseIPv4_EOS16"
+      - "Customer3_E-LINE_EOS16"
+    eos17:
+      - "BaseIPv4_EOS17"
+      - "Customer3_E-LINE_EOS17"
+    eos18:
+      - "BaseIPv4_EOS18"
+      - "Customer4_L3VPN_EOS18"
+    eos19:
+      - "BaseIPv4_EOS19"
+      - "Customer4_L3VPN_EOS19"
+    eos20:
+      - "BaseIPv4_EOS20"
+      - "SharedServices_EOS20"
+  reset-ring:
+    eos1:
+      - "BaseIPv4_EOS1_RING"
+    eos2:
+      - "BaseIPv4_EOS2_RING"
+    eos3:
+      - "BaseIPv4_EOS3_RING"
+    eos4:
+      - "BaseIPv4_EOS4_RING"
+    eos5:
+      - "BaseIPv4_EOS5_RING"
+    eos6:
+      - "BaseIPv4_EOS6_RING"
+    eos7:
+      - "BaseIPv4_EOS7"
+    eos8:
+      - "BaseIPv4_EOS8"
+    eos9:
+      - "BaseIPv4_EOS9"
+    eos10:
+      - "BaseIPv4_EOS10"
+    eos11:
+      - "BaseIPv4_EOS11"
+    eos12:
+      - "BaseIPv4_EOS12"
+    eos13:
+      - "BaseIPv4_EOS13"
+    eos14:
+      - "BaseIPv4_EOS14"
+    eos15:
+      - "BaseIPv4_EOS15"
+    eos16:
+      - "BaseIPv4_EOS16"
+    eos17:
+      - "BaseIPv4_EOS17"
+    eos18:
+      - "BaseIPv4_EOS18"
+    eos19:
+      - "BaseIPv4_EOS19"
+    eos20:
+      - "BaseIPv4_EOS20"
+  sr-ring:
+    eos1:
+      - "BaseIPv4_EOS1_RING"
+      - "IS-IS_EOS1_RING"
+    eos3:
+      - "BaseIPv4_EOS3_RING"
+      - "IS-IS_EOS3_RING"
+    eos4:
+      - "BaseIPv4_EOS4_RING"
+      - "IS-IS_EOS4_RING"
+    eos6:
+      - "BaseIPv4_EOS6_RING"
+      - "IS-IS_EOS6_RING"
+    eos7:
+      - "BaseIPv4_EOS7"
+      - "IS-IS_EOS7"
+    eos8:
+      - "BaseIPv4_EOS8"
+      - "IS-IS_EOS8"
+  evpn-ring:
+    eos1:
+      - "BaseIPv4_EOS1_RING"
+      - "IS-IS_EOS1_RING"
+      - "SR_EOS1"
+    eos3:
+      - "BaseIPv4_EOS3_RING"
+      - "IS-IS_EOS3_RING"
+      - "SR_EOS3"
+    eos4:
+      - "BaseIPv4_EOS4_RING"
+      - "IS-IS_EOS4_RING"
+      - "SR_EOS4"
+    eos6:
+      - "BaseIPv4_EOS6_RING"
+      - "IS-IS_EOS6_RING"
+      - "SR_EOS6"
+    eos7:
+      - "BaseIPv4_EOS7"
+      - "IS-IS_EOS7"
+      - "SR_EOS7"
+    eos8:
+      - "BaseIPv4_EOS8"
+      - "IS-IS_EOS8"
+      - "SR_EOS8"
+  c1l3vpn-ring:
+    eos1:
+      - "BaseIPv4_EOS1_RING"
+      - "IS-IS_EOS1_RING"
+      - "SR_EOS1"
+      - "EVPN_PEERING_EOS1_RING"
+    eos3:
+      - "BaseIPv4_EOS3_RING"
+      - "IS-IS_EOS3_RING"
+      - "SR_EOS3"
+      - "EVPN_PEERING_EOS3_RING"
+    eos4:
+      - "BaseIPv4_EOS4_RING"
+      - "IS-IS_EOS4_RING"
+      - "SR_EOS4"
+      - "EVPN_PEERING_EOS4_RING"
+    eos6:
+      - "BaseIPv4_EOS6_RING"
+      - "IS-IS_EOS6_RING"
+      - "SR_EOS6"
+      - "EVPN_PEERING_EOS6_RING"
+    eos7:
+      - "BaseIPv4_EOS7"
+      - "IS-IS_EOS7"
+      - "SR_EOS7"
+      - "EVPN_PEERING_EOS7_RING"
+    eos8:
+      - "BaseIPv4_EOS8"
+      - "IS-IS_EOS8"
+      - "SR_EOS8"
+      - "EVPN_PEERING_EOS8_RING"
+  c2l2vpn-ring:
+    eos1:
+      - "BaseIPv4_EOS1_RING"
+      - "IS-IS_EOS1_RING"
+      - "SR_EOS1"
+      - "EVPN_PEERING_EOS1_RING"
+      - "Customer1_L3VPN_EOS1"
+    eos3:
+      - "BaseIPv4_EOS3_RING"
+      - "IS-IS_EOS3_RING"
+      - "SR_EOS3"
+      - "EVPN_PEERING_EOS3_RING"
+    eos4:
+      - "BaseIPv4_EOS4_RING"
+      - "IS-IS_EOS4_RING"
+      - "SR_EOS4"
+      - "EVPN_PEERING_EOS4_RING"
+    eos6:
+      - "BaseIPv4_EOS6_RING"
+      - "IS-IS_EOS6_RING"
+      - "SR_EOS6"
+      - "EVPN_PEERING_EOS6_RING"
+      - "Customer1_L3VPN_EOS6_RING"
+    eos7:
+      - "BaseIPv4_EOS7"
+      - "IS-IS_EOS7"
+      - "SR_EOS7"
+      - "EVPN_PEERING_EOS7_RING"
+    eos8:
+      - "BaseIPv4_EOS8"
+      - "IS-IS_EOS8"
+      - "SR_EOS8"
+      - "EVPN_PEERING_EOS8_RING"
+      - "Customer1_L3VPN_EOS8_RING" 
+    eos11:
+      - "BaseIPv4_EOS11"
+      - "Customer1_L3VPN_EOS11"
+    eos12:
+      - "BaseIPv4_EOS12"
+      - "Customer1_L3VPN_EOS12"
+    eos13:
+      - "BaseIPv4_EOS13"
+      - "Customer1_L3VPN_EOS13"
+    eos15:
+      - "BaseIPv4_EOS15"
+      - "Customer1_L3VPN_EOS15"
+  c3eline-ring:
+    eos1:
+      - "BaseIPv4_EOS1_RING"
+      - "IS-IS_EOS1_RING"
+      - "SR_EOS1"
+      - "EVPN_PEERING_EOS1_RING"
+      - "Customer1_L3VPN_EOS1"
+    eos3:
+      - "BaseIPv4_EOS3_RING"
+      - "IS-IS_EOS3_RING"
+      - "SR_EOS3"
+      - "EVPN_PEERING_EOS3_RING"
+      - "Customer2_L2VPN_EOS3"
+    eos4:
+      - "BaseIPv4_EOS4_RING"
+      - "IS-IS_EOS4_RING"
+      - "SR_EOS4"
+      - "EVPN_PEERING_EOS4_RING"
+      - "Customer2_L2VPN_EOS4"
+    eos6:
+      - "BaseIPv4_EOS6_RING"
+      - "IS-IS_EOS6_RING"
+      - "SR_EOS6"
+      - "EVPN_PEERING_EOS6_RING"
+      - "Customer1_L3VPN_EOS6_RING"
+      - "Customer2_L2VPN_EOS6"
+    eos7:
+      - "BaseIPv4_EOS7"
+      - "IS-IS_EOS7"
+      - "SR_EOS7"
+      - "EVPN_PEERING_EOS7_RING"
+      - "Customer2_L2VPN_EOS7"
+    eos8:
+      - "BaseIPv4_EOS8"
+      - "IS-IS_EOS8"
+      - "SR_EOS8"
+      - "EVPN_PEERING_EOS8_RING"
+      - "Customer1_L3VPN_EOS8_RING"
+      - "Customer2_L2VPN_EOS8"
+    eos9:
+      - "BaseIPv4_EOS9"
+      - "Customer2_L2VPN_EOS9"
+    eos10:
+      - "BaseIPv4_EOS10"
+      - "Customer2_L2VPN_EOS10"
+    eos11:
+      - "BaseIPv4_EOS11"
+      - "Customer1_L3VPN_EOS11"
+    eos12:
+      - "BaseIPv4_EOS12"
+      - "Customer1_L3VPN_EOS12"
+    eos13:
+      - "BaseIPv4_EOS13"
+      - "Customer1_L3VPN_EOS13"
+    eos14:
+      - "BaseIPv4_EOS14"
+      - "Customer2_L2VPN_EOS14"
+    eos15:
+      - "BaseIPv4_EOS15"
+      - "Customer1_L3VPN_EOS15"
+  c4l3vpn-ring:
+    eos1:
+      - "BaseIPv4_EOS1_RING"
+      - "IS-IS_EOS1_RING"
+      - "SR_EOS1"
+      - "EVPN_PEERING_EOS1_RING"
+      - "Customer1_L3VPN_EOS1"
+      - "Customer3_E-LINE_EOS1"
+    eos3:
+      - "BaseIPv4_EOS3_RING"
+      - "IS-IS_EOS3_RING"
+      - "SR_EOS3"
+      - "EVPN_PEERING_EOS3_RING"
+      - "Customer2_L2VPN_EOS3"
+    eos4:
+      - "BaseIPv4_EOS4_RING"
+      - "IS-IS_EOS4_RING"
+      - "SR_EOS4"
+      - "EVPN_PEERING_EOS4_RING"
+      - "Customer2_L2VPN_EOS4"
+      - "Customer3_E-LINE_EOS4"
+    eos6:
+      - "BaseIPv4_EOS6_RING"
+      - "IS-IS_EOS6_RING"
+      - "SR_EOS6"
+      - "EVPN_PEERING_EOS6_RING"
+      - "Customer1_L3VPN_EOS6_RING"
+      - "Customer2_L2VPN_EOS6"
+    eos7:
+      - "BaseIPv4_EOS7"
+      - "IS-IS_EOS7"
+      - "SR_EOS7"
+      - "EVPN_PEERING_EOS7_RING"
+      - "Customer2_L2VPN_EOS7"
+    eos8:
+      - "BaseIPv4_EOS8"
+      - "IS-IS_EOS8"
+      - "SR_EOS8"
+      - "EVPN_PEERING_EOS8_RING"
+      - "Customer1_L3VPN_EOS8_RING"
+      - "Customer2_L2VPN_EOS8"
+    eos9:
+      - "BaseIPv4_EOS9"
+      - "Customer2_L2VPN_EOS9"
+    eos10:
+      - "BaseIPv4_EOS10"
+      - "Customer2_L2VPN_EOS10"
+    eos11:
+      - "BaseIPv4_EOS11"
+      - "Customer1_L3VPN_EOS11"
+    eos12:
+      - "BaseIPv4_EOS12"
+      - "Customer1_L3VPN_EOS12"
+    eos13:
+      - "BaseIPv4_EOS13"
+      - "Customer1_L3VPN_EOS13"
+    eos14:
+      - "BaseIPv4_EOS14"
+      - "Customer2_L2VPN_EOS14"
+    eos15:
+      - "BaseIPv4_EOS15"
+      - "Customer1_L3VPN_EOS15"
+    eos16:
+      - "BaseIPv4_EOS16"
+      - "Customer3_E-LINE_EOS16"
+    eos17:
+      - "BaseIPv4_EOS17"
+      - "Customer3_E-LINE_EOS17"
+  centsvc-ring:
+    eos1:
+      - "BaseIPv4_EOS1_RING"
+      - "IS-IS_EOS1_RING"
+      - "SR_EOS1"
+      - "EVPN_PEERING_EOS1_RING"
+      - "Customer1_L3VPN_EOS1"
+      - "Customer3_E-LINE_EOS1"
+    eos3:
+      - "BaseIPv4_EOS3_RING"
+      - "IS-IS_EOS3_RING"
+      - "SR_EOS3"
+      - "EVPN_PEERING_EOS3_RING"
+      - "Customer2_L2VPN_EOS3"
+    eos4:
+      - "BaseIPv4_EOS4_RING"
+      - "IS-IS_EOS4_RING"
+      - "SR_EOS4"
+      - "EVPN_PEERING_EOS4_RING"
+      - "Customer2_L2VPN_EOS4"
+      - "Customer3_E-LINE_EOS4"
+    eos6:
+      - "BaseIPv4_EOS6_RING"
+      - "IS-IS_EOS6_RING"
+      - "SR_EOS6"
+      - "EVPN_PEERING_EOS6_RING"
+      - "Customer1_L3VPN_EOS6_RING"
+      - "Customer2_L2VPN_EOS6"
+    eos7:
+      - "BaseIPv4_EOS7"
+      - "IS-IS_EOS7"
+      - "SR_EOS7"
+      - "EVPN_PEERING_EOS7_RING"
+      - "Customer2_L2VPN_EOS7"
+      - "Customer4_L3VPN_EOS7"
+    eos8:
+      - "BaseIPv4_EOS8"
+      - "IS-IS_EOS8"
+      - "SR_EOS8"
+      - "EVPN_PEERING_EOS8_RING"
+      - "Customer1_L3VPN_EOS8_RING"
+      - "Customer2_L2VPN_EOS8"
+      - "Customer4_L3VPN_EOS8"
+    eos9:
+      - "BaseIPv4_EOS9"
+      - "Customer2_L2VPN_EOS9"
+    eos10:
+      - "BaseIPv4_EOS10"
+      - "Customer2_L2VPN_EOS10"
+    eos11:
+      - "BaseIPv4_EOS11"
+      - "Customer1_L3VPN_EOS11"
+    eos12:
+      - "BaseIPv4_EOS12"
+      - "Customer1_L3VPN_EOS12"
+    eos13:
+      - "BaseIPv4_EOS13"
+      - "Customer1_L3VPN_EOS13"
+    eos14:
+      - "BaseIPv4_EOS14"
+      - "Customer2_L2VPN_EOS14"
+    eos15:
+      - "BaseIPv4_EOS15"
+      - "Customer1_L3VPN_EOS15"
+    eos16:
+      - "BaseIPv4_EOS16"
+      - "Customer3_E-LINE_EOS16"
+    eos17:
+      - "BaseIPv4_EOS17"
+      - "Customer3_E-LINE_EOS17"
+    eos18:
+      - "BaseIPv4_EOS18"
+      - "Customer4_L3VPN_EOS18"
+    eos19:
+      - "BaseIPv4_EOS19"
+      - "Customer4_L3VPN_EOS19"
+  complete-ring:
+    eos1:
+      - "BaseIPv4_EOS1_RING"
+      - "IS-IS_EOS1_RING"
+      - "SR_EOS1"
+      - "EVPN_PEERING_EOS1_RING"
+      - "Customer1_L3VPN_EOS1"
+      - "Customer3_E-LINE_EOS1"
+      - "SharedServices_EOS1"
+    eos2:
+      - "BaseIPv4_EOS2_RING"
+    eos3:
+      - "BaseIPv4_EOS3_RING"
+      - "IS-IS_EOS3_RING"
+      - "SR_EOS3"
+      - "EVPN_PEERING_EOS3_RING"
+      - "Customer2_L2VPN_EOS3"
+      - "SharedServices_EOS3"
+    eos4:
+      - "BaseIPv4_EOS4_RING"
+      - "IS-IS_EOS4_RING"
+      - "SR_EOS4"
+      - "EVPN_PEERING_EOS4_RING"
+      - "Customer2_L2VPN_EOS4"
+      - "Customer3_E-LINE_EOS4"
+    eos5:
+      - "BaseIPv4_EOS5_RING"
+    eos6:
+      - "BaseIPv4_EOS6_RING"
+      - "IS-IS_EOS6_RING"
+      - "SR_EOS6"
+      - "EVPN_PEERING_EOS6_RING"
+      - "Customer1_L3VPN_EOS6_RING"
+      - "Customer2_L2VPN_EOS6"
+      - "SharedServices_EOS6"
+    eos7:
+      - "BaseIPv4_EOS7"
+      - "IS-IS_EOS7"
+      - "SR_EOS7"
+      - "EVPN_PEERING_EOS7_RING"
+      - "Customer2_L2VPN_EOS7"
+      - "Customer4_L3VPN_EOS7"
+      - "SharedServices_EOS7"
+    eos8:
+      - "BaseIPv4_EOS8"
+      - "IS-IS_EOS8"
+      - "SR_EOS8"
+      - "EVPN_PEERING_EOS8_RING"
+      - "Customer1_L3VPN_EOS8_RING"
       - "Customer2_L2VPN_EOS8"
       - "Customer4_L3VPN_EOS8"
       - "SharedServices_EOS8"
