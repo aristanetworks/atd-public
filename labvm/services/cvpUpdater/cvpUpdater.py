@@ -15,7 +15,7 @@ CVP_CONTAINERS = []
 
 # Temporary file_path location for CVP Custom info
 cvp_file = '/home/arista/cvp/cvp_info.yaml'
-pDEBUG = False
+pDEBUG = True
 
 # ==================================
 # Start of Global Functions
@@ -158,8 +158,10 @@ def main():
         for eos in eos_info:
             # Check to see if the device has a target container
             if eos.targetContainerName:
+                pS("INFO", "{0} is the target container for {1}".format(eos.targetContainerName, eos.hostname))
                 eos.updateContainer(cvp_clnt)
                 if eos.targetContainerName != eos.parentContainer["name"]:
+                    pS("INFO", "Moving {0} from {1} to {2}".format(eos.hostname, eos.parentContainer['name'], eos.targetContainerName))
                     cvp_clnt.moveDevice(eos)
                     try:
                         cvp_clnt.genConfigBuilders(eos)
