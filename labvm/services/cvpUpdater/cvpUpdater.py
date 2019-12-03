@@ -150,7 +150,7 @@ def main():
                 pS("INFO","Adding {}".format(eos.hostname))
                 tmp_eos_add.append(eos.ip)
             else:
-                pS("INFO","Skipping {}".format(eos.hostname))
+                pS("INFO","{} is already added into Provisioning".format(eos.hostname))
         if tmp_eos_add:
             # Import all devices not 
             pS("INFO","Importing devices: {0}".format(", ".join(tmp_eos_add)))
@@ -160,8 +160,11 @@ def main():
             if eos.targetContainerName:
                 eos.updateContainer(cvp_clnt)
                 if eos.targetContainerName != eos.parentContainer["name"]:
-                    cvp_clnt.moveDevice(eos) 
-                    cvp_clnt.genConfigBuilders(eos)
+                    cvp_clnt.moveDevice(eos)
+                    try:
+                        cvp_clnt.genConfigBuilders(eos)
+                    except KeyError:
+                        pS("INFO", "No Configlet Builders Found for {0}".format(eos.hostname))
                     if cvp_yaml['cvp_info']['configlets']['netelements']:
                         if eos.hostname in cvp_yaml['cvp_info']['configlets']['netelements'].keys():
                             cvp_clnt.addDeviceConfiglets(eos,cvp_yaml['cvp_info']['configlets']['netelements'][eos.hostname])
