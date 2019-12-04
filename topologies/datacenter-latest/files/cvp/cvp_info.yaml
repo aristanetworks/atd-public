@@ -28,6 +28,7 @@ cvp_info:
       Tenant:
         - AAA
         - VLANs
+        - adc-infra
         - SYS_TelemetryBuilderV3
     netelements:
       spine1:

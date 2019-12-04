@@ -167,11 +167,20 @@ def main():
                         cvp_clnt.genConfigBuilders(eos)
                     except KeyError:
                         pS("INFO", "No Configlet Builders Found for {0}".format(eos.hostname))
-                    if cvp_yaml['cvp_info']['configlets']['netelements']:
-                        if eos.hostname in cvp_yaml['cvp_info']['configlets']['netelements'].keys():
-                            cvp_clnt.addDeviceConfiglets(eos,cvp_yaml['cvp_info']['configlets']['netelements'][eos.hostname])
-                    cvp_clnt.applyConfiglets(eos)
-            
+                if cvp_yaml['cvp_info']['configlets']['netelements']:
+                    if eos.hostname in cvp_yaml['cvp_info']['configlets']['netelements'].keys():
+                        eos_new_cfgs = cvp_yaml['cvp_info']['configlets']['netelements'][eos.hostname]
+                        # Check to see if there are any existing configlets applied
+                        tmp_eos_cfgs = cvp_clnt.getConfigletsByNetElementId(eos)
+                        if tmp_eos_cfgs:
+                            tmp_cfgs_remove = []
+                            for cfg in tmp_eos_cfgs['configletList']:
+                                if cfg['name'] not in eos_new_cfgs:
+                                    tmp_cfgs_remove.append(cfg['name'])
+                            pS("INFO", "[{0}] Configlets to remove: {1}".format(eos.hostname, ", ".join(tmp_cfgs_remove)))
+                            eos.removeConfiglets(cvp_clnt, tmp_cfgs_remove)
+                        cvp_clnt.addDeviceConfiglets(eos, eos_new_cfgs)
+                cvp_clnt.applyConfiglets(eos)
         cvp_clnt.saveTopology()
         pS("OK", "Topology saved")
         cvp_clnt.getAllTasks("pending")
