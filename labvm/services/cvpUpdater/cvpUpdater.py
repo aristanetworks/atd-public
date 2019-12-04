@@ -149,7 +149,21 @@ def main():
                 cvp_clnt.applyConfigletsContainers(p_cnt)
                 cvp_clnt.saveTopology()
                 cvp_clnt.getAllTasks("pending")
-                cvp_clnt.execAllTasks("pending")
+                task_response = cvp_clnt.execAllTasks("pending")
+                pS("OK", "All pending tasks are executing")
+                for task_id in task_response['ids']:
+                    task_status = cvp_clnt.getTaskStatus(task_id)['taskStatus']
+                    while task_status != "Completed":
+                        task_status = cvp_clnt.getTaskStatus(task_id)['taskStatus']
+                        if task_status == 'Failed':
+                            pS("iBerg", "Task ID: {0} Status: {1}".format(task_id, task_status))
+                            break
+                        elif task_status == 'Completed':
+                            pS("INFO", "Task ID: {0} Status: {1}".format(task_id, task_status))
+                            break
+                        else:
+                            pS("INFO", "Task ID: {0} Status: {1}, Waiting 10 seconds...".format(task_id, task_status))
+                            sleep(10)
         # ==========================================
         # Update configlet info for all containers
         # ==========================================
@@ -200,8 +214,21 @@ def main():
         cvp_clnt.saveTopology()
         pS("OK", "Topology saved")
         cvp_clnt.getAllTasks("pending")
-        cvp_clnt.execAllTasks("pending")
+        task_response = cvp_clnt.execAllTasks("pending")
         pS("OK", "All pending tasks are executing")
+        for task_id in task_response['ids']:
+            task_status = cvp_clnt.getTaskStatus(task_id)['taskStatus']
+            while task_status != "Completed":
+                task_status = cvp_clnt.getTaskStatus(task_id)['taskStatus']
+                if task_status == 'Failed':
+                    pS("iBerg", "Task ID: {0} Status: {1}".format(task_id, task_status))
+                    break
+                elif task_status == 'Completed':
+                    pS("INFO", "Task ID: {0} Status: {1}".format(task_id, task_status))
+                else:
+                    pS("INFO", "Task ID: {0} Status: {1}, Waiting 10 seconds...".format(task_id, task_status))
+                    sleep(10)
+
         # ==========================================
         # Creating Snapshots
         # ==========================================
