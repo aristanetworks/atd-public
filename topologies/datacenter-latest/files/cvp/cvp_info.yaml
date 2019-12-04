@@ -26,7 +26,7 @@ cvp_info:
   configlets:
     containers:
       Tenant:
-        - AAA
+        - ATD-AAA
         - VLANs
         - adc-infra
         - SYS_TelemetryBuilderV3

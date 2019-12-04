@@ -7,7 +7,7 @@ interface Management1
 !
 dns domain arista.lab
 ip routing
- ip route 0.0.0.0/0 192.168.0.1
+!! ip route 0.0.0.0/0 192.168.0.1
 !
 management api http-commands
    no shutdown
