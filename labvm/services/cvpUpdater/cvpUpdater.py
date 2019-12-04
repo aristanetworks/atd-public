@@ -135,10 +135,24 @@ def main():
                 pS("INFO","{0} container already exists....skipping".format(p_cnt))
             # Check and add configlets to containers
             if p_cnt in cvp_yaml['cvp_info']['configlets']['containers'].keys():
+                cfgs_cnt_ignore = []
+                proposed_cnt_cfgs = cvp_yaml['cvp_info']['configlets']['containers'][p_cnt]
+                p_cnt_id = cvp_clnt.getContainerId(p_cnt)[0]['Key']
+                existing_cnt_cfgs = cvp_clnt.getConfigletsByContainerId(p_cnt_id)
+                if existing_cnt_cfgs:
+                    for ex_cfg in existing_cnt_cfgs:
+                        if ex_cfg not in proposed_cnt_cfgs:
+                            cfgs_cnt_ignore.append(ex_cfg)
                 pS("OK","Configlets found for {0} container.  Will apply".format(p_cnt))
-                cvp_clnt.addContainerConfiglets(p_cnt,cvp_yaml['cvp_info']['configlets']['containers'][p_cnt])
+                cvp_clnt.removeContainerConfiglets(p_cnt, cfgs_cnt_ignore)
+                cvp_clnt.addContainerConfiglets(p_cnt, proposed_cnt_cfgs)
                 cvp_clnt.applyConfigletsContainers(p_cnt)
                 cvp_clnt.saveTopology()
+        # ==========================================
+        # Update configlet info for all containers
+        # ==========================================
+        for p_cnt in cvp_clnt.containers:
+            cvp_clnt.updateContainersConfigletsInfo(p_cnt)
         # ==========================================
         # Add devices to Inventory/Provisioning
         # ==========================================
@@ -175,7 +189,7 @@ def main():
                         if tmp_eos_cfgs:
                             tmp_cfgs_remove = []
                             for cfg in tmp_eos_cfgs['configletList']:
-                                if cfg['name'] not in eos_new_cfgs:
+                                if cfg['name'] not in eos_new_cfgs and cfg['name'] not in cvp_clnt.containers['Tenant']['configlets']['names'] and cfg['name'] not in cvp_clnt.containers[eos.targetContainerName]['configlets']['names']:
                                     tmp_cfgs_remove.append(cfg['name'])
                             pS("INFO", "[{0}] Configlets to remove: {1}".format(eos.hostname, ", ".join(tmp_cfgs_remove)))
                             eos.removeConfiglets(cvp_clnt, tmp_cfgs_remove)
