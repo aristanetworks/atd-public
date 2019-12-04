@@ -140,14 +140,16 @@ def main():
                 p_cnt_id = cvp_clnt.getContainerId(p_cnt)[0]['Key']
                 existing_cnt_cfgs = cvp_clnt.getConfigletsByContainerId(p_cnt_id)
                 if existing_cnt_cfgs:
-                    for ex_cfg in existing_cnt_cfgs:
-                        if ex_cfg not in proposed_cnt_cfgs:
-                            cfgs_cnt_ignore.append(ex_cfg)
+                    for ex_cfg in existing_cnt_cfgs['configletList']:
+                        if ex_cfg['name'] not in proposed_cnt_cfgs:
+                            cfgs_cnt_ignore.append(ex_cfg['name'])
                 pS("OK","Configlets found for {0} container.  Will apply".format(p_cnt))
                 cvp_clnt.removeContainerConfiglets(p_cnt, cfgs_cnt_ignore)
                 cvp_clnt.addContainerConfiglets(p_cnt, proposed_cnt_cfgs)
                 cvp_clnt.applyConfigletsContainers(p_cnt)
                 cvp_clnt.saveTopology()
+                cvp_clnt.getAllTasks("pending")
+                cvp_clnt.execAllTasks("pending")
         # ==========================================
         # Update configlet info for all containers
         # ==========================================

@@ -29,6 +29,7 @@ cvp_info:
         - ATD-AAA
         - VLANs
         - adc-infra
+        - eapi
         - SYS_TelemetryBuilderV3
     netelements:
       spine1:
