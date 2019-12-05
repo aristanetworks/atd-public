@@ -30,7 +30,7 @@ else:
   print '   name MLAGPeerLink'
   print '   trunk group mlagPeer'
   print '!'
-  print 'no spanning-tree vlan %s' % info['mlag']['peer_vlan']
+  print 'no spanning-tree vlan-id %s' % info['mlag']['peer_vlan']
   print '!'
   for i in info['mlag']['peer_interfaces']:
     print 'interface %s' % i
