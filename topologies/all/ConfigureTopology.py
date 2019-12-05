@@ -15,7 +15,7 @@ def remove_configlets(client, device, mext=None):
     Define base configlets that are to be untouched
     mext = lab type to keep track of which base configlets to keep.  Added for RATD and RATD-Ring
     """
-    base_configlets = ['AAA','aws-infa']
+    base_configlets = ['AAA','aws-infra','ATD-INFRA']
     
     configlets_to_remove = []
     configlets_to_remain = []

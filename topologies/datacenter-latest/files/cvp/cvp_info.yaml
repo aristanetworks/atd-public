@@ -26,10 +26,8 @@ cvp_info:
   configlets:
     containers:
       Tenant:
-        - ATD-AAA
+        - ATD-INFRA
         - VLANs
-        - adc-infra
-        - eapi
         - SYS_TelemetryBuilderV3
     netelements:
       spine1:

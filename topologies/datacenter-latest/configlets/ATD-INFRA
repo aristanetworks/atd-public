@@ -1,4 +1,4 @@
-
+agent PhyEthtool shutdown
 !
 aaa authentication login default local
 aaa authorization exec default local
@@ -11,4 +11,6 @@ username arista ssh-key ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC6bJB3TkBEQZ9jNyO1
 tacacs-server key 7 070E33455D1D18
 tacacs-server host 192.168.0.4
 !
-
+management api http-commands
+   no shutdown
+!
