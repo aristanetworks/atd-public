@@ -198,7 +198,7 @@ def main():
                     except KeyError:
                         pS("INFO", "No Configlet Builders Found for {0}".format(eos.hostname))
                 if cvp_yaml['cvp_info']['configlets']['netelements']:
-                    if eos.hostname in cvp_yaml['cvp_info']['configlets']['netelements'].keys():
+                    if eos.hostname in cvp_yaml['cvp_info']['configlets']['netelements']:
                         eos_new_cfgs = cvp_yaml['cvp_info']['configlets']['netelements'][eos.hostname]
                         # Check to see if there are any existing configlets applied
                         tmp_eos_cfgs = cvp_clnt.getConfigletsByNetElementId(eos)
