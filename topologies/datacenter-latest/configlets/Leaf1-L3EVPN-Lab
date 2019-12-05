@@ -2,7 +2,7 @@ service routing protocols model multi-agent
 !
 vlan 2001
 !
-vrf definition vrf1
+vrf instance vrf1
 !
 interface Port-Channel5
    switchport access vlan 2001
@@ -32,13 +32,13 @@ interface Loopback1
    ip address 99.99.99.99/32 secondary
 !
 interface Loopback901
-   vrf forwarding vrf1
+   vrf vrf1
    ip address 200.200.200.1/32
 !
 interface Vlan2001
    mtu 9000
    no autostate
-   vrf forwarding vrf1
+   vrf vrf1
    ip address virtual 172.16.115.1/24
 !
 interface Vxlan1
