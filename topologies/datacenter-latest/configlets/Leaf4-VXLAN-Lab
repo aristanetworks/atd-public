@@ -32,7 +32,7 @@ interface Ethernet3
 interface Ethernet4
    description HOST2
    channel-group 4 mode active
-   lacp timer
+   lacp timer fast fast
 !
 interface Ethernet5
    shutdown
