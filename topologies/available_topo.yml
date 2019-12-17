@@ -18,5 +18,10 @@ topologies: [
       Topology_File: '/cloud-deploy-test/cloud-deploy-test.yml',
       Topology_Access: 'admin',
       Topology_Desc: 'DO NOT USE! Temporary topology for testing backend functionality only'
+    },
+    { Topology_Name: 'adc-update-test (do not use)',
+      Topology_File: '/adc-update-test/adc-update-test.yml',
+      Topology_Access: 'admin',
+      Topology_Desc: 'DO NOT USE! Add a topology to test the update to production frontend'
     }
 ]
