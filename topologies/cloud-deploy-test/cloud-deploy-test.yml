@@ -1,0 +1,33 @@
+# Temporary topology for testing backend functionality
+
+cloud_service: aws:adc
+
+default_interfaces: 8
+default_ami_name: 4.23.0.1F
+
+cvp_instance: singlenode
+# Let's use a bad version number to force a failure.
+cvp_version: 2020.1
+
+ztp: false
+
+nodes:
+  - node1:
+      neighbors:
+        - neighborDevice: node2
+          neighborPort: Ethernet1
+          port: Ethernet1
+        - neighborDevice: node2
+          neighborPort: Ethernet2
+          port: Ethernet2
+      ip_addr: 192.168.0.25
+
+  - node2:
+      neighbors:
+        - neighborDevice: node1
+          neighborPort: Ethernet1
+          port: Ethernet1
+        - neighborDevice: node1
+          neighborPort: Ethernet2
+          port: Ethernet2
+      ip_addr: 192.168.0.22
