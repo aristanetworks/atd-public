@@ -1,8 +1,8 @@
 cloud_service: aws:adc
 default_interfaces: 8
-default_ami_name: 4.23.0.1F
+default_ami_name: 4.22.2.1F
 cvp_instance: singlenode
-cvp_version: 2019.1.0
+cvp_version: 2019.1.1
 eni_s_d_check: false
 topology_name: 'datacenter-latest'
 custom_ami_names: false
@@ -172,8 +172,3 @@ nodes:
       ip_addr: 192.168.0.44
       neighbors: []
   
-  - atd_jump_host:
-      neighbors: []
-      ami_name: "adc-atd-labvm.i-0e295ae444a9483f3"
-      ip_addr: 192.168.0.4
-
