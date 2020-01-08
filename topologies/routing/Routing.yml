@@ -1,19 +1,13 @@
 cloud_service: aws:adc
-
 default_interfaces: 8
-default_ami_name: cloud-deploy-veos-4.21.2F
-
+default_ami_name: 4.21.2F
 cvp_instance: singlenode
-cvp_version: cvp-2018.2.2.adc.base
-
-eni_s_d_check: false
+cvp_version: 2018.2.2
 topology_name: routing
-
 only_add_to_inventory: true
-
-custom_ami_names: true
-preconfigured: true
-topology_link: false
+custom_ami_names: false
+preconfigured: false
+topology_link: true
 
 nodes:
   - eos1:
