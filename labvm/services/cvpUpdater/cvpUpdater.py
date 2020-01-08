@@ -151,7 +151,7 @@ def main():
                 cvp_clnt.getAllTasks("pending")
                 task_response = cvp_clnt.execAllTasks("pending")
                 # Perform check to see if there are any existing tasks to be executed
-                if task_response['ids']:
+                if task_response:
                     pS("OK", "All pending tasks are executing")
                     for task_id in task_response['ids']:
                         task_status = cvp_clnt.getTaskStatus(task_id)['taskStatus']
