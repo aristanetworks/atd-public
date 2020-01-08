@@ -2,7 +2,7 @@ cloud_service: aws:adc
 default_interfaces: 8
 default_ami_name: 4.21.2F
 cvp_instance: singlenode
-cvp_version: 2018.2.2
+cvp_version: 2019.1.1
 topology_name: routing
 only_add_to_inventory: true
 custom_ami_names: false
