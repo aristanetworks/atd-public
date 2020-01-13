@@ -19,7 +19,7 @@ import hashlib
 import syslog
 from ruamel.yaml import YAML
 from os import listdir, stat, chmod
-from os.path import isdir
+from os.path import isdir, exists
 from shutil import rmtree, copy2
 from subprocess import Popen
 
@@ -325,7 +325,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
     if args.branch:
         GIT_BRANCH = args.branch
-    elif path.exists(GIT_BRANCH_PATH):
+    elif exists(GIT_BRANCH_PATH):
         tmp_repo_info = open(GIT_BRANCH_PATH, 'r')
         tmp_repo = YAML().load(tmp_repo_info)
         GIT_BRANCH = tmp_repo['atd-public']['branch']
