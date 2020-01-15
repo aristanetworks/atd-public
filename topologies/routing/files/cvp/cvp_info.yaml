@@ -35,6 +35,7 @@ cvp_info:
       Tenant:
         - AAA
         - aws-infra
+        - SYS_TelemetryBuilderV3
     netelements:
       eos1:
         - BaseIPv4_EOS1
