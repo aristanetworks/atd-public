@@ -43,6 +43,10 @@ media-options:
   media-reset:
   -   command: "/usr/local/bin/ConfigureTopology.py && bash /home/arista/Broadcaster/pushHostMediaConfig.sh"
       description: "Media - Reset All Devices to Broadcaster Base (media-reset)"
+troubleshooting-labs:
+  troubleshooting-intro:
+  -   command: "/usr/local/bin/ConfigureTopology.py -t tshoot-intro"
+      description: "Troubleshooting Lab 1 (tshoot-intro)"
 labconfiglets:
   mlag:
     spine1:
@@ -197,3 +201,16 @@ labconfiglets:
       - "media-leaf3-Multicast-lab"
     leaf4:
       - "media-leaf4-Multicast-lab"
+  tshoot-intro:
+    spine1:
+      - "tshoot-spine1-Multicast-lab"
+    spine2:
+      - "tshoot-spine2-Multicast-lab"
+    leaf1:
+      - "tshoot-leaf1-Multicast-lab"
+    leaf2:
+      - "tshoot-leaf2-Multicast-lab"
+    leaf3:
+      - "tshoot-leaf3-Multicast-lab"
+    leaf4:
+      - "tshoot-leaf4-Multicast-lab"
