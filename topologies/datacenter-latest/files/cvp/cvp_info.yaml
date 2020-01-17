@@ -11,6 +11,9 @@ cvp_info:
       - spine2
     CVX:
       - cvx01
+    Hosts:
+      - host1
+      - host2
   snapshots:
     - name: Validate_Routing
       commands:
@@ -23,12 +26,27 @@ cvp_info:
   configlets:
     containers:
       Tenant:
-        - AAA
+        - ATD-INFRA
         - VLANs
-        - SYS_TelemetryBuilder
-        - SYS_BaseConfig
-        - aws-infra
+        - SYS_TelemetryBuilderV3
     netelements:
+      spine1:
+        - BaseIPv4_Spine1
+      spine2:
+        - BaseIPv4_Spine2
+      leaf1:
+        - BaseIPv4_Leaf1
+      leaf2:
+        - BaseIPv4_Leaf2
+      leaf3:
+        - BaseIPv4_Leaf3
+      leaf4:
+        - BaseIPv4_Leaf4
+      host1:
+        - BaseIPv4_Host1
+      host2:
+        - BaseIPv4_Host2
       cvx01:
+        - BaseIPv4_Cvx01
         - cvx01-Controller
         

@@ -4,9 +4,8 @@ import getopt
 import sys
 import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-import cvprac.cvp_client
-from cvprac.cvp_client_errors import CvpLoginError
-import yaml
+from rcvpapi.rcvpapi import *
+import yaml, syslog, time
 
 DEBUG = False
 
@@ -16,13 +15,13 @@ def remove_configlets(client, device, mext=None):
     Define base configlets that are to be untouched
     mext = lab type to keep track of which base configlets to keep.  Added for RATD and RATD-Ring
     """
-    base_configlets = ['AAA','aws-infa']
+    base_configlets = ['AAA','aws-infra','ATD-INFRA']
     
     configlets_to_remove = []
+    configlets_to_remain = []
 
-    device_id = device['systemMacAddress']
-    configlets = client.api.get_configlets_by_device_id(device_id)
-    for configlet in configlets:
+    configlets = client.getConfigletsByNetElementId(device)
+    for configlet in configlets['configletList']:
         if configlet['name'] in base_configlets or configlet['name'].startswith('SYS_') or configlet['name'].startswith('BaseIPv4_'):
             # Do further evaluation on RATD topo to distinguish between standard RATD and RATD-Ring modules
             if configlet['name'].startswith('BaseIPv4_'):
@@ -32,34 +31,31 @@ def remove_configlets(client, device, mext=None):
                     configlets_to_remove.append( {'name': configlet['name'], 'key': configlet['key']} )
             continue
         else:
-            if DEBUG:
-               print 'Configlet %s not part of base on %s - Removing from device' % (configlet['name'], device['fqdn'])
-            configlets_to_remove.append( {'name': configlet['name'], 'key': configlet['key']} )
-
-    client.api.remove_configlets_from_device('ConfigureTopology', device, configlets_to_remove)
+            pS("INFO", "Configlet {0} not part of base on {1} - Removing from device".format(configlet['name'], device.hostname))
+            configlets_to_remove.append(configlet['name'])
+    device.removeConfiglets(client, configlets_to_remove)
+    client.addDeviceConfiglets(device, configlets_to_remain)
+    client.applyConfiglets(device)
     return
 
-def get_devices(client):
-    # Returns a list of devices
-    devices = []
-    containers = client.api.get_containers()
-    container_list = containers['data']
-    number_of_containers = containers['total']
+def getDeviceInfo(client):
+    eos_devices = []
+    for dev in client.inventory:
+        tmp_eos = client.inventory[dev]
+        tmp_eos_sw = CVPSWITCH(dev, tmp_eos['ipAddress'])
+        tmp_eos_sw.updateDevice(client)
+        eos_devices.append(tmp_eos_sw)
+    return(eos_devices)
 
-    for container in container_list:
-        container_name = container['name']
-        _devices = client.api.get_devices_in_container(container_name)
-        devices.extend(_devices)
-
-    return devices
 
 def update_topology(client, lab, configlets):
     # Get all the devices in CVP
-    devices = get_devices(client)
+    devices = getDeviceInfo(client)
     # Loop through all devices
+    # for device in devices:
     for device in devices:
         # Get the actual name of the device
-        device_name = device['fqdn'].split('.')[0]
+        device_name = device.hostname
         
         # Check to see if this is a RATD-Ring topo:
         if 'ring' in lab:
@@ -77,18 +73,12 @@ def update_topology(client, lab, configlets):
         
           # Define a list of configlets built off of the MenuOptions.yaml
           for configlet_name in configlets[lab][device_name]:
-             lab_configlet = client.api.get_configlet_by_name(configlet_name)
-             lab_configlets.append({'name': lab_configlet['name'], 'key': lab_configlet['key']})
+              lab_configlets.append(configlet_name)
 
           # Apply the configlets to the device
-          client.api.apply_configlets_to_device('ConfigureTopology', device, lab_configlets)
-
-    return
-
-def execute_pending_tasks(client):
-    tasks = client.api.get_tasks_by_status('Pending')
-    for task in tasks:
-        client.api.execute_task(task['workOrderId'])
+          client.addDeviceConfiglets(device, lab_configlets)
+          client.applyConfiglets(device)
+          client.saveTopology()
 
     return
 
@@ -103,6 +93,18 @@ def print_usage(topologies):
     print ', '.join(topologies)
     print ''
     quit()
+
+def pS(mstat,mtype):
+    """
+    Function to send output from service file to Syslog
+    Parameters:
+    mstat = Message Status, ie "OK", "INFO" (required)
+    mtype = Message to be sent/displayed (required)
+    """
+    mmes = "\t" + mtype
+    syslog.syslog("[{0}] {1}".format(mstat,mmes.expandtabs(7 - len(mstat))))
+    if DEBUG:
+        print("[{0}] {1}".format(mstat,mmes.expandtabs(7 - len(mstat))))
 
 def main(argv):
     f = open('/etc/ACCESS_INFO.yaml')
@@ -143,38 +145,30 @@ def main(argv):
     # List of configlets
     labconfiglets = menuoptions['labconfiglets']
 
-    # Topology from ADC
-    topology = accessinfo['topology']
-
-    # CVP Info
-    cvlogin = accessinfo['login_info']['cvp']['gui'][0]
-    cvip = accessinfo['nodes']['cvp'][0]['internal_ip']
-
-    user = 'arista' # someday should be cvlogin['user']
-    pwd = 'arista' # cvlogin['pw']
-
-    # Setup the client
-    cvp_client = cvprac.cvp_client.CvpClient()
-
-    # Attempt to connect to CVP
-    try:
-        cvp_client.connect([cvip], user, pwd)
-    except CvpLoginError as e:
-        if DEBUG:
-           print 'CvpLoginError has occured...Error Message:'
-           print e.msg
-        sys.exit(2)
+    # Adding new connection to CVP via rcvpapi
+    cvp_clnt = ''
+    for c_login in accessinfo['login_info']['cvp']['shell']:
+        if c_login['user'] == 'arista':
+            while not cvp_clnt:
+                try:
+                    cvp_clnt = CVPCON(accessinfo['nodes']['cvp'][0]['internal_ip'],c_login['user'],c_login['pw'])
+                    pS("OK","Connected to CVP at {0}".format(accessinfo['nodes']['cvp'][0]['internal_ip']))
+                except:
+                    pS("ERROR", "CVP is currently unavailable....Retrying in 30 seconds.")
+                    time.sleep(30)
 
     # Make sure option chosen is valid, then configure the topology
     if lab in options:
-      update_topology(cvp_client, lab, labconfiglets)
+        pS("INFO", "Setting {0} topology to {1} setup".format(accessinfo['topology'], lab))
+        update_topology(cvp_clnt, lab, labconfiglets)
     else:
       print_usage(options)
 
     # Execute all tasks generated from reset_devices()
-    execute_pending_tasks(cvp_client)
-    if DEBUG:
-       print 'Completed setting devices to topology: %s' % lab
+    cvp_clnt.getAllTasks("pending")
+    cvp_clnt.execAllTasks("pending")
+    pS("OK", 'Completed setting devices to topology: {}'.format(lab))
 
 if __name__ == '__main__':
+    syslog.openlog(logoption=syslog.LOG_PID)
     main(sys.argv[1:])

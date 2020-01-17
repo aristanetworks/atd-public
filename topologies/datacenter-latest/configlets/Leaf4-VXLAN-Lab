@@ -1,4 +1,4 @@
-no spanning-tree vlan 4094
+no spanning-tree vlan-id 4094
 !
 vlan 4094
    trunk group MLAGPEER
@@ -32,7 +32,7 @@ interface Ethernet3
 interface Ethernet4
    description HOST2
    channel-group 4 mode active
-   lacp rate fast
+   lacp timer fast
 !
 interface Ethernet5
    shutdown
