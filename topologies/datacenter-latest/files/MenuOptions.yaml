@@ -210,16 +210,16 @@ labconfiglets:
   tshoot-intro:
     spine1:
       - "tshoot-spine1-Tshoot-intro"
-#    spine2:
-#      - "tshoot-spine2-Tshoot-intro"
+    spine2:
+      - "tshoot-default"
     leaf1:
       - "tshoot-leaf1-Tshoot-intro"
     leaf2:
       - "tshoot-leaf2-Tshoot-intro"
-#    leaf3:
-#      - "tshoot-leaf3-Tshoot-intro"
-#    leaf4:
-#      - "tshoot-leaf4-Tshoot-intro"
+    leaf3:
+      - "tshoot-default"
+    leaf4:
+      - "tshoot-default"
   tshoot-sp:
     spine1:
       - "tshoot-spine1-Tshoot-sp"
