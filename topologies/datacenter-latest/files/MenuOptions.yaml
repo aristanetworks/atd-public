@@ -220,6 +220,10 @@ labconfiglets:
       - "tshoot-default"
     leaf4:
       - "tshoot-default"
+    host1:
+      - "tshoot-host1-Tshoot-intro"
+    host2:
+      - "tshoot-default"
   tshoot-sp:
     spine1:
       - "tshoot-spine1-Tshoot-sp"
