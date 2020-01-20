@@ -1,0 +1,24 @@
+interface Port-Channel1
+   no switchport
+   ip address 172.16.112.201/24
+!
+interface Port-Channel2
+   no switchport
+   ip address 172.16.115.100/24
+!
+interface Ethernet1
+   channel-group 1 mode active
+   lacp rate fast
+!
+interface Ethernet2
+   channel-group 1 mode active
+   lacp rate fast
+!
+interface Ethernet3
+   channel-group 2 mode active
+   lacp rate fast
+!
+interface Ethernet4
+   channel-group 2 mode active
+   lacp rate fast
+!

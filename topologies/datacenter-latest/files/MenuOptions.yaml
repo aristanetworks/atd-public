@@ -62,6 +62,10 @@ labconfiglets:
       - "VLANs"
     leaf4:
       - "VLANs"
+    host1:
+      - "Host1-ATD"
+    host2:
+      - "Host2-ATD"
   bgp:
     spine1:
       - "Spine1-BGP-Lab"
@@ -75,6 +79,10 @@ labconfiglets:
       - "Leaf3-BGP-Lab"
     leaf4:
       - "Leaf4-BGP-Lab"
+    host1:
+      - "Host1-ATD"
+    host2:
+      - "Host2-ATD"
   vxlan:
     spine1:
       - "Spine1-BGP-Lab"
@@ -92,6 +100,10 @@ labconfiglets:
     leaf4:
       - "Leaf4-VXLAN-Lab"
       - "VLANs"
+    host1:
+      - "Host1-ATD"
+    host2:
+      - "Host2-ATD"
   l2evpn:
     spine1:
       - "Spine1-L2EVPN-Lab"
@@ -108,6 +120,10 @@ labconfiglets:
     leaf4:
       - "Leaf4-L2EVPN-Lab"
       - "VLANs"
+    host1:
+      - "Host1-ATD"
+    host2:
+      - "Host2-ATD"
   l3evpn:
     spine1:
       - "Spine1-L3EVPN-Lab"
@@ -119,6 +135,10 @@ labconfiglets:
       - "Leaf2-L3EVPN-Lab"
     leaf4:
       - "Leaf4-L3EVPN-Lab"
+    host1:
+      - "Host1-ATD"
+    host2:
+      - "Host2-ATD"
   cvp:
     spine1:
       - "Spine1-BGP-Lab"
@@ -132,6 +152,10 @@ labconfiglets:
       - "Leaf3-BGP-Lab"
     leaf4:
       - "Leaf4-BGP-Lab-Full"
+    host1:
+      - "Host1-ATD"
+    host2:
+      - "Host2-ATD"
   media-intro:
     spine1:
       - "media-spine1-IP-Intro-start"
@@ -145,6 +169,10 @@ labconfiglets:
       - "media-leaf3-IP-Intro-start"
     leaf4:
       - "media-leaf4-IP-Intro-start"
+    host1:
+      - "Host1-Media"
+    host2:
+      - "Host2-Media"
   media-vlan:
     spine1:
       - "media-spine1-VLAN-STP-start"
@@ -158,6 +186,10 @@ labconfiglets:
       - "media-leaf3-VLAN-STP-start"
     leaf4:
       - "media-leaf4-VLAN-STP-start"
+    host1:
+      - "Host1-Media"
+    host2:
+      - "Host2-Media"
   media-ospf:
     spine1:
       - "media-spine1-OSPF-start"
@@ -171,6 +203,10 @@ labconfiglets:
       - "media-leaf3-OSPF-start"
     leaf4:
       - "media-leaf4-OSPF-start"
+    host1:
+      - "Host1-Media"
+    host2:
+      - "Host2-Media"
   media-bgp:
     spine1:
       - "media-spine1-BGP-start"
@@ -184,6 +220,10 @@ labconfiglets:
       - "media-leaf3-BGP-start"
     leaf4:
       - "media-leaf4-BGP-start"
+    host1:
+      - "Host1-Media"
+    host2:
+      - "Host2-Media"
   media-mcast:
     spine1:
       - "media-spine1-Multicast-lab"
@@ -197,3 +237,7 @@ labconfiglets:
       - "media-leaf3-Multicast-lab"
     leaf4:
       - "media-leaf4-Multicast-lab"
+    host1:
+      - "Host1-Media"
+    host2:
+      - "Host2-Media"
