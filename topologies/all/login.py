@@ -67,8 +67,8 @@ cvp = cvpinfo['ip']
 veosinfo = nodes['veos']
 
 labcontrols = menuoptions['options']
-# Check to see if this is the datacenter topo
-if topology == 'datacenter':
+# Check to see if this is the datacenter or datacenter-latest topo
+if 'datacenter' in topology:
   labcontrols2 = menuoptions['media-options']
 else:
   # If topo other than datacenter, set to False
