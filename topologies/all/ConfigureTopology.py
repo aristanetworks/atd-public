@@ -126,6 +126,10 @@ def main(argv):
 
     if enableControls2:
       options.update(menuoptions['media-options'])
+      try:
+        options.update(menuoptions['troubleshooting-labs'])
+      except:
+        pass
 
     lab = 'reset'
 
