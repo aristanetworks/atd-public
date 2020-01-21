@@ -1,6 +1,6 @@
 cloud_service: aws:adc
 default_interfaces: 8
-default_ami_name: 4.22.2F
+default_ami_name: 4.22.0F
 cvp_instance: singlenode
 cvp_version: 2019.1.1
 topology_name: datacenter-latest
