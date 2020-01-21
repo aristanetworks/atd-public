@@ -16,3 +16,14 @@ username arista sshkey ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC6bJB3TkBEQZ9jNyO1k
 tacacs-server key 7 070E33455D1D18
 tacacs-server host 192.168.0.4
 !
+event-handler iptables-vxlan
+   trigger on-boot
+   action bash sudo iptables -I INPUT 1 -p udp --dport 4789 -j ACCEPT
+   asynchronous
+!
+event-handler ovs-restart
+   trigger on-boot
+   action bash sudo systemctl restart openvswitch
+   delay 30
+   asynchronous
+!
