@@ -3,8 +3,9 @@ default_interfaces: 8
 default_ami_name: 4.22.2.1F
 cvp_instance: singlenode
 cvp_version: 2019.1.1
-eni_s_d_check: false
-topology_name: 'datacenter-latest'
+topology_name: datacenter-latest
+external_configuration: true
+only_add_to_inventory: false
 custom_ami_names: false
 preconfigured: false
 topology_link: true

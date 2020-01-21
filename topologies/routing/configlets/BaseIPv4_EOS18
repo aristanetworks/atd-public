@@ -1,7 +1,4 @@
 terminal length 0
-daemon TerminAttr
-   exec /usr/bin/TerminAttr -ingestgrpcurl=192.168.0.5:9910 -taillogs -ingestauth=key, -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -ingestvrf=default
-   no shutdown
 service routing protocols model multi-agent
 hostname eos18
 aaa authentication policy on-success log

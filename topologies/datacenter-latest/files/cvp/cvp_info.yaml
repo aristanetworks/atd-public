@@ -28,7 +28,6 @@ cvp_info:
       Tenant:
         - ATD-INFRA
         - VLANs
-        - SYS_TelemetryBuilderV3
     netelements:
       spine1:
         - BaseIPv4_Spine1
