@@ -12,7 +12,7 @@ L3 EVPN
 
 2. On **leaf3**, configure EOS to Mutli-Agent and add loopback0
 
-   1. **leaf3** enable the Multi-Agent
+   1. **leaf3** enable the Multi-Agent **(Already configured and enabled on the switch)**
 
         .. code-block:: text
 
