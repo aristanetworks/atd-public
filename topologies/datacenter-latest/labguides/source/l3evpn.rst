@@ -12,7 +12,7 @@ L3 EVPN
 
 2. On **leaf3**, configure EOS to Mutli-Agent and add loopback0
 
-   1. **leaf3** enable the Multi-Agent
+   1. **leaf3** enable the Multi-Agent **(Already configured and enabled on the switch)**
 
         .. code-block:: text
 
@@ -60,7 +60,7 @@ L3 EVPN
               maximum-paths 2 ecmp 2
               neighbor SPINE peer group
               neighbor SPINE remote-as 65001
-              neighbor SPINE fall-over bfd
+              neighbor SPINE bfd
               neighbor SPINE maximum-routes 12000
               neighbor 172.16.200.9 peer group SPINE
               neighbor 172.16.200.25 peer group SPINE
@@ -90,6 +90,7 @@ L3 EVPN
           neighbor 172.16.0.2 peer group SPINE-EVPN-TRANSIT
         !
         address-family evpn
+          bgp next-hop-unchanged
           neighbor SPINE-EVPN-TRANSIT activate
         !
         address-family ipv4

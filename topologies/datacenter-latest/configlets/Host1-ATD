@@ -22,5 +22,6 @@ interface Ethernet4
    channel-group 2 mode active
    lacp timer fast
 !
+ip route 172.16.116.0/24 172.16.115.1
 ip route 172.16.134.0/24 172.16.112.1
 !

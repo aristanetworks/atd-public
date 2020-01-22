@@ -141,6 +141,8 @@ labconfiglets:
       - "Leaf1-L3EVPN-Lab"
     leaf2:
       - "Leaf2-L3EVPN-Lab"
+    leaf3:
+      - "VLANs"
     leaf4:
       - "Leaf4-L3EVPN-Lab"
     cvx01:

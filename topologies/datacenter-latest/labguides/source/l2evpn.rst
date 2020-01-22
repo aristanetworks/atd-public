@@ -13,7 +13,7 @@ L2 EVPN
 
    1. Type ``l2evpn`` at the prompt. The script will configure the datacenter with the exception of **leaf3**
 
-2. On **leaf3**, configure ArBGP.
+2. On **leaf3**, configure ArBGP. **(Already configured and enabled on the switch)**
 
     .. code-block:: html
 
