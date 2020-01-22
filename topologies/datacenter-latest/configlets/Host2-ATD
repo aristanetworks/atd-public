@@ -19,5 +19,6 @@ interface Ethernet4
    channel-group 2 mode active
 !
 !
+ip route 172.16.115.0/24 172.16.116.1
 ip route 172.16.112.0/24 172.16.134.1
 !
