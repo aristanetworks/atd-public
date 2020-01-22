@@ -62,6 +62,8 @@ labconfiglets:
       - "VLANs"
     leaf4:
       - "VLANs"
+    cvx01:
+      - "cvx01-Controller"
     host1:
       - "Host1-ATD"
     host2:
@@ -79,6 +81,8 @@ labconfiglets:
       - "Leaf3-BGP-Lab"
     leaf4:
       - "Leaf4-BGP-Lab"
+    cvx01:
+      - "cvx01-Controller"
     host1:
       - "Host1-ATD"
     host2:
@@ -100,6 +104,8 @@ labconfiglets:
     leaf4:
       - "Leaf4-VXLAN-Lab"
       - "VLANs"
+    cvx01:
+      - "cvx01-Controller"
     host1:
       - "Host1-ATD"
     host2:
@@ -120,6 +126,8 @@ labconfiglets:
     leaf4:
       - "Leaf4-L2EVPN-Lab"
       - "VLANs"
+    cvx01:
+      - "cvx01-Controller"
     host1:
       - "Host1-ATD"
     host2:
@@ -135,6 +143,8 @@ labconfiglets:
       - "Leaf2-L3EVPN-Lab"
     leaf4:
       - "Leaf4-L3EVPN-Lab"
+    cvx01:
+      - "cvx01-Controller"
     host1:
       - "Host1-ATD"
     host2:
@@ -152,6 +162,8 @@ labconfiglets:
       - "Leaf3-BGP-Lab"
     leaf4:
       - "Leaf4-BGP-Lab-Full"
+    cvx01:
+      - "cvx01-Controller"
     host1:
       - "Host1-ATD"
     host2:
