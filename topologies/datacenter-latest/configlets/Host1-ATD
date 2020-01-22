@@ -8,19 +8,19 @@ interface Port-Channel2
 !
 interface Ethernet1
    channel-group 1 mode active
-   lacp rate fast
+   lacp timer fast
 !
 interface Ethernet2
    channel-group 1 mode active
-   lacp rate fast
+   lacp timer fast
 !
 interface Ethernet3
    channel-group 2 mode active
-   lacp rate fast
+   lacp timer fast
 !
 interface Ethernet4
    channel-group 2 mode active
-   lacp rate fast
+   lacp timer fast
 !
 ip route 0.0.0.0/0 172.16.115.1
 ip route 172.16.134.0/24 172.16.112.1
