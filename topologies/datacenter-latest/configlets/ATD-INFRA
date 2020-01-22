@@ -1,5 +1,3 @@
-agent PhyEthtool shutdown
-!
 daemon TerminAttr
   exec /usr/bin/TerminAttr -ingestgrpcurl=192.168.0.5:9910 -taillogs -ingestauth=key,1a38fe7df56879d685e51b6f0ff86327 -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent
   no shutdown
@@ -17,4 +15,15 @@ tacacs-server host 192.168.0.4
 !
 management api http-commands
    no shutdown
+!
+event-handler iptables-vxlan
+   trigger on-boot
+   action bash sudo iptables -I INPUT 1 -p udp --dport 4789 -j ACCEPT
+   asynchronous
+!
+event-handler ovs-restart
+   trigger on-boot
+   action bash sudo systemctl restart openvswitch
+   delay 30
+   asynchronous
 !
