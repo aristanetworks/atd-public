@@ -17,4 +17,6 @@ scp KernelVersion-patch-bug431736.i686.rpm arista@$i:/mnt/flash/
 ssh arista@$i copy flash:/KernelVersion-patch-bug431736.i686.rpm extension:/
 ssh arista@$i extension KernelVersion-patch-bug431736.i686.rpm
 done
+cd /home/arista
+rm -rf /home/arista/patch
 echo "Done!"
