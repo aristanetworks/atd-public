@@ -154,6 +154,9 @@ L2 EVPN
 
             enable
             ping 172.16.112.202
+        
+        .. note:: If the pings are failing, try selecting option **98** or type in **bash** 
+                  from the login menu, then type **./veos-patch.sh**          
 
    3. On **leaf1** and **leaf3**
 
