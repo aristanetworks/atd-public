@@ -13,7 +13,7 @@ L2 EVPN
 
    1. Type ``l2evpn`` at the prompt. The script will configure the datacenter with the exception of **leaf3**
 
-2. On **leaf3**, configure ArBGP.
+2. On **leaf3**, configure ArBGP. **(Already configured and enabled on the switch)**
 
     .. code-block:: html
 
@@ -154,6 +154,9 @@ L2 EVPN
 
             enable
             ping 172.16.112.202
+        
+        .. note:: If the pings are failing, try selecting option **98** or type in **bash** 
+                  from the login menu, then type **./veos-patch.sh**          
 
    3. On **leaf1** and **leaf3**
 
