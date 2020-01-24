@@ -4,7 +4,7 @@
 from ruamel.yaml import YAML
 from rcvpapi.rcvpapi import *
 import requests, json, syslog
-from os import path, listdir
+from os import path, listdir, system
 from time import sleep
 import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
@@ -250,6 +250,12 @@ def main():
         # Logout and close session to CVP
         cvp_clnt.execLogout()
         pS("OK","Logged out of CVP")
+        # Adding section to reboot all vEOS nodes in case 
+        # multi-agent needs to initialize on initial deployment
+        for eos in eos_info:
+            pS("INFO", "Rebooting {0}".format(eos.hostname))
+            system("/usr/bin/ssh -f arista@{0} reload now".format(eos.ip))
+            pS("OK", "{0} has been rebooted.".format(eos.hostname))
     else:
         pS("ERROR","Couldn't connect to CVP")
 
