@@ -73,6 +73,9 @@ if 'datacenter' in topology:
 else:
   # If topo other than datacenter, set to False
   labcontrols2 = False
+  
+# Catch for routing and datacenter-latest topos to sort login menu naturally
+if topology != 'datacenter':
   # Sort the list naturally
   veosinfo = sortVEOS(veosinfo)
 
