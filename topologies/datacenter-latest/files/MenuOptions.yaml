@@ -172,9 +172,9 @@ labconfiglets:
       - "Host2-ATD"
   media-reset:
     host1:
-      - Host1-Media
+      - "Host1-Media"
     host2:
-      - Host2-Media
+      - "Host2-Media"
   media-intro:
     spine1:
       - "media-spine1-IP-Intro-start"
