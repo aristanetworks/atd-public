@@ -1,6 +1,6 @@
 #!/bin/bash
 
-rm ~/enable-media
+rm -f ~/enable-media
 
 # echo "Prepping host vms and enabling eAPI"
 # ssh -t 192.168.0.31 "
