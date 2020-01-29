@@ -283,14 +283,12 @@ Media OSPF Lab
 
          .. code-block:: text
 
-            enable
             ping 172.16.15.5
 
       **Example:**
 
          .. code-block:: text
 
-            host2> enable
             host2# ping 172.16.15.5
             PING 172.16.15.5 (172.16.15.5) 72(100) bytes of data.
             80 bytes from 172.16.15.5: icmp_seq=1 ttl=60 time=99.5 ms

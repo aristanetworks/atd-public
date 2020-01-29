@@ -277,7 +277,6 @@ Media BGP Lab
 
         .. code-block:: text
 
-            enable
             ping 172.16.15.5
 
       **Example:**
