@@ -1,7 +1,7 @@
 ---
 options:
   reset:
-  -   command: "/usr/local/bin/ConfigureTopology.py && bash /home/arista/Broadcaster/pushHostDefaultConfig.sh"
+  -   command: "/usr/local/bin/ConfigureTopology.py && bash rm -f ~/enable-media"
       description: "Reset All Devices to Base ATD (reset)"
   mlag:
   -   command: "/usr/local/bin/ConfigureTopology.py -t mlag"
@@ -41,7 +41,7 @@ media-options:
   -   command: "/usr/local/bin/ConfigureTopology.py -t media-mcast"
       description: "Media - Multicast (media-mcast)"
   media-reset:
-  -   command: "/usr/local/bin/ConfigureTopology.py && bash /home/arista/Broadcaster/pushHostMediaConfig.sh"
+  -   command: "/usr/local/bin/ConfigureTopology.py -t media-reset"
       description: "Media - Reset All Devices to Broadcaster Base (media-reset)"
 labconfiglets:
   mlag:
@@ -170,6 +170,11 @@ labconfiglets:
       - "Host1-ATD"
     host2:
       - "Host2-ATD"
+  media-reset:
+    host1:
+      - Host1-Media
+    host2:
+      - Host2-Media
   media-intro:
     spine1:
       - "media-spine1-IP-Intro-start"
