@@ -79,6 +79,10 @@ def update_topology(client, lab, configlets):
           client.addDeviceConfiglets(device, lab_configlets)
           client.applyConfiglets(device)
           client.saveTopology()
+        # Adding check for reset option to apply configlets as necessary
+        elif lab == 'reset':
+          client.applyConfiglets(device)
+          client.saveTopology()
 
     return
 
