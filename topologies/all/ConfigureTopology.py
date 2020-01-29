@@ -26,9 +26,13 @@ def remove_configlets(client, device, mext=None):
             # Do further evaluation on RATD topo to distinguish between standard RATD and RATD-Ring modules
             if configlet['name'].startswith('BaseIPv4_'):
                 if mext and '_RING' not in configlet['name']:
-                    configlets_to_remove.append( {'name': configlet['name'], 'key': configlet['key']} )
+                    configlets_to_remove.append(configlet['name'])
                 elif not mext and '_RING' in configlet['name']:
-                    configlets_to_remove.append( {'name': configlet['name'], 'key': configlet['key']} )
+                    configlets_to_remove.append(configlet['name'])
+                else:
+                    configlets_to_remain.append(configlet['name'])
+            else:
+                configlets_to_remain.append(configlet['name'])
             continue
         else:
             pS("INFO", "Configlet {0} not part of base on {1} - Removing from device".format(configlet['name'], device.hostname))
