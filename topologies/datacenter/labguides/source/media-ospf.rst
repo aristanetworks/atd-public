@@ -8,7 +8,7 @@ Media OSPF Lab
 
 1. Log into the **Lab Access** jumpserver:
 
-   1. Type ``media-ospf`` or option ``16`` at the prompt. The script will configure the topology with the exception of **Leaf 4**.
+   1. Type ``media-ospf`` at the prompt. The script will configure the topology with the exception of **Leaf 4**.
 
    2. On **Spine 2**, verify OSPF operation (it should not be operating correctly) and you will see all the routes currently in the environment.
 

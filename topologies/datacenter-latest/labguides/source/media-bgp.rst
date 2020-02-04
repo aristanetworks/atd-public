@@ -8,7 +8,7 @@ Media BGP Lab
 
 1. Log into the **LabAccess** jumpserver:
 
-   1. Type ``media-bgp`` or option ``17`` at the prompt. The script will configure the topology with the exception of **Leaf4**.
+   1. Type ``media-bgp`` or option ``14`` at the prompt. The script will configure the topology with the exception of **Leaf4**.
 
    2. On **spine2**, verify the BGP operation (it should not be operating correctly) and current routing table and command outputs similar to the outputs below.
 
@@ -277,7 +277,6 @@ Media BGP Lab
 
         .. code-block:: text
 
-            enable
             ping 172.16.15.5
 
       **Example:**

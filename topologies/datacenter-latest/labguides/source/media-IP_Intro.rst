@@ -8,7 +8,7 @@ Media Intro to IP Lab
 
 1. Log into the **LabAccess** jumpserver:
 
-   1. Type ``media-intro`` or option ``14`` at the prompt. The script will configure the topology with the exception of **Leaf 4**. The main task is to configure the remaining device so there is connectivity between the two hosts
+   1. Type ``media-intro`` or option ``11`` at the prompt. The script will configure the topology with the exception of **Leaf 4**. The main task is to configure the remaining device so there is connectivity between the two hosts
 
 
 2. Connect to **Leaf 4** from the menu:
@@ -115,7 +115,6 @@ Media Intro to IP Lab
 
         .. code-block:: text
 
-            enable
             ping 172.16.15.5
 
       **Example:**
