@@ -201,9 +201,13 @@ Advanced Networking for Media Engineers
 
     .. code-block:: text
 
-        Select Menu Option# 8
+        Select Host 2 from main menu
         Confirm Gateway of Host 1 is accessible at 172.16.15.1 and the Host 1 At 172.16.15.5
 
+         ping 172.16.15.1
+         ping 172.16.15.5
+        
+        ex.
         host2# ping 172.16.15.1
         host2# ping 172.16.15.5
 
@@ -260,7 +264,7 @@ Advanced Networking for Media Engineers
 
     .. code-block:: text
 
-        What would you like to do? 7
+        On Host 1 type the following:
         host1# bash
         [arista@host1 ~]$ /mnt/flash/mcast-source.sh
 
@@ -304,7 +308,7 @@ Advanced Networking for Media Engineers
 
     .. code-block:: text
 
-        What would you like to do? 8
+        On Host 2 type the following:
         host2# bash
         [arista@host2 ~]$ /mnt/flash/mcast-receiver.sh
 
