@@ -170,8 +170,8 @@ Media OSPF Lab
 
             configure
             router ospf 100
-              passive interface loopback0
-              passive interface ethernet4
+              passive-interface loopback0
+              passive-interface ethernet4
 
       **Example:**
 
