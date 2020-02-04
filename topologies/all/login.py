@@ -162,6 +162,7 @@ Device Menu:            Lab Controls
       elif ans!="" and counter==devicecount:
         #print("\n Not Valid Choice Try again")
         break
+      # If entry is null, set 'ans' back to True to loop back to start.
       elif ans == "":
         ans = True
         break
