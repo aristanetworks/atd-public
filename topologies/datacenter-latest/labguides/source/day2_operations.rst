@@ -180,7 +180,7 @@ Go back to the ATD web landing page, and click on the **Jenkins** link:
 
 |
 
-Jenkins will open in a new tab. Click on **create new jobs** in the middle of
+Jenkins will open in a new tab. Click on **New Item** in the top left of
 the window.
 
 You will be greeted with a screen like the one below. Enter **vlan** as the
@@ -194,7 +194,7 @@ Click **OK**.
 Now comes the fun part.
 
 Under **Source Code Management**, check **Git** and
-enter ``/home/aristagui/Desktop/labfiles/lab6/lab`` in the **Repository URL** field.
+enter ``/home/aristagui/Desktop/labfiles/lab6/repo`` in the **Repository URL** field.
 
 .. note:: You will see a warning, ignore it for now.
 
