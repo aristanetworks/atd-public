@@ -163,7 +163,6 @@ Device Menu:            Lab Controls
         #print("\n Not Valid Choice Try again")
         break
       elif ans == "":
-        print("\n Not a valid choice. Try again.")
         ans = True
         break
 
