@@ -1,0 +1,13 @@
+[Unit]
+Description=Automatically checks ATD Repo and updates any specified changed ATD services
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=forking
+ExecStart=/usr/local/bin/atdServiceUpdater.py
+User=root
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
