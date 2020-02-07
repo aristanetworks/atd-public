@@ -6,7 +6,6 @@ Wants=network-online.target
 [Service]
 Type=forking
 ExecStart=/usr/local/bin/atdServiceUpdater.py
-TimeoutStartSec=infinity
 User=root
 Restart=on-failure
 
