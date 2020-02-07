@@ -1,48 +1,42 @@
-terminal length 0
 service routing protocols model multi-agent
+!
 hostname eos2
-aaa authentication policy on-success log
-aaa authentication policy on-failure log
-aaa root secret sha512 $6$E.iJv60aK.6A6h5F$NwF2c4NIHOo4w0x1Qzea4XpFC49lKRKD6dORjP.7hyzP0jvZyaBfHvQejCQDUE1Q4QR8vGPSVk2NOY9r/e4mC0
-username admin privilege 15 role network-admin secret sha512 $6$F.Fl8nkXROjthgfw$rWbRvMc6gwDapnsromaJZHGJvzEQ0QXLeBvv1etK.sip6fc13IyT.ugaLnMNqScb8qfi5Zpk3RrLXep8o2ik11
-username arista privilege 15 role network-admin secret sha512 $6$WsobqLAye/h1hY8p$Be5PWpLZXu3L3Fk.Ak9j8lO4UZah4Ez6tWX4w.tiepdDM29BwH0ClbWDDYuegp09sR/CnBtlFNwAZodM2sSc11
-username cvpadmin privilege 15 secret sha512 $6$U/IY4V7DQO6sYX3s$xqA6RVLJFmIdLLvLGft2eRsUw9dLecfXB9e6WULxjY6MVOPkwWh/Og7Fqwe8LCxxxgfYVUZIkDLP941mZbsZh.
-username ec2-user nopassword
-username ec2-user sshkey ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCHEDh9HDGbWA58rkYi6M6RTgVeSQl1ilIBOIhzJy6QSevBHtUUDijGIlbBOoGZl5JHRn8UvmdKQBN5ygAUbGOE4sbh9n8BPrlsg1osaN2pwE73JWMSI50pSLCQO/3HBpwHyQ3bo5ZYLj0MzpKEMatMe7gy5pkjF4P0AKU0s9/qo9ixXlWHDw/9DJCfucUk6zwBiTUJxPKTskTFWvDRr/Yo+GUz5of9i/jIA37ux/20RjVuedqy3+LoYbwD7jYUJlq525g+OAZwIY+07Nz8alpBayW+asYKBosD5kMDrf+kLmFGbsNxYXJCEjEuEmDw7fQt5Gscos2BRG4Egcik1T0p
+!
 interface Ethernet1
    description Unused
    shutdown
    no switchport
+!
 interface Ethernet2
    description Unused
    shutdown
    no switchport
+!
 interface Ethernet3
    description Unused
    shutdown
    no switchport
+!
 interface Ethernet4
    description Unused
    shutdown
    no switchport
+!
 interface Ethernet5
    description Unused
    shutdown
    no switchport
+!
 interface Loopback0
    ip address 2.2.2.2/32
+!
 interface Management1
    ip address 192.168.0.11/24
    no lldp transmit
-event-handler ovs-restart
-   trigger on-boot
-   action bash sudo systemctl restart openvswitch
-   delay 30
-   asynchronous
-ip access-list ALL
-   permit ip any any
+   no lldp receive
+!
 ip routing
-control-plane
-   ip access-group ALL in
+!
 management api http-commands
    no shutdown
+   protocol http

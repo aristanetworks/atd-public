@@ -1,15 +1,13 @@
 vlan 20
-name Customer2_E-LAN
+   name Customer2_E-LAN
 !
 interface Ethernet6
    description EOS14
-   switchport
    channel-group 14 mode active
 !
 interface Port-Channel14
    description CE-EOS14
    switchport access vlan 20
-   switchport
    !
    evpn ethernet-segment
       identifier 0000:0200:0200:2000:0608
@@ -18,7 +16,8 @@ interface Port-Channel14
    spanning-tree portfast
 !
 router bgp 100
-maximum-paths 2
+   maximum-paths 2
+   !
    vlan 20
       rd 6.6.6.6:20
       route-target both 2:20

@@ -4,6 +4,7 @@ interface Loopback0
    node-segment ipv4 index 1
 !
 router isis 100
+   !
    segment-routing mpls
+      router-id 1.1.1.1
       no shutdown
-   router-id 1.1.1.1
