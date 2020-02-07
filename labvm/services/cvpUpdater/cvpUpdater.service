@@ -1,13 +1,13 @@
 [Unit]
 Description=Automatically configures CVP with EOS devices depending on the topology
-Required=atdFiles.service
+Requires=atdFiles.service
 After=atdFiles.service
 
 [Service]
 Type=forking
 ExecStart=/usr/local/bin/cvpUpdater.py
 User=arista
-TimeoutStartSec=240
+TimeoutStartSec=infinity
 Restart=on-failure
 RestartSec=60
 
