@@ -47,7 +47,7 @@ CVX
             interface Ethernet4
               description HOST2
               channel-group 4 mode active
-              lacp rate fast
+              lacp timer fast
 
             interface Loopback1
               ip address 172.16.0.56/32
