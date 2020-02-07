@@ -1,13 +1,13 @@
 [Unit]
 Description=Automatically updates configlets
-Required=cvpUpdater.service
+Requires=cvpUpdater.service
 After=cvpUpdater.service
 
 [Service]
 Type=forking
 ExecStart=/usr/local/bin/gitConfigletSync.py
 User=arista
-TimeoutStartSec=180
+TimeoutStartSec=infinity
 Restart=on-failure
 RestartSec=60
 
