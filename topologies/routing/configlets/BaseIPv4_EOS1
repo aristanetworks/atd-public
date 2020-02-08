@@ -1,6 +1,7 @@
 service routing protocols model multi-agent
 !
 hostname eos1
+dns domain arista.lab
 !
 interface Ethernet1
    description EOS2
@@ -38,8 +39,6 @@ interface Management1
    ip address 192.168.0.10/24
    no lldp transmit
    no lldp receive
-!
-dns domain arista.lab
 !
 ip routing
 !

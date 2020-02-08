@@ -1,6 +1,7 @@
 service routing protocols model multi-agent
 !
 hostname eos19
+dns domain arista.lab
 !
 interface Ethernet1
    description EOS7
