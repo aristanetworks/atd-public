@@ -34,7 +34,7 @@ interface Ethernet4
    description HOST1
    channel-group 4 mode active
    lacp rate fast
-!  
+!
 interface Ethernet5
    shutdown
 !
@@ -55,7 +55,7 @@ interface Loopback1
    ip address 172.16.0.34/32
 !
 interface Vlan12
-   ip address 172.16.112.4/24
+   ip address 172.16.112.3/24
    ip virtual-router address 172.16.112.1
 !
 interface Vxlan1
@@ -63,13 +63,13 @@ interface Vxlan1
    vxlan vlan 12 vni 1212
    vxlan flood vtep 172.16.0.56
 !
-ip virtual-router mac-address 00:1c:73:00:00:12
+ip virtual-router mac-address 00:1c:73:00:00:ff
 !
 router bgp 65001
    router-id 172.16.0.4
    maximum-paths 4 ecmp 4
    neighbor 172.16.200.5 remote-as 65000
-   neighbor 172.16.200.5 maximum-routes 12000 
+   neighbor 172.16.200.5 maximum-routes 12000
    neighbor 172.16.200.21 remote-as 65000
    neighbor 172.16.200.21 maximum-routes 12000
    neighbor 172.16.12.1 remote-as 65001

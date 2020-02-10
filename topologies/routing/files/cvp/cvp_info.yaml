@@ -33,8 +33,7 @@ cvp_info:
   configlets:
     containers:
       Tenant:
-        - AAA
-        - aws-infra
+        - ATD-INFRA
     netelements:
       eos1:
         - BaseIPv4_EOS1

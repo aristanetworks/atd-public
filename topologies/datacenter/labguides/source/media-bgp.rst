@@ -8,7 +8,7 @@ Media BGP Lab
 
 1. Log into the **LabAccess** jumpserver:
 
-   1. Type ``media-bgp`` or option ``17`` at the prompt. The script will configure the topology with the exception of **Leaf4**.
+   1. Type ``media-bgp`` at the prompt. The script will configure the topology with the exception of **Leaf4**.
 
    2. On **spine2**, verify the BGP operation (it should not be operating correctly) and current routing table and command outputs similar to the outputs below.
 
@@ -17,12 +17,12 @@ Media BGP Lab
             show ip bgp summary
             show ip bgp
             show ip route
-            
-            
+
+
       **Example:**
-        
+
         .. code-block:: text
-        
+
             spine2#show ip bgp summary
             BGP summary information for VRF default
             Router identifier 10.127.255.3, local AS number 2
@@ -32,7 +32,7 @@ Media BGP Lab
                 10.127.34.4      4  2                  0         0    0    0 00:02:10 Active
 
 
-       
+
 
             spine2#show ip bgp
             BGP routing table information for VRF default
@@ -46,7 +46,7 @@ Media BGP Lab
              * >     10.127.255.1/32        10.127.23.2           0       100     0       1 i
              * >     172.16.15.0/24         10.127.23.2           0       100     0       1 i
 
-           
+
 
             spine2#show ip route
 
@@ -84,9 +84,9 @@ Media BGP Lab
             ip address 10.127.255.4/32
 
       **Example:**
-       
+
         .. code-block:: text
-         
+
             leaf4#configure
             leaf4(config)#interface loopback 0
             leaf4(config-if-Lo0)#ip address 10.127.255.4/32
@@ -103,9 +103,9 @@ Media BGP Lab
               router-id 10.127.255.4
 
       **Example:**
-      
+
         .. code-block:: text
-        
+
             leaf4(config)#configure
             leaf4(config)#router bgp 2
             leaf4(config-router-bgp)#router-id 10.127.255.4
@@ -122,9 +122,9 @@ Media BGP Lab
                 neighbor 10.127.34.3 remote-as 2
 
       **Example:**
-      
+
         .. code-block:: text
-        
+
             leaf4(config)#configure
             leaf4(config)#router bgp 2
             leaf4(config-router-bgp)#neighbor 10.127.34.3 remote-as 2
@@ -143,9 +143,9 @@ Media BGP Lab
               redistribute connected
 
       **Example:**
-        
+
         .. code-block:: text
-        
+
             leaf4#configure
             leaf4(config)#router bgp 2
             leaf4(config-router-bgp)#redistribute connected
@@ -157,9 +157,9 @@ Media BGP Lab
             show ip bgp summary
             show ip bgp neighbors 10.127.34.3 advertised-routes
             show ip bgp neighbors 10.127.34.3 received-routes
-            
+
       **Example:**
-      
+
         .. code-block:: text
 
             leaf4(config-router-bgp)#show ip bgp summary
@@ -169,7 +169,7 @@ Media BGP Lab
               Neighbor         V  AS           MsgRcvd   MsgSent  InQ OutQ  Up/Down State  PfxRcd PfxAcc
               10.127.34.3      4  2                 22        22    0    0 00:10:37 Estab  2      2
 
-            
+
 
             leaf4(config-router-bgp)#show ip bgp neighbors 10.127.34.3 advertised-routes
             BGP routing table information for VRF default
@@ -185,7 +185,7 @@ Media BGP Lab
              * >     172.16.46.0/24         10.127.34.4           -       100     -       i
              * >     192.168.0.0/24         10.127.34.4           -       100     -       i
 
-            
+
 
             leaf4(config-router-bgp)#show ip bgp neighbors 10.127.34.3 received-routes
             BGP routing table information for VRF default
@@ -209,9 +209,9 @@ Media BGP Lab
             show ip bgp
             show ip route
             show ip route bgp
-            
+
       **Example:**
-      
+
         .. code-block:: text
 
             leaf4(config-router-bgp)#show ip bgp summary
@@ -238,7 +238,7 @@ Media BGP Lab
              * >     172.16.46.0/24         -                     1       0       -       i
              * >     192.168.0.0/24         -                     1       0       -       i
 
-            
+
 
             leaf4(config-router-bgp)#show ip route | Begin Gateway
             Gateway of last resort:
@@ -251,7 +251,7 @@ Media BGP Lab
              C      172.16.46.0/24 is directly connected, Ethernet4
              C      192.168.0.0/24 is directly connected, Management1
 
-            
+
 
             leaf4(config-router-bgp)#show ip route bgp
 
@@ -277,13 +277,14 @@ Media BGP Lab
 
         .. code-block:: text
 
+            enable
             ping 172.16.15.5
 
       **Example:**
-      
+
         .. code-block:: text
-        
-            host2(config)#ping 172.16.15.5
+
+            host2(config)# ping 172.16.15.5
             PING 172.16.15.5 (172.16.15.5) 72(100) bytes of data.
             80 bytes from 172.16.15.5: icmp_seq=1 ttl=60 time=436 ms
             80 bytes from 172.16.15.5: icmp_seq=2 ttl=60 time=433 ms
@@ -296,18 +297,17 @@ Media BGP Lab
 .. admonition:: **Test your knowledge:**
 
     When **Leaf 4** receives the incoming routes from **Spine 2**, why can we not reach all the infrastructure IP addresses?
-  
+
 
 **LAB COMPLETE!**
 
 .. admonition:: **Helpful Commands:**
 
     During the lab you can use the different commands to verify connectivity and behaviour for validation and troubleshooting purposes:
-  
-   - show ip route 
-   - show ip route bgp 
+
+   - show ip route
+   - show ip route bgp
    - show ip bgp summary
-   - show ip bgp 
+   - show ip bgp
    - show ip bgp neighbors <neighbor address> advertised-routes
    - show ip bgp neighbors <neighbor address> received-routes
-

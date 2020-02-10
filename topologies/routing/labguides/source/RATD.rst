@@ -1,11 +1,14 @@
 Routing ATD Lab Guide
 =====================
 
-.. image:: images/RATDv7-Topo.png
+.. image:: images/RATD-Topo-Image.png
    :align: center
 
 1.	Deploy IS-IS as the Service Provider Underlay IGP
 ==========================================================
+
+   .. image:: images/RATD-Section1+2-Image.png
+      :align: center
   
    a.	IS-IS will be leveraged to carry underlay IPv4 prefix reachability information
   
@@ -21,7 +24,7 @@ Routing ATD Lab Guide
 
 2.	Establish MPLS transport label distribution via Segment-Routing
 =========================================================================
- 
+
    a.	Enable Segment-Routing extensions to IS-IS, leveraging MPLS data plane encapsulation
    
    b.	The Segment Routing Global Block (SRBG) label range should be 900,000 – 965,535 on all Service Provider nodes
@@ -54,10 +57,13 @@ Routing ATD Lab Guide
 
 3.	Prepare to offer VPN services to customers via MP-BGP EVPN control-plane
 ==================================================================================
+
+   .. image:: images/RATD-Section3-Image.png
+      :align: center
  
    a.	BGP Autonomous System 100 is leveraged by the Service Provider
  
-  b.	Do all nodes within the Service Provider need to run BGP? Why, or why not?
+   b.	Do all nodes within the Service Provider need to run BGP? Why, or why not?
   
    c.	Enable BGP EVPN peering within the service provider
   
@@ -77,6 +83,9 @@ Routing ATD Lab Guide
 
 4.	Prepare for Customer-1 Layer3 VPN Services
 ===================================================================================
+
+   .. image:: images/RATD-Section4+5+6+7-Image.png
+      :align: center
    
    a.	Customer-1 CE Nodes: EOS11, EOS13, EOS15
    
@@ -148,6 +157,9 @@ Routing ATD Lab Guide
 
 8.	Prepare for Customer-2 Layer2 VPN E-LAN Services
 =========================================================================
+
+   .. image:: images/RATD-Section8+9.png
+      :align: center
    
    a.	Customer-2 CE Nodes: EOS9, EOS10, EOS14
    
@@ -199,6 +211,9 @@ Routing ATD Lab Guide
 10. Configure Customer-3 E-LINE Service
 =========================================================================
 
+   .. image:: images/RATD-Section10-Image.png
+      :align: center
+
    a.	Customer-3 requires that EOS16 and EOS17 appear as directly Layer2 adjacent to each other
    
    b.	Configure a P2P E-LINE service enabling this functionality
@@ -209,6 +224,9 @@ Routing ATD Lab Guide
 
 11.	Prepare for Customer-4 Layer3 VPN Services
 =========================================================================
+
+   .. image:: images/RATD-Section11+12-Image.png
+      :align: center
   
    a.	Customer-4 CE Nodes: EOS18, EOS19
   
@@ -243,6 +261,9 @@ Routing ATD Lab Guide
 
 13.	Offer Centralized Services to L3VPN Customers
 =========================================================================
+
+   .. image:: images/RATD-Section13-Image.png
+      :align: center
   
    a.	EOS20 is providing a centralized service to L3VPN customers
    

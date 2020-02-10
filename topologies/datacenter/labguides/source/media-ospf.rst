@@ -8,7 +8,7 @@ Media OSPF Lab
 
 1. Log into the **Lab Access** jumpserver:
 
-   1. Type ``media-ospf`` or option ``16`` at the prompt. The script will configure the topology with the exception of **Leaf 4**.
+   1. Type ``media-ospf`` at the prompt. The script will configure the topology with the exception of **Leaf 4**.
 
    2. On **Spine 2**, verify OSPF operation (it should not be operating correctly) and you will see all the routes currently in the environment.
 
@@ -19,12 +19,12 @@ Media OSPF Lab
             show ip ospf database
             show ip route
 
-            
-            
+
+
       **Example:**
-            
-         .. code-block:: text  
-            
+
+         .. code-block:: text
+
             spine2#show ip ospf neighbor
             Neighbor ID     VRF      Pri State                  Dead Time   Address         Interface
             10.127.255.2    default  1   FULL/BDR               00:00:35    10.127.23.2     Ethernet1
@@ -123,9 +123,9 @@ Media OSPF Lab
               router-id 10.127.255.4
 
       **Example:**
-       
+
          .. code-block:: text
-            
+
             leaf4#configure
             leaf4(config)#int et 3
             leaf4(config-if-Et3)#no switchport
@@ -150,11 +150,11 @@ Media OSPF Lab
             router ospf 100
                network 10.127.0.0/16 area 0.0.0.0
                network 172.16.46.0/24 area 0.0.0.0
-               
+
       **Example:**
 
           .. code-block:: text
-         
+
             leaf4(config)#configure
             leaf4(config)#router ospf 100
             leaf4(config-router-ospf)#network 10.127.0.0/16 area 0.0.0.0
@@ -174,9 +174,9 @@ Media OSPF Lab
               passive interface ethernet4
 
       **Example:**
-       
+
          .. code-block:: text
-            
+
             leaf4(config)#router ospf 100
             leaf4(config-router-ospf)#passive-interface loopback 0
             leaf4(config-router-ospf)#passive-interface ethernet4
@@ -192,9 +192,9 @@ Media OSPF Lab
             show ip route
 
       **Example**
-       
+
          .. code-block:: text
-            
+
             leaf4(config-if-Et4)#show ip ospf neighbor
             Neighbor ID     VRF      Pri State                  Dead Time   Address         Interface
             10.127.255.3    default  1   FULL/DR                00:00:31    10.127.34.3     Ethernet3
@@ -283,13 +283,15 @@ Media OSPF Lab
 
          .. code-block:: text
 
+            enable
             ping 172.16.15.5
 
       **Example:**
-      
+
          .. code-block:: text
-            
-            host2#ping 172.16.15.5
+
+            host2> enable
+            host2# ping 172.16.15.5
             PING 172.16.15.5 (172.16.15.5) 72(100) bytes of data.
             80 bytes from 172.16.15.5: icmp_seq=1 ttl=60 time=99.5 ms
             80 bytes from 172.16.15.5: icmp_seq=2 ttl=60 time=102 ms
@@ -307,8 +309,8 @@ Media OSPF Lab
 .. admonition:: **Test your knowledge:**
 
     When inspecting the routing table on **Leaf 4**, why are all the infrastructure IP address in there? What are the positive and negative results of that?
-  
-  
+
+
 **LAB COMPLETE!**
 
 .. admonition:: **Helpful Commands:**

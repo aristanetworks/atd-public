@@ -10,7 +10,7 @@ Lastly, the lab will initiate a Network Rollback to revert the changes that were
 **If students have not completed previous lab modules or have reset their environment:**
 
 1. Log into the LabAccess jumpserver:
-    1. If starting from this lab module, type “cvp” at the prompt. The script will configure all devices in the lab so you can complete this lab.
+    1. If starting from this lab module, type ``cvp`` at the prompt. The script will configure all devices in the lab so you can complete this lab.
 
 .. note:: Did you know → the “cvp” script is composed of python code that uses the CloudVision Portal Rest API to automate the provisioning of CVP Configlets.
 

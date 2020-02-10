@@ -4,4 +4,4 @@ serviceUpdaters:
   - atdFiles
   - gitConfigletSync
   - cvpUpdater
-  # - atdModuleUpdater
+  - sslUpdater

@@ -1,0 +1,44 @@
+service routing protocols model multi-agent
+!
+hostname eos4
+!
+interface Ethernet1
+   description EOS9
+!
+interface Ethernet2
+   description EOS8
+   no switchport
+   ip address 10.4.8.4/24
+!
+interface Ethernet3
+   description Unused
+   shutdown
+   no switchport
+!
+interface Ethernet4
+   description Unused
+   shutdown
+   no switchport
+!
+interface Ethernet5
+   description EOS3
+   no switchport
+   ip address 10.3.4.4/24
+!
+interface Ethernet6
+   description EOS16
+   no switchport
+!
+interface Loopback0
+   ip address 4.4.4.4/32
+!
+interface Management1
+   ip address 192.168.0.13/24
+   no lldp transmit
+   no lldp receive
+!
+ip routing
+!
+management api http-commands
+   no shutdown
+   protocol http
