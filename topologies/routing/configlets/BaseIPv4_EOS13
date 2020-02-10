@@ -1,7 +1,4 @@
-service routing protocols model multi-agent
-!
 hostname eos13
-dns domain arista.lab
 !
 interface Ethernet1
    description EOS6
@@ -25,9 +22,3 @@ interface Management1
    ip address 192.168.0.22/24
    no lldp transmit
    no lldp receive
-!
-ip routing
-!
-management api http-commands
-   no shutdown
-   protocol http
