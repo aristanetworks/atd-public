@@ -6,7 +6,7 @@ topologies: [
     },
     { Topology_Name: 'Data Center - Latest',
       Topology_File: '/datacenter-latest/Datacenter.yml',
-      Topology_Access: 'admin',
+      Topology_Access: 'standard',
       Topology_Desc: 'Two Spines, Four Leafs. Focused on EOS fundamentals within the Data Center w/CV 2019'
     },
     { Topology_Name: 'Advanced Routing',
