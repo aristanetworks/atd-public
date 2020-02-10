@@ -17,3 +17,5 @@ patch panel
 !
 interface Ethernet6
    no switchport
+   no lldp transmit
+   no lldp receive

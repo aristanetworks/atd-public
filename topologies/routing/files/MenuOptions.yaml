@@ -29,7 +29,7 @@ options:
       description: "Complete all Sections (complete)"
   reset-ring:
   -   command: "/usr/local/bin/ConfigureTopology.py -t reset-ring"
-      description: "RING TOPOLOGY - Reset All Devices to Base IPv4 (reset-ring)"
+      description: "RING TOPOLOGY - Re-configure nodes for Base RING Topology (reset-ring)"
   sr-ring: 
   -   command: "/usr/local/bin/ConfigureTopology.py -t sr-ring"
       description: "RING TOPOLOGY - Start at Section 2: Segment-Routing (sr-ring)"
