@@ -38,8 +38,6 @@ Connect to the topology by clicking the link and click on **Lab Frontend**.
 .. image:: images/programmability_connecting_3.png
    :align: center
 
-.. note:: If any of the devices listed under **Lab Status** are *down*, please contact your Arista SE.
-
 You will be greeted with a screen like this:
 
 .. image:: images/programmability_connecting_4.png

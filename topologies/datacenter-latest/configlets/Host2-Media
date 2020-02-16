@@ -12,7 +12,6 @@ interface Ethernet3
 interface Ethernet4
    shutdown
 !
-ip route 0.0.0.0/0 172.16.46.4
 ip route 10.127.0.0/16 172.16.46.4
 ip route 172.16.0.0/16 172.16.46.4
 !

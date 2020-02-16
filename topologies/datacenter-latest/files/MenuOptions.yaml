@@ -41,7 +41,7 @@ media-options:
   -   command: "/usr/local/bin/ConfigureTopology.py -t media-mcast"
       description: "Media - Multicast (media-mcast)"
   media-reset:
-  -   command: "/usr/local/bin/ConfigureTopology.py && bash /home/arista/Broadcaster/pushHostMediaConfig.sh"
+  -   command: "/usr/local/bin/ConfigureTopology.py -t media-reset"
       description: "Media - Reset All Devices to Broadcaster Base (media-reset)"
 troubleshooting-labs:
   tshoot-intro:
@@ -180,6 +180,23 @@ labconfiglets:
       - "Host1-ATD"
     host2:
       - "Host2-ATD"
+  media-reset:
+    spine1:
+      - "media-spine1-IP-Intro-start"
+    spine2:
+      - "media-spine2-IP-Intro-start"
+    leaf1:
+      - "media-leaf1-IP-Intro-start"
+    leaf2:
+      - "media-leaf2-IP-Intro-start"
+    leaf3:
+      - "media-leaf3-IP-Intro-start"
+    leaf4:
+      - "media-leaf4-IP-Intro-start"
+    host1:
+      - "Host1-Media"
+    host2:
+      - "Host2-Media"
   media-intro:
     spine1:
       - "media-spine1-IP-Intro-start"

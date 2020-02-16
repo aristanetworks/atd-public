@@ -380,7 +380,7 @@ TASK 3: Rollback
 
 |
 
-4. We will not have a rollback change control created. The same change control process can be followed as before. For now, we can select 'Execute Change Control' to roll back the changes.
+4. We will now have a rollback change control created. The same change control process can be followed as before. For now, we can select 'Execute Change Control' to roll back the changes.
 
 |
 

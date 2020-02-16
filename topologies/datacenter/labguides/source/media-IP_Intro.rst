@@ -8,12 +8,12 @@ Media Intro to IP Lab
 
 1. Log into the **LabAccess** jumpserver:
 
-   1. Type ``media-intro`` or option ``14`` at the prompt. The script will configure the topology with the exception of **Leaf 4**. The main task is to configure the remaining device so there is connectivity between the two hosts
+   1. Type ``media-intro`` at the prompt. The script will configure the topology with the exception of **Leaf 4**. The main task is to configure the remaining device so there is connectivity between the two hosts
 
 
 2. Connect to **Leaf 4** from the menu:
 
-   1.  Connect to ``Leaf 4`` by selecting option ``6`` from the menu.  Once in the switch we are in the *Privileged EXEC* mode, denoted by the **#** preceding the device name.  This is similar to a admin user, in this mode can configure and view information on the switch. To configure devices we will need to go into the global configuration mode by typing *configure* at the prompt, in *Privileged EXEC (enable)* mode.  As you do the labs you will see this *configure* command being used to ensure that you are in the *config* mode.  One prompt that you may come across is the **>** this denotes that you are in EXEC mode, where you can do basic tests and view system information.  EXEC mode is the default mode for all switches.
+   1.  Connect to ``Leaf 4`` from the menu.  Once in the switch we are in the *Privileged EXEC* mode, denoted by the **#** preceding the device name.  This is similar to a admin user, in this mode can configure and view information on the switch. To configure devices we will need to go into the global configuration mode by typing *configure* at the prompt, in *Privileged EXEC (enable)* mode.  As you do the labs you will see this *configure* command being used to ensure that you are in the *config* mode.  One prompt that you may come across is the **>** this denotes that you are in EXEC mode, where you can do basic tests and view system information.  EXEC mode is the default mode for all switches.
 
 
 3.  Configure the proper ip address on the interfaces along with the appropriate static routes to ensure there is end-to-end connectivity for the two end hosts to reach each other.  All interfaces in this lab are designed as point-to-point  connections

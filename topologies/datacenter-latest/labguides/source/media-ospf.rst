@@ -8,7 +8,7 @@ Media OSPF Lab
 
 1. Log into the **Lab Access** jumpserver:
 
-   1. Type ``media-ospf`` or option ``16`` at the prompt. The script will configure the topology with the exception of **Leaf 4**.
+   1. Type ``media-ospf`` or option ``13`` at the prompt. The script will configure the topology with the exception of **Leaf 4**.
 
    2. On **Spine 2**, verify OSPF operation (it should not be operating correctly) and you will see all the routes currently in the environment.
 
@@ -170,8 +170,8 @@ Media OSPF Lab
 
             configure
             router ospf 100
-              passive interface loopback0
-              passive interface ethernet4
+              passive-interface loopback0
+              passive-interface ethernet4
 
       **Example:**
 
@@ -283,14 +283,12 @@ Media OSPF Lab
 
          .. code-block:: text
 
-            enable
             ping 172.16.15.5
 
       **Example:**
 
          .. code-block:: text
 
-            host2> enable
             host2# ping 172.16.15.5
             PING 172.16.15.5 (172.16.15.5) 72(100) bytes of data.
             80 bytes from 172.16.15.5: icmp_seq=1 ttl=60 time=99.5 ms

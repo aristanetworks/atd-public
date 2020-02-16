@@ -73,6 +73,9 @@ if 'datacenter' in topology:
 else:
   # If topo other than datacenter, set to False
   labcontrols2 = False
+
+# Catch for routing and datacenter-latest topos to sort login menu naturally
+if topology != 'datacenter':
   # Sort the list naturally
   veosinfo = sortVEOS(veosinfo)
 
@@ -158,6 +161,10 @@ Device Menu:            Lab Controls
         quit()
       elif ans!="" and counter==devicecount:
         #print("\n Not Valid Choice Try again")
+        break
+      # If entry is null, set 'ans' back to True to loop back to start.
+      elif ans == "":
+        ans = True
         break
 
     counter2 = 20

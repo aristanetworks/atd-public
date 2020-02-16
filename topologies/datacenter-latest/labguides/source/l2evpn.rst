@@ -42,7 +42,7 @@ L2 EVPN
         !
         interface Ethernet4
           channel-group 4 mode active
-          lacp rate fast
+          lacp timer fast
         !
         interface Ethernet5
           shutdown
@@ -64,7 +64,7 @@ L2 EVPN
           router-id 172.16.0.5
           maximum-paths 2 ecmp 2
           neighbor SPINE peer group
-          neighbor SPINE fall-over bfd
+          neighbor SPINE bfd
           neighbor SPINE remote-as 65001
           neighbor SPINE maximum-routes 12000
           neighbor 172.16.200.9 peer group SPINE
@@ -152,12 +152,8 @@ L2 EVPN
 
         .. code-block:: text
 
-            enable
             ping 172.16.112.202
         
-        .. note:: If the pings are failing, try selecting option **98** or type in **bash** 
-                  from the login menu, then type **./veos-patch.sh**          
-
    3. On **leaf1** and **leaf3**
 
         .. code-block:: text
