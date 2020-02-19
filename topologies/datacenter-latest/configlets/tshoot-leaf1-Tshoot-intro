@@ -1,28 +1,3 @@
-! Command: show running-config
-! device: leaf1 (vEOS, EOS-4.21.2F)
-!
-daemon TerminAttr
-   exec /usr/bin/TerminAttr -ingestgrpcurl=192.168.0.5:9910 -taillogs -ingestauth=key,1a38fe7df56879d685e51b6f0ff86327 -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent
-   no shutdown
-!
-transceiver qsfp default-mode 4x10G
-!
-hostname leaf1
-dns domain arista.lab
-!
-spanning-tree mode mstp
-!
-tacacs-server key 7 070E33455D1D18
-tacacs-server host 192.168.0.4
-!
-aaa authorization exec default local
-!
-no aaa root
-!
-username admin privilege 15 role network-admin secret 5 $1$5O85YVVn$HrXcfOivJEnISTMb6xrJc.
-username arista privilege 15 secret 5 $1$4VjIjfd1$XkUVulbNDESHFzcxDU.Tk1
-username arista ssh-key ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC6bJB3TkBEQZ9jNyO1kbdU0P20gZ1D72CvsPNZ5S4bbciBNTT/MHX8GwyLmM9k+ihaHK2JtRhWFcdsm9MojRgjAuzw4wn/6pa92y/93GvaYL//dOBXrHctZsX3PX7TZFL9VVBVA8aFp5iXxEM8uyKWhxnBo/D0eR25Jed4gHVHQMi6Hyh7eKRpE3E6kvRlSkhNikZ5EwdoM7lg2i6rjf7+o3G6isGtxliMZD98N6qWW79U6euS072qkK/q3dfgyHdd8a8MD5VLWbYR9ikhKwpXAmxcFn5aRllqXJ++QAW0NO78noI91ICRxpAuQSzgrntdwXdyFWiqyiD3AxK28qWZ arista@labaccess
-!
 vlan 12,34
 !
 interface Ethernet1
@@ -50,67 +25,8 @@ interface Ethernet5
    switchport trunk allowed vlan 12
    switchport mode trunk
 !
-interface Ethernet6
-!
-interface Ethernet7
-!
-interface Ethernet8
-!
-interface Ethernet9
-!
-interface Ethernet10
-!
-interface Ethernet11
-!
-interface Ethernet12
-!
-interface Ethernet13
-!
-interface Ethernet14
-!
-interface Ethernet15
-!
-interface Ethernet16
-!
-interface Ethernet17
-!
-interface Ethernet18
-!
-interface Ethernet19
-!
-interface Ethernet20
-!
-interface Ethernet21
-!
-interface Ethernet22
-!
-interface Ethernet23
-!
-interface Ethernet24
-!
-interface Ethernet25
-!
-interface Ethernet26
-!
-interface Ethernet27
-!
-interface Ethernet28
-!
-interface Ethernet29
-!
-interface Ethernet30
-!
-interface Ethernet31
-!
-interface Ethernet32
-!
 interface Loopback0
    ip address 172.16.0.3/32
-!
-interface Management1
-   ip address 192.168.0.14/24
-   no lldp transmit
-   no lldp receive
 !
 interface Vlan12
    ip address 172.16.112.1/24
@@ -118,9 +34,7 @@ interface Vlan12
 !
 ip virtual-router mac-address 00:1c:73:00:00:12
 !
-ip route 0.0.0.0/0 192.168.0.254
-!
-ip routing
+!ip route 0.0.0.0/0 192.168.0.254
 !
 router bgp 65001
    router-id 172.16.0.3
@@ -137,9 +51,3 @@ router ospf 1
    no passive-interface Ethernet2
    network 0.0.0.0/0 area 0.0.0.0
    max-lsa 12000
-!
-management api http-commands
-   protocol http
-   no shutdown
-!
-end
