@@ -92,7 +92,7 @@ interface Management1
    ip address 192.168.0.31/24
 !
 interface Vlan22
-   ip address 172.16.112.10/24
+   ip address 172.16.112.201/24
 !
 ip route 0.0.0.0/0 172.16.115.1
 !
