@@ -10,7 +10,7 @@ agent PhyEthtool shutdown
 transceiver qsfp default-mode 4x10G
 !
 hostname leaf2
-ip domain-name arista.lab
+dns domain arista.lab
 !
 spanning-tree mode mstp
 spanning-tree mst 0 priority 4096

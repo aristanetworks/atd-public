@@ -8,7 +8,7 @@ daemon TerminAttr
 transceiver qsfp default-mode 4x10G
 !
 hostname leaf1
-ip domain-name arista.lab
+dns domain arista.lab
 !
 spanning-tree mode mstp
 !
@@ -127,7 +127,7 @@ router bgp 65001
    maximum-paths 4 ecmp 4
    neighbor 172.16.200.1 remote-as 65000
    neighbor 172.16.200.1 send-community extended
-   neighbor 172.16.200.1 maximum-routes 12000 
+   neighbor 172.16.200.1 maximum-routes 12000
    network 172.16.0.3/32
    network 172.16.112.0/25
 !
