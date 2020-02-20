@@ -1,0 +1,18 @@
+{
+
+        "guacamoleVersion" : "*",
+        "name" : "ATDLogin",
+        "namespace" : "aristalogin",
+        "translations" : [ 
+		"translations/en.json"
+	 ],
+
+	 "css" : [
+                "css/login-override.css"
+         ],
+
+	 "resources" : {
+                "images/Arista-Logo-144.png" : "image/png"
+         }
+}
+

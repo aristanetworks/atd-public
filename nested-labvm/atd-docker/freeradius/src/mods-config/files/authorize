@@ -1,0 +1,10 @@
+
+# =================================================
+# User Accounts
+# =================================================
+
+arista	Cleartext-Password := "arista"
+	Arista-AVPair = "shell:cvp-roles=network-admin",
+	Arista-AVPair = "shell:roles=network-admin",
+	Arista-AVPair = "shell:priv-lvl=15",
+	Service-Type = NAS-Prompt-User

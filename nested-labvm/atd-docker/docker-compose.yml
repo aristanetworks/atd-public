@@ -1,0 +1,106 @@
+version: "3"
+services:
+  sslupdater:
+    container_name: atd-sslupdater
+    image: atddocker_sslupdater:1.0
+    restart: always
+    volumes:
+      - /etc/ACCESS_INFO.yaml:/etc/ACCESS_INFO.yaml:ro
+  cvpupdater:
+    container_name: atd-cvpupdater
+    image: atddocker_cvpupdater:1.0
+    restart: always
+    volumes:
+      - /etc/ACCESS_INFO.yaml:/etc/ACCESS_INFO.yaml:ro
+      - /home/arista/cvp:/home/arista/cvp:ro
+      - /tmp/atd:/tmp/atd:ro
+      - cvp_dir:/root/CVP:rw
+  gitconfigletsync:
+    container_name: atd-gitconfigletsync
+    image: atddocker_gitconfigletsync:1.0
+    restart: always
+    volumes:
+      - /etc/ACCESS_INFO.yaml:/etc/ACCESS_INFO.yaml:ro
+      - /tmp/atd:/tmp/atd:ro
+      - cvp_dir:/root/CVP:rw
+  labguides:
+    container_name: atd-labguides
+    image: atddocker_labguides:1.0
+    restart: always
+    volumes:
+      - /etc/ACCESS_INFO.yaml:/etc/ACCESS_INFO.yaml:ro
+      - /tmp/atd:/tmp/atd:ro
+      - atd_labguides:/root/labguides/web
+  freerad:
+    container_name: atd-freeradius
+    image: atddocker_freerad:1.0
+    restart: always
+    ports:
+      - "1812:1812/udp"
+      - "1813:1813/udp"
+  nginx:
+    container_name: atd-nginx
+    image: atddocker_nginx:1.0
+    restart: always
+    depends_on:
+      - http
+      - guacamole
+      - jenkins
+    ports:
+      - "80:80/tcp"
+    networks:
+      - atd_nginx
+  http:
+    container_name: atd-http
+    image: atddocker_http:1.0
+    restart: always
+    depends_on:
+      - labguides
+    volumes:
+      - atd_labguides:/var/www/html/labguides
+    networks:
+      - atd_nginx
+  desktop:
+    container_name: atd-desktop
+    image: atddocker_desktop:1.0
+    restart: always
+    privileged: true
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    networks:
+      - guac_net
+  guacd:
+    container_name: atd-guacd
+    image: atddocker_guacd:1.0
+    restart: always
+    networks:
+      - guac_net
+  guacamole:
+    container_name: atd-guacamole
+    image: atddocker_guacamole:1.0
+    restart: always
+    depends_on: 
+      - guacd
+    networks:
+      - guac_net
+      - atd_nginx
+    environment: 
+      - GUACD_HOSTNAME=atd-guacd
+  jenkins:
+    container_name: atd-jenkins
+    image: atddocker_jenkins:1.0
+    restart: always
+    environment:
+      - JENKINS_OPTS="--prefix=/jenkins"
+    networks:
+      - atd_nginx
+    volumes:
+      - jenkins_home:/var/jenkins_home
+networks:
+  guac_net:
+  atd_nginx:
+volumes:
+  atd_labguides:
+  atd_http:
+  jenkins_home:
+  cvp_dir:
