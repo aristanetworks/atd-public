@@ -53,7 +53,6 @@ media-options:
   media-reset:
   -   command: "/usr/local/bin/ConfigureTopology.py -t media-reset"
       description: "Media - Reset All Devices to Broadcaster Base (media-reset)"
-troubleshooting-labs:
 labconfiglets:
   mlag:
     spine1:
