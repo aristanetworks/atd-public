@@ -20,7 +20,7 @@ interface Ethernet10
 !
 banner motd
 ******************************
-*** Note Leaf Switch 3  is ***
+*** Note this switch is    ***
 *** not used for this lab. ***
 *** Please return to menu  ***
 ******************************
