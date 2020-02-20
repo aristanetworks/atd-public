@@ -27,12 +27,12 @@ options:
   tshoot-intro:
   -   command: "/usr/local/bin/ConfigureTopology.py -t tshoot-intro"
       description: "Troubleshooting Lab 1 (tshoot-intro)"
-  tshoot-sp:
-  -   command: "/usr/local/bin/ConfigureTopology.py -t tshoot-sp"
-      description: "Troubleshooting Lab 2 (tshoot-sp)"
-  tshoot-automation:
-  -   command: "/usr/local/bin/ConfigureTopology.py -t tshoot-automation"
-      description: "Troubleshooting Lab 3 (tshoot-automation)"
+#  tshoot-sp:
+#  -   command: "/usr/local/bin/ConfigureTopology.py -t tshoot-sp"
+#      description: "Troubleshooting Lab 2 (tshoot-sp)"
+#  tshoot-automation:
+#  -   command: "/usr/local/bin/ConfigureTopology.py -t tshoot-automation"
+#      description: "Troubleshooting Lab 3 (tshoot-automation)"
 
 media-options:
   media-intro:
@@ -299,29 +299,29 @@ labconfiglets:
       - "tshoot-host1-Tshoot-intro"
     host2:
       - "tshoot-default"
-  tshoot-sp:
-    spine1:
-      - "tshoot-spine1-Tshoot-sp"
-    spine2:
-      - "tshoot-spine2-Tshoot-sp"
-    leaf1:
-      - "tshoot-leaf1-Tshoot-sp"
-    leaf2:
-      - "tshoot-leaf2-Tshoot-sp"
-    leaf3:
-      - "tshoot-leaf3-Tshoot-lab"
-    leaf4:
-      - "tshoot-leaf4-Tshoot-lab"
-  tshoot-automation:
-    spine1:
-      - "tshoot-spine1-Tshoot-automation"
-    spine2:
-      - "tshoot-spine2-Tshoot-automation"
-    leaf1:
-      - "tshoot-leaf1-Tshoot-automation"
-    leaf2:
-      - "tshoot-leaf2-Tshoot-automation"
-    leaf3:
-      - "tshoot-leaf3-Tshoot-automation"
-    leaf4:
-      - "tshoot-leaf4-Tshoot-automation"
+#  tshoot-sp:
+#    spine1:
+#      - "tshoot-spine1-Tshoot-sp"
+#    spine2:
+#      - "tshoot-spine2-Tshoot-sp"
+#    leaf1:
+#      - "tshoot-leaf1-Tshoot-sp"
+#    leaf2:
+#      - "tshoot-leaf2-Tshoot-sp"
+#   leaf3:
+#      - "tshoot-leaf3-Tshoot-lab"
+#    leaf4:
+#      - "tshoot-leaf4-Tshoot-lab"
+#  tshoot-automation:
+#    spine1:
+#      - "tshoot-spine1-Tshoot-automation"
+#    spine2:
+#      - "tshoot-spine2-Tshoot-automation"
+#    leaf1:
+#      - "tshoot-leaf1-Tshoot-automation"
+#    leaf2:
+#      - "tshoot-leaf2-Tshoot-automation"
+#    leaf3:
+#     - "tshoot-leaf3-Tshoot-automation"
+#    leaf4:
+#      - "tshoot-leaf4-Tshoot-automation"
