@@ -50,7 +50,7 @@ RUN bash scripts/install_code.sh
 
 RUN yum install -y python3 git
 
-RUN pip3 install ansible
+RUN pip3 install ansible rcvpapi cvprac pyeapi jsonrpclib
 
 # File setups
 
