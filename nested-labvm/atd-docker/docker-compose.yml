@@ -4,12 +4,16 @@ services:
     container_name: atd-sslupdater
     image: atddocker_sslupdater:1.0
     restart: always
+    environment:
+      - PYTHONUNBUFFERED=1
     volumes:
       - /etc/ACCESS_INFO.yaml:/etc/ACCESS_INFO.yaml:ro
   cvpupdater:
     container_name: atd-cvpupdater
     image: atddocker_cvpupdater:1.0
     restart: always
+    environment:
+      - PYTHONUNBUFFERED=1
     volumes:
       - /etc/ACCESS_INFO.yaml:/etc/ACCESS_INFO.yaml:ro
       - /home/arista/cvp:/home/arista/cvp:ro
@@ -19,14 +23,28 @@ services:
     container_name: atd-gitconfigletsync
     image: atddocker_gitconfigletsync:1.0
     restart: always
+    environment:
+      - PYTHONUNBUFFERED=1
     volumes:
       - /etc/ACCESS_INFO.yaml:/etc/ACCESS_INFO.yaml:ro
       - /tmp/atd:/tmp/atd:ro
       - cvp_dir:/root/CVP:rw
+  kvmbuilder:
+    container_name: atd-kvmbuilder
+    image: atddocker_kvmbuilder:1.0
+    restart: on-failure
+    environment:
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - /etc/ACCESS_INFO.yaml:/etc/ACCESS_INFO.yaml:ro
+      - /tmp/atd:/tmp/atd:ro
+      - /home/arista/kvm_scripts:/root/kvm:rw
   labguides:
     container_name: atd-labguides
     image: atddocker_labguides:1.0
     restart: always
+    environment:
+      - PYTHONUNBUFFERED=1
     volumes:
       - /etc/ACCESS_INFO.yaml:/etc/ACCESS_INFO.yaml:ro
       - /tmp/atd:/tmp/atd:ro

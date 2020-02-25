@@ -3,6 +3,7 @@
 cd /home/arista/atd-docker
 
 docker build -t c7systemd:1.0 c7systemd/.
+docker build -t atddocker_kvmbuilder:1.0 kvmbuilder/.
 docker build -t atddocker_desktop:1.0 desktop/.
 docker build -t atddocker_cvpupdater:1.0 cvpUpdater/.
 docker build -t atddocker_gitconfigletsync:1.0 gitConfigletSync/.
