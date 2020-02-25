@@ -139,7 +139,7 @@ Device Menu:            Lab Controls
       sys.stdout.write("\n")
       sys.stdout.write("\n")
 
-    print "  97. Screen (screen)"
+    print "  97. Screen (screen) - Opens a screen session to each of the hosts"
     print "  98. Shell (bash)"
     print "  99. Quit (quit/exit)"
     print ""
