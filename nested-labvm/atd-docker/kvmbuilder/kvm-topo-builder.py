@@ -4,6 +4,7 @@ from ruamel.yaml import YAML
 from os.path import isdir, exists
 from os import mkdir
 from time import sleep
+import argparse
 import xml.etree.ElementTree as ET
 
 FILE_TOPO = '/etc/ACCESS_INFO.yaml'
@@ -119,7 +120,7 @@ def pS(mstat,mtype):
     mmes = "\t" + mtype
     print("[{0}] {1}".format(mstat,mmes.expandtabs(7 - len(mstat))))
 
-def main():
+def main(uargs):
     global DATA_OUTPUT
     while True:
         if exists(FILE_TOPO):
@@ -214,5 +215,10 @@ def main():
     
 if __name__ == '__main__':
     print('Starting KMV Builder')
-    main()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-t", "--tag", type=str, help="Tag name for topology", default=None, required=False)
+    parser.add_argument("-f", "--file", type=str, help="Custom Topology build file", default=None, required=False)
+    args = parser.parse_args()
+    #TODO add in logic to load custom build file. Default to tag's build file
+    main(args)
     print('Complete!')

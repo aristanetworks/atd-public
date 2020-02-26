@@ -1,5 +1,9 @@
 FROM python:3.8.1
 
+ARG UID=1000
+
+RUN useradd -u $UID arista
+
 RUN pip install \
     sphinx \
     sphinx-bootstrap-theme \
@@ -13,7 +17,9 @@ RUN apt install -y \
     texlive-latex-extra \
     latexmk
 
-WORKDIR /root
+USER arista
+
+WORKDIR /home/arista
 
 COPY build_labguides.sh .
 

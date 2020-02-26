@@ -20,7 +20,9 @@ FROM cbuilder
 
 RUN yum update -y
 
-RUN useradd arista 
+ARG UID=1000
+
+RUN useradd -u $UID arista 
 
 RUN mkdir scripts
 
@@ -54,6 +56,8 @@ RUN pip3 install ansible rcvpapi cvprac pyeapi jsonrpclib
 
 # File setups
 
+USER arista
+
 WORKDIR /home/arista
 
 RUN mkdir -p .local/share/keyrings
@@ -74,7 +78,7 @@ RUN mkdir -p Desktop/labfiles/lab4 \
 
 COPY arista/labfiles/. Desktop/labfiles/lab4/
 
-RUN chown -R arista:arista Desktop .local/ .Xclients
+# RUN chown -R arista:arista Desktop .local/ .Xclients
 
 RUN chmod -R +x Desktop/*.desktop
 

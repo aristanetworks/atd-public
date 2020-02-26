@@ -1,10 +1,16 @@
 FROM python:3.8.1
 
+ARG UID=1000
+
+RUN useradd -u $UID arista
+
 RUN pip install rcvpapi \
     cvprac \
     Pyyaml
 
-WORKDIR /root
+USER arista
+
+WORKDIR /home/arista
 
 COPY gitConfigletSync.py .
 

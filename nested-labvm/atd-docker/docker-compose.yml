@@ -38,7 +38,7 @@ services:
     volumes:
       - /etc/ACCESS_INFO.yaml:/etc/ACCESS_INFO.yaml:ro
       - /tmp/atd:/tmp/atd:ro
-      - /home/arista/kvm_scripts:/root/kvm:rw
+      - /home/arista/kvm_scripts:/home/arista/kvm:rw
   labguides:
     container_name: atd-labguides
     image: atddocker_labguides:1.0
@@ -48,7 +48,7 @@ services:
     volumes:
       - /etc/ACCESS_INFO.yaml:/etc/ACCESS_INFO.yaml:ro
       - /tmp/atd:/tmp/atd:ro
-      - atd_labguides:/root/labguides/web
+      - atd_labguides:/home/arista/labguides/web
   freerad:
     container_name: atd-freeradius
     image: atddocker_freerad:1.0

@@ -1,14 +1,20 @@
 FROM python:3.8.1
 
+ARG UID=1000
+
+RUN useradd -u $UID arista
+
 RUN pip install rcvpapi \
     ruamel.yaml
 
-RUN mkdir -p /root/CVP
+USER arista
 
-WORKDIR /root
+RUN mkdir -p /home/arista/CVP
+
+WORKDIR /home/arista
 
 COPY cvpUpdater.py .
 
-VOLUME ['/root/CVP']
+VOLUME ['/home/arista/CVP']
 
 CMD ["python", "cvpUpdater.py"]
