@@ -11,8 +11,8 @@ FILE_TOPO = '/etc/ACCESS_INFO.yaml'
 REPO_PATH = '/tmp/atd/'
 REPO_TOPO = REPO_PATH + 'topologies/'
 AVAIL_TOPO = REPO_TOPO + 'available_topo.yaml'
-DATA_OUTPUT = '/root/kvm/'
-BASE_XML_VEOS = '/root/base.xml'
+DATA_OUTPUT = '~/kvm/'
+BASE_XML_VEOS = '~/base.xml'
 
 OVS_BRIDGES = []
 VEOS_NODES = {}

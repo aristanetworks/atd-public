@@ -18,7 +18,7 @@ services:
       - /etc/ACCESS_INFO.yaml:/etc/ACCESS_INFO.yaml:ro
       - /home/arista/cvp:/home/arista/cvp:ro
       - /tmp/atd:/tmp/atd:ro
-      - cvp_dir:/root/CVP:rw
+      - cvp_dir:/home/arista/CVP_DATA:rw
   gitconfigletsync:
     container_name: atd-gitconfigletsync
     image: atddocker_gitconfigletsync:1.0
@@ -28,7 +28,7 @@ services:
     volumes:
       - /etc/ACCESS_INFO.yaml:/etc/ACCESS_INFO.yaml:ro
       - /tmp/atd:/tmp/atd:ro
-      - cvp_dir:/root/CVP:rw
+      - cvp_dir:/home/arista/CVP_DATA:rw
   kvmbuilder:
     container_name: atd-kvmbuilder
     image: atddocker_kvmbuilder:1.0

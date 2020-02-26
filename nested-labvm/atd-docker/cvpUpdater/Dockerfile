@@ -9,12 +9,12 @@ RUN pip install rcvpapi \
 
 USER arista
 
-RUN mkdir -p /home/arista/CVP
+RUN mkdir -p /home/arista/CVP_DATA
 
 WORKDIR /home/arista
 
 COPY cvpUpdater.py .
 
-VOLUME ['/home/arista/CVP']
+VOLUME ["/home/arista/CVP_DATA"]
 
 CMD ["python", "cvpUpdater.py"]
