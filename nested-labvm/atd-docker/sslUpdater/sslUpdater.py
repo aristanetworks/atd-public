@@ -3,12 +3,11 @@
 from rcvpapi.rcvpapi import *
 from ruamel.yaml import YAML
 from os import path
-import requests, json, syslog, time
+import requests, json, time
 import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 # Globals
-PDEBUG = True
 TOPO_FILE = '/etc/ACCESS_INFO.yaml'
 CERT_DAYS = 14
 sleep_delay = 30
@@ -40,9 +39,7 @@ def pS(mstat,mtype):
     mtype = Message to be sent/displayed (required)
     """
     mmes = "\t" + mtype
-    syslog.syslog("[{0}] {1}".format(mstat,mmes.expandtabs(7 - len(mstat))))
-    if PDEBUG:
-        print("[{0}] {1}".format(mstat,mmes.expandtabs(7 - len(mstat))))
+    print("[{0}] {1}".format(mstat,mmes.expandtabs(7 - len(mstat))))
 
 
 def main():
@@ -84,8 +81,6 @@ def main():
             pS("INFO","Cert is still valid and not expiring within the next {} days".format(CERT_DAYS))
 
 if __name__ == '__main__':
-    # Open Syslog
-    syslog.openlog(logoption=syslog.LOG_PID)
     pS("OK","Starting...")
     main()
     while True:

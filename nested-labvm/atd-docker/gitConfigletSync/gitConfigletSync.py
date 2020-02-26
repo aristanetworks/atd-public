@@ -5,7 +5,6 @@ import os
 import time
 import shutil
 import yaml
-import syslog
 from rcvpapi.rcvpapi import *
 import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
@@ -41,7 +40,6 @@ def pS(mstat,mtype):
     Function to send output from service file to Syslog
     """
     mmes = "\t" + mtype
-    syslog.syslog("[{0}] {1}".format(mstat,mmes.expandtabs(7 - len(mstat))))
     print("[{0}] {1}".format(mstat,mmes.expandtabs(7 - len(mstat))))
 
 

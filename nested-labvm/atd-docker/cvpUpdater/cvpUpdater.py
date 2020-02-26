@@ -3,7 +3,7 @@
 
 from ruamel.yaml import YAML
 from rcvpapi.rcvpapi import *
-import requests, json, syslog
+import requests, json
 from os import path, listdir, system
 from time import sleep
 import urllib3
@@ -16,7 +16,6 @@ sleep_delay = 30
 
 # Temporary file_path location for CVP Custom info
 cvp_file = '/home/arista/cvp/cvp_info.yaml'
-pDEBUG = True
 
 # ==================================
 # Start of Global Functions
@@ -77,9 +76,7 @@ def pS(mstat,mtype):
     mtype = Message to be sent/displayed (required)
     """
     mmes = "\t" + mtype
-    syslog.syslog("[{0}] {1}".format(mstat,mmes.expandtabs(7 - len(mstat))))
-    if pDEBUG:
-        print("[{0}] {1}".format(mstat,mmes.expandtabs(7 - len(mstat))))
+    print("[{0}] {1}".format(mstat,mmes.expandtabs(7 - len(mstat))))
 
 def main():
     """
@@ -269,7 +266,6 @@ def main():
 
 if __name__ == '__main__':
     # Open Syslog
-    syslog.openlog(logoption=syslog.LOG_PID)
     pS("OK","Starting...")
 
     if not path.exists(CVP_CONFIG_FIILE):

@@ -26,6 +26,7 @@ class vNODE():
         self.ip = node_ip
         self.intfs = {}
         self.portMappings(node_neighbors)
+
     def portMappings(self,node_neighbors):
         """
         Function to create port mappings
@@ -37,6 +38,7 @@ class vNODE():
             _bridgeCheck = checkBridge(self.name_short + lport['code'], rneigh['code'] + rport['code'])
             if _bridgeCheck['status']:
                 _brName = self.name_short + lport['code'] + '-' + rneigh['code'] + rport['code']
+                pS("OK","Bridge {0} will be created".format(_brName))
                 OVS_BRIDGES.append(_brName)
             else:
                 _brName = _bridgeCheck['name']
@@ -44,7 +46,6 @@ class vNODE():
                 'bridge': _brName,
                 'port': lport['code']
             }
-
 
 
 def checkBridge(dev1, dev2):
@@ -110,6 +111,13 @@ def createMac(dev_id):
         return('c{0}'.format(dev_id - 10))
     elif dev_id >=20 and dev_id < 30:
         return('d{0}'.format(dev_id - 20))
+
+def pS(mstat,mtype):
+    """
+    Function to send output from service file to Syslog
+    """
+    mmes = "\t" + mtype
+    print("[{0}] {1}".format(mstat,mmes.expandtabs(7 - len(mstat))))
 
 def main():
     global DATA_OUTPUT
@@ -196,6 +204,7 @@ def main():
         KOUT_LINES.append("sudo virsh define {0}.xml".format(vdev))
         KOUT_LINES.append("sudo virsh start {0}".format(vdev))
         KOUT_LINES.append("sudo virsh autostart {0}".format(vdev))
+        pS("OK", "Created Virsh commands for {0}".format(vdev))
         # Increment the node counter
         node_counter += 1
     with open(DATA_OUTPUT + TOPO_TAG + '-kvm-create.sh', 'w') as kout:
@@ -203,7 +212,6 @@ def main():
             kout.write("{0}\n".format(kli))
     
     
-
 if __name__ == '__main__':
     print('Starting KMV Builder')
     main()
