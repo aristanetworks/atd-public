@@ -22,7 +22,7 @@ RUN yum update -y
 
 ARG UID=1000
 
-RUN useradd -u $UID arista 
+RUN useradd -m -u $UID arista 
 
 RUN mkdir scripts
 
