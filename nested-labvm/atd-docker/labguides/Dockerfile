@@ -17,12 +17,14 @@ RUN apt install -y \
     texlive-latex-extra \
     latexmk
 
-USER arista
-
 WORKDIR /home/arista
 
 COPY build_labguides.sh .
 
 RUN mkdir -p labguides/src && mkdir -p labguides/web
+
+RUN chown -R arista:arista .
+
+USER arista
 
 CMD ["bash", "build_labguides.sh"]

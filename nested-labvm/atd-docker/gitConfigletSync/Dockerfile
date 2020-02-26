@@ -8,10 +8,12 @@ RUN pip install rcvpapi \
     cvprac \
     Pyyaml
 
-USER arista
-
 WORKDIR /home/arista
 
 COPY gitConfigletSync.py .
+
+RUN chown -R arista:arista .
+
+USER arista
 
 CMD ["python", "gitConfigletSync.py"]

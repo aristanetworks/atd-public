@@ -7,13 +7,15 @@ RUN useradd -m -u $UID arista
 RUN pip install rcvpapi \
     ruamel.yaml
 
-USER arista
-
 RUN mkdir -p /home/arista/CVP_DATA
 
 WORKDIR /home/arista
 
 COPY cvpUpdater.py .
+
+RUN chown -R arista:arista .
+
+USER arista
 
 VOLUME ["/home/arista/CVP_DATA"]
 

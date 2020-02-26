@@ -6,8 +6,6 @@ RUN useradd -m -u $UID arista
 
 RUN pip install ruamel.yaml
 
-USER arista
-
 WORKDIR /home/arista
 
 RUN mkdir /home/arista/kvm
@@ -15,5 +13,9 @@ RUN mkdir /home/arista/kvm
 COPY kvm-topo-builder.py .
 
 COPY kvm_xml/. .
+
+RUN chown -R arista:arista .
+
+USER arista
 
 CMD ["python", "kvm-topo-builder.py"]

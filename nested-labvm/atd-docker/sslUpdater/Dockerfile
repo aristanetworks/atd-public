@@ -7,10 +7,12 @@ RUN useradd -m -u $UID arista
 RUN pip install rcvpapi \
     ruamel.yaml
 
-USER arista
-
 WORKDIR /home/arista
 
 COPY sslUpdater.py .
+
+RUN chown -R arista:arista .
+
+USER arista
 
 CMD ["python", "sslUpdater.py"]

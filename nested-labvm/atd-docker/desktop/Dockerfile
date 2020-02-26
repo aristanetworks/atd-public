@@ -56,15 +56,15 @@ RUN pip3 install ansible rcvpapi cvprac pyeapi jsonrpclib
 
 # File setups
 
-USER arista
 
 WORKDIR /home/arista
 
-RUN mkdir -p .local/share/keyrings
 
 COPY arista/.Xclients .Xclients
 
 RUN chmod a+x .Xclients
+
+RUN mkdir -p .local/share/keyrings
 
 COPY arista/local/. .local/share/keyrings/
 
@@ -78,11 +78,13 @@ RUN mkdir -p Desktop/labfiles/lab4 \
 
 COPY arista/labfiles/. Desktop/labfiles/lab4/
 
-# RUN chown -R arista:arista Desktop .local/ .Xclients
+RUN chown -R arista:arista .
 
 RUN chmod -R +x Desktop/*.desktop
 
 RUN echo "arista" | passwd --stdin "arista"
+
+USER arista
 
 EXPOSE 3389
 
