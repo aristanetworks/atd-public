@@ -10,7 +10,7 @@ import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 topo_file = '/etc/ACCESS_INFO.yaml'
-CVP_CONFIG_FIILE = '/root/CVP/.cvpState.txt'
+CVP_CONFIG_FIILE = path.expanduser('~/CVP_DATA/.cvpState.txt')
 CVP_CONTAINERS = []
 sleep_delay = 30
 

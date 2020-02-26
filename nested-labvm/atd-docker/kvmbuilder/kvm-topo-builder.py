@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from ruamel.yaml import YAML
-from os.path import isdir, exists
+from os.path import isdir, exists, expanduser
 from os import mkdir
 from time import sleep
 import argparse
@@ -11,8 +11,8 @@ FILE_TOPO = '/etc/ACCESS_INFO.yaml'
 REPO_PATH = '/tmp/atd/'
 REPO_TOPO = REPO_PATH + 'topologies/'
 AVAIL_TOPO = REPO_TOPO + 'available_topo.yaml'
-DATA_OUTPUT = '~/kvm/'
-BASE_XML_VEOS = '~/base.xml'
+DATA_OUTPUT = expanduser('~/kvm/')
+BASE_XML_VEOS = expanduser('~/base.xml')
 
 OVS_BRIDGES = []
 VEOS_NODES = {}

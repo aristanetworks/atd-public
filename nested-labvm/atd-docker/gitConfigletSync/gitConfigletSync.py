@@ -10,7 +10,7 @@ import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 ACCESS = '/etc/ACCESS_INFO.yaml'
-CVP_CONFIG_FIILE = '/root/CVP/.cvpState.txt'
+CVP_CONFIG_FIILE = os.path.expanduser('~/CVP_DATA/.cvpState.txt')
 sleep_delay = 30
 
 # Function to sync configlet to CVP
