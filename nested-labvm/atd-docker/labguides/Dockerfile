@@ -1,8 +1,8 @@
 FROM python:3.8.1
 
-ARG UID=1000
+# ARG UID=1000
 
-RUN useradd -m -u $UID arista
+# RUN useradd -m -u $UID arista
 
 RUN pip install \
     sphinx \
@@ -17,14 +17,14 @@ RUN apt install -y \
     texlive-latex-extra \
     latexmk
 
-WORKDIR /home/arista
+WORKDIR /root
 
 COPY build_labguides.sh .
 
 RUN mkdir -p labguides/src && mkdir -p labguides/web
 
-RUN chown -R arista:arista .
+# RUN chown -R arista:arista .
 
-USER arista
+# USER arista
 
 CMD ["bash", "build_labguides.sh"]
