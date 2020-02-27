@@ -125,7 +125,20 @@ def main():
             sleep(sleep_delay)
             cvp_clnt.getDeviceInventory()
             tmp_device_count = len(cvp_clnt.inventory)
-            
+        pS("OK", "All {0} out of {1} nodes have registered to CVP.".format(tmp_device_count, len(NODES)))
+        pS("INFO", "Checking to see if all nodes are reachable")
+        # Make sure all nodes are up and reachable
+        while True:
+            for vnode in cvp_clnt.inventory:
+                vresponse = cvp_clnt.ipConnectivityTest(cvp_clnt.inventory[vnode]['ipAddress'])
+                if 'data' in vresponse:
+                    if vresponse['data'] == 'success':
+                        pS("OK", "{0} is up and reachable at {1}".format(vnode, cvp_clnt.inventory[vnode]['ipAddress']))
+                        break
+                else:
+                    pS("INFO", "{0} is NOT reachable at {1}. Sleeping {2} seconds.".format(vnode, cvp_clnt.inventory[vnode]['ipAddress'], sleep_delay))
+                    sleep(sleep_delay)
+
         # ==========================================
         # Add configlets into CVP
         # ==========================================
