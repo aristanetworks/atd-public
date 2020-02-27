@@ -128,8 +128,8 @@ def main():
         pS("OK", "All {0} out of {1} nodes have registered to CVP.".format(tmp_device_count, len(NODES)))
         pS("INFO", "Checking to see if all nodes are reachable")
         # Make sure all nodes are up and reachable
-        while True:
-            for vnode in cvp_clnt.inventory:
+        for vnode in cvp_clnt.inventory:
+            while True:
                 vresponse = cvp_clnt.ipConnectivityTest(cvp_clnt.inventory[vnode]['ipAddress'])
                 if 'data' in vresponse:
                     if vresponse['data'] == 'success':
