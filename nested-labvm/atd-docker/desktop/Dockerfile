@@ -84,7 +84,7 @@ RUN chmod -R +x Desktop/*.desktop
 
 RUN echo "arista" | passwd --stdin "arista"
 
-USER arista
+# USER arista
 
 EXPOSE 3389
 
