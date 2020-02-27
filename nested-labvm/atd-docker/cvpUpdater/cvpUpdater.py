@@ -11,6 +11,8 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 topo_file = '/etc/ACCESS_INFO.yaml'
 CVP_CONFIG_FIILE = path.expanduser('~/CVP_DATA/.cvpState.txt')
+REPO_PATH = '/tmp/atd/'
+REPO_TOPO = REPO_PATH + 'topologies/'
 CVP_CONTAINERS = []
 sleep_delay = 30
 
@@ -89,7 +91,6 @@ def main():
         else:
             pS("ERROR", "ACCESS_INFO file is not available...Waiting for {0} seconds".format(sleep_delay))
             sleep(sleep_delay)
-
     atd_yaml = getTopoInfo(topo_file)
     cvp_yaml = getTopoInfo(cvp_file)
     eos_cnt_map = eosContainerMapper(cvp_yaml['cvp_info']['containers'])
@@ -104,7 +105,27 @@ def main():
                 except:
                     pS("ERROR","CVP is currently unavailable....Retrying in {0} seconds.".format(sleep_delay))
                     sleep(sleep_delay)
+    
+    # Check to see if all nodes have connected to CVP before proceeding
+    while True:
+        if path.exists(REPO_TOPO + atd_yaml['topology'] + '/topo_build.yml'):
+            break
+        else:
+            sleep(sleep_delay)
+
+    FILE_BUILD = YAML().load(open(REPO_TOPO + atd_yaml['topology'] + '/topo_build.yml', 'r'))
+    NODES = FILE_BUILD['nodes']
     if cvp_clnt:
+        # ==========================================
+        # Check to see how many nodes have connected
+        # ==========================================
+        tmp_device_count = len(cvp_clnt.inventory)
+        while len(NODES) > tmp_device_count:
+            pS("INFO", "Only {0} out of {1} nodes have registered to CVP. Sleeping {2} seconds.".format(tmp_device_count, len(NODES), sleep_delay))
+            sleep(sleep_delay)
+            cvp_clnt.getDeviceInventory()
+            tmp_device_count = len(cvp_clnt.inventory)
+            
         # ==========================================
         # Add configlets into CVP
         # ==========================================
