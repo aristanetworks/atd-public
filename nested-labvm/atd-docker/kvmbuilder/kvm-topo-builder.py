@@ -92,7 +92,7 @@ def createOVS(topo_tag):
     with open(DATA_OUTPUT + topo_tag + '-ovs-create.sh', 'w') as dout:
         dout.write("#!/bin/bash\n\n")
         for br in OVS_BRIDGES:
-            dout.write("sudo ovs-vsctl addr-br {0}\n".format(br))
+            dout.write("sudo ovs-vsctl add-br {0}\n".format(br))
             dout.write("sudo ovs-vsctl set bridge {0} other-config:forward-bpdu=true\n".format(br))
 
 def destinationValidate(topo_tag):
