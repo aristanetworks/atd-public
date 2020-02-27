@@ -138,7 +138,7 @@ def main():
                 else:
                     pS("INFO", "{0} is NOT reachable at {1}. Sleeping {2} seconds.".format(vnode, cvp_clnt.inventory[vnode]['ipAddress'], sleep_delay))
                     sleep(sleep_delay)
-
+        pS("OK", "All Devices are registered and reachable.")
         # ==========================================
         # Add configlets into CVP
         # ==========================================
