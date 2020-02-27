@@ -172,7 +172,7 @@ def main(uargs):
         # Starting interface section
         tmp_int = ET.SubElement(xdev, 'interface', attrib={'type': 'bridge'})
         ET.SubElement(tmp_int, 'source', attrib={'bridge': 'vmgmt'})
-        ET.SubElement(tmp_int, 'mac', attrit={'address': '00:1c:73:{0}:c6:01'.format(createMac(node_counter))})
+        ET.SubElement(tmp_int, 'mac', attrib={'address': '00:1c:73:{0}:c6:01'.format(createMac(node_counter))})
         ET.SubElement(tmp_int, 'target', attrib={'dev': vdev})
         ET.SubElement(tmp_int, 'model', attrib={'type': 'virtio'})
         ET.SubElement(tmp_int, 'address', attrib={
@@ -189,7 +189,8 @@ def main(uargs):
             tmp_int = ET.SubElement(xdev, 'interface', attrib={'type': 'bridge'})
             ET.SubElement(tmp_int, 'source', attrib={'bridge': tmp_dev['bridge']})
             ET.SubElement(tmp_int, 'target', attrib={'dev': '{0}x{1}'.format(vdev, tmp_dev['port'].replace('X',''))})
-            ET.SubElement(tmp_int, 'model', attrib={'type': 'openvswitch'})
+            ET.SubElement(tmp_int, 'model', attrib={'type': 'virtio'})
+            ET.SubElement(tmp_int, 'virtualport', attrib={'type': 'openvswitch'})
             ET.SubElement(tmp_int, 'address', attrib={
                 'type': 'pci',
                 'domain': '0x0000',
