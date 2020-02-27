@@ -38,7 +38,7 @@ services:
     volumes:
       - /etc/ACCESS_INFO.yaml:/etc/ACCESS_INFO.yaml:ro
       - /tmp/atd:/tmp/atd:ro
-      - /home/arista/kvm_scripts:/home/arista/kvm:rw
+      - /home/arista/KVM_scripts:/home/arista/kvm:rw
   labguides:
     container_name: atd-labguides
     image: atddocker_labguides:1.0
@@ -85,6 +85,7 @@ services:
     privileged: true
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
+      - /home/arista/GUI_Desktop:/home/arista/Desktop/Files:rw
     networks:
       - guac_net
   guacd:
