@@ -188,7 +188,7 @@ def main(uargs):
             tmp_dev = VEOS_NODES[vdev].intfs[vintf]
             tmp_int = ET.SubElement(xdev, 'interface', attrib={'type': 'bridge'})
             ET.SubElement(tmp_int, 'source', attrib={'bridge': tmp_dev['bridge']})
-            ET.SubElement(tmp_int, 'target', attrib={'dev': '{0}-{1}'.format(vdev, tmp_dev['port'].replace('X',''))})
+            ET.SubElement(tmp_int, 'target', attrib={'dev': '{0}x{1}'.format(vdev, tmp_dev['port'].replace('X',''))})
             ET.SubElement(tmp_int, 'model', attrib={'type': 'openvswitch'})
             ET.SubElement(tmp_int, 'address', attrib={
                 'type': 'pci',
