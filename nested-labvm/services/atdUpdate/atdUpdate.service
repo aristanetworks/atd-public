@@ -1,0 +1,14 @@
+[Unit]
+Description=Automatically clones the ATD Public repo to a specified branch
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/atdUpdate.sh
+TimeoutStartSec=infinity
+User=root
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
