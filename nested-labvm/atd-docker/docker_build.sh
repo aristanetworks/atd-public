@@ -2,6 +2,7 @@
 
 cd /home/arista/atd-docker
 
+docker build --build-arg UID=$(id -u arista) -t atddocker_login:1.0 login/.
 docker build --build-arg UID=$(id -u arista) -t atddocker_kvmbuilder:1.0 kvmbuilder/.
 docker build --build-arg UID=$(id -u arista) -t atddocker_desktop:1.0 desktop/.
 docker build --build-arg UID=$(id -u arista) -t atddocker_cvpupdater:1.0 cvpUpdater/.
