@@ -50,11 +50,12 @@ def getEosDevice(topo,eosYaml,cvpMapper):
     """
     EOS_DEV = []
     for dev in eosYaml:
+        devn = list(dev.keys())[0]
         try:
-            EOS_DEV.append(CVPSWITCH(dev,eosYaml[dev]['ip_addr'],cvpMapper[dev]))
+            EOS_DEV.append(CVPSWITCH(devn,dev[devn]['ip_addr'],cvpMapper[devn]))
             checkContainer(cvpMapper[dev])
         except:
-            EOS_DEV.append(CVPSWITCH(dev,eosYaml[dev]['ip_addr']))
+            EOS_DEV.append(CVPSWITCH(devn,dev[devn]['ip_addr']))
     return(EOS_DEV)
 
 def eosContainerMapper(cvpYaml):
