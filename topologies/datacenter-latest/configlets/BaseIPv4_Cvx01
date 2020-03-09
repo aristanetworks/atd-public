@@ -1,7 +1,7 @@
 hostname cvx01
 !
 interface Management1
-   ip address 192.168.0.44/24
+   ip address 192.168.0.18/24
    no lldp transmit
    no lldp receive
 !

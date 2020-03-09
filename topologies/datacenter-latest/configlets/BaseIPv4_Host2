@@ -1,7 +1,7 @@
 hostname host2
 !
 interface Management1
-   ip address 192.168.0.32/24
+   ip address 192.168.0.18/24
    no lldp transmit
    no lldp receive
 !
