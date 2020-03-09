@@ -53,7 +53,7 @@ nodes:
 
   - leaf1:
       # interfaces: 8
-      ip_addr: 192.168.0.14
+      ip_addr: 192.168.0.12
       neighbors:
         - neighborDevice: leaf2
           neighborPort: Ethernet1
@@ -74,7 +74,7 @@ nodes:
 
   - leaf2:
       # interfaces: 8
-      ip_addr: 192.168.0.15
+      ip_addr: 192.168.0.13
       neighbors:
         - neighborDevice: leaf1
           neighborPort: Ethernet1
@@ -95,7 +95,7 @@ nodes:
 
   - leaf3:
       # interfaces: 8
-      ip_addr: 192.168.0.16
+      ip_addr: 192.168.0.14
       neighbors:
         - neighborDevice: leaf4
           neighborPort: Ethernet1
@@ -116,7 +116,7 @@ nodes:
 
   - leaf4:
       # interfaces: 8
-      ip_addr: 192.168.0.17
+      ip_addr: 192.168.0.15
       neighbors:
         - neighborDevice: leaf3
           neighborPort: Ethernet1
@@ -137,7 +137,7 @@ nodes:
 
   - host1:
       # interfaces: 8
-      ip_addr: 192.168.0.31
+      ip_addr: 192.168.0.16
       neighbors:
         - neighborDevice: leaf1
           neighborPort: Ethernet4
@@ -154,7 +154,7 @@ nodes:
 
   - host2:
       # interfaces: 8
-      ip_addr: 192.168.0.32
+      ip_addr: 192.168.0.17
       neighbors:
         - neighborDevice: leaf3
           neighborPort: Ethernet4
@@ -170,6 +170,6 @@ nodes:
           port: Ethernet4
 
   - cvx01:
-      ip_addr: 192.168.0.44
+      ip_addr: 192.168.0.18
       neighbors: []
   

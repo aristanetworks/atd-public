@@ -51,10 +51,10 @@ def getEosDevice(topo,eosYaml,cvpMapper):
     EOS_DEV = []
     for dev in eosYaml:
         try:
-            EOS_DEV.append(CVPSWITCH(dev['hostname'],dev['internal_ip'],cvpMapper[dev['hostname']]))
-            checkContainer(cvpMapper[dev['hostname']])
+            EOS_DEV.append(CVPSWITCH(dev,eosYaml[dev]['ip_addr'],cvpMapper[dev]))
+            checkContainer(cvpMapper[dev])
         except:
-            EOS_DEV.append(CVPSWITCH(dev['hostname'],dev['internal_ip']))
+            EOS_DEV.append(CVPSWITCH(dev,eosYaml[dev]['ip_addr']))
     return(EOS_DEV)
 
 def eosContainerMapper(cvpYaml):
@@ -93,8 +93,15 @@ def main():
             sleep(sleep_delay)
     atd_yaml = getTopoInfo(topo_file)
     cvp_yaml = getTopoInfo(cvp_file)
+    while True:
+        if path.exists(REPO_TOPO + atd_yaml['topology'] + '/topo_build.yml'):
+            break
+    else:
+        sleep(sleep_delay)
+
+    build_yaml = getTopoInfo(REPO_TOPO + atd_yaml['topology'] + '/topo_build.yml')
     eos_cnt_map = eosContainerMapper(cvp_yaml['cvp_info']['containers'])
-    eos_info = getEosDevice(atd_yaml['topology'],atd_yaml['nodes']['veos'],eos_cnt_map)
+    eos_info = getEosDevice(atd_yaml['topology'],build_yaml['nodes'],eos_cnt_map)
     configlet_location = '/tmp/atd/topologies/{0}/configlets/'.format(atd_yaml['topology'])
     for c_login in atd_yaml['login_info']['cvp']['shell']:
         if c_login['user'] == 'arista':
@@ -107,12 +114,6 @@ def main():
                     sleep(sleep_delay)
     
     # Check to see if all nodes have connected to CVP before proceeding
-    while True:
-        if path.exists(REPO_TOPO + atd_yaml['topology'] + '/topo_build.yml'):
-            break
-        else:
-            sleep(sleep_delay)
-
     FILE_BUILD = YAML().load(open(REPO_TOPO + atd_yaml['topology'] + '/topo_build.yml', 'r'))
     NODES = FILE_BUILD['nodes']
     if cvp_clnt:
