@@ -1,7 +1,7 @@
 #!/bin/bash
 
-BRANCH=$(cat /etc/ATD_REPO.yaml | python3 -m shyaml get-value atd-public-branch)
-TOPO=$(cat /etc/ACCESS_INFO.yaml | python3 -m shyaml get-value topology)
+BRANCH=$(cat /etc/atd/ATD_REPO.yaml | python3 -m shyaml get-value atd-public-branch)
+TOPO=$(cat /etc/atd/ACCESS_INFO.yaml | python3 -m shyaml get-value topology)
 
 rm -rf /tmp/atd
 
