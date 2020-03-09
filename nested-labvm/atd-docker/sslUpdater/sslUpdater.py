@@ -8,7 +8,7 @@ import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 # Globals
-TOPO_FILE = '/etc/ACCESS_INFO.yaml'
+TOPO_FILE = '/etc/atd/ACCESS_INFO.yaml'
 CERT_DAYS = 14
 sleep_delay = 30
 

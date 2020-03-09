@@ -9,7 +9,7 @@ from rcvpapi.rcvpapi import *
 import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-ACCESS = '/etc/ACCESS_INFO.yaml'
+ACCESS = '/etc/atd/ACCESS_INFO.yaml'
 CVP_CONFIG_FIILE = os.path.expanduser('~/CVP_DATA/.cvpState.txt')
 sleep_delay = 30
 

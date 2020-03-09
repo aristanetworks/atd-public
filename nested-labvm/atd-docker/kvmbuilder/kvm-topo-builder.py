@@ -7,7 +7,7 @@ from time import sleep
 import argparse
 import xml.etree.ElementTree as ET
 
-FILE_TOPO = '/etc/ACCESS_INFO.yaml'
+FILE_TOPO = '/etc/atd/ACCESS_INFO.yaml'
 REPO_PATH = '/tmp/atd/'
 REPO_TOPO = REPO_PATH + 'topologies/'
 AVAIL_TOPO = REPO_TOPO + 'available_topo.yaml'

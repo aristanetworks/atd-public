@@ -1,7 +1,7 @@
 #!/bin/bash
 
-TOPO=$(cat /etc/ACCESS_INFO.yaml | shyaml get-value topology)
-ARISTA_PWD=$(cat /etc/ACCESS_INFO.yaml | shyaml get-value login_info.jump_host.pw)
+TOPO=$(cat /etc/atd/ACCESS_INFO.yaml | shyaml get-value topology)
+ARISTA_PWD=$(cat /etc/atd/ACCESS_INFO.yaml | shyaml get-value login_info.jump_host.pw)
 
 # Clean up previous stuff to make sure it's current
 #rm -rf /home/arista/labguides/src/build

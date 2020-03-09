@@ -9,7 +9,7 @@ from time import sleep
 import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-topo_file = '/etc/ACCESS_INFO.yaml'
+topo_file = '/etc/atd/ACCESS_INFO.yaml'
 CVP_CONFIG_FIILE = path.expanduser('~/CVP_DATA/.cvpState.txt')
 REPO_PATH = '/tmp/atd/'
 REPO_TOPO = REPO_PATH + 'topologies/'
