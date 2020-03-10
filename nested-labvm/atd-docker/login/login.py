@@ -29,7 +29,7 @@ def sortVEOS(vd):
     fin_l.append(tmp_d[tveos])
   return(fin_l)
 
-f = open('/etc/ACCESS_INFO.yaml')
+f = open('/etc/atd/ACCESS_INFO.yaml')
 accessinfo = YAML().load(f)
 f.close()
 
