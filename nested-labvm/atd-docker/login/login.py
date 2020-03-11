@@ -166,17 +166,23 @@ Device Menu:            Lab Controls
       elif ans == "":
         ans = True
         break
-
     counter2 = 20
+    try:
+        ans = int(ans)
+        dINT = True
+    except:
+        dINT = False
+    
     for labcontrol in labcontrols:
       optionValues = labcontrols[labcontrol][0]
       counter2 += 1
-      if ans==str(counter2) or ans==labcontrol:
-        os.system(optionValues['command'])
-        break
-      elif int(ans) > devicecount and int(ans) < 20:
-        print("\n Not Valid Choice Try again")
-        break
+      if ans==counter2 or ans==labcontrol:
+          os.system(optionValues['command'])
+          break
+      elif dINT:
+        if ans > devicecount and ans < 20:
+          print("\n Not Valid Choice Try again")
+          break
 
     if enableControls2:
       counter3 = 10
@@ -186,9 +192,10 @@ Device Menu:            Lab Controls
         if ans==str(counter3) or ans==labcontrol2:
           os.system(optionValues['command'])
           break
-        elif ans > devicecount and ans < 10:
-          print("\n Not Valid Choice Try again")
-          break
+        if dINT:
+          if ans > devicecount and ans < 10:
+            print("\n Not Valid Choice Try again")
+            break
 
 else:
   os.system("/usr/lib/openssh/sftp-server")
