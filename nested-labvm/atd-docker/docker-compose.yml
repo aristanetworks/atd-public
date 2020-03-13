@@ -107,6 +107,8 @@ services:
     container_name: atd-guacamole
     image: atddocker_guacamole:1.0
     restart: always
+    volumes:
+      - /home/arista/infra/user-mapping.xml:/root/.guacamole/user-mapping.xml:ro
     depends_on: 
       - guacd
     networks:
