@@ -47,23 +47,14 @@ except:
 
 topology = accessinfo['topology']
 
+f = open('/tmp/atd/topologies/{0}/topo_build.yml'.format(topology))
+topoinfo = YAML().load(f)
+f.close()
+
 login = accessinfo['login_info']
-nodes = accessinfo['nodes']
+nodes = topoinfo['nodes']
 
-cvplogin = login['cvp']
-veoslogin = login['veos'][0]
-
-cvpguilogin = cvplogin['gui'][0]
-cvpguiuser = cvpguilogin['user']
-cvpguipass = cvpguilogin['pw']
-
-veosuser = veoslogin['user']
-veospass = veoslogin['pw']
-
-cvpinfo = nodes['cvp'][0]
-cvp = cvpinfo['ip']
-
-veosinfo = nodes['veos']
+veosinfo = nodes
 
 labcontrols = menuoptions['options']
 # Check to see if this is the datacenter or datacenter-latest topo
