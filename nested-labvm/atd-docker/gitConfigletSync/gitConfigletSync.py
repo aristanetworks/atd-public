@@ -95,8 +95,8 @@ def main():
    # Adding new connection to CVP via rcvpapi
    while not cvp_clnt:
       try:
-         cvp_clnt = CVPCON(accessinfo['nodes']['cvp'][0]['internal_ip'],cvpUsername,cvpPassword)
-         pS("OK", "Connected to CVP at {0}".format(accessinfo['nodes']['cvp'][0]['internal_ip']))
+         cvp_clnt = CVPCON(accessinfo['nodes']['cvp'][0]['ip'],cvpUsername,cvpPassword)
+         pS("OK", "Connected to CVP at {0}".format(accessinfo['nodes']['cvp'][0]['ip']))
       except:
          pS("iBerg", "CVP is currently unavailable....Retrying in 30 seconds.")
          time.sleep(30)

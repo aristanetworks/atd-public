@@ -142,7 +142,7 @@ def main(uargs):
     # Output as script OVS Bridge creation
     createOVS(TOPO_TAG)
     # Create xml files for KVM
-    node_counter = 1
+    node_counter = 0
     for vdev in VEOS_NODES:
         # Open base XML file
         tree = ET.parse(BASE_XML_VEOS)

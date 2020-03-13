@@ -108,8 +108,8 @@ def main():
         if c_login['user'] == 'arista':
             while not cvp_clnt:
                 try:
-                    cvp_clnt = CVPCON(atd_yaml['nodes']['cvp'][0]['internal_ip'],c_login['user'],c_login['pw'])
-                    pS("OK","Connected to CVP at {0}".format(atd_yaml['nodes']['cvp'][0]['internal_ip']))
+                    cvp_clnt = CVPCON(atd_yaml['nodes']['cvp'][0]['ip'],c_login['user'],c_login['pw'])
+                    pS("OK","Connected to CVP at {0}".format(atd_yaml['nodes']['cvp'][0]['ip']))
                 except:
                     pS("ERROR","CVP is currently unavailable....Retrying in {0} seconds.".format(sleep_delay))
                     sleep(sleep_delay)
