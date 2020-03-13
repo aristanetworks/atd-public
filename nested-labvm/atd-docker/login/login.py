@@ -17,8 +17,9 @@ def sortVEOS(vd):
   tmp_d = {}
   fin_l = []
   for tveos in vd:
-    tmp_l.append(tveos['hostname'])
-    tmp_d[tveos['hostname']] = tveos
+    tveosn = list(tveos.keys())[0]
+    tmp_l.append(tveosn)
+    tmp_d[tveosn] = tveos
   tmp_l.sort(key=natural_keys)
   # If cvx in list, move to end
   if 'cvx' in tmp_l[0]:
@@ -96,11 +97,12 @@ Device Menu:            Lab Controls
 
     counter = 0
     for veos,labcontrol in zip_longest(veosinfo,labcontrols):
+      veosn = list(veos.keys())[0]
       counter += 1
       sys.stdout.write("   ")
       sys.stdout.write(str(counter))
       sys.stdout.write(". ")
-      sys.stdout.write(veos['hostname'])
+      sys.stdout.write(veosn)
 
       if labcontrol != None:
          sys.stdout.write("\t\t  ")
@@ -138,8 +140,8 @@ Device Menu:            Lab Controls
     counter = 0
     for veos in veosinfo:
       counter += 1
-      if ans==str(counter) or ans==veos['hostname']:
-        os.system("ssh "+veos['internal_ip'])
+      if ans==str(counter) or ans==veosn:
+        os.system("ssh "+veos[veosn]['ip_addr'])
         break
       elif ans=="97" or ans=="screen":
         os.system('/usr/bin/screen')
