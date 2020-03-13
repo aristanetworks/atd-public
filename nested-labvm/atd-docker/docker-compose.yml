@@ -16,6 +16,7 @@ services:
       - PYTHONUNBUFFERED=1
     volumes:
       - /etc/atd:/etc/atd:ro
+      - /tmp/atd/topologies:/tmp/atd/topologies:ro
       - /home/arista:/home/arista:rw
   cvpupdater:
     container_name: atd-cvpupdater
