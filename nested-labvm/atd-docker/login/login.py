@@ -49,7 +49,6 @@ topology = accessinfo['topology']
 
 login = accessinfo['login_info']
 nodes = accessinfo['nodes']
-tag = accessinfo['tag']
 
 cvplogin = login['cvp']
 veoslogin = login['veos'][0]
