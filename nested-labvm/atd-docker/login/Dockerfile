@@ -2,7 +2,7 @@ FROM python:3.8.1
 
 ARG UID=1000
 
-RUN useradd -m -u $UID arista
+RUN useradd -s /usr/local/bin/login.py -m -u $UID arista
 
 RUN usermod -aG root arista
 
