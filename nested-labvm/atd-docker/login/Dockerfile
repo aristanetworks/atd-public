@@ -32,6 +32,10 @@ COPY login.py /usr/local/bin
 
 RUN chmod +x /usr/local/bin/login.py
 
+COPY ConfigureTopology.py /usr/local/bin
+
+RUN chmod +x /usr/local/bin/ConfigureTopology.py
+
 RUN echo 'login.py' >> .profile
 
 RUN chown -R arista:arista .

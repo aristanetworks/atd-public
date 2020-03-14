@@ -28,3 +28,5 @@ su arista -c 'bash docker_build.sh'
 su arista -c 'docker-compose up -d'
 
 echo 'y' | docker image prune
+
+systemctl restart sshd
