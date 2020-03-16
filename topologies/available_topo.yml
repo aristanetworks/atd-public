@@ -1,13 +1,13 @@
 topologies: [
-    { Topology_Name: 'Data Center',
-      Topology_File: '/datacenter/ADCATDBluePrint.yml',
-      Topology_Access: 'standard',
-      Topology_Desc: 'Two Spines, Four Leafs. Focused on EOS fundamentals within the Data Center w/CV 2018'
-    },
     { Topology_Name: 'Data Center - Latest',
       Topology_File: '/datacenter-latest/Datacenter.yml',
       Topology_Access: 'standard',
       Topology_Desc: 'Two Spines, Four Leafs. Focused on EOS fundamentals within the Data Center w/CV 2019'
+    },
+    { Topology_Name: 'Data Center',
+      Topology_File: '/datacenter/ADCATDBluePrint.yml',
+      Topology_Access: 'standard',
+      Topology_Desc: 'Two Spines, Four Leafs. Focused on EOS fundamentals within the Data Center w/CV 2018'
     },
     { Topology_Name: 'Advanced Routing',
       Topology_File: '/routing/Routing.yml',
