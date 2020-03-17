@@ -139,9 +139,10 @@ Device Menu:            Lab Controls
 
     counter = 0
     for veos in veosinfo:
+      veosn = list(veos.keys())[0]
       counter += 1
       if ans==str(counter) or ans==veosn:
-        os.system("ssh "+veos[veosn]['ip_addr'])
+        os.system("ssh -o StrictHostKeyChecking=no arista@" + veos[veosn]['ip_addr'])
         break
       elif ans=="97" or ans=="screen":
         os.system('/usr/bin/screen')
