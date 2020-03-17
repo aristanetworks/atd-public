@@ -15,7 +15,7 @@ cp /tmp/atd/nested-labvm/services/atdUpdate/atdUpdate.service /etc/systemd/syste
 systemctl daemon-reload
 
 # Add files to arista home
-rsync -av /tmp/atd/topologies/$TOPO/files/ /home/arista
+rsync -av /tmp/atd/topologies/$TOPO/files/ /home/arista/arista-dir
 
 chown -R arista:arista /home/arista
 
