@@ -17,7 +17,8 @@ services:
     volumes:
       - /etc/atd:/etc/atd:ro
       - /tmp/atd/topologies:/tmp/atd/topologies:ro
-      - /home/arista:/home/arista:rw
+      - /home/arista/arista-dir:/home/arista:rw
+      - /home/arista/.ssh:/home/arista/.ssh:rw
   cvpupdater:
     container_name: atd-cvpupdater
     image: atddocker_cvpupdater:1.0
