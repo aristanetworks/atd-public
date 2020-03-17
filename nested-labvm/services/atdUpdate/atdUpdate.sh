@@ -23,9 +23,9 @@ chown -R arista:arista /home/arista
 
 cd /tmp/atd/nested-labvm/atd-docker
 
-su arista -c 'bash docker_build.sh'
+su atdadmin -c 'bash docker_build.sh'
 
-su arista -c 'docker-compose up -d'
+su atdadmin -c 'docker-compose up -d'
 
 echo 'y' | docker image prune
 
