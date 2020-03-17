@@ -49,7 +49,7 @@ services:
     volumes:
       - /etc/atd:/etc/atd:ro
       - /tmp/atd:/tmp/atd:ro
-      - /home/arista/KVM_scripts:/home/arista/kvm:rw
+      - /home/atdadmin/KVM_scripts:/home/atdadmin/kvm:rw
   labguides:
     container_name: atd-labguides
     image: atddocker_labguides:1.0
