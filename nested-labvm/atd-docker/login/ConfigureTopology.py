@@ -15,7 +15,7 @@ def remove_configlets(client, device, mext=None):
     Define base configlets that are to be untouched
     mext = lab type to keep track of which base configlets to keep.  Added for RATD and RATD-Ring
     """
-    base_configlets = ['AAA','aws-infra','ATD-INFRA', 'VLANs']
+    base_configlets = ['ATD-INFRA', 'VLANs']
     
     configlets_to_remove = []
     configlets_to_remain = []
@@ -111,7 +111,7 @@ def pS(mstat,mtype):
         print("[{0}] {1}".format(mstat,mmes.expandtabs(7 - len(mstat))))
 
 def main(argv):
-    f = open('/etc/ACCESS_INFO.yaml')
+    f = open('/etc/atd/ACCESS_INFO.yaml')
     accessinfo = yaml.safe_load(f)
     f.close()
 
