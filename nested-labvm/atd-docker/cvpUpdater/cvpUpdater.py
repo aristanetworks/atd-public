@@ -5,6 +5,7 @@ from ruamel.yaml import YAML
 from rcvpapi.rcvpapi import *
 import requests, json
 from os import path, listdir, system
+from sys import exit
 from time import sleep
 import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
@@ -86,19 +87,32 @@ def main():
     Main Function if this is the initial deployment for the ATD/CVP
     """
     cvp_clnt = ""
+    file_counter = 0
     while True:
         if path.exists(topo_file):
+            pS("OK", "ACCESS_INFO file is available.")
             break
         else:
-            pS("ERROR", "ACCESS_INFO file is not available...Waiting for {0} seconds".format(sleep_delay))
-            sleep(sleep_delay)
+            if file_counter >= 10:
+                exit('Access INFO timer expired')
+            else:
+                file_counter += 1
+                pS("ERROR", "ACCESS_INFO file is not available...Waiting for {0} seconds".format(sleep_delay))
+                sleep(sleep_delay)
     atd_yaml = getTopoInfo(topo_file)
     cvp_yaml = getTopoInfo(cvp_file)
+    file_counter = 0
     while True:
         if path.exists(REPO_TOPO + atd_yaml['topology'] + '/topo_build.yml'):
+            pS("OK", "TOPO_BUILD file is available.")
             break
-    else:
-        sleep(sleep_delay)
+        else:
+            if file_counter >= 10:
+                exit('Topo Build timer expired')
+            else:
+                file_counter += 1
+                pS("ERROR", "TOPO_BUILD file is not available...Waiting for {0} seconds".format(sleep_delay))
+                sleep(sleep_delay)
 
     build_yaml = getTopoInfo(REPO_TOPO + atd_yaml['topology'] + '/topo_build.yml')
     eos_cnt_map = eosContainerMapper(cvp_yaml['cvp_info']['containers'])
