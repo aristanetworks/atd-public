@@ -48,9 +48,12 @@ except:
 
 topology = accessinfo['topology']
 
-f = open('/tmp/atd/topologies/{0}/topo_build.yml'.format(topology))
-topoinfo = YAML().load(f)
-f.close()
+try:
+  f = open('/tmp/atd/topologies/{0}/topo_build.yml'.format(topology))
+  topoinfo = YAML().load(f)
+  f.close()
+except:
+  sys.exit("topo_build not available")
 
 login = accessinfo['login_info']
 nodes = topoinfo['nodes']
