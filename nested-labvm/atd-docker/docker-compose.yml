@@ -81,7 +81,7 @@ services:
       - atd_nginx
   http:
     container_name: atd-http
-    image: atddocker_http:1.1
+    image: atddocker_http:1.0
     restart: always
     depends_on:
       - labguides
