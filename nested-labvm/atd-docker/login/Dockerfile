@@ -10,7 +10,7 @@ RUN apt update
 
 RUN apt install -y openssh-server vim sudo
 
-RUN pip install ruamel.yaml rcvpapi cvprac 
+RUN pip install ruamel.yaml rcvpapi cvprac pyaml
 
 RUN mkdir /var/run/sshd
 
