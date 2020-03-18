@@ -59,7 +59,7 @@ services:
     volumes:
       - /etc/atd:/etc/atd:ro
       - /tmp/atd:/tmp/atd:ro
-      - atd_labguides:/home/arista/labguides/web
+      - atd_labguides:/root/labguides/web
   freerad:
     container_name: atd-freeradius
     image: atddocker_freerad:1.0
