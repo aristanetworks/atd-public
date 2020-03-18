@@ -11,7 +11,7 @@ docker build --build-arg UID=$(id -u arista) -t atddocker_sslupdater:1.0 sslUpda
 docker build --build-arg UID=$(id -u arista) -t atddocker_labguides:1.0 labguides/.
 docker build -t atddocker_freerad:1.0 freeradius/.
 docker build -t atddocker_nginx:1.0 nginx/.
-docker build -t atddocker_http:1.0 http/.
+docker build -t atddocker_http:1.1 http/.
 docker build -t atddocker_guacd:1.0 guacd/.
 docker build -t atddocker_guacamole:1.0 guacamole/.
 docker build -t atddocker_jenkins:1.0 jenkins/.
