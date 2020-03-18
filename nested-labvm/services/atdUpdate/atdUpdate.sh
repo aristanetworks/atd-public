@@ -16,6 +16,7 @@ systemctl daemon-reload
 
 # Add files to arista home
 rsync -av /tmp/atd/topologies/$TOPO/files/ /home/arista/arista-dir
+rsync -av /tmp/atd/topologies/$TOPO/files/infra /home/arista/
 
 chown -R arista:arista /home/arista
 
