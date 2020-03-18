@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
 import getopt
 import sys
@@ -40,7 +40,7 @@ def remove_configlets(client, device, mext=None):
     device.removeConfiglets(client, configlets_to_remove)
     client.addDeviceConfiglets(device, configlets_to_remain)
     client.applyConfiglets(device)
-    return
+    return()
 
 def getDeviceInfo(client):
     eos_devices = []
@@ -84,19 +84,18 @@ def update_topology(client, lab, configlets):
           client.applyConfiglets(device)
     # Perform a single Save Topology by default
     client.saveTopology()
-
-    return
+    return()
 
 def print_usage(topologies):
     # Function to print help menu with valid topologies
-    print 'Usage:'
-    print ''
-    print 'ConfigureTopology.py - No options will reset the topology to the base'
-    print '  -t Topology to push out to devices'
-    print ''
-    print 'Valid topologies are:'
-    print ', '.join(topologies)
-    print ''
+    print('Usage:')
+    print('')
+    print('ConfigureTopology.py - No options will reset the topology to the base')
+    print('  -t Topology to push out to devices')
+    print('')
+    print('Valid topologies are:')
+    print(', '.join(topologies))
+    print('')
     quit()
 
 def pS(mstat,mtype):
