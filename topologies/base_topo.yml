@@ -1,0 +1,4 @@
+---
+topologies:
+  datacenter-latest:  base-atd-datacenter-20200318b-gm
+  routing: base-atd-routing-20200317b-gm-a
