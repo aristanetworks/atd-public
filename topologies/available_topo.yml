@@ -2,26 +2,31 @@ topologies: [
     { Topology_Name: 'Data Center - Latest',
       Topology_File: '/datacenter-latest/Datacenter.yml',
       Topology_Access: 'standard',
-      Topology_Desc: 'Two Spines, Four Leafs. Focused on EOS fundamentals within the Data Center w/CV 2019'
+      Topology_Desc: 'Two Spines, Four Leafs. Focused on EOS fundamentals within the Data Center w/CV 2019',
+      Topology_Default: true
     },
     { Topology_Name: 'Data Center',
       Topology_File: '/datacenter/ADCATDBluePrint.yml',
       Topology_Access: 'standard',
-      Topology_Desc: 'Two Spines, Four Leafs. Focused on EOS fundamentals within the Data Center w/CV 2018'
+      Topology_Desc: 'Two Spines, Four Leafs. Focused on EOS fundamentals within the Data Center w/CV 2018',
+      Topology_Default: false
     },
     { Topology_Name: 'Advanced Routing',
       Topology_File: '/routing/Routing.yml',
       Topology_Access: 'admin',
-      Topology_Desc: 'Twenty nodes. Focused on advanced routing, L2VPN and L3VPN topics'
+      Topology_Desc: 'Twenty nodes. Focused on advanced routing, L2VPN and L3VPN topics',
+      Topology_Default: false
     },
     { Topology_Name: 'cloud-deploy-test (do not use)',
       Topology_File: '/cloud-deploy-test/cloud-deploy-test.yml',
       Topology_Access: 'admin',
-      Topology_Desc: 'DO NOT USE! Temporary topology for testing backend functionality only'
+      Topology_Desc: 'DO NOT USE! Temporary topology for testing backend functionality only',
+      Topology_Default: false
     },
     { Topology_Name: 'adc-update-test (do not use)',
       Topology_File: '/adc-update-test/adc-update-test.yml',
       Topology_Access: 'admin',
-      Topology_Desc: 'DO NOT USE! Add a topology to test the update to production frontend'
+      Topology_Desc: 'DO NOT USE! Add a topology to test the update to production frontend',
+      Topology_Default: false
     }
 ]
