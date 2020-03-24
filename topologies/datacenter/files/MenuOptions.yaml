@@ -230,9 +230,9 @@ labconfiglets:
     leaf2:
       - "tshoot-leaf2-Tshoot-sp"
     leaf3:
-      - "tshoot-leaf3-Tshoot-lab"
+      - "tshoot-leaf3-Tshoot-sp"
     leaf4:
-      - "tshoot-leaf4-Tshoot-lab"
+      - "tshoot-leaf4-Tshoot-sp"
   tshoot-automation:
     spine1:
       - "tshoot-spine1-Tshoot-automation"
