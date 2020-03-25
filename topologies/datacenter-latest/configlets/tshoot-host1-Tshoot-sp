@@ -1,6 +1,4 @@
 !
-hostname host-1
-!
 spanning-tree mode mstp
 !
 no aaa root
