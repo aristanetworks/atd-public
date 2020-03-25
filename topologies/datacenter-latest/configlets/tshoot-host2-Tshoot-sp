@@ -1,5 +1,3 @@
-
-hostname host-2
 !
 spanning-tree mode mstp
 !
