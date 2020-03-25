@@ -1,8 +1,6 @@
 !
 service routing protocols model multi-agent
 !
-hostname Spine-1
-!
 spanning-tree mode mstp
 !
 no aaa root
