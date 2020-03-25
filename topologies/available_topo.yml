@@ -1,6 +1,6 @@
 topologies_default: 'This is a string that is more than 40 characters'
 topologies: [
-    { Topology_Name: 'This is a string that is more than 40 characters',
+    { Topology_Name: 'This is a string that is more than 40 characters'
       Topology_File: '/datacenter-latest/Datacenter.yml',
       Topology_Access: 'standard',
       Topology_Desc: 'Two Spines, Four Leafs. Focused on EOS fundamentals within the Data Center w/CV 2019',
