@@ -1,4 +1,3 @@
-topologies_default: 'No Match'
 topologies: [
     { Topology_Name: 'Data Center - Latest',
       Topology_File: '/datacenter-latest/Datacenter.yml',
