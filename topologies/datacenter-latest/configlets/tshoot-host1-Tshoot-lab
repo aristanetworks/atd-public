@@ -1,6 +1,4 @@
 !
-transceiver qsfp default-mode 4x10G
-!
 hostname host-1
 !
 spanning-tree mode mstp
