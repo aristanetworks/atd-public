@@ -1,9 +1,9 @@
-# topology_default - key used to set the default topology to use
+# topologies_default - key used to set the default topology to use
 #  - If tag has no valid value or is missing, the first entry in topologies will be used as the default
 #
 # topologies - array of topologies to use
 # - Topology_Name: Must be less than 50 characters. Anything larger will be truncated
-# - Topology_File: Must include path to yml file in topologies directory
+# - Topology_File: Must include path to yml file in topologies directory. If the path is invalid the entire topology entry is ignored
 # - Topology_Access: Must be 'admin' or 'standard'. If not standard or admin, defaults to standard
 # - Topology_Desc: Must be less than 100 characters. Anything larger will be truncated
 
