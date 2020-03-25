@@ -27,9 +27,9 @@ options:
   tshoot-intro:
   -   command: "/usr/local/bin/ConfigureTopology.py -t tshoot-intro"
       description: "Troubleshooting Lab 1 (tshoot-intro)"
-  tshoot-sp:
-  -   command: "/usr/local/bin/ConfigureTopology.py -t tshoot-sp"
-      description: "Troubleshooting Lab 2 (tshoot-sp)"
+#  tshoot-sp:
+#  -   command: "/usr/local/bin/ConfigureTopology.py -t tshoot-sp"
+#      description: "Troubleshooting Lab 2 (tshoot-sp)"
 #  tshoot-automation:
 #  -   command: "/usr/local/bin/ConfigureTopology.py -t tshoot-automation"
 #      description: "Troubleshooting Lab 3 (tshoot-automation)"
