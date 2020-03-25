@@ -1,6 +1,13 @@
-topologies_default: 'This is a string that is more than 40 characters'
+# topology_default - key used to set the default topology to use
+#  - If tag has no valid value or is missing, the first entry in topologies will be used as the default
+topologies_default: 'Data Center - Latest'
+# topologies - array of topologies to use
+# - Topology_Name: Must be less than 50 characters. Anything larger will be truncated
+# - Topology_File: Must include path to yml file in topologies directory
+# - Topology_Access: Must be 'admin' or 'standard'. If not standard or admin, defaults to standard
+# - Topology_Desc: Must be less than 100 characters. Anything larger will be truncated
 topologies: [
-    { Topology_Name: 'This is a string that is more than 40 characters'
+    { Topology_Name: 'Data Center - Latest'
       Topology_File: '/datacenter-latest/Datacenter.yml',
       Topology_Access: 'standard',
       Topology_Desc: 'Two Spines, Four Leafs. Focused on EOS fundamentals within the Data Center w/CV 2019',
