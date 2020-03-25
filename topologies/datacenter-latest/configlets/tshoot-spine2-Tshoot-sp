@@ -1,8 +1,6 @@
 !
 service routing protocols model multi-agent
 !
-hostname Spine-2
-!
 spanning-tree mode mstp
 !
 interface Ethernet1
