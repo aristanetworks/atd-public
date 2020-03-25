@@ -316,7 +316,6 @@ labconfiglets:
       - "tshoot-host1-Tshoot-sp"
     host2:
       - "tshoot-host2-Tshoot-sp"
-      
 #  tshoot-automation:
 #    spine1:
 #      - "tshoot-spine1-Tshoot-automation"
