@@ -1,7 +1,5 @@
-
-service routing protocols model multi-agent
 !
-hostname Leaf1
+service routing protocols model multi-agent
 !
 spanning-tree mode mstp
 !
