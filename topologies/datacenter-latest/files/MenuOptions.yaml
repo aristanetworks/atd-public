@@ -307,11 +307,16 @@ labconfiglets:
     leaf1:
       - "tshoot-leaf1-Tshoot-sp"
     leaf2:
-      - "tshoot-leaf2-Tshoot-sp"
-   leaf3:
-      - "tshoot-leaf3-Tshoot-sp"
+      - "tshoot-default"
+    leaf3:
+      - "tshoot-default"
     leaf4:
       - "tshoot-leaf4-Tshoot-sp"
+    host1:
+      - "tshoot-host1-Tshoot-sp"
+    host2:
+      - "tshoot-host2-Tshoot-sp"
+      
 #  tshoot-automation:
 #    spine1:
 #      - "tshoot-spine1-Tshoot-automation"
