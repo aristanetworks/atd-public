@@ -1,0 +1,303 @@
+cloud_service: aws:adc
+default_interfaces: 8
+default_ami_name: 4.24.0F
+cvp_instance: singlenode
+cvp_version: 2019.1.4
+topology_name: beta-routing
+external_configuration: true
+only_add_to_inventory: false
+custom_ami_names: false
+preconfigured: false
+topology_link: true
+
+nodes:
+  - eos1:
+      # interfaces: 6
+      ip_addr: "192.168.0.10"
+      neighbors:
+        - neighborDevice: eos2
+          neighborPort: Ethernet5
+          port: Ethernet1
+        - neighborDevice: eos7
+          neighborPort: Ethernet3
+          port: Ethernet2
+        - neighborDevice: eos11
+          neighborPort: Ethernet1
+          port: Ethernet3
+        - neighborDevice: eos6
+          neighborPort: Ethernet4
+          port: Ethernet4
+        - neighborDevice: eos5
+          neighborPort: Ethernet4
+          port: Ethernet5
+        - neighborDevice: eos17
+          neighborPort: Ethernet1
+          port: Ethernet6
+
+  - eos2:
+      # interfaces: 5
+      ip_addr: "192.168.0.11"
+      neighbors:
+        - neighborDevice: eos3
+          neighborPort: Ethernet3
+          port: Ethernet1
+        - neighborDevice: eos4
+          neighborPort: Ethernet4
+          port: Ethernet2
+        - neighborDevice: eos5
+          neighborPort: Ethernet3
+          port: Ethernet3
+        - neighborDevice: eos6
+          neighborPort: Ethernet5
+          port: Ethernet4
+        - neighborDevice: eos1
+          neighborPort: Ethernet1
+          port: Ethernet5
+
+  - eos3:
+      # interfaces: 6
+      ip_addr: "192.168.0.12"
+      neighbors:
+        - neighborDevice: eos9
+          neighborPort: Ethernet2
+          port: Ethernet1
+        - neighborDevice: eos7
+          neighborPort: Ethernet1
+          port: Ethernet2
+        - neighborDevice: eos2
+          neighborPort: Ethernet1
+          port: Ethernet3
+        - neighborDevice: eos5
+          neighborPort: Ethernet2
+          port: Ethernet4
+        - neighborDevice: eos4
+          neighborPort: Ethernet5
+          port: Ethernet5
+        - neighborDevice: eos20
+          neighborPort: Ethernet1
+          port: Ethernet6
+
+  - eos4:
+      # interfaces: 6
+      ip_addr: "192.168.0.13"
+      neighbors:
+        - neighborDevice: eos9
+          neighborPort: Ethernet1
+          port: Ethernet1
+        - neighborDevice: eos8
+          neighborPort: Ethernet1
+          port: Ethernet2
+        - neighborDevice: eos5
+          neighborPort: Ethernet1
+          port: Ethernet3
+        - neighborDevice: eos2
+          neighborPort: Ethernet2
+          port: Ethernet4
+        - neighborDevice: eos3
+          neighborPort: Ethernet5
+          port: Ethernet5
+        - neighborDevice: eos16
+          neighborPort: Ethernet1
+          port: Ethernet6
+
+  - eos5:
+      # interfaces: 5
+      ip_addr: "192.168.0.14"
+      neighbors:
+        - neighborDevice: eos4
+          neighborPort: Ethernet3
+          port: Ethernet1
+        - neighborDevice: eos3
+          neighborPort: Ethernet4
+          port: Ethernet2
+        - neighborDevice: eos2
+          neighborPort: Ethernet3
+          port: Ethernet3
+        - neighborDevice: eos1
+          neighborPort: Ethernet5
+          port: Ethernet4
+        - neighborDevice: eos6
+          neighborPort: Ethernet1
+          port: Ethernet5
+
+  - eos6:
+      # interfaces: 6
+      ip_addr: "192.168.0.15"
+      neighbors:
+        - neighborDevice: eos5
+          neighborPort: Ethernet5
+          port: Ethernet1
+        - neighborDevice: eos8
+          neighborPort: Ethernet3
+          port: Ethernet2
+        - neighborDevice: eos13
+          neighborPort: Ethernet1
+          port: Ethernet3
+        - neighborDevice: eos1
+          neighborPort: Ethernet4
+          port: Ethernet4
+        - neighborDevice: eos2
+          neighborPort: Ethernet4
+          port: Ethernet5
+        - neighborDevice: eos14
+          neighborPort: Ethernet2
+          port: Ethernet6
+
+  - eos7:
+      # interfaces: 4
+      ip_addr: "192.168.0.16"
+      neighbors:
+        - neighborDevice: eos3
+          neighborPort: Ethernet2
+          port: Ethernet1
+        - neighborDevice: eos10
+          neighborPort: Ethernet1
+          port: Ethernet2
+        - neighborDevice: eos1
+          neighborPort: Ethernet2
+          port: Ethernet3
+        - neighborDevice: eos19
+          neighborPort: Ethernet1
+          port: Ethernet4
+
+  - eos8:
+      # interfaces: 5
+      ip_addr: "192.168.0.17"
+      neighbors:
+        - neighborDevice: eos4
+          neighborPort: Ethernet2
+          port: Ethernet1
+        - neighborDevice: eos15
+          neighborPort: Ethernet1
+          port: Ethernet2
+        - neighborDevice: eos6
+          neighborPort: Ethernet2
+          port: Ethernet3
+        - neighborDevice: eos14
+          neighborPort: Ethernet1
+          port: Ethernet4
+        - neighborDevice: eos18
+          neighborPort: Ethernet1
+          port: Ethernet5
+
+  - eos9:
+      # interfaces: 2
+      ip_addr: "192.168.0.18"
+      neighbors:
+        - neighborDevice: eos4
+          neighborPort: Ethernet1
+          port: Ethernet1
+        - neighborDevice: eos3
+          neighborPort: Ethernet1
+          port: Ethernet2
+
+  - eos10:
+      # interfaces: 1
+      ip_addr: "192.168.0.19"
+      neighbors:
+        - neighborDevice: eos7
+          neighborPort: Ethernet2
+          port: Ethernet1
+
+  - eos11:
+      # interfaces: 3
+      ip_addr: "192.168.0.20"
+      neighbors:
+        - neighborDevice: eos1
+          neighborPort: Ethernet3
+          port: Ethernet1
+        - neighborDevice: eos12
+          neighborPort: Ethernet2
+          port: Ethernet2
+        - neighborDevice: eos13
+          neighborPort: Ethernet3
+          port: Ethernet3
+
+  - eos12:
+      # interfaces: 2
+      ip_addr: "192.168.0.21"
+      neighbors:
+        - neighborDevice: eos13
+          neighborPort: Ethernet2
+          port: Ethernet1
+        - neighborDevice: eos11
+          neighborPort: Ethernet2
+          port: Ethernet2
+
+  - eos13:
+      ip_addr: "192.168.0.22"
+      # interfaces: 3
+      neighbors:
+        - neighborDevice: eos6
+          neighborPort: Ethernet3
+          port: Ethernet1
+        - neighborDevice: eos12
+          neighborPort: Ethernet1
+          port: Ethernet2
+        - neighborDevice: eos11
+          neighborPort: Ethernet3
+          port: Ethernet3
+
+  - eos14:
+      # interfaces: 2
+      ip_addr: "192.168.0.23"
+      neighbors:
+        - neighborDevice: eos8
+          neighborPort: Ethernet4
+          port: Ethernet1
+        - neighborDevice: eos6
+          neighborPort: Ethernet6
+          port: Ethernet2
+
+  - eos15:
+      # interfaces: 1
+      ip_addr: "192.168.0.24"
+      neighbors:
+        - neighborDevice: eos8
+          neighborPort: Ethernet2
+          port: Ethernet1
+
+  - eos16:
+      # interfaces: 1
+      ip_addr: "192.168.0.25"
+      neighbors:
+        - neighborDevice: eos4
+          neighborPort: Ethernet6
+          port: Ethernet1
+
+  - eos17:
+      # interfaces: 1
+      ip_addr: "192.168.0.26"
+      neighbors:
+        - neighborDevice: eos1
+          neighborPort: Ethernet6
+          port: Ethernet1
+
+  - eos18:
+      # interfaces: 1
+      ip_addr: "192.168.0.27"
+      neighbors:
+        - neighborDevice: eos8
+          neighborPort: Ethernet5
+          port: Ethernet1
+
+  - eos19:
+      # interfaces: 1
+      ip_addr: "192.168.0.28"
+      neighbors:
+        - neighborDevice: eos7
+          neighborPort: Ethernet4
+          port: Ethernet1
+
+  - eos20:
+      # interfaces: 1
+      ip_addr: "192.168.0.29"
+      neighbors:
+        - neighborDevice: eos3
+          neighborPort: Ethernet6
+          port: Ethernet1
+
+  - atd_jump_host:
+      neighbors: []
+      ami_name: "adc-atd-labvm.i-0e295ae444a9483f3"
+      ip_addr: "192.168.0.4"

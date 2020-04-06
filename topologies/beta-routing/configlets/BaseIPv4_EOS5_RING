@@ -1,0 +1,34 @@
+hostname eos5
+!
+interface Ethernet1
+   description Unused
+   shutdown
+   no switchport
+!
+interface Ethernet2
+   description Unused
+   shutdown
+   no switchport
+!
+interface Ethernet3
+   description Unused
+   shutdown
+   no switchport
+!
+interface Ethernet4
+   description Unused
+   shutdown
+   no switchport
+!
+interface Ethernet5
+   description Unused
+   shutdown
+   no switchport
+!
+interface Loopback0
+   ip address 5.5.5.5/32
+!
+interface Management1
+   ip address 192.168.0.14/24
+   no lldp transmit
+   no lldp receive

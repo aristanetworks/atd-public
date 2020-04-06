@@ -1,0 +1,13 @@
+hostname eos16
+!
+interface Ethernet1
+   no switchport
+   ip address 10.16.17.16/24
+!
+interface Loopback0
+   ip address 16.16.16.16/32
+!
+interface Management1
+   ip address 192.168.0.25/24
+   no lldp transmit
+   no lldp receive
