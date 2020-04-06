@@ -1,0 +1,14 @@
+hostname eos20
+!
+interface Ethernet1
+   description EOS3
+   no switchport
+   ip address 10.3.20.20/24
+!
+interface Loopback0
+   ip address 20.20.20.20/32
+!
+interface Management1
+   ip address 192.168.0.29/24
+   no lldp transmit
+   no lldp receive

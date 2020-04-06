@@ -1,0 +1,14 @@
+hostname eos18
+!
+interface Ethernet1
+   description EOS8
+   no switchport
+   ip address 10.8.18.18/24
+!
+interface Loopback0
+   ip address 18.18.18.18/32
+!
+interface Management1
+   ip address 192.168.0.27/24
+   no lldp transmit
+   no lldp receive

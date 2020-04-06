@@ -1,0 +1,15 @@
+interface Ethernet1
+   no switchport
+   channel-group 9 mode active
+!
+interface Ethernet2
+   no switchport
+   channel-group 9 mode active
+!
+interface Port-Channel9
+   description PEs: EOS3,EOS4
+   ip address 10.0.0.9/24
+!
+router ospf 200
+   network 0.0.0.0/0 area 0.0.0.0
+   max-lsa 12000
