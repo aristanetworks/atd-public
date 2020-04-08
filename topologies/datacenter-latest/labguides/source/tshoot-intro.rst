@@ -11,8 +11,8 @@ Troubleshooting Introduction
 
 Log into the **LabAccess** jumpserver:
 
-   - Type ``tshoot-intro`` at the prompt. The script will configure the lab into a errored set of states It is upto you to come
-     up with a solution for each of the questions below.
+      - Type ``tshoot-intro`` at the prompt. The script will configure the lab into a errored set of states It is upto you to come
+        up with a solution for each of the questions below.
 
 Question #1:
 
