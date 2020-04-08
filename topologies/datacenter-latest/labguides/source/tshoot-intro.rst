@@ -11,8 +11,8 @@ Troubleshooting Introduction
 
 Log into the **LabAccess** jumpserver:
 
-Type ``tshoot-intro`` at the prompt. The script will configure the lab into a errored set of states. It is upto you to determine
-   a solution for each of the questions below. There can be many solutions, please work with your SE.
+   1. Type ``tshoot-intro`` at the prompt. The script will configure the lab into a errored set of states. It is upto you to determine
+      a solution for each of the questions below. There can be many solutions, please work with your SE.
 
 Question #1:
 Why can’t Leaf1 ping Host1? Are there multiple ways to fix this?
