@@ -5,14 +5,14 @@ Troubleshooting Introduction
    :align: center
 
 .. note:: A set of possible answers are available here_. The link above is only available to Arista employees.
-Please work with your Arista SE for answers.
+          Please work with your Arista SE for answers.
 
 .. _here: https://drive.google.com/file/d/16NJ0hKy2ZfhV4Z4fdLgcp6hBnJ_iIn9P/view?usp=sharing
 
 1. Log into the **LabAccess** jumpserver:
 
    - Type ``tshoot-intro`` at the prompt. The script will configure the lab into a errored set of states It is upto you to come
-   up with a solution for each of the questions below.
+     up with a solution for each of the questions below.
 
 2. Question #1:
 
