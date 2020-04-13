@@ -25,16 +25,6 @@ f.close()
 topology = access_info['topology']
 login_info = access_info['login_info']
 nodes = access_info['nodes']
-tag = access_info['tag']
-cvp_login = login_info['cvp']
-veos_login = login_info['veos'][0]
-cvp_gui_login = cvp_login['gui'][0]
-cvp_gui_user = cvp_gui_login['user']
-cvp_gui_pass = cvp_gui_login['pw']
-veos_user = veos_login['user']
-veos_pass = veos_login['pw']
-cvp_info = nodes['cvp'][0]
-cvp = cvp_info['ip']
 veos_info = nodes['veos']
 
 # Set default menu mode
@@ -232,19 +222,17 @@ def main():
         # Sort the list naturally
         veos_info_sorted = sort_veos(veos_info)
 
-    if sys.stdout.isatty():
+    signal.signal(signal.SIGINT, signal_handler)
 
-        signal.signal(signal.SIGINT, signal_handler)
-
-        # Create Menu Manager
-        while menu_mode:
-          if menu_mode == 'MAIN':
-            main_menu()
-          elif menu_mode == 'DEVICE_SSH':
-            device_menu(veos_info_sorted,lab_controls,enable_controls2,lab_controls2)
-            
-        else:
-            os.system("/usr/lib/openssh/sftp-server")
+    # Create Menu Manager
+    while menu_mode:
+      if menu_mode == 'MAIN':
+        main_menu()
+      elif menu_mode == 'DEVICE_SSH':
+        device_menu(veos_info_sorted,lab_controls,enable_controls2,lab_controls2)
+        
+    else:
+        os.system("/usr/lib/openssh/sftp-server")
 
 if __name__ == '__main__':
     main()
