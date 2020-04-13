@@ -62,26 +62,26 @@ def device_menu():
   veos_info_sorted = sort_veos(veos_info)
 
   print ("""
-  \t==========Device SSH Menu==========
-  \tScreen Instructions:
+  ==========Device SSH Menu==========
+  Screen Instructions:
 
-  \t* Select specific screen - Ctrl + a <number>
-  \t* Select previous screen - Ctrl + a p
-  \t* Select next screen - Ctrl + a n
-  \t* Exit all screens (return to menu) - Ctrl + a \\
+  * Select specific screen - Ctrl + a <number>
+  * Select previous screen - Ctrl + a p
+  * Select next screen - Ctrl + a n
+  * Exit all screens (return to menu) - Ctrl + a \\
 
-  \tPlease select from the following options:
+  Please select from the following options:
   """)
 
   counter = 0
   for veos in veos_info_sorted:
       counter += 1
-      print("\t{0}. {1}".format(str(counter),veos['hostname']))
+      print("{0}. {1}".format(str(counter),veos['hostname']))
 
 
-  print("  97. Screen (screen) - Opens a screen session to each of the hosts")
-  print("  98. Shell (bash)")
-  print("  99. Back to Main Menu (back)")
+  print("97. Screen (screen) - Opens a screen session to each of the hosts")
+  print("98. Shell (bash)")
+  print("99. Back to Main Menu (back)")
   print("")
   user_input = input("What would you like to do? ")
 
