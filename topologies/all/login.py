@@ -78,9 +78,9 @@ def sortVEOS(vd):
   tmp_l = []
   tmp_d = {}
   fin_l = []
-  for tveos in vd:
-    tmp_l.append(tveos['hostname'])
-    tmp_d[tveos['hostname']] = tveos
+  for t_veos in vd:
+    tmp_l.append(t_veos['hostname'])
+    tmp_d[tveos['hostname']] = t_veos
   tmp_l.sort(key=natural_keys)
   # If cvx in list, move to end
   if 'cvx' in tmp_l[0]:
@@ -121,12 +121,13 @@ def main():
     if 'datacenter' in topology:
         lab_controls2 = menu_options['media-options']
     else:
-    # If topo other than datacenter, set to False
+        # If topo other than datacenter, set to False
         lab_controls2 = False
 
     # Catch for routing and datacenter-latest topos to sort login menu naturally
     if topology != 'datacenter':
-    # Sort the list naturally
+
+        # Sort the list naturally
         veos_info = sortVEOS(veos_info)
 
     if sys.stdout.isatty():
