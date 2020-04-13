@@ -53,30 +53,7 @@ def signal_handler(signal, frame):
 def natural_keys(text):
   return [ atoi(c) for c in re.split(r'(\d+)', text) ]
 
-def sortVEOS(vd):
-  tmp_l = []
-  tmp_d = {}
-  fin_l = []
-  for tveos in vd:
-    tmp_l.append(tveos['hostname'])
-    tmp_d[tveos['hostname']] = tveos
-  tmp_l.sort(key=natural_keys)
-  # If cvx in list, move to end
-  if 'cvx' in tmp_l[0]:
-        tmp_cvx = tmp_l[0]
-        tmp_l.pop(0)
-        tmp_l.append(tmp_cvx)
-  for tveos in tmp_l:
-    fin_l.append(tmp_d[tveos])
-  return(fin_l)
-
-def atoi(text):
-  return int(text) if text.isdigit() else text
-
-def natural_keys(text):
-  return [ atoi(c) for c in re.split(r'(\d+)', text) ]
-
-def sortVEOS(vd):
+def sort_veos(vd):
   tmp_l = []
   tmp_d = {}
   fin_l = []
@@ -92,6 +69,12 @@ def sortVEOS(vd):
   for tveos in tmp_l:
     fin_l.append(tmp_d[tveos])
   return(fin_l)
+
+def atoi(text):
+  return int(text) if text.isdigit() else text
+
+def natural_keys(text):
+  return [ atoi(c) for c in re.split(r'(\d+)', text) ]
 
 
 ##############################################
