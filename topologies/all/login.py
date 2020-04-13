@@ -72,6 +72,7 @@ def sort_veos(vd):
   return(fin_l)
 
 def device_menu(veos_info_sorted,lab_controls,enable_controls2,lab_controls2):
+  global menu_mode
   print ("""
       Jump Host for Arista Demo Cloud
 
@@ -173,6 +174,7 @@ def device_menu(veos_info_sorted,lab_controls,enable_controls2,lab_controls2):
               break
 
 def main_menu():
+  global menu_mode
   print("Main Menu: \n")
   print("1. SSH to Devices (ssh)")
   print("99. Exit LabVM (quit/exit)")
