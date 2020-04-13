@@ -126,7 +126,7 @@ def main_menu():
   print("\n\n*****************************************")
   print("*****Jump Host for Arista Demo Cloud*****")
   print("*****************************************")
-  print("==========Main Menu==========:\n\n")
+  print("\n\n==========Main Menu==========:\n")
   print("Please select from the following options: ")
   print("1. SSH to Devices (ssh)")
   print("99. Exit LabVM (quit/exit)")
