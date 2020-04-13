@@ -141,7 +141,6 @@ def device_menu(veos_info_sorted,lab_controls,enable_controls2,lab_controls2):
           break
       elif ans=="99" or ans=="back":
           menu_mode = "MAIN"
-          return menu_mode
       elif ans!="" and counter==devicecount:
           #print("\n Not Valid Choice Try again")
           break
@@ -183,7 +182,7 @@ def main_menu(veos_info_sorted,lab_controls,enable_controls2,lab_controls2):
   print("99. Exit LabVM (quit/exit)")
   print("")
 
-  user_input = input("What would you like to do?")
+  user_input = input("What would you like to do?: ")
   
   # Check user input to see which menu to change to
   if user_input == '1' or user_input.lower() == 'ssh':
@@ -243,7 +242,7 @@ def main():
           if menu_mode == 'MAIN':
             main_menu(veos_info_sorted,lab_controls,enable_controls2,lab_controls2)
           elif menu_mode == 'DEVICE_SSH':
-            device_menu()
+            device_menu(veos_info_sorted,lab_controls,enable_controls2,lab_controls2)
             
         else:
             os.system("/usr/lib/openssh/sftp-server")
