@@ -116,7 +116,7 @@ def lab_options_menu():
   lab_options = YAML().load(f)
   f.close()
   
-  print('==========Device SSH Menu==========')
+  print('==========Lab Options Menu==========')
   counter = 0
   for option in lab_options:
     print(str(counter) + option)
