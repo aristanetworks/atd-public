@@ -112,7 +112,7 @@ def device_menu():
 
 def lab_options_menu():
   # Open MenuOptions.yaml and load the variables
-  f = open('/home/arista/MenuOptions.yaml')
+  f = open('/home/arista/files/menus/LabOptions.yaml')
   lab_options = YAML().load(f)
   f.close()
   
@@ -129,6 +129,7 @@ def main_menu():
   print("\n\n==========Main Menu==========:\n")
   print("Please select from the following options: ")
   print("1. SSH to Devices (ssh)")
+  print("2. Labs")
   print("99. Exit LabVM (quit/exit)")
   print("")
 
