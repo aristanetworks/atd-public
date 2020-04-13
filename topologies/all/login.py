@@ -69,7 +69,7 @@ def device_menu():
   print("* Select next screen - Ctrl + a n")
   print("* Exit all screens (return to menu) - Ctrl + a \\")
 
-  print("Please select from the following options:")
+  print("\nPlease select from the following options:")
 
   counter = 0
   for veos in veos_info_sorted:
@@ -137,6 +137,8 @@ def main_menu():
   # Check user input to see which menu to change to
   if user_input == '1' or user_input.lower() == 'ssh':
     menu_mode = 'DEVICE_SSH'
+  elif user_input == '2' or user_input.lower() == 'labs':
+    menu_mode = 'LAB_OPTIONS'
   elif user_input == '99' or user_input.lower() == 'exit' or user_input.lower() == 'quit':
     print("User exited.")
     quit()
