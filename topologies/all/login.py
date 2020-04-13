@@ -113,7 +113,7 @@ def main():
     if topology != 'datacenter':
 
         # Sort the list naturally
-        veos_info = sort_veos(veos_info)
+        veos_info_sorted = sort_veos(veos_info)
 
     if sys.stdout.isatty():
 
@@ -136,7 +136,7 @@ def main():
             """)
 
             counter = 0
-            for veos,lab_control in zip_longest(veos_info,lab_controls):
+            for veos,lab_control in zip_longest(veos_info_sorted,lab_controls):
                 counter += 1
                 sys.stdout.write("   ")
                 sys.stdout.write(str(counter))
@@ -177,7 +177,7 @@ def main():
             ans = input("What would you like to do? ")
 
             counter = 0
-            for veos in veos_info:
+            for veos in veos_info_sorted:
                 counter += 1
                 if ans==str(counter) or ans==veos['hostname']:
                     os.system("ssh "+veos['ip'])
