@@ -5,6 +5,8 @@ import signal
 import re
 from ruamel.yaml import YAML
 from itertools import zip_longest
+
+
 ######################################
 ########## Global Variables ##########
 ######################################
@@ -125,7 +127,7 @@ def main():
     # Catch for routing and datacenter-latest topos to sort login menu naturally
     if topology != 'datacenter':
     # Sort the list naturally
-        veosinfo = sortVEOS(veos_info)
+        veos_info = sortVEOS(veos_info)
 
     if sys.stdout.isatty():
 
@@ -148,7 +150,7 @@ def main():
             """)
 
             counter = 0
-            for veos,lab_control in zip_longest(veosinfo,lab_controls):
+            for veos,lab_control in zip_longest(veos_info,lab_controls):
                 counter += 1
                 sys.stdout.write("   ")
                 sys.stdout.write(str(counter))
@@ -189,7 +191,7 @@ def main():
             ans = input("What would you like to do? ")
 
             counter = 0
-            for veos in veosinfo:
+            for veos in veos_info:
                 counter += 1
                 if ans==str(counter) or ans==veos['hostname']:
                     os.system("ssh "+veos['ip'])
