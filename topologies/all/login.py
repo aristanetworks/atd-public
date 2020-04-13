@@ -78,7 +78,7 @@ def device_menu():
   for veos in zip_longest(veos_info_sorted):
       counter += 1
       print(str(counter))
-      print(veos['hostname'])
+      print(veos)
       print("\t{0}. {1}".format(str(counter),veos['hostname']))
 
 
