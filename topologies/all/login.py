@@ -183,7 +183,6 @@ def main_menu():
   # Check user input to see which menu to change to
   if user_input == '1' or user_input.lower() == 'ssh':
     menu_mode = 'DEVICE_SSH'
-    print(menu_mode)
   elif user_input == '99' or user_input.lower() == 'exit' or user_input.lower() == 'quit':
     print("User exited.")
     quit()
@@ -236,10 +235,10 @@ def main():
 
         # Create Menu Manager
         while menu_mode:
+          print(menu_mode)
           if menu_mode == 'MAIN':
             main_menu()
           elif menu_mode == 'DEVICE_SSH':
-            print('device_menu')
             device_menu(veos_info_sorted,lab_controls,enable_controls2,lab_controls2)
             
         else:
