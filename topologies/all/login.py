@@ -79,12 +79,14 @@ def device_menu():
       counter += 1
       print("\t{0}. {1}".format(str(counter),veos['hostname']))
 
+
   print("  97. Screen (screen) - Opens a screen session to each of the hosts")
   print("  98. Shell (bash)")
   print("  99. Back to Main Menu (back)")
   print("")
   user_input = input("What would you like to do? ")
 
+  device_count = counter
   counter = 0
   for veos in veos_info_sorted:
       counter += 1
