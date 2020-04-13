@@ -59,15 +59,15 @@ def sort_veos(vd):
   fin_l = []
   for t_veos in vd:
     tmp_l.append(t_veos['hostname'])
-    tmp_d[tveos['hostname']] = t_veos
+    tmp_d[t_veos['hostname']] = t_veos
   tmp_l.sort(key=natural_keys)
   # If cvx in list, move to end
   if 'cvx' in tmp_l[0]:
         tmp_cvx = tmp_l[0]
         tmp_l.pop(0)
         tmp_l.append(tmp_cvx)
-  for tveos in tmp_l:
-    fin_l.append(tmp_d[tveos])
+  for t_veos in tmp_l:
+    fin_l.append(tmp_d[t_veos])
   return(fin_l)
 
 def atoi(text):
