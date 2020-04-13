@@ -180,7 +180,7 @@ def device_menu(veos_info_sorted,lab_controls,enable_controls2,lab_controls2):
 def main_menu(veos_info_sorted,lab_controls,enable_controls2,lab_controls2):
   print("Main Menu: \n")
   print("1. SSH to Devices (ssh)")
-  print("2. Exit LabVM (quit/exit)")
+  print("99. Exit LabVM (quit/exit)")
   print("")
 
   user_input = input("What would you like to do?")
