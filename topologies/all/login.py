@@ -103,7 +103,7 @@ def device_menu(veos_info_sorted,lab_controls,enable_controls2,lab_controls2):
 
       sys.stdout.write("\n")
 
-      devicecount = counter
+      device_count = counter
 
   if enable_controls2 and lab_controls2 != None:
       #sys.stdout.write("\n")
@@ -125,58 +125,54 @@ def device_menu(veos_info_sorted,lab_controls,enable_controls2,lab_controls2):
   print("  98. Shell (bash)")
   print("  99. Back to Main Menu (back)")
   print("")
-  ans = input("What would you like to do? ")
+  user_input = input("What would you like to do? ")
 
   counter = 0
   for veos in veos_info_sorted:
       counter += 1
-      if ans==str(counter) or ans==veos['hostname']:
+      if user_input == str(counter) or user_input == veos['hostname']:
           os.system("ssh "+veos['ip'])
           break
-      elif ans=="97" or ans=="screen":
+      elif user_input == "97" or user_input == "screen":
           os.system('/usr/bin/screen')
           break
-      elif ans=="98" or ans=="bash" or ans=="shell":
+      elif user_input == "98" or user_input == "bash" or user_input == "shell":
           os.system("/bin/bash")
           break
-      elif ans=="99" or ans=="back":
+      elif user_input == "99" or user_input == "back":
           menu_mode = "MAIN"
-      elif ans!="" and counter==devicecount:
+      elif user_input != "" and counter == device_count:
           #print("\n Not Valid Choice Try again")
           break
-      # If entry is null, set 'ans' back to True to loop back to start.
-      elif ans == "":
-          ans = True
-          break
+      # If entry is null or without mapping, do nothing (which will loop the menu)
       else:
           print("Invalid Entry.")
-          ans = True
           break
 
   counter2 = 20
   for lab_control in lab_controls:
       optionValues = lab_controls[lab_control][0]
       counter2 += 1
-      if ans==str(counter2) or ans==lab_control:
+      if user_input == str(counter2) or user_input == lab_control:
           os.system(optionValues['command'])
           break
-      elif ans > devicecount and ans < 20:
+      elif user_input > device_count and user_input < 20:
           print("\n Not Valid Choice Try again")
           break
 
   if enable_controls2:
       counter3 = 10
       for lab_control2 in lab_controls2:
-          optionValues = lab_controls2[lab_control2][0]
+          option_values = lab_controls2[lab_control2][0]
           counter3 += 1
-          if ans==str(counter3) or ans==lab_control2:
-              os.system(optionValues['command'])
+          if user_input == str(counter3) or user_input == lab_control2:
+              os.system(option_values['command'])
               break
-          elif ans > devicecount and ans < 10:
+          elif user_input > device_count and user_input < 10:
               print("\n Not Valid Choice Try again")
               break
 
-def main_menu(veos_info_sorted,lab_controls,enable_controls2,lab_controls2):
+def main_menu():
   print("Main Menu: \n")
   print("1. SSH to Devices (ssh)")
   print("99. Exit LabVM (quit/exit)")
@@ -187,6 +183,7 @@ def main_menu(veos_info_sorted,lab_controls,enable_controls2,lab_controls2):
   # Check user input to see which menu to change to
   if user_input == '1' or user_input.lower() == 'ssh':
     menu_mode == 'DEVICE_SSH'
+    print(menu_mode)
   elif user_input == '99' or user_input.lower() == 'exit' or user_input.lower() == 'quit':
     print("User exited.")
     quit()
