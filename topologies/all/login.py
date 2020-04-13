@@ -242,6 +242,7 @@ def main():
           if menu_mode == 'MAIN':
             main_menu(veos_info_sorted,lab_controls,enable_controls2,lab_controls2)
           elif menu_mode == 'DEVICE_SSH':
+            print('device_menu')
             device_menu(veos_info_sorted,lab_controls,enable_controls2,lab_controls2)
             
         else:
