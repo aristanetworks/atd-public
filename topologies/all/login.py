@@ -81,7 +81,7 @@ def device_menu():
 
   print("97. Screen (screen) - Opens a screen session to each of the hosts")
   print("98. Shell (bash)")
-  print("99. Back to Main Menu (back)")
+  print("99. Back to Main Menu (back/exit)")
   print("")
   user_input = input("What would you like to do? ")
 
@@ -90,16 +90,16 @@ def device_menu():
   counter = 0
   for veos in veos_info_sorted:
       counter += 1
-      if user_input == str(counter) or user_input == veos['hostname']:
+      if user_input == str(counter) or user_input.lower() == veos['hostname']:
           os.system("ssh "+veos['ip'])
           break
-      elif user_input == "97" or user_input == "screen":
+      elif user_input == "97" or user_input.lower() == "screen":
           os.system('/usr/bin/screen')
           break
-      elif user_input == "98" or user_input == "bash" or user_input == "shell":
+      elif user_input == "98" or user_input.lower() == "bash" or user_input.lower() == "shell":
           os.system("/bin/bash")
           break
-      elif user_input == "99" or user_input == "back":
+      elif user_input == "99" or user_input.lower() == "back" or user_input.lower() == 'exit':
           menu_mode = "MAIN"
           break
       elif user_input != "" and counter == device_count:
