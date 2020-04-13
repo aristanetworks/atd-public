@@ -71,7 +71,7 @@ def device_menu():
   \t* Exit all screens (return to menu) - Ctrl + a \\
 
   \tPlease select from the following options:
-  """
+  """)
 
   counter = 0
   for veos in veos_info_sorted:
