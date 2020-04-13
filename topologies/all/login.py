@@ -182,7 +182,7 @@ def main_menu():
   
   # Check user input to see which menu to change to
   if user_input == '1' or user_input.lower() == 'ssh':
-    menu_mode == 'DEVICE_SSH'
+    menu_mode = 'DEVICE_SSH'
     print(menu_mode)
   elif user_input == '99' or user_input.lower() == 'exit' or user_input.lower() == 'quit':
     print("User exited.")
