@@ -62,8 +62,7 @@ def device_menu():
   veos_info_sorted = sort_veos(veos_info)
 
   print ("""
-  \tJump Host for Arista Demo Cloud
-
+  \t==========Device SSH Menu==========
   \tScreen Instructions:
 
   \t* Select specific screen - Ctrl + a <number>
@@ -71,8 +70,8 @@ def device_menu():
   \t* Select next screen - Ctrl + a n
   \t* Exit all screens (return to menu) - Ctrl + a \\
 
-  \tDevice Menu:            Lab Controls
-          """)
+  \tPlease select from the following options:
+  """
 
   counter = 0
   for veos in veos_info_sorted:
@@ -125,7 +124,9 @@ def lab_options():
 
 def main_menu():
   global menu_mode
-  print("Main Menu: \n")
+  print("*****Jump Host for Arista Demo Cloud*****\n")
+  print("==========Main Menu==========: \n")
+  print("Please select from the following options: ")
   print("1. SSH to Devices (ssh)")
   print("99. Exit LabVM (quit/exit)")
   print("")
