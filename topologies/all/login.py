@@ -58,6 +58,9 @@ def sort_veos(vd):
 
 def device_menu(veos_info_sorted,lab_controls,enable_controls2,lab_controls2):
   global menu_mode
+
+  veos_info_sorted = sort_veos(veos_info)
+
   print ("""
       Jump Host for Arista Demo Cloud
 
