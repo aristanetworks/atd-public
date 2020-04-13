@@ -113,7 +113,7 @@ def main():
     if topology != 'datacenter':
 
         # Sort the list naturally
-        veos_info = sortVEOS(veos_info)
+        veos_info = sort_veos(veos_info)
 
     if sys.stdout.isatty():
 
