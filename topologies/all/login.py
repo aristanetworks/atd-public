@@ -112,12 +112,13 @@ def device_menu():
 
 
 
-def lab_options():
+def lab_options_menu():
   # Open MenuOptions.yaml and load the variables
   f = open('/home/arista/MenuOptions.yaml')
   lab_options = YAML().load(f)
   f.close()
-
+  
+  print('==========Device SSH Menu==========')
   counter = 0
   for option in lab_options:
     print(str(counter) + option)
@@ -157,6 +158,8 @@ def main():
         main_menu()
       elif menu_mode == 'DEVICE_SSH':
         device_menu()
+      elif menu_mode == 'LAB_OPTIONS':
+        lab_options_menu()
 
 
 if __name__ == '__main__':
