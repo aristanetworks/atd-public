@@ -37,6 +37,9 @@ cvp_info = nodes['cvp'][0]
 cvp = cvp_info['ip']
 veos_info = nodes['veos']
 
+# Set default menu mode
+menu_mode = 'MAIN'
+
 ###################################################
 #################### Functions ####################
 ###################################################
@@ -68,7 +71,7 @@ def sort_veos(vd):
     fin_l.append(tmp_d[t_veos])
   return(fin_l)
 
-def main_menu(veos_info_sorted,lab_controls,enable_controls2,lab_controls2):
+def device_menu(veos_info_sorted,lab_controls,enable_controls2,lab_controls2):
   print ("""
       Jump Host for Arista Demo Cloud
 
@@ -120,7 +123,7 @@ def main_menu(veos_info_sorted,lab_controls,enable_controls2,lab_controls2):
 
   print("  97. Screen (screen) - Opens a screen session to each of the hosts")
   print("  98. Shell (bash)")
-  print("  99. Quit (quit/exit)")
+  print("  99. Back to Main Menu (back)")
   print("")
   ans = input("What would you like to do? ")
 
@@ -136,13 +139,18 @@ def main_menu(veos_info_sorted,lab_controls,enable_controls2,lab_controls2):
       elif ans=="98" or ans=="bash" or ans=="shell":
           os.system("/bin/bash")
           break
-      elif ans=="99" or ans=="quit" or ans=="exit":
-          quit()
+      elif ans=="99" or ans=="back":
+          menu_mode = "MAIN"
+          return menu_mode
       elif ans!="" and counter==devicecount:
           #print("\n Not Valid Choice Try again")
           break
       # If entry is null, set 'ans' back to True to loop back to start.
       elif ans == "":
+          ans = True
+          break
+      else:
+          print("Invalid Entry.")
           ans = True
           break
 
@@ -168,6 +176,23 @@ def main_menu(veos_info_sorted,lab_controls,enable_controls2,lab_controls2):
           elif ans > devicecount and ans < 10:
               print("\n Not Valid Choice Try again")
               break
+
+def main_menu(veos_info_sorted,lab_controls,enable_controls2,lab_controls2):
+  print("Main Menu: \n")
+  print("1. SSH to Devices (ssh)")
+  print("2. Exit LabVM (quit/exit)")
+  print("")
+
+  user_input = input("What would you like to do?")
+  
+  # Check user input to see which menu to change to
+  if user_input == '1' or user_input.lower() == 'ssh':
+    menu_mode == 'DEVICE_SSH'
+  elif user_input == '99' or user_input.lower() == 'exit' or user_input.lower() == 'quit':
+    print("User exited.")
+    quit()
+  else:
+    print("Invalid Input")
 
 
 
@@ -213,15 +238,13 @@ def main():
 
         signal.signal(signal.SIGINT, signal_handler)
 
-        menu_mode = 'MAIN'
-        ans = True
+        # Create Menu Manager
         while menu_mode:
-          if menu_mode == 'EXIT':
-            quit()
           if menu_mode == 'MAIN':
             main_menu(veos_info_sorted,lab_controls,enable_controls2,lab_controls2)
+          elif menu_mode == 'DEVICE_SSH':
+            device_menu()
             
-
         else:
             os.system("/usr/lib/openssh/sftp-server")
 
