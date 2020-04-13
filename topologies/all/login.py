@@ -142,6 +142,7 @@ def device_menu(veos_info_sorted,lab_controls,enable_controls2,lab_controls2):
           break
       elif user_input == "99" or user_input == "back":
           menu_mode = "MAIN"
+          break
       elif user_input != "" and counter == device_count:
           #print("\n Not Valid Choice Try again")
           break
@@ -237,7 +238,6 @@ def main():
 
         # Create Menu Manager
         while menu_mode:
-          print(menu_mode)
           if menu_mode == 'MAIN':
             main_menu()
           elif menu_mode == 'DEVICE_SSH':
