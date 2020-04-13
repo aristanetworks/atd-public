@@ -5,8 +5,6 @@ import signal
 import re
 from ruamel.yaml import YAML
 from itertools import zip_longest
-from ruamel.yaml import YAML
-
 ######################################
 ########## Global Variables ##########
 ######################################
