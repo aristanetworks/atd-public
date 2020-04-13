@@ -56,43 +56,28 @@ def sort_veos(vd):
     fin_l.append(tmp_d[t_veos])
   return(fin_l)
 
-def device_menu(veos_info_sorted,lab_controls,enable_controls2,lab_controls2):
+def device_menu():
   global menu_mode
 
   veos_info_sorted = sort_veos(veos_info)
 
   print ("""
-      Jump Host for Arista Demo Cloud
+  \tJump Host for Arista Demo Cloud
 
-      Screen Instructions:
+  \tScreen Instructions:
 
-      * Select specific screen - Ctrl + a <number>
-      * Select previous screen - Ctrl + a p
-      * Select next screen - Ctrl + a n
-      * Exit all screens (return to menu) - Ctrl + a \\
+  \t* Select specific screen - Ctrl + a <number>
+  \t* Select previous screen - Ctrl + a p
+  \t* Select next screen - Ctrl + a n
+  \t* Exit all screens (return to menu) - Ctrl + a \\
 
-      Device Menu:            Lab Controls
-
+  \tDevice Menu:            Lab Controls
           """)
 
   counter = 0
-  for veos,lab_control in zip_longest(veos_info_sorted,lab_controls):
+  for veos,lab_control in zip_longest(veos_info_sorted):
       counter += 1
-      sys.stdout.write("   ")
-      sys.stdout.write(str(counter))
-      sys.stdout.write(". ")
-      sys.stdout.write(veos['hostname'])
-
-      if lab_control != None:
-          sys.stdout.write("\t\t  ")
-          sys.stdout.write(str(counter+20))
-          sys.stdout.write(". ")
-          optionValues = lab_controls[lab_control][0]
-          sys.stdout.write(optionValues['description'])
-
-      sys.stdout.write("\n")
-
-      device_count = counter
+      print("\t{0}. {1}".format(str(counter),veos['hostname']))
 
   print("  97. Screen (screen) - Opens a screen session to each of the hosts")
   print("  98. Shell (bash)")
@@ -167,7 +152,7 @@ def main():
       if menu_mode == 'MAIN':
         main_menu()
       elif menu_mode == 'DEVICE_SSH':
-        device_menu(veos_info_sorted,lab_controls,enable_controls2,lab_controls2)
+        device_menu()
 
 
 if __name__ == '__main__':
