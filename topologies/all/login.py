@@ -112,7 +112,7 @@ def device_menu():
 
 def lab_options_menu():
   # Open MenuOptions.yaml and load the variables
-  f = open('/home/arista/files/menus/LabOptions.yaml')
+  f = open('/home/arista/menus/LabOptions.yaml')
   lab_options = YAML().load(f)
   f.close()
   
