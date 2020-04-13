@@ -16,11 +16,6 @@ f = open('/etc/ACCESS_INFO.yaml')
 access_info = YAML().load(f)
 f.close()
 
-# Open MenuOptions.yaml and load the variables
-f = open('/home/arista/MenuOptions.yaml')
-menu_options = YAML().load(f)
-f.close()
-
 # Set Main Script Variables
 topology = access_info['topology']
 login_info = access_info['login_info']
@@ -96,22 +91,6 @@ def device_menu(veos_info_sorted,lab_controls,enable_controls2,lab_controls2):
 
       device_count = counter
 
-  if enable_controls2 and lab_controls2 != None:
-      #sys.stdout.write("\n")
-      counter = 0
-      sys.stdout.write("\n")
-      sys.stdout.write("  Media Controls")
-      for lab_control2 in lab_controls2:
-          counter += 1
-          sys.stdout.write("\n")
-          sys.stdout.write("  ")
-          sys.stdout.write(str(counter+10))
-          sys.stdout.write(". ")
-          optionValues = lab_controls2[lab_control2][0]
-          sys.stdout.write(optionValues['description'])
-      sys.stdout.write("\n")
-      sys.stdout.write("\n")
-
   print("  97. Screen (screen) - Opens a screen session to each of the hosts")
   print("  98. Shell (bash)")
   print("  99. Back to Main Menu (back)")
@@ -141,28 +120,17 @@ def device_menu(veos_info_sorted,lab_controls,enable_controls2,lab_controls2):
           print("Invalid Entry.")
           break
 
-  counter2 = 20
-  for lab_control in lab_controls:
-      optionValues = lab_controls[lab_control][0]
-      counter2 += 1
-      if user_input == str(counter2) or user_input == lab_control:
-          os.system(optionValues['command'])
-          break
-      elif user_input > device_count and user_input < 20:
-          print("\n Not Valid Choice Try again")
-          break
 
-  if enable_controls2:
-      counter3 = 10
-      for lab_control2 in lab_controls2:
-          option_values = lab_controls2[lab_control2][0]
-          counter3 += 1
-          if user_input == str(counter3) or user_input == lab_control2:
-              os.system(option_values['command'])
-              break
-          elif user_input > device_count and user_input < 10:
-              print("\n Not Valid Choice Try again")
-              break
+
+def lab_options():
+  # Open MenuOptions.yaml and load the variables
+  f = open('/home/arista/MenuOptions.yaml')
+  lab_options = YAML().load(f)
+  f.close()
+
+  counter = 0
+  for option in lab_options:
+    print(str(counter) + option)
 
 def main_menu():
   global menu_mode
@@ -190,39 +158,6 @@ def main_menu():
 
 def main():
 
-    # Check to see if we need the media menu
-    enable_controls2 = False
-    try:
-        with open("/home/arista/enable-media", 'r') as fh:
-            enable_controls2 = True
-    except:
-        enable_controls2 = False
-
-    # Check to see if we need the media menu
-    enable_controls2 = False
-    try:
-        with open("/home/arista/enable-media", 'r') as fh:
-            enable_controls2 = True
-    except:
-        enable_controls2 = False
-
-
-
-    lab_controls = menu_options['options']
-    # Check to see if this is the datacenter or datacenter-latest topo
-    if 'datacenter' in topology:
-        lab_controls2 = menu_options['media-options']
-    else:
-        # If topo other than datacenter, set to False
-        lab_controls2 = False
-
-    # Catch for routing and datacenter-latest topos to sort login menu naturally
-    if topology != 'datacenter':
-
-        # Sort the list naturally
-        veos_info_sorted = sort_veos(veos_info)
-
-    signal.signal(signal.SIGINT, signal_handler)
 
     # Create Menu Manager
     while menu_mode:
@@ -230,9 +165,7 @@ def main():
         main_menu()
       elif menu_mode == 'DEVICE_SSH':
         device_menu(veos_info_sorted,lab_controls,enable_controls2,lab_controls2)
-        
-    else:
-        os.system("/usr/lib/openssh/sftp-server")
+
 
 if __name__ == '__main__':
     main()
