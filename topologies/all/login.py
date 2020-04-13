@@ -77,8 +77,6 @@ def device_menu():
   counter = 0
   for veos in veos_info_sorted:
       counter += 1
-      print(str(counter))
-      print(veos)
       print("\t{0}. {1}".format(str(counter),veos['hostname']))
 
 
