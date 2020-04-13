@@ -41,7 +41,7 @@ veos_info = nodes['veos']
 #################### Functions ####################
 ###################################################
 
-def atoi(text):
+def text_to_int(text):
   return int(text) if text.isdigit() else text
 
 def signal_handler(signal, frame):
@@ -49,7 +49,7 @@ def signal_handler(signal, frame):
     quit()
 
 def natural_keys(text):
-  return [ atoi(c) for c in re.split(r'(\d+)', text) ]
+  return [ text_to_int(char) for char in re.split(r'(\d+)', text) ]
 
 def sort_veos(vd):
   tmp_l = []
@@ -68,11 +68,107 @@ def sort_veos(vd):
     fin_l.append(tmp_d[t_veos])
   return(fin_l)
 
-def atoi(text):
-  return int(text) if text.isdigit() else text
+def main_menu(veos_info_sorted,lab_controls,enable_controls2,lab_controls2):
+  print ("""
+      Jump Host for Arista Demo Cloud
 
-def natural_keys(text):
-  return [ atoi(c) for c in re.split(r'(\d+)', text) ]
+      Screen Instructions:
+
+      * Select specific screen - Ctrl + a <number>
+      * Select previous screen - Ctrl + a p
+      * Select next screen - Ctrl + a n
+      * Exit all screens (return to menu) - Ctrl + a \\
+
+      Device Menu:            Lab Controls
+
+          """)
+
+  counter = 0
+  for veos,lab_control in zip_longest(veos_info_sorted,lab_controls):
+      counter += 1
+      sys.stdout.write("   ")
+      sys.stdout.write(str(counter))
+      sys.stdout.write(". ")
+      sys.stdout.write(veos['hostname'])
+
+      if lab_control != None:
+          sys.stdout.write("\t\t  ")
+          sys.stdout.write(str(counter+20))
+          sys.stdout.write(". ")
+          optionValues = lab_controls[lab_control][0]
+          sys.stdout.write(optionValues['description'])
+
+      sys.stdout.write("\n")
+
+      devicecount = counter
+
+  if enable_controls2 and lab_controls2 != None:
+      #sys.stdout.write("\n")
+      counter = 0
+      sys.stdout.write("\n")
+      sys.stdout.write("  Media Controls")
+      for lab_control2 in lab_controls2:
+          counter += 1
+          sys.stdout.write("\n")
+          sys.stdout.write("  ")
+          sys.stdout.write(str(counter+10))
+          sys.stdout.write(". ")
+          optionValues = lab_controls2[lab_control2][0]
+          sys.stdout.write(optionValues['description'])
+      sys.stdout.write("\n")
+      sys.stdout.write("\n")
+
+  print("  97. Screen (screen) - Opens a screen session to each of the hosts")
+  print("  98. Shell (bash)")
+  print("  99. Quit (quit/exit)")
+  print("")
+  ans = input("What would you like to do? ")
+
+  counter = 0
+  for veos in veos_info_sorted:
+      counter += 1
+      if ans==str(counter) or ans==veos['hostname']:
+          os.system("ssh "+veos['ip'])
+          break
+      elif ans=="97" or ans=="screen":
+          os.system('/usr/bin/screen')
+          break
+      elif ans=="98" or ans=="bash" or ans=="shell":
+          os.system("/bin/bash")
+          break
+      elif ans=="99" or ans=="quit" or ans=="exit":
+          quit()
+      elif ans!="" and counter==devicecount:
+          #print("\n Not Valid Choice Try again")
+          break
+      # If entry is null, set 'ans' back to True to loop back to start.
+      elif ans == "":
+          ans = True
+          break
+
+  counter2 = 20
+  for lab_control in lab_controls:
+      optionValues = lab_controls[lab_control][0]
+      counter2 += 1
+      if ans==str(counter2) or ans==lab_control:
+          os.system(optionValues['command'])
+          break
+      elif ans > devicecount and ans < 20:
+          print("\n Not Valid Choice Try again")
+          break
+
+  if enable_controls2:
+      counter3 = 10
+      for lab_control2 in lab_controls2:
+          optionValues = lab_controls2[lab_control2][0]
+          counter3 += 1
+          if ans==str(counter3) or ans==lab_control2:
+              os.system(optionValues['command'])
+              break
+          elif ans > devicecount and ans < 10:
+              print("\n Not Valid Choice Try again")
+              break
+
 
 
 ##############################################
@@ -117,107 +213,14 @@ def main():
 
         signal.signal(signal.SIGINT, signal_handler)
 
+        menu_mode = 'MAIN'
         ans = True
-        while ans:
-            print ("""
-        Jump Host for Arista Demo Cloud
-
-        Screen Instructions:
-
-        * Select specific screen - Ctrl + a <number>
-        * Select previous screen - Ctrl + a p
-        * Select next screen - Ctrl + a n
-        * Exit all screens (return to menu) - Ctrl + a \\
-
-        Device Menu:            Lab Controls
-
-            """)
-
-            counter = 0
-            for veos,lab_control in zip_longest(veos_info_sorted,lab_controls):
-                counter += 1
-                sys.stdout.write("   ")
-                sys.stdout.write(str(counter))
-                sys.stdout.write(". ")
-                sys.stdout.write(veos['hostname'])
-
-                if lab_control != None:
-                    sys.stdout.write("\t\t  ")
-                    sys.stdout.write(str(counter+20))
-                    sys.stdout.write(". ")
-                    optionValues = lab_controls[lab_control][0]
-                    sys.stdout.write(optionValues['description'])
-
-                sys.stdout.write("\n")
-
-                devicecount = counter
-
-            if enable_controls2 and lab_controls2 != None:
-                #sys.stdout.write("\n")
-                counter = 0
-                sys.stdout.write("\n")
-                sys.stdout.write("  Media Controls")
-                for lab_control2 in lab_controls2:
-                    counter += 1
-                    sys.stdout.write("\n")
-                    sys.stdout.write("  ")
-                    sys.stdout.write(str(counter+10))
-                    sys.stdout.write(". ")
-                    optionValues = lab_controls2[lab_control2][0]
-                    sys.stdout.write(optionValues['description'])
-                sys.stdout.write("\n")
-                sys.stdout.write("\n")
-
-            print("  97. Screen (screen) - Opens a screen session to each of the hosts")
-            print("  98. Shell (bash)")
-            print("  99. Quit (quit/exit)")
-            print("")
-            ans = input("What would you like to do? ")
-
-            counter = 0
-            for veos in veos_info_sorted:
-                counter += 1
-                if ans==str(counter) or ans==veos['hostname']:
-                    os.system("ssh "+veos['ip'])
-                    break
-                elif ans=="97" or ans=="screen":
-                    os.system('/usr/bin/screen')
-                    break
-                elif ans=="98" or ans=="bash" or ans=="shell":
-                    os.system("/bin/bash")
-                    break
-                elif ans=="99" or ans=="quit" or ans=="exit":
-                    quit()
-                elif ans!="" and counter==devicecount:
-                    #print("\n Not Valid Choice Try again")
-                    break
-                # If entry is null, set 'ans' back to True to loop back to start.
-                elif ans == "":
-                    ans = True
-                    break
-
-            counter2 = 20
-            for lab_control in lab_controls:
-                optionValues = lab_controls[lab_control][0]
-                counter2 += 1
-                if ans==str(counter2) or ans==lab_control:
-                    os.system(optionValues['command'])
-                    break
-                elif ans > devicecount and ans < 20:
-                    print("\n Not Valid Choice Try again")
-                    break
-
-            if enable_controls2:
-                counter3 = 10
-                for lab_control2 in lab_controls2:
-                    optionValues = lab_controls2[lab_control2][0]
-                    counter3 += 1
-                    if ans==str(counter3) or ans==lab_control2:
-                        os.system(optionValues['command'])
-                        break
-                    elif ans > devicecount and ans < 10:
-                        print("\n Not Valid Choice Try again")
-                        break
+        while menu_mode:
+          if menu_mode == 'EXIT':
+            quit()
+          if menu_mode == 'MAIN':
+            main_menu(veos_info_sorted,lab_controls,enable_controls2,lab_controls2)
+            
 
         else:
             os.system("/usr/lib/openssh/sftp-server")
