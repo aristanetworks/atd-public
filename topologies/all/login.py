@@ -121,6 +121,7 @@ def lab_options_menu():
         for lab in lab_options['lab_list'][lab_type]['options']:
           print("{0}. {1}".format(str(counter),lab_options['lab_list'][lab_type]['options'][lab][0]['description']))
           counter += 1
+        print('\n')
 
     # Additional Menu Options
     print("99. Back to Main Menu (back/exit)")
@@ -131,6 +132,7 @@ def lab_options_menu():
     # Check to see if input is digit, if it is, check to see if it is in range of the counter
     try:
         if user_input.isdigit():
+          print('is digit')
             if user_input in range(1, counter):
               print(user_input)
             elif user_input == '99':
