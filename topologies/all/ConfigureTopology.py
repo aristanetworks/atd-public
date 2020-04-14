@@ -120,10 +120,10 @@ def main(argv):
     menuoptions = yaml.safe_load(f)
     f.close()
 
-    options = menuoptions['lab_list'][argv[1]]['options'][argv[3]]
+    options = menuoptions['lab_list'][argv[1]]['options']
 
     # Parse command arguments
-    # lab = 'reset'
+    lab = menuoptions['lab_list'][argv[1]]['options'][argv[3]]
     # try:
     #     opts, args = getopt.getopt(argv,"ht:",["topology="])
     # except getopt.GetOptError:
