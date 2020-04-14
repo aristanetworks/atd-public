@@ -183,4 +183,5 @@ def main(argv):
 
 if __name__ == '__main__':
     syslog.openlog(logoption=syslog.LOG_PID)
+    print(sys.argv)
     main(sys.argv[1:])
