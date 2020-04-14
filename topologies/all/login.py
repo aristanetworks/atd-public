@@ -117,7 +117,7 @@ def device_menu():
 
 def lab_options_menu():
     global menu_mode
-    menu_files = os.listdir('/home/arista/menus')
+    menu_files = os.listdir('/home/arista/menus').sort()
     # # Open MenuOptions.yaml and load the variables
     # f = open('/home/arista/menus/LabOptions.yaml')
     # lab_options = YAML().load(f)
@@ -139,8 +139,8 @@ def lab_options_menu():
         print(menu_type.replace('-', ' ').replace('.yaml', '') + ":")
         for lab in menu_info['lab_list']:
           print("{0}. {1}".format(str(counter),menu_info['lab_list'][lab][0]['description']))
-          # commands_dict[counter] = menu_info['lab_list'][lab][0]['command']
-          # commands_dict[lab] = menu_info['lab_list'][lab][0]['command']
+          commands_dict[counter] = menu_info['lab_list'][lab][0]['command']
+          commands_dict[lab] = menu_info['lab_list'][lab][0]['command']
           counter += 1
         print('\n')
 
