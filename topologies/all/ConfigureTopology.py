@@ -124,7 +124,7 @@ def main(argv):
     print(options)
 
     # Parse command arguments
-    lab = menuoptions['lab_list'][argv[1]]['options'][argv[3]]
+    lab = argv[3]
     print(lab)
     # try:
     #     opts, args = getopt.getopt(argv,"ht:",["topology="])
