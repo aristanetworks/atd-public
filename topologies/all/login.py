@@ -57,96 +57,116 @@ def sort_veos(vd):
   return(fin_l)
 
 def device_menu():
-  global menu_mode
+    global menu_mode
 
-  veos_info_sorted = sort_veos(veos_info)
+    veos_info_sorted = sort_veos(veos_info)
 
-  print("\n\n==========Device SSH Menu==========\n")
-  print("Screen Instructions:\n")
+    print("\n\n==========Device SSH Menu==========\n")
+    print("Screen Instructions:\n")
 
-  print("* Select specific screen - Ctrl + a <number>")
-  print("* Select previous screen - Ctrl + a p")
-  print("* Select next screen - Ctrl + a n")
-  print("* Exit all screens (return to menu) - Ctrl + a \\")
+    print("* Select specific screen - Ctrl + a <number>")
+    print("* Select previous screen - Ctrl + a p")
+    print("* Select next screen - Ctrl + a n")
+    print("* Exit all screens (return to menu) - Ctrl + a \\")
 
-  print("\nPlease select from the following options:")
+    print("\nPlease select from the following options:")
 
-  counter = 0
-  for veos in veos_info_sorted:
-      counter += 1
-      print("{0}. {1}".format(str(counter),veos['hostname']))
+    counter = 0
+    for veos in veos_info_sorted:
+        counter += 1
+        print("{0}. {1}".format(str(counter),veos['hostname']))
 
 
-  print("97. Screen (screen) - Opens a screen session to each of the hosts")
-  print("98. Shell (bash)")
-  print("99. Back to Main Menu (back/exit)")
-  print("")
-  user_input = input("What would you like to do? ")
+    print("97. Screen (screen) - Opens a screen session to each of the hosts")
+    print("98. Shell (bash)")
+    print("99. Back to Main Menu (back/exit)")
+    print("")
+    user_input = input("What would you like to do? ")
 
-  # Set device_count to use for comparison on next iteration
-  device_count = counter
-  counter = 0
-  for veos in veos_info_sorted:
-      counter += 1
-      if user_input == str(counter) or user_input.lower() == veos['hostname']:
-          os.system("ssh "+veos['ip'])
-          break
-      elif user_input == "97" or user_input.lower() == "screen":
-          os.system('/usr/bin/screen')
-          break
-      elif user_input == "98" or user_input.lower() == "bash" or user_input.lower() == "shell":
-          os.system("/bin/bash")
-          break
-      elif user_input == "99" or user_input.lower() == "back" or user_input.lower() == 'exit':
-          menu_mode = "MAIN"
-          break
-      elif user_input != "" and counter == device_count:
-          #print("\n Not Valid Choice Try again")
-          break
-      # If entry is null or without mapping, do nothing (which will loop the menu)
-      else:
-          print("Invalid Entry.")
-          break
+    # Set device_count to use for comparison on next iteration
+    device_count = counter
+    counter = 0
+    for veos in veos_info_sorted:
+        counter += 1
+        if user_input == str(counter) or user_input.lower() == veos['hostname']:
+            os.system("ssh "+veos['ip'])
+        elif user_input == "97" or user_input.lower() == "screen":
+            os.system('/usr/bin/screen')
+        elif user_input == "98" or user_input.lower() == "bash" or user_input.lower() == "shell":
+            os.system("/bin/bash")
+        elif user_input == "99" or user_input.lower() == "back" or user_input.lower() == 'exit':
+            menu_mode = "MAIN"
+        elif user_input != "" and counter == device_count:
+            print("\n Not Valid Choice Try again")
+        # If entry is null or without mapping, do nothing (which will loop the menu)
+        else:
+            print("Invalid Entry.")
 
 
 
 def lab_options_menu():
-  # Open MenuOptions.yaml and load the variables
-  f = open('/home/arista/menus/LabOptions.yaml')
-  lab_options = YAML().load(f)
-  f.close()
-  
-  print('==========Lab Options Menu==========')
-  counter = 1
-  for lab_type in lab_options['lab_list']:
-    print(lab_type+":")
-    for lab in lab_options['lab_list'][lab_type]['options']:
-      print("{0}. {1}".format(str(counter),lab))
+    # Open MenuOptions.yaml and load the variables
+    f = open('/home/arista/menus/LabOptions.yaml')
+    lab_options = YAML().load(f)
+    f.close()
+    
+    # Display Lab Options
+    counter = 1
+    print('==========Lab Options Menu==========\n')
+    print("Please select from the following options: ")
+    # Iterate through lab types and pring descriptions. Increment counter to reflect choices
+    for lab_type in lab_options['lab_list']:
+        print(lab_type+":")
+        for lab in lab_options['lab_list'][lab_type]['options']['description']:
+          print("{0}. {1}".format(str(counter),lab))
+        counter += 1
+
+    # Additional Menu Options
+    print("99. Back to Main Menu (back/exit)")
+
+    # User Input
+    user_input = input("What would you like to do?: ")
+
+    # Check to see if input is digit, if it is, check to see if it is in range of the counter
+    try:
+        if user_input.isdigit():
+            if user_input in range(1, counter):
+              print(user_input)
+            elif user_input == '99':
+              menu_mode = "MAIN"
+            else:
+              print("Invalid Input")
+        elif user_input.lower() == 'back' or user_input.lower() == 'exit':
+            menu_mode = "MAIN"
+        else:
+            print("Invalid Input")
+    except:
+      print("Invalid Input")
 
 def main_menu():
-  global menu_mode
-  print("\n\n*****************************************")
-  print("*****Jump Host for Arista Demo Cloud*****")
-  print("*****************************************")
-  print("\n\n==========Main Menu==========:\n")
-  print("Please select from the following options: ")
-  print("1. SSH to Devices (ssh)")
-  print("2. Labs")
-  print("99. Exit LabVM (quit/exit)")
-  print("")
+    global menu_mode
+    print("\n\n*****************************************")
+    print("*****Jump Host for Arista Demo Cloud*****")
+    print("*****************************************")
+    print("\n\n==========Main Menu==========:\n")
+    print("Please select from the following options: ")
+    print("1. SSH to Devices (ssh)")
+    print("2. Labs")
+    print("99. Exit LabVM (quit/exit)")
+    print("")
 
-  user_input = input("What would you like to do?: ")
-  
-  # Check user input to see which menu to change to
-  if user_input == '1' or user_input.lower() == 'ssh':
-    menu_mode = 'DEVICE_SSH'
-  elif user_input == '2' or user_input.lower() == 'labs':
-    menu_mode = 'LAB_OPTIONS'
-  elif user_input == '99' or user_input.lower() == 'exit' or user_input.lower() == 'quit':
-    print("User exited.")
-    quit()
-  else:
-    print("Invalid Input")
+    user_input = input("What would you like to do?: ")
+    
+    # Check user input to see which menu to change to
+    if user_input == '1' or user_input.lower() == 'ssh':
+      menu_mode = 'DEVICE_SSH'
+    elif user_input == '2' or user_input.lower() == 'labs':
+      menu_mode = 'LAB_OPTIONS'
+    elif user_input == '99' or user_input.lower() == 'exit' or user_input.lower() == 'quit':
+      print("User exited.")
+      quit()
+    else:
+      print("Invalid Input")
 
 
 
@@ -159,12 +179,12 @@ def main():
 
     # Create Menu Manager
     while menu_mode:
-      if menu_mode == 'MAIN':
-        main_menu()
-      elif menu_mode == 'DEVICE_SSH':
-        device_menu()
-      elif menu_mode == 'LAB_OPTIONS':
-        lab_options_menu()
+        if menu_mode == 'MAIN':
+          main_menu()
+        elif menu_mode == 'DEVICE_SSH':
+          device_menu()
+        elif menu_mode == 'LAB_OPTIONS':
+          lab_options_menu()
 
 
 if __name__ == '__main__':
