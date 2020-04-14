@@ -139,7 +139,7 @@ def lab_options_menu():
         print(menu_type.replace('-', ' ').replace('.yaml', '') + ":")
         for lab in menu_info['lab_list']:
           print("{0}. {1}".format(str(counter),menu_info['lab_list'][lab][0]['description']))
-          print(menu_info['lab_list'][lab][0][0])
+          print(menu_info['lab_list'][lab][0])
           commands_dict[counter] = menu_info['lab_list'][lab][0]['command']
           commands_dict[lab] = menu_info['lab_list'][lab][0]['command']
           counter += 1
