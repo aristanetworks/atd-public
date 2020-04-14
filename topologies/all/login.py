@@ -92,7 +92,7 @@ def device_menu():
     try:
       if user_input.isdigit():
           if int(user_input) in device_dict:
-              os.system(device_dict[int(user_input)])
+              os.system('ssh' + device_dict[int(user_input)])
           elif user_input == '97':
               os.system('/usr/bin/screen')
           elif user_input == '98':
@@ -101,7 +101,7 @@ def device_menu():
               menu_mode = 'MAIN'
       # If user input is not a digit, query to see if the text string is in the device dict
       elif user_input.lower() in device_dict:
-          os.system(device_dict[user_input])
+          os.system('ssh' + device_dict[user_input])
       elif user_input.lower() == 'screen':
           os.system('/usr/bin/screen')
       elif user_input.lower() == 'bash' or user_input.lower() == 'shell':
