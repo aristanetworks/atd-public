@@ -116,9 +116,9 @@ def lab_options_menu():
     print("Please select from the following options: ")
     # Iterate through lab types and pring descriptions. Increment counter to reflect choices
     for lab_type in lab_options['lab_list']:
-        print(lab_type + ":")
+        print(lab_type.replace('-', ' ') + ":")
         for lab in lab_options['lab_list'][lab_type]['options']:
-          print("{0}. {1}".format(str(counter),lab_options['lab_list'][lab_type]['options'][0]))
+          print("{0}. {1}".format(str(counter),lab_options['lab_list'][lab_type]['options']))
         counter += 1
 
     # Additional Menu Options
