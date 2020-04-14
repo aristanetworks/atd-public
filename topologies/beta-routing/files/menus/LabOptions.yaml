@@ -6,57 +6,57 @@ lab_list:
       -   command: "/usr/local/bin/ConfigureTopology.py -t General-Routing -l reset"
           description: "Reset All Devices to Base IPv4 (reset)"
       sr: 
-      -   command: "/usr/local/bin/ConfigureTopology.py -t sr"
+      -   command: "/usr/local/bin/ConfigureTopology.py -t General-Routing -l sr"
           description: "Start at Section 2: Segment-Routing (sr)"
       evpn: 
-      -   command: "/usr/local/bin/ConfigureTopology.py -t evpn"
+      -   command: "/usr/local/bin/ConfigureTopology.py -t General-Routing -l evpn"
           description: "Start at Section 3: EVPN Control-Plane (evpn)"
       c1l3vpn: 
-      -   command: "/usr/local/bin/ConfigureTopology.py -t c1l3vpn"
+      -   command: "/usr/local/bin/ConfigureTopology.py -t General-Routing -l c1l3vpn"
           description: "Start at Section 4: Customer-1 L3VPN (c1l3vpn)"
       c2l2vpn: 
-      -   command: "/usr/local/bin/ConfigureTopology.py -t c2l2vpn"
+      -   command: "/usr/local/bin/ConfigureTopology.py -t General-Routing -l c2l2vpn"
           description: "Start at Section 8: Customer-2 L2VPN (c2l2vpn)"
       c3eline: 
-      -   command: "/usr/local/bin/ConfigureTopology.py -t c3eline"
+      -   command: "/usr/local/bin/ConfigureTopology.py -t General-Routing -l c3eline"
           description: "Start at Section 10: Customer-3 E-LINE (c3eline)"
       c4l3vpn: 
-      -   command: "/usr/local/bin/ConfigureTopology.py -t c4l3vpn"
+      -   command: "/usr/local/bin/ConfigureTopology.py -t General-Routing -l c4l3vpn"
           description: "Start at Section 11: Customer-4 L3VPN (c4l3vpn)"
       centsvc: 
-      -   command: "/usr/local/bin/ConfigureTopology.py -t centsvc"
+      -   command: "/usr/local/bin/ConfigureTopology.py -t General-Routing -l centsvc"
           description: "Start at Section 13: Centralized Services (centsvc)"
       complete: 
-      -   command: "/usr/local/bin/ConfigureTopology.py -t complete"
+      -   command: "/usr/local/bin/ConfigureTopology.py -t General-Routing -l complete"
           description: "Complete all Sections (complete)"
   Ring-Routing:
     options:
       reset-ring:
-      -   command: "/usr/local/bin/ConfigureTopology.py -t reset-ring"
+      -   command: "/usr/local/bin/ConfigureTopology.py -t Ring-Routing -l reset-ring"
           description: "RING TOPOLOGY - Re-configure nodes for Base RING Topology (reset-ring)"
       sr-ring: 
-      -   command: "/usr/local/bin/ConfigureTopology.py -t sr-ring"
+      -   command: "/usr/local/bin/ConfigureTopology.py -t Ring-Routing -l sr-ring"
           description: "RING TOPOLOGY - Start at Section 2: Segment-Routing (sr-ring)"
       evpn-ring: 
-      -   command: "/usr/local/bin/ConfigureTopology.py -t evpn-ring"
+      -   command: "/usr/local/bin/ConfigureTopology.py -t Ring-Routing -l evpn-ring"
           description: "RING TOPOLOGY - Start at Section 3: EVPN Control-Plane (evpn-ring)"
       c1l3vpn-ring: 
-      -   command: "/usr/local/bin/ConfigureTopology.py -t c1l3vpn-ring"
+      -   command: "/usr/local/bin/ConfigureTopology.py -t Ring-Routing -l c1l3vpn-ring"
           description: "RING TOPOLOGY - Start at Section 4: Customer-1 L3VPN (c1l3vpn-ring)"
       c2l2vpn-ring: 
-      -   command: "/usr/local/bin/ConfigureTopology.py -t c2l2vpn-ring"
+      -   command: "/usr/local/bin/ConfigureTopology.py -t Ring-Routing -l c2l2vpn-ring"
           description: "RING TOPOLOGY - Start at Section 8: Customer-2 L2VPN (c2l2vpn-ring)"
       c3eline-ring: 
-      -   command: "/usr/local/bin/ConfigureTopology.py -t c3eline-ring"
+      -   command: "/usr/local/bin/ConfigureTopology.py -t Ring-Routing -l c3eline-ring"
           description: "RING TOPOLOGY - Start at Section 10: Customer-3 E-LINE (c3eline-ring)"
       c4l3vpn-ring: 
-      -   command: "/usr/local/bin/ConfigureTopology.py -t c4l3vpn-ring"
+      -   command: "/usr/local/bin/ConfigureTopology.py -t Ring-Routing -l c4l3vpn-ring"
           description: "RING TOPOLOGY - Start at Section 11: Customer-4 L3VPN (c4l3vpn-ring)"
       centsvc-ring: 
-      -   command: "/usr/local/bin/ConfigureTopology.py -t centsvc-ring"
+      -   command: "/usr/local/bin/ConfigureTopology.py -t Ring-Routing -l centsvc-ring"
           description: "RING TOPOLOGY - Start at Section 13: Centralized Services (centsvc-ring)"
       complete-ring: 
-      -   command: "/usr/local/bin/ConfigureTopology.py -t complete-ring"
+      -   command: "/usr/local/bin/ConfigureTopology.py -t Ring-Routing -l complete-ring"
           description: "RING TOPOLOGY - Complete all Sections (complete-ring)"
 labconfiglets:
   reset:

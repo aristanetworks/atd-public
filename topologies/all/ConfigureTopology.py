@@ -121,11 +121,9 @@ def main(argv):
     f.close()
 
     options = menuoptions['lab_list'][argv[1]]['options']
-    print(options)
 
     # Parse command arguments
     lab = argv[3]
-    print(lab)
     # try:
     #     opts, args = getopt.getopt(argv,"ht:",["topology="])
     # except getopt.GetOptError:
