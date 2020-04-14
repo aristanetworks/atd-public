@@ -111,15 +111,20 @@ def lab_options_menu():
     lab_options = YAML().load(f)
     f.close()
     
+    # Create Command Options Menu to save commands and later execute based on matching the counter to a dict key
+    commands_dict = {}
+
     # Display Lab Options
     counter = 1
     print('==========Lab Options Menu==========\n')
     print("Please select from the following options: ")
     # Iterate through lab types and pring descriptions. Increment counter to reflect choices
+
     for lab_type in lab_options['lab_list']:
         print(lab_type.replace('-', ' ') + ":")
         for lab in lab_options['lab_list'][lab_type]['options']:
           print("{0}. {1}".format(str(counter),lab_options['lab_list'][lab_type]['options'][lab][0]['description']))
+          commands_dict[counter] = [lab_type]['options'][lab][0]['command']
           counter += 1
         print('\n')
 
@@ -134,7 +139,7 @@ def lab_options_menu():
         if user_input.isdigit():
             print('is digit')
             if int(user_input) in range(1, counter):
-              print(user_input)
+              print("Command = {0}".format(commands_dict[int(user_input)]))
             elif user_input == '99':
               menu_mode = "MAIN"
             else:
