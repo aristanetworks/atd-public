@@ -145,7 +145,7 @@ def main(argv):
       enableControls2 = False
 
     if enableControls2:
-      options.update(menuoptions['media-options'])
+      menuoptions.update(menuoptions['media-options'])
 
  
 
@@ -167,11 +167,11 @@ def main(argv):
                     time.sleep(30)
 
     # Make sure option chosen is valid, then configure the topology
-    if lab in options:
+    if lab in menuoptions:
         pS("INFO", "Setting {0} topology to {1} setup".format(accessinfo['topology'], lab))
         update_topology(cvp_clnt, lab, labconfiglets)
     else:
-      print_usage(options)
+      print_usage(menuoptions)
 
     # Execute all tasks generated from reset_devices()
     cvp_clnt.getAllTasks("pending")
