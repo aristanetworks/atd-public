@@ -140,7 +140,7 @@ def lab_options_menu():
         for lab in menu_info['lab_list']:
           print("{0}. {1}".format(str(counter),menu_info['lab_list'][lab][0]['description']))
           for item in menu_info['lab_list'][lab][0]:
-            print(item)
+            print(item['command'])
           commands_dict[counter] = menu_info['lab_list'][lab][0]['command']
           commands_dict[lab] = menu_info['lab_list'][lab][0]['command']
           counter += 1
