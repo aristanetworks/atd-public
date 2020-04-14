@@ -3,7 +3,7 @@ lab_list:
   General-Routing:
     options: 
       reset:
-      -   command: "/usr/local/bin/ConfigureTopology.py -t reset"
+      -   command: "/usr/local/bin/ConfigureTopology.py -t General-Routing -l reset"
           description: "Reset All Devices to Base IPv4 (reset)"
       sr: 
       -   command: "/usr/local/bin/ConfigureTopology.py -t sr"
