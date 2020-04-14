@@ -222,7 +222,7 @@ labconfiglets:
     eos15:
       - "BaseIPv4_EOS15"
       - "Customer1_L3VPN_EOS15"
-    c3eline:
+  c3eline:
     eos1:
       - "BaseIPv4_EOS1"
       - "IS-IS_EOS1"
