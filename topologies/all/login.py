@@ -94,7 +94,7 @@ def device_menu():
             os.system('/usr/bin/screen')
         elif user_input == "98" or user_input.lower() == "bash" or user_input.lower() == "shell":
             os.system("/bin/bash")
-        elif user_input == "99" or user_input.lower() == "back" or user_input.lower() == 'exit':
+        elif user_input == "99" or user_input.lower() == 'back' or user_input.lower() == 'exit':
             menu_mode = "MAIN"
         elif user_input != "" and counter == device_count:
             pass
@@ -145,6 +145,8 @@ def lab_options_menu():
                 menu_mode = "MAIN"
         elif user_input.lower() in commands_dict:
             os.system(commands_dict[user_input])
+        elif user_input.lower() == 'back' or user_input.lower() == 'exit':
+            menu_mode = "MAIN"
         else:
             print("Invalid Input")
     except:
