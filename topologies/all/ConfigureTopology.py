@@ -120,6 +120,8 @@ def main(argv):
     menuoptions = yaml.safe_load(f)
     f.close()
 
+    options = menuoptions['lab_list']
+
     # Parse command arguments
     lab = argv[3]
     # try:
@@ -145,7 +147,7 @@ def main(argv):
       enableControls2 = False
 
     if enableControls2:
-      menuoptions.update(menuoptions['media-options'])
+      options.update(menuoptions['media-options'])
 
  
 
@@ -167,11 +169,11 @@ def main(argv):
                     time.sleep(30)
 
     # Make sure option chosen is valid, then configure the topology
-    if lab in menuoptions:
+    if lab in options:
         pS("INFO", "Setting {0} topology to {1} setup".format(accessinfo['topology'], lab))
         update_topology(cvp_clnt, lab, labconfiglets)
     else:
-      print_usage(menuoptions)
+      print_usage(options)
 
     # Execute all tasks generated from reset_devices()
     cvp_clnt.getAllTasks("pending")
