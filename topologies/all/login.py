@@ -125,7 +125,7 @@ def lab_options_menu():
         for lab in lab_options['lab_list'][lab_type]['options']:
           print("{0}. {1}".format(str(counter),lab_options['lab_list'][lab_type]['options'][lab][0]['description']))
           commands_dict[counter] = lab_options['lab_list'][lab_type]['options'][lab][0]['command']
-          commands_dict[lab_options['lab_list'][lab_type]['options'][lab]] = lab_options['lab_list'][lab_type]['options'][lab][0]['command']
+          commands_dict[lab] = lab_options['lab_list'][lab_type]['options'][lab][0]['command']
           counter += 1
         print('\n')
 
