@@ -127,7 +127,7 @@ labconfiglets:
       - "BaseIPv4_EOS8"
       - "IS-IS_EOS8"
       - "SR_EOS8"
-    c1l3vpn:
+  c1l3vpn:
     eos1:
       - "BaseIPv4_EOS1"
       - "IS-IS_EOS1"
