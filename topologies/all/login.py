@@ -116,7 +116,7 @@ def lab_options_menu():
 
     # Display Lab Options
     counter = 1
-    print('==========Lab Options Menu==========\n')
+    print('\n==========Lab Options Menu==========\n')
     print("Please select from the following options: \n")
     # Iterate through lab types and pring descriptions. Increment counter to reflect choices
 
