@@ -130,7 +130,8 @@ def lab_options_menu():
         print('\n')
 
     # Additional Menu Options
-    print("99. Back to Main Menu (back/exit)")
+    print("Other Options: ")
+    print("99. Back to Main Menu (back/exit)\n")
 
     # User Input
     user_input = input("What would you like to do?: ")
@@ -150,10 +151,11 @@ def lab_options_menu():
         if user_input.isdigit():
             if int(user_input) in commands_dict:
                 print("Command = {0}".format(commands_dict[int(user_input)]))
+            elif user_input == '99':
+                menu_mode = "MAIN"
         elif user_input.lower() in commands_dict:
             print("Command = {0}".format(commands_dict[user_input]))
-        elif user_input == '99':
-            menu_mode = "MAIN"
+        
         else:
             print("Invalid Input")
     except:
