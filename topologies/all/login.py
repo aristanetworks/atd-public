@@ -87,7 +87,7 @@ def device_menu():
     print("")
     user_input = input("What would you like to do? ")
 
-    # Check to see if input is digit, if it is, check to see if it is in range of the counter
+    # Check to see if input is digit, if it is, check to see if it is in the device dict
     counter = 1
     try:
       if user_input.isdigit():
@@ -99,6 +99,7 @@ def device_menu():
               os.system("/bin/bash")
           elif user_input == '99':
               menu_mode = 'MAIN'
+      # If user input is not a digit, query to see if the text string is in the device dict
       elif user_input.lower() in device_dict:
           os.system(device_dict[user_input])
       elif user_input.lower() == 'screen':
@@ -111,29 +112,16 @@ def device_menu():
           print("Invalid Input")
     except:
       print("Invalid Input")
-    for veos in veos_info_sorted:
-        if user_input == str(counter) or user_input.lower() == veos['hostname']:
-            os.system("ssh "+veos['ip'])
-        elif user_input == "97" or user_input.lower() == "screen":
-            os.system('/usr/bin/screen')
-        elif user_input == "98" or user_input.lower() == "bash" or user_input.lower() == "shell":
-            os.system("/bin/bash")
-        elif user_input == "99" or user_input.lower() == 'back' or user_input.lower() == 'exit':
-            menu_mode = "MAIN"
-        elif user_input != "" and counter == device_count:
-            pass
-        # If entry is null or without mapping, do nothing (which will loop the menu)
-        else:
-            print("Invalid Entry.")
 
 
 
 def lab_options_menu():
     global menu_mode
-    # Open MenuOptions.yaml and load the variables
-    f = open('/home/arista/menus/LabOptions.yaml')
-    lab_options = YAML().load(f)
-    f.close()
+    menu_files = os.listdir('/home/arista/menus')
+    # # Open MenuOptions.yaml and load the variables
+    # f = open('/home/arista/menus/LabOptions.yaml')
+    # lab_options = YAML().load(f)
+    # f.close()
     
     # Create Commands dict to save commands and later execute based on matching the counter to a dict key
     commands_dict = {}
@@ -144,12 +132,14 @@ def lab_options_menu():
     print("Please select from the following options: \n")
     
     # Iterate through lab types and pring descriptions. Increment counter to reflect choices
-    for lab_type in lab_options['lab_list']:
-        print(lab_type.replace('-', ' ') + ":")
-        for lab in lab_options['lab_list'][lab_type]['options']:
-          print("{0}. {1}".format(str(counter),lab_options['lab_list'][lab_type]['options'][lab][0]['description']))
-          commands_dict[counter] = lab_options['lab_list'][lab_type]['options'][lab][0]['command']
-          commands_dict[lab] = lab_options['lab_list'][lab_type]['options'][lab][0]['command']
+    for menu_type in menu_files:
+        menu_file = open('/home/arista/menu/' + menu_type)
+        menu_info = YAML().load(f)
+        print(menu_type.replace('-', ' ').replace('.yaml', '') + ":")
+        for lab in menu_info['lab_list']:
+          print("{0}. {1}".format(str(counter),menu_info['lab_list'][lab][0]['description']))
+          commands_dict[counter] = menu_info['lab_list'][lab][0]['command']
+          commands_dict[lab] = menu_info['lab_list'][lab][0]['command']
           counter += 1
         print('\n')
 
@@ -160,13 +150,14 @@ def lab_options_menu():
     # User Input
     user_input = input("What would you like to do?: ")
 
-    # Check to see if input is digit, if it is, check to see if it is in range of the counter
+    # Check to see if input is digit, if it is, check to see if it is in the commands dict
     try:
         if user_input.isdigit():
             if int(user_input) in commands_dict:
                 os.system(commands_dict[int(user_input)])
             elif user_input == '99':
                 menu_mode = "MAIN"
+        # If user input is not a digit, query to see if the text string is in the commands dict
         elif user_input.lower() in commands_dict:
             os.system(commands_dict[user_input])
         elif user_input.lower() == 'back' or user_input.lower() == 'exit':
