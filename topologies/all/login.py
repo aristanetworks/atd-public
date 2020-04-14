@@ -151,7 +151,7 @@ def lab_options_menu():
             if int(user_input) in commands_dict:
                 print("Command = {0}".format(commands_dict[int(user_input)]))
         elif user_input.lower() in commands_dict:
-            print("Command = {0}".format(commands_dict[int(user_input)]))
+            print("Command = {0}".format(commands_dict[user_input]))
         elif user_input == '99':
             menu_mode = "MAIN"
         else:
