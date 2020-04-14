@@ -117,11 +117,9 @@ def device_menu():
 
 def lab_options_menu():
     global menu_mode
+    # Get Yaml Files in /home/arista/menus
     menu_files = os.listdir('/home/arista/menus')
-    # # Open MenuOptions.yaml and load the variables
-    # f = open('/home/arista/menus/LabOptions.yaml')
-    # lab_options = YAML().load(f)
-    # f.close()
+    menu_files.sort()
     
     # Create Commands dict to save commands and later execute based on matching the counter to a dict key
     commands_dict = {}
@@ -131,11 +129,15 @@ def lab_options_menu():
     print('\n==========Lab Options Menu==========\n')
     print("Please select from the following options: \n")
     
-    # Iterate through lab types and pring descriptions. Increment counter to reflect choices
-    for menu_type in menu_files.sort():
+    # Iterate through lab menu files and print descriptions. Increment counter to reflect choices
+    for menu_type in menu_files:
+        
+        # Open yaml and load the variables
         menu_file = open('/home/arista/menus/' + menu_type)
         menu_info = YAML().load(menu_file)
         menu_file.close()
+
+        # Print Lab Menu and add options to commands dict
         print(menu_type.replace('-', ' ').replace('.yaml', '') + ":")
         for lab in menu_info['lab_list']:
           print("{0}. {1}".format(str(counter),menu_info['lab_list'][lab][0]['description']))
