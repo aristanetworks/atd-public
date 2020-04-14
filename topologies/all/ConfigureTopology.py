@@ -176,5 +176,5 @@ def main(argv):
 
 if __name__ == '__main__':
     syslog.openlog(logoption=syslog.LOG_PID)
-    print("sys_arg" + sys.argv[1:])
+    print("sys_arg" + str(sys.argv[1:]))
     main(sys.argv[1:])
