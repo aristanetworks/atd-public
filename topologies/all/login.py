@@ -58,7 +58,10 @@ def sort_veos(vd):
 
 def device_menu():
     global menu_mode
+    # Create Device Dict to save devices and later execute based on matching the counter to a dict key
+    device_dict = {}
 
+    # Sort veos instances
     veos_info_sorted = sort_veos(veos_info)
 
     print("\n\n==========Device SSH Menu==========\n")
@@ -71,23 +74,44 @@ def device_menu():
 
     print("\nPlease select from the following options:")
 
-    counter = 0
+    counter = 1
     for veos in veos_info_sorted:
+        print("{0}. {1} ({2})".format(str(counter),veos['hostname'],veos['hostname']))
+        device_dict[counter] = veos['ip']
+        device_dict[veos['hostname']] = veos['ip']
         counter += 1
-        print("{0}. {1}".format(str(counter),veos['hostname']))
-
 
     print("97. Screen (screen) - Opens a screen session to each of the hosts")
-    print("98. Shell (bash)")
+    print("98. Shell (shell/bash)")
     print("99. Back to Main Menu (back/exit)")
     print("")
     user_input = input("What would you like to do? ")
 
-    # Set device_count to use for comparison on next iteration
-    device_count = counter
-    counter = 0
+    # Check to see if input is digit, if it is, check to see if it is in range of the counter
+    counter = 1
+    try:
+      if user_input.isdigit():
+          if int(user_input) in device_dict:
+              os.system(device_dict[int(user_input)])
+          elif user_input == '97':
+              os.system('/usr/bin/screen')
+          elif user_input == '98':
+              os.system("/bin/bash")
+          elif user_input == '99':
+              menu_mode = 'MAIN'
+      elif user_input.lower() in device_dict:
+          os.system(device_dict[user_input])
+      elif user_input.lower() == 'screen':
+          os.system('/usr/bin/screen')
+      elif user_input.lower() == 'bash' or user_input.lower() == 'shell':
+          os.system("/bin/bash")
+      elif user_input.lower() == 'back' or user_input.lower() == 'exit':
+          menu_mode = "MAIN"
+      else:
+          print("Invalid Input")
+    except:
+      print("Invalid Input")
     for veos in veos_info_sorted:
-        counter += 1
         if user_input == str(counter) or user_input.lower() == veos['hostname']:
             os.system("ssh "+veos['ip'])
         elif user_input == "97" or user_input.lower() == "screen":
@@ -111,15 +135,15 @@ def lab_options_menu():
     lab_options = YAML().load(f)
     f.close()
     
-    # Create Command Options Menu to save commands and later execute based on matching the counter to a dict key
+    # Create Commands dict to save commands and later execute based on matching the counter to a dict key
     commands_dict = {}
 
     # Display Lab Options
     counter = 1
     print('\n==========Lab Options Menu==========\n')
     print("Please select from the following options: \n")
+    
     # Iterate through lab types and pring descriptions. Increment counter to reflect choices
-
     for lab_type in lab_options['lab_list']:
         print(lab_type.replace('-', ' ') + ":")
         for lab in lab_options['lab_list'][lab_type]['options']:
@@ -160,7 +184,7 @@ def main_menu():
     print("\n\n==========Main Menu==========:\n")
     print("Please select from the following options: ")
     print("1. SSH to Devices (ssh)")
-    print("2. Labs")
+    print("2. Labs (labs)")
     print("99. Exit LabVM (quit/exit)")
     print("")
 
