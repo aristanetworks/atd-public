@@ -138,16 +138,6 @@ def lab_options_menu():
 
     # Check to see if input is digit, if it is, check to see if it is in range of the counter
     try:
-        # if user_input.isdigit():
-        #     print('is digit')
-        #     if int(user_input) in range(1, counter):
-        #       print("Command = {0}".format(commands_dict[int(user_input)]))
-        #     elif user_input == '99':
-        #       menu_mode = "MAIN"
-        #     else:
-        #       print("Invalid Input")
-        # elif user_input.lower() == 'back' or user_input.lower() == 'exit':
-        #     menu_mode = "MAIN"
         if user_input.isdigit():
             if int(user_input) in commands_dict:
                 print("Command = {0}".format(commands_dict[int(user_input)]))
@@ -155,7 +145,6 @@ def lab_options_menu():
                 menu_mode = "MAIN"
         elif user_input.lower() in commands_dict:
             print("Command = {0}".format(commands_dict[user_input]))
-        
         else:
             print("Invalid Input")
     except:
