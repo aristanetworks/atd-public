@@ -120,7 +120,7 @@ def main(argv):
     menuoptions = yaml.safe_load(f)
     f.close()
 
-    options = menuoptions['lab_list']
+    options = menuoptions['lab_list'][argv]['options']
     # Check to see if we need the media menu
     enableControls2 = False
     try:
