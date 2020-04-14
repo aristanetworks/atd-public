@@ -1,7 +1,7 @@
 ---
 lab_list:
   reset:
-  -   command: "/usr/local/bin/ConfigureTopology.py && bash /home/arista/Broadcaster/pushHostDefaultConfig.sh"
+  -   command: "/usr/local/bin/ConfigureTopology.py -t Datacenter -l reset && bash /home/arista/Broadcaster/pushHostDefaultConfig.sh"
       description: "Reset All Devices to Base ATD (reset)"
   mlag:
   -   command: "/usr/local/bin/ConfigureTopology.py -t Datacenter -l mlag"
