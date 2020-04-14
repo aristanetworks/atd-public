@@ -26,7 +26,7 @@ lab_list:
       description: "RING TOPOLOGY - Start at Section 13: Centralized Services (centsvc-ring)"
   complete-ring: 
   -   command: "/usr/local/bin/ConfigureTopology.py -t Ring-Routing -l complete-ring"
-          description: "RING TOPOLOGY - Complete all Sections (complete-ring)"
+      description: "RING TOPOLOGY - Complete all Sections (complete-ring)"
 labconfiglets:
     reset-ring:
         eos1:
