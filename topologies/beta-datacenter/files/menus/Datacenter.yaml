@@ -1,25 +1,25 @@
 ---
 lab_list:
   reset:
-  -   command: "/usr/local/bin/ConfigureTopology.py && bash /home/arista/Broadcaster/pushHostDefaultConfig.sh"
+  -   command: "/usr/local/bin/ConfigureTopology.py -t Datacenter -l reset && bash /home/arista/Broadcaster/pushHostDefaultConfig.sh"
       description: "Reset All Devices to Base ATD (reset)"
   mlag:
-  -   command: "/usr/local/bin/ConfigureTopology.py -t mlag"
+  -   command: "/usr/local/bin/ConfigureTopology.py -t Datacenter -l mlag"
       description: "MLAG Lab (mlag)"
   bgp:
-  -   command: "/usr/local/bin/ConfigureTopology.py -t bgp"
+  -   command: "/usr/local/bin/ConfigureTopology.py -t Datacenter -l bgp"
       description: "BGP Lab (bgp)"
   vxlan:
-  -   command: "/usr/local/bin/ConfigureTopology.py -t vxlan"
+  -   command: "/usr/local/bin/ConfigureTopology.py -t Datacenter -l vxlan"
       description: "VXLAN Lab (vxlan) excludes leaf3 instead of leaf4"
   l2evpn:
-  -   command: "/usr/local/bin/ConfigureTopology.py -t l2evpn"
+  -   command: "/usr/local/bin/ConfigureTopology.py -t Datacenter -l l2evpn"
       description: "EVPN Type 2 Lab (l2evpn) excludes leaf3 instead of leaf4"
   l3evpn:
-  -   command: "/usr/local/bin/ConfigureTopology.py -t l3evpn"
+  -   command: "/usr/local/bin/ConfigureTopology.py -t Datacenter -l l3evpn"
       description: "EVPN Type 5 Lab (l3evpn) excludes leaf3 instead of leaf4"
   cvp:
-  -   command: "/usr/local/bin/ConfigureTopology.py -t cvp"
+  -   command: "/usr/local/bin/ConfigureTopology.py -t Datacenter -l cvp"
       description: "CVP lab (cvp)"
 labconfiglets:
   mlag:

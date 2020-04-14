@@ -4,22 +4,22 @@ lab_list:
   -   command: "bash /home/arista/Broadcaster/pushHostMediaConfig.sh"
       description: "Setup Broadcast Engineer Training (media-setup)"
   media-intro:
-  -   command: "/usr/local/bin/ConfigureTopology.py -t media-intro"
+  -   command: "/usr/local/bin/ConfigureTopology.py -t Media -l media-intro"
       description: "Media - IP Intro (media-intro)"
   media-vlan:
-  -   command: "/usr/local/bin/ConfigureTopology.py -t media-vlan"
+  -   command: "/usr/local/bin/ConfigureTopology.py -t Media -l media-vlan"
       description: "Media - VLAN STP (media-vlan)"
   media-ospf:
-  -   command: "/usr/local/bin/ConfigureTopology.py -t media-ospf"
+  -   command: "/usr/local/bin/ConfigureTopology.py -t Media -l media-ospf"
       description: "Media - OSPF (media-ospf)"
   media-bgp:
-  -   command: "/usr/local/bin/ConfigureTopology.py -t media-bgp"
+  -   command: "/usr/local/bin/ConfigureTopology.py -t Media -l media-bgp"
       description: "Media - BGP  (media-bgp)"
   media-mcast:
-  -   command: "/usr/local/bin/ConfigureTopology.py -t media-mcast"
+  -   command: "/usr/local/bin/ConfigureTopology.py -t Media -l media-mcast"
       description: "Media - Multicast (media-mcast)"
   media-reset:
-  -   command: "/usr/local/bin/ConfigureTopology.py -t media-reset"
+  -   command: "/usr/local/bin/ConfigureTopology.py -t Media -l media-reset"
       description: "Media - Reset All Devices to Broadcaster Base (media-reset)"
 labconfiglets:
   media-reset:
