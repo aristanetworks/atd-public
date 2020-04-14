@@ -112,68 +112,67 @@ def pS(mstat,mtype):
         print("[{0}] {1}".format(mstat,mmes.expandtabs(7 - len(mstat))))
 
 def main(argv):
-    print(argv[1])
-    # f = open('/etc/ACCESS_INFO.yaml')
-    # accessinfo = yaml.safe_load(f)
-    # f.close()
+    f = open('/etc/ACCESS_INFO.yaml')
+    accessinfo = yaml.safe_load(f)
+    f.close()
 
-    # f = open('/home/arista/menus/LabOptions.yaml')
-    # menuoptions = yaml.safe_load(f)
-    # f.close()
+    f = open('/home/arista/menus/LabOptions.yaml')
+    menuoptions = yaml.safe_load(f)
+    f.close()
 
-    # options = menuoptions['lab_list'][argv]['options']
-    # # Check to see if we need the media menu
-    # enableControls2 = False
-    # try:
-    #   with open("/home/arista/enable-media", 'r') as fh:
-    #     enableControls2 = True
-    # except:
-    #   enableControls2 = False
+    options = menuoptions['lab_list'][argv[1]]['options']
+    # Check to see if we need the media menu
+    enableControls2 = False
+    try:
+      with open("/home/arista/enable-media", 'r') as fh:
+        enableControls2 = True
+    except:
+      enableControls2 = False
 
-    # if enableControls2:
-    #   options.update(menuoptions['media-options'])
+    if enableControls2:
+      options.update(menuoptions['media-options'])
 
-    # lab = 'reset'
+    lab = 'reset'
 
-    # # Parse command arguments
-    # try:
-    #     opts, args = getopt.getopt(argv,"ht:",["topology="])
-    # except getopt.GetOptError:
-    #     print_usage(options)
-    #     sys.exit(2)
-    # for opt, arg in opts:
-    #     if opt == '-h':
-    #         print_usage(options)
-    #         sys.exit()
-    #     elif opt in ("-t", "--topology"):
-    #         lab = arg
+    # Parse command arguments
+    try:
+        opts, args = getopt.getopt(argv,"ht:",["topology="])
+    except getopt.GetOptError:
+        print_usage(options)
+        sys.exit(2)
+    for opt, arg in opts:
+        if opt == '-h':
+            print_usage(options)
+            sys.exit()
+        elif opt in ("-t", "--topology"):
+            lab = arg
 
-    # # List of configlets
-    # labconfiglets = menuoptions['labconfiglets']
+    # List of configlets
+    labconfiglets = menuoptions['labconfiglets']
 
-    # # Adding new connection to CVP via rcvpapi
-    # cvp_clnt = ''
-    # for c_login in accessinfo['login_info']['cvp']['shell']:
-    #     if c_login['user'] == 'arista':
-    #         while not cvp_clnt:
-    #             try:
-    #                 cvp_clnt = CVPCON(accessinfo['nodes']['cvp'][0]['internal_ip'],c_login['user'],c_login['pw'])
-    #                 pS("OK","Connected to CVP at {0}".format(accessinfo['nodes']['cvp'][0]['internal_ip']))
-    #             except:
-    #                 pS("ERROR", "CVP is currently unavailable....Retrying in 30 seconds.")
-    #                 time.sleep(30)
+    # Adding new connection to CVP via rcvpapi
+    cvp_clnt = ''
+    for c_login in accessinfo['login_info']['cvp']['shell']:
+        if c_login['user'] == 'arista':
+            while not cvp_clnt:
+                try:
+                    cvp_clnt = CVPCON(accessinfo['nodes']['cvp'][0]['internal_ip'],c_login['user'],c_login['pw'])
+                    pS("OK","Connected to CVP at {0}".format(accessinfo['nodes']['cvp'][0]['internal_ip']))
+                except:
+                    pS("ERROR", "CVP is currently unavailable....Retrying in 30 seconds.")
+                    time.sleep(30)
 
-    # # Make sure option chosen is valid, then configure the topology
-    # if lab in options:
-    #     pS("INFO", "Setting {0} topology to {1} setup".format(accessinfo['topology'], lab))
-    #     update_topology(cvp_clnt, lab, labconfiglets)
-    # else:
-    #   print_usage(options)
+    # Make sure option chosen is valid, then configure the topology
+    if lab in options:
+        pS("INFO", "Setting {0} topology to {1} setup".format(accessinfo['topology'], lab))
+        update_topology(cvp_clnt, lab, labconfiglets)
+    else:
+      print_usage(options)
 
-    # # Execute all tasks generated from reset_devices()
-    # cvp_clnt.getAllTasks("pending")
-    # cvp_clnt.execAllTasks("pending")
-    # pS("OK", 'Completed setting devices to topology: {}'.format(lab))
+    # Execute all tasks generated from reset_devices()
+    cvp_clnt.getAllTasks("pending")
+    cvp_clnt.execAllTasks("pending")
+    pS("OK", 'Completed setting devices to topology: {}'.format(lab))
 
 if __name__ == '__main__':
     syslog.openlog(logoption=syslog.LOG_PID)
