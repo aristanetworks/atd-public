@@ -120,7 +120,7 @@ def main(argv):
     menuoptions = yaml.safe_load(f)
     f.close()
 
-    options = menuoptions['options']
+    options = menuoptions['lab_list']
     # Check to see if we need the media menu
     enableControls2 = False
     try:
@@ -176,4 +176,5 @@ def main(argv):
 
 if __name__ == '__main__':
     syslog.openlog(logoption=syslog.LOG_PID)
+    print("sys_arg" + sys.argv[1:])
     main(sys.argv[1:])
