@@ -116,7 +116,7 @@ def main(argv):
     accessinfo = yaml.safe_load(f)
     f.close()
 
-    f = open('/home/arista/menus/{0}}.yaml'.format(argv[1]))
+    f = open('/home/arista/menus/{0}.yaml'.format(argv[1]))
     menuoptions = yaml.safe_load(f)
     f.close()
 
