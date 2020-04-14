@@ -120,7 +120,7 @@ def main(argv):
     menuoptions = yaml.safe_load(f)
     f.close()
 
-    options = menuoptions['lab_list'][argv[1]]['lab_list']
+    options = menuoptions[argv[1]]['lab_list']
 
     # Parse command arguments
     lab = argv[3]
