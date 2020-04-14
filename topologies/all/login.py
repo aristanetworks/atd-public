@@ -117,7 +117,7 @@ def lab_options_menu():
     # Display Lab Options
     counter = 1
     print('==========Lab Options Menu==========\n')
-    print("Please select from the following options: ")
+    print("Please select from the following options: \n")
     # Iterate through lab types and pring descriptions. Increment counter to reflect choices
 
     for lab_type in lab_options['lab_list']:
@@ -125,6 +125,7 @@ def lab_options_menu():
         for lab in lab_options['lab_list'][lab_type]['options']:
           print("{0}. {1}".format(str(counter),lab_options['lab_list'][lab_type]['options'][lab][0]['description']))
           commands_dict[counter] = lab_options['lab_list'][lab_type]['options'][lab][0]['command']
+          commands_dict[lab_options['lab_list'][lab_type]['options'][lab]] = lab_options['lab_list'][lab_type]['options'][lab][0]['command']
           counter += 1
         print('\n')
 
@@ -136,15 +137,22 @@ def lab_options_menu():
 
     # Check to see if input is digit, if it is, check to see if it is in range of the counter
     try:
+        # if user_input.isdigit():
+        #     print('is digit')
+        #     if int(user_input) in range(1, counter):
+        #       print("Command = {0}".format(commands_dict[int(user_input)]))
+        #     elif user_input == '99':
+        #       menu_mode = "MAIN"
+        #     else:
+        #       print("Invalid Input")
+        # elif user_input.lower() == 'back' or user_input.lower() == 'exit':
+        #     menu_mode = "MAIN"
         if user_input.isdigit():
-            print('is digit')
-            if int(user_input) in range(1, counter):
-              print("Command = {0}".format(commands_dict[int(user_input)]))
-            elif user_input == '99':
-              menu_mode = "MAIN"
-            else:
-              print("Invalid Input")
-        elif user_input.lower() == 'back' or user_input.lower() == 'exit':
+            if int(user_input) in commands_dict:
+                print("Command = {0}".format(commands_dict[int(user_input)]))
+        elif user_input.lower() in commands_dict:
+            print("Command = {0}".format(commands_dict[int(user_input)]))
+        elif user_input == '99':
             menu_mode = "MAIN"
         else:
             print("Invalid Input")

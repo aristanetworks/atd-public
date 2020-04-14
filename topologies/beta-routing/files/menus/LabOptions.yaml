@@ -1,6 +1,6 @@
 ---
 lab_list:
-  General_Routing:
+  General-Routing:
     options: 
       reset:
       -   command: "/usr/local/bin/ConfigureTopology.py -t reset"
@@ -29,7 +29,7 @@ lab_list:
       complete: 
       -   command: "/usr/local/bin/ConfigureTopology.py -t complete"
           description: "Complete all Sections (complete)"
-  Ring_Routing:
+  Ring-Routing:
     options:
       reset-ring:
       -   command: "/usr/local/bin/ConfigureTopology.py -t reset-ring"
