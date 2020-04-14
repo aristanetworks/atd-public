@@ -134,6 +134,7 @@ def lab_options_menu():
     # Iterate through lab types and pring descriptions. Increment counter to reflect choices
     for menu_type in menu_files:
         menu_file = open('/home/arista/menus/' + menu_type)
+        print(menu_file)
         menu_info = YAML().load(menu_file)
         print(menu_type.replace('-', ' ').replace('.yaml', '') + ":")
         for lab in menu_info['lab_list']:
