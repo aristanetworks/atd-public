@@ -118,7 +118,7 @@ def lab_options_menu():
     for lab_type in lab_options['lab_list']:
         print(lab_type + ":")
         for lab in lab_options['lab_list'][lab_type]['options']:
-          print("{0}. {1}".format(str(counter),lab_options['lab_list'][lab_type]['options'][lab]['description']))
+          print("{0}. {1}".format(str(counter),lab_options['lab_list'][lab_type]['options'][0][lab]['description']))
         counter += 1
 
     # Additional Menu Options
