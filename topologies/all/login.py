@@ -97,7 +97,7 @@ def device_menu():
         elif user_input == "99" or user_input.lower() == "back" or user_input.lower() == 'exit':
             menu_mode = "MAIN"
         elif user_input != "" and counter == device_count:
-            print("\n Not Valid Choice Try again")
+            pass
         # If entry is null or without mapping, do nothing (which will loop the menu)
         else:
             print("Invalid Entry.")
@@ -182,7 +182,6 @@ def main_menu():
 ##############################################
 
 def main():
-
 
     # Create Menu Manager
     while menu_mode:
