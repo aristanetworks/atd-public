@@ -117,11 +117,11 @@ def lab_options_menu():
   f.close()
   
   print('==========Lab Options Menu==========')
-  counter = 0
+  counter = 1
   for lab_type in lab_options['lab_list']:
     print(lab_type+":")
     for lab in lab_options['lab_list'][lab_type]['options']:
-      print("\t"+lab)
+      print("{0}. {1}".format(str(counter),lab)
 
 def main_menu():
   global menu_mode
