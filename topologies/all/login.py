@@ -133,7 +133,7 @@ def lab_options_menu():
     try:
         if user_input.isdigit():
             print('is digit')
-            if user_input in range(1, counter):
+            if int(user_input) in range(1, counter):
               print(user_input)
             elif user_input == '99':
               menu_mode = "MAIN"
