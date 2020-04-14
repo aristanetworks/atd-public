@@ -117,7 +117,7 @@ def device_menu():
 
 def lab_options_menu():
     global menu_mode
-    menu_files = os.listdir('/home/arista/menus').sort()
+    menu_files = os.listdir('/home/arista/menus')
     # # Open MenuOptions.yaml and load the variables
     # f = open('/home/arista/menus/LabOptions.yaml')
     # lab_options = YAML().load(f)
@@ -132,7 +132,7 @@ def lab_options_menu():
     print("Please select from the following options: \n")
     
     # Iterate through lab types and pring descriptions. Increment counter to reflect choices
-    for menu_type in menu_files:
+    for menu_type in menu_files.sort():
         menu_file = open('/home/arista/menus/' + menu_type)
         menu_info = YAML().load(menu_file)
         menu_file.close()
