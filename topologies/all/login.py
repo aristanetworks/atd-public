@@ -132,7 +132,7 @@ def lab_options_menu():
     # Check to see if input is digit, if it is, check to see if it is in range of the counter
     try:
         if user_input.isdigit():
-          print('is digit')
+            print('is digit')
             if user_input in range(1, counter):
               print(user_input)
             elif user_input == '99':
