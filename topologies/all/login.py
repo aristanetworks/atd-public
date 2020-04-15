@@ -139,8 +139,8 @@ def lab_options_menu():
       for menu_type in menu_files:
           # Print Lab Menu and add options to lab options dict
           print(menu_type.replace('-', ' ').replace('.yaml', '') + ":")
-          lab_options[counter] = menu_type
-          lab_options[menu_type.replace('.yaml', '')] = menu_type
+          lab_options_dict[counter] = menu_type
+          lab_options_dict[menu_type.replace('.yaml', '')] = menu_type
           counter += 1
 
       # Additional Menu Options
