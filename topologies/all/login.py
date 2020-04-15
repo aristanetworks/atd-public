@@ -257,6 +257,7 @@ def main():
           lab_options_menu()
       except KeyboardInterrupt:
         if menu_mode == 'MAIN':
+          print('User exited.')
           quit()
         else:
           menu_mode = 'MAIN'
