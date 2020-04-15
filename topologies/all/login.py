@@ -144,7 +144,7 @@ def lab_options_menu():
           counter += 1
 
       # Additional Menu Options
-      print("Other Options: ")
+      print("\nOther Options: ")
       print("99. Back to Main Menu (back/exit)\n")
       
       user_input = input("\nWhat would you like to do?: ")
