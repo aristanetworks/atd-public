@@ -126,9 +126,6 @@ def lab_options_menu():
     # Create Lab Options dict to save lab and later navigate to that menu of labs
       lab_options_dict = {}
 
-      # Create Commands dict to save commands and later execute based on matching the counter to a dict key
-      commands_dict = {}
-
       # Display Lab Options
       counter = 1
       print('\n==========Lab Options Menu==========\n')
@@ -169,7 +166,10 @@ def lab_options_menu():
 
 
     elif 'LAB_' in menu_mode and menu_mode != 'LAB_OPTIONS':
-  
+      
+      # Create Commands dict to save commands and later execute based on matching the counter to a dict key
+      commands_dict = {}
+
       # Open yaml for the lab option (minus 'LAB_' from menu mode) and load the variables
       menu_file = open('/home/arista/menus/' + menu_mode[4:])
       menu_info = YAML().load(menu_file)
