@@ -139,15 +139,15 @@ def main(argv):
 
 
     # Check to see if we need the media menu
-    enableControls2 = False
-    try:
-      with open("/home/arista/enable-media", 'r') as fh:
-        enableControls2 = True
-    except:
-      enableControls2 = False
+    # enableControls2 = False
+    # try:
+    #   with open("/home/arista/enable-media", 'r') as fh:
+    #     enableControls2 = True
+    # except:
+    #   enableControls2 = False
 
-    if enableControls2:
-      options.update(menuoptions['media-options'])
+    # if enableControls2:
+    #   options.update(menuoptions['media-options'])
 
  
 
