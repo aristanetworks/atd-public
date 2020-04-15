@@ -142,7 +142,7 @@ def lab_options_menu():
 
       # Additional Menu Options
       print("\nOther Options: ")
-      print("99. Back to Main Menu (back/exit)\n")
+      print("99. Back to Main Menu (back/exit) - CTRL + z\n")
       
       user_input = input("\nWhat would you like to do?: ")
 
@@ -187,7 +187,7 @@ def lab_options_menu():
       # Additional Menu Options
       print("Other Options: ")
       print("98. Back to Lab Options Menu (back/exit)")
-      print("99. Back to Main Menu (main)\n")
+      print("99. Back to Main Menu (main) - CTRL + z\n")
 
       # User Input
       user_input = input("What would you like to do?: ")
