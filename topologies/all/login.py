@@ -245,15 +245,18 @@ def main_menu():
 ##############################################
 
 def main():
-
+    global menu_mode
     # Create Menu Manager
     while menu_mode:
+      try:
         if menu_mode == 'MAIN':
           main_menu()
         elif menu_mode == 'DEVICE_SSH':
           device_menu()
         elif 'LAB_' in menu_mode:
           lab_options_menu()
+      except KeyboardInterrupt:
+        menu_mode = 'MAIN'
 
 
 if __name__ == '__main__':
