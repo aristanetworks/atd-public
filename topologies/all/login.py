@@ -117,58 +117,101 @@ def device_menu():
 
 def lab_options_menu():
     global menu_mode
-    # Get Yaml Files in /home/arista/menus
-    menu_files = os.listdir('/home/arista/menus')
-    menu_files.sort()
-    
-    # Create Commands dict to save commands and later execute based on matching the counter to a dict key
-    commands_dict = {}
 
-    # Display Lab Options
-    counter = 1
-    print('\n==========Lab Options Menu==========\n')
-    print("Please select from the following options: \n")
-    
-    # Iterate through lab menu files and print descriptions. Increment counter to reflect choices
-    for menu_type in menu_files:
-        
-        # Open yaml and load the variables
-        menu_file = open('/home/arista/menus/' + menu_type)
-        menu_info = YAML().load(menu_file)
-        menu_file.close()
+    if menu_mode == 'LAB_OPTIONS':
+      # Get Yaml Files in /home/arista/menus
+      menu_files = os.listdir('/home/arista/menus')
+      menu_files.sort()
+      
+    # Create Lab Options dict to save lab and later navigate to that menu of labs
+      lab_options_dict = {}
 
-        # Print Lab Menu and add options to commands dict
-        print(menu_type.replace('-', ' ').replace('.yaml', '') + ":")
-        for lab in menu_info['lab_list']:
-          print("{0}. {1}".format(str(counter),menu_info['lab_list'][lab][0]['description']))
-          commands_dict[counter] = menu_info['lab_list'][lab][0]['command']
-          commands_dict[lab] = menu_info['lab_list'][lab][0]['command']
+      # Create Commands dict to save commands and later execute based on matching the counter to a dict key
+      commands_dict = {}
+
+      # Display Lab Options
+      counter = 1
+      print('\n==========Lab Options Menu==========\n')
+      print("Please select from the following options: \n")
+      
+      # Iterate through lab menu files and print names without .yaml - Increment counter to reflect choices
+      counter = 1
+      for menu_type in menu_files:
+          # Print Lab Menu and add options to lab options dict
+          print(menu_type.replace('-', ' ').replace('.yaml', '') + ":")
+          lab_options[counter] = menu_type
+          lab_options[menu_type.replace('.yaml', '')] = menu_type
           counter += 1
-        print('\n')
 
-    # Additional Menu Options
-    print("Other Options: ")
-    print("99. Back to Main Menu (back/exit)\n")
+      # Additional Menu Options
+      print("Other Options: ")
+      print("99. Back to Main Menu (back/exit)\n")
+      
+      user_input = input("\nWhat would you like to do?: ")
 
-    # User Input
-    user_input = input("What would you like to do?: ")
+      # Check to see if input is digit, if it is, check to see if it is in the lab options dict
+      try:
+          if user_input.isdigit():
+              if int(user_input) in lab_options_dict:
+                  menu_mode = 'LAB_' + lab_options_dict[int(user_input)]
+              elif user_input == '99':
+                  menu_mode = "MAIN"
+          # If user input is not a digit, query to see if the text string is in the commands dict
+          elif user_input.lower() in lab_options_dict:
+              menu_mode = 'LAB_' + lab_options_dict[user_input]
+          elif user_input.lower() == 'back' or user_input.lower() == 'exit':
+              menu_mode = "MAIN"
+          else:
+              print("Invalid Input")
+      except:
+        print("Invalid Input")
 
-    # Check to see if input is digit, if it is, check to see if it is in the commands dict
-    try:
-        if user_input.isdigit():
-            if int(user_input) in commands_dict:
-                os.system(commands_dict[int(user_input)])
-            elif user_input == '99':
-                menu_mode = "MAIN"
-        # If user input is not a digit, query to see if the text string is in the commands dict
-        elif user_input.lower() in commands_dict:
-            os.system(commands_dict[user_input])
-        elif user_input.lower() == 'back' or user_input.lower() == 'exit':
-            menu_mode = "MAIN"
-        else:
-            print("Invalid Input")
-    except:
-      print("Invalid Input")
+
+
+    elif 'LAB_' in menu_mode and menu_mode != 'LAB_OPTIONS':
+  
+      # Open yaml for the lab option (minus 'LAB_' from menu mode) and load the variables
+      menu_file = open('/home/arista/menus/' + menu_mode[4:])
+      menu_info = YAML().load(menu_file)
+      menu_file.close()
+
+      
+
+      for lab in menu_info['lab_list']:
+        print("{0}. {1}".format(str(counter),menu_info['lab_list'][lab][0]['description']))
+        commands_dict[counter] = menu_info['lab_list'][lab][0]['command']
+        commands_dict[lab] = menu_info['lab_list'][lab][0]['command']
+        counter += 1
+      print('\n')
+
+      # Additional Menu Options
+      print("Other Options: ")
+      print("98. Back to Lab Options Menu (back/exit)\n")
+      print("99. Back to Main Menu (main)\n")
+
+      # User Input
+      user_input = input("What would you like to do?: ")
+
+  # # Check to see if input is digit, if it is, check to see if it is in the commands dict
+  # try:
+  #     if user_input.isdigit():
+  #         if int(user_input) in commands_dict:
+  #             os.system(commands_dict[int(user_input)])
+  #         elif user_input == '98':
+  #             menu_mode = "LAB_OPTIONS"
+  #         elif user_input == '99':
+  #             menu_mode = "MAIN"
+  #     # If user input is not a digit, query to see if the text string is in the commands dict
+  #     elif user_input.lower() in commands_dict:
+  #         os.system(commands_dict[user_input])
+  #     elif user_input.lower() == 'back' or user_input.lower() == 'exit':
+  #         menu_mode = "LAB_OPTIONS"
+  #     elif user_input.lower() == 'main':
+  #         menu_mode = "MAIN"
+  #     else:
+  #         print("Invalid Input")
+  # except:
+  #   print("Invalid Input")
 
 def main_menu():
     global menu_mode
@@ -209,7 +252,7 @@ def main():
           main_menu()
         elif menu_mode == 'DEVICE_SSH':
           device_menu()
-        elif menu_mode == 'LAB_OPTIONS':
+        elif 'LAB_' in menu_mode:
           lab_options_menu()
 
 
