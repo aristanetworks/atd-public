@@ -186,32 +186,32 @@ def lab_options_menu():
 
       # Additional Menu Options
       print("Other Options: ")
-      print("98. Back to Lab Options Menu (back/exit)\n")
+      print("98. Back to Lab Options Menu (back/exit)")
       print("99. Back to Main Menu (main)\n")
 
       # User Input
       user_input = input("What would you like to do?: ")
 
-  # # Check to see if input is digit, if it is, check to see if it is in the commands dict
-  # try:
-  #     if user_input.isdigit():
-  #         if int(user_input) in commands_dict:
-  #             os.system(commands_dict[int(user_input)])
-  #         elif user_input == '98':
-  #             menu_mode = "LAB_OPTIONS"
-  #         elif user_input == '99':
-  #             menu_mode = "MAIN"
-  #     # If user input is not a digit, query to see if the text string is in the commands dict
-  #     elif user_input.lower() in commands_dict:
-  #         os.system(commands_dict[user_input])
-  #     elif user_input.lower() == 'back' or user_input.lower() == 'exit':
-  #         menu_mode = "LAB_OPTIONS"
-  #     elif user_input.lower() == 'main':
-  #         menu_mode = "MAIN"
-  #     else:
-  #         print("Invalid Input")
-  # except:
-  #   print("Invalid Input")
+      # Check to see if input is digit, if it is, check to see if it is in the commands dict
+      try:
+          if user_input.isdigit():
+              if int(user_input) in commands_dict:
+                  os.system(commands_dict[int(user_input)])
+              elif user_input == '98':
+                  menu_mode = "LAB_OPTIONS"
+              elif user_input == '99':
+                  menu_mode = "MAIN"
+          # If user input is not a digit, query to see if the text string is in the commands dict
+          elif user_input.lower() in commands_dict:
+              os.system(commands_dict[user_input])
+          elif user_input.lower() == 'back' or user_input.lower() == 'exit':
+              menu_mode = "LAB_OPTIONS"
+          elif user_input.lower() == 'main':
+              menu_mode = "MAIN"
+          else:
+              print("Invalid Input")
+      except:
+        print("Invalid Input")
 
 def main_menu():
     global menu_mode
