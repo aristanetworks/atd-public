@@ -83,7 +83,7 @@ def device_menu():
 
     print("97. Screen (screen) - Opens a screen session to each of the hosts")
     print("98. Shell (shell/bash)")
-    print("99. Back to Main Menu (back/exit)")
+    print("99. Back to Main Menu (back/exit) - CTRL + c")
     print("")
     user_input = input("What would you like to do? ")
 
@@ -187,7 +187,7 @@ def lab_options_menu():
       # Additional Menu Options
       print("Other Options: ")
       print("98. Back to Lab Options Menu (back/exit)")
-      print("99. Back to Main Menu (main) - CTRL + z\n")
+      print("99. Back to Main Menu (main) - CTRL + c\n")
 
       # User Input
       user_input = input("What would you like to do?: ")
@@ -222,7 +222,7 @@ def main_menu():
     print("Please select from the following options: ")
     print("1. SSH to Devices (ssh)")
     print("2. Labs (labs)")
-    print("99. Exit LabVM (quit/exit)")
+    print("99. Exit LabVM (quit/exit)- CTRL + c")
     print("")
 
     user_input = input("What would you like to do?: ")
@@ -256,7 +256,11 @@ def main():
         elif 'LAB_' in menu_mode:
           lab_options_menu()
       except KeyboardInterrupt:
-        menu_mode = 'MAIN'
+        if menu_mode == 'MAIN':
+          quit()
+        else:
+          menu_mode = 'MAIN'
+        
 
 
 if __name__ == '__main__':
