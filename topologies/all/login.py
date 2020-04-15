@@ -233,7 +233,7 @@ def main_menu():
     elif user_input == '2' or user_input.lower() == 'labs':
       menu_mode = 'LAB_OPTIONS'
     elif user_input == '99' or user_input.lower() == 'exit' or user_input.lower() == 'quit':
-      print("User exited.")
+      print("\nUser exited.")
       quit()
     else:
       print("Invalid Input")
