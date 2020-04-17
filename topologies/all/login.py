@@ -216,7 +216,7 @@ def lab_options_menu():
 def main_menu():
     global menu_mode
     print("\n\n*****************************************")
-    print("*****Jump Host for Arista Demo Cloud*****")
+    print("*****Jump Host for Arista Test Drive*****")
     print("*****************************************")
     print("\n\n==========Main Menu==========:\n")
     print("Please select from the following options: ")
