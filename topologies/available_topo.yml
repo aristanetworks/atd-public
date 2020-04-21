@@ -6,6 +6,8 @@
 # - Topology_File: Must include path to yml file in topologies directory. If the path is invalid the entire topology entry is ignored
 # - Topology_Access: Must be 'admin' or 'standard'. If not standard or admin, defaults to standard
 # - Topology_Desc: Must be less than 100 characters. Anything larger will be truncated
+# - Topology_Backend: Must be a valid backend IP ['10.16.129.5', '10.16.129.72'] where the topology will be deployed.
+#       If empty, it will default to 10.16.129.5. An error will be displayed on the Event Form if an invalid value is provided.
 
 topologies_default: 'Data Center - Latest'
 topologies: [
