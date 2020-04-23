@@ -14,15 +14,19 @@ labconfiglets:
     spine1:
       - "tshoot-spine1-Tshoot-intro"
     spine2:
-      - "tshoot-spine2-Tshoot-intro"
+      - "tshoot-default"
     leaf1:
       - "tshoot-leaf1-Tshoot-intro"
     leaf2:
       - "tshoot-leaf2-Tshoot-intro"
     leaf3:
-      - "tshoot-leaf3-Tshoot-intro"
+      - "tshoot-default"
     leaf4:
-      - "tshoot-leaf4-Tshoot-intro"
+      - "tshoot-default"
+    host1:
+      - "tshoot-host1-Tshoot-intro"
+    host2:
+      - "tshoot-default"
   tshoot-sp:
     spine1:
       - "tshoot-spine1-Tshoot-sp"
@@ -31,21 +35,25 @@ labconfiglets:
     leaf1:
       - "tshoot-leaf1-Tshoot-sp"
     leaf2:
-      - "tshoot-leaf2-Tshoot-sp"
+      - "tshoot-default"
     leaf3:
-      - "tshoot-leaf3-Tshoot-sp"
+      - "tshoot-default"
     leaf4:
       - "tshoot-leaf4-Tshoot-sp"
-  tshoot-automation:
-    spine1:
-      - "tshoot-spine1-Tshoot-automation"
-    spine2:
-      - "tshoot-spine2-Tshoot-automation"
-    leaf1:
-      - "tshoot-leaf1-Tshoot-automation"
-    leaf2:
-      - "tshoot-leaf2-Tshoot-automation"
-    leaf3:
-      - "tshoot-leaf3-Tshoot-automation"
-    leaf4:
-      - "tshoot-leaf4-Tshoot-automation"
+    host1:
+      - "tshoot-host1-Tshoot-sp"
+    host2:
+      - "tshoot-host2-Tshoot-sp"
+#  tshoot-automation:
+#    spine1:
+#      - "tshoot-spine1-Tshoot-automation"
+#    spine2:
+#      - "tshoot-spine2-Tshoot-automation"
+#    leaf1:
+#      - "tshoot-leaf1-Tshoot-automation"
+#    leaf2:
+#      - "tshoot-leaf2-Tshoot-automation"
+#    leaf3:
+#     - "tshoot-leaf3-Tshoot-automation"
+#    leaf4:
+#      - "tshoot-leaf4-Tshoot-automation"
