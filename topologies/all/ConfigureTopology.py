@@ -77,6 +77,7 @@ def update_topology(client, lab, configlets):
         
           # Define a list of configlets built off of the MenuOptions.yaml
           for configlet_name in configlets[lab][device_name]:
+              print("DEBUG: Applying Configlet: " + configlet_name)
               lab_configlets.append(configlet_name)
 
           # Apply the configlets to the device
@@ -112,6 +113,8 @@ def pS(mstat,mtype):
         print("[{0}] {1}".format(mstat,mmes.expandtabs(7 - len(mstat))))
 
 def main(argv):
+    print("DEBUG Arguments:")
+    print(argv)
     f = open('/etc/ACCESS_INFO.yaml')
     accessinfo = yaml.safe_load(f)
     f.close()
@@ -123,6 +126,7 @@ def main(argv):
     options = menuoptions['lab_list']
 
     # Parse command arguments
+    print("DEBUG: Applying configs for lab: " + argv[3])
     lab = argv[3]
     # try:
     #     opts, args = getopt.getopt(argv,"ht:",["topology="])
