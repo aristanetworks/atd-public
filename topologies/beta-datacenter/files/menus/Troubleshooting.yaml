@@ -1,7 +1,7 @@
 ---
 lab_list:
   tshoot-intro:
-  -   command: "/usr/local/bin/ConfigureTopology.py -t tshoot-intro"
+  -   command: "/usr/local/bin/ConfigureTopology.py -t Troubleshooting -l tshoot-intro"
       description: "Troubleshooting Lab 1 (tshoot-intro)"
 #  tshoot-sp:
 #  -   command: "/usr/local/bin/ConfigureTopology.py -t tshoot-sp"
