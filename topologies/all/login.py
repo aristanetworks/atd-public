@@ -193,7 +193,6 @@ def lab_options_menu():
       # Check to see if input is in commands_dict
       try:
           if user_input.lower() in commands_dict:
-              print("Executing command: " + commands_dict[user_input])
               os.system(commands_dict[user_input])
           elif user_input.lower() == 'back' or user_input.lower() == 'exit':
               menu_mode = "LAB_OPTIONS"
