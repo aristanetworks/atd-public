@@ -213,6 +213,8 @@ def lab_options_menu():
 
 def main_menu():
     global menu_mode
+    global previous_menu
+
     os.system("clear")
     print("\n\n*****************************************")
     print("*****Jump Host for Arista Test Drive*****")
@@ -228,8 +230,10 @@ def main_menu():
     
     # Check user input to see which menu to change to
     if user_input == '1' or user_input.lower() == 'ssh':
+      previous_menu = menu_mode
       menu_mode = 'DEVICE_SSH'
     elif user_input == '2' or user_input.lower() == 'labs':
+      previous_menu = menu_mode
       menu_mode = 'LAB_OPTIONS'
     elif user_input == '99' or user_input.lower() == 'exit' or user_input.lower() == 'quit':
       print("\nUser exited.")
