@@ -24,6 +24,7 @@ veos_info = nodes['veos']
 
 # Set default menu mode
 menu_mode = 'MAIN'
+previous_menu = ''
 
 ###################################################
 #################### Functions ####################
@@ -58,12 +59,16 @@ def sort_veos(vd):
 
 def device_menu():
     global menu_mode
+    global previous_menu
+    os.system("clear")
     # Create Device Dict to save devices and later execute based on matching the counter to a dict key
     device_dict = {}
 
     # Sort veos instances
     veos_info_sorted = sort_veos(veos_info)
-
+    print("\n\n*****************************************")
+    print("*****Jump Host for Arista Test Drive*****")
+    print("*****************************************")
     print("\n\n==========Device SSH Menu==========\n")
     print("Screen Instructions:\n")
 
@@ -87,27 +92,18 @@ def device_menu():
     print("")
     user_input = input("What would you like to do? ")
 
-    # Check to see if input is digit, if it is, check to see if it is in the device dict
+    # Check to see if input is in device_dict
     counter = 1
     try:
-      if user_input.isdigit():
-          if int(user_input) in device_dict:
-              os.system('ssh ' + device_dict[int(user_input)])
-          elif user_input == '97':
-              os.system('/usr/bin/screen')
-          elif user_input == '98':
-              os.system("/bin/bash")
-          elif user_input == '99':
-              menu_mode = 'MAIN'
-      # If user input is not a digit, query to see if the text string is in the device dict
-      elif user_input.lower() in device_dict:
+      if user_input.lower() in device_dict:
+          previous_menu = 'DEVICE_SSH'
           os.system('ssh ' + device_dict[user_input])
       elif user_input.lower() == 'screen':
           os.system('/usr/bin/screen')
       elif user_input.lower() == 'bash' or user_input.lower() == 'shell':
-          os.system("/bin/bash")
+          os.system('/bin/bash')
       elif user_input.lower() == 'back' or user_input.lower() == 'exit':
-          menu_mode = "MAIN"
+          menu_mode = previous_menu
       else:
           print("Invalid Input")
     except:
@@ -117,7 +113,13 @@ def device_menu():
 
 def lab_options_menu():
     global menu_mode
+    global previous_menu
+
     os.system("clear")
+    print("\n\n*****************************************")
+    print("*****Jump Host for Arista Test Drive*****")
+    print("*****************************************")
+    print("\n\n==========Lab Options Menu==========\n")
 
     if menu_mode == 'LAB_OPTIONS':
       # Get Yaml Files in /home/arista/menus
@@ -208,10 +210,11 @@ def lab_options_menu():
 
 def main_menu():
     global menu_mode
+    os.system("clear")
     print("\n\n*****************************************")
     print("*****Jump Host for Arista Test Drive*****")
     print("*****************************************")
-    print("\n\n==========Main Menu==========:\n")
+    print("\n\n==========Main Menu==========\n")
     print("Please select from the following options: ")
     print("1. SSH to Devices (ssh)")
     print("2. Labs (labs)")
