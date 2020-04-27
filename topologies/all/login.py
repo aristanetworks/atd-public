@@ -85,7 +85,8 @@ def device_menu():
         device_dict[counter] = veos['ip']
         device_dict[veos['hostname']] = veos['ip']
         counter += 1
-
+    
+    print("\nOther Options: ")
     print("96. Screen (screen) - Opens a screen session to each of the hosts")
     print("97. Back to Previous Menu (back)")
     print("98. Shell (shell/bash)")
@@ -246,7 +247,9 @@ def main_menu():
       counter += 1
     print('\n')
 
-    print("97. Labs Menu (labs)")
+
+
+    print("97. Additional Labs (labs)")
     print("98. SSH to Devices (ssh)")
     print("99. Exit LabVM (quit/exit)- CTRL + c")
     print("")
