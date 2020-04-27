@@ -6,7 +6,7 @@
 # - Topology_File: Must include path to yml file in topologies directory. If the path is invalid the entire topology entry is ignored
 # - Topology_Access: Must be 'admin' or 'standard'. If not standard or admin, defaults to standard
 # - Topology_Desc: Must be less than 100 characters. Anything larger will be truncated
-# - Topology_Backend: Must be a valid backend IP ['10.16.129.5', '10.16.129.72'] where the topology will be deployed.
+# - Topology_Backend: Must be a valid backend IP ['10.16.129.5', '10.16.129.72', '10.16.129.222'] where the topology will be deployed.
 #       If empty, it will default to 10.16.129.5. An error will be displayed on the Event Form if an invalid value is provided.
 
 topologies_default: 'Data Center - Latest'
@@ -15,7 +15,7 @@ topologies: [
       Topology_File: '/datacenter-latest/Datacenter.yml',
       Topology_Access: 'standard',
       Topology_Desc: 'Two Spines, Four Leafs. Focused on EOS fundamentals within the Data Center w/CV 2019',
-      Topology_Backend: '10.16.129.72',
+      Topology_Backend: '10.16.129.222',
     },
     { Topology_Name: 'Data Center',
       Topology_File: '/datacenter/ADCATDBluePrint.yml',
@@ -27,7 +27,7 @@ topologies: [
       Topology_File: '/routing/Routing.yml',
       Topology_Access: 'admin',
       Topology_Desc: 'Twenty nodes. Focused on advanced routing, L2VPN and L3VPN topics',
-      Topology_Backend: '10.16.129.72',
+      Topology_Backend: '10.16.129.222',
     },
     { Topology_Name: 'BETA - Data Center - Latest',
       Topology_File: '/beta-datacenter/topo_build.yml',
