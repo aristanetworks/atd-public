@@ -119,7 +119,6 @@ def lab_options_menu():
     print("\n\n*****************************************")
     print("*****Jump Host for Arista Test Drive*****")
     print("*****************************************")
-    print("\n\n==========Lab Options Menu==========\n")
 
     if menu_mode == 'LAB_OPTIONS':
       # Get Yaml Files in /home/arista/menus
