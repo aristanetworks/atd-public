@@ -256,8 +256,7 @@ def main_menu():
     # Check user input to see which menu to change to
     try:
       if user_input.lower() in commands_dict:
-          previous_menu = menu_mode
-          menu_mode = 'LAB_' + commands_dict[user_input]
+          os.system(commands_dict[user_input])
       elif user_input == '98' or user_input.lower() == 'ssh':
         previous_menu = menu_mode
         menu_mode = 'DEVICE_SSH'
