@@ -144,8 +144,9 @@ def lab_options_menu():
 
       # Additional Menu Options
       print("\nOther Options: ")
+      print("97. Back to Previous Menu (back)")
       print("98. SSH to Devices (ssh)")
-      print("99. Back to Main Menu (back/exit) - CTRL + c\n")
+      print("99. Back to Main Menu (main/exit) - CTRL + c\n")
       
       user_input = input("\nWhat would you like to do?: ")
 
@@ -154,11 +155,13 @@ def lab_options_menu():
           if user_input.lower() in lab_options_dict:
               previous_menu = menu_mode
               menu_mode = 'LAB_' + lab_options_dict[user_input]
+          elif user_input == '97' or user_input.lower() == 'back':
+              menu_mode = previous_menu
           elif user_input == '98' or user_input.lower() == 'ssh':
               previous_menu = menu_mode
               menu_mode = 'DEVICE_SSH'
-          elif user_input.lower() == 'back' or user_input.lower() == 'exit':
-              menu_mode = previous_menu
+          elif user_input.lower() == 'main' or user_input.lower() == 'exit':
+              menu_mode = 'MAIN'
           else:
               print("Invalid Input")
       except:
@@ -187,9 +190,9 @@ def lab_options_menu():
 
       # Additional Menu Options
       print("Other Options: ")
-      print("97. Back to Lab Options Menu (back/exit)")
+      print("97. Back to Previous Menu (back)")
       print("98. SSH to Devices (ssh)")
-      print("99. Back to Main Menu (main) - CTRL + c\n")
+      print("99. Back to Main Menu (main/exit) - CTRL + c\n")
 
       # User Input
       user_input = input("What would you like to do?: ")
@@ -199,13 +202,13 @@ def lab_options_menu():
           if user_input.lower() in commands_dict:
               previous_menu = menu_mode
               os.system(commands_dict[user_input])
-          elif user_input.lower() == 'back' or user_input.lower() == 'exit':
+          elif user_input == '97' or user_input.lower() == 'back':
               menu_mode = previous_menu
           elif user_input == '98' or user_input.lower() == 'ssh':
               previous_menu = menu_mode
               menu_mode = 'DEVICE_SSH'
           elif user_input == '99' or user_input.lower() == 'main':
-              menu_mode = "MAIN"
+              menu_mode = 'MAIN'
           else:
               print("Invalid Input")
       except:
