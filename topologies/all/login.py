@@ -139,11 +139,12 @@ def lab_options_menu():
       # Iterate through lab menu files and print names without .yaml - Increment counter to reflect choices
       counter = 1
       for menu_type in menu_files:
-          # Print Lab Menu and add options to lab options dict
-          print('{0}. {1}'.format(str(counter),menu_type.replace('-', ' ').replace('.yaml', '')))
-          lab_options_dict[str(counter)] = menu_type
-          lab_options_dict[menu_type.replace('.yaml', '')] = menu_type
-          counter += 1
+          if menu_type != 'default.yaml':
+            # Print Lab Menu and add options to lab options dict
+            print('{0}. {1}'.format(str(counter),menu_type.replace('-', ' ').replace('.yaml', '')))
+            lab_options_dict[str(counter)] = menu_type
+            lab_options_dict[menu_type.replace('.yaml', '')] = menu_type
+            counter += 1
 
       # Additional Menu Options
       print("\nOther Options: ")
@@ -227,25 +228,49 @@ def main_menu():
     print("*****************************************")
     print("\n\n==========Main Menu==========\n")
     print("Please select from the following options: ")
-    print("1. SSH to Devices (ssh)")
-    print("2. Labs (labs)")
+
+    # Create Commands dict to save commands and later execute based on matching the counter to a dict key
+    commands_dict = {}
+
+    # Open yaml for the lab option (minus 'LAB_' from menu mode) and load the variables
+    menu_file = open('/home/arista/menus/default.yaml')
+    menu_info = YAML().load(menu_file)
+    menu_file.close()
+
+    
+    counter = 1
+    for lab in menu_info['lab_list']:
+      print("{0}. {1}".format(str(counter),menu_info['lab_list'][lab][0]['description']))
+      commands_dict[str(counter)] = menu_info['lab_list'][lab][0]['command']
+      commands_dict[lab] = menu_info['lab_list'][lab][0]['command']
+      counter += 1
+    print('\n')
+
+    print("97. Labs Menu (labs)")
+    print("98. SSH to Devices (ssh)")
     print("99. Exit LabVM (quit/exit)- CTRL + c")
     print("")
 
     user_input = input("What would you like to do?: ")
     
     # Check user input to see which menu to change to
-    if user_input == '1' or user_input.lower() == 'ssh':
-      previous_menu = menu_mode
-      menu_mode = 'DEVICE_SSH'
-    elif user_input == '2' or user_input.lower() == 'labs':
-      previous_menu = menu_mode
-      menu_mode = 'LAB_OPTIONS'
-    elif user_input == '99' or user_input.lower() == 'exit' or user_input.lower() == 'quit':
-      print("\nUser exited.")
-      quit()
-    else:
-      print("Invalid Input")
+    try:
+      if user_input.lower() in commands_dict:
+          previous_menu = menu_mode
+          menu_mode = 'LAB_' + commands_dict[user_input]
+      elif user_input == '98' or user_input.lower() == 'ssh':
+        previous_menu = menu_mode
+        menu_mode = 'DEVICE_SSH'
+      elif user_input == '97' or user_input.lower() == 'labs':
+        previous_menu = menu_mode
+        menu_mode = 'LAB_OPTIONS'
+      elif user_input == '99' or user_input.lower() == 'exit' or user_input.lower() == 'quit':
+        print("\nUser exited.")
+        quit()
+      else:
+        print("Invalid Input")
+    except:
+        print("Invalid Input")
 
 
 
