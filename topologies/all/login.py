@@ -103,7 +103,10 @@ def device_menu():
       elif user_input == '96' or user_input.lower() == 'screen':
           os.system('/usr/bin/screen')
       elif user_input == '97' or user_input.lower() == 'back':
-          menu_mode = previous_menu
+          if menu_mode == previous_menu:
+              menu_mode == 'MAIN'
+          else:
+              menu_mode = previous_menu
       elif user_input == '98' or user_input.lower() == 'bash' or user_input.lower() == 'shell':
           os.system('/bin/bash')
       elif user_input == '99' or user_input.lower() == 'main' or user_input == '99' or user_input.lower() == 'exit':
@@ -161,7 +164,10 @@ def lab_options_menu():
               previous_menu = menu_mode
               menu_mode = 'LAB_' + lab_options_dict[user_input]
           elif user_input == '97' or user_input.lower() == 'back':
-              menu_mode = previous_menu
+              if menu_mode == previous_menu:
+                  menu_mode == 'MAIN'
+              else:
+                  menu_mode = previous_menu
           elif user_input == '98' or user_input.lower() == 'ssh':
               previous_menu = menu_mode
               menu_mode = 'DEVICE_SSH'
@@ -210,7 +216,10 @@ def lab_options_menu():
               previous_menu = menu_mode
               os.system(commands_dict[user_input])
           elif user_input == '97' or user_input.lower() == 'back':
-              menu_mode = previous_menu
+              if menu_mode == previous_menu:
+                  menu_mode == 'MAIN'
+              else:
+                  menu_mode = previous_menu
           elif user_input == '98' or user_input.lower() == 'ssh':
               previous_menu = menu_mode
               menu_mode = 'DEVICE_SSH'
