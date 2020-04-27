@@ -117,6 +117,7 @@ def device_menu():
 
 def lab_options_menu():
     global menu_mode
+    os.system("clear")
 
     if menu_mode == 'LAB_OPTIONS':
       # Get Yaml Files in /home/arista/menus
