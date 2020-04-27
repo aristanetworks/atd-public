@@ -184,7 +184,7 @@ def lab_options_menu():
       menu_info = YAML().load(menu_file)
       menu_file.close()
 
-      print('\n\n==========Lab Options Menu - {0}==========\n'.format(menu_mode[4:].replace('-', ' ')))
+      print('\n\n==========Lab Options Menu - {0}==========\n'.format(menu_mode[4:].replace('-', ' ').replace('.yaml', '')))
       print("Please select from the following options: \n")
       
       counter = 1
