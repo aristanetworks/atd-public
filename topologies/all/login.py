@@ -136,7 +136,7 @@ def lab_options_menu():
       for menu_type in menu_files:
           # Print Lab Menu and add options to lab options dict
           print('{0}. {1}'.format(str(counter),menu_type.replace('-', ' ').replace('.yaml', '')))
-          lab_options_dict[counter] = menu_type
+          lab_options_dict[str(counter)] = menu_type
           lab_options_dict[menu_type.replace('.yaml', '')] = menu_type
           counter += 1
 
@@ -147,17 +147,9 @@ def lab_options_menu():
       
       user_input = input("\nWhat would you like to do?: ")
 
-      # Check to see if input is digit, if it is, check to see if it is in the lab options dict
+      # Check to see if digit is in lab_options dict
       try:
-          if user_input.isdigit():
-              if int(user_input) in lab_options_dict:
-                  menu_mode = 'LAB_' + lab_options_dict[int(user_input)]
-              elif user_input == '98':
-                  menu_mode = 'DEVICE_SSH'
-              elif user_input == '99':
-                  menu_mode = "MAIN"
-          # If user input is not a digit, query to see if the text string is in the commands dict
-          elif user_input.lower() in lab_options_dict:
+          if user_input.lower() in lab_options_dict:
               menu_mode = 'LAB_' + lab_options_dict[user_input]
           elif user_input.lower() == 'ssh':
               menu_mode = 'DEVICE_SSH'
@@ -184,7 +176,7 @@ def lab_options_menu():
       counter = 1
       for lab in menu_info['lab_list']:
         print("{0}. {1}".format(str(counter),menu_info['lab_list'][lab][0]['description']))
-        commands_dict[counter] = menu_info['lab_list'][lab][0]['command']
+        commands_dict[str(counter)] = menu_info['lab_list'][lab][0]['command']
         commands_dict[lab] = menu_info['lab_list'][lab][0]['command']
         counter += 1
       print('\n')
@@ -198,20 +190,9 @@ def lab_options_menu():
       # User Input
       user_input = input("What would you like to do?: ")
 
-      # Check to see if input is digit, if it is, check to see if it is in the commands dict
+      # Check to see if input is in commands_dict
       try:
-          if user_input.isdigit():
-              if int(user_input) in commands_dict:
-                  print("Executing command: " + commands_dict[int(user_input)])
-                  os.system(commands_dict[int(user_input)])
-              elif user_input == '97':
-                  menu_mode = "LAB_OPTIONS"
-              elif user_input == '98':
-                  menu_mode = 'DEVICE_SSH'
-              elif user_input == '99':
-                  menu_mode = "MAIN"
-          # If user input is not a digit, query to see if the text string is in the commands dict
-          elif user_input.lower() in commands_dict:
+          if user_input.lower() in commands_dict:
               print("Executing command: " + commands_dict[user_input])
               os.system(commands_dict[user_input])
           elif user_input.lower() == 'back' or user_input.lower() == 'exit':
@@ -244,6 +225,10 @@ def main_menu():
       menu_mode = 'DEVICE_SSH'
     elif user_input == '2' or user_input.lower() == 'labs':
       menu_mode = 'LAB_OPTIONS'
+    elif user_input == '97':
+      os.system('/usr/bin/screen')
+    elif user_input == '98':
+      os.system("/bin/bash")
     elif user_input == '99' or user_input.lower() == 'exit' or user_input.lower() == 'quit':
       print("\nUser exited.")
       quit()
