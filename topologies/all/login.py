@@ -225,10 +225,6 @@ def main_menu():
       menu_mode = 'DEVICE_SSH'
     elif user_input == '2' or user_input.lower() == 'labs':
       menu_mode = 'LAB_OPTIONS'
-    elif user_input == '97':
-      os.system('/usr/bin/screen')
-    elif user_input == '98':
-      os.system("/bin/bash")
     elif user_input == '99' or user_input.lower() == 'exit' or user_input.lower() == 'quit':
       print("\nUser exited.")
       quit()
