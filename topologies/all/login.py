@@ -142,6 +142,7 @@ def lab_options_menu():
 
       # Additional Menu Options
       print("\nOther Options: ")
+      print("98. SSH to Devices (ssh)")
       print("99. Back to Main Menu (back/exit) - CTRL + c\n")
       
       user_input = input("\nWhat would you like to do?: ")
@@ -151,11 +152,15 @@ def lab_options_menu():
           if user_input.isdigit():
               if int(user_input) in lab_options_dict:
                   menu_mode = 'LAB_' + lab_options_dict[int(user_input)]
+              elif user_input == '98':
+                  menu_mode = 'DEVICE_SSH'
               elif user_input == '99':
                   menu_mode = "MAIN"
           # If user input is not a digit, query to see if the text string is in the commands dict
           elif user_input.lower() in lab_options_dict:
               menu_mode = 'LAB_' + lab_options_dict[user_input]
+          elif user_input.lower() == 'ssh':
+              menu_mode = 'DEVICE_SSH'
           elif user_input.lower() == 'back' or user_input.lower() == 'exit':
               menu_mode = "MAIN"
           else:
@@ -186,7 +191,8 @@ def lab_options_menu():
 
       # Additional Menu Options
       print("Other Options: ")
-      print("98. Back to Lab Options Menu (back/exit)")
+      print("97. Back to Lab Options Menu (back/exit)")
+      print("98. SSH to Devices (ssh)")
       print("99. Back to Main Menu (main) - CTRL + c\n")
 
       # User Input
@@ -198,8 +204,10 @@ def lab_options_menu():
               if int(user_input) in commands_dict:
                   print("Executing command: " + commands_dict[int(user_input)])
                   os.system(commands_dict[int(user_input)])
-              elif user_input == '98':
+              elif user_input == '97':
                   menu_mode = "LAB_OPTIONS"
+              elif user_input == '98':
+                  menu_mode = 'DEVICE_SSH'
               elif user_input == '99':
                   menu_mode = "MAIN"
           # If user input is not a digit, query to see if the text string is in the commands dict
@@ -208,6 +216,8 @@ def lab_options_menu():
               os.system(commands_dict[user_input])
           elif user_input.lower() == 'back' or user_input.lower() == 'exit':
               menu_mode = "LAB_OPTIONS"
+          elif user_input.lower() == 'ssh':
+              menu_mode = 'DEVICE_SSH'
           elif user_input.lower() == 'main':
               menu_mode = "MAIN"
           else:
