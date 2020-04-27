@@ -17,3 +17,4 @@ screen 6 ssh 192.168.0.17
 screen 7 ssh 192.168.0.31
 screen 8 ssh 192.168.0.32
 screen 9 ssh 192.168.0.44
+screen 10 /usr/local/bin/login.py

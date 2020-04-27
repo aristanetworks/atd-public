@@ -102,10 +102,10 @@ def device_menu():
           os.system('ssh ' + device_dict[user_input])
       elif user_input == '96' or user_input.lower() == 'screen':
           os.system('/usr/bin/screen')
-      elif user_input == '98' or user_input.lower() == 'bash' or user_input.lower() == 'shell':
-          os.system('/bin/bash')
       elif user_input == '97' or user_input.lower() == 'back':
           menu_mode = previous_menu
+      elif user_input == '98' or user_input.lower() == 'bash' or user_input.lower() == 'shell':
+          os.system('/bin/bash')
       elif user_input == '99' or user_input.lower() == 'main' or user_input == '99' or user_input.lower() == 'exit':
           menu_mode = 'MAIN'
       else:
