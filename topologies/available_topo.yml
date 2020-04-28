@@ -49,5 +49,11 @@ topologies: [
       Topology_File: '/adc-update-test/adc-update-test.yml',
       Topology_Access: 'admin',
       Topology_Desc: 'DO NOT USE! Add a topology to test the update to production frontend',
+    },
+    { Topology_Name: 'GCP - Nested VM',
+      Topology_File: '/nested-vm/NestedVM.yml',
+      Topology_Access: 'admin',
+      Topology_Desc: 'Topology deployed in GCP',
+      Topology_Backend: '10.16.129.222',
     }
 ]
