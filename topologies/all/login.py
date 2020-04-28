@@ -278,8 +278,7 @@ def main_menu():
         previous_menu = menu_mode
         menu_mode = 'LAB_OPTIONS'
       elif user_input == '99' or user_input.lower() == 'exit' or user_input.lower() == 'quit':
-        print("\nUser exited.")
-        quit()
+        menu_mode = 'EXIT'
       else:
         print("Invalid Input")
     except:
@@ -302,6 +301,8 @@ def main():
           device_menu()
         elif 'LAB_' in menu_mode:
           lab_options_menu()
+        elif menu_mode == 'EXIT':
+          print('User exited.')
       except KeyboardInterrupt:
         if menu_mode == 'MAIN':
           print('User exited.')
