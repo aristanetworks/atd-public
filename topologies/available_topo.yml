@@ -8,6 +8,7 @@
 # - Topology_Desc: Must be less than 100 characters. Anything larger will be truncated
 # - Topology_Backend: Must be a valid backend IP ['10.16.129.5', '10.16.129.72', '10.16.129.222'] where the topology will be deployed.
 #       If empty, it will default to 10.16.129.5. An error will be displayed on the Event Form if an invalid value is provided.
+# - Topology_Service: Cloud service where to run the deployment. Defaults to 'aws'
 
 topologies_default: 'Data Center - Latest'
 topologies: [
@@ -55,5 +56,6 @@ topologies: [
       Topology_Access: 'admin',
       Topology_Desc: 'Topology deployed in GCP',
       Topology_Backend: '10.16.129.222',
+      Topology_Service: 'gcp',
     }
 ]
