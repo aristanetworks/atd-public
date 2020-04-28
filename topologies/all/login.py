@@ -279,6 +279,7 @@ def main_menu():
         menu_mode = 'LAB_OPTIONS'
       elif user_input == '99' or user_input.lower() == 'exit' or user_input.lower() == 'quit':
         menu_mode = 'EXIT'
+        quit()
       else:
         print("Invalid Input")
     except:
