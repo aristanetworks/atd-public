@@ -169,9 +169,9 @@ def main(uargs):
         # Add CPU configuration
         vcpu = ET.SubElement(root, 'vcpu', attrib={
             'placement': 'static',
-            'cpuset': VEOS_CPUS[node_counter]
+            'cpuset': str(VEOS_CPUS[node_counter])
         })
-        vcpu.text = 1
+        vcpu.text = '1'
         # Add/Create disk location for xml
         tmp_disk = ET.SubElement(xdev, 'disk', attrib={
             'type': 'file',
