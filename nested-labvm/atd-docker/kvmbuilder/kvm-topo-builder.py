@@ -16,6 +16,7 @@ DATA_OUTPUT = expanduser('~/kvm/')
 BASE_XML_VEOS = expanduser('~/base.xml')
 
 CPU_START = 8
+AVAIL_CPUS = 10
 OVS_BRIDGES = []
 VEOS_NODES = {}
 sleep_delay = 30
@@ -122,9 +123,9 @@ def getCPUs():
     cpu_cores = int(psutil.cpu_count(logical=True)/2)
     avail_cpus = []
     for cpuindex in range(CPU_START, cpu_cores):
-        avail_cpus.append(cpuindex)
-        avail_cpus.append(cpuindex + cpu_cores)
-    return(avail_cpus)
+        avail_cpus.append(str(cpuindex))
+        avail_cpus.append(str(cpuindex + cpu_cores))
+    return(', '.join(avail_cpus))
 
 def pS(mstat,mtype):
     """
@@ -169,7 +170,7 @@ def main(uargs):
         # Add CPU configuration
         vcpu = ET.SubElement(root, 'vcpu', attrib={
             'placement': 'static',
-            'cpuset': str(VEOS_CPUS[node_counter])
+            'cpuset': VEOS_CPUS
         })
         vcpu.text = '1'
         # Add/Create disk location for xml
