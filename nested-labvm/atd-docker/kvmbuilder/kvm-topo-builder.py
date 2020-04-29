@@ -6,6 +6,7 @@ from os import mkdir
 from time import sleep
 import argparse
 import xml.etree.ElementTree as ET
+import psutil
 
 FILE_TOPO = '/etc/atd/ACCESS_INFO.yaml'
 REPO_PATH = '/tmp/atd/'
@@ -14,6 +15,7 @@ AVAIL_TOPO = REPO_TOPO + 'available_topo.yaml'
 DATA_OUTPUT = expanduser('~/kvm/')
 BASE_XML_VEOS = expanduser('~/base.xml')
 
+CPU_START = 8
 OVS_BRIDGES = []
 VEOS_NODES = {}
 sleep_delay = 30
@@ -113,6 +115,17 @@ def createMac(dev_id):
     elif dev_id >=20 and dev_id < 30:
         return('d{0}'.format(dev_id - 20))
 
+def getCPUs():
+    """
+    Function to get available CPUs vEOS node
+    """
+    cpu_cores = int(psutil.cpu_count(logical=True)/2)
+    avail_cpus = []
+    for cpuindex in range(CPU_START, cpu_cores):
+        avail_cpus.append(cpuindex)
+        avail_cpus.append(cpuindex + cpu_cores)
+    return(avail_cpus)
+
 def pS(mstat,mtype):
     """
     Function to send output from service file to Syslog
@@ -122,6 +135,7 @@ def pS(mstat,mtype):
 
 def main(uargs):
     global DATA_OUTPUT
+    VEOS_CPUS = getCPUs()
     while True:
         if exists(FILE_TOPO):
             break
@@ -152,6 +166,12 @@ def main(uargs):
         # Add name item for KVM domain
         vname = ET.SubElement(root, 'name')
         vname.text = vdev
+        # Add CPU configuration
+        vcpu = ET.SubElement(root, 'vcpu', attrib={
+            'placement': 'static',
+            'cpuset': VEOS_CPUS[node_counter]
+        })
+        vcpu.text = 1
         # Add/Create disk location for xml
         tmp_disk = ET.SubElement(xdev, 'disk', attrib={
             'type': 'file',

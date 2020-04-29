@@ -4,7 +4,7 @@ ARG UID=1000
 
 RUN useradd -m -u $UID atdadmin
 
-RUN pip install ruamel.yaml
+RUN pip install ruamel.yaml psutil
 
 WORKDIR /home/atdadmin
 
