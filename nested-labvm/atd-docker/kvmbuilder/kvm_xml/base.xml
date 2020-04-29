@@ -1,7 +1,6 @@
 <domain type='kvm' id='@random_id@'>
   <memory unit='MiB'>2048</memory>
   <currentMemory unit='MiB'>2048</currentMemory>
-  <vcpu placement='static'>1</vcpu>
   <os>
     <type arch='x86_64' machine='pc'>hvm</type>
     <boot dev='hd'/>
