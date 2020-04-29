@@ -16,7 +16,6 @@ DATA_OUTPUT = expanduser('~/kvm/')
 BASE_XML_VEOS = expanduser('~/base.xml')
 
 CPU_START = 8
-AVAIL_CPUS = 10
 OVS_BRIDGES = []
 VEOS_NODES = {}
 sleep_delay = 30
