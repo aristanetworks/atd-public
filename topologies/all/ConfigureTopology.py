@@ -176,7 +176,8 @@ def main(argv):
       print_usage(options)
 
     # Execute all tasks generated from reset_devices()
-    current_tasks = cvp_clnt.getAllTasks("pending")
+    cvp_clnt.getAllTasks("pending")
+    current_tasks = cvp_clnt.tasks()
     cvp_clnt.execAllTasks("pending")
     pS("OK", 'Completed setting devices to topology: {}'.format(lab))
 
