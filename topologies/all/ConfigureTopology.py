@@ -184,6 +184,7 @@ def main(argv):
     tasks_complete = False
     while not tasks_complete:
         current_tasks = cvp_clnt.getAllTasks("ACTIVE")
+        print(current_tasks)
         if len(current_tasks) == 0:
             print("Lab setup completed.")
             tasks_complete = True
