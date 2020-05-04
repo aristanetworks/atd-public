@@ -176,14 +176,13 @@ def main(argv):
       print_usage(options)
 
     # Execute all tasks generated from reset_devices()
-    cvp_clnt.getAllTasks("pending")
+    current_tasks = cvp_clnt.getAllTasks("pending")
     cvp_clnt.execAllTasks("pending")
     pS("OK", 'Completed setting devices to topology: {}'.format(lab))
 
     print("Please wait while lab is prepared...")
     tasks_complete = False
     while not tasks_complete:
-        current_tasks = cvp_clnt.getAllTasks("ACTIVE")
         print(current_tasks)
         if len(current_tasks) == 0:
             print("Lab setup completed.")
