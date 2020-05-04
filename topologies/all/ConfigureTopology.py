@@ -186,7 +186,7 @@ def main(argv):
     while not all_tasks_completed:
         tasks_running = []
         for task in tasks_to_check:
-            if cvp_clnt.getTaskStatus(task['workOrderId'])['taskStatus']) != 'Completed':
+            if cvp_clnt.getTaskStatus(task['workOrderId'])['taskStatus'] != 'Completed':
                 tasks_running.append(task)
             else:
                 pass
