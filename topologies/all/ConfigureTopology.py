@@ -192,6 +192,7 @@ def main(argv):
                 pass
         
         if len(tasks_running) == 0:
+            print("Lab Setup Completed.")
             all_tasks_completed = True
         else:
             pass
