@@ -180,6 +180,17 @@ def main(argv):
     cvp_clnt.execAllTasks("pending")
     pS("OK", 'Completed setting devices to topology: {}'.format(lab))
 
+    print("Please wait while lab is prepared...")
+    tasks_complete = False
+    while not tasks_complete:
+        current_tasks = cvp_clnt.getAllTasks("ACTIVE")
+        if len(current_tasks) == 0:
+            print("Lab setup completed.")
+            tasks_complete = True
+        else:
+            pass
+
+
 if __name__ == '__main__':
     syslog.openlog(logoption=syslog.LOG_PID)
     main(sys.argv[1:])
