@@ -181,7 +181,7 @@ def main(argv):
     cvp_clnt.execAllTasks("pending")
     pS("OK", 'Completed setting devices to topology: {}'.format(lab))
 
-    print("Please wait while lab is prepared...")
+    print("Please wait while the lab is prepared...")
     all_tasks_completed = False
     while not all_tasks_completed:
         tasks_running = []
