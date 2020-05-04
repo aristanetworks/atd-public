@@ -22,4 +22,4 @@ Connecting
 
 3. The LabAccess menu allows users to connect to each device and specify
    lab topology. It is recommended to open multiple SSH sessions or use
-   the Screen option to jump between devices rapidly.
+   the Screen option (under the SSH Menu) to jump between devices rapidly.
