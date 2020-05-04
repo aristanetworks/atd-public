@@ -184,7 +184,7 @@ def main(argv):
     print("Please wait while lab is prepared...")
     all_tasks_completed = False
     # while not all_tasks_completed:
-    for task in tasks_to_check:
+    for task in tasks_to_check['pending']:
         print(task)
         #     all_tasks_completed = True
         # else:
