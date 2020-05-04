@@ -177,15 +177,26 @@ def main(argv):
 
     # Execute all tasks generated from reset_devices()
     cvp_clnt.getAllTasks("pending")
-    tasks_to_check = cvp_clnt.tasks
+    tasks_to_check = cvp_clnt.tasks['pending']
     cvp_clnt.execAllTasks("pending")
     pS("OK", 'Completed setting devices to topology: {}'.format(lab))
 
     print("Please wait while lab is prepared...")
     all_tasks_completed = False
-    # while not all_tasks_completed:
-    for task in tasks_to_check['pending']:
-        print(cvp_clnt.getTaskStatus(task['workOrderId']))
+    while not all_tasks_completed:
+        tasks_running = []
+        for task in tasks_to_check:
+            if cvp_clnt.getTaskStatus(task['workOrderId'])['taskStatus'] != 'Completed'):
+                tasks_running.append(task)
+            else:
+                pass
+        
+        if len(tasks_running) == 0:
+            all_tasks_completed = True
+        else:
+            pass
+            
+
 
 
 if __name__ == '__main__':
