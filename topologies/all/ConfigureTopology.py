@@ -169,7 +169,7 @@ def main(argv):
                     time.sleep(30)
 
     # Make sure option chosen is valid, then configure the topology
-    print("Please wait while the lab is prepared...")
+    print("Please wait while the {0} lab is prepared...".format(lab))
     if lab in options:
         pS("INFO", "Setting {0} topology to {1} setup".format(accessinfo['topology'], lab))
         update_topology(cvp_clnt, lab, labconfiglets)
