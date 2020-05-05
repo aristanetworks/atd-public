@@ -188,6 +188,8 @@ def main(argv):
         for task in tasks_to_check:
             if cvp_clnt.getTaskStatus(task['workOrderId'])['taskStatus'] != 'Completed':
                 tasks_running.append(task)
+            elif cvp_clnt.getTaskStatus(task['workOrderId'])['taskStatus'] != 'Failed':
+                print('Task {0} failed.'.format(task['workOrderId'])
             else:
                 pass
         
