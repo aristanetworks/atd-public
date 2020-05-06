@@ -1,4 +1,4 @@
 ---
 topologies:
-  datacenter-latest:  base-atd-datacenter-e4-24-0f-c2020-1-0-gm
-  routing: base-atd-routing-20200317b-gm-a
+  datacenter-latest: base-atd-datacenter-e4-24-0-c2020-1-0-20200504
+  routing: base-atd-routing-e4-24-0-c2020-1-0-20200504
