@@ -6,14 +6,11 @@ Media OSPF Lab
 
 .. note:: Did you know the OSPF algorithm is considered a link-state protocol, based on the Dijkstra Shortest Path Algorithm? It is a common protocol used in a number of widely deployed environments in various industries.
 
-1. Log into the **LabAccess** jumpserver:
+1. Log into the **Lab Access** jumpserver:
 
-   1. Type ``labs`` or option ``97`` at the Main Menu prompt. This will bring up additional lab menu selections.
-   2. Type ``media`` or option ``2`` at this prompt to open the media lab section (If you were previously in the Media Labs Menu, you can type ``back`` or option ``97`` to go back).
-   3. If this is your first media lab, type ``media-setup`` or option ``1`` at this prompt and wait for the process to run to prepare the lab environment.
-   4. Type ``media-ospf`` or option ``4`` at the prompt. The script will configure the topology with the exception of **Leaf 4**.
+   1. Type ``media-ospf`` at the prompt. The script will configure the topology with the exception of **Leaf 4**.
 
-   5. On **Spine 2**, verify OSPF operation (it should not be operating correctly) and you will see all the routes currently in the environment.
+   2. On **Spine 2**, verify OSPF operation (it should not be operating correctly) and you will see all the routes currently in the environment.
 
         .. code-block:: text
 
@@ -173,8 +170,8 @@ Media OSPF Lab
 
             configure
             router ospf 100
-              passive-interface loopback0
-              passive-interface ethernet4
+              passive interface loopback0
+              passive interface ethernet4
 
       **Example:**
 
@@ -286,12 +283,14 @@ Media OSPF Lab
 
          .. code-block:: text
 
+            enable
             ping 172.16.15.5
 
       **Example:**
 
          .. code-block:: text
 
+            host2> enable
             host2# ping 172.16.15.5
             PING 172.16.15.5 (172.16.15.5) 72(100) bytes of data.
             80 bytes from 172.16.15.5: icmp_seq=1 ttl=60 time=99.5 ms

@@ -65,7 +65,7 @@ MLAG
               switchport trunk group MLAGPEER
               exit
 
-            no spanning-tree vlan-id 4094
+            no spanning-tree vlan 4094
 
             interface vlan 4094
               description MLAG PEER LINK

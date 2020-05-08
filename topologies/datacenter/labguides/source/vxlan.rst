@@ -32,7 +32,7 @@ VxLAN
         interface Ethernet4
             description HOST2
             channel-group 4 mode active
-            lacp timer fast
+            lacp rate fast
 
 3. Verify MLAG on **Leaf3**
 
