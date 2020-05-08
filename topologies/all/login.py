@@ -262,7 +262,7 @@ def main_menu():
 
     print("97. Additional Labs (labs)")
     print("98. SSH to Devices (ssh)")
-    print("99. Exit LabVM (quit/exit)- CTRL + c")
+    print("99. Exit LabVM (quit/exit) - CTRL + c")
     print("")
 
     user_input = input("What would you like to do?: ")
