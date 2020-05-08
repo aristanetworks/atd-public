@@ -245,7 +245,7 @@ def main_menu():
 
     # Open yaml for the default yaml and read what file to lookup for default menu
     default_menu_file = open('/home/arista/menus/default.yaml')
-    default_menu_info = YAML().load(menu_file)
+    default_menu_info = YAML().load(default_menu_file)
     default_menu_file.close()
 
 
