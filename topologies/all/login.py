@@ -4,7 +4,6 @@ import sys
 import signal
 import re
 from ruamel.yaml import YAML
-from itertools import zip_longest
 
 
 ######################################
