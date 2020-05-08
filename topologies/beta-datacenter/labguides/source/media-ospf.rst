@@ -6,9 +6,11 @@ Media OSPF Lab
 
 .. note:: Did you know the OSPF algorithm is considered a link-state protocol, based on the Dijkstra Shortest Path Algorithm? It is a common protocol used in a number of widely deployed environments in various industries.
 
-1. Log into the **Lab Access** jumpserver:
+1. Log into the **LabAccess** jumpserver:
 
-   1. Type ``media-ospf`` or option ``13`` at the prompt. The script will configure the topology with the exception of **Leaf 4**.
+   1. Type ``labs`` or option ``97`` at the Main Menu prompt. This will bring up additional lab menu selections.
+   2. Type ``media`` or option ``2`` at this prompt to open the media lab section (If you were previously in the Media Labs Menu, you can type ``back`` or option ``97`` to go back).
+   3. Type ``media-ospf`` or option ``4`` at the prompt. The script will configure the topology with the exception of **Leaf 4**.
 
    2. On **Spine 2**, verify OSPF operation (it should not be operating correctly) and you will see all the routes currently in the environment.
 

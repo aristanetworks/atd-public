@@ -80,7 +80,7 @@ Ansible playbook (``ntp.yml``):
 
     ---
     - name: Add a NTP server
-      hosts: 192.168.0.14
+      hosts: veos
       gather_facts: no
       connection: local
       vars:
@@ -204,7 +204,7 @@ Now let’s create the playbook on your desktop named ``interfaces.yml``:
 
     ---
     - name: Add interface descriptions
-      hosts: 192.168.0.14
+      hosts: veos
       gather_facts: no
       connection: local
       vars:

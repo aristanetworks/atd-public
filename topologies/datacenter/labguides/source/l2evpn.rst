@@ -13,7 +13,7 @@ L2 EVPN
 
    1. Type ``l2evpn`` at the prompt. The script will configure the datacenter with the exception of **leaf3**
 
-2. On **leaf3**, configure ArBGP.
+2. On **leaf3**, configure ArBGP. **(Already configured and enabled on the switch)**
 
     .. code-block:: html
 
@@ -42,7 +42,7 @@ L2 EVPN
         !
         interface Ethernet4
           channel-group 4 mode active
-          lacp rate fast
+          lacp timer fast
         !
         interface Ethernet5
           shutdown
@@ -63,12 +63,12 @@ L2 EVPN
         router bgp 65103
           router-id 172.16.0.5
           maximum-paths 2 ecmp 2
-          neighbor SPINE peer-group
-          neighbor SPINE fall-over bfd
+          neighbor SPINE peer group
+          neighbor SPINE bfd
           neighbor SPINE remote-as 65001
           neighbor SPINE maximum-routes 12000
-          neighbor 172.16.200.9 peer-group SPINE
-          neighbor 172.16.200.25 peer-group SPINE
+          neighbor 172.16.200.9 peer group SPINE
+          neighbor 172.16.200.25 peer group SPINE
           redistribute connected
         !
 
@@ -87,15 +87,15 @@ L2 EVPN
 
         configure
         router bgp 65103
-          neighbor SPINE-EVPN-TRANSIT peer-group
+          neighbor SPINE-EVPN-TRANSIT peer group
           neighbor SPINE-EVPN-TRANSIT next-hop-unchanged
           neighbor SPINE-EVPN-TRANSIT update-source Loopback0
           neighbor SPINE-EVPN-TRANSIT ebgp-multihop
           neighbor SPINE-EVPN-TRANSIT send-community extended
           neighbor SPINE-EVPN-TRANSIT remote-as 65001
           neighbor SPINE-EVPN-TRANSIT maximum-routes 0
-          neighbor 172.16.0.1 peer-group SPINE-EVPN-TRANSIT
-          neighbor 172.16.0.2 peer-group SPINE-EVPN-TRANSIT
+          neighbor 172.16.0.1 peer group SPINE-EVPN-TRANSIT
+          neighbor 172.16.0.2 peer group SPINE-EVPN-TRANSIT
         !
         address-family evpn
           neighbor SPINE-EVPN-TRANSIT activate
@@ -152,9 +152,8 @@ L2 EVPN
 
         .. code-block:: text
 
-            enable
             ping 172.16.112.202
-
+        
    3. On **leaf1** and **leaf3**
 
         .. code-block:: text

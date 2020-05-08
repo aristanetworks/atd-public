@@ -7,7 +7,10 @@ Advanced Networking for Media Engineers
 .. note:: To simplify the training using our multicast topology, this exercise will disable Leaf2 and Leaf3.  This lab is a continuation of the concepts from the previous Broadcast Engineer Labs
 
 1. Log into the **LabAccess** jumpserver:
-    1. Type ``media-mcast`` or option ``15`` at the prompt. The script will pre-configure the topology with the exception of Leaf4 and Hosts 1 & 2
+
+   1. Type ``labs`` or option ``97`` at the Main Menu prompt. This will bring up additional lab menu selections.
+   2. Type ``media`` or option ``2`` at this prompt to open the media lab section (If you were previously in the Media Labs Menu, you can type ``back`` or option ``97`` to go back).
+   3. Type ``media-mcast`` or option ``6`` at the prompt. The script will pre-configure the topology with the exception of Leaf4 and Hosts 1 & 2.
 
 2. Create Vlan 46 & SVI for host access vlan on **Leaf 4**.
     1. On **Leaf 4** we will create an vlan and a SVI
