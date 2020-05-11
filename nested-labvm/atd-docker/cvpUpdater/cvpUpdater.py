@@ -12,7 +12,7 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 topo_file = '/etc/atd/ACCESS_INFO.yaml'
 CVP_CONFIG_FIILE = path.expanduser('~/CVP_DATA/.cvpState.txt')
-REPO_PATH = '/tmp/atd/'
+REPO_PATH = '/opt/atd/'
 REPO_TOPO = REPO_PATH + 'topologies/'
 CVP_CONTAINERS = []
 sleep_delay = 30
@@ -117,7 +117,7 @@ def main():
     build_yaml = getTopoInfo(REPO_TOPO + atd_yaml['topology'] + '/topo_build.yml')
     eos_cnt_map = eosContainerMapper(cvp_yaml['cvp_info']['containers'])
     eos_info = getEosDevice(atd_yaml['topology'],build_yaml['nodes'],eos_cnt_map)
-    configlet_location = '/tmp/atd/topologies/{0}/configlets/'.format(atd_yaml['topology'])
+    configlet_location = '/opt/atd/topologies/{0}/configlets/'.format(atd_yaml['topology'])
     for c_login in atd_yaml['login_info']['cvp']['shell']:
         if c_login['user'] == 'arista':
             while not cvp_clnt:

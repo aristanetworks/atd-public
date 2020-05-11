@@ -9,7 +9,7 @@ import xml.etree.ElementTree as ET
 import psutil
 
 FILE_TOPO = '/etc/atd/ACCESS_INFO.yaml'
-REPO_PATH = '/tmp/atd/'
+REPO_PATH = '/opt/atd/'
 REPO_TOPO = REPO_PATH + 'topologies/'
 AVAIL_TOPO = REPO_TOPO + 'available_topo.yaml'
 DATA_OUTPUT = expanduser('~/kvm/')

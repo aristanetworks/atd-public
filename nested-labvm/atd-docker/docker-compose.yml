@@ -16,7 +16,7 @@ services:
       - PYTHONUNBUFFERED=1
     volumes:
       - /etc/atd:/etc/atd:ro
-      - /tmp/atd/topologies:/tmp/atd/topologies:ro
+      - /opt/atd/topologies:/opt/atd/topologies:ro
       - /home/arista/arista-dir:/home/arista:rw
       - /home/arista/.ssh:/home/arista/.ssh:rw
   cvpupdater:
@@ -28,7 +28,7 @@ services:
     volumes:
       - /etc/atd:/etc/atd:ro
       - /home/arista/arista-dir/cvp:/home/arista/cvp:ro
-      - /tmp/atd:/tmp/atd:ro
+      - /opt/atd:/opt/atd:ro
       - cvp_dir:/home/arista/CVP_DATA:rw
   gitconfigletsync:
     container_name: atd-gitconfigletsync
@@ -38,7 +38,7 @@ services:
       - PYTHONUNBUFFERED=1
     volumes:
       - /etc/atd:/etc/atd:ro
-      - /tmp/atd:/tmp/atd:ro
+      - /opt/atd:/opt/atd:ro
       - cvp_dir:/home/arista/CVP_DATA:rw
   kvmbuilder:
     container_name: atd-kvmbuilder
@@ -48,7 +48,7 @@ services:
       - PYTHONUNBUFFERED=1
     volumes:
       - /etc/atd:/etc/atd:ro
-      - /tmp/atd:/tmp/atd:ro
+      - /opt/atd:/opt/atd:ro
       - /home/atdadmin/KVM_scripts:/home/atdadmin/kvm:rw
   labguides:
     container_name: atd-labguides
@@ -58,7 +58,7 @@ services:
       - PYTHONUNBUFFERED=1
     volumes:
       - /etc/atd:/etc/atd:ro
-      - /tmp/atd:/tmp/atd:ro
+      - /opt/atd:/opt/atd:ro
       - atd_labguides:/root/labguides/web
   freerad:
     container_name: atd-freeradius

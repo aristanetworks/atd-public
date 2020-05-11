@@ -49,7 +49,7 @@ except:
 topology = accessinfo['topology']
 
 try:
-  f = open('/tmp/atd/topologies/{0}/topo_build.yml'.format(topology))
+  f = open('/opt/atd/topologies/{0}/topo_build.yml'.format(topology))
   topoinfo = YAML().load(f)
   f.close()
 except:

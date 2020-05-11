@@ -61,7 +61,7 @@ def main():
       topology = 'none'
       
    # Temp path for where repo will be cloned to (include trailing /)
-   gitTempPath = '/tmp/atd/'
+   gitTempPath = '/opt/atd/'
 
    # Relative path within the repo to the configlet directory
    configletPath = 'topologies/' + topology + '/configlets/'
