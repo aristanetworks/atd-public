@@ -299,24 +299,27 @@ def main_menu():
 def main():
     global menu_mode
     # Create Menu Manager
-    while menu_mode:
-      try:
-        if menu_mode == 'MAIN':
-          main_menu()
-        elif menu_mode == 'DEVICE_SSH':
-          device_menu()
-        elif 'LAB_' in menu_mode:
-          lab_options_menu()
-        elif menu_mode == 'EXIT':
-          print('User exited.')
-          quit()
-      except KeyboardInterrupt:
-        if menu_mode == 'MAIN':
-          print('User exited.')
-          quit()
-        else:
-          menu_mode = 'MAIN'
-        
+
+    if sys.stdout.isatty():
+      while menu_mode:
+        try:
+          if menu_mode == 'MAIN':
+            main_menu()
+          elif menu_mode == 'DEVICE_SSH':
+            device_menu()
+          elif 'LAB_' in menu_mode:
+            lab_options_menu()
+          elif menu_mode == 'EXIT':
+            print('User exited.')
+            quit()
+        except KeyboardInterrupt:
+          if menu_mode == 'MAIN':
+            print('User exited.')
+            quit()
+          else:
+            menu_mode = 'MAIN'
+    else:
+      os.system("/usr/lib/openssh/sftp-server")
 
 
 if __name__ == '__main__':

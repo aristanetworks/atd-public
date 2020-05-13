@@ -196,7 +196,7 @@ def main(argv):
                 pass
         
         if len(tasks_running) == 0:
-            print("Lab Setup Completed.")
+            input("Lab Setup Completed. Please press Enter to continue...")
             all_tasks_completed = True
         else:
             pass
