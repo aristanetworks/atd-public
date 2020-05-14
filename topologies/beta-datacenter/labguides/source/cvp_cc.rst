@@ -87,7 +87,7 @@ We want to add several Loopbacks to each device using a Configlet Builder at the
 |
 |
 
-8. This screen will show pending tasks that will be associated with a Change Control(CC). Select all pending Tasks and click '+ Create Change Control'.
+8. This screen will show pending tasks that will be associated with a Change Control(CC). Select all pending Tasks and click '+ Create Change Control with 4 Tasks'.
 
 |
 |
@@ -190,10 +190,6 @@ Select 'Before Snapshot' under 'Assign to stage' and 'Parallel' under 'Select or
 
 A few notes about Change Control:
     a. Each Task can be assigned to different stages if wanted. Health checks can be performed in stages before the next stage executes.
-
-|
-|
-
     b. The order of Task execution can be specified if there are dependencies. This is done by dragging tasks under the same column (Series).
 
 |
@@ -405,13 +401,13 @@ TASK 2: View Telemetry
 
 |
 
-.. image:: images/cvp_cc/cvp_cc29-5.png
+.. image:: images/cvp_cc/cvp_cc29-6.png
    :align: center
 
 |
 |
 
-.. image:: images/cvp_cc/cvp_cc29-6.png
+.. image:: images/cvp_cc/cvp_cc29-5.png
    :align: center
 
 |
