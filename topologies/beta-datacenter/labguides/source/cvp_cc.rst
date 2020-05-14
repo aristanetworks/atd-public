@@ -281,7 +281,7 @@ Here we can view all of the changes for the tasks, snapshots to be taken, and an
 |
 |
 
-.. image:: images/cvp_cc/cvp_cc21-1.png
+.. image:: images/cvp_cc/cvp_cc21-2.png
    :align: center
 
 |
