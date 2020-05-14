@@ -18,7 +18,7 @@ HTTPS: `https://192.168.0.14 <https://192.168.0.14>`_
 .. image:: images/commandapi_2.png
    :align: center
 
-When prompted, enter in the username ``arista`` and ``arista`` as the password.
+When prompted, enter in the username ``arista`` and ``{REPLACE_ARISTA}`` as the password.
 Accept the self-signed SSL certificate, please do so.
 
 You will be greeted with the following window:
