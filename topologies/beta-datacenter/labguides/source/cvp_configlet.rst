@@ -25,7 +25,7 @@ been defined for AAA and VLANs.
 
 |
 
-3. You will come to a login screen for CloudVision Portal. Enter the username “arista” and the password “arista”
+3. You will come to a login screen for CloudVision Portal. Enter the username “arista” and the password “{REPLACE_ARISTA}”
 
 |
 

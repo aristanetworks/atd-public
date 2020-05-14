@@ -32,7 +32,7 @@ We will use the following script:
 
     import pyeapi
 
-    node = pyeapi.connect(host='192.168.0.14',username='arista',password='arista',return_node=True)
+    node = pyeapi.connect(host='192.168.0.14',username='arista',password='{REPLACE_ARISTA}',return_node=True)
 
     users = node.api('users')
     
@@ -44,10 +44,10 @@ What does this script do?
 
 **import pyeapi** - this imports the pyeapi module.
 
-**node = pyeapi.connect(host='192.168.0.14',username='arista',password='arista',return_node=True)** -
+**node = pyeapi.connect(host='192.168.0.14',username='arista',password='{REPLACE_ARISTA}',return_node=True)** -
 instantiates the variable ``node``, and uses pyeapi to create a connection to
 the switch using the username of ``arista`` and the
-password ``arista``. ``return_node`` allows you to use the node object to consume
+password ``{REPLACE_ARISTA}``. ``return_node`` allows you to use the node object to consume
 the API with - don’t focus on this one for now, let’s just roll with the
 rest of the script.
 
