@@ -11,6 +11,7 @@ TMP=$((i-1))
 if [ $( cat /etc/ACCESS_INFO.yaml | shyaml get-value login_info.veos.$TMP.user ) = "arista" ]
 then
     LAB_ARISTA_PWD=$( cat /etc/ACCESS_INFO.yaml | shyaml get-value login_info.veos.$TMP.pw )
+    AR_LEN=$( echo -n $LAB_ARISTA_PWD | wc -m)
 fi
 done
 
@@ -35,11 +36,20 @@ chown -R arista:arista /home/arista
 
 
 # Update all occurrences for the arista lab credentials
+
+if [ $AR_LEN == 7 ]
+then
+        FIRST='|  ``password: "{REPLACE_ARISTA}"``           |'
+        FREPLACE='| ``password: "'$LAB_ARISTA_PWD'"``           |'
+        SECOND='|  Sets the password to ``{REPLACE_ARISTA}``  |'
+        FSECOND='| Sets the password to ``'$LAB_ARISTA_PWD'``  |'
+        sed -i "s/$FIRST/$FREPLACE/g" /tmp/atd/topologies/$TOPO/labguides/source/*.rst
+        sed -i "s/$SECOND/$FSECOND/g" /tmp/atd/topologies/$TOPO/labguides/source/*.rst
+fi
 sed -i "s/{REPLACE_ARISTA}/$LAB_ARISTA_PWD/g" /tmp/atd/topologies/$TOPO/labguides/source/*.rst
 
 # Update the Arista user password for connecting to the labvm
 sed -i "s/{REPLACE_PWD}/$ARISTA_PWD/g" /tmp/atd/topologies/$TOPO/labguides/source/*.rst
-
 # Build the lab guides html files
 cd /tmp/atd/topologies/$TOPO/labguides
 make html

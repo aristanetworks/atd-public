@@ -133,7 +133,7 @@ it’s doing:
 +-----------------------------------+-----------------------------------+
 |       ``username: "arista"``      | Sets the username to ``arista``   |
 +-----------------------------------+-----------------------------------+
-|       ``password: "{REPLACE_ARISTA}"``      | Sets the password to ``{REPLACE_ARISTA}``   |
+|  ``password: "{REPLACE_ARISTA}"``           |  Sets the password to ``{REPLACE_ARISTA}``  |
 +-----------------------------------+-----------------------------------+
 |       ``authorize: yes``          | Enables once connected            |
 +-----------------------------------+-----------------------------------+
