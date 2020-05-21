@@ -31,12 +31,12 @@ chmod +x /usr/local/bin/ConfigureTopology.py
 # Add files to arista home
 rsync -av /tmp/atd/topologies/$TOPO/files/ /home/arista
 
-# Copy the updated guacamole user-mapping.xml file 
+# Update arista password and copy the updated guacamole user-mapping.xml file 
+sed -i "s/{REPLACE_ARISTA}/$LAB_ARISTA_PWD/g" /home/arista/infra/user-mapping.xml
 cp /home/arista/infra/user-mapping.xml /etc/guacamole/
 
 # Update file permissions in /home/arista
 chown -R arista:arista /home/arista
-
 
 # Update all occurrences for the arista lab credentials
 
@@ -53,6 +53,7 @@ sed -i "s/{REPLACE_ARISTA}/$LAB_ARISTA_PWD/g" /tmp/atd/topologies/$TOPO/labguide
 
 # Update the Arista user password for connecting to the labvm
 sed -i "s/{REPLACE_PWD}/$ARISTA_PWD/g" /tmp/atd/topologies/$TOPO/labguides/source/*.rst
+
 # Build the lab guides html files
 cd /tmp/atd/topologies/$TOPO/labguides
 make html
