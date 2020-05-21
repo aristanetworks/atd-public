@@ -31,6 +31,9 @@ chmod +x /usr/local/bin/ConfigureTopology.py
 # Add files to arista home
 rsync -av /tmp/atd/topologies/$TOPO/files/ /home/arista
 
+# Copy the updated guacamole user-mapping.xml file 
+cp /home/arista/infra/user-mapping.xml /etc/guacamole/
+
 # Update file permissions in /home/arista
 chown -R arista:arista /home/arista
 
