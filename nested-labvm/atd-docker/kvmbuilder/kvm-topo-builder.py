@@ -196,7 +196,7 @@ def main(uargs):
             'placement': 'static',
             'cpuset': VEOS_CPUS
         })
-        vcpu.text = '1'
+        vcpu.text = '2'
         # Add/Create disk location for xml
         tmp_disk = ET.SubElement(xdev, 'disk', attrib={
             'type': 'file',
