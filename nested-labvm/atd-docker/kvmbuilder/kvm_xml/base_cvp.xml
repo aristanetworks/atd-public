@@ -1,0 +1,108 @@
+<domain id="1" type="kvm">
+  <name>cvp</name>
+  <memory unit="MiB">22528</memory>
+  <currentMemory unit="MiB">22528</currentMemory>
+  <os>
+    <type arch="x86_64" machine="pc">hvm</type>
+    <boot dev="hd" />
+  </os>
+  <features>
+    <acpi />
+    <apic />
+  </features>
+  <clock offset="utc">
+    <timer name="rtc" tickpolicy="catchup" />
+    <timer name="pit" tickpolicy="delay" />
+    <timer name="hpet" present="no" />
+  </clock>
+  <on_poweroff>destroy</on_poweroff>
+  <on_reboot>restart</on_reboot>
+  <on_crash>restart</on_crash>
+  <pm>
+    <suspend-to-mem enabled="no" />
+    <suspend-to-disk enabled="no" />
+  </pm>
+  <devices>
+    <emulator>/usr/libexec/qemu-kvm</emulator>
+    <disk device="disk" type="file">
+      <driver cache="directsync" io="native" name="qemu" type="qcow2" />
+      <source file="/var/lib/libvirt/images/cvp/disk1.qcow2" />
+      <target bus="virtio" dev="vda" />
+    </disk>
+    <disk device="disk" type="file">
+      <driver cache="directsync" io="native" name="qemu" type="qcow2" />
+      <source file="/var/lib/libvirt/images/cvp/disk2.qcow2" />
+      <target bus="virtio" dev="vdb" />
+    </disk>
+    <disk device="cdrom" type="file">
+      <driver name="qemu" type="raw" />
+      <source file="" />
+      <target bus="ide" dev="hdc" />
+      <alias name="ide0-1-0" />
+      <readonly />
+      <address bus="1" controller="0" target="0" type="drive" unit="0" />
+    </disk>
+    <controller index="0" model="ich9-ehci1" type="usb">
+      <alias name="usb0" />
+      <address bus="0x00" domain="0x0000" function="0x7" slot="0x06" type="pci" />
+    </controller>
+    <controller index="0" model="ich9-uhci1" type="usb">
+      <alias name="usb0" />
+      <master startport="0" />
+      <address bus="0x00" domain="0x0000" function="0x0" multifunction="on" slot="0x06" type="pci" />
+    </controller>
+    <controller index="0" model="ich9-uhci2" type="usb">
+      <alias name="usb0" />
+      <master startport="2" />
+      <address bus="0x00" domain="0x0000" function="0x1" slot="0x06" type="pci" />
+    </controller>
+    <controller index="0" model="ich9-uhci3" type="usb">
+      <alias name="usb0" />
+      <master startport="4" />
+      <address bus="0x00" domain="0x0000" function="0x2" slot="0x06" type="pci" />
+    </controller>
+    <controller index="0" type="ide">
+      <alias name="ide0" />
+      <address bus="0x00" domain="0x0000" function="0x1" slot="0x01" type="pci" />
+    </controller>
+    <controller index="0" type="virtio-serial">
+      <alias name="virtio-serial0" />
+      <address bus="0x00" domain="0x0000" function="0x0" slot="0x07" type="pci" />
+    </controller>
+    <interface type='bridge'>
+      <source bridge='vmgmt' />
+      <mac address='00:1c:73:a0:c6:01'/>
+      <target dev='cvp1'/>
+      <model type='virtio'/>
+      <alias name='net0'/>
+    </interface>
+    <serial type="pty">
+      <source path="/dev/pts/3" />
+      <target port="0" />
+      <alias name="serial0" />
+    </serial>
+    <console tty="/dev/pts/3" type="pty">
+      <source path="/dev/pts/3" />
+      <target port="0" type="serial" />
+      <alias name="serial0" />
+    </console>
+    <channel type="spicevmc">
+      <target name="com.redhat.spice.0" type="virtio" />
+      <alias name="channel0" />
+      <address bus="0" controller="0" port="1" type="virtio-serial" />
+    </channel>
+    <input bus="ps2" type="mouse" />
+    <input bus="ps2" type="keyboard" />
+    <graphics autoport="yes" listen="127.0.0.1" port="5900" type="vnc">
+      <listen address="127.0.0.1" type="address" />
+    </graphics>
+    <video>
+      <model heads="1" type="cirrus" vram="16384" />
+      <alias name="video0" />
+    </video>
+    <memballoon model="virtio">
+      <alias name="balloon0" />
+    </memballoon>
+  </devices>
+  <seclabel type="none" />
+</domain>

@@ -14,7 +14,10 @@ REPO_TOPO = REPO_PATH + 'topologies/'
 AVAIL_TOPO = REPO_TOPO + 'available_topo.yaml'
 DATA_OUTPUT = expanduser('~/kvm/')
 BASE_XML_VEOS = expanduser('~/base.xml')
+BASE_XML_CVP = expanduser('~/base_cvp.xml')
 
+CVP_CPU_START = 2
+CVP_CPU_COUNT = 12
 CPU_START = 8
 OVS_BRIDGES = []
 VEOS_NODES = {}
@@ -115,13 +118,17 @@ def createMac(dev_id):
     elif dev_id >=20 and dev_id < 30:
         return('d{0}'.format(dev_id - 20))
 
-def getCPUs():
+def getCPUs(start_cpu,cpu_total=0):
     """
     Function to get available CPUs vEOS node
     """
     cpu_cores = int(psutil.cpu_count(logical=True)/2)
     avail_cpus = []
-    for cpuindex in range(CPU_START, cpu_cores):
+    if cpu_total:
+        cpu_total = int(cpu_total / 2) + start_cpu
+    else:
+        cpu_total = cpu_cores
+    for cpuindex in range(start_cpu, cpu_total):
         avail_cpus.append(str(cpuindex))
         avail_cpus.append(str(cpuindex + cpu_cores))
     return(', '.join(avail_cpus))
@@ -135,7 +142,8 @@ def pS(mstat,mtype):
 
 def main(uargs):
     global DATA_OUTPUT
-    VEOS_CPUS = getCPUs()
+    CVP_CPUS = getCPUs(CVP_CPU_START,CVP_CPU_COUNT)
+    VEOS_CPUS = getCPUs(CPU_START)
     while True:
         if exists(FILE_TOPO):
             break
@@ -155,7 +163,24 @@ def main(uargs):
         VEOS_NODES[vdevn] = vNODE(vdevn, vdev[vdevn]['ip_addr'], vdev[vdevn]['neighbors'])
     # Output as script OVS Bridge creation
     createOVS(TOPO_TAG)
-    # Create xml files for KVM
+    # Create xml file for CVP KVM Node
+    # Open base cvp xml
+    tree = ET.parse(BASE_XML_CVP)
+    root = tree.getroot()
+    # Add CPU Configuration
+    vcpu = ET.SubElement(root, 'vcpu', attrib={
+        'placement': 'static',
+        'cpuset': CVP_CPUS
+    })
+    # Export out xml for CVP node
+    tree.write(DATA_OUTPUT + 'cvp.xml')
+    KOUT_LINES.append("sudo virsh define cvp.xml")
+    KOUT_LINES.append("sudo virsh start cvp")
+    KOUT_LINES.append("sudo virsh autostart cvp")
+    pS("OK", "Created Virsh commands for cvp")
+
+
+    # Create xml files for vEOS KVM Nodes
     node_counter = 0
     for vdev in VEOS_NODES:
         # Open base XML file
@@ -220,7 +245,7 @@ def main(uargs):
             })
             # Increment the counter
             d_intf_counter += 1
-        # TODO add in export/write of xml for node
+        # Export/write of xml for node
         tree.write(DATA_OUTPUT + '{0}.xml'.format(vdev))
         KOUT_LINES.append("sudo cp /var/lib/libvirt/images/veos/base/veos.qcow2 /var/lib/libvirt/images/veos/{0}.qcow2".format(vdev))
         KOUT_LINES.append("sudo virsh define {0}.xml".format(vdev))
