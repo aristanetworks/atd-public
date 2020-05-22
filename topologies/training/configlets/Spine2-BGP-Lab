@@ -1,0 +1,43 @@
+interface Ethernet1
+   shutdown
+!
+interface Ethernet2
+   description LEAF1
+   no switchport
+   ip address 172.16.200.17/30
+!
+interface Ethernet3
+   description LEAF2
+   no switchport
+   ip address 172.16.200.21/30
+!
+interface Ethernet4
+   description LEAF3
+   no switchport
+   ip address 172.16.200.25/30
+!
+interface Ethernet5
+   description LEAF4
+   no switchport
+   ip address 172.16.200.29/30
+!
+interface Loopback0
+   ip address 172.16.0.2/32
+!
+router bgp 65000
+   router-id 172.16.0.2
+   maximum-paths 4 ecmp 4
+   neighbor 172.16.200.18 remote-as 65001
+   neighbor 172.16.200.18 maximum-routes 12000 
+   neighbor 172.16.200.18 send-community extended
+   neighbor 172.16.200.22 remote-as 65001
+   neighbor 172.16.200.22 maximum-routes 12000 
+   neighbor 172.16.200.22 send-community extended
+   neighbor 172.16.200.26 remote-as 65002
+   neighbor 172.16.200.26 maximum-routes 12000 
+   neighbor 172.16.200.26 send-community extended
+   neighbor 172.16.200.30 remote-as 65002
+   neighbor 172.16.200.30 maximum-routes 12000 
+   neighbor 172.16.200.30 send-community extended
+   network 172.16.0.2/32
+!
