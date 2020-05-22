@@ -172,6 +172,7 @@ def main(uargs):
         'placement': 'static',
         'cpuset': CVP_CPUS
     })
+    vcpu.text = '12'
     # Export out xml for CVP node
     tree.write(DATA_OUTPUT + 'cvp.xml')
     KOUT_LINES.append("sudo virsh define cvp.xml")
