@@ -1,4 +1,5 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
+
 import os
 import sys
 import signal
@@ -11,7 +12,7 @@ from ruamel.yaml import YAML
 ######################################
 
 # Open ACCESS_INFO.yaml and load the variables
-f = open('/etc/ACCESS_INFO.yaml')
+f = open('/etc/atd/ACCESS_INFO.yaml')
 access_info = YAML().load(f)
 f.close()
 

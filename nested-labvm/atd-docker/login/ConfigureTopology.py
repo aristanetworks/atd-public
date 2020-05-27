@@ -112,7 +112,7 @@ def pS(mstat,mtype):
         print("[{0}] {1}".format(mstat,mmes.expandtabs(7 - len(mstat))))
 
 def main(argv):
-    f = open('/etc/ACCESS_INFO.yaml')
+    f = open('/etc/atd/ACCESS_INFO.yaml')
     accessinfo = yaml.safe_load(f)
     f.close()
 
