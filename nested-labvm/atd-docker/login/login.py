@@ -56,7 +56,7 @@ def sort_veos(vd):
   for t_veos in vd:
     t_veos_name = list(t_veos.keys())[0]
     tmp_l.append(t_veos_name)
-    tmp_d[t_veos_name] = t_veos
+    tmp_d[t_veos_name] = dict(t_veos[t_veos_name])
     tmp_d[t_veos_name]['hostname'] = t_veos_name
   tmp_l.sort(key=natural_keys)
   # If cvx in list, move to end
@@ -110,7 +110,7 @@ def device_menu():
     try:
       if user_input.lower() in device_dict:
           previous_menu = menu_mode
-          os.system('ssh ' + device_dict[user_input])
+          os.system('ssh -o StrictHostKeyChecking=no arista@ ' + device_dict[user_input])
       elif user_input == '96' or user_input.lower() == 'screen':
           os.system('/usr/bin/screen')
       elif user_input == '97' or user_input.lower() == 'back':
