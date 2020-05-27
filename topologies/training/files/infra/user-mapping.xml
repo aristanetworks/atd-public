@@ -47,6 +47,20 @@
             <param name="username">arista</param>
             <param name="password">arista</param>
         </connection>
+        <connection name="spine3">
+            <protocol>ssh</protocol>
+            <param name="hostname">192.168.0.12</param>
+            <param name="port">22</param>
+            <param name="username">arista</param>
+            <param name="password">arista</param>
+        </connection>
+        <connection name="spine4">
+            <protocol>ssh</protocol>
+            <param name="hostname">192.168.0.13</param>
+            <param name="port">22</param>
+            <param name="username">arista</param>
+            <param name="password">arista</param>
+        </connection>
         <connection name="leaf1">
             <protocol>ssh</protocol>
             <param name="hostname">192.168.0.14</param>
@@ -77,21 +91,35 @@
         </connection>
         <connection name="host1">
             <protocol>ssh</protocol>
-            <param name="hostname">192.168.0.31</param>
+            <param name="hostname">192.168.0.18</param>
             <param name="port">22</param>
             <param name="username">arista</param>
             <param name="password">arista</param>
         </connection>
         <connection name="host2">
             <protocol>ssh</protocol>
-            <param name="hostname">192.168.0.32</param>
+            <param name="hostname">192.168.0.19</param>
+            <param name="port">22</param>
+            <param name="username">arista</param>
+            <param name="password">arista</param>
+        </connection>
+        <connection name="host3">
+            <protocol>ssh</protocol>
+            <param name="hostname">192.168.0.20</param>
+            <param name="port">22</param>
+            <param name="username">arista</param>
+            <param name="password">arista</param>
+        </connection>
+        <connection name="host4">
+            <protocol>ssh</protocol>
+            <param name="hostname">192.168.0.21</param>
             <param name="port">22</param>
             <param name="username">arista</param>
             <param name="password">arista</param>
         </connection>
         <connection name="cvx">
             <protocol>ssh</protocol>
-            <param name="hostname">192.168.0.44</param>
+            <param name="hostname">192.168.0.22</param>
             <param name="port">22</param>
             <param name="username">arista</param>
             <param name="password">arista</param>
