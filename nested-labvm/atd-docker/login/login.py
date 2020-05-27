@@ -110,7 +110,7 @@ def device_menu():
     try:
       if user_input.lower() in device_dict:
           previous_menu = menu_mode
-          os.system('ssh -o StrictHostKeyChecking=no arista@ ' + device_dict[user_input])
+          os.system('ssh -o StrictHostKeyChecking=no arista@' + device_dict[user_input])
       elif user_input == '96' or user_input.lower() == 'screen':
           os.system('/usr/bin/screen')
       elif user_input == '97' or user_input.lower() == 'back':
