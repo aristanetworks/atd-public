@@ -93,8 +93,8 @@ def device_menu():
     counter = 1
     for veos in veos_info_sorted:
         print("{0}. {1} ({2})".format(str(counter),veos['hostname'],veos['hostname']))
-        device_dict[str(counter)] = veos['ip']
-        device_dict[veos['hostname']] = veos['ip']
+        device_dict[str(counter)] = veos['ip_addr']
+        device_dict[veos['hostname']] = veos['ip_addr']
         counter += 1
     
     print("\nOther Options: ")
