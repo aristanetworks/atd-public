@@ -29,8 +29,7 @@ try:
 except:
   sys.exit("topo_build not available")
 
-nodes = topoinfo['nodes']
-veos_info = nodes['veos']
+veos_info = topoinfo['nodes']
 
 # Set default menu mode
 menu_mode = 'MAIN'
