@@ -1,12 +1,12 @@
 [Unit]
 Description=Automatically downloads updated ATD files and documentation
-Requires=atdServiceUpdater.service
+Required=atdServiceUpdater.service
 After=atdServiceUpdater.service
 
 [Service]
 Type=forking
 ExecStart=/usr/local/bin/atdFiles.sh
-TimeoutStartSec=infinity
+TimeoutStartSec=180
 Restart=on-failure
 RestartSec=60
 

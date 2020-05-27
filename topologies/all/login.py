@@ -1,194 +1,326 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 import os
 import sys
 import signal
 import re
 from ruamel.yaml import YAML
-from itertools import izip_longest
 
-def atoi(text):
+
+######################################
+########## Global Variables ##########
+######################################
+
+# Open ACCESS_INFO.yaml and load the variables
+f = open('/etc/ACCESS_INFO.yaml')
+access_info = YAML().load(f)
+f.close()
+
+# Set Main Script Variables
+topology = access_info['topology']
+login_info = access_info['login_info']
+nodes = access_info['nodes']
+veos_info = nodes['veos']
+
+# Set default menu mode
+menu_mode = 'MAIN'
+previous_menu = ''
+
+###################################################
+#################### Functions ####################
+###################################################
+
+def text_to_int(text):
   return int(text) if text.isdigit() else text
 
-def natural_keys(text):
-  return [ atoi(c) for c in re.split(r'(\d+)', text) ]
+def signal_handler(signal, frame):
+    print("\n")
+    quit()
 
-def sortVEOS(vd):
+def natural_keys(text):
+  return [ text_to_int(char) for char in re.split(r'(\d+)', text) ]
+
+def sort_veos(vd):
   tmp_l = []
   tmp_d = {}
   fin_l = []
-  for tveos in vd:
-    tmp_l.append(tveos['hostname'])
-    tmp_d[tveos['hostname']] = tveos
+  for t_veos in vd:
+    tmp_l.append(t_veos['hostname'])
+    tmp_d[t_veos['hostname']] = t_veos
   tmp_l.sort(key=natural_keys)
   # If cvx in list, move to end
   if 'cvx' in tmp_l[0]:
         tmp_cvx = tmp_l[0]
         tmp_l.pop(0)
         tmp_l.append(tmp_cvx)
-  for tveos in tmp_l:
-    fin_l.append(tmp_d[tveos])
+  for t_veos in tmp_l:
+    fin_l.append(tmp_d[t_veos])
   return(fin_l)
 
-f = open('/etc/ACCESS_INFO.yaml')
-accessinfo = YAML().load(f)
-f.close()
+def device_menu():
+    global menu_mode
+    global previous_menu
+    os.system("clear")
+    # Create Device Dict to save devices and later execute based on matching the counter to a dict key
+    device_dict = {}
 
-f = open('/home/arista/MenuOptions.yaml')
-menuoptions = YAML().load(f)
-f.close()
+    # Sort veos instances
+    veos_info_sorted = sort_veos(veos_info)
+    print("\n\n*****************************************")
+    print("*****Jump Host for Arista Test Drive*****")
+    print("*****************************************")
+    print("\n\n==========Device SSH Menu==========\n")
+    print("Screen Instructions:\n")
 
-# Check to see if we need the media menu
-enableControls2 = False
-try:
-  with open("/home/arista/enable-media", 'r') as fh:
-    enableControls2 = True
-except:
-  enableControls2 = False
+    print("* Select specific screen - Ctrl + a <number>")
+    print("* Select previous screen - Ctrl + a p")
+    print("* Select next screen - Ctrl + a n")
+    print("* Exit all screens (return to menu) - Ctrl + a \\")
 
-topology = accessinfo['topology']
+    print("\nPlease select from the following options:")
 
-login = accessinfo['login_info']
-nodes = accessinfo['nodes']
-tag = accessinfo['tag']
+    counter = 1
+    for veos in veos_info_sorted:
+        print("{0}. {1} ({2})".format(str(counter),veos['hostname'],veos['hostname']))
+        device_dict[str(counter)] = veos['ip']
+        device_dict[veos['hostname']] = veos['ip']
+        counter += 1
+    
+    print("\nOther Options: ")
+    print("96. Screen (screen) - Opens a screen session to each of the hosts")
+    print("97. Back to Previous Menu (back)")
+    print("98. Shell (shell/bash)")
+    print("99. Back to Main Menu (main/exit) - CTRL + c")
+    print("")
+    user_input = input("What would you like to do? ")
 
-cvplogin = login['cvp']
-veoslogin = login['veos'][0]
-
-cvpguilogin = cvplogin['gui'][0]
-cvpguiuser = cvpguilogin['user']
-cvpguipass = cvpguilogin['pw']
-
-veosuser = veoslogin['user']
-veospass = veoslogin['pw']
-
-cvpinfo = nodes['cvp'][0]
-cvp = cvpinfo['ip']
-
-veosinfo = nodes['veos']
-
-labcontrols = menuoptions['options']
-# Check to see if this is the datacenter or datacenter-latest topo
-if 'datacenter' in topology:
-  labcontrols2 = menuoptions['media-options']
-else:
-  # If topo other than datacenter, set to False
-  labcontrols2 = False
-
-# Catch for routing and datacenter-latest topos to sort login menu naturally
-if topology != 'datacenter':
-  # Sort the list naturally
-  veosinfo = sortVEOS(veosinfo)
-
-if sys.stdout.isatty():
-
-  def signal_handler(signal, frame):
-    print("\n")
-    quit()
-
-  signal.signal(signal.SIGINT, signal_handler)
+    # Check to see if input is in device_dict
+    counter = 1
+    try:
+      if user_input.lower() in device_dict:
+          previous_menu = menu_mode
+          os.system('ssh ' + device_dict[user_input])
+      elif user_input == '96' or user_input.lower() == 'screen':
+          os.system('/usr/bin/screen')
+      elif user_input == '97' or user_input.lower() == 'back':
+          if menu_mode == previous_menu:
+              menu_mode = 'MAIN'
+          else:
+              menu_mode = previous_menu
+      elif user_input == '98' or user_input.lower() == 'bash' or user_input.lower() == 'shell':
+          os.system('/bin/bash')
+      elif user_input == '99' or user_input.lower() == 'main' or user_input == '99' or user_input.lower() == 'exit':
+          menu_mode = 'MAIN'
+      else:
+          print("Invalid Input")
+    except:
+      print("Invalid Input")
 
 
-  ans=True
-  while ans:
-    print ("""
-Jump Host for Arista Demo Cloud
 
-Screen Instructions:
+def lab_options_menu():
+    global menu_mode
+    global previous_menu
 
-   * Select specific screen - Ctrl + a <number>
-   * Select previous screen - Ctrl + a p
-   * Select next screen - Ctrl + a n
-   * Exit all screens (return to menu) - Ctrl + a \\
+    os.system("clear")
+    print("\n\n*****************************************")
+    print("*****Jump Host for Arista Test Drive*****")
+    print("*****************************************")
 
-Device Menu:            Lab Controls
+    if menu_mode == 'LAB_OPTIONS':
+      # Get Yaml Files in /home/arista/menus
+      menu_files = os.listdir('/home/arista/menus')
+      menu_files.sort()
+      
+    # Create Lab Options dict to save lab and later navigate to that menu of labs
+      lab_options_dict = {}
 
-    """)
+      # Display Lab Options
+      counter = 1
+      print('\n\n==========Lab Options Menu==========\n')
+      print("Please select from the following options: \n")
+      
+      # Iterate through lab menu files and print names without .yaml - Increment counter to reflect choices
+      counter = 1
+      for menu_type in menu_files:
+          if menu_type != 'default.yaml':
+            # Print Lab Menu and add options to lab options dict
+            print('{0}. {1} ({2})'.format(str(counter),menu_type.replace('-', ' ').replace('.yaml', ''), menu_type.replace('.yaml', '').lower() ))
+            lab_options_dict[str(counter)] = menu_type
+            lab_options_dict[menu_type.replace('.yaml', '').lower()] = menu_type
+            counter += 1
 
-    counter = 0
-    for veos,labcontrol in izip_longest(veosinfo,labcontrols):
+      # Additional Menu Options
+      print("\nOther Options: ")
+      print("97. Back to Previous Menu (back)")
+      print("98. SSH to Devices (ssh)")
+      print("99. Back to Main Menu (main/exit) - CTRL + c\n")
+      
+      user_input = input("\nWhat would you like to do?: ")
+
+      # Check to see if digit is in lab_options dict
+      try:
+          if user_input.lower() in lab_options_dict:
+              previous_menu = menu_mode
+              menu_mode = 'LAB_' + lab_options_dict[user_input]
+          elif user_input == '97' or user_input.lower() == 'back':
+              if menu_mode == previous_menu:
+                  menu_mode = 'MAIN'
+              else:
+                  menu_mode = previous_menu
+          elif user_input == '98' or user_input.lower() == 'ssh':
+              previous_menu = menu_mode
+              menu_mode = 'DEVICE_SSH'
+          elif user_input == '99' or user_input.lower() == 'main' or user_input == '99' or user_input.lower() == 'exit':
+              menu_mode = 'MAIN'
+          else:
+              print("Invalid Input")
+      except:
+        print("Invalid Input")
+
+
+
+    elif 'LAB_' in menu_mode and menu_mode != 'LAB_OPTIONS':
+      
+      # Create Commands dict to save commands and later execute based on matching the counter to a dict key
+      commands_dict = {}
+
+      # Open yaml for the lab option (minus 'LAB_' from menu mode) and load the variables
+      menu_file = open('/home/arista/menus/' + menu_mode[4:])
+      menu_info = YAML().load(menu_file)
+      menu_file.close()
+
+      print('\n\n==========Lab Options Menu - {0}==========\n'.format(menu_mode[4:].replace('-', ' ').replace('.yaml', '')))
+      print("Please select from the following options: \n")
+      
+      counter = 1
+      for lab in menu_info['lab_list']:
+        print("{0}. {1}".format(str(counter),menu_info['lab_list'][lab][0]['description']))
+        commands_dict[str(counter)] = menu_info['lab_list'][lab][0]['command']
+        commands_dict[lab] = menu_info['lab_list'][lab][0]['command']
+        counter += 1
+      print('\n')
+
+      # Additional Menu Options
+      print("Other Options: ")
+      print("97. Back to Previous Menu (back)")
+      print("98. SSH to Devices (ssh)")
+      print("99. Back to Main Menu (main/exit) - CTRL + c\n")
+
+      # User Input
+      user_input = input("What would you like to do?: ")
+
+      # Check to see if input is in commands_dict
+      try:
+          if user_input.lower() in commands_dict:
+              previous_menu = menu_mode
+              os.system(commands_dict[user_input])
+          elif user_input == '97' or user_input.lower() == 'back':
+              if menu_mode == previous_menu:
+                  menu_mode = 'MAIN'
+              else:
+                  menu_mode = previous_menu
+          elif user_input == '98' or user_input.lower() == 'ssh':
+              previous_menu = menu_mode
+              menu_mode = 'DEVICE_SSH'
+          elif user_input == '99' or user_input.lower() == 'main' or user_input == '99' or user_input.lower() == 'exit':
+              menu_mode = 'MAIN'
+          else:
+              print("Invalid Input")
+      except:
+        print("Invalid Input")
+
+def main_menu():
+    global menu_mode
+    global previous_menu
+
+    os.system("clear")
+    print("\n\n*****************************************")
+    print("*****Jump Host for Arista Test Drive*****")
+    print("*****************************************")
+    print("\n\n==========Main Menu==========\n")
+    print("Please select from the following options: ")
+
+    # Create Commands dict to save commands and later execute based on matching the counter to a dict key
+    commands_dict = {}
+
+    # Open yaml for the default yaml and read what file to lookup for default menu
+    default_menu_file = open('/home/arista/menus/default.yaml')
+    default_menu_info = YAML().load(default_menu_file)
+    default_menu_file.close()
+
+
+    # Open yaml for the lab option (minus 'LAB_' from menu mode) and load the variables
+    menu_file = open('/home/arista/menus/{0}'.format(default_menu_info['default_menu']))
+    menu_info = YAML().load(menu_file)
+    menu_file.close()
+
+
+    
+    counter = 1
+    for lab in menu_info['lab_list']:
+      print("{0}. {1}".format(str(counter),menu_info['lab_list'][lab][0]['description']))
+      commands_dict[str(counter)] = menu_info['lab_list'][lab][0]['command']
+      commands_dict[lab] = menu_info['lab_list'][lab][0]['command']
       counter += 1
-      sys.stdout.write("   ")
-      sys.stdout.write(str(counter))
-      sys.stdout.write(". ")
-      sys.stdout.write(veos['hostname'])
+    print('\n')
 
-      if labcontrol != None:
-         sys.stdout.write("\t\t  ")
-         sys.stdout.write(str(counter+20))
-         sys.stdout.write(". ")
-         optionValues = labcontrols[labcontrol][0]
-         sys.stdout.write(optionValues['description'])
 
-      sys.stdout.write("\n")
 
-    devicecount = counter
+    print("97. Additional Labs (labs)")
+    print("98. SSH to Devices (ssh)")
+    print("99. Exit LabVM (quit/exit) - CTRL + c")
+    print("")
 
-    if enableControls2 and labcontrols2 != None:
-      #sys.stdout.write("\n")
-      counter = 0
-      sys.stdout.write("\n")
-      sys.stdout.write("  Media Controls")
-      for labcontrol2 in labcontrols2:
-         counter += 1
-         sys.stdout.write("\n")
-         sys.stdout.write("  ")
-         sys.stdout.write(str(counter+10))
-         sys.stdout.write(". ")
-         optionValues = labcontrols2[labcontrol2][0]
-         sys.stdout.write(optionValues['description'])
-      sys.stdout.write("\n")
-      sys.stdout.write("\n")
+    user_input = input("What would you like to do?: ")
+    
+    # Check user input to see which menu to change to
+    try:
+      if user_input.lower() in commands_dict:
+          os.system(commands_dict[user_input])
+      elif user_input == '98' or user_input.lower() == 'ssh':
+        previous_menu = menu_mode
+        menu_mode = 'DEVICE_SSH'
+      elif user_input == '97' or user_input.lower() == 'labs':
+        previous_menu = menu_mode
+        menu_mode = 'LAB_OPTIONS'
+      elif user_input == '99' or user_input.lower() == 'exit' or user_input.lower() == 'quit':
+        menu_mode = 'EXIT'
+      else:
+        print("Invalid Input")
+    except:
+        print("Invalid Input")
 
-    print "  97. Screen (screen)"
-    print "  98. Shell (bash)"
-    print "  99. Quit (quit/exit)"
-    print ""
-    ans=raw_input("What would you like to do? ")
 
-    counter = 0
-    for veos in veosinfo:
-      counter += 1
-      if ans==str(counter) or ans==veos['hostname']:
-        os.system("ssh "+veos['ip'])
-        break
-      elif ans=="97" or ans=="screen":
-        os.system('/usr/bin/screen')
-        break
-      elif ans=="98" or ans=="bash" or ans=="shell":
-        os.system("/bin/bash")
-        break
-      elif ans=="99" or ans=="quit" or ans=="exit":
-        quit()
-      elif ans!="" and counter==devicecount:
-        #print("\n Not Valid Choice Try again")
-        break
-      # If entry is null, set 'ans' back to True to loop back to start.
-      elif ans == "":
-        ans = True
-        break
 
-    counter2 = 20
-    for labcontrol in labcontrols:
-      optionValues = labcontrols[labcontrol][0]
-      counter2 += 1
-      if ans==str(counter2) or ans==labcontrol:
-        os.system(optionValues['command'])
-        break
-      elif ans > devicecount and ans < 20:
-        print("\n Not Valid Choice Try again")
-        break
+##############################################
+#################### Main ####################
+##############################################
 
-    if enableControls2:
-      counter3 = 10
-      for labcontrol2 in labcontrols2:
-        optionValues = labcontrols2[labcontrol2][0]
-        counter3 += 1
-        if ans==str(counter3) or ans==labcontrol2:
-          os.system(optionValues['command'])
-          break
-        elif ans > devicecount and ans < 10:
-          print("\n Not Valid Choice Try again")
-          break
+def main():
+    global menu_mode
+    # Create Menu Manager
 
-else:
-  os.system("/usr/lib/openssh/sftp-server")
+    if sys.stdout.isatty():
+      while menu_mode:
+        try:
+          if menu_mode == 'MAIN':
+            main_menu()
+          elif menu_mode == 'DEVICE_SSH':
+            device_menu()
+          elif 'LAB_' in menu_mode:
+            lab_options_menu()
+          elif menu_mode == 'EXIT':
+            print('User exited.')
+            quit()
+        except KeyboardInterrupt:
+          if menu_mode == 'MAIN':
+            print('User exited.')
+            quit()
+          else:
+            menu_mode = 'MAIN'
+    else:
+      os.system("/usr/lib/openssh/sftp-server")
+
+
+if __name__ == '__main__':
+    main()

@@ -1,0 +1,9 @@
+interface Ethernet1
+   ip ospf network point-to-point
+!
+interface Ethernet2
+   ip ospf network point-to-point
+!
+router ospf 100
+   network 0.0.0.0/0 area 0.0.0.0
+   max-lsa 12000

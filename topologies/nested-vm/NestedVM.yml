@@ -1,0 +1,6 @@
+cloud_service: gcp:dev
+topology_name: nested-vm
+
+nodes:
+  - atd_jump_host:
+      neighbors: []

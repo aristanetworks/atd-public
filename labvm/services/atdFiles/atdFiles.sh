@@ -8,6 +8,12 @@ ARISTA_PWD=$(cat /etc/ACCESS_INFO.yaml | shyaml get-value login_info.jump_host.p
 pip install rcvpapi
 pip install --upgrade rcvpapi
 
+# Install Python3-pip
+apt install python3-pip -y
+
+# Install python3 ruamel.yaml
+pip3 install ruamel.yaml
+
 # Clean up previous stuff to make sure it's current
 rm -rf /var/www/html/atd/labguides/
 

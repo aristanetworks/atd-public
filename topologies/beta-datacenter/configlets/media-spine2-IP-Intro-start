@@ -1,0 +1,14 @@
+interface Ethernet1
+   no switchport
+   ip address 10.127.23.3/24
+interface Ethernet2
+   shutdown
+interface Ethernet3
+   shutdown
+interface Ethernet4
+   shutdown
+interface Ethernet5
+   no switchport
+   ip address 10.127.34.3/24
+ip route 172.16.15.0/24 10.127.23.2
+ip route 172.16.46.0/24 10.127.34.4
