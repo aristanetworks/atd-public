@@ -19,7 +19,17 @@ f.close()
 # Set Main Script Variables
 topology = access_info['topology']
 login_info = access_info['login_info']
-nodes = access_info['nodes']
+
+
+# Open topo_build.yaml and load
+try:
+  f = open('/opt/atd/topologies/{0}/topo_build.yml'.format(topology))
+  topoinfo = YAML().load(f)
+  f.close()
+except:
+  sys.exit("topo_build not available")
+
+nodes = topoinfo['nodes']
 veos_info = nodes['veos']
 
 # Set default menu mode
