@@ -4,7 +4,7 @@ daemon TerminAttr
 !
 service routing protocols model multi-agent
 !
-dns domain arista.lab
+dns domain atd.lab
 !
 tacacs-server key 7 070E33455D1D18
 tacacs-server host 192.168.0.4
