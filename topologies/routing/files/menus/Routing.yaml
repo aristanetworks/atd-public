@@ -1,31 +1,31 @@
 ---
 lab_list:
   reset:
-  -   command: "/usr/local/bin/ConfigureTopology.py -t General-Routing -l reset"
+  -   command: "/usr/local/bin/ConfigureTopology.py -t Routing -l reset"
       description: "Reset All Devices to Base IPv4 (reset)"
   sr: 
-  -   command: "/usr/local/bin/ConfigureTopology.py -t General-Routing -l sr"
+  -   command: "/usr/local/bin/ConfigureTopology.py -t Routing -l sr"
       description: "Start at Section 2: Segment-Routing (sr)"
   evpn: 
-  -   command: "/usr/local/bin/ConfigureTopology.py -t General-Routing -l evpn"
+  -   command: "/usr/local/bin/ConfigureTopology.py -t Routing -l evpn"
       description: "Start at Section 3: EVPN Control-Plane (evpn)"
   c1l3vpn: 
-  -   command: "/usr/local/bin/ConfigureTopology.py -t General-Routing -l c1l3vpn"
+  -   command: "/usr/local/bin/ConfigureTopology.py -t Routing -l c1l3vpn"
       description: "Start at Section 4: Customer-1 L3VPN (c1l3vpn)"
   c2l2vpn: 
-  -   command: "/usr/local/bin/ConfigureTopology.py -t General-Routing -l c2l2vpn"
+  -   command: "/usr/local/bin/ConfigureTopology.py -t Routing -l c2l2vpn"
       description: "Start at Section 8: Customer-2 L2VPN (c2l2vpn)"
   c3eline: 
-  -   command: "/usr/local/bin/ConfigureTopology.py -t General-Routing -l c3eline"
+  -   command: "/usr/local/bin/ConfigureTopology.py -t Routing -l c3eline"
       description: "Start at Section 10: Customer-3 E-LINE (c3eline)"
   c4l3vpn: 
-  -   command: "/usr/local/bin/ConfigureTopology.py -t General-Routing -l c4l3vpn"
+  -   command: "/usr/local/bin/ConfigureTopology.py -t Routing -l c4l3vpn"
       description: "Start at Section 11: Customer-4 L3VPN (c4l3vpn)"
   centsvc: 
-  -   command: "/usr/local/bin/ConfigureTopology.py -t General-Routing -l centsvc"
+  -   command: "/usr/local/bin/ConfigureTopology.py -t Routing -l centsvc"
       description: "Start at Section 13: Centralized Services (centsvc)"
   complete: 
-  -   command: "/usr/local/bin/ConfigureTopology.py -t General-Routing -l complete"
+  -   command: "/usr/local/bin/ConfigureTopology.py -t Routing -l complete"
       description: "Complete all Sections (complete)"
 labconfiglets:
   reset:
