@@ -209,6 +209,8 @@ def deploy_lab(selected_menu,selected_lab):
             print("Deployment for {0} - {1} lab is complete.".format(selected_menu,selected_lab))
             all_tasks_completed = True
         
+    input("Lab Setup Completed. Please press Enter to continue...")
+        
 
 def device_menu():
     global menu_mode
