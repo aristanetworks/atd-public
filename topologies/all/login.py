@@ -19,6 +19,7 @@ import time
 ########## Global Variables ##########
 ######################################
 DEBUG = False
+__version__ = "2.1"
 
 # Open ACCESS_INFO.yaml and load the variables
 f = open('/etc/ACCESS_INFO.yaml')
