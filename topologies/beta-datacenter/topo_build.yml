@@ -1,6 +1,6 @@
 cloud_service: aws:adc
 default_interfaces: 8
-default_ami_name: 4.24.0F
+default_ami_name: 4.24.1F
 cvp_instance: singlenode
 cvp_version: 2020.1.1
 topology_name: beta-datacenter
