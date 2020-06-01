@@ -7,9 +7,9 @@ from ruamel.yaml import YAML
 import json
 from datetime import timedelta, datetime, timezone, date
 import getopt
+from rcvpapi.rcvpapi import *
 import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-from rcvpapi.rcvpapi import *
 import logging
 import time
 

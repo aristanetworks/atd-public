@@ -32,6 +32,8 @@ labconfiglets:
     host2:
       - "BaseIPv4_Host2"
       - "tshoot-default"
+    cvx01:
+      - "BaseIPv4_Cvx01"
   tshoot-sp:
     spine1:
       - "BaseIPv4_Spine1"
@@ -57,16 +59,26 @@ labconfiglets:
     host2:
       - "BaseIPv4_Host2"
       - "tshoot-host2-Tshoot-sp"
+    cvx01:
+      - "BaseIPv4_Cvx01"
 #  tshoot-automation:
 #    spine1:
+#      - "BaseIPv4_Spine1"
 #      - "tshoot-spine1-Tshoot-automation"
 #    spine2:
+#      - "BaseIPv4_Spine2"
 #      - "tshoot-spine2-Tshoot-automation"
 #    leaf1:
+#      - "BaseIPv4_Leaf1"
 #      - "tshoot-leaf1-Tshoot-automation"
 #    leaf2:
+#      - "BaseIPv4_Leaf2"
 #      - "tshoot-leaf2-Tshoot-automation"
 #    leaf3:
+#      - "BaseIPv4_Leaf3"
 #     - "tshoot-leaf3-Tshoot-automation"
 #    leaf4:
+#      - "BaseIPv4_Leaf4"
 #      - "tshoot-leaf4-Tshoot-automation"
+#    cvx01:
+#      - "BaseIPv4_Cvx01"
