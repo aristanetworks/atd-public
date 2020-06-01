@@ -208,8 +208,6 @@ def deploy_lab(selected_menu,selected_lab):
                 
             print("Deployment for {0} - {1} lab is complete.".format(selected_menu,selected_lab))
             all_tasks_completed = True
-        else:
-            print("{0}/{1} tasks completed. Please wait...".format(str(len(tasks_to_check) - len(tasks_running)), len(tasks_to_check)))
         
 
 def device_menu():
