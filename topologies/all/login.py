@@ -106,7 +106,7 @@ def update_topology(client, lab, configlets):
     # Get all the devices in CVP
     devices = get_device_info(client)
     # Loop through all devices
-    # for device in devices:
+    
     for device in devices:
         # Get the actual name of the device
         device_name = device.hostname
