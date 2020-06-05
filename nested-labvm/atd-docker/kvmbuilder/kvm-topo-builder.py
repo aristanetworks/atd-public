@@ -17,8 +17,6 @@ BASE_XML_VEOS = expanduser('~/base.xml')
 BASE_XML_CVP = expanduser('~/base_cvp.xml')
 
 CVP_CPU_START = 2
-CVP_CPU_COUNT = 12
-VEOS_CPU_COUNT = 2
 CPU_START = 8
 OVS_BRIDGES = []
 VEOS_NODES = {}
@@ -143,8 +141,6 @@ def pS(mstat,mtype):
 
 def main(uargs):
     global DATA_OUTPUT
-    CVP_CPUS = getCPUs(CVP_CPU_START,CVP_CPU_COUNT)
-    VEOS_CPUS = getCPUs(CPU_START)
     while True:
         if exists(FILE_TOPO):
             break
@@ -156,6 +152,10 @@ def main(uargs):
     except:
         print("File not found")
     FILE_BUILD = YAML().load(open(REPO_TOPO + TOPO_TAG + '/topo_build.yml', 'r'))
+    cvp_cpu_count = FILE_BUILD['cvp_cpu']
+    veos_cpu_count = FILE_BUILD['veos_cpu']
+    CVP_CPUS = getCPUs(CVP_CPU_START,cvp_cpu_count)
+    VEOS_CPUS = getCPUs(CPU_START)
     NODES = FILE_BUILD['nodes']
     DATA_OUTPUT += TOPO_TAG + "/"
     # Start to build out Node create and Network creation
@@ -173,7 +173,7 @@ def main(uargs):
         'placement': 'static',
         'cpuset': CVP_CPUS
     })
-    vcpu.text = str(CVP_CPU_COUNT)
+    vcpu.text = str(cvp_cpu_count)
     # Export out xml for CVP node
     tree.write(DATA_OUTPUT + 'cvp.xml')
     KOUT_LINES.append("sudo virsh define cvp.xml")
@@ -198,7 +198,7 @@ def main(uargs):
             'placement': 'static',
             'cpuset': VEOS_CPUS
         })
-        vcpu.text = str(VEOS_CPU_COUNT)
+        vcpu.text = str(veos_cpu_count)
         # Add/Create disk location for xml
         tmp_disk = ET.SubElement(xdev, 'disk', attrib={
             'type': 'file',

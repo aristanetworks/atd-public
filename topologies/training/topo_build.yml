@@ -1,3 +1,5 @@
+cvp_cpu: 12
+veos_cpu: 2
 nodes:
   - spine1:
       # interfaces: 8
