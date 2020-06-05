@@ -18,6 +18,7 @@ BASE_XML_CVP = expanduser('~/base_cvp.xml')
 
 CVP_CPU_START = 2
 CVP_CPU_COUNT = 12
+VEOS_CPU_COUNT = 2
 CPU_START = 8
 OVS_BRIDGES = []
 VEOS_NODES = {}
@@ -172,7 +173,7 @@ def main(uargs):
         'placement': 'static',
         'cpuset': CVP_CPUS
     })
-    vcpu.text = '12'
+    vcpu.text = str(CVP_CPU_COUNT)
     # Export out xml for CVP node
     tree.write(DATA_OUTPUT + 'cvp.xml')
     KOUT_LINES.append("sudo virsh define cvp.xml")
@@ -197,7 +198,7 @@ def main(uargs):
             'placement': 'static',
             'cpuset': VEOS_CPUS
         })
-        vcpu.text = '2'
+        vcpu.text = str(VEOS_CPU_COUNT)
         # Add/Create disk location for xml
         tmp_disk = ET.SubElement(xdev, 'disk', attrib={
             'type': 'file',

@@ -10,7 +10,7 @@ cp -r /opt/atd/topologies/$TOPO/labguides/* /root/labguides/src/
 
 # Update the Arista user password for connecting to the labvm
 sed -i "s/{REPLACE_PWD}/$ARISTA_PWD/g" /root/labguides/src/source/connecting.rst
-sed -i "s/{REPLACE_PWD}/$ARISTA_PWD/g" /root/src/source/programmability_connecting.rst
+sed -i "s/{REPLACE_PWD}/$ARISTA_PWD/g" /root/labguides/src/source/programmability_connecting.rst
 
 # chown -R arista:arista /home/arista/labguides/src/
 
