@@ -1,6 +1,6 @@
 FROM python:3.8.1
 
-RUN pip install tornado
+RUN pip install tornado psutil
 
 COPY ./src/uptime.py /usr/local/bin/
 
