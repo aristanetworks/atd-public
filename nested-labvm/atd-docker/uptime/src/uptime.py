@@ -18,7 +18,7 @@ class UptimeHandler(tornado.web.RequestHandler):
 
 
 def uptimeSeconds():
-    return(time.time() - psutil.boot_time())
+    return(round(time.time() - psutil.boot_time()))
 
 def checkProvisioned(full_file_path):
     if exists(full_file_path):
