@@ -13,6 +13,7 @@ class UptimeHandler(tornado.web.RequestHandler):
     def get(self):
         self.write({
             'uptime': uptimeSeconds(),
+            'boottime': round(psutil.boot_time()),
             'status': checkProvisioned('/etc/atd/.provisioned')
         })
 
