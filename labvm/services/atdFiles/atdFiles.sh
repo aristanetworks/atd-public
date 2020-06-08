@@ -20,6 +20,12 @@ done
 pip install rcvpapi
 pip install --upgrade rcvpapi
 
+# Install Python3-pip
+apt install python3-pip -y
+
+# Install python3 ruamel.yaml
+pip3 install ruamel.yaml
+
 # Clean up previous stuff to make sure it's current
 rm -rf /var/www/html/atd/labguides/
 
