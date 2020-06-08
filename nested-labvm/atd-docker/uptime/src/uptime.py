@@ -38,7 +38,7 @@ def pS(mtype):
 
 if __name__ == "__main__":
     app = tornado.web.Application([
-        (r'/', UptimeHandler)
+        (r'/uptime', UptimeHandler)
     ])
     app.listen(APP_PORT)
     pS('*** Server Started on {} ***'.format(APP_PORT))
