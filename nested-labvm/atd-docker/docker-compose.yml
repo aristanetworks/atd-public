@@ -14,6 +14,8 @@ services:
     restart: always
     environment:
       - PYTHONUNBUFFERED=1
+    volumes:
+      - /etc/atd:/etc/atd:ro
     networks:
       - atd_nginx
   login:
