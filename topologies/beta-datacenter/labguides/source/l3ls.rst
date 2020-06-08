@@ -137,7 +137,6 @@ Layer 3 Leaf-Spine
 
         .. code-block:: text
 
-            enable
             ping 172.16.116.100
             traceroute 172.16.116.100
 

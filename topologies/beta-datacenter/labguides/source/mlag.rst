@@ -140,7 +140,6 @@ MLAG
 
         .. code-block:: text
 
-              enable
               ping 172.16.112.202
 
 |

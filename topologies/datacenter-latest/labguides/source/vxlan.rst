@@ -85,7 +85,6 @@ VxLAN
 
         .. code-block:: text
 
-            enable
             ping 172.16.112.1
             ping 172.16.112.202
 
@@ -100,7 +99,6 @@ VxLAN
 
         .. code-block:: text
 
-            enable
             show interface po1 | grep -i Hardware
             show arp
 
@@ -110,7 +108,6 @@ VxLAN
 
         .. code-block:: text
 
-            enable
             ping 172.16.112.1
             ping 172.16.112.201
 
@@ -127,7 +124,6 @@ VxLAN
 
         .. code-block:: text
 
-            enable
             show interface po1 | grep -i Hardware
             show arp
 
