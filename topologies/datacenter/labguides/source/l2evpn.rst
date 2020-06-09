@@ -5,9 +5,7 @@ L2 EVPN
 .. image:: images/l2evpn.png
    :align: center
 
-.. note:: Based on limitations in **vEOS-LAB** data plane, EVPN with
-          Multi-homing via MLAG is unsupported. As such, this lab exercise will
-          not enable MLAG.
+.. note:: This lab exercise will not enable MLAG.
 
 1. Log into the  **LabAccess**  jumpserver:
 
