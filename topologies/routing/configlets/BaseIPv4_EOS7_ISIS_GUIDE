@@ -1,0 +1,3 @@
+interface Ethernet2
+   no switchport
+   ip address 10.7.10.7/24

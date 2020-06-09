@@ -1,0 +1,3 @@
+interface Ethernet4
+   no switchport
+   ip address 10.8.14.8/24

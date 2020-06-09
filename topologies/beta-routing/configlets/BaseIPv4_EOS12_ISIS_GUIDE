@@ -1,0 +1,9 @@
+vlan 100
+   name 11-12-13
+interface Ethernet1
+   switchport mode trunk
+interface Ethernet2
+   switchport mode trunk
+interface Vlan100
+   description SVI FOR 11-12-13
+   ip address 10.100.100.12/24
