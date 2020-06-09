@@ -14,7 +14,7 @@ class UptimeHandler(tornado.web.RequestHandler):
         self.write({
             'uptime': uptimeSeconds(),
             'boottime': round(psutil.boot_time()),
-            'status': checkProvisioned('/etc/atd/.provisioned')
+            'status': checkProvisioned('/etc/atd/.init')
         })
 
 
@@ -23,9 +23,9 @@ def uptimeSeconds():
 
 def checkProvisioned(full_file_path):
     if exists(full_file_path):
-        return('post')
-    else:
         return('init')
+    else:
+        return('post')
 
 def pS(mtype):
     """
