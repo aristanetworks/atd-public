@@ -6,7 +6,7 @@ lab_list:
     description: "Start at Lab 1: Single Flood Domain (lab1)"
   lab2:
     description: "Start at Lab 2: Loopback Only Advertisements in LSPs"
-  lab2:
+  lab3:
     description: "Start at Lab 3: Broadcast Network"
   complete: 
     description: "Complete all Sections (complete)"
