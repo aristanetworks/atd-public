@@ -145,9 +145,10 @@ Tasks:
 Appendix A: Configurations
 ==========================================================
 
-**Lab 1: Configure IS-IS as a Single Flood Domain**
+Lab 1: Configure IS-IS as a Single Flood Domain
+------------------------------------------------------
 
-EOS1:
+**EOS1:**
 
     .. code-block:: html
 
@@ -171,7 +172,7 @@ EOS1:
         is-type level-2
         address-family ipv4 unicast
 
-EOS2:
+**EOS2:**
 
     .. code-block:: html
 
@@ -205,7 +206,7 @@ EOS2:
         is-type level-2
         address-family ipv4 unicast
 
-EOS3:
+**EOS3:**
 
     .. code-block:: html
 
@@ -229,7 +230,7 @@ EOS3:
         is-type level-2
         address-family ipv4 unicast
 
-EOS4:
+**EOS4:**
 
     .. code-block:: html
 
@@ -253,7 +254,7 @@ EOS4:
         is-type level-2
         address-family ipv4 unicast
 
-EOS5:
+**EOS5:**
 
     .. code-block:: html
 
@@ -287,7 +288,7 @@ EOS5:
         is-type level-2
         address-family ipv4 unicast
 
-EOS6:
+**EOS6:**
 
     .. code-block:: html
 
@@ -311,9 +312,10 @@ EOS6:
         is-type level-2
         address-family ipv4 unicast
 
-**Lab 2: Loopback Only Advertisements in LSPs**
+Lab 2: Loopback Only Advertisements in LSPs
+------------------------------------------------------
 
-All Nodes (EOS1 to EOS6):
+**All Nodes (EOS1 to EOS6):**
 
     .. code-block:: html
 
@@ -323,9 +325,10 @@ All Nodes (EOS1 to EOS6):
       router isis 1
         advertise passive-only
 
-**Lab 3: Broadcast Network**
+Lab 3: Broadcast Network
+-----------------------------
 
-EOS11:
+**EOS11:**
 
     .. code-block:: html
 
@@ -342,7 +345,7 @@ EOS11:
         advertise passive-only
         address-family ipv4 unicast
 
-EOS12:
+**EOS12:**
 
     .. code-block:: html
 
@@ -359,7 +362,7 @@ EOS12:
         advertise passive-only
         address-family ipv4 unicast
 
-EOS13:
+**EOS13:**
 
     .. code-block:: html
 
