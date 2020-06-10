@@ -24,6 +24,7 @@ L2 EVPN
 
         configure
         interface Port-Channel4
+          description HOST2
           switchport mode access
           switchport access vlan 12
         !
@@ -31,14 +32,17 @@ L2 EVPN
           shutdown
         !
         interface Ethernet2
+          description SPINE1
           no switchport
           ip address 172.16.200.10/30
         !
         interface Ethernet3
+          description SPINE2
           no switchport
           ip address 172.16.200.26/30
         !
         interface Ethernet4
+          description HOST2
           channel-group 4 mode active
           lacp timer fast
         !

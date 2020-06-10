@@ -33,9 +33,11 @@ MLAG
 
             configure
             interface port-channel 10
+              description MLAG PEER LINK - LEAF3
               switchport mode trunk
 
             interface ethernet 1
+              description MLAG PEER LINK - LEAF3
               channel-group 10 mode active
 
       .. note::
@@ -62,7 +64,6 @@ MLAG
 
             interface port-channel 10
               switchport trunk group MLAGPEER
-              exit
 
             no spanning-tree vlan-id 4094
 
@@ -92,10 +93,16 @@ MLAG
 
             configure
             interface port-channel 34
+              description MLAG - SPINE1 & 2
               switchport mode trunk
               mlag 34
 
-            interface ethernet 2-3
+            interface ethernet 2
+              description SPINE1
+              channel-group 34 mode active
+
+            interface ethernet 3
+              description SPINE2
               channel-group 34 mode active
 
       .. note::
@@ -107,10 +114,12 @@ MLAG
 
             configure
             interface port-channel 4
+              description MLAG - HOST2
               switchport access vlan 12
               mlag 4
 
             interface ethernet 4
+              description HOST2
               channel-group 4 mode active
 
             interface ethernet5

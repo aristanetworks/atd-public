@@ -24,14 +24,21 @@ L3 EVPN
         .. code-block:: text
 
             configure
+            interface Port-Channel5
+              description HOST2
+              switchport access vlan 2003
+              no shutdown
+            !
             interface Ethernet1
               shutdown
             !
             interface Ethernet2
+              description SPINE1
               no switchport
               ip address 172.16.200.10/30
             !
             interface Ethernet3
+              description SPINE2
               no switchport
               ip address 172.16.200.26/30
             !
@@ -39,6 +46,7 @@ L3 EVPN
               shutdown
             !
             interface Ethernet5
+              description HOST2
               channel-group 5 mode active
               no shutdown
             !
@@ -118,18 +126,12 @@ L3 EVPN
                 route-target export evpn 1:1001
                 redistribute connected
                 redistribute static
-              exit
-            !
-            exit
+              !
 
    2. Configure vrf interfaces (start in global configuration mode not BGP)
 
         .. code-block:: text
 
-            interface Port-Channel5
-              switchport access vlan 2003
-              no shutdown
-            !
             interface Vlan2003
               mtu 9000
               no autostate

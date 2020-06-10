@@ -51,10 +51,12 @@ Layer 3 Leaf-Spine
 
             configure
             interface ethernet2
+              description SPINE1
               no switchport
               ip address 172.16.200.14/30
 
             interface ethernet3
+              description SPINE2
               no switchport
               ip address 172.16.200.30/30
 

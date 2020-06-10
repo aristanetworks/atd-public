@@ -25,6 +25,7 @@ CVX
             configure
             cvx
               no shutdown
+
               service vxlan
                 no shutdown
 
@@ -91,7 +92,6 @@ CVX
 
         .. code-block:: text
 
-            enable
             ping 172.16.112.202
 
 5. Verify that **CVX01** has established connections and is receiving VxLAN advertisements
