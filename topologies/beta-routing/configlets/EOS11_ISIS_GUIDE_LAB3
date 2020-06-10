@@ -3,6 +3,10 @@ router isis 1
    is-type level-2
    advertise passive-only
    address-family ipv4 unicast
+!
+interface Ethernet3
+   shutdown
+!
 interface Loopback0
    isis passive
 interface vlan100
