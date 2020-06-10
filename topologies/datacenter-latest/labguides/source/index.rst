@@ -48,3 +48,15 @@ Welcome to the Arista ATD documentation!
    :caption: Troubleshooting Training
 
    tshoot-intro.rst
+
+.. toctree::
+   :maxdepth: 1
+   :caption: EVPN Class Guide
+
+   EVPN_Class_Guide.rst
+
+.. toctree::
+   :maxdepth: 1
+   :caption: EVPN Class Guide Answer Key
+
+   EVPN_Class_Guide_Answer_Key.rst
