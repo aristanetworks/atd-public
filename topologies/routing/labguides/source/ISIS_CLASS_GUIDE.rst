@@ -92,7 +92,7 @@ Lab 2: Loopback Only Advertisements in LSPs
 Lab 3: Broadcast Network
 ==========================================================
 
-  .. image:: images/IS-IS_Lab1_and_Lab2.png
+  .. image:: images/IS-IS_Lab3.png
     :align: center
 
 **Prep:**
