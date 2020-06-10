@@ -123,7 +123,7 @@ Tasks:
 
     #. Continue using a single flood domain
 
-    #. Match the system-id of each device to the name of the device (Eg. EOS11’s last system-id hextet will be “00011” and EOS13’s will be “0013”)
+    #. Match the system-id of each device to the name of the device (Eg. EOS11’s last system-id hextet will be “0011” and EOS13’s will be “0013”)
   
   #. Advertise loopbacks into IS-IS
   
