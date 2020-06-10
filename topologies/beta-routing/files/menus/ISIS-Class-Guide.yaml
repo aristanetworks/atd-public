@@ -197,7 +197,7 @@ labconfiglets:
     eos1:
       - "BaseIPv4_EOS1_ISIS_GUIDE"
       - "EOS1_ISIS_GUIDE_LAB1"
-      - "EOS1_ISIS_GUIDE_LAB1"
+      - "EOS1_ISIS_GUIDE_LAB2"
     eos2:
       - "BaseIPv4_EOS2"
       - "EOS2_ISIS_GUIDE_LAB1"
