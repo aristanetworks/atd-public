@@ -10,7 +10,7 @@ Lab 1: Configure IS-IS as a Single Flood Domain
   .. image:: images/IS-IS_Lab1_and_Lab2.png
     :align: center
 
-  .. note:: IP addressing is already configured for all labs.
+.. note:: IP addressing is already configured for all labs.
   
 Prep:
 ----------
