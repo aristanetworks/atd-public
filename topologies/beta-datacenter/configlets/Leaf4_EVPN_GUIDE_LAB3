@@ -44,6 +44,9 @@ interface Port-Channel20
    mlag 20
    spanning-tree portfast
 !
+interface vxlan1
+ vxlan virtual-router encapsulation mac-address mlag-system-id
+!
 router bgp 65034
    neighbor MLAG-IPv4-UNDERLAY-PEER peer group
    neighbor MLAG-IPv4-UNDERLAY-PEER remote-as 65034
