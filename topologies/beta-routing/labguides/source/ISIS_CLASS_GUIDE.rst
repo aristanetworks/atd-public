@@ -28,10 +28,16 @@ Tasks:
 
   #. Configure EOS1 to EOS6 links to be in a single area and flood domain.
 
+    #. Enable ipv4 routing
+    
     #. Use area “0000”
+    
     #. Use IS-IS Instance name of “1”
+    
     #. Match the system-id of each device to the name of the device (Eg. EOS1’s last system-id hextet will be “0001” and EOS6’s will be “0006”)
+    
     #. Advertise all loopbacks
+    
     #. Ensure there are no pseudonodes in the environment
 
   #. All intermediate systems should have all routes from other intermediate systems
@@ -117,6 +123,8 @@ Tasks:
   
   #. Configure IS-IS between EOS11, EOS12, and EOS13 using VLAN 100
 
+    #. Enable ipv4 routing
+
     #. Use area “0000”
 
     #. Use ISIS Instance name of “1”
@@ -152,6 +160,8 @@ Lab 1: Configure IS-IS as a Single Flood Domain
 
     .. code-block:: html
 
+      ip routing
+      !
       interface Ethernet1
         isis enable 1
         isis circuit-type level-2
@@ -176,6 +186,8 @@ Lab 1: Configure IS-IS as a Single Flood Domain
 
     .. code-block:: html
 
+      ip routing
+      !
       interface Ethernet1
         isis enable 1
         isis circuit-type level-2
@@ -210,6 +222,8 @@ Lab 1: Configure IS-IS as a Single Flood Domain
 
     .. code-block:: html
 
+      ip routing
+      !
       interface Ethernet3
         isis enable 1
         isis circuit-type level-2
@@ -234,6 +248,8 @@ Lab 1: Configure IS-IS as a Single Flood Domain
 
     .. code-block:: html
 
+      ip routing
+      !
       interface Ethernet3
         isis enable 1
         isis circuit-type level-2
@@ -258,6 +274,8 @@ Lab 1: Configure IS-IS as a Single Flood Domain
 
     .. code-block:: html
 
+      ip routing
+      !
       interface Ethernet1
         isis enable 1
         isis circuit-type level-2
@@ -292,6 +310,8 @@ Lab 1: Configure IS-IS as a Single Flood Domain
 
     .. code-block:: html
 
+      ip routing
+      !
       interface Ethernet1
         isis enable 1
         isis circuit-type level-2
@@ -331,7 +351,9 @@ Lab 3: Broadcast Network
 **EOS11:**
 
     .. code-block:: html
-
+      
+      ip routing
+      !
       interface Loopback0
         isis passive
       !
@@ -348,7 +370,9 @@ Lab 3: Broadcast Network
 **EOS12:**
 
     .. code-block:: html
-
+      
+      ip routing
+      !
       interface Loopback0
         isis passive
       !
@@ -366,6 +390,8 @@ Lab 3: Broadcast Network
 
     .. code-block:: html
 
+      ip routing
+      !
       interface Loopback0
         isis passive
       !

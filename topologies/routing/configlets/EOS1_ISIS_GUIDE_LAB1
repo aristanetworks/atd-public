@@ -1,3 +1,5 @@
+ip routing
+!
 interface Ethernet1
    isis enable 1
    isis circuit-type level-2
