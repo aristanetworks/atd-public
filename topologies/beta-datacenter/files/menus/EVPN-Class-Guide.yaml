@@ -20,7 +20,6 @@ lab_list:
     description: "Deploy troubleshooting scenario B (tshootb)"
   tshootc:
     description: "Deploy troubleshooting scenario C (tshootc)"
-  
 labconfiglets:
   reset:
     spine1:
