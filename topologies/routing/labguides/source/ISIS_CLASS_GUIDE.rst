@@ -12,7 +12,8 @@ Lab 1: Configure IS-IS as a Single Flood Domain
 
   .. note:: IP addressing is already configured for all labs.
   
-**Prep:**
+Prep:
+----------
 
   #. On lab jumphost, type ‘labs’ to get to the ‘Additional Labs’ menu
 
@@ -22,7 +23,8 @@ Lab 1: Configure IS-IS as a Single Flood Domain
   
   #. Wait until you are prompted that the lab deployment is complete. This will take some time.
 
-**Tasks:**
+Tasks:
+---------
 
   #. Configure EOS1 to EOS6 links to be in a single area and flood domain.
 
@@ -54,7 +56,8 @@ Lab 2: Loopback Only Advertisements in LSPs
   .. image:: images/IS-IS_Lab1_and_Lab2.png
     :align: center
 
-**Prep:**
+Prep:
+----------
 
   .. note:: If you are continuing from Lab 1, you can skip these steps and go directly to “Tasks.”
 
@@ -66,7 +69,8 @@ Lab 2: Loopback Only Advertisements in LSPs
   
   #. Wait until you are prompted that the lab deployment is complete. This will take some time.
 
-**Tasks:**
+Tasks:
+---------
 
   #. Configure IS-IS on  EOS1 to EOS6 so that only loopback reachability is advertised in LSPs
     
@@ -95,7 +99,8 @@ Lab 3: Broadcast Network
   .. image:: images/IS-IS_Lab3.png
     :align: center
 
-**Prep:**
+Prep:
+----------
 
   .. note:: If you are continuing from Lab 2, you can skip these steps and go directly to “Tasks.”
 
@@ -108,6 +113,7 @@ Lab 3: Broadcast Network
   #. Wait until you are prompted that the lab deployment is complete. This will take some time.
 
 Tasks:
+---------
   
   #. Configure IS-IS between EOS11, EOS12, and EOS13 using VLAN 100
 
