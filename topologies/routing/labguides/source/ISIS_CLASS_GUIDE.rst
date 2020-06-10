@@ -177,6 +177,9 @@ Lab 1: Configure IS-IS as a Single Flood Domain
         isis circuit-type level-2
         isis network point-to-point
       !
+      interface Loopback0
+        isis enable 1
+      !
       router isis 1
         net 49.0000.0000.0000.0001.00
         is-type level-2
@@ -213,6 +216,9 @@ Lab 1: Configure IS-IS as a Single Flood Domain
         isis circuit-type level-2
         isis network point-to-point
       !
+      interface Loopback0
+        isis enable 1
+      !
       router isis 1
         net 49.0000.0000.0000.0002.00
         is-type level-2
@@ -239,6 +245,9 @@ Lab 1: Configure IS-IS as a Single Flood Domain
         isis circuit-type level-2
         isis network point-to-point
       !
+      interface Loopback0
+        isis enable 1
+      !
       router isis 1
         net 49.0000.0000.0000.0003.00
         is-type level-2
@@ -264,6 +273,9 @@ Lab 1: Configure IS-IS as a Single Flood Domain
         isis enable 1
         isis circuit-type level-2
         isis network point-to-point
+      !
+      interface Loopback0
+        isis enable 1
       !
       router isis 1
         net 49.0000.0000.0000.0004.00
@@ -301,6 +313,9 @@ Lab 1: Configure IS-IS as a Single Flood Domain
         isis circuit-type level-2
         isis network point-to-point
       !
+      interface Loopback0
+        isis enable 1
+      !
       router isis 1
         net 49.0000.0000.0000.0005.00
         is-type level-2
@@ -326,6 +341,9 @@ Lab 1: Configure IS-IS as a Single Flood Domain
         isis enable 1
         isis circuit-type level-2
         isis network point-to-point
+      !
+      interface Loopback0
+        isis enable 1
       !
       router isis 1
         net 49.0000.0000.0000.0006.00
@@ -355,6 +373,7 @@ Lab 3: Broadcast Network
       ip routing
       !
       interface Loopback0
+        isis enable 1
         isis passive
       !
       interface vlan100
@@ -374,6 +393,7 @@ Lab 3: Broadcast Network
       ip routing
       !
       interface Loopback0
+        isis enable 1
         isis passive
       !
       interface vlan100
@@ -393,6 +413,7 @@ Lab 3: Broadcast Network
       ip routing
       !
       interface Loopback0
+        isis enable 1
         isis passive
       !
       interface vlan100
