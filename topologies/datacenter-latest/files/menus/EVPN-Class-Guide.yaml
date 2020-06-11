@@ -92,7 +92,7 @@ labconfiglets:
     spine2:
       - "BaseIPv4_Spine2_EVPN_GUIDE"
       - "Spine2_EVPN_GUIDE_LAB1"
-      - "Spine2_EVPN_GUIDE_LAB1"
+      - "Spine2_EVPN_GUIDE_LAB2"
     leaf1:
       - "BaseIPv4_Leaf1_EVPN_GUIDE"
       - "Leaf1_EVPN_GUIDE_LAB1"
@@ -123,7 +123,7 @@ labconfiglets:
     spine2:
       - "BaseIPv4_Spine2_EVPN_GUIDE"
       - "Spine2_EVPN_GUIDE_LAB1"
-      - "Spine2_EVPN_GUIDE_LAB1"
+      - "Spine2_EVPN_GUIDE_LAB2"
     leaf1:
       - "BaseIPv4_Leaf1_EVPN_GUIDE"
       - "Leaf1_EVPN_GUIDE_LAB1"
@@ -158,7 +158,7 @@ labconfiglets:
     spine2:
       - "BaseIPv4_Spine2_EVPN_GUIDE"
       - "Spine2_EVPN_GUIDE_LAB1"
-      - "Spine2_EVPN_GUIDE_LAB1"
+      - "Spine2_EVPN_GUIDE_LAB2"
     leaf1:
       - "BaseIPv4_Leaf1_EVPN_GUIDE"
       - "Leaf1_EVPN_GUIDE_LAB1"
@@ -197,7 +197,7 @@ labconfiglets:
     spine2:
       - "BaseIPv4_Spine2_EVPN_GUIDE"
       - "Spine2_EVPN_GUIDE_LAB1"
-      - "Spine2_EVPN_GUIDE_LAB1"
+      - "Spine2_EVPN_GUIDE_LAB2"
     leaf1:
       - "BaseIPv4_Leaf1_EVPN_GUIDE"
       - "Leaf1_EVPN_GUIDE_LAB1"
@@ -240,7 +240,7 @@ labconfiglets:
     spine2:
       - "BaseIPv4_Spine2_EVPN_GUIDE"
       - "Spine2_EVPN_GUIDE_LAB1"
-      - "Spine2_EVPN_GUIDE_LAB1"
+      - "Spine2_EVPN_GUIDE_LAB2"
     leaf1:
       - "BaseIPv4_Leaf1_EVPN_GUIDE"
       - "Leaf1_EVPN_GUIDE_LAB1"
@@ -273,7 +273,7 @@ labconfiglets:
     spine2:
       - "BaseIPv4_Spine2_EVPN_GUIDE"
       - "Spine2_EVPN_GUIDE_LAB1"
-      - "Spine2_EVPN_GUIDE_LAB1"
+      - "Spine2_EVPN_GUIDE_LAB2"
     leaf1:
       - "Leaf1_EVPN_GUIDE_TSHOOTB"
     leaf2:
@@ -306,7 +306,7 @@ labconfiglets:
     spine2:
       - "BaseIPv4_Spine2_EVPN_GUIDE"
       - "Spine2_EVPN_GUIDE_LAB1"
-      - "Spine2_EVPN_GUIDE_LAB1"
+      - "Spine2_EVPN_GUIDE_LAB2"
     leaf1:
       - "Leaf1_EVPN_GUIDE_TSHOOTC"
     leaf2:
