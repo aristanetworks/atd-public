@@ -4,6 +4,8 @@ alias def routing-context vrf default
 !
 hostname HostCD
 !
+dns domain arista.lab
+!
 vrf instance HostC
 !
 vrf instance HostD

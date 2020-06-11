@@ -2,6 +2,8 @@ service routing protocols model multi-agent
 !
 hostname LEAF2
 !
+dns domain arista.lab
+!
 interface Ethernet1
 !
 interface Ethernet2

@@ -2,6 +2,8 @@ service routing protocols model multi-agent
 !
 hostname SPINE1
 !
+dns domain arista.lab
+!
 interface Ethernet1
    shutdown
 !

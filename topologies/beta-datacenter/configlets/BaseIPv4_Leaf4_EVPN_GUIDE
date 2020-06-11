@@ -2,6 +2,8 @@ service routing protocols model multi-agent
 !
 hostname LEAF4
 !
+dns domain arista.lab
+!
 interface Ethernet2
    description SPINE1
    no switchport
