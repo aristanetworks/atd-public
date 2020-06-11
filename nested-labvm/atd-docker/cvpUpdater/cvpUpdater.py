@@ -276,16 +276,23 @@ def main():
         task_response = cvp_clnt.execAllTasks("pending")
         pS("OK", "All pending tasks are executing")
         for task_id in task_response['ids']:
+            previous_status = ''
             task_status = cvp_clnt.getTaskStatus(task_id)['taskStatus']
             while task_status != "Completed":
-                task_status = cvp_clnt.getTaskStatus(task_id)['taskStatus']
-                if task_status == 'Failed':
-                    pS("iBerg", "Task ID: {0} Status: {1}".format(task_id, task_status))
-                    break
-                elif task_status == 'Completed':
-                    pS("INFO", "Task ID: {0} Status: {1}".format(task_id, task_status))
+                task_status = cvp_clnt.getTaskStatus(task_id)
+                if 'taskStatus' in task_status:
+                    task_status = task_status['taskStatus']
+                    if task_status == 'Failed':
+                        pS("iBerg", "Task ID: {0} Status: {1}".format(task_id, task_status))
+                        break
+                    elif task_status == 'Completed':
+                        pS("INFO", "Task ID: {0} Status: {1}".format(task_id, task_status))
+                    else:
+                        pS("INFO", "Task ID: {0} Status: {1}, Waiting 10 seconds...".format(task_id, task_status))
+                        previous_status = task_status
+                        sleep(10)
                 else:
-                    pS("INFO", "Task ID: {0} Status: {1}, Waiting 10 seconds...".format(task_id, task_status))
+                    pS("INFO", "Task ID: {0} Status: {1}, Waiting 10 seconds...".format(task_id, previous_status))
                     sleep(10)
 
         # ==========================================
