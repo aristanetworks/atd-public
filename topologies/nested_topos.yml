@@ -1,0 +1,39 @@
+# topologies_default - key used to set the default topology to use
+#  - If tag has no valid value or is missing, the first entry in topologies will be used as the default
+#
+# topologies - array of topologies to use
+# - Topology_Name: Must be less than 50 characters. Anything larger will be truncated
+# - Topology_File: Must include path to yml file in topologies directory. If the path is invalid the entire topology entry is ignored
+# - Topology_Access: Must be 'admin' or 'standard'. If not standard or admin, defaults to standard
+# - Topology_Desc: Must be less than 100 characters. Anything larger will be truncated
+# - Topology_Backend: (Required) Must be a valid backend IP where the topology will be deployed. If empty, the entry is ignored.
+#       An error will be displayed on the Event Form if an invalid value is provided.
+
+topologies_default: 'Data Center - Latest'
+topologies: [
+    { Topology_Name: 'Data Center - Latest',
+      Topology_File: '/datacenter-latest/Datacenter.yml',
+      Topology_Access: 'standard',
+      Topology_Desc: 'Two Spines, Four Leafs. Focused on EOS fundamentals within the Data Center w/CV 2020',
+    },
+    { Topology_Name: 'Advanced Routing',
+      Topology_File: '/routing/Routing.yml',
+      Topology_Access: 'admin',
+      Topology_Desc: 'Twenty nodes. Focused on advanced routing, L2VPN and L3VPN topics',
+    },
+    { Topology_Name: 'Training',
+      Topology_File: '/training/topo_build.yml',
+      Topology_Access: 'standard',
+      Topology_Desc: 'Four Spines, Four Leafs. For use by the Arista Training Team.',
+    },
+    { Topology_Name: 'BETA - Data Center - Latest',
+      Topology_File: '/beta-datacenter/topo_build.yml',
+      Topology_Access: 'admin',
+      Topology_Desc: 'BETA TESTING - Two Spines, Four Leafs. Focused on EOS fundamentals within the Data Center w/CV 2020',
+    },
+    { Topology_Name: 'BETA - Advanced Routing',
+      Topology_File: '/beta-routing/topo_build.yml',
+      Topology_Access: 'admin',
+      Topology_Desc: 'BETA TESTING - Twenty nodes. Focused on advanced routing, L2VPN and L3VPN topics',
+    }
+]

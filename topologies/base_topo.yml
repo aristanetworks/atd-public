@@ -12,3 +12,11 @@ topologies:
     image: base-training-e4-24-1f-c2020-1-1-20200611
     cpu: 42
     ram: 64
+  beta-datacenter: 
+    image: base-atd-datacenter-e4-24-1f-c2020-1-1-20200611
+    cpu: 26
+    ram: 60
+  beta-routing:
+    image: base-atd-routing-e4-24-1f-c2020-1-1-20200611
+    cpu: 36
+    ram: 90
