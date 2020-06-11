@@ -35,5 +35,7 @@ RUN chmod +x /usr/local/bin/start_frontend
 
 RUN chmod +x /usr/local/bin/uilanding
 
+EXPOSE 80
+
 CMD ["start_frontend"]
 
