@@ -206,7 +206,7 @@ Lab 2: EVPN Control-Plane Provisioning
         neighbor EVPN-OVERLAY-PEERS peer group
         neighbor EVPN-OVERLAY-PEERS next-hop-unchanged
         neighbor EVPN-OVERLAY-PEERS update-source Loopback0
-        neighbor EVPN-OVERLAY-PEERS fall-over bfd
+        neighbor EVPN-OVERLAY-PEERS bfd
         neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3
         neighbor EVPN-OVERLAY-PEERS password @rista123
         neighbor EVPN-OVERLAY-PEERS send-community
@@ -223,7 +223,7 @@ Lab 2: EVPN Control-Plane Provisioning
         neighbor EVPN-OVERLAY-PEERS peer group
         neighbor EVPN-OVERLAY-PEERS remote-as 65000
         neighbor EVPN-OVERLAY-PEERS update-source Loopback0
-        neighbor EVPN-OVERLAY-PEERS fall-over bfd
+        neighbor EVPN-OVERLAY-PEERS bfd
         neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3
         neighbor EVPN-OVERLAY-PEERS password @rista123
         neighbor EVPN-OVERLAY-PEERS send-community
@@ -242,7 +242,7 @@ Lab 2: EVPN Control-Plane Provisioning
         neighbor EVPN-OVERLAY-PEERS peer group
         neighbor EVPN-OVERLAY-PEERS remote-as 65000
         neighbor EVPN-OVERLAY-PEERS update-source Loopback0
-        neighbor EVPN-OVERLAY-PEERS fall-over bfd
+        neighbor EVPN-OVERLAY-PEERS bfd
         neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3
         neighbor EVPN-OVERLAY-PEERS password @rista123
         neighbor EVPN-OVERLAY-PEERS send-community
