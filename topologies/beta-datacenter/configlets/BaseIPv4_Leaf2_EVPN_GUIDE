@@ -1,6 +1,6 @@
 service routing protocols model multi-agent
 !
-hostname LEAF2
+hostname leaf2
 !
 dns domain arista.lab
 !
@@ -12,6 +12,7 @@ interface Ethernet2
    ip address 10.102.201.102/24
 !
 interface Ethernet3
+   description SPINE2
    no switchport
    ip address 10.102.202.102/24
 !
