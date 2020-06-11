@@ -35,6 +35,8 @@ interface Management1
    no lldp transmit
    no lldp receive
 !
+ip routing
+!
 management api http-commands
    protocol http
    no shutdown
