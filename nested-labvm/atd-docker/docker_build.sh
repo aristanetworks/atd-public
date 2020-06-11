@@ -16,3 +16,4 @@ docker build -t atddocker_guacd:1.0 guacd/.
 docker build -t atddocker_guacamole:1.0 guacamole/.
 docker build -t atddocker_jenkins:1.0 jenkins/.
 docker build -t atddocker_uptime:1.0 uptime/.
+docker build -t atddocker_uilanding:1.0 uilanding/.
