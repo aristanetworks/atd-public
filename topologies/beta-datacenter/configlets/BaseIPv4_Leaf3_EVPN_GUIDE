@@ -1,6 +1,6 @@
 service routing protocols model multi-agent
 !
-hostname LEAF3
+hostname leaf3
 !
 dns domain arista.lab
 !

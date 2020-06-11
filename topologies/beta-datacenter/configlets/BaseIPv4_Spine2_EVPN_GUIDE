@@ -1,6 +1,6 @@
 service routing protocols model multi-agent
 !
-hostname SPINE2
+hostname spine2
 !
 dns domain arista.lab
 !
