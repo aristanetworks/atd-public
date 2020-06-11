@@ -2,7 +2,7 @@ alias a routing-context vrf HostA
 alias b routing-context vrf HostB
 alias def routing-context vrf default
 !
-hostname HostAB
+hostname Host1
 !
 dns domain arista.lab
 !

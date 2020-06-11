@@ -21,3 +21,6 @@ router bgp 65012
       route-target import evpn 1:1
       route-target export evpn 1:1
       redistribute connected
+!
+router l2-vpn
+   arp selective-install

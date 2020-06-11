@@ -1,6 +1,6 @@
 service routing protocols model multi-agent
 !
-hostname LEAF4
+hostname leaf4
 !
 no spanning-tree vlan-id 4094
 !
