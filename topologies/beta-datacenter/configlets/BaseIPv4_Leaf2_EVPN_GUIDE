@@ -21,8 +21,6 @@ interface Management1
    no lldp transmit
    no lldp receive
 !
-ip route 0.0.0.0/0 192.168.0.254
-!
 ip routing
 !
 management api http-commands

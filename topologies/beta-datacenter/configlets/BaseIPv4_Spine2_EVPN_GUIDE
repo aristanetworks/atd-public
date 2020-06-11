@@ -35,8 +35,6 @@ interface Management1
 !
 ip route 0.0.0.0/0 192.168.0.254
 !
-ip routing
-!
 management api http-commands
    protocol http
    no shutdown
