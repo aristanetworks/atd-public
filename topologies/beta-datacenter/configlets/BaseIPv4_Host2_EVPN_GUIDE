@@ -42,4 +42,6 @@ ip routing
 ip routing vrf HostC
 ip routing vrf HostD
 !
-end
+management api http-commands
+   protocol http
+   no shutdown
