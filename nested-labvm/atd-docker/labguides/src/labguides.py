@@ -5,7 +5,7 @@ import tornado.web
 from datetime import datetime
 
 PORT = 80
-BASE_PATH = '/root/labguides/'
+BASE_PATH = '/root/labguides/web'
 
 
 class labguideRequestHandler(tornado.web.RequestHandler):
