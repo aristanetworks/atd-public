@@ -19,12 +19,6 @@ class topoRequestHandler(tornado.web.RequestHandler):
             ARISTA_PWD=access_yaml['login_info']['jump_host']['pw'],
             PUBLIC_IP=node_ip
         )
-
-class labguideRequestHandler(tornado.web.RequestHandler):
-    def get(self):
-        self.render(
-            BASE_PATH + '/labguides/index.html'
-        )
     
 # ===============================
 # Utility Functions
@@ -55,8 +49,6 @@ if __name__ == "__main__":
         (r'/js/(.*)', tornado.web.StaticFileHandler, {'path': BASE_PATH +  "js/"}),
         (r'/css/(.*)', tornado.web.StaticFileHandler, {'path': BASE_PATH +  "css/"}),
         (r'/images/(.*)', tornado.web.StaticFileHandler, {'path': BASE_PATH +  "images/"}),
-        (r'/labguides', labguideRequestHandler),
-        (r'/labguides/(.*)', tornado.web.StaticFileHandler, {'path': BASE_PATH +  "labguides/"}),
         (r'/', topoRequestHandler)
     ])
     app.listen(PORT)

@@ -71,16 +71,15 @@ services:
       - /opt/atd:/opt/atd:ro
     networks:
       - atd_nginx
-  # labguides:
-  #   container_name: atd-labguides
-  #   image: atddocker_labguides:1.0
-  #   restart: always
-  #   environment:
-  #     - PYTHONUNBUFFERED=1
-  #   volumes:
-  #     - /etc/atd:/etc/atd:ro
-  #     - /opt/atd:/opt/atd:ro
-  #     - atd_labguides:/root/labguides/web
+  labguides:
+    container_name: atd-labguides
+    image: atddocker_labguides:1.0
+    restart: always
+    environment:
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - /etc/atd:/etc/atd:ro
+      - /opt/atd:/opt/atd:ro
   freerad:
     container_name: atd-freeradius
     image: atddocker_freerad:1.0

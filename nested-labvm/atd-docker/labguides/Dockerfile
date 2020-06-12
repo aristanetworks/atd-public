@@ -1,10 +1,8 @@
 FROM python:3.8.1
 
-# ARG UID=1000
+RUN pip install --upgrade pip
 
-# RUN useradd -m -u $UID arista
-
-RUN pip install \
+RUN pip install tornado requests ruamel.yaml \
     sphinx \
     sphinx-bootstrap-theme \
     shyaml
@@ -17,14 +15,18 @@ RUN apt install -y \
     texlive-latex-extra \
     latexmk
 
+RUN mkdir -p /opt/topo/html
+
+RUN mkdir -p /root/labguides
+
 WORKDIR /root
 
-COPY build_labguides.sh .
+COPY ./src/build_labguides.sh .
 
-RUN mkdir -p labguides/src && mkdir -p labguides/web
+COPY ./src/labguides.py .
 
-# RUN chown -R arista:arista .
+RUN chmod +x labguides.py && chmod +x build_labguides.sh
 
-# USER arista
+EXPOSE 80
 
 CMD ["bash", "build_labguides.sh"]
