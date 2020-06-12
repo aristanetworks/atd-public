@@ -80,6 +80,8 @@ services:
     volumes:
       - /etc/atd:/etc/atd:ro
       - /opt/atd:/opt/atd:ro
+    networks:
+      - atd_nginx
   freerad:
     container_name: atd-freeradius
     image: atddocker_freerad:1.0

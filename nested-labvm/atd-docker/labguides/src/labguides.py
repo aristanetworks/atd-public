@@ -11,7 +11,7 @@ BASE_PATH = '/root/labguides/'
 class labguideRequestHandler(tornado.web.RequestHandler):
     def get(self):
         self.render(
-            BASE_PATH + '/labguides/index.html'
+            BASE_PATH + 'index.html'
         )
     
 # ===============================
