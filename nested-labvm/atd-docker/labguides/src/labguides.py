@@ -10,6 +10,7 @@ BASE_PATH = '/root/labguides/web/'
 
 class labguideRequestHandler(tornado.web.RequestHandler):
     def get(self):
+        pS(str(self.request.uri))        
         self.render(
             BASE_PATH + 'index.html'
         )
@@ -31,6 +32,7 @@ def pS(mtype):
 if __name__ == "__main__":
     app = tornado.web.Application([
         (r'/labguides', labguideRequestHandler),
+        (r'/(.*)', tornado.web.StaticFileHandler, {'path': BASE_PATH}),
         (r'/labguides/(.*)', tornado.web.StaticFileHandler, {'path': BASE_PATH})
     ])
     app.listen(PORT)
