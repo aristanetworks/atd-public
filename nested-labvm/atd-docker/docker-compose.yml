@@ -60,16 +60,27 @@ services:
       - /etc/atd:/etc/atd:ro
       - /opt/atd:/opt/atd:ro
       - /home/atdadmin/KVM_scripts:/home/atdadmin/kvm:rw
-  labguides:
-    container_name: atd-labguides
-    image: atddocker_labguides:1.0
+  uilanding:
+    container_name: atd-uilanding
+    image: atddocker_uilanding:1.0
     restart: always
     environment:
       - PYTHONUNBUFFERED=1
     volumes:
       - /etc/atd:/etc/atd:ro
       - /opt/atd:/opt/atd:ro
-      - atd_labguides:/root/labguides/web
+    networks:
+      - atd_nginx
+  # labguides:
+  #   container_name: atd-labguides
+  #   image: atddocker_labguides:1.0
+  #   restart: always
+  #   environment:
+  #     - PYTHONUNBUFFERED=1
+  #   volumes:
+  #     - /etc/atd:/etc/atd:ro
+  #     - /opt/atd:/opt/atd:ro
+  #     - atd_labguides:/root/labguides/web
   freerad:
     container_name: atd-freeradius
     image: atddocker_freerad:1.0
@@ -82,23 +93,23 @@ services:
     image: atddocker_nginx:1.0
     restart: always
     depends_on:
-      - http
+      - uilanding
       - guacamole
       - jenkins
     ports:
       - "80:80/tcp"
     networks:
       - atd_nginx
-  http:
-    container_name: atd-http
-    image: atddocker_http:1.0
-    restart: always
-    depends_on:
-      - labguides
-    volumes:
-      - atd_labguides:/var/www/html/labguides
-    networks:
-      - atd_nginx
+  # http:
+  #   container_name: atd-http
+  #   image: atddocker_http:1.0
+  #   restart: always
+  #   depends_on:
+  #     - labguides
+  #   volumes:
+  #     - atd_labguides:/var/www/html/labguides
+  #   networks:
+  #     - atd_nginx
   desktop:
     container_name: atd-desktop
     image: atddocker_desktop:1.0

@@ -50,7 +50,6 @@ if __name__ == "__main__":
         (r'/css/(.*)', tornado.web.StaticFileHandler, {'path': BASE_PATH +  "css/"}),
         (r'/labguides/(.*)', tornado.web.StaticFileHandler, {'path': BASE_PATH +  "labguides/"}),
         (r'/images/(.*)', tornado.web.StaticFileHandler, {'path': BASE_PATH +  "images/"}),
-        (r'/vendor/(.*)', tornado.web.StaticFileHandler, {'path': BASE_PATH +  "vendor/"}),
         (r'/', topoRequestHandler)
     ])
     app.listen(PORT)
