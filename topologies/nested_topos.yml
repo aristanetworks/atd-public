@@ -18,7 +18,7 @@ topologies: [
     },
     { Topology_Name: 'Advanced Routing',
       Topology_File: '/routing/Routing.yml',
-      Topology_Access: 'admin',
+      Topology_Access: 'standard',
       Topology_Desc: 'Twenty nodes. Focused on advanced routing, L2VPN and L3VPN topics',
     },
     { Topology_Name: 'Training',
