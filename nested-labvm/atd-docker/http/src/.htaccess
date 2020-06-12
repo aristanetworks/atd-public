@@ -1,4 +1,0 @@
-AuthUserFile /var/www/html/.htpasswd
-AuthName "Arista Test Drive. Please Login"
-AuthType Basic
-require valid-user
