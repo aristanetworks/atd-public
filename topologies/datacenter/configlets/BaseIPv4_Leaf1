@@ -1,3 +1,5 @@
+service routing protocols model multi-agent
+!
 hostname leaf1
 !
 interface Management1
@@ -5,9 +7,9 @@ interface Management1
    no lldp transmit
    no lldp receive
 !
-ip domain-name arista.lab
+dns domain arista.lab
 ip routing
- ip route 0.0.0.0/0 192.168.0.1
+!! ip route 0.0.0.0/0 192.168.0.1
 !
 management api http-commands
    no shutdown
