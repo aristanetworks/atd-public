@@ -17,7 +17,7 @@ RUN apt install -y \
 
 RUN mkdir -p /opt/topo/html
 
-RUN mkdir -p /root/labguides
+RUN mkdir -p /root/labguides/web
 
 WORKDIR /root
 
