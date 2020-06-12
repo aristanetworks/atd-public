@@ -26,8 +26,9 @@ cvp_info:
   configlets:
     containers:
       Tenant:
-        - ATD-INFRA
+        - AAA
         - VLANs
+        - SYS_TelemetryBuilderV3
     netelements:
       spine1:
         - BaseIPv4_Spine1
@@ -43,10 +44,8 @@ cvp_info:
         - BaseIPv4_Leaf4
       host1:
         - BaseIPv4_Host1
-        - Host1-ATD
       host2:
         - BaseIPv4_Host2
-        - Host2-ATD
       cvx01:
         - BaseIPv4_Cvx01
         - cvx01-Controller

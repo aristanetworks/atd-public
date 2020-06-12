@@ -42,9 +42,3 @@ Welcome to the Arista ATD documentation!
    media-ospf.rst
    media-bgp.rst
    media-multicast.rst
-
-.. toctree::
-   :maxdepth: 1
-   :caption: Troubleshooting Training
-
-   tshoot-intro.rst

@@ -34,7 +34,7 @@ Note the two checksums, ``30fed59`` and ``524c2bb``. Let’s diff them with ``gi
 524c2bb 30fed59``.
 
 .. note:: Your checksums will be different than in this lab guide. Please
-          make sure to use your checksums from git reflog and not the ones in
+          make sure to use your checksums fromgit reflog and not the ones in
           the guide.
 
 .. code-block:: bash
@@ -96,19 +96,6 @@ revert:
     b1e1694 HEAD@{0}: revert: Revert "Added VLAN 2000 and 3000"
     30fed59 HEAD@{1}: commit: Added VLAN 2000 and 3000
     524c2bb HEAD@{2}: commit: (initial): Initial commit
-
-Now let's push our changes to our remote repo so Jenkins can pick up on the changes
-
-.. code-block:: bash
-
-    aristagui@labvm:~/Desktop/labfiles/lab6/lab$ git push origin master
-    Counting objects: 6, done.
-    Delta compression using up to 2 threads.
-    Compressing objects: 100% (5/5), done.
-    Writing objects: 100% (6/6), 783 bytes | 0 bytes/s, done.
-    Total 6 (delta 1), reused 0 (delta 0)
-    To /home/aristagui/Desktop/labfiles/lab6/repo
-        19404fc..983adb8  master -> master
 
 Hurray!
 
