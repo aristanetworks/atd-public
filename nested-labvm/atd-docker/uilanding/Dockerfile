@@ -1,8 +1,5 @@
 FROM python:3.8.1
 
-# ARG UID=1000
-
-# RUN useradd -m -u $UID arista
 
 RUN pip install --upgrade pip
 
@@ -25,7 +22,7 @@ RUN mkdir -p /root/labguides
 
 WORKDIR /root
 
-COPY ./src/html/* /opt/topo/html/
+COPY ./src/html /opt/topo/html/
 
 COPY ./src/start_frontend.sh /usr/local/bin/start_frontend
 
