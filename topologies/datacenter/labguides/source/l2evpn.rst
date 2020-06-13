@@ -5,9 +5,7 @@ L2 EVPN
 .. image:: images/l2evpn.png
    :align: center
 
-.. note:: Based on limitations in **vEOS-LAB** data plane, EVPN with
-          Multi-homing via MLAG is unsupported. As such, this lab exercise will
-          not enable MLAG.
+.. note:: This lab exercise will not enable MLAG.
 
 1. Log into the  **LabAccess**  jumpserver:
 
@@ -52,7 +50,6 @@ L2 EVPN
         !
         interface Loopback1
           ip address 3.3.3.3/32
-          ip address 99.99.99.99/32 secondary
         !
 
 4. Add Underlay BGP configurations on **Leaf3**
@@ -88,10 +85,9 @@ L2 EVPN
         configure
         router bgp 65103
           neighbor SPINE-EVPN-TRANSIT peer-group
-          neighbor SPINE-EVPN-TRANSIT next-hop-unchanged
           neighbor SPINE-EVPN-TRANSIT update-source Loopback0
           neighbor SPINE-EVPN-TRANSIT ebgp-multihop
-          neighbor SPINE-EVPN-TRANSIT send-community extended
+          neighbor SPINE-EVPN-TRANSIT send-community
           neighbor SPINE-EVPN-TRANSIT remote-as 65001
           neighbor SPINE-EVPN-TRANSIT maximum-routes 0
           neighbor 172.16.0.1 peer-group SPINE-EVPN-TRANSIT

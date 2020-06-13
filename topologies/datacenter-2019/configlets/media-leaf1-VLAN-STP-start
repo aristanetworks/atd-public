@@ -1,0 +1,14 @@
+vlan 100
+   name v100
+interface Ethernet1
+   shutdown
+interface Ethernet2
+   switchport trunk allowed vlan 100
+   switchport mode trunk
+interface Ethernet3
+   switchport trunk allowed vlan 100
+   switchport mode trunk
+interface Ethernet4
+   switchport access vlan 100
+interface Ethernet5
+   shutdown

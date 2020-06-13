@@ -51,10 +51,12 @@ Layer 3 Leaf-Spine
 
             configure
             interface ethernet2
+              description SPINE1
               no switchport
               ip address 172.16.200.14/30
 
             interface ethernet3
+              description SPINE2
               no switchport
               ip address 172.16.200.30/30
 
@@ -137,7 +139,6 @@ Layer 3 Leaf-Spine
 
         .. code-block:: text
 
-            enable
             ping 172.16.116.100
             traceroute 172.16.116.100
 
@@ -190,7 +191,7 @@ Layer 3 Leaf-Spine
 
             configure
             router bgp 65002
-              neighbor <neighbor_ip> fall-over bfd
+              neighbor <neighbor_ip> bfd
 
 7. Troubleshooting BGP:
 
