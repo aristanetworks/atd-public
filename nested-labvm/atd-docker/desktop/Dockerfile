@@ -82,6 +82,8 @@ RUN chown -R arista:arista .
 
 RUN chmod -R +x Desktop/*.desktop
 
+RUN echo "@rista123" | passwd --stdin "arista"
+
 RUN echo "arista" | passwd --stdin "arista"
 
 # USER arista
