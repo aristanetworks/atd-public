@@ -35,8 +35,10 @@ labconfiglets:
       - "cvx01-Controller"
     host1:
       - "BaseIPv4_Host1"
+      - "Host1-ATD"
     host2:
       - "BaseIPv4_Host2"
+      - "Host2-ATD"
   mlag:
     spine1:
       - "BaseIPv4_Spine1"
