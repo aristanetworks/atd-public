@@ -162,8 +162,8 @@ def main(argv):
         if c_login['user'] == 'arista':
             while not cvp_clnt:
                 try:
-                    cvp_clnt = CVPCON(accessinfo['nodes']['cvp'][0]['internal_ip'],c_login['user'],c_login['pw'])
-                    pS("OK","Connected to CVP at {0}".format(accessinfo['nodes']['cvp'][0]['internal_ip']))
+                    cvp_clnt = CVPCON(accessinfo['nodes']['cvp'][0]['ip'],c_login['user'],c_login['pw'])
+                    pS("OK","Connected to CVP at {0}".format(accessinfo['nodes']['cvp'][0]['ip']))
                 except:
                     pS("ERROR", "CVP is currently unavailable....Retrying in 30 seconds.")
                     time.sleep(30)
