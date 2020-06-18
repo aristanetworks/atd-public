@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
 import getopt
 import sys
@@ -89,14 +89,14 @@ def update_topology(client, lab, configlets):
 
 def print_usage(topologies):
     # Function to print help menu with valid topologies
-    print 'Usage:'
-    print ''
-    print 'ConfigureTopology.py - No options will reset the topology to the base'
-    print '  -t Topology to push out to devices'
-    print ''
-    print 'Valid topologies are:'
-    print ', '.join(topologies)
-    print ''
+    print('Usage:')
+    print('')
+    print('ConfigureTopology.py - No options will reset the topology to the base')
+    print('  -t Topology to push out to devices')
+    print('')
+    print('Valid topologies are:')
+    print(', '.join(topologies))
+    print('')
     quit()
 
 def pS(mstat,mtype):
