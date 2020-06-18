@@ -4,6 +4,18 @@
 TOPO=$(cat /etc/ACCESS_INFO.yaml | shyaml get-value topology)
 ARISTA_PWD=$(cat /etc/ACCESS_INFO.yaml | shyaml get-value login_info.jump_host.pw)
 
+# Get the current arista password:
+for i in $(seq 1 $(cat /etc/ACCESS_INFO.yaml | shyaml get-length login_info.veos))
+do
+TMP=$((i-1))
+if [ $( cat /etc/ACCESS_INFO.yaml | shyaml get-value login_info.veos.$TMP.user ) = "arista" ]
+then
+    LAB_ARISTA_PWD=$( cat /etc/ACCESS_INFO.yaml | shyaml get-value login_info.veos.$TMP.pw )
+    AR_LEN=$( echo -n $LAB_ARISTA_PWD | wc -m)
+fi
+done
+
+
 # Adding in temporary pip install/upgrade for rCVP API
 pip install rcvpapi
 pip install --upgrade rcvpapi
@@ -24,12 +36,28 @@ cp /tmp/atd/topologies/all/login.py /usr/local/bin/login.py
 # Add files to arista home
 rsync -av /tmp/atd/topologies/$TOPO/files/ /home/arista
 
+# Update arista password and copy the updated guacamole user-mapping.xml file 
+sed -i "s/{REPLACE_ARISTA}/$LAB_ARISTA_PWD/g" /home/arista/infra/user-mapping.xml
+cp /home/arista/infra/user-mapping.xml /etc/guacamole/
+
 # Update file permissions in /home/arista
 chown -R arista:arista /home/arista
 
+# Update all occurrences for the arista lab credentials
+
+if [ $AR_LEN == 7 ]
+then
+        FIRST='|  ``password: "{REPLACE_ARISTA}"``           |'
+        FREPLACE='| ``password: "'$LAB_ARISTA_PWD'"``           |'
+        SECOND='|  Sets the password to ``{REPLACE_ARISTA}``  |'
+        FSECOND='| Sets the password to ``'$LAB_ARISTA_PWD'``  |'
+        sed -i "s/$FIRST/$FREPLACE/g" /tmp/atd/topologies/$TOPO/labguides/source/*.rst
+        sed -i "s/$SECOND/$FSECOND/g" /tmp/atd/topologies/$TOPO/labguides/source/*.rst
+fi
+sed -i "s/{REPLACE_ARISTA}/$LAB_ARISTA_PWD/g" /tmp/atd/topologies/$TOPO/labguides/source/*.rst
+
 # Update the Arista user password for connecting to the labvm
-sed -i "s/{REPLACE_PWD}/$ARISTA_PWD/g" /tmp/atd/topologies/$TOPO/labguides/source/connecting.rst
-sed -i "s/{REPLACE_PWD}/$ARISTA_PWD/g" /tmp/atd/topologies/$TOPO/labguides/source/programmability_connecting.rst
+sed -i "s/{REPLACE_PWD}/$ARISTA_PWD/g" /tmp/atd/topologies/$TOPO/labguides/source/*.rst
 
 # Build the lab guides html files
 cd /tmp/atd/topologies/$TOPO/labguides

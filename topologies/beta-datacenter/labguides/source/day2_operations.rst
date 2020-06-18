@@ -158,7 +158,7 @@ Open **Atom** and create the file below:
     provider:
      host: "{{ inventory_hostname }}"
      username: arista
-     password: arista
+     password: {REPLACE_ARISTA}
      authorize: yes
      transport: eapi
      validate_certs: no

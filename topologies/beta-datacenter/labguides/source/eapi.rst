@@ -33,7 +33,7 @@ The script is the same as in the presentation you just saw:
 
     from jsonrpclib import Server
 
-    switch = Server ("http://arista:arista@192.168.0.14/command-api")
+    switch = Server ("http://arista:{REPLACE_ARISTA}@192.168.0.14/command-api")
 
     response = switch.runCmds( 1, ["show version"] )
 
@@ -50,7 +50,7 @@ submodule ``Server`` from the module ``jsonrpclib``. A Python module extends th
 capability of Python by adding additional functionality. There are
 Python modules for pretty much everything!
 
-**switch = Server ( "http://arista:arista@192.168.0.14/command-api")**
+**switch = Server ( "http://arista:{REPLACE_ARISTA}@192.168.0.14/command-api")**
 this instantiates a variable - ``switch`` - and uses the ``Server`` submodule
 imported previously to create a connection to the switch. Note that it
 uses standard username/password formatting to make the connection.
@@ -155,7 +155,7 @@ doing something with it:
 
     from jsonrpclib import Server
 
-    switch = Server ("http://arista:arista@192.168.0.14/command-api")
+    switch = Server ("http://arista:{REPLACE_ARISTA}@192.168.0.14/command-api")
 
     response = switch.runCmds( 1, ["show version"] )
 
