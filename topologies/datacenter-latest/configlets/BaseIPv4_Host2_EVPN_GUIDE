@@ -1,6 +1,6 @@
-alias c routing-context vrf HostC
-alias d routing-context vrf HostD
-alias def routing-context vrf default
+alias c cli vrf HostC
+alias d cli vrf HostD
+alias def cli vrf default
 !
 hostname host2
 !
