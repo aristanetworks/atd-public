@@ -109,6 +109,7 @@ services:
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
       - /home/arista/GUI_Desktop:/home/arista/Desktop/Files:rw
+      - /home/arista/.ssh:/home/arista/.ssh:rw
     networks:
       - guac_net
   guacd:
