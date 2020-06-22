@@ -50,15 +50,13 @@ RUN bash scripts/install_code.sh
 
 # Install Lab specifics
 
-RUN yum install -y python3 git
+RUN yum install -y python3 git openssh-server vim less rsync sudo
 
 RUN pip3 install ansible rcvpapi cvprac pyeapi jsonrpclib
 
 # File setups
 
-
 WORKDIR /home/arista
-
 
 COPY arista/.Xclients .Xclients
 
@@ -69,6 +67,8 @@ RUN mkdir -p .local/share/keyrings
 COPY arista/local/. .local/share/keyrings/
 
 COPY arista/Desktop/. Desktop/
+
+COPY arista/home/. /home/arista/
 
 RUN mkdir -p Desktop/labfiles/lab4 \
     Desktop/labfiles/lab6/repo \
@@ -86,8 +86,16 @@ RUN echo "@rista123" | passwd --stdin "root"
 
 RUN echo "arista" | passwd --stdin "arista"
 
-# USER arista
+RUN sed -i 's/#PubkeyAuthentication yes/PubkeyAuthentication yes/g' /etc/ssh/sshd_config
 
-EXPOSE 3389
+RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
+
+RUN echo "export VISIBLE=now" >> /etc/profile
+
+RUN echo 'arista ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+
+RUN usermod -aG wheel arista
+
+EXPOSE 3389 22
 
 CMD ["/usr/sbin/init"]
