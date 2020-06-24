@@ -7,6 +7,11 @@ rm -rf /opt/atd
 
 git clone --branch $BRANCH https://github.com/aristanetworks/atd-public.git /opt/atd
 
+# Update ssh-key in EOS configlet for Arista user
+ARISTA_SSH=$(cat /home/arista/.ssh/id_rsa.pub)
+
+sed -i "/username arista ssh-key/cusername arista ssh-key ${ARISTA_SSH}" /opt/atd/topologies/$TOPO/configlets/ATD-INFRA
+
 # Update atdUpdate service
 
 cp /opt/atd/nested-labvm/services/atdUpdate/atdUpdate.sh /usr/local/bin/
