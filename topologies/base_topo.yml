@@ -1,7 +1,7 @@
 ---
 topologies:
   datacenter-latest: 
-    image: base-atd-datacenter-e4-24-1f-c2020-1-1-20200611
+    image: base-atd-datacenter-e4-24-1f-c2020-1-1-20200623
     cpu: 26
     ram: 60
   routing:
