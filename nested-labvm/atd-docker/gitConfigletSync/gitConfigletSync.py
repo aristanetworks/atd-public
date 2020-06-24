@@ -124,6 +124,27 @@ def main():
          else:
             res = cvp_clnt.impConfiglet("static",configletName,configletConfig)
             pS("OK", "{0} Configlet: {1}".format(res[0],configletName))
+   # Perform a check to see if there any pending tasks to be executed due to configlet update
+   cvp_clnt.getAllTasks("pending")
+   if cvp_clnt.tasks['pending']:
+      task_response = cvp_clnt.execAllTasks("pending")
+      # Perform check to see if there are any existing tasks to be executed
+      if task_response:
+         pS("OK", "All pending tasks are executing")
+         for task_id in task_response['ids']:
+            task_status = cvp_clnt.getTaskStatus(task_id)['taskStatus']
+            while task_status != "Completed":
+               task_status = cvp_clnt.getTaskStatus(task_id)['taskStatus']
+               if task_status == 'Failed':
+                     pS("iBerg", "Task ID: {0} Status: {1}".format(task_id, task_status))
+                     break
+               elif task_status == 'Completed':
+                     pS("INFO", "Task ID: {0} Status: {1}".format(task_id, task_status))
+                     break
+               else:
+                     pS("INFO", "Task ID: {0} Status: {1}, Waiting 10 seconds...".format(task_id, task_status))
+                     sleep(10)
+
 
 if __name__ == '__main__':
    # Check to see if cvpUpdater has already run
