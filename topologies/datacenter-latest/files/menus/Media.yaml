@@ -1,20 +1,28 @@
 ---
 lab_list:
-  media-setup:
-    additional_commands: 
-      - "bash /home/arista/Broadcaster/pushHostMediaConfig.sh"
-    description: "Setup Broadcast Engineer Training (media-setup)"
   media-intro:
+    additional_commands: 
+    - "bash /home/arista/Broadcaster/pushHostMediaConfig.sh"
     description: "Media - IP Intro (media-intro)"
   media-vlan:
+    additional_commands: 
+      - "bash /home/arista/Broadcaster/pushHostMediaConfig.sh"
     description: "Media - VLAN STP (media-vlan)"
   media-ospf:
+    additional_commands: 
+      - "bash /home/arista/Broadcaster/pushHostMediaConfig.sh"
     description: "Media - OSPF (media-ospf)"
   media-bgp:
+    additional_commands: 
+      - "bash /home/arista/Broadcaster/pushHostMediaConfig.sh"
     description: "Media - BGP  (media-bgp)"
   media-mcast:
+    additional_commands: 
+      - "bash /home/arista/Broadcaster/pushHostMediaConfig.sh"
     description: "Media - Multicast (media-mcast)"
   media-reset:
+    additional_commands: 
+      - "bash /home/arista/Broadcaster/pushHostMediaConfig.sh"
     description: "Media - Reset All Devices to Broadcaster Base (media-reset)"
 labconfiglets:
   media-setup:    
