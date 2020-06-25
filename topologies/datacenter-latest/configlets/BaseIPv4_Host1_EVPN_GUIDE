@@ -4,8 +4,6 @@ alias def cli vrf default
 !
 hostname host1
 !
-dns domain arista.lab
-!
 vlan 10
    name Ten
 !
@@ -42,10 +40,5 @@ interface Management1
 ip route vrf HostB 0.0.0.0/0 20.20.20.1
 ip route vrf HostA 0.0.0.0/0 10.10.10.1
 !
-ip routing
 ip routing vrf HostB
 ip routing vrf HostA
-!
-management api http-commands
-   protocol http
-   no shutdown

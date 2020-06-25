@@ -2,8 +2,6 @@ service routing protocols model multi-agent
 !
 hostname spine2
 !
-dns domain arista.lab
-!
 interface Ethernet1
    shutdown
 !
@@ -34,9 +32,3 @@ interface Management1
    ip address 192.168.0.11/24
    no lldp transmit
    no lldp receive
-!
-ip routing
-!
-management api http-commands
-   protocol http
-   no shutdown

@@ -4,8 +4,6 @@ alias def cli vrf default
 !
 hostname host2
 !
-dns domain arista.lab
-!
 vrf instance HostC
 !
 vrf instance HostD
@@ -38,10 +36,5 @@ interface Management1
 ip route vrf HostC 0.0.0.0/0 30.30.30.1
 ip route vrf HostD 0.0.0.0/0 10.10.10.1
 !
-ip routing
 ip routing vrf HostC
 ip routing vrf HostD
-!
-management api http-commands
-   protocol http
-   no shutdown

@@ -28,3 +28,6 @@ event-handler ovs-restart
    delay 30
    asynchronous
 !
+dns domain arista.lab
+!
+ip routing

@@ -2,8 +2,6 @@ service routing protocols model multi-agent
 !
 hostname leaf3
 !
-dns domain arista.lab
-!
 interface Ethernet1
 !
 interface Ethernet2
@@ -23,9 +21,3 @@ interface Management1
    ip address 192.168.0.16/24
    no lldp transmit
    no lldp receive
-!
-ip routing
-!
-management api http-commands
-   protocol http
-   no shutdown

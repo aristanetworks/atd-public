@@ -2,8 +2,6 @@ service routing protocols model multi-agent
 !
 hostname leaf4
 !
-dns domain arista.lab
-!
 interface Ethernet2
    description SPINE1
    no switchport
@@ -21,9 +19,3 @@ interface Management1
    ip address 192.168.0.17/24
    no lldp transmit
    no lldp receive
-!
-ip routing
-!
-management api http-commands
-   protocol http
-   no shutdown
