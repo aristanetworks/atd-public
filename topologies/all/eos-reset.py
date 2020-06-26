@@ -78,7 +78,7 @@ def pushBareConfig(veos_host, veos_ip, veos_config):
     DEVREBOOT = False
     veos_ssh = paramiko.SSHClient()
     veos_ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    veos_ssh.connect(hostname=veos_ip, username="root", password="", port="22220")
+    veos_ssh.connect(hostname=veos_ip, username="root", password="", port="50001")
     veos_ssh.exec_command("echo '{0}' | tee /mnt/flash/startup-config".format(veos_config))
     veos_ssh.exec_command('FastCli -c "{0}"'.format(dev_cmds))
     stdin, stdout, stderr = veos_ssh.exec_command('FastCli -c "{0}"'.format(ztp_cmds))
