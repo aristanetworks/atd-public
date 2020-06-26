@@ -19,7 +19,7 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 ACCESS = '/etc/ACCESS_INFO.yaml'
 CVPINFO = '/home/arista/cvp/cvp_info.yaml'
-BARE_CFGS = ['AAA']
+BARE_CFGS = ['ATD-INFRA']
 CVP_CONTAINERS = []
 PDEBUG = True
 DELAYTIMER = 30
