@@ -24,7 +24,7 @@
             <param name="hostname">192.168.0.1</param>
             <param name="port">22</param>
             <param name="username">arista</param>
-            <param name="password">arista1234</param>
+            <param name="password">{ARISTA_REPLACE}</param>
         </connection>
         <connection name="cvp">
             <protocol>ssh</protocol>
