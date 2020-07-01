@@ -21,10 +21,10 @@
         </connection>
         <connection name="devbox-ssh">
             <protocol>ssh</protocol>
-            <param name="hostname">192.168.0.1</param>
+            <param name="hostname">atd-desktop</param>
             <param name="port">22</param>
             <param name="username">arista</param>
-            <param name="password">arista1234</param>
+            <param name="password">arista</param>
         </connection>
         <connection name="cvp">
             <protocol>ssh</protocol>
