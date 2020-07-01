@@ -18,6 +18,8 @@ CMD ["/usr/sbin/init"]
 
 FROM cbuilder
 
+RUN sed -i "s/tsflags/#tsflags/g" /etc/yum.conf
+
 RUN yum update -y
 
 ARG UID=1000
@@ -50,7 +52,7 @@ RUN bash scripts/install_code.sh
 
 # Install Lab specifics
 
-RUN yum install -y python3 git openssh-server vim less rsync sudo
+RUN yum install -y python3 git openssh-server vim less rsync sudo man man-pages man-pages-overrides
 
 RUN pip3 install ansible rcvpapi cvprac pyeapi jsonrpclib
 
