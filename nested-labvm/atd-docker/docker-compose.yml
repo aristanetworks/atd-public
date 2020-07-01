@@ -22,6 +22,7 @@ services:
     container_name: atd-login
     image: atddocker_login:1.0
     restart: always
+    hostname: devbox
     environment:
       - PYTHONUNBUFFERED=1
     volumes:
@@ -105,6 +106,7 @@ services:
     container_name: atd-desktop
     image: atddocker_desktop:1.0
     restart: always
+    hostname: devbox
     privileged: true
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
