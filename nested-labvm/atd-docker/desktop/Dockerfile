@@ -52,7 +52,7 @@ RUN bash scripts/install_code.sh
 
 # Install Lab specifics
 
-RUN yum install -y python3 git openssh-server vim less rsync sudo man man-pages man-pages-overrides
+RUN yum install -y python3 git openssh-server vim less rsync sudo man man-pages man-pages-overrides jq
 
 RUN pip3 install ansible rcvpapi cvprac pyeapi jsonrpclib
 
