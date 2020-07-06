@@ -47,7 +47,7 @@ while 1:
          break
    except:
       attempts += 1
-      print "Cannot connect to CVP waiting 1 minute attempt",attempts
+      print("Cannot connect to CVP waiting 1 minute attempt: {0}".format(str(attempts)))
       time.sleep(60)
 
 # Adding new connection to CVP via rcvpapi
@@ -70,14 +70,14 @@ def syncConfiglet(cvpClient,configletName,configletConfig):
       configletCurrentDate = configlet['dateTimeInLongFormat']
       # If it does, check to see if the config is in sync, if not update the config with the one in Git
       if configletConfig == configletCurrentConfig:
-        print "Configlet", configletName, "exists and is up to date!"
+        print("Configlet {0} exists and is up to date!".format(configletName))
       else:
         cvpClient.api.update_configlet(configletConfig,configletKey,configletName)
-        print "Configlet", configletName, "exists and is now up to date"
+        print("Configlet {0} exists and is now up to date".format(configletName))
      
    except:
       addConfiglet = cvpClient.api.add_configlet(configletName,configletConfig)
-      print "Configlet", configletName, "has been added"
+      print("Configlet {0} has been added".format(configletName))
 
 ##### End of syncConfiglet
 
@@ -87,7 +87,7 @@ while True:
       print("Local copy exists....continuing")
       break
    else:
-      print "Local copy is missing....Waiting 1 minute for it to become available"
+      print("Local copy is missing....Waiting 1 minute for it to become available")
       time.sleep(60)
 
 configlets = os.listdir(gitTempPath + configletPath)
@@ -104,5 +104,27 @@ for configletName in configlets:
       else:
          res = cvp_clnt.impConfiglet("static",configletName,configletConfig)
          print("{0} Configlet: {1}".format(res[0],configletName))
+
+# Perform a check to see if there any pending tasks to be executed due to configlet update
+sleep(5)
+cvp_clnt.getAllTasks("pending")
+if cvp_clnt.tasks['pending']:
+   task_response = cvp_clnt.execAllTasks("pending")
+   # Perform check to see if there are any existing tasks to be executed
+   if task_response:
+      print("All pending tasks are executing")
+      for task_id in task_response['ids']:
+         task_status = cvp_clnt.getTaskStatus(task_id)['taskStatus']
+         while task_status != "Completed":
+            task_status = cvp_clnt.getTaskStatus(task_id)['taskStatus']
+            if task_status == 'Failed':
+                  print("Task ID: {0} Status: {1}".format(task_id, task_status))
+                  break
+            elif task_status == 'Completed':
+                  print("Task ID: {0} Status: {1}".format(task_id, task_status))
+                  break
+            else:
+                  print("Task ID: {0} Status: {1}, Waiting 10 seconds...".format(task_id, task_status))
+                  sleep(10)
 
 print("Configlet sync complete")
