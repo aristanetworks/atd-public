@@ -1,6 +1,28 @@
-service routing protocols model multi-agent
 !
 hostname leaf3
+!
+alias mlag-reload bash /mnt/flash/shut-infs && sudo shutdown now -r
+!
+vlan 12,34
+!
+interface Ethernet1
+   no switchport
+   ip address 10.10.1.6/30
+!
+interface Ethernet2
+   no switchport
+   ip address 10.10.2.6/30
+!
+interface Ethernet3
+   no switchport
+   ip address 10.10.3.6/30
+!
+interface Ethernet4
+   no switchport
+   ip address 10.10.4.6/30
+!
+interface Loopback1
+   ip address 10.3.1.1/32
 !
 interface Management1
    ip address 192.168.0.16/24
@@ -8,7 +30,17 @@ interface Management1
    no lldp receive
 !
 ip routing
-!! ip route 0.0.0.0/0 192.168.0.1
+!
+router bgp 65003
+   neighbor spines peer group
+   neighbor spines remote-as 65100
+   neighbor spines maximum-routes 12000
+   neighbor 10.10.1.5 peer group spines
+   neighbor 10.10.2.5 peer group spines
+   neighbor 10.10.3.5 peer group spines
+   neighbor 10.10.4.5 peer group spines
+   network 10.3.1.1/32
+   network 0.0.0.0/0
 !
 management api http-commands
    no shutdown

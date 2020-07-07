@@ -7,6 +7,7 @@ dns domain arista.lab
 aaa authentication login default local
 aaa authorization exec default local
 !
+username Script secret sha512 $6$PNfpb9anSBQ5/aia$phaa3ar5pwkntenD9WHc6Ed5b96lbW0dc0bjtwPnFLaDiCK8D5Cjl6ewP/xdNbl4PtS6Paq.3SssN8pj05NQm.
 username admin privilege 15 role network-admin secret 5 $1$5O85YVVn$HrXcfOivJEnISTMb6xrJc.
 username arista privilege 15 secret 5 $1$4VjIjfd1$XkUVulbNDESHFzcxDU.Tk1
 !
