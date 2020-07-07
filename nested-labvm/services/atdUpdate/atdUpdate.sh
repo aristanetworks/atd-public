@@ -35,6 +35,12 @@ systemctl daemon-reload
 rsync -av /opt/atd/topologies/$TOPO/files/ /home/arista/arista-dir
 rsync -av /opt/atd/topologies/$TOPO/files/infra /home/arista/
 
+# Perform check if there is a scripts directory
+if [ -d "/opt/atd/topologies/$TOPO/files/scripts" ]
+then
+    rsync -av /opt/atd/topologies/$TOPO/files/scripts /home/arista/GUI_Desktop/
+fi
+
 chown -R arista:arista /home/arista
 
 # Update ATD containers
