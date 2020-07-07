@@ -1,0 +1,31 @@
+interface Ethernet1
+   no switchport
+   ip address 10.10.1.2/30
+!
+interface Ethernet2
+   no switchport
+   ip address 10.10.2.2/30
+!
+interface Ethernet3
+   no switchport
+   ip address 10.10.3.2/30
+!
+interface Ethernet4
+   no switchport
+   ip address 10.10.4.2/30
+!
+interface Loopback1
+   ip address 10.1.1.1/32
+!
+router bgp 65001
+   maximum-paths 32 ecmp 32
+   neighbor spines peer group
+   neighbor spines remote-as 65100
+   neighbor spines maximum-routes 12000
+   neighbor 10.10.1.1 peer group spines
+   neighbor 10.10.2.1 peer group spines
+   neighbor 10.10.3.1 peer group spines
+   neighbor 10.10.4.1 peer group spines
+   network 10.1.1.1/32
+   network 0.0.0.0/0
+!

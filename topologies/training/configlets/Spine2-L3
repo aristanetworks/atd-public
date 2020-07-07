@@ -1,0 +1,32 @@
+interface Ethernet1
+   no switchport
+   ip address 10.10.2.1/30
+!
+interface Ethernet3
+   no switchport
+   ip address 10.10.2.5/30
+!
+interface Loopback1
+   ip address 192.168.100.2/32
+!
+router bgp 65100
+   neighbor leaf1 peer group
+   neighbor leaf1 remote-as 65001
+   neighbor leaf1 send-community
+   neighbor leaf1 maximum-routes 12000
+   neighbor leaf3 peer group
+   neighbor leaf3 remote-as 65003
+   neighbor leaf3 send-community
+   neighbor leaf3 maximum-routes 12000
+   neighbor 10.10.2.2 peer group leaf1
+   neighbor 10.10.2.6 peer group leaf3
+   address-family evpn
+      bgp next-hop-unchanged
+      neighbor leaf1 activate
+      neighbor leaf3 activate
+   address-family ipv4
+      neighbor leaf1 activate
+      neighbor leaf3 activate
+      network 192.168.100.2/32
+      network 0.0.0.0/0
+!
