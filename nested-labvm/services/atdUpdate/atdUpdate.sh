@@ -4,9 +4,16 @@ BRANCH=$(cat /etc/atd/ATD_REPO.yaml | python3 -m shyaml get-value atd-public-bra
 TOPO=$(cat /etc/atd/ACCESS_INFO.yaml | python3 -m shyaml get-value topology)
 APWD=$(cat /etc/atd/ACCESS_INFO.yaml | python3 -m shyaml get-value login_info.jump_host.pw)
 
+if  [ -z "$(cat /etc/atd/ATD_REPO.yaml | grep repo)" ]
+then
+    REPO="https://github.com/aristanetworks/atd-public.git"
+else
+    REPO=$(cat /etc/atd/ATD_REPO.yaml | python3 -m shyaml get-value public-repo)
+fi
+
 rm -rf /opt/atd
 
-git clone --branch $BRANCH https://github.com/aristanetworks/atd-public.git /opt/atd
+git clone --branch $BRANCH $REPO /opt/atd
 
 # Update ssh-key in EOS configlet for Arista user
 ARISTA_SSH=$(cat /home/arista/.ssh/id_rsa.pub)
