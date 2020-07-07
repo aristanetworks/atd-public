@@ -74,7 +74,7 @@ def main(atd_yaml):
     lab_topo = MODULES[atd_yaml['default_lab']]['topo']
     lab_module = MODULES[atd_yaml['default_lab']]['module']
     pS("INFO", "Configuring the lab for {0}".format(lab_module))
-    system("{0} -t {1} -l {2}".format(CONFIGURE_TOPOLOGY, lab_topo, lab_module))
+    system('echo -e "\n" | {0} -t {1} -l {2}'.format(CONFIGURE_TOPOLOGY, lab_topo, lab_module))
     pS("OK", "Lab has been configured.")
 
 if __name__ == '__main__':
