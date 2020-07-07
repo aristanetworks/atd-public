@@ -1,8 +1,6 @@
 !
 hostname leaf1
 !
-alias mlag-reload bash /mnt/flash/shut-infs && sudo shutdown now -r
-!
 vlan 12,34
 !
 interface Management1
