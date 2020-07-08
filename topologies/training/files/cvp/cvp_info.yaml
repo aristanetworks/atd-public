@@ -35,28 +35,38 @@ cvp_info:
     netelements:
       spine1:
         - BaseIPv4_Spine1
+        - Spine1_L3
       spine2:
         - BaseIPv4_Spine2
+        - Spine2_L3
       spine3:
         - BaseIPv4_Spine3
+        - Spine3_L3
       spine4:
         - BaseIPv4_Spine4
+        - Spine4_L3
       leaf1:
         - BaseIPv4_Leaf1
+        - Leaf1_L3
       leaf2:
         - BaseIPv4_Leaf2
       leaf3:
         - BaseIPv4_Leaf3
+        - Leaf3_L3
       leaf4:
         - BaseIPv4_Leaf4
       host1:
         - BaseIPv4_Host1
+        - Host1_L3
       host2:
         - BaseIPv4_Host2
+        - Host2_L3
       host3:
         - BaseIPv4_Host3
+        - Host3_L3
       host4:
         - BaseIPv4_Host4
+        - Host4_L3
       cvx01:
         - BaseIPv4_Cvx01
         - cvx01-Controller

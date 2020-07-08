@@ -1,20 +1,7 @@
-vlan 12,34,200-201
-!
-interface Port-Channel6
-   switchport access vlan 200
+vlan 12,34,201
 !
 interface Ethernet1
    switchport access vlan 201
 !
-interface Ethernet2
-   shutdown
-   channel-group 6 mode active
-!
-interface Vlan200
-   no autostate
-   ip address 10.10.200.4/24
-!
 interface Vlan201
    ip address 192.168.201.1/24
-!
-ip route 10.10.100.0/24 10.10.200.1

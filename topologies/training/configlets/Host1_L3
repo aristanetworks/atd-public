@@ -1,19 +1,7 @@
-vlan 12,34,100-101
-!
-interface Port-Channel5
-   switchport access vlan 100
+vlan 12,34,101
 !
 interface Ethernet1
    switchport access vlan 101
 !
-interface Ethernet2
-   channel-group 5 mode active
-!
-interface Vlan100
-   no autostate
-   ip address 10.10.100.4/24
-!
 interface Vlan101
    ip address 192.168.101.1/24
-!
-ip route 10.10.200.0/24 10.10.100.1
