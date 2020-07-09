@@ -18,6 +18,9 @@
           <area alt="{{ escape(node) }}" title="{{ escape(node) }}" href="#" onClick="MyWindow=window.open('http://{{ NODE_IP }}/guacamole/#/client/{{ escape(NODES[node]['href']) }}','MyWindow','width=600,height=300'); return false;" coords="{{ escape(NODES[node]['coords']) }}" shape="rect">
         {% end %}
       </map>
+      <p>To access the EOS nodes, click on an EOS node, then enter the following credentials for initial access:<br />
+      Username: arista<br />
+      Password: @rista123</p>
     </div>
     {% raw LABGUIDE %}
   </body>
