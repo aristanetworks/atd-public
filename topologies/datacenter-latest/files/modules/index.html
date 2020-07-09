@@ -1,17 +1,24 @@
 <html>
   <head>
     <title>Arista Test Drive | {{ MOD_NAME }}</title>
-    <link rel="stylesheet" type="text/css" href="atd.css">
+    {% for script in JS %}
+      {% raw script %}
+    {% end %}
+    {% for style in CSS %}
+      {% raw style %}
+    {% end %}
+    <link rel="stylesheet" type="text/css" href="module/atd.css">
   </head>
   <body>
     <div id="content">
       <h1>Arista Test Drive | {{ MOD_NAME }}</h1>
       <img src="{{ MOD_IMG }}" usemap="#image_map">
       <map name="image_map">
-        {% for node in nodes %}
-          <area alt="{{ escape(node) }}" title="{{ escape(node) }}" href="http://{{ NODE_IP }}/guacamole/{{ escape(node['href']) }}" coords="{{ escape(node['coords']) }}" shape="rect">
+        {% for node in NODES %}
+          <area alt="{{ escape(node) }}" title="{{ escape(node) }}" href="#" onClick="MyWindow=window.open('http://{{ NODE_IP }}/guacamole/#/client/{{ escape(NODES[node]['href']) }}','MyWindow','width=600,height=300'); return false;" coords="{{ escape(NODES[node]['coords']) }}" shape="rect">
         {% end %}
       </map>
     </div>
+    {% raw LABGUIDE %}
   </body>
 </html>

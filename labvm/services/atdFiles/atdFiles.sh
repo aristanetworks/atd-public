@@ -24,7 +24,7 @@ pip install --upgrade rcvpapi
 apt install python3-pip -y
 
 # Install python3 ruamel.yaml
-pip3 install ruamel.yaml
+pip3 install ruamel.yaml bs4
 
 # Clean up previous stuff to make sure it's current
 rm -rf /var/www/html/atd/labguides/
@@ -32,7 +32,9 @@ rm -rf /var/www/html/atd/labguides/
 # Make sure login.py and ConfigureTopology.py is current
 cp /tmp/atd/topologies/all/login.py /usr/local/bin/login.py
 cp /tmp/atd/topologies/all/ConfigureTopology.py /usr/local/bin/ConfigureTopology.py
+cp /tmp/atd/topologies/all/labModule.py /usr/local/bin/labModule.py
 chmod +x /usr/local/bin/ConfigureTopology.py
+chmod +x /usr/local/bin/labModule.py
 
 # Add files to arista home
 rsync -av /tmp/atd/topologies/$TOPO/files/ /home/arista
@@ -70,7 +72,7 @@ then
         # Add in code to modify NGINX config and restart NGINX service
         #
         # Code to start the lab module page
-        nohup python3 /home/arista/modules/labModule.py &
+        nohup labModule.py &
     fi
 fi
 
