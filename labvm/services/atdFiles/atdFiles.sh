@@ -36,6 +36,13 @@ cp /tmp/atd/topologies/all/labModule.py /usr/local/bin/labModule.py
 chmod +x /usr/local/bin/ConfigureTopology.py
 chmod +x /usr/local/bin/labModule.py
 
+# Copy over new nginx config if it exists and restart service
+if [ ! -z '/tmp/atd/topologies/all/nginx.conf' ]
+then
+    cp /tmp/atd/topologies/all/nginx.conf /etc/nginx/sites-enabled/default
+    systemctl restart nginx
+fi
+
 # Add files to arista home
 rsync -av /tmp/atd/topologies/$TOPO/files/ /home/arista
 
@@ -68,9 +75,6 @@ then
     MODULE=$(cat /etc/ACCESS_INFO.yaml | shyaml get-value default_lab)
     if [ $MODULE != "none" ]
     then
-        # ==== TODO ====
-        # Add in code to modify NGINX config and restart NGINX service
-        #
         # Code to start the lab module page
         nohup labModule.py &
     fi
