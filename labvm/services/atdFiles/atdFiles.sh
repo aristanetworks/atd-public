@@ -60,6 +60,20 @@ sed -i "s/{REPLACE_ARISTA}/$LAB_ARISTA_PWD/g" /tmp/atd/topologies/$TOPO/labguide
 # Update the Arista user password for connecting to the labvm
 sed -i "s/{REPLACE_PWD}/$ARISTA_PWD/g" /tmp/atd/topologies/$TOPO/labguides/source/*.rst
 
+# Perform check for module lab
+if [ ! -z "$(grep "default_lab" /etc/ACCESS_INFO.yaml)" ] && [ -d "/home/arista/modules" ]
+then
+    MODULE=$(cat /etc/ACCESS_INFO.yaml | shyaml get-value default_lab)
+    if [ $MODULE != "none" ]
+    then
+        # ==== TODO ====
+        # Add in code to modify NGINX config and restart NGINX service
+        #
+        # Code to start the lab module page
+        nohup python3 /home/arista/modules/labModule.py &
+    fi
+fi
+
 # Build the lab guides html files
 cd /tmp/atd/topologies/$TOPO/labguides
 make html
