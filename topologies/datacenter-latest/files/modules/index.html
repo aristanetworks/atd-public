@@ -1,0 +1,17 @@
+<html>
+  <head>
+    <title>Arista Test Drive | {{ MOD_NAME }}</title>
+    <link rel="stylesheet" type="text/css" href="atd.css">
+  </head>
+  <body>
+    <div id="content">
+      <h1>Arista Test Drive | {{ MOD_NAME }}</h1>
+      <img src="{{ MOD_IMG }}" usemap="#image_map">
+      <map name="image_map">
+        {% for node in nodes %}
+          <area alt="{{ escape(node) }}" title="{{ escape(node) }}" href="http://{{ NODE_IP }}/guacamole/{{ escape(node['href']) }}" coords="{{ escape(node['coords']) }}" shape="rect">
+        {% end %}
+      </map>
+    </div>
+  </body>
+</html>

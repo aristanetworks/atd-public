@@ -1,0 +1,27 @@
+mlag:
+  image: "mlag_1.png"
+  nodes:
+    Spine1:
+      coords: "333,141,603,267"
+      href: "/asdfa"
+    Spine2:
+      coords: "1694,132,1964,258"
+      href: "/asdfa"
+    Leaf1:
+      coords: "160,692,425,819"
+      href: "/asdfa"
+    Leaf2:
+      coords: "826,690,1096,814"
+      href: "/asdfa"
+    Leaf3:
+      coords: "1192,690,1462,812"
+      href: "/asdfa"
+    Leaf4:
+      coords: "1875,690,2144,817"
+      href: "/asdfa"
+    Host1:
+      coords: "530,894,713,978"
+      href: "/asdfa"
+    Host2:
+      coords: "1586,805,1769,882"
+      href: "/asdfa"
