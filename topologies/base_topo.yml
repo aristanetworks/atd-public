@@ -1,22 +1,27 @@
 ---
 topologies:
   datacenter-latest: 
+    branch: nested-release
     image: base-atd-datacenter-e4-24-1f-c2020-1-1-20200701-u
     cpu: 26
     ram: 60
   routing:
+    branch: nested-release
     image: base-atd-routing-e4-24-1f-c2020-1-1-20200701-u
     cpu: 36
     ram: 90
   training:
+    branch: nested-release
     image: base-training-e4-24-1f-c2020-1-1-20200708-u
     cpu: 42
     ram: 64
   beta-datacenter: 
+    branch: nested-release
     image: base-atd-datacenter-e4-24-1f-c2020-1-1-20200701-u
     cpu: 26
     ram: 60
   beta-routing:
+    branch: nested-release
     image: base-atd-routing-e4-24-1f-c2020-1-1-20200701-u
     cpu: 36
     ram: 90
