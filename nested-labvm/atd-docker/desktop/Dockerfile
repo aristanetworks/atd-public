@@ -54,7 +54,7 @@ RUN bash scripts/install_code.sh
 
 RUN yum install -y python3 git openssh-server vim nano less rsync sudo man man-pages man-pages-overrides jq
 
-RUN pip3 install ansible rcvpapi cvprac pyeapi jsonrpclib jsonrpclib-pelix
+RUN pip3 install ansible rcvpapi cvprac pyeapi jsonrpclib jsonrpclib-pelix paramiko
 
 # File setups
 

@@ -112,6 +112,7 @@ services:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
       - /home/arista/GUI_Desktop:/home/arista/Desktop/Files:rw
       - /home/arista/.ssh:/home/arista/.ssh:rw
+      - /home/arista/arista-dir/hosts:/etc/hosts:ro
     networks:
       - guac_net
   guacd:
