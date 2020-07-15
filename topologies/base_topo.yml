@@ -15,6 +15,11 @@ topologies:
     image: base-training-e4-24-1f-c2020-1-1-20200708-u
     cpu: 42
     ram: 64
+  kane:
+    branch: nested-release
+    image: base-kane-e4-24-1f-c2020-1-1-20200714
+    cpu: 36
+    ram: 90
   beta-datacenter: 
     branch: nested-release
     image: base-atd-datacenter-e4-24-1f-c2020-1-1-20200701-u
