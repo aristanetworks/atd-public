@@ -1,0 +1,151 @@
+<user-mapping>
+
+    <!-- Per-user authentication and config information -->
+
+    <!-- A user using md5 to hash the password
+         arista user and its md5 hashed password below is used to
+             login to Guacamole Web UI-->
+    <authorize
+            username="arista"
+            password="dff0516218630b32d06657ba7cd13aa5"
+            encoding="md5">
+
+        <!-- Authorized connection -->
+        <connection name="devbox-gui">
+            <protocol>rdp</protocol>
+            <param name="hostname">atd-desktop</param>
+            <param name="port">3389</param>
+            <param name="username">arista</param>
+            <param name="password">arista</param>
+            <param name="ignore-cert">true</param>
+        </connection>
+        <connection name="devbox-ssh">
+            <protocol>ssh</protocol>
+            <param name="hostname">192.168.0.1</param>
+            <param name="port">22</param>
+            <param name="username">arista</param>
+            <param name="password">{ARISTA_REPLACE}</param>
+        </connection>
+        <connection name="cvp">
+            <protocol>ssh</protocol>
+            <param name="hostname">192.168.0.5</param>
+            <param name="port">22</param>
+            <param name="username">root</param>
+            <param name="password">cvproot</param>
+        </connection>
+        <connection name="HDC-BorderLeaf1">
+            <protocol>ssh</protocol>
+            <param name="hostname">192.168.0.10</param>
+            <param name="port">22</param>
+            <param name="username">arista</param>
+            <param name="password">arista</param>
+        </connection>
+        <connection name="HDC-BorderLeaf2">
+            <protocol>ssh</protocol>
+            <param name="hostname">192.168.0.11</param>
+            <param name="port">22</param>
+            <param name="username">arista</param>
+            <param name="password">arista</param>
+        </connection>
+        <connection name="HDC-7606-1">
+            <protocol>ssh</protocol>
+            <param name="hostname">192.168.0.12</param>
+            <param name="port">22</param>
+            <param name="username">arista</param>
+            <param name="password">arista</param>
+        </connection>
+        <connection name="HDC-7606-2">
+            <protocol>ssh</protocol>
+            <param name="hostname">192.168.0.13</param>
+            <param name="port">22</param>
+            <param name="username">arista</param>
+            <param name="password">arista</param>
+        </connection>
+        <connection name="HDC-TestNode-1">
+            <protocol>ssh</protocol>
+            <param name="hostname">192.168.0.14</param>
+            <param name="port">22</param>
+            <param name="username">arista</param>
+            <param name="password">arista</param>
+        </connection>
+        <connection name="CDC-BorderLeaf1">
+            <protocol>ssh</protocol>
+            <param name="hostname">192.168.0.15</param>
+            <param name="port">22</param>
+            <param name="username">arista</param>
+            <param name="password">arista</param>
+        </connection>
+        <connection name="CDC-BorderLeaf2">
+            <protocol>ssh</protocol>
+            <param name="hostname">192.168.0.16</param>
+            <param name="port">22</param>
+            <param name="username">arista</param>
+            <param name="password">arista</param>
+        </connection>
+        <connection name="CDC-7606-1">
+            <protocol>ssh</protocol>
+            <param name="hostname">192.168.0.17</param>
+            <param name="port">22</param>
+            <param name="username">arista</param>
+            <param name="password">arista</param>
+        </connection>
+        <connection name="CDC-7606-2">
+            <protocol>ssh</protocol>
+            <param name="hostname">192.168.0.18</param>
+            <param name="port">22</param>
+            <param name="username">arista</param>
+            <param name="password">arista</param>
+        </connection>
+        <connection name="N7K-CoreVDC1">
+            <protocol>ssh</protocol>
+            <param name="hostname">192.168.0.19</param>
+            <param name="port">22</param>
+            <param name="username">arista</param>
+            <param name="password">arista</param>
+        </connection>
+        <connection name="N7K-DistVDC1">
+            <protocol>ssh</protocol>
+            <param name="hostname">192.168.0.20</param>
+            <param name="port">22</param>
+            <param name="username">arista</param>
+            <param name="password">arista</param>
+        </connection>
+        <connection name="N7K-DistVDC2">
+            <protocol>ssh</protocol>
+            <param name="hostname">192.168.0.21</param>
+            <param name="port">22</param>
+            <param name="username">arista</param>
+            <param name="password">arista</param>
+        </connection>
+        <connection name="N7K-CoreVDC2">
+            <protocol>ssh</protocol>
+            <param name="hostname">192.168.0.22</param>
+            <param name="port">22</param>
+            <param name="username">arista</param>
+            <param name="password">arista</param>
+        </connection>
+        <connection name="RemoteTestNode1">
+            <protocol>ssh</protocol>
+            <param name="hostname">192.168.0.23</param>
+            <param name="port">22</param>
+            <param name="username">arista</param>
+            <param name="password">arista</param>
+        </connection>
+        <connection name="RemoteTestNode2">
+            <protocol>ssh</protocol>
+            <param name="hostname">192.168.0.24</param>
+            <param name="port">22</param>
+            <param name="username">arista</param>
+            <param name="password">arista</param>
+        </connection>
+        <connection name="CDCTestNode1">
+            <protocol>ssh</protocol>
+            <param name="hostname">192.168.0.25</param>
+            <param name="port">22</param>
+            <param name="username">arista</param>
+            <param name="password">arista</param>
+        </connection>
+
+    </authorize>
+
+</user-mapping>

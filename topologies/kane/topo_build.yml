@@ -1,0 +1,220 @@
+cvp_cpu: 12
+veos_cpu: 1
+nodes:
+  - HDC-BorderLeaf1:
+      # interfaces: 4
+      ip_addr: 192.168.0.10
+      neighbors:
+        - neighborDevice: CDC-BorderLeaf1
+          neighborPort: Ethernet1
+          port: Ethernet1
+        - neighborDevice: HDC-7606-1
+          neighborPort: Ethernet2
+          port: Ethernet2
+        - neighborDevice: HDC-BorderLeaf2
+          neighborPort: Ethernet3
+          port: Ethernet3
+        - neighborDevice: HDC-TestNode1
+          neighborPort: Ethernet1
+          port: Ethernet4
+
+  - HDC-BorderLeaf2:
+      # interfaces: 8
+      ip_addr: 192.168.0.11
+      neighbors:
+        - neighborDevice: CDC-BorderLeaf2
+          neighborPort: Ethernet1
+          port: Ethernet1
+        - neighborDevice: HDC-7606-2
+          neighborPort: Ethernet2
+          port: Ethernet2
+        - neighborDevice: HDC-BorderLeaf1
+          neighborPort: Ethernet3
+          port: Ethernet3
+        - neighborDevice: HDC-TestNode1
+          neighborPort: Ethernet2
+          port: Ethernet4
+
+  - HDC-7606-1:
+      # interfaces: 8
+      ip_addr: 192.168.0.12
+      neighbors:
+        - neighborDevice: CDC-7606-1
+          neighborPort: Ethernet1
+          port: Ethernet1
+        - neighborDevice: HDC-BorderLeaf1
+          neighborPort: Ethernet2
+          port: Ethernet2
+
+  - HDC-7606-2:
+      # interfaces: 8
+      ip_addr: 192.168.0.13
+      neighbors:
+        - neighborDevice: CDC-7606-2
+          neighborPort: Ethernet1
+          port: Ethernet1
+        - neighborDevice: HDC-BorderLeaf2
+          neighborPort: Ethernet2
+          port: Ethernet2
+
+  - HDC-TestNode-1:
+      # interfaces: 8
+      ip_addr: 192.168.0.14
+      neighbors:
+        - neighborDevice: HDC-BorderLeaf1
+          neighborPort: Ethernet4
+          port: Ethernet1
+        - neighborDevice: HDC-BorderLeaf2
+          neighborPort: Ethernet4
+          port: Ethernet2
+
+  - CDC-BorderLeaf1:
+      # interfaces: 8
+      ip_addr: 192.168.0.15
+      neighbors:
+        - neighborDevice: HDC-BorderLeaf1
+          neighborPort: Ethernet1
+          port: Ethernet1
+        - neighborDevice: CDC-7606-1
+          neighborPort: Ethernet2
+          port: Ethernet2
+        - neighborDevice: CDC-BorderLeaf2
+          neighborPort: Ethernet3
+          port: Ethernet3
+        - neighborDevice: N7K-DistVDC1
+          neighborPort: Ethernet1
+          port: Ethernet4
+
+  - CDC-BorderLeaf2:
+      # interfaces: 8
+      ip_addr: 192.168.0.16
+      neighbors:
+        - neighborDevice: HDC-BorderLeaf2
+          neighborPort: Ethernet1
+          port: Ethernet1
+        - neighborDevice: CDC-7606-2
+          neighborPort: Ethernet2
+          port: Ethernet2
+        - neighborDevice: CDC-BorderLeaf1
+          neighborPort: Ethernet3
+          port: Ethernet3
+        - neighborDevice: N7K-DistVDC2
+          neighborPort: Ethernet1
+          port: Ethernet4
+
+  - CDC-7606-1:
+      # interfaces: 8
+      ip_addr: 192.168.0.17
+      neighbors:
+        - neighborDevice: HDC-7606-1
+          neighborPort: Ethernet1
+          port: Ethernet1
+        - neighborDevice: CDC-BorderLeaf1
+          neighborPort: Ethernet2
+          port: Ethernet2
+        - neighborDevice: N7K-CoreVDC1
+          neighborPort: Ethernet1
+          port: Ethernet3
+        - neighborDevice: RemoteTestNode1
+          neighborPort: Ethernet1
+          port: Ethernet4
+
+  - CDC-7606-2:
+      # interfaces: 8
+      ip_addr: 192.168.0.18
+      neighbors:
+        - neighborDevice: HDC-7606-2
+          neighborPort: Ethernet1
+          port: Ethernet1
+        - neighborDevice: CDC-BorderLeaf2
+          neighborPort: Ethernet2
+          port: Ethernet2
+        - neighborDevice: N7K-CoreVDC2
+          neighborPort: Ethernet1
+          port: Ethernet3
+        - neighborDevice: RemoteTestNode2
+          neighborPort: Ethernet1
+          port: Ethernet4
+
+  - N7K-CoreVDC1:
+      # interfaces: 8
+      ip_addr: 192.168.0.19
+      neighbors:
+        - neighborDevice: CDC-7606-1
+          neighborPort: Ethernet3
+          port: Ethernet1
+        - neighborDevice: N7K-DistVDC1
+          neighborPort: Ethernet3
+          port: Ethernet2
+
+  - N7K-DistVDC1:
+      # interfaces: 8
+      ip_addr: 192.168.0.20
+      neighbors:
+        - neighborDevice: CDC-BorderLeaf1
+          neighborPort: Ethernet4
+          port: Ethernet1
+        - neighborDevice: N7K-DistVDC2
+          neighborPort: Ethernet2
+          port: Ethernet2
+        - neighborDevice: N7K-CoreVDC1
+          neighborPort: Ethernet2
+          port: Ethernet3
+        - neighborDevice: CDC-TestNode1
+          neighborPort: Ethernet1
+          port: Ethernet4
+
+  - N7K-DistVDC2:
+      # interfaces: 8
+      ip_addr: 192.168.0.21
+      neighbors:
+        - neighborDevice: CDC-BorderLeaf2
+          neighborPort: Ethernet4
+          port: Ethernet1
+        - neighborDevice: N7K-DistVDC1
+          neighborPort: Ethernet2
+          port: Ethernet2
+        - neighborDevice: N7K-CoreVDC2
+          neighborPort: Ethernet2
+          port: Ethernet3
+        - neighborDevice: CDC-TestNode1
+          neighborPort: Ethernet2
+          port: Ethernet4
+
+  - N7K-CoreVDC2:
+      # interfaces: 8
+      ip_addr: 192.168.0.22
+      neighbors:
+        - neighborDevice: CDC-7606-2
+          neighborPort: Ethernet3
+          port: Ethernet1
+        - neighborDevice: N7K-DistVDC1
+          neighborPort: Ethernet3
+          port: Ethernet2
+
+  - RemoteTestNode1:
+      # interfaces: 8
+      ip_addr: 192.168.0.23
+      neighbors:
+        - neighborDevice: CDC-7606-1
+          neighborPort: Ethernet4
+          port: Ethernet1
+
+  - RemoteTestNode2:
+      # interfaces: 8
+      ip_addr: 192.168.0.24
+      neighbors:
+        - neighborDevice: CDC-7606-2
+          neighborPort: Ethernet4
+          port: Ethernet1
+
+  - CDCTestNode1:
+      # interfaces: 8
+      ip_addr: 192.168.0.25
+      neighbors:
+        - neighborDevice: N7K-DistVDC1
+          neighborPort: Ethernet4
+          port: Ethernet1
+        - neighborDevice: N7K-DistVDC2
+          neighborPort: Ethernet4
+          port: Ethernet2
