@@ -2,22 +2,22 @@ cvp_info:
   containers:
     Tenant:
     EOS:
-      - HDC-BorderLeaf1
-      - HDC-BorderLeaf2
-      - HDC-7606-1
-      - HDC-7606-2
-      - HDC-TestNode-1
-      - CDC-BorderLeaf1
-      - CDC-BorderLeaf2
-      - CDC-7606-1
-      - CDC-7606-2
-      - N7K-CoreVDC1
-      - N7K-DistVDC1
-      - N7K-DistVDC2
-      - N7K-CoreVDC2
-      - RemoteTestNode1
-      - RemoteTestNode2
-      - CDCTestNode1
+      - HBL1
+      - HBL2
+      - H761
+      - H762
+      - HTN1
+      - CBL1
+      - CBL2
+      - C761
+      - C762
+      - NCVD1
+      - NDVD1
+      - NDVD2
+      - NCVD2
+      - RTN1
+      - RTN2
+      - CTN1
   snapshots:
     - name: Validate_IP_Addressing
       commands:
@@ -31,35 +31,35 @@ cvp_info:
       Tenant:
         - ATD-INFRA
     netelements:
-      HDC-BorderLeaf1:
+      HBL1:
         - BaseIPv4_HDC-BorderLeaf1
-      HDC-BorderLeaf2:
+      HBL2:
         - BaseIPv4_HDC-BorderLeaf2
-      HDC-7606-1:
+      H761:
         - BaseIPv4_HDC-7606-1
-      HDC-7606-2:
+      H762:
         - BaseIPv4_HDC-7606-2
-      HDC-TestNode-1:
+      HTN1:
         - BaseIPv4_HDC-TestNode-1
-      CDC-BorderLeaf1:
+      CBL1:
         - BaseIPv4_CDC-BorderLeaf1
-      CDC-BorderLeaf2:
+      CBL2:
         - BaseIPv4_CDC-BorderLeaf2
-      CDC-7606-1:
+      C761:
         - BaseIPv4_CDC-7606-1
-      CDC-7606-2:
+      C762:
         - BaseIPv4_CDC-7606-2
-      N7K-CoreVDC1:
+      NCVD1:
         - BaseIPv4_N7K-CoreVDC1
-      N7K-DistVDC1:
+      NDVD1:
         - BaseIPv4_N7K-DistVDC1
-      N7K-DistVDC2:
+      NDVD2:
         - BaseIPv4_N7K-DistVDC2
-      N7K-CoreVDC2:
+      NCVD2:
         - BaseIPv4_N7K-CoreVDC2
-      RemoteTestNode1:
+      RTN1:
         - BaseIPv4_RemoteTestNode1
-      RemoteTestNode2:
+      RTN2:
         - BaseIPv4_RemoteTestNode2
-      CDCTestNode1:
+      CTN1:
         - BaseIPv4_CDCTestNode1
