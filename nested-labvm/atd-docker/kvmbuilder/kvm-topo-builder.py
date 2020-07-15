@@ -17,7 +17,6 @@ BASE_XML_VEOS = expanduser('~/base.xml')
 BASE_XML_CVP = expanduser('~/base_cvp.xml')
 
 CVP_CPU_START = 2
-CPU_START = 8
 OVS_BRIDGES = []
 VEOS_NODES = {}
 sleep_delay = 30
@@ -99,6 +98,18 @@ def createOVS(topo_tag):
             dout.write("sudo ovs-vsctl add-br {0}\n".format(br))
             dout.write("sudo ovs-vsctl set bridge {0} other-config:forward-bpdu=true\n".format(br))
 
+def deleteOVS(topo_tag):
+    """
+    Function to output and write to bash script
+    to delete all OVS-bridges.
+    """
+    _tag = topo_tag[0]
+    destinationValidate(topo_tag)
+    with open(DATA_OUTPUT + topo_tag + '-ovs-delete.sh', 'w') as dout:
+        dout.write("#!/bin/bash\n\n")
+        for br in OVS_BRIDGES:
+            dout.write("sudo ovs-vsctl del-br {0}\n".format(br))
+
 def destinationValidate(topo_tag):
     """
     Function to check and create destination directory.
@@ -154,8 +165,9 @@ def main(uargs):
     FILE_BUILD = YAML().load(open(REPO_TOPO + TOPO_TAG + '/topo_build.yml', 'r'))
     cvp_cpu_count = FILE_BUILD['cvp_cpu']
     veos_cpu_count = FILE_BUILD['veos_cpu']
+    VEOS_CPU_START = CVP_CPU_START + (cvp_cpu_count / 2)
     CVP_CPUS = getCPUs(CVP_CPU_START,cvp_cpu_count)
-    VEOS_CPUS = getCPUs(CPU_START)
+    VEOS_CPUS = getCPUs(VEOS_CPU_START)
     NODES = FILE_BUILD['nodes']
     DATA_OUTPUT += TOPO_TAG + "/"
     # Start to build out Node create and Network creation
@@ -164,6 +176,8 @@ def main(uargs):
         VEOS_NODES[vdevn] = vNODE(vdevn, vdev[vdevn]['ip_addr'], vdev[vdevn]['neighbors'])
     # Output as script OVS Bridge creation
     createOVS(TOPO_TAG)
+    # Output as script OVS Bridge deletion
+    deleteOVS(TOPO_TAG)
     # Create xml file for CVP KVM Node
     # Open base cvp xml
     tree = ET.parse(BASE_XML_CVP)
