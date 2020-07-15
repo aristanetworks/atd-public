@@ -7,12 +7,19 @@ import secrets
 import hashlib, uuid
 from datetime import datetime
 from ruamel.yaml import YAML
+from time import sleep
 
 PORT = 80
 BASE_PATH = '/opt/topo/html/'
 ATD_ACCESS_PATH = '/etc/atd/ACCESS_INFO.yaml'
 
-host_yaml = YAML().load(open(ATD_ACCESS_PATH, 'r'))
+# Add in check to make sure arista password has been updated
+while True:
+    host_yaml = YAML().load(open(ATD_ACCESS_PATH, 'r'))
+    if host_yaml['login_info']['jump_host']['pw'] == 'REPLACE_PWD':
+        sleep(2)
+    else:
+        break
 
 salt = uuid.uuid4().hex
 
