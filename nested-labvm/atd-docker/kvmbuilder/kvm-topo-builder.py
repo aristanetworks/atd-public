@@ -165,7 +165,7 @@ def main(uargs):
     FILE_BUILD = YAML().load(open(REPO_TOPO + TOPO_TAG + '/topo_build.yml', 'r'))
     cvp_cpu_count = FILE_BUILD['cvp_cpu']
     veos_cpu_count = FILE_BUILD['veos_cpu']
-    VEOS_CPU_START = CVP_CPU_START + (cvp_cpu_count / 2)
+    VEOS_CPU_START = int(CVP_CPU_START + (cvp_cpu_count / 2))
     CVP_CPUS = getCPUs(CVP_CPU_START,cvp_cpu_count)
     VEOS_CPUS = getCPUs(VEOS_CPU_START)
     NODES = FILE_BUILD['nodes']
@@ -276,7 +276,7 @@ def main(uargs):
     
     
 if __name__ == '__main__':
-    print('Starting KMV Builder')
+    print('Starting KVM Builder')
     parser = argparse.ArgumentParser()
     parser.add_argument("-t", "--tag", type=str, help="Tag name for topology", default=None, required=False)
     parser.add_argument("-f", "--file", type=str, help="Custom Topology build file", default=None, required=False)
