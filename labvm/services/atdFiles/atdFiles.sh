@@ -70,9 +70,9 @@ sed -i "s/{REPLACE_ARISTA}/$LAB_ARISTA_PWD/g" /tmp/atd/topologies/$TOPO/labguide
 sed -i "s/{REPLACE_PWD}/$ARISTA_PWD/g" /tmp/atd/topologies/$TOPO/labguides/source/*.rst
 
 # Perform check for module lab
-if [ ! -z "$(grep "default_lab" /etc/ACCESS_INFO.yaml)" ] && [ -d "/home/arista/modules" ]
+if [ ! -z "$(grep "app" /etc/ACCESS_INFO.yaml)" ] && [ -d "/home/arista/modules" ]
 then
-    MODULE=$(cat /etc/ACCESS_INFO.yaml | shyaml get-value default_lab)
+    MODULE=$(cat /etc/ACCESS_INFO.yaml | shyaml get-value app)
     if [ $MODULE != "none" ]
     then
         # Code to start the lab module page
