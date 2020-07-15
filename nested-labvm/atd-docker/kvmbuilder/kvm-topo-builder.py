@@ -16,7 +16,6 @@ DATA_OUTPUT = expanduser('~/kvm/')
 BASE_XML_VEOS = expanduser('~/base.xml')
 BASE_XML_CVP = expanduser('~/base_cvp.xml')
 
-CVP_CPU_START = 2
 OVS_BRIDGES = []
 VEOS_NODES = {}
 sleep_delay = 30
@@ -163,10 +162,12 @@ def main(uargs):
     except:
         print("File not found")
     FILE_BUILD = YAML().load(open(REPO_TOPO + TOPO_TAG + '/topo_build.yml', 'r'))
+    host_cpu_count = FILE_BUILD['host_cpu']
     cvp_cpu_count = FILE_BUILD['cvp_cpu']
     veos_cpu_count = FILE_BUILD['veos_cpu']
+    CVP_CPU_START = int(host_cpu_count / 2)
     VEOS_CPU_START = int(CVP_CPU_START + (cvp_cpu_count / 2))
-    CVP_CPUS = getCPUs(CVP_CPU_START,cvp_cpu_count)
+    CVP_CPUS = getCPUs(CVP_CPU_START, cvp_cpu_count)
     VEOS_CPUS = getCPUs(VEOS_CPU_START)
     NODES = FILE_BUILD['nodes']
     DATA_OUTPUT += TOPO_TAG + "/"

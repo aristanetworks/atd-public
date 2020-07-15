@@ -1,3 +1,4 @@
+host_cpu: 4
 cvp_cpu: 12
 veos_cpu: 1
 nodes:
