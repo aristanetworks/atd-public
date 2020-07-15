@@ -10,6 +10,7 @@ topo_file = '/etc/ACCESS_INFO.yaml'
 CVP_CONFIG_FIILE = '/home/arista/.cvpState.txt'
 pDEBUG = True
 CONFIGURE_TOPOLOGY = "/usr/local/bin/ConfigureTopology.py"
+APP_KEY = 'app'
 
 # Module mapping for default_lab tag to map for use with ConfigureTopology
 MODULES = {
@@ -19,23 +20,23 @@ MODULES = {
     },
     'bgp': {
         'topo': 'Datacenter',
-        'module': 'mlag'
+        'module': 'bgp'
     },
     'vxlan': {
         'topo': 'Datacenter',
-        'module': 'mlag'
+        'module': 'vxlan'
     },
     'l2evpn': {
         'topo': 'Datacenter',
-        'module': 'mlag'
+        'module': 'l2evpn'
     },
     'l3evpn': {
         'topo': 'Datacenter',
-        'module': 'mlag'
+        'module': 'l3evpn'
     },
     'cvp': {
         'topo': 'Datacenter',
-        'module': 'mlag'
+        'module': 'cvp'
     }
 }
 
@@ -70,9 +71,8 @@ def main(atd_yaml):
     Parameters:
     atd_yaml = Ruamel.YAML object container of ACCESS_INFO 
     """
-    "/usr/local/bin/ConfigureTopology.py -t Datacenter -l mlag"
-    lab_topo = MODULES[atd_yaml['default_lab']]['topo']
-    lab_module = MODULES[atd_yaml['default_lab']]['module']
+    lab_topo = MODULES[atd_yaml[APP_KEY]]['topo']
+    lab_module = MODULES[atd_yaml[APP_KEY]]['module']
     pS("INFO", "Configuring the lab for {0}".format(lab_module))
     system('echo -e "\n" | {0} -t {1} -l {2}'.format(CONFIGURE_TOPOLOGY, lab_topo, lab_module))
     pS("OK", "Lab has been configured.")
@@ -84,11 +84,11 @@ if __name__ == '__main__':
     # Perform check to see if a module has been assigned
     atd_yaml = getTopoInfo(topo_file)
     # Perform check to see if lab parameter is available
-    if 'default_lab' in atd_yaml:
+    if APP_KEY in atd_yaml:
         # Check to see if a value has been set for the parameter:
-        if atd_yaml['default_lab'] != 'none':
+        if atd_yaml[APP_KEY] != 'none':
             # Check if module is in MODULES
-            if atd_yaml['default_lab'] in MODULES:
+            if atd_yaml[APP_KEY] in MODULES:
                 # Perform loop check to verify that CVP has been configured and cvpUpdated has completed.
                 while not path.exists(CVP_CONFIG_FIILE):
                     # If it check hasn't passed, sleep 10 seconds.
