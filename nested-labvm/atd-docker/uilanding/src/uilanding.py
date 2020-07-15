@@ -5,6 +5,8 @@ import tornado.web
 import requests
 import secrets
 import hashlib, uuid
+from base64 import b64decode, b64encode
+import json
 from datetime import datetime
 from ruamel.yaml import YAML
 from time import sleep
@@ -33,10 +35,25 @@ class BaseHandler(tornado.web.RequestHandler):
 
 class LoginHandler(BaseHandler):
     def get(self):
-        self.render(
-            BASE_PATH + 'login.html',
-            LOGIN_MESSAGE=""
-        )
+        AUTH = False
+        if 'auth' in self.request.arguments:
+            try:
+                decoded_cred = decodeID(self.get_argument('auth'))
+                tmp_username_hash = hashlib.sha512((decoded_cred['user'] + salt).encode('utf-8')).hexdigest()
+                if tmp_username_hash in accounts:
+                    tmp_pwd_hash = hashlib.sha512((decoded_cred['user'] + salt).encode('utf-8')).hexdigest()
+                    if tmp_pwd_hash == accounts[tmp_username_hash]:
+                        AUTH = True
+            except:
+                pass
+        if AUTH:
+            self.set_secure_cookie("user", decoded_cred['user'])
+            self.redirect('/')
+        else:
+            self.render(
+                BASE_PATH + 'login.html',
+                LOGIN_MESSAGE=""
+            )
 
     def post(self):
         tmp_username_hash = hashlib.sha512((self.get_argument("name") + salt).encode('utf-8')).hexdigest()
@@ -59,7 +76,10 @@ class LoginHandler(BaseHandler):
 class topoRequestHandler(BaseHandler):
     def get(self):
         if not self.current_user:
-            self.redirect('/login')
+            if 'auth' in self.request.arguments:
+                self.redirect('/login?auth={0}'.format(self.get_argument('auth')))
+            else:
+                self.redirect('/login')
             return()
         else:
             node_ip = getPublicIP()
@@ -72,6 +92,16 @@ class topoRequestHandler(BaseHandler):
 # ===============================
 # Utility Functions
 # ===============================
+
+def encodeID(tmp_data):
+    tmp_str = json.dumps(tmp_data).encode()
+    enc_str = b64encode(tmp_str).decode()
+    return(enc_str)
+
+def decodeID(tmp_data):
+    decrypt_str = b64decode(tmp_data.encode()).decode()
+    tmp_json = json.loads(decrypt_str)
+    return(tmp_json)
 
 def genCookieSecret():
     """
