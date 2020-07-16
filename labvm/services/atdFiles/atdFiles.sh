@@ -32,9 +32,9 @@ rm -rf /var/www/html/atd/labguides/
 # Make sure login.py and ConfigureTopology.py is current
 cp /tmp/atd/topologies/all/login.py /usr/local/bin/login.py
 cp /tmp/atd/topologies/all/ConfigureTopology.py /usr/local/bin/ConfigureTopology.py
-cp /tmp/atd/topologies/all/labModule.py /usr/local/bin/labModule.py
+cp /tmp/atd/topologies/all/labUI.py /usr/local/bin/labUI.py
 chmod +x /usr/local/bin/ConfigureTopology.py
-chmod +x /usr/local/bin/labModule.py
+chmod +x /usr/local/bin/labUI.py
 
 # Copy over new nginx config if it exists and restart service
 if [ ! -z '/tmp/atd/topologies/all/nginx.conf' ]
@@ -76,7 +76,7 @@ then
     if [ $MODULE != "none" ]
     then
         # Code to start the lab module page
-        nohup labModule.py &
+        nohup labUI.py &
     fi
 fi
 
