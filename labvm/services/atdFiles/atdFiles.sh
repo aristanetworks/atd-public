@@ -24,7 +24,7 @@ pip install --upgrade rcvpapi
 apt install python3-pip -y
 
 # Install python3 ruamel.yaml
-pip3 install ruamel.yaml bs4
+pip3 install ruamel.yaml bs4 tornado
 
 # Clean up previous stuff to make sure it's current
 rm -rf /var/www/html/atd/labguides/
