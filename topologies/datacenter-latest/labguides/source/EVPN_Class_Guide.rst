@@ -207,11 +207,3 @@ Lab 7: Troubleshooting
     #. Scenario C
     
         #. HostA cannot communicate with HostD
-
-    #. Scenario D
-        
-        #. HostB cannot communicate with any remote host
-
-    #. Scenario E
-    
-        #. Intermittent traffic loss to a host connected to MLAG VTEP Pair

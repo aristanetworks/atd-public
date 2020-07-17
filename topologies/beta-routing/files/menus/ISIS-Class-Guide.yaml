@@ -1,7 +1,5 @@
 ---
 lab_list:
-  reset:
-    description: "Reset All Devices to Base IPv4 (reset)"
   lab1: 
     description: "Start at Lab 1: Single Flood Domain (lab1)"
   lab2:
@@ -10,6 +8,8 @@ lab_list:
     description: "Start at Lab 3: Broadcast Network (lab3)"
   complete: 
     description: "Complete all Sections (complete)"
+  reset:
+    description: "Reset All Devices to Base IPv4 (reset)"
 labconfiglets:
   reset:
     eos1:

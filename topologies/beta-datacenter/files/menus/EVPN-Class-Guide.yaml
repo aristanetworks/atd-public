@@ -1,7 +1,5 @@
 ---
 lab_list:
-  reset:
-    description: "Reset All Devices to Base IPv4 (reset)"
   lab1:
     description: "Lab 1: Underlay Control-Plane Buildout (lab1)"
   lab2:
@@ -20,6 +18,8 @@ lab_list:
     description: "Deploy troubleshooting scenario B (tshootb)"
   tshootc:
     description: "Deploy troubleshooting scenario C (tshootc)"
+  reset:
+    description: "Reset All Devices to Base IPv4 (reset)"
 labconfiglets:
   reset:
     spine1:
