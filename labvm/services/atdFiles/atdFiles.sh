@@ -24,7 +24,7 @@ pip install --upgrade rcvpapi
 apt install python3-pip -y
 
 # Install python3 ruamel.yaml
-pip3 install ruamel.yaml
+pip3 install ruamel.yaml bs4 tornado
 
 # Clean up previous stuff to make sure it's current
 rm -rf /var/www/html/atd/labguides/
@@ -32,7 +32,16 @@ rm -rf /var/www/html/atd/labguides/
 # Make sure login.py and ConfigureTopology.py is current
 cp /tmp/atd/topologies/all/login.py /usr/local/bin/login.py
 cp /tmp/atd/topologies/all/ConfigureTopology.py /usr/local/bin/ConfigureTopology.py
+cp /tmp/atd/topologies/all/labUI.py /usr/local/bin/labUI.py
 chmod +x /usr/local/bin/ConfigureTopology.py
+chmod +x /usr/local/bin/labUI.py
+
+# Copy over new nginx config if it exists and restart service
+if [ ! -z '/tmp/atd/topologies/all/nginx.conf' ]
+then
+    cp /tmp/atd/topologies/all/nginx.conf /etc/nginx/sites-enabled/default
+    systemctl restart nginx
+fi
 
 # Add files to arista home
 rsync -av /tmp/atd/topologies/$TOPO/files/ /home/arista
@@ -59,6 +68,17 @@ sed -i "s/{REPLACE_ARISTA}/$LAB_ARISTA_PWD/g" /tmp/atd/topologies/$TOPO/labguide
 
 # Update the Arista user password for connecting to the labvm
 sed -i "s/{REPLACE_PWD}/$ARISTA_PWD/g" /tmp/atd/topologies/$TOPO/labguides/source/*.rst
+
+# Perform check for module lab
+if [ ! -z "$(grep "app" /etc/ACCESS_INFO.yaml)" ] && [ -d "/home/arista/modules" ]
+then
+    MODULE=$(cat /etc/ACCESS_INFO.yaml | shyaml get-value app)
+    if [ $MODULE != "none" ]
+    then
+        # Code to start the lab module page
+        nohup labUI.py &
+    fi
+fi
 
 # Build the lab guides html files
 cd /tmp/atd/topologies/$TOPO/labguides

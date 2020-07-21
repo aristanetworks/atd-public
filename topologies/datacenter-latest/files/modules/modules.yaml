@@ -1,0 +1,28 @@
+mlag:
+  name: "MLAG"
+  image: "mlag_1.png"
+  nodes:
+    Spine1:
+      coords: "130,56,234,105"
+      href: "c3BpbmUxAGMAZGVmYXVsdA=="
+    Spine2:
+      coords: "658,54,763,101"
+      href: "c3BpbmUyAGMAZGVmYXVsdA=="
+    Leaf1:
+      coords: "62,269,167,319"
+      href: "bGVhZjEAYwBkZWZhdWx0"
+    Leaf2:
+      coords: "319,268,426,315"
+      href: "bGVhZjIAYwBkZWZhdWx0"
+    Leaf3:
+      coords: "464,267,567,317"
+      href: "bGVhZjMAYwBkZWZhdWx0"
+    Leaf4:
+      coords: "728,268,834,316"
+      href: "bGVhZjQAYwBkZWZhdWx0"
+    Host1:
+      coords: "206,384,276,414"
+      href: "aG9zdDEAYwBkZWZhdWx0"
+    Host2:
+      coords: "615,388,685,421"
+      href: "aG9zdDIAYwBkZWZhdWx0"
