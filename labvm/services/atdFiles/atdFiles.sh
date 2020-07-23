@@ -20,11 +20,22 @@ done
 pip install rcvpapi
 pip install --upgrade rcvpapi
 
+# Add current Node.js repo
+curl -sL https://deb.nodesource.com/setup_13.x | sudo bash -
+
 # Install Python3-pip
-apt install python3-pip -y
+apt install python3-pip npm nodejs -y
 
 # Install python3 ruamel.yaml
 pip3 install ruamel.yaml bs4 tornado
+
+# Setup NPM and webssh2
+npm install --save read-config@1
+git clone https://github.com/billchurch/webssh2.git /opt/webssh2
+cd /opt/webssh2/app
+npm install --production
+cp /tmp/atd/labvm/services/webssh2/config.json /opt/webssh2/app/config.json
+
 
 # Clean up previous stuff to make sure it's current
 rm -rf /var/www/html/atd/labguides/
