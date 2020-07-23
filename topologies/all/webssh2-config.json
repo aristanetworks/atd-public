@@ -5,7 +5,7 @@
   },
   "user": {
     "name": "arista",
-    "password": "arista1",
+    "password": "{REPLACE_ARISTA}",
     "privatekey": null
   },
   "ssh": {
