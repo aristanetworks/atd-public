@@ -26,7 +26,7 @@ mlag:
     Host2:
       coords: "615,388,685,421"
       href: "aG9zdDIAYwBkZWZhdWx0"
-bgp:
+l3ls:
   name: "BGP"
   image: "l3ls_1.png"
   nodes:
