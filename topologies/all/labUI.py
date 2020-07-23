@@ -35,7 +35,7 @@ class topoRequestHandler(tornado.web.RequestHandler):
                 # If the app key/value differs, re-configure lab
                 if lab_module != ACCESS_YAML[APP_KEY]:
                     if lab_module in LABS_YAML['labs']:
-                        lab_topo = LABS_YAML['labs'][lab_module]
+                        lab_topo = LABS_YAML['labs'][lab_module]['topo']
                         print("Re-configuring lab from {0} to {1}".format(ACCESS_YAML[APP_KEY], lab_module))
                         system('echo -e "\n" | {0} -t {1} -l {2}'.format(CONFIGURE_TOPOLOGY, lab_topo, lab_module))
                         print("Done re-configuring the lab.")
