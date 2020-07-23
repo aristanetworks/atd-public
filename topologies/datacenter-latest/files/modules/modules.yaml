@@ -26,3 +26,103 @@ mlag:
     Host2:
       coords: "615,388,685,421"
       href: "aG9zdDIAYwBkZWZhdWx0"
+bgp:
+  name: "BGP"
+  image: "l3ls_1.png"
+  nodes:
+    Spine1:
+      coords: "106,29,218,83"
+      href: "c3BpbmUxAGMAZGVmYXVsdA=="
+    Spine2:
+      coords: "691,31,806,85"
+      href: "c3BpbmUyAGMAZGVmYXVsdA=="
+    Leaf1:
+      coords: "27,265,141,319"
+      href: "bGVhZjEAYwBkZWZhdWx0"
+    Leaf2:
+      coords: "317,264,430,319"
+      href: "bGVhZjIAYwBkZWZhdWx0"
+    Leaf3:
+      coords: "477,264,591,317"
+      href: "bGVhZjMAYwBkZWZhdWx0"
+    Leaf4:
+      coords: "765,266,877,320"
+      href: "bGVhZjQAYwBkZWZhdWx0"
+    Host1:
+      coords: "182,442,258,477"
+      href: "aG9zdDEAYwBkZWZhdWx0"
+    Host2:
+      coords: "644,441,725,477"
+      href: "aG9zdDIAYwBkZWZhdWx0"
+vxlan:
+  name: "VxLAN"
+  image: "vxlan_1.png"
+  nodes:
+    Spine1:
+      coords: "96,29,208,83"
+      href: "c3BpbmUxAGMAZGVmYXVsdA=="
+    Spine2:
+      coords: "680,28,796,82"
+      href: "c3BpbmUyAGMAZGVmYXVsdA=="
+    Leaf1:
+      coords: "22,266,137,319"
+      href: "bGVhZjEAYwBkZWZhdWx0"
+    Leaf2:
+      coords: "313,262,425,315"
+      href: "bGVhZjIAYwBkZWZhdWx0"
+    Leaf3:
+      coords: "466,264,583,317"
+      href: "bGVhZjMAYwBkZWZhdWx0"
+    Leaf4:
+      coords: "757,264,873,319"
+      href: "bGVhZjQAYwBkZWZhdWx0"
+    Host1:
+      coords: "192,433,268,469"
+      href: "aG9zdDEAYwBkZWZhdWx0"
+    Host2:
+      coords: "637,432,716,468"
+      href: "aG9zdDIAYwBkZWZhdWx0"
+l2evpn:
+  name: "Layer 2 EVPN"
+  image: "l2evpn.png"
+  nodes:
+    Spine1:
+      coords: "90,25,189,71"
+      href: "c3BpbmUxAGMAZGVmYXVsdA=="
+    Spine2:
+      coords: "594,25,691,71"
+      href: "c3BpbmUyAGMAZGVmYXVsdA=="
+    Leaf1:
+      coords: "26,227,127,274"
+      href: "bGVhZjEAYwBkZWZhdWx0"
+    Leaf3:
+      coords: "411,226,511,273"
+      href: "bGVhZjMAYwBkZWZhdWx0"
+    Host1:
+      coords: "173,373,241,404"
+      href: "aG9zdDEAYwBkZWZhdWx0"
+    Host2:
+      coords: "555,370,624,400"
+      href: "aG9zdDIAYwBkZWZhdWx0"
+l3evpn:
+  name: "Layer 3 EVPN"
+  image: "l3evpn.png"
+  nodes:
+    Spine1:
+      coords: "92,24,187,72"
+      href: "c3BpbmUxAGMAZGVmYXVsdA=="
+    Spine2:
+      coords: "595,24,694,72"
+      href: "c3BpbmUyAGMAZGVmYXVsdA=="
+    Leaf1:
+      coords: "26,228,127,273"
+      href: "bGVhZjEAYwBkZWZhdWx0"
+    Leaf3:
+      coords: "410,225,509,273"
+      href: "bGVhZjMAYwBkZWZhdWx0"
+    Host1:
+      coords: "175,373,241,404"
+      href: "aG9zdDEAYwBkZWZhdWx0"
+    Host2:
+      coords: "557,372,623,401"
+      href: "aG9zdDIAYwBkZWZhdWx0"
