@@ -32,9 +32,8 @@ pip3 install ruamel.yaml bs4 tornado
 # Setup NPM and webssh2
 npm install --save read-config@1
 git clone https://github.com/billchurch/webssh2.git /opt/webssh2
-cd /opt/webssh2/app
-npm install --production
-cp /tmp/atd/labvm/services/webssh2/config.json /opt/webssh2/app/config.json
+npm install /opt/webssh2/app --production
+cp /tmp/atd/topologies/all/webssh2-config.json /opt/webssh2/app/config.json
 
 
 # Clean up previous stuff to make sure it's current
