@@ -21,10 +21,10 @@ pip install rcvpapi
 pip install --upgrade rcvpapi
 
 # Add current Node.js repo
-curl -sL https://deb.nodesource.com/setup_13.x | sudo bash -
+curl -sL https://deb.nodesource.com/setup_14.x | sudo bash -
 
 # Install Python3-pip
-apt install python3-pip npm nodejs -y
+apt install python3-pip nodejs -y
 
 # Install python3 ruamel.yaml
 pip3 install ruamel.yaml bs4 tornado
