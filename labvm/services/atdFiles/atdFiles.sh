@@ -30,6 +30,7 @@ apt install python3-pip nodejs -y
 pip3 install ruamel.yaml bs4 tornado
 
 # Setup NPM and webssh2
+npm install forever -g
 git clone https://github.com/billchurch/webssh2.git /opt/webssh2
 cp /tmp/atd/topologies/all/webssh2-config.json /opt/webssh2/app/config.json
 npm --prefix /opt/webssh2/app install --production
