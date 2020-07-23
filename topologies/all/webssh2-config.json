@@ -17,7 +17,7 @@
     "readyTimeout": 20000,
     "keepaliveInterval": 120000,
     "keepaliveCountMax": 10,
-    "allowedSubnets": []
+    "allowedSubnets": [ "192.168.0.0/16", "10.0.0.0/8", "172.16.0.0/12" ]
   },
   "terminal": {
     "cursorBlink": true,
