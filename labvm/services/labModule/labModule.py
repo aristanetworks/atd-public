@@ -22,6 +22,10 @@ MODULES = {
         'topo': 'Datacenter',
         'module': 'bgp'
     },
+    'l3ls': {
+        'topo': 'Datacenter',
+        'module': 'bgp'
+    },
     'vxlan': {
         'topo': 'Datacenter',
         'module': 'vxlan'
