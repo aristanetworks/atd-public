@@ -1,0 +1,22 @@
+labs:
+  mlag:
+    topo: Datacenter
+    module: mlag
+  bgp:
+    topo: Datacenter
+    module: bgp
+  l3ls:
+    topo: Datacenter
+    module: bgp
+  vxlan:
+    topo: Datacenter
+    module: vxlan
+  l2evpn:
+    topo: Datacenter
+    module: l2evpn
+  l3evpn:
+    topo: Datacenter
+    module: l3evpn
+  cvp:
+    topo: Datacenter
+    module: cvp
