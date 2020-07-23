@@ -2,6 +2,7 @@
 
 from ruamel.yaml import YAML
 from bs4 import BeautifulSoup
+from os import system
 import tornado.ioloop
 import tornado.web
 import json
@@ -10,9 +11,17 @@ import traceback
 
 PORT = 50020
 BASE_PATH = '/home/arista/modules/'
+ACCESS_PATH = '/etc/ACCESS_INFO.yaml'
 MODULE_FILE = BASE_PATH + 'modules.yaml'
+LABS_FILE = BASE_PATH + 'labs.yaml'
+CONFIGURE_TOPOLOGY = "/usr/local/bin/ConfigureTopology.py"
+APP_KEY = 'app'
 
 MOD_YAML = YAML().load(open(MODULE_FILE, 'r'))
+
+ACCESS_YAML = YAML().load(open(ACCESS_PATH, 'r'))
+
+LABS_YAML = YAML().load(open(LABS_FILE, 'r'))
 
 settings = {
     'static_path': BASE_PATH
@@ -22,6 +31,17 @@ class topoRequestHandler(tornado.web.RequestHandler):
     def get(self):
         if 'lab' in self.request.arguments:
             lab_module = self.get_argument("lab")
+            if APP_KEY in ACCESS_YAML:
+                # If the app key/value differs, re-configure lab
+                if lab_module != ACCESS_YAML[APP_KEY]:
+                    if lab_module in LABS_YAML['labs']:
+                        lab_topo = LABS_YAML['labs'][lab_module]
+                        print("Re-configuring lab from {0} to {1}".format(ACCESS_YAML[APP_KEY], lab_module))
+                        system('echo -e "\n" | {0} -t {1} -l {2}'.format(CONFIGURE_TOPOLOGY, lab_topo, lab_module))
+                        print("Done re-configuring the lab.")
+                        ACCESS_YAML[APP_KEY] =  lab_module
+                        with open(ACCESS_PATH, 'w') as mod_access:
+                            YAML().dump(ACCESS_YAML, mod_access)
             if lab_module in MOD_YAML:
                 labguide = getLabHTML(lab_module)
                 if labguide:
@@ -42,7 +62,7 @@ class topoRequestHandler(tornado.web.RequestHandler):
 # ===============================
 # Utility Functions
 # ===============================
-
+    
 def getPublicIP():
     """
     Function to get Public IP.
