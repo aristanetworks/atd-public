@@ -33,6 +33,7 @@ pip3 install ruamel.yaml bs4 tornado
 npm install forever -g
 git clone https://github.com/billchurch/webssh2.git /opt/webssh2
 cp /tmp/atd/topologies/all/webssh2-config.json /opt/webssh2/app/config.json
+sed -i "s/{REPLACE_ARISTA}/$LAB_ARISTA_PWD/g" /opt/webssh2/app/config.json
 npm --prefix /opt/webssh2/app install --production
 npm --prefix /opt/webssh2/app install forever
 forever start /opt/webssh2/app/index.js
