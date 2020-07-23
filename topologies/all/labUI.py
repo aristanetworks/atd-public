@@ -8,8 +8,10 @@ import tornado.web
 import json
 import requests
 import traceback
+import syslog
 
 PORT = 50020
+pDEBUG = True
 BASE_PATH = '/home/arista/modules/'
 ACCESS_PATH = '/etc/ACCESS_INFO.yaml'
 MODULE_FILE = BASE_PATH + 'modules.yaml'
@@ -36,9 +38,9 @@ class topoRequestHandler(tornado.web.RequestHandler):
                 if lab_module != ACCESS_YAML[APP_KEY]:
                     if lab_module in LABS_YAML['labs']:
                         lab_topo = LABS_YAML['labs'][lab_module]['topo']
-                        print("Re-configuring lab from {0} to {1}".format(ACCESS_YAML[APP_KEY], lab_module))
+                        pS("INFO", "Re-configuring lab from {0} to {1}".format(ACCESS_YAML[APP_KEY], lab_module))
                         system('echo -e "\n" | {0} -t {1} -l {2}'.format(CONFIGURE_TOPOLOGY, lab_topo, lab_module))
-                        print("Done re-configuring the lab.")
+                        pS("OK", "Done re-configuring the lab.")
                         ACCESS_YAML[APP_KEY] =  lab_module
                         with open(ACCESS_PATH, 'w') as mod_access:
                             YAML().dump(ACCESS_YAML, mod_access)
@@ -108,17 +110,31 @@ def parseLabHTML(html, lab_tag):
         if lab_tag in html_img.get("alt"):
             html_img.extract()
     return(parsed)
+
+def pS(mstat,mtype):
+    """
+    Function to send output from service file to Syslog
+    Parameters:
+    mstat = Message Status, ie "OK", "INFO" (required)
+    mtype = Message to be sent/displayed (required)
+    """
+    mmes = "\t" + mtype
+    syslog.syslog("[{0}] {1}".format(mstat,mmes.expandtabs(7 - len(mstat))))
+    if pDEBUG:
+        print("[{0}] {1}".format(mstat,mmes.expandtabs(7 - len(mstat))))
     
 
 if __name__ == "__main__":
+    # Open Syslog
+    syslog.openlog(logoption=syslog.LOG_PID)
     app = tornado.web.Application([
         (r'/module', topoRequestHandler),
         (r'/module/(.*)', tornado.web.StaticFileHandler, {'path': BASE_PATH })
     ],)
     app.listen(PORT)
-    print('*** Websocket Server Started on {} ***'.format(PORT))
+    pS("OK", '*** Websocket Server Started on {} ***'.format(PORT))
     try:
         tornado.ioloop.IOLoop.instance().start()
     except KeyboardInterrupt:
         tornado.ioloop.IOLoop.instance().stop()
-        print("*** Websocked Server Stopped ***")
+        pS("INFO", "*** Websocked Server Stopped ***")
