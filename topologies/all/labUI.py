@@ -39,7 +39,7 @@ class topoRequestHandler(tornado.web.RequestHandler):
                     if lab_module in LABS_YAML['labs']:
                         lab_topo = LABS_YAML['labs'][lab_module]['topo']
                         pS("INFO", "Re-configuring lab from {0} to {1}".format(ACCESS_YAML[APP_KEY], lab_module))
-                        system('nohup $(echo -e "\n" | {0} -t {1} -l {2}) &'.format(CONFIGURE_TOPOLOGY, lab_topo, lab_module))
+                        system('echo -e "\n" | {0} -t {1} -l {2}'.format(CONFIGURE_TOPOLOGY, lab_topo, lab_module))
                         pS("OK", "Done re-configuring the lab.")
                         ACCESS_YAML[APP_KEY] =  lab_module
                         with open(ACCESS_PATH, 'w') as mod_access:
