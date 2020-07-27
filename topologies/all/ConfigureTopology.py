@@ -222,7 +222,7 @@ def main(argv):
         print("Setting up {0} lab").format(lab)
         for node in accessinfo["nodes"]["veos"]:
             hostname = node["hostname"]
-            print("Config for {0}: {1}").format(hostname).format(labconfiglets[lab][hostname])
+            print("Config for {0}: {1}").format(hostname,labconfiglets[lab][hostname])
 
 
 if __name__ == '__main__':
