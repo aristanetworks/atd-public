@@ -10,8 +10,17 @@ import paramiko
 
 DEBUG = False
 
+# Cmds to copy bare startup to running
 dev_cmds = """enable
 copy startup-config running-config
+"""
+# Cmds to grab ZTP status
+ztp_cmds = """enable
+show zerotouch | grep ZeroTouch
+"""
+# Cancel ZTP
+ztp_cancel = """enable
+zerotouch cancel
 """
 
 def remove_configlets(client, device, mext=None):
@@ -125,7 +134,7 @@ def pushBareConfig(veos_host, veos_ip, veos_config):
     veos_ssh = paramiko.SSHClient()
     veos_ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     veos_ssh.connect(hostname=veos_ip, username="root", password="", port="50001")
-    veos_ssh.exec_command("echo '{0}' | tee /mnt/flash/startup-config".format(veos_config))
+    veos_ssh.exec_command("echo 'testing' | tee /mnt/flash/startup-config".format(veos_config))
     veos_ssh.exec_command('FastCli -c "{0}"'.format(dev_cmds))
     stdin, stdout, stderr = veos_ssh.exec_command('FastCli -c "{0}"'.format(ztp_cmds))
     ztp_out = stdout.readlines()
