@@ -225,7 +225,7 @@ def main(argv):
         f.close()
 
         cvpConfigs = cvpInfo["cvp_info"]["configlets"]
-        infraConfigs = cvpInfo["containers"]["Tenant"]
+        infraConfigs = cvpConfigs["containers"]["Tenant"]
 
         print("Setting up {0} lab").format(lab)
         for node in accessinfo["nodes"]["veos"]:
