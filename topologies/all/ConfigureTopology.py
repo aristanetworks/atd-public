@@ -228,7 +228,8 @@ def main(argv):
         for node in accessinfo["nodes"]["veos"]:
             hostname = node["hostname"]
             baseConfigs = cvpInfo["cvp_info"]["configlets"]["netelements"]
-            print("Config for {0}: {1} {2}").format(hostname,baseConfigs[hostname],labconfiglets[lab][hostname])
+            configs = baseConfigs[hostname] + labconfiglets[lab][hostname]
+            print("Config for {0}: {1}").format(hostname,configs)
 
 
 if __name__ == '__main__':
