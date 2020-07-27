@@ -198,6 +198,11 @@ def main(argv):
     # List of configlets
     labconfiglets = menuoptions['labconfiglets']
 
+    if lab in options:
+        pS("INFO", "Setting {0} topology to {1} setup".format(accessinfo['topology'], lab))
+    else:
+        print_usage(options)
+
     # Check if the topo has CVP
     if 'cvp' in accessinfo['nodes']:
         # Adding new connection to CVP via rcvpapi
@@ -212,13 +217,8 @@ def main(argv):
                         pS("ERROR", "CVP is currently unavailable....Retrying in 30 seconds.")
                         time.sleep(30)
 
-        # Make sure option chosen is valid, then configure the topology
-        print("Please wait while the {0} lab is prepared...".format(lab))
-        if lab in options:
-            pS("INFO", "Setting {0} topology to {1} setup".format(accessinfo['topology'], lab))
-            update_topology(cvp_clnt, lab, labconfiglets)
-        else:
-            print_usage(options)
+        # Config the topology
+        update_topology(cvp_clnt, lab, labconfiglets)
         
         # Execute all tasks generated from reset_devices()
         print('Gathering task information...')
