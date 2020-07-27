@@ -12,9 +12,11 @@ from scp import SCPClient
 DEBUG = False
 
 # Cmds to copy bare startup to running
-dev_cmds = """enable
-copy startup-config running-config
+cpRunStart = """enable
 copy running-config startup-config
+"""
+cpStartRun = """enable
+copy startup-config running-config
 """
 # Cmds to grab ZTP status
 ztp_cmds = """enable
@@ -142,7 +144,8 @@ def pushBareConfig(veos_host, veos_ip, veos_config):
     veos_ssh.connect(hostname=veos_ip, username="root", password="", port="50001")
     scp = SCPClient(veos_ssh.get_transport())
     scp.put(deviceConfig,remote_path="/mnt/flash/startup-config")
-    veos_ssh.exec_command('FastCli -c "{0}"'.format(dev_cmds))
+    veos_ssh.exec_command('FastCli -c "{0}"'.format(cpStartRun))
+    veos_ssh.exec_command('FastCli -c "{0}"'.format(cpRunStart))
     stdin, stdout, stderr = veos_ssh.exec_command('FastCli -c "{0}"'.format(ztp_cmds))
     ztp_out = stdout.readlines()
     if 'Active' in ztp_out[0]:
