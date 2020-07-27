@@ -111,6 +111,26 @@ def pS(mstat,mtype):
     if DEBUG:
         print("[{0}] {1}".format(mstat,mmes.expandtabs(7 - len(mstat))))
 
+def pushBareConfig(veos_host, veos_ip, veos_config):
+    """
+    Pushes a bare config to the EOS device.
+    """
+    DEVREBOOT = False
+    veos_ssh = paramiko.SSHClient()
+    veos_ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    veos_ssh.connect(hostname=veos_ip, username="root", password="", port="50001")
+    veos_ssh.exec_command("echo '{0}' | tee /mnt/flash/startup-config".format(veos_config))
+    veos_ssh.exec_command('FastCli -c "{0}"'.format(dev_cmds))
+    stdin, stdout, stderr = veos_ssh.exec_command('FastCli -c "{0}"'.format(ztp_cmds))
+    ztp_out = stdout.readlines()
+    if 'Active' in ztp_out[0]:
+        DEVREBOOT = True
+        pS("INFO", "Rebooting {0}...This will take a couple minutes to come back up".format(veos_host))
+        #veos_ssh.exec_command("/sbin/reboot -f > /dev/null 2>&1 &")
+        veos_ssh.exec_command('FastCli -c "{0}"'.format(ztp_cancel))
+    veos_ssh.close()
+    return(DEVREBOOT)
+
 def main(argv):
     f = open('/etc/ACCESS_INFO.yaml')
     accessinfo = yaml.safe_load(f)
@@ -153,7 +173,6 @@ def main(argv):
     labconfiglets = menuoptions['labconfiglets']
 
     # Check if the topo has CVP
-
     if 'cvp' in accessinfo['nodes']:
         # Adding new connection to CVP via rcvpapi
         cvp_clnt = ''
@@ -200,10 +219,10 @@ def main(argv):
             else:
                 pass
     else:
-        print("Setting up {0} lab")
+        print("Setting up {0} lab").format(lab)
         for node in accessinfo["nodes"]["veos"]:
-            print("Config for {0}: ").format(node["hostname"])
-
+            hostname = node["hostname"]
+            print("Config for {0}: {1}").format(hostname).format(labconfiglets[lab][hostname])
 
 
 if __name__ == '__main__':
