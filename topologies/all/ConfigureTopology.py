@@ -199,8 +199,8 @@ def main(argv):
                 all_tasks_completed = True
             else:
                 pass
-        else:
-            print("no CVP")   
+    else:
+        print("no CVP")   
 
 
 
