@@ -10,6 +10,10 @@ import paramiko
 
 DEBUG = False
 
+dev_cmds = """enable
+copy startup-config running-config
+"""
+
 def remove_configlets(client, device, mext=None):
     """
     Removes all configlets except the ones defined here or starting with SYS_
@@ -116,6 +120,7 @@ def pushBareConfig(veos_host, veos_ip, veos_config):
     """
     Pushes a bare config to the EOS device.
     """
+
     DEVREBOOT = False
     veos_ssh = paramiko.SSHClient()
     veos_ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
