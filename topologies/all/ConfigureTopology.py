@@ -229,6 +229,7 @@ def main(argv):
 
         print("Setting up {0} lab").format(lab)
         for node in accessinfo["nodes"]["veos"]:
+            deviceConfig = ""
             hostname = node["hostname"]
             baseConfigs = cvpConfigs["netelements"]
             configs = baseConfigs[hostname] + infraConfigs + labconfiglets[lab][hostname]
