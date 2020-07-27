@@ -41,6 +41,16 @@ body {
   line-height: 2em;
 }
 
+.access {
+  display: block;
+  width: 100%;
+  background-color: rgb(156, 207, 151);
+  margin: 10px;
+  padding: 10px;
+  border-radius: 4px;
+  border-style: none;
+}
+
 .orderitem {
   width: 45%;
   float: left;
