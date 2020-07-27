@@ -253,7 +253,7 @@ def main(argv):
         cvpConfigs = cvpInfo["cvp_info"]["configlets"]
         infraConfigs = cvpConfigs["containers"]["Tenant"]
 
-        print("Setting up {0} lab".format(lab))
+        pS("INFO","Setting up {0} lab".format(lab))
         for node in accessinfo["nodes"]["veos"]:
             deviceConfig = ""
             hostname = node["hostname"]
@@ -263,7 +263,7 @@ def main(argv):
             for config in configs:
                 with open('/tmp/atd/topologies/{0}/configlets/{1}'.format(accessinfo['topology'], config), 'r') as configlet:
                     deviceConfig += configlet.read()
-            print("Pushing {0} config for {1} on IP {2} with configlets: {3}".format(lab,hostname,node["ip"],configs))
+            pS("INFO","Pushing {0} config for {1} on IP {2} with configlets: {3}".format(lab,hostname,node["ip"],configs))
             pushBareConfig(hostname, node["ip"], deviceConfig)
             
 
