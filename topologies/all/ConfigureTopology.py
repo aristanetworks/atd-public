@@ -126,16 +126,16 @@ def pS(mstat,mtype):
         print("[{0}] {1}".format(mstat,mmes.expandtabs(7 - len(mstat))))
 
 veos_config2 = """daemon TerminAttr
-  exec /usr/bin/TerminAttr -ingestgrpcurl=192.168.0.5:9910 -taillogs -ingestauth=key,1a38fe7df56879d685e51b6f0ff86327 -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent
+  exec -usr-bin-TerminAttr -ingestgrpcurl=192.168.0.5:9910 -taillogs -ingestauth=key,1a38fe7df56879d685e51b6f0ff86327 -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=-Sysdb-cell-1-agent,-Sysdb-cell-2-agent
   no shutdown
 !
 aaa authentication login default local
 aaa authorization exec default local
 !
 username admin privilege 15 role network-admin secret 5 $1$5O85YVVn$HrXcfOivJEnISTMb6xrJc.
-username arista privilege 15 role network-admin secret sha512 $6$tk41vwYg5ZT4iTYK$CC/uNnDsdC/aZ2B57bfnIas5cEKe/kY9lifwbgvi0Qo.9AizVZgqFUnBEUbOxMFEvSa7ChVebjLmqebmG/OCD/
+username arista privilege 15 role network-admin secret sha512 $6$tk41vwYg5ZT4iTYK$CC-uNnDsdC-aZ2B57bfnIas5cEKe-kY9lifwbgvi0Qo.9AizVZgqFUnBEUbOxMFEvSa7ChVebjLmqebmG-OCD-
 !
-username arista ssh-key ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC6bJB3TkBEQZ9jNyO1kbdU0P20gZ1D72CvsPNZ5S4bbciBNTT/MHX8GwyLmM9k+ihaHK2JtRhWFcdsm9MojRgjAuzw4wn/6pa92y/93GvaYL//dOBXrHctZsX3PX7TZFL9VVBVA8aFp5iXxEM8uyKWhxnBo/D0eR25Jed4gHVHQMi6Hyh7eKRpE3E6kvRlSkhNikZ5EwdoM7lg2i6rjf7+o3G6isGtxliMZD98N6qWW79U6euS072qkK/q3dfgyHdd8a8MD5VLWbYR9ikhKwpXAmxcFn5aRllqXJ++QAW0NO78noI91ICRxpAuQSzgrntdwXdyFWiqyiD3AxK28qWZ arista@labaccess
+username arista ssh-key ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC6bJB3TkBEQZ9jNyO1kbdU0P20gZ1D72CvsPNZ5S4bbciBNTT-MHX8GwyLmM9k+ihaHK2JtRhWFcdsm9MojRgjAuzw4wn-6pa92y-93GvaYL--dOBXrHctZsX3PX7TZFL9VVBVA8aFp5iXxEM8uyKWhxnBo-D0eR25Jed4gHVHQMi6Hyh7eKRpE3E6kvRlSkhNikZ5EwdoM7lg2i6rjf7+o3G6isGtxliMZD98N6qWW79U6euS072qkK-q3dfgyHdd8a8MD5VLWbYR9ikhKwpXAmxcFn5aRllqXJ++QAW0NO78noI91ICRxpAuQSzgrntdwXdyFWiqyiD3AxK28qWZ arista@labaccess
 !
 tacacs-server key 7 070E33455D1D18
 tacacs-server host 192.168.0.4
@@ -161,13 +161,13 @@ vlan 34
 hostname cvx01
 !
 interface Management1
-   ip address 192.168.0.44/24
+   ip address 192.168.0.44-24
    no lldp transmit
    no lldp receive
 !
 dns domain arista.lab
 ip routing
-!! ip route 0.0.0.0/0 192.168.0.1
+!! ip route 0.0.0.0-0 192.168.0.1
 !
 management api http-commands
    no shutdown
@@ -178,7 +178,7 @@ cvx
    service vxlan
       no shutdown
 !
-EOF"""
+"""
 
 def pushBareConfig(veos_host, veos_ip, veos_config):
     """
