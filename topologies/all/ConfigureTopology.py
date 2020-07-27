@@ -219,10 +219,16 @@ def main(argv):
             else:
                 pass
     else:
+        # Open up defaults
+        f = open('/home/arista/cvp/cvp_info.yaml')
+        cvpInfo = yaml.safe_load(f)
+        f.close()
+
         print("Setting up {0} lab").format(lab)
         for node in accessinfo["nodes"]["veos"]:
             hostname = node["hostname"]
-            print("Config for {0}: {1}").format(hostname,labconfiglets[lab][hostname])
+            baseConfigs = cvpInfo["configlets"]["netelements"]
+            print("Config for {0}: {1} {2}").format(hostname,baseConfigs[hostname],labconfiglets[lab][hostname])
 
 
 if __name__ == '__main__':
