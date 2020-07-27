@@ -15,7 +15,7 @@
       <img src="{{ MOD_IMG }}" usemap="#image_map">
       <map name="image_map">
         {% for node in NODES %}
-          <area alt="{{ escape(node) }}" title="{{ escape(node) }}" href="#" onClick="MyWindow=window.open('http://{{ NODE_IP }}/guacamole/#/client/{{ escape(NODES[node]['href']) }}','MyWindow','width=600,height=300'); return false;" coords="{{ escape(NODES[node]['coords']) }}" shape="rect">
+          <area alt="{{ escape(node) }}" title="{{ escape(node) }}" href="#" onClick="MyWindow=window.open('http://{{ NODE_IP }}/ssh/host/{{ escape(NODES[node]['ip']) }}','MyWindow','width=600,height=300'); return false;" coords="{{ escape(NODES[node]['coords']) }}" shape="rect">
         {% end %}
       </map>
       <div class="access">
