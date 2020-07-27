@@ -238,7 +238,7 @@ def main(argv):
             for config in configs:
                 with open('/tmp/atd/topologies/{0}/configlets/{1}'.format(accessinfo['topology'], config), 'r') as configlet:
                     deviceConfig += configlet.read()
-            print("Pushing {0} config for {1} with configlets: {2}").format(lab,hostname,configs)
+            print("Pushing {0} config for {1} on IP {3} with configlets: {2}").format(lab,hostname,configs,node["ip"])
             pushBareConfig(hostname, node["ip"], deviceConfig)
             
 
