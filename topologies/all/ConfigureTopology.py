@@ -200,7 +200,9 @@ def main(argv):
             else:
                 pass
     else:
-        print("no CVP")   
+        print("Setting up {0} lab")
+        for node in accessinfo["nodes"]:
+            print("Config for {0}: ").format(node)
 
 
 
