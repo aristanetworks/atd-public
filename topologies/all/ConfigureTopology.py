@@ -234,11 +234,11 @@ def main(argv):
             baseConfigs = cvpConfigs["netelements"]
             configs = baseConfigs[hostname] + infraConfigs + labconfiglets[lab][hostname]
             configs = list(dict.fromkeys(configs))
-            print("Config for {0}:").format(hostname)
             for config in configs:
                 with open('/tmp/atd/topologies/{0}/configlets/{1}'.format(accessinfo['topology'], config), 'r') as configlet:
                     deviceConfig += configlet.read()
-            print(deviceConfig)
+            print("Pushing {0} config for {1} with configlets: {2}").format(lab,hostname,configs)
+            pushBareConfig(hostname, node["ip"], deviceConfig)
             
 
 
