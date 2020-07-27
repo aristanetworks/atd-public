@@ -6,6 +6,7 @@ import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 from rcvpapi.rcvpapi import *
 import yaml, syslog, time
+import paramiko
 
 DEBUG = False
 
