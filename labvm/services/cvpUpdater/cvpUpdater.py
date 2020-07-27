@@ -264,12 +264,18 @@ if __name__ == '__main__':
     syslog.openlog(logoption=syslog.LOG_PID)
     pS("OK","Starting...")
 
-    if not path.exists(CVP_CONFIG_FIILE):
-        # Start the main Service
-        pS("OK","Initial ATD Topo Boot")
-        main()
-        with open(CVP_CONFIG_FIILE,'w') as tf:
-            tf.write("CVP_CONFIGURED\n")
-        pS("OK","Completed CVP Configuration")
+    atd_yaml = getTopoInfo(topo_file)
+    if 'cvp' in atd_yaml['nodes']:
+        if not path.exists(CVP_CONFIG_FIILE):
+            # Start the main Service
+            pS("OK","Initial ATD Topo Boot")
+            main()
+            with open(CVP_CONFIG_FIILE,'w') as tf:
+                tf.write("CVP_CONFIGURED\n")
+            pS("OK","Completed CVP Configuration")
+        else:
+            pS("OK","CVP is already configured")
     else:
-        pS("OK","CVP is already configured")
+        pS("INFO","CVP is not present in this topology, disabling cvpUpdater")
+        os.system("systemctl disable cvpUpdater")
+        os.system("systemctl stop cvpUpdater")
