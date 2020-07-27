@@ -14,6 +14,7 @@ DEBUG = False
 # Cmds to copy bare startup to running
 dev_cmds = """enable
 copy startup-config running-config
+copy running-config startup-config
 """
 # Cmds to grab ZTP status
 ztp_cmds = """enable
