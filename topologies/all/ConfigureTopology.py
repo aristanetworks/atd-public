@@ -233,7 +233,12 @@ def main(argv):
             baseConfigs = cvpConfigs["netelements"]
             configs = baseConfigs[hostname] + infraConfigs + labconfiglets[lab][hostname]
             configs = list(dict.fromkeys(configs))
-            print("Config for {0}: {1}").format(hostname,configs)
+            print("Config for {0}:").format(hostname)
+            for config in configs:
+                with open('/tmp/atd/topologies/{0}/configlets/{1}'.format(accessinfo['topology'], config), 'r') as configlet:
+                    deviceConfig += configlet.read()
+            print(deviceConfig)
+            
 
 
 if __name__ == '__main__':
