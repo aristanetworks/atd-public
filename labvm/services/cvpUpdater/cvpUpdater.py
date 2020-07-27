@@ -277,5 +277,5 @@ if __name__ == '__main__':
             pS("OK","CVP is already configured")
     else:
         pS("INFO","CVP is not present in this topology, disabling cvpUpdater")
-        os.system("systemctl disable cvpUpdater")
-        os.system("systemctl stop cvpUpdater")
+        system("systemctl disable cvpUpdater")
+        system("systemctl stop cvpUpdater")
