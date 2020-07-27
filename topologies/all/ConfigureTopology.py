@@ -232,6 +232,7 @@ def main(argv):
             hostname = node["hostname"]
             baseConfigs = cvpConfigs["netelements"]
             configs = baseConfigs[hostname] + infraConfigs + labconfiglets[lab][hostname]
+            configs = list(dict.fromkeys(configs))
             print("Config for {0}: {1}").format(hostname,configs)
 
 
