@@ -149,12 +149,11 @@ def main(argv):
     # if enableControls2:
     #   options.update(menuoptions['media-options'])
 
- 
-
-
-
     # List of configlets
     labconfiglets = menuoptions['labconfiglets']
+
+    # Check if the topo has CVP
+    
 
     # Adding new connection to CVP via rcvpapi
     cvp_clnt = ''
