@@ -153,53 +153,54 @@ def main(argv):
     labconfiglets = menuoptions['labconfiglets']
 
     # Check if the topo has CVP
-    
 
-    # Adding new connection to CVP via rcvpapi
-    cvp_clnt = ''
-    for c_login in accessinfo['login_info']['cvp']['shell']:
-        if c_login['user'] == 'arista':
-            while not cvp_clnt:
-                try:
-                    cvp_clnt = CVPCON(accessinfo['nodes']['cvp'][0]['internal_ip'],c_login['user'],c_login['pw'])
-                    pS("OK","Connected to CVP at {0}".format(accessinfo['nodes']['cvp'][0]['internal_ip']))
-                except:
-                    pS("ERROR", "CVP is currently unavailable....Retrying in 30 seconds.")
-                    time.sleep(30)
+    if 'cvp' in accessinfo['nodes']:
+        # Adding new connection to CVP via rcvpapi
+        cvp_clnt = ''
+        for c_login in accessinfo['login_info']['cvp']['shell']:
+            if c_login['user'] == 'arista':
+                while not cvp_clnt:
+                    try:
+                        cvp_clnt = CVPCON(accessinfo['nodes']['cvp'][0]['internal_ip'],c_login['user'],c_login['pw'])
+                        pS("OK","Connected to CVP at {0}".format(accessinfo['nodes']['cvp'][0]['internal_ip']))
+                    except:
+                        pS("ERROR", "CVP is currently unavailable....Retrying in 30 seconds.")
+                        time.sleep(30)
 
-    # Make sure option chosen is valid, then configure the topology
-    print("Please wait while the {0} lab is prepared...".format(lab))
-    if lab in options:
-        pS("INFO", "Setting {0} topology to {1} setup".format(accessinfo['topology'], lab))
-        update_topology(cvp_clnt, lab, labconfiglets)
-    else:
-      print_usage(options)
-    
-    # Execute all tasks generated from reset_devices()
-    print('Gathering task information...')
-    cvp_clnt.getAllTasks("pending")
-    tasks_to_check = cvp_clnt.tasks['pending']
-    cvp_clnt.execAllTasks("pending")
-    pS("OK", 'Completed setting devices to topology: {}'.format(lab))
+        # Make sure option chosen is valid, then configure the topology
+        print("Please wait while the {0} lab is prepared...".format(lab))
+        if lab in options:
+            pS("INFO", "Setting {0} topology to {1} setup".format(accessinfo['topology'], lab))
+            update_topology(cvp_clnt, lab, labconfiglets)
+        else:
+        print_usage(options)
+        
+        # Execute all tasks generated from reset_devices()
+        print('Gathering task information...')
+        cvp_clnt.getAllTasks("pending")
+        tasks_to_check = cvp_clnt.tasks['pending']
+        cvp_clnt.execAllTasks("pending")
+        pS("OK", 'Completed setting devices to topology: {}'.format(lab))
 
-    print('Waiting on change control to finish executing...')
-    all_tasks_completed = False
-    while not all_tasks_completed:
-        tasks_running = []
-        for task in tasks_to_check:
-            if cvp_clnt.getTaskStatus(task['workOrderId'])['taskStatus'] != 'Completed':
-                tasks_running.append(task)
-            elif cvp_clnt.getTaskStatus(task['workOrderId'])['taskStatus'] == 'Failed':
-                print('Task {0} failed.'.format(task['workOrderId']))
+        print('Waiting on change control to finish executing...')
+        all_tasks_completed = False
+        while not all_tasks_completed:
+            tasks_running = []
+            for task in tasks_to_check:
+                if cvp_clnt.getTaskStatus(task['workOrderId'])['taskStatus'] != 'Completed':
+                    tasks_running.append(task)
+                elif cvp_clnt.getTaskStatus(task['workOrderId'])['taskStatus'] == 'Failed':
+                    print('Task {0} failed.'.format(task['workOrderId']))
+                else:
+                    pass
+            
+            if len(tasks_running) == 0:
+                raw_input("Lab Setup Completed. Please press Enter to continue...")
+                all_tasks_completed = True
             else:
                 pass
-        
-        if len(tasks_running) == 0:
-            raw_input("Lab Setup Completed. Please press Enter to continue...")
-            all_tasks_completed = True
         else:
-            pass
-            
+            print("no CVP")   
 
 
 
