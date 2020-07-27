@@ -144,6 +144,7 @@ def pushBareConfig(veos_host, veos_ip, veos_config):
     veos_ssh.connect(hostname=veos_ip, username="root", password="", port="50001")
     scp = SCPClient(veos_ssh.get_transport())
     scp.put(deviceConfig,remote_path="/mnt/flash/startup-config")
+    scp.close()
     veos_ssh.exec_command('FastCli -c "{0}"'.format(cpStartRun))
     veos_ssh.exec_command('FastCli -c "{0}"'.format(cpRunStart))
     stdin, stdout, stderr = veos_ssh.exec_command('FastCli -c "{0}"'.format(ztp_cmds))
@@ -265,7 +266,6 @@ def main(argv):
             print("Pushing {0} config for {1} on IP {2} with configlets: {3}".format(lab,hostname,node["ip"],configs))
             pushBareConfig(hostname, node["ip"], deviceConfig)
             
-
 
 if __name__ == '__main__':
     syslog.openlog(logoption=syslog.LOG_PID)
