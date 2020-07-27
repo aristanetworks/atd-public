@@ -125,7 +125,7 @@ def pS(mstat,mtype):
     if DEBUG:
         print("[{0}] {1}".format(mstat,mmes.expandtabs(7 - len(mstat))))
 
-veos_config2 = 'daemon TerminAttr
+veos_config2 = """daemon TerminAttr
   exec /usr/bin/TerminAttr -ingestgrpcurl=192.168.0.5:9910 -taillogs -ingestauth=key,1a38fe7df56879d685e51b6f0ff86327 -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent
   no shutdown
 !
@@ -177,7 +177,7 @@ cvx
    no shutdown
    service vxlan
       no shutdown
-!'
+!"""
 
 def pushBareConfig(veos_host, veos_ip, veos_config):
     """
