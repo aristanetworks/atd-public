@@ -129,6 +129,7 @@ def pushBareConfig(veos_host, veos_ip, veos_config):
     """
     Pushes a bare config to the EOS device.
     """
+    print(format(veos_config))
     DEVREBOOT = False
     veos_ssh = paramiko.SSHClient()
     veos_ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
