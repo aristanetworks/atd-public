@@ -202,7 +202,7 @@ def main(argv):
     else:
         print("Setting up {0} lab")
         for node in accessinfo["nodes"]["veos"]:
-            print("Config for {0}: ").format(node)
+            print("Config for {0}: ").format(node["hostname"])
 
 
 
