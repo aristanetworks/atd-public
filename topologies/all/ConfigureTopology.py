@@ -7,6 +7,7 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 from rcvpapi.rcvpapi import *
 import yaml, syslog, time
 import paramiko
+from scp import SCPClient
 
 DEBUG = False
 
@@ -129,11 +130,17 @@ def pushBareConfig(veos_host, veos_ip, veos_config):
     """
     Pushes a bare config to the EOS device.
     """
+    # Write config to tmp file
+    deviceConfig = "/tmp/" + veos_host + ".cfg"
+    with open(deviceConfig,"a") as tmpConfig:
+        tmpConfig.write(veos_config)
+
     DEVREBOOT = False
     veos_ssh = paramiko.SSHClient()
     veos_ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     veos_ssh.connect(hostname=veos_ip, username="root", password="", port="50001")
-    veos_ssh.exec_command("echo '{0}' > /mnt/flash/startup-config".format(veos_config))
+    scp = SCPClient(veos_ssh.get_transport())
+    scp.put(deviceConfig,remote_path="/mnt/flash/startup-config")
     veos_ssh.exec_command('FastCli -c "{0}"'.format(dev_cmds))
     stdin, stdout, stderr = veos_ssh.exec_command('FastCli -c "{0}"'.format(ztp_cmds))
     ztp_out = stdout.readlines()
