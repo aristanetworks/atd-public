@@ -178,7 +178,7 @@ cvx
    service vxlan
       no shutdown
 !
-"""
+EOF"""
 
 def pushBareConfig(veos_host, veos_ip, veos_config):
     """
