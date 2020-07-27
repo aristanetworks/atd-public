@@ -224,11 +224,14 @@ def main(argv):
         cvpInfo = yaml.safe_load(f)
         f.close()
 
+        cvpConfigs = cvpInfo["cvp_info"]["configlets"]
+        infraConfigs = cvpInfo["containers"]["Tenant"]
+
         print("Setting up {0} lab").format(lab)
         for node in accessinfo["nodes"]["veos"]:
             hostname = node["hostname"]
-            baseConfigs = cvpInfo["cvp_info"]["configlets"]["netelements"]
-            configs = baseConfigs[hostname] + labconfiglets[lab][hostname]
+            baseConfigs = cvpConfigs["netelements"]
+            configs = baseConfigs[hostname] + infraConfigs + labconfiglets[lab][hostname]
             print("Config for {0}: {1}").format(hostname,configs)
 
 
