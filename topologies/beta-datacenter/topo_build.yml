@@ -1,8 +1,8 @@
 cloud_service: aws:adc
 default_interfaces: 8
-default_ami_name: 4.24.1F
+default_ami_name: cloud-deploy-veos-4.24.1F
 cvp_instance: singlenode
-cvp_version: 2020.1.1
+cvp_version: cloud-deploy-veos-cvp-2020.1.1
 topology_name: beta-datacenter
 external_configuration: true
 only_add_to_inventory: false
