@@ -48,8 +48,6 @@ def main():
    configletPath = 'topologies/' + topology + '/configlets/'
    ignoreConfiglets = ['readme.md']
 
-   # cvpNodes can be a single item or a list of the cluster
-   cvpNodes = ['192.168.0.5']
    for urole in accessinfo['login_info']['cvp']['shell']:
       if urole['user'] == 'arista':
          cvpUsername = urole['user']
