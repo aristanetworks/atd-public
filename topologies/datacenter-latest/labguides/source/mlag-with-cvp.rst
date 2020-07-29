@@ -4,27 +4,24 @@ MLAG
 .. image:: images/cvp-mlag/mlag_1.png
    :align: center
 
-.. note:: Did you know the “mlag” script is composed of Python code that
-          uses the CloudVision Portal REST API to automate the provisioning of
-          CVP Configlets. The configlets that are configured via the REST API
-          are ``Spine1-MLAG-Lab``, ``Spine2-MLAG-Lab``, ``Leaf1-MLAG-Lab``,
-          ``Leaf2-MLAG-Lab``, ``Leaf3-MLAG-Lab``. In addition each switch also
-          gets the ``VLANs`` configlet.
+.. note:: For more details on the configuration we will apply to Leaf4, check out the UCN MLAG Lab.
 
-.. note:: The manually-entered commands below that are part of this lab are
-          equivalent to ``Leaf4-MLAG-Lab``.
+**To access the command line of particular switch, click on that switch in the topology diagram at the top of the lab guide.**
 
-1. Log into CloudVision and find Leaf3 on the **Devices** page:
 
-   1. Search for ``Leaf3`` in the **Device** column of the inventory table.
+1. Log into CloudVision and find Leaf3 on the **Devices** page.
+
+   1. The username to access CloudVision is ``arista``and the password is ``arista1``
+
+   2. Search for ``Leaf3`` in the **Device** column of the inventory table.
 
     .. image:: images/cvp-mlag/mlag-leaf3-inventory-table.png
        :align: center
        :width: 50 %
 
-   2. Click on ``Leaf3``.
+   3. Click on ``Leaf3``.
 
-2. View the MLAG status for Leaf3.  
+2. View the MLAG status for Leaf3.
 
    1. Click on the **MLAG** section on the left side navigation bar.
 
@@ -90,7 +87,7 @@ MLAG
        :align: center
        :width: 50 %
 
-5. Once our change control has successfully completed, navigate back to our Device overview page to check out **Leaf3**'s MLAG status.
+4. Once our change control has successfully completed, navigate back to our Device overview page to check out **Leaf3**'s MLAG status.
 
     1. If you aren't there already, on the Devices page, select **Leaf3** -> **Switching** -> **MLAG**
 
@@ -102,12 +99,12 @@ MLAG
 
     3. Jump over to **Leaf4**'s MLAG section, we see the everything looks okay too.
 
-6. Log in to Host1 and ping Host2
+5. Log in to Host1 and ping Host2
         .. code-block:: text
 
               ping 172.16.112.202
 
-7. Click **Devices** at the top of the page to navigate back to the main **Devices** page.
+6. Click **Devices** at the top of the page to navigate back to the main **Devices** page.
     1. Click **Comparison** on the left side bar.
     2. At the center of the page, select **Leaf3** for one of our devices and **Leaf4** for the other.
     3. Here we can compare different metrics for these two devices side by side to see similarities and differences between the two members of this MLAG pair.

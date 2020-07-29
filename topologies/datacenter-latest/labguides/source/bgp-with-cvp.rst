@@ -5,25 +5,21 @@ Layer 3 Leaf-Spine
    :align: center
    :width: 50 %
 
-.. note:: Did you know the “bgp” script is composed of Python code that
-          uses the CloudVision Portal REST API to automate the provisioning of
-          CVP Configlets. The configlets that are configured via the REST API
-          are ``Spine1-BGP-Lab``, ``Spine2-BGP-Lab``, ``Leaf1-BGP-Lab``,
-          ``Leaf2-BGP-Lab``, ``Leaf3-BGP-Lab``, ``Leaf4-BGP-Lab``.
+.. note:: For more details on the configuration we will apply to Leaf4, check out the UCN MLAG Lab.
 
-.. note:: The manually-entered commands below that are part of this lab are
-          equivalent to ``Leaf4-BGP-Lab-Full``.
+**To access the command line of particular switch, click on that switch in the topology diagram at the top of the lab guide.**
 
+1. Log into CloudVision and find Leaf4 on the **Devices** page.
 
-1. Log into CloudVision and find Leaf4 on the **Devices** page:
-
-   1. Search for ``leaf4`` in the **Device** column of the inventory table.
+   1. The username to access CloudVision is ``arista``and the password is ``arista1``
+   
+   2. Search for ``leaf4`` in the **Device** column of the inventory table.
 
     .. image:: images/cvp-l3ls/leaf4-inventory-table.png
        :align: center
        :width: 50 %
 
-   2. Click on **leaf4**.
+   3. Click on **leaf4**.
 
 2. Click on the **BGP** section on the left side navigation bar.
 
@@ -110,7 +106,7 @@ Layer 3 Leaf-Spine
 
    5.  There should now be a temporary action for leaf4 indicated by the green outline around leaf4. Click **Save**.
 
-    .. image:: images/cvp-l3ls/leaf4-temp-action.png
+    .. image:: images/cvp-l3ls/leaf4-pending-task.png
        :align: center
        :width: 50 %  
 
