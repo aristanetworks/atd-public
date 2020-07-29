@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-from cvprac.cvp_client import CvpClient
 import os, time, shutil, syslog
 from ruamel.yaml import YAML
 from rcvpapi.rcvpapi import *
@@ -30,28 +29,6 @@ def getTopoInfo(yaml_file):
     topoYaml = YAML().load(topoInfo)
     topoInfo.close()
     return(topoYaml)
-
-# Function to sync configlet to CVP
-def syncConfiglet(cvpClient,configletName,configletConfig):
-   try:
-      # See if configlet exists
-      configlet = cvpClient.api.get_configlet_by_name(configletName)
-      configletKey = configlet['key']
-      configletCurrentConfig = configlet['config']
-      # For future use to compare date in CVP vs. Git (use this to push to Git)
-      configletCurrentDate = configlet['dateTimeInLongFormat']
-      # If it does, check to see if the config is in sync, if not update the config with the one in Git
-      if configletConfig == configletCurrentConfig:
-         print("Configlet", configletName, "exists and is up to date!")
-      else:
-         cvpClient.api.update_configlet(configletConfig,configletKey,configletName)
-         print("Configlet", configletName, "exists and is now up to date")
-   
-   except:
-      addConfiglet = cvpClient.api.add_configlet(configletName,configletConfig)
-      print("Configlet", configletName, "has been added")
-
-##### End of syncConfiglet
 
 def main():
    """
