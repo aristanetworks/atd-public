@@ -240,7 +240,7 @@ def main(argv):
                     pass
             
             if len(tasks_running) == 0:
-                raw_input("Lab Setup Completed. Please press Enter to continue...")
+                input("Lab Setup Completed. Please press Enter to continue...")
                 all_tasks_completed = True
             else:
                 pass

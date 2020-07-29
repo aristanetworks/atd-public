@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-
+#!/usr/bin/env python3
 
 from ruamel.yaml import YAML
 from rcvpapi.rcvpapi import *
