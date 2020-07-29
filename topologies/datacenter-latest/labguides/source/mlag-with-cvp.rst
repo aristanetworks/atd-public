@@ -11,7 +11,7 @@ MLAG
 
 1. Log into CloudVision and find Leaf3 on the **Devices** page.
 
-   1. The username to access CloudVision is ``arista``and the password is ``arista1``
+   1. The username to access CloudVision is ``arista``and the password is ``{REPLACE_ARISTA}``
 
    2. Search for ``Leaf3`` in the **Device** column of the inventory table.
 
