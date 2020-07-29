@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
-import os, time, shutil, syslog
+import time, shutil, syslog
+from os import system
 from ruamel.yaml import YAML
 from rcvpapi.rcvpapi import *
 import urllib3
