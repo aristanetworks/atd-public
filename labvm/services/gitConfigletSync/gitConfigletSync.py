@@ -41,14 +41,14 @@ def syncConfiglet(cvpClient,configletName,configletConfig):
       configletCurrentDate = configlet['dateTimeInLongFormat']
       # If it does, check to see if the config is in sync, if not update the config with the one in Git
       if configletConfig == configletCurrentConfig:
-      print "Configlet", configletName, "exists and is up to date!"
+         print("Configlet", configletName, "exists and is up to date!")
       else:
-      cvpClient.api.update_configlet(configletConfig,configletKey,configletName)
-      print "Configlet", configletName, "exists and is now up to date"
+         cvpClient.api.update_configlet(configletConfig,configletKey,configletName)
+         print("Configlet", configletName, "exists and is now up to date")
    
    except:
       addConfiglet = cvpClient.api.add_configlet(configletName,configletConfig)
-      print "Configlet", configletName, "has been added"
+      print("Configlet", configletName, "has been added")
 
 ##### End of syncConfiglet
 
@@ -92,7 +92,7 @@ def main():
             break
       except:
          attempts += 1
-         print "Cannot connect to CVP waiting 1 minute attempt",attempts
+         print("Cannot connect to CVP waiting 1 minute attempt ",attempts)
          time.sleep(60)
 
    # Adding new connection to CVP via rcvpapi
@@ -110,7 +110,7 @@ def main():
          print("Local copy exists....continuing")
          break
       else:
-         print "Local copy is missing....Waiting 1 minute for it to become available"
+         print("Local copy is missing....Waiting 1 minute for it to become available")
          time.sleep(60)
 
    configlets = os.listdir(gitTempPath + configletPath)
