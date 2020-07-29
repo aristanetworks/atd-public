@@ -1,13 +1,14 @@
 #!/usr/bin/env python
 
 from cvprac.cvp_client import CvpClient
-import os
-import time
-import shutil
-import yaml
+import os, time, shutil, syslog
+from ruamel.yaml import YAML
 from rcvpapi.rcvpapi import *
 import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
+pDEBUG = True
+topo_file = '/etc/ACCESS_INFO.yaml'
 
 def pS(mstat,mtype):
     """
@@ -53,9 +54,9 @@ def syncConfiglet(cvpClient,configletName,configletConfig):
 ##### End of syncConfiglet
 
 def main():
-    """
-    Main Function if this is the initial deployment for the ATD/CVP
-    """
+   """
+   Main Function if this is the initial deployment for the ATD/CVP
+   """
    try:
       accessinfo = getTopoInfo(topo_file)
       topology = accessinfo['topology']
@@ -79,21 +80,6 @@ def main():
 
    # rcvpapi clnt var container
    cvp_clnt = ""
-
-   # Initialize the client
-   clnt = CvpClient()
-
-   # Attempt to connect to CVP, if it's not available wait 60 seconds
-   attempts = 0
-   while 1:
-      try: 
-         clnt.connect(cvpNodes, cvpUsername, cvpPassword)
-         if clnt.api.get_cvp_info()['version']:
-            break
-      except:
-         attempts += 1
-         print("Cannot connect to CVP waiting 1 minute attempt ",attempts)
-         time.sleep(60)
 
    # Adding new connection to CVP via rcvpapi
    while not cvp_clnt:
