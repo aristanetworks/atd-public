@@ -330,6 +330,14 @@ if __name__ == "__main__":
         tmp_repo = YAML().load(tmp_repo_info)
         GIT_BRANCH = tmp_repo['atd-public']['branch']
         tmp_repo_info.close()
+    else:
+        git_yaml = {
+            'atd-public': {
+                'branch': 'master'
+            }
+        }
+        with open(GIT_BRANCH_PATH, 'w') as gpath:
+            YAML().dump(git_yaml, gpath)
     # Start the main Service
     main()
 
