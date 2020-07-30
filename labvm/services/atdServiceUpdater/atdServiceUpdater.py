@@ -167,10 +167,13 @@ def getServiceList():
     """
     Parses the GitHub copy of serviceUpdater.yml to see
     which service files should be updated/added.
+    It removes atdServiceUpdater from the list as it will be
+    updated seperately
     """
     service_YAML = open(YAML_PATH,'r')
     service_LIST = YAML().load(service_YAML)['serviceUpdaters']
     service_YAML.close()
+    service_LIST.pop(service_LIST.index(UPDATER_NAME))
     return(service_LIST)
 
 def cloneGitRepo():
