@@ -1,7 +1,7 @@
 [Unit]
 Description=Automatically downloads updated ATD files and documentation
-After=network-online.target
-Wants=network-online.target
+Required=atdServiceUpdater.service
+After=atdServiceUpdater.service
 
 [Service]
 Type=forking

@@ -1,8 +1,7 @@
 ---
 serviceUpdaters:
-  - atdServiceUpdater
+  - atdFiles
   - gitConfigletSync
   - cvpUpdater
   - sslUpdater
   - labModule
-  - atdFiles
