@@ -1,5 +1,6 @@
 ---
 serviceUpdaters:
+  - atdServiceUpdater
   - atdFiles
   - gitConfigletSync
   - cvpUpdater
