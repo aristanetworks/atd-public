@@ -28,7 +28,7 @@ all_services = [] # Holds Service Class objects
 up_service_files = [] # Holds service file names to be restarted/started
 
 # Declare the name for the updater file to be used in checking later for reload sequence
-updater_file_name = 'atdServiceUpdater.service'
+UPDATER_NAME = 'atdServiceUpdater'
 
 # Temp path for where repo will be cloned to (include trailing /)
 GIT_TEMP_PATH = '/tmp/atd/'
@@ -203,7 +203,7 @@ def restartServiceFull(serlist):
     daemonReload()
     for sname in serlist:
          # Check if atdServiceUpdater.service
-        if sname[0] == updater_file_name:
+        if sname[0] == UPDATER_NAME + '.service':
             pS("OK","Exiting initial {}, new service instance starting".format(sname[0]))
         if sname[1] != 'new':
             restartService(sname[0])
@@ -301,8 +301,19 @@ def main():
     """
     # Clone remote repo
     cloneGitRepo()
-    l_service = getServiceList()[::-1]
+    l_service = getServiceList()
     pS("OK","Services to check: {}".format(", ".join(l_service)))
+
+    # Perform a check to see if atdServiceUpdater needs to be updated.
+    atd_updater_svc = SERVICES(UPDATER_NAME)
+
+    # If atdServiceUpdater needs to be updated, restart it
+    if up_service_files:
+        pS("OK","Services to be Restarted: {}".format(", ".join(upser[0] for upser in up_service_files)))
+        restartServiceFull(up_service_files)
+        # Reset array to empty, most likely not needed as the script will restart
+        up_service_files = []
+
 
     # Iterate through all Services in YAML
     for ser in l_service:
