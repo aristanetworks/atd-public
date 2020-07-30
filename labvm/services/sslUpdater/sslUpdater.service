@@ -1,6 +1,6 @@
 [Unit]
 Description=Automatically updates the CVP self-signed cert
-Required=atdFiles.service
+Requires=atdFiles.service
 After=atdFiles.service
 
 [Service]
