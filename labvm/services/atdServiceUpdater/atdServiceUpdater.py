@@ -328,7 +328,6 @@ def main():
 
 if __name__ == "__main__":
     # Open Syslog
-    global GIT_BRANCH
     syslog.openlog(logoption=syslog.LOG_PID)
     pS("OK","Starting...")
 
