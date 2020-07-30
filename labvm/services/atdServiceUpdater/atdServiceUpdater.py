@@ -177,6 +177,7 @@ def cloneGitRepo():
     GIT_PATH and GIT_BRANCH
     and copies them to a local tmp directory
     """
+    pS("INFO", "Cloning {0} branch.".format(GIT_BRANCH))
     if isdir(GIT_TEMP_PATH):
         deleteLocalRepo()
     try:
@@ -327,6 +328,7 @@ def main():
 
 if __name__ == "__main__":
     # Open Syslog
+    global GIT_BRANCH
     syslog.openlog(logoption=syslog.LOG_PID)
     pS("OK","Starting...")
 
