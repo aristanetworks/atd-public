@@ -9,7 +9,7 @@ import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 topo_file = '/etc/ACCESS_INFO.yaml'
-CVP_CONFIG_FIILE = '/home/arista/.cvpState.txt'
+CVP_CONFIG_FILE = '/home/arista/.cvpState.txt'
 CVP_CONTAINERS = []
 
 # Temporary file_path location for CVP Custom info
@@ -265,11 +265,11 @@ if __name__ == '__main__':
 
     atd_yaml = getTopoInfo(topo_file)
     if 'cvp' in atd_yaml['nodes']:
-        if not path.exists(CVP_CONFIG_FIILE):
+        if not path.exists(CVP_CONFIG_FILE):
             # Start the main Service
             pS("OK","Initial ATD Topo Boot")
             main()
-            with open(CVP_CONFIG_FIILE,'w') as tf:
+            with open(CVP_CONFIG_FILE,'w') as tf:
                 tf.write("CVP_CONFIGURED\n")
             pS("OK","Completed CVP Configuration")
         else:
