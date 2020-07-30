@@ -1,13 +1,12 @@
 #!/usr/bin/env python3
 
-import time, shutil, syslog
-from os import system
+import time, shutil, syslog, os
 from ruamel.yaml import YAML
 from rcvpapi.rcvpapi import *
 import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-pDEBUG = True
+pDEBUG = False
 topo_file = '/etc/ACCESS_INFO.yaml'
 
 def pS(mstat,mtype):
@@ -106,5 +105,5 @@ if __name__ == '__main__':
       pS("OK","Completed Configlet Sync")
    else:
       pS("INFO","CVP is not present in this topology, disabling gitConfigletSync")
-      system("systemctl disable gitConfigletSync")
-      system("systemctl stop gitConfigletSync")
+      os.system("systemctl disable gitConfigletSync")
+      os.system("systemctl stop gitConfigletSync")

@@ -2,12 +2,14 @@
 
 import getopt
 import sys
-import urllib3
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 from rcvpapi.rcvpapi import *
 import yaml, syslog, time
 import paramiko
 from scp import SCPClient
+import requests
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
+
+requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 DEBUG = False
 
