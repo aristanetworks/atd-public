@@ -44,6 +44,8 @@ SERVICE_PATH = '/lib/systemd/system/'
 S_FILE_PATH = '/usr/local/bin/'
 
 class SERVICES():
+    global up_service_files
+
     def __init__(self,ser_name):
         self.name = ser_name # Service Name
         self.tmp_path = LOCAL_GIT + "/" + ser_name # Temp path location
@@ -300,11 +302,9 @@ def main():
     """
     Main function that runs the script.
     """
-    up_service_files = []
+    global up_service_files
     # Clone remote repo
     cloneGitRepo()
-    l_service = getServiceList()
-    pS("OK","Services to check: {}".format(", ".join(l_service)))
 
     # Perform a check to see if atdServiceUpdater needs to be updated.
     atd_updater_svc = SERVICES(UPDATER_NAME)
@@ -316,6 +316,8 @@ def main():
         # Reset array to empty, most likely not needed as the script will restart
         up_service_files = []
 
+    l_service = getServiceList()
+    pS("OK","Services to check: {}".format(", ".join(l_service)))
 
     # Iterate through all Services in YAML
     for ser in l_service:
