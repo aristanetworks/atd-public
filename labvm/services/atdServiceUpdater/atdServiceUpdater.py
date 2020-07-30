@@ -177,9 +177,9 @@ def cloneGitRepo():
     GIT_PATH and GIT_BRANCH
     and copies them to a local tmp directory
     """
-    pS("INFO", "Cloning {0} branch.".format(GIT_BRANCH))
     if isdir(GIT_TEMP_PATH):
         deleteLocalRepo()
+    pS("INFO", "Cloning {0} branch.".format(GIT_BRANCH))
     try:
         git.Repo.clone_from(GIT_PATH,GIT_TEMP_PATH,branch=GIT_BRANCH)
         pS("OK","Cloned repo!")
