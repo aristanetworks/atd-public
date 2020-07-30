@@ -300,6 +300,7 @@ def main():
     """
     Main function that runs the script.
     """
+    up_service_files = []
     # Clone remote repo
     cloneGitRepo()
     l_service = getServiceList()
