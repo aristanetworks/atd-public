@@ -6,7 +6,6 @@ After=atdFiles.service
 [Service]
 Type=forking
 ExecStart=/usr/local/bin/cvpUpdater.py
-User=arista
 TimeoutStartSec=900
 Restart=on-failure
 RestartSec=60

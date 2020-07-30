@@ -1,13 +1,33 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
 import getopt
 import sys
-import urllib3
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 from rcvpapi.rcvpapi import *
 import yaml, syslog, time
+import paramiko
+from scp import SCPClient
+import requests
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
+
+requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 DEBUG = False
+
+# Cmds to copy bare startup to running
+cpRunStart = """enable
+copy running-config startup-config
+"""
+cpStartRun = """enable
+copy startup-config running-config
+"""
+# Cmds to grab ZTP status
+ztp_cmds = """enable
+show zerotouch | grep ZeroTouch
+"""
+# Cancel ZTP
+ztp_cancel = """enable
+zerotouch cancel
+"""
 
 def remove_configlets(client, device, mext=None):
     """
@@ -89,14 +109,14 @@ def update_topology(client, lab, configlets):
 
 def print_usage(topologies):
     # Function to print help menu with valid topologies
-    print 'Usage:'
-    print ''
-    print 'ConfigureTopology.py - No options will reset the topology to the base'
-    print '  -t Topology to push out to devices'
-    print ''
-    print 'Valid topologies are:'
-    print ', '.join(topologies)
-    print ''
+    print('Usage:')
+    print('')
+    print('ConfigureTopology.py - No options will reset the topology to the base')
+    print('  -t Topology to push out to devices')
+    print('')
+    print('Valid topologies are:')
+    print(', '.join(topologies))
+    print('')
     quit()
 
 def pS(mstat,mtype):
@@ -110,6 +130,34 @@ def pS(mstat,mtype):
     syslog.syslog("[{0}] {1}".format(mstat,mmes.expandtabs(7 - len(mstat))))
     if DEBUG:
         print("[{0}] {1}".format(mstat,mmes.expandtabs(7 - len(mstat))))
+
+def pushBareConfig(veos_host, veos_ip, veos_config):
+    """
+    Pushes a bare config to the EOS device.
+    """
+    # Write config to tmp file
+    deviceConfig = "/tmp/" + veos_host + ".cfg"
+    with open(deviceConfig,"a") as tmpConfig:
+        tmpConfig.write(veos_config)
+
+    DEVREBOOT = False
+    veos_ssh = paramiko.SSHClient()
+    veos_ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    veos_ssh.connect(hostname=veos_ip, username="root", password="", port="50001")
+    scp = SCPClient(veos_ssh.get_transport())
+    scp.put(deviceConfig,remote_path="/mnt/flash/startup-config")
+    scp.close()
+    veos_ssh.exec_command('FastCli -c "{0}"'.format(cpStartRun))
+    veos_ssh.exec_command('FastCli -c "{0}"'.format(cpRunStart))
+    stdin, stdout, stderr = veos_ssh.exec_command('FastCli -c "{0}"'.format(ztp_cmds))
+    ztp_out = stdout.readlines()
+    if 'Active' in ztp_out[0]:
+        DEVREBOOT = True
+        pS("INFO", "Rebooting {0}...This will take a couple minutes to come back up".format(veos_host))
+        #veos_ssh.exec_command("/sbin/reboot -f > /dev/null 2>&1 &")
+        veos_ssh.exec_command('FastCli -c "{0}"'.format(ztp_cancel))
+    veos_ssh.close()
+    return(DEVREBOOT)
 
 def main(argv):
     f = open('/etc/ACCESS_INFO.yaml')
@@ -149,60 +197,77 @@ def main(argv):
     # if enableControls2:
     #   options.update(menuoptions['media-options'])
 
- 
-
-
-
     # List of configlets
     labconfiglets = menuoptions['labconfiglets']
 
-    # Adding new connection to CVP via rcvpapi
-    cvp_clnt = ''
-    for c_login in accessinfo['login_info']['cvp']['shell']:
-        if c_login['user'] == 'arista':
-            while not cvp_clnt:
-                try:
-                    cvp_clnt = CVPCON(accessinfo['nodes']['cvp'][0]['internal_ip'],c_login['user'],c_login['pw'])
-                    pS("OK","Connected to CVP at {0}".format(accessinfo['nodes']['cvp'][0]['internal_ip']))
-                except:
-                    pS("ERROR", "CVP is currently unavailable....Retrying in 30 seconds.")
-                    time.sleep(30)
-
-    # Make sure option chosen is valid, then configure the topology
-    print("Please wait while the {0} lab is prepared...".format(lab))
     if lab in options:
         pS("INFO", "Setting {0} topology to {1} setup".format(accessinfo['topology'], lab))
-        update_topology(cvp_clnt, lab, labconfiglets)
     else:
-      print_usage(options)
-    
-    # Execute all tasks generated from reset_devices()
-    print('Gathering task information...')
-    cvp_clnt.getAllTasks("pending")
-    tasks_to_check = cvp_clnt.tasks['pending']
-    cvp_clnt.execAllTasks("pending")
-    pS("OK", 'Completed setting devices to topology: {}'.format(lab))
+        print_usage(options)
 
-    print('Waiting on change control to finish executing...')
-    all_tasks_completed = False
-    while not all_tasks_completed:
-        tasks_running = []
-        for task in tasks_to_check:
-            if cvp_clnt.getTaskStatus(task['workOrderId'])['taskStatus'] != 'Completed':
-                tasks_running.append(task)
-            elif cvp_clnt.getTaskStatus(task['workOrderId'])['taskStatus'] == 'Failed':
-                print('Task {0} failed.'.format(task['workOrderId']))
+    # Check if the topo has CVP
+    if 'cvp' in accessinfo['nodes']:
+        # Adding new connection to CVP via rcvpapi
+        cvp_clnt = ''
+        for c_login in accessinfo['login_info']['cvp']['shell']:
+            if c_login['user'] == 'arista':
+                while not cvp_clnt:
+                    try:
+                        cvp_clnt = CVPCON(accessinfo['nodes']['cvp'][0]['internal_ip'],c_login['user'],c_login['pw'])
+                        pS("OK","Connected to CVP at {0}".format(accessinfo['nodes']['cvp'][0]['internal_ip']))
+                    except:
+                        pS("ERROR", "CVP is currently unavailable....Retrying in 30 seconds.")
+                        time.sleep(30)
+
+        # Config the topology
+        update_topology(cvp_clnt, lab, labconfiglets)
+        
+        # Execute all tasks generated from reset_devices()
+        print('Gathering task information...')
+        cvp_clnt.getAllTasks("pending")
+        tasks_to_check = cvp_clnt.tasks['pending']
+        cvp_clnt.execAllTasks("pending")
+        pS("OK", 'Completed setting devices to topology: {}'.format(lab))
+
+        print('Waiting on change control to finish executing...')
+        all_tasks_completed = False
+        while not all_tasks_completed:
+            tasks_running = []
+            for task in tasks_to_check:
+                if cvp_clnt.getTaskStatus(task['workOrderId'])['taskStatus'] != 'Completed':
+                    tasks_running.append(task)
+                elif cvp_clnt.getTaskStatus(task['workOrderId'])['taskStatus'] == 'Failed':
+                    print('Task {0} failed.'.format(task['workOrderId']))
+                else:
+                    pass
+            
+            if len(tasks_running) == 0:
+                input("Lab Setup Completed. Please press Enter to continue...")
+                all_tasks_completed = True
             else:
                 pass
-        
-        if len(tasks_running) == 0:
-            raw_input("Lab Setup Completed. Please press Enter to continue...")
-            all_tasks_completed = True
-        else:
-            pass
+    else:
+        # Open up defaults
+        f = open('/home/arista/cvp/cvp_info.yaml')
+        cvpInfo = yaml.safe_load(f)
+        f.close()
+
+        cvpConfigs = cvpInfo["cvp_info"]["configlets"]
+        infraConfigs = cvpConfigs["containers"]["Tenant"]
+
+        pS("INFO","Setting up {0} lab".format(lab))
+        for node in accessinfo["nodes"]["veos"]:
+            deviceConfig = ""
+            hostname = node["hostname"]
+            baseConfigs = cvpConfigs["netelements"]
+            configs = baseConfigs[hostname] + infraConfigs + labconfiglets[lab][hostname]
+            configs = list(dict.fromkeys(configs))
+            for config in configs:
+                with open('/tmp/atd/topologies/{0}/configlets/{1}'.format(accessinfo['topology'], config), 'r') as configlet:
+                    deviceConfig += configlet.read()
+            pS("INFO","Pushing {0} config for {1} on IP {2} with configlets: {3}".format(lab,hostname,node["ip"],configs))
+            pushBareConfig(hostname, node["ip"], deviceConfig)
             
-
-
 
 if __name__ == '__main__':
     syslog.openlog(logoption=syslog.LOG_PID)

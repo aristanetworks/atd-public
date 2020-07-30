@@ -27,7 +27,7 @@ curl -sL https://deb.nodesource.com/setup_14.x | sudo bash -
 apt install python3-pip nodejs -y
 
 # Install python3 ruamel.yaml
-pip3 install ruamel.yaml bs4 tornado
+pip3 install ruamel.yaml bs4 tornado scp paramiko rcvpapi
 
 # Setup NPM and webssh2
 npm install forever -g
