@@ -22,22 +22,24 @@ class topoRequestHandler(tornado.web.RequestHandler):
     def get(self):
         if 'lab' in self.request.arguments:
             lab_module = self.get_argument("lab")
-            if lab_module in MOD_YAML:
-                labguide = getLabHTML(lab_module)
-                if labguide:
-                    labguide_js = modifyLabScripts(labguide.head.find_all("script",{"type":"text/javascript"}), 'js')
-                    labguide_css = modifyLabScripts(labguide.head.find_all("link",{"type":"text/css"}), 'css')
-                    # Set Vars for index render
-                    self.render(
-                        BASE_PATH + 'index.html',
-                        JS = labguide_js,
-                        CSS = labguide_css,
-                        MOD_NAME = MOD_YAML[lab_module]['name'],
-                        NODE_IP = getPublicIP(),
-                        MOD_IMG = 'labguides/_images/{0}'.format(MOD_YAML[lab_module]['image']),
-                        NODES = MOD_YAML[lab_module]['nodes'],
-                        LABGUIDE = parseLabHTML(labguide, lab_module)
-                    )
+            if 'ucn-' in lab_module or 'cvp-' in lab_module:
+                lab, mod = lab_module.split('-')
+                if mod in MOD_YAML:
+                    labguide = getLabHTML(lab_module)
+                    if labguide:
+                        labguide_js = modifyLabScripts(labguide.head.find_all("script",{"type":"text/javascript"}), 'js')
+                        labguide_css = modifyLabScripts(labguide.head.find_all("link",{"type":"text/css"}), 'css')
+                        # Set Vars for index render
+                        self.render(
+                            BASE_PATH + 'index.html',
+                            JS = labguide_js,
+                            CSS = labguide_css,
+                            MOD_NAME = MOD_YAML[lab_module]['name'],
+                            NODE_IP = getPublicIP(),
+                            MOD_IMG = 'labguides/_images/{0}'.format(MOD_YAML[lab_module]['image']),
+                            NODES = MOD_YAML[lab_module]['nodes'],
+                            LABGUIDE = parseLabHTML(labguide, lab_module)
+                        )
     
 # ===============================
 # Utility Functions
