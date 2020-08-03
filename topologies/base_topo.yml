@@ -12,7 +12,7 @@ topologies:
     ram: 90
   training:
     branch: v1.0.20200727a
-    image: base-training-e4-24-1f-c2020-1-1-20200708-u
+    image: base-training-e4-24-1f-c2020-1-1-20200803-u
     cpu: 42
     ram: 64
   kane:
