@@ -326,6 +326,9 @@ def main():
     for ser in l_service:
         tmp_ser = SERVICES(ser)
         all_services.append(tmp_ser)
+        # Enable all services
+        daemonReload()
+        enableService(ser)
     
     # Check if any files have changed and restart necessary services
     if up_service_files:
