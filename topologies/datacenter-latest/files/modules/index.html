@@ -18,11 +18,6 @@
           <area alt="{{ escape(node) }}" title="{{ escape(node) }}" href="#" onClick="MyWindow=window.open('http://{{ NODE_IP }}/ssh/host/{{ escape(NODES[node]['ip']) }}','MyWindow','width=600,height=300'); return false;" coords="{{ escape(NODES[node]['coords']) }}" shape="rect">
         {% end %}
       </map>
-      <div class="access">
-        <p><b>Note:</b><br />
-        <br />
-        Please skip Step #1</p>
-      </div>
     </div>
     {% raw LABGUIDE %}
   </body>

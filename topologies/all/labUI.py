@@ -87,7 +87,9 @@ def parseLabHTML(html, lab_tag):
     parsed.select('h1')[0].extract()
     # Remove the lab diagram
     for html_img in parsed.find_all("img"):
-        if lab_tag in html_img.get("alt"):
+        # Update the image path:
+        html_img['src'] = html_img['src'].replace('_images', 'labguides/_images')
+        if MOD_YAML[lab_tag]['image'] in html_img.get("alt"):
             html_img.extract()
     return(parsed)
     
