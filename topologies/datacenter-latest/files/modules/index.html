@@ -15,7 +15,11 @@
       <img src="{{ MOD_IMG }}" usemap="#image_map">
       <map name="image_map">
         {% for node in NODES %}
-          <area alt="{{ escape(node) }}" title="{{ escape(node) }}" href="#" onClick="MyWindow=window.open('http://{{ NODE_IP }}/ssh/host/{{ escape(NODES[node]['ip']) }}','MyWindow','width=600,height=300'); return false;" coords="{{ escape(NODES[node]['coords']) }}" shape="rect">
+          {% if node == "CVP" %}
+            <area alt="{{ escape(node) }}" title="{{ escape(node) }}" href="https://{{ NODE_IP }}" target="_blank" coords="{{ escape(NODES[node]['coords']) }}" shape="rect">
+          {% else %}
+            <area alt="{{ escape(node) }}" title="{{ escape(node) }}" href="http://{{ NODE_IP }}/ssh/host/{{ escape(NODES[node]['ip']) }}" target="_blank" coords="{{ escape(NODES[node]['coords']) }}" shape="rect">
+          {% endif %}
         {% end %}
       </map>
     </div>
