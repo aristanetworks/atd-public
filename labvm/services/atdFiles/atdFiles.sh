@@ -106,7 +106,7 @@ mv /tmp/atd/topologies/$TOPO/labguides/build/latex/ATD.pdf /var/www/html/atd/lab
 mv /tmp/atd/topologies/$TOPO/labguides/build/html/* /var/www/html/atd/labguides/
 
 # Copy over the modules images to the web directory
-if [ -d tmp/atd/topologies/$TOPO/labguides/source/images/modules ]
+if [ -d /tmp/atd/topologies/$TOPO/labguides/source/images/modules ]
 then
     cp -r /tmp/atd/topologies/$TOPO/labguides/source/images/modules /var/www/html/atd/labguides/_images/
 fi
