@@ -1,7 +1,7 @@
 ucn:
   mlag:
     name: "MLAG"
-    image: "mlag_1.png"
+    image: "ucn-mlag.png"
     nodes:
       Spine1:
         coords: "130,56,234,105"
@@ -29,7 +29,7 @@ ucn:
         ip: "192.168.0.32"
   l3ls:
     name: "BGP"
-    image: "l3ls_1.png"
+    image: "ucn-l3ls.png"
     nodes:
       Spine1:
         coords: "106,29,218,83"
@@ -57,7 +57,7 @@ ucn:
         ip: "192.168.0.32"
   vxlan:
     name: "VxLAN"
-    image: "vxlan_1.png"
+    image: "ucn-vxlan.png"
     nodes:
       Spine1:
         coords: "96,29,208,83"
@@ -85,7 +85,7 @@ ucn:
         ip: "192.168.0.32"
   l2evpn:
     name: "Layer 2 EVPN"
-    image: "l2evpn.png"
+    image: "ucn-l2evpn.png"
     nodes:
       Spine1:
         coords: "90,25,189,71"
@@ -107,7 +107,7 @@ ucn:
         ip: "192.168.0.32"
   l3evpn:
     name: "Layer 3 EVPN"
-    image: "l3evpn.png"
+    image: "ucn-l3evpn.png"
     nodes:
       Spine1:
         coords: "92,24,187,72"
