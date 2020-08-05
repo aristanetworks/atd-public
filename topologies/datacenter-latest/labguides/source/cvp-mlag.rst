@@ -1,9 +1,6 @@
 MLAG
 ====
 
-.. image:: images/cvp-mlag/mlag_1.png
-   :align: center
-
 .. note:: For more details on the configuration we will apply to Leaf4, check out the UCN MLAG Lab.
 
 **To access the command line of particular switch, click on that switch in the topology diagram at the top of the lab guide.**
