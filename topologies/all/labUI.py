@@ -39,7 +39,7 @@ class topoRequestHandler(tornado.web.RequestHandler):
                                 NODE_IP = getPublicIP(),
                                 MOD_IMG = 'labguides/_images/modules/{0}'.format(MOD_YAML[lab][mod]['image']),
                                 NODES = MOD_YAML[lab][mod]['nodes'],
-                                LABGUIDE = parseLabHTML(labguide, mod)
+                                LABGUIDE = parseLabHTML(labguide, lab, mod)
                             )
     
 # ===============================
@@ -77,7 +77,7 @@ def modifyLabScripts(html, tag_type):
             tag[tag_name] = 'labguides/{0}'.format(tag[tag_name])
     return(html)
 
-def parseLabHTML(html, lab_tag):
+def parseLabHTML(html, lab_tag, mod_tag):
     """
     Function to parse through html document and parse out/remove
     unnecessary data.
@@ -90,8 +90,6 @@ def parseLabHTML(html, lab_tag):
     for html_img in parsed.find_all("img"):
         # Update the image path:
         html_img['src'] = html_img['src'].replace('_images', 'labguides/_images')
-        if MOD_YAML[lab_tag]['image'] in html_img.get("alt"):
-            html_img.extract()
     return(parsed)
     
 
