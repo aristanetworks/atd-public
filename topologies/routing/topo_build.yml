@@ -10,7 +10,7 @@ custom_ami_names: false
 preconfigured: false
 topology_link: true
 host_cpu: 4
-cvp_cpu: 12
+cvp_cpu: 16
 veos_cpu: 1
 
 nodes:
