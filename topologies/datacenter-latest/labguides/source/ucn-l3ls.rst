@@ -1,6 +1,8 @@
 Layer 3 Leaf-Spine
 ==================
 
+**To access the command line of particular switch, click on that switch in the topology diagram at the top of the lab guide.**
+
 1. Configure SVI and VARP Virtual IP on the **Leaf4** switch using the following criteria
 
    1. Create the vARP MAC Address in Global Configuration mode

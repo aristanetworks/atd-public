@@ -2,6 +2,8 @@
 L2 EVPN
 =======
 
+**To access the command line of particular switch, click on that switch in the topology diagram at the top of the lab guide.**
+
 1. On **leaf3**, configure ArBGP. **(Already configured and enabled on the switch)**
 
     .. code-block:: html
