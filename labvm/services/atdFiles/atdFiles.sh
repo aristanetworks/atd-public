@@ -1,5 +1,13 @@
 #!/bin/bash
 
+# Add in while wait check until ACCESS_INFO is available
+   
+while : ; do
+    [[ -f "/etc/ACCESS_INFO.yaml" ]] && break
+    echo "Pausing until file exists."
+    sleep 1
+done
+
 # Find out what topology is running
 TOPO=$(cat /etc/ACCESS_INFO.yaml | shyaml get-value topology)
 ARISTA_PWD=$(cat /etc/ACCESS_INFO.yaml | shyaml get-value login_info.jump_host.pw)
