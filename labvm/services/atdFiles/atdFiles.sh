@@ -103,4 +103,13 @@ mkdir /var/www/html/atd/labguides/
 
 # Put the new HTML and PDF in the proper directories
 mv /tmp/atd/topologies/$TOPO/labguides/build/latex/ATD.pdf /var/www/html/atd/labguides/
-mv /tmp/atd/topologies/$TOPO/labguides/build/html/* /var/www/html/atd/labguides/ && chown -R www-data:www-data /var/www/html/atd/labguides
+mv /tmp/atd/topologies/$TOPO/labguides/build/html/* /var/www/html/atd/labguides/
+
+# Copy over the modules images to the web directory
+if [ -d /tmp/atd/topologies/$TOPO/labguides/source/images/modules ]
+then
+    cp -r /tmp/atd/topologies/$TOPO/labguides/source/images/modules /var/www/html/atd/labguides/_images/
+fi
+
+# Change the permission for the web directory files
+chown -R www-data:www-data /var/www/html/atd/labguides
