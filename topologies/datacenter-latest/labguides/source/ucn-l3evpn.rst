@@ -1,8 +1,6 @@
 L3 EVPN
 =======
 
-.. note:: For more details on the configuration we will apply to Leaf4, check out the UCN MLAG Lab.
-
 **To access the command line of particular switch, click on that switch in the topology diagram at the top of the lab guide.**
 
 1. On **leaf3**, configure EOS to Mutli-Agent and add loopback0
