@@ -3,20 +3,23 @@
 from ruamel.yaml import YAML
 from time import sleep
 from os.path import exists
+from os import makedirs
 import argparse
 
 
 FILE_TOPO = '/etc/atd/ACCESS_INFO.yaml'
 REPO_PATH = '/opt/atd/'
 CEOS_PATH = '/opt/ceos/'
-CEOS_NODES = CEOS_PATH + 'nodes/'
+CEOS_NODES = CEOS_PATH + 'nodes'
 CEOS_SCRIPTS = CEOS_PATH + 'scripts/'
 REPO_TOPO = REPO_PATH + 'topologies/'
 AVAIL_TOPO = REPO_TOPO + 'available_topo.yaml'
+MGMT_BRIDGE = 'vmgmt'
 sleep_delay = 30
+CEOS_VERSION = '4.24.1.1f'
 
 VETH_PAIRS = []
-CEOS = []
+CEOS = {}
 
 
 class CEOS_NODE():
@@ -34,12 +37,12 @@ class CEOS_NODE():
             rport = parseNames(intf['neighborPort'])
             rneigh = parseNames(intf['neighborDevice'])
             _vethCheck = checkVETH('{0}{1}'.format(self.name, lport['code']), '{0}{1}'.format(rneigh['name'], rport['code']))
-            print(str(_vethCheck))
             if _vethCheck['status']:
                 pS("OK", "VETH Pair {0} will be created.".format(_vethCheck['name']))
                 VETH_PAIRS.append(_vethCheck['name'])
             self.intfs[intf['port']] = {
-                ''
+                'veth': _vethCheck['name'],
+                'port': lport['code']
             }
 
 def parseNames(devName):
@@ -82,6 +85,19 @@ def checkVETH(dev1, dev2):
         'name': veth_name
     })
         
+def checkDir(path):
+    """
+    Function to check if a destination directory exists.
+    """
+    if not exists(path):
+        try:
+            makedirs(path)
+            return(True)
+        except:
+            return(False)
+    else:
+        return(True)
+
 
 def createMac(dev_id):
     """
@@ -121,8 +137,42 @@ def main(args):
     for vdev in NODES:
         vdevn = list(vdev.keys())[0]
         CEOS[vdevn] = CEOS_NODE(vdevn, vdev[vdevn]['ip_addr'], vdev[vdevn]['neighbors'])
-
-
+    # Check for CEOS Scripts Directory
+    if checkDir(CEOS_SCRIPTS):
+        pS("OK", "Directory is present now.")
+    else:
+        pS("iBerg", "Error creating directory.")
+    # Create the initial deployment files
+    with open(CEOS_SCRIPTS + 'Create.sh', 'w') as cout:
+        # Write initial bash line
+        cout.write("#!/bin/bash\n")
+        cout.write("set -x -e\n")
+        # Get the veths created
+        cout.write("# Creating veths\n")
+        for _veth in VETH_PAIRS:
+            _v1, _v2 = _veth.split("-")
+            cout.write("ip link add {0} type veth peer name {1}\n".format(_v1, _v2))
+        cout.write("#\n#\n# Creating anchor containers\n#\n")
+        # Create initial anchor containers
+        for _node in CEOS:
+            cout.write("# Getting {0} nodes plubming\n".format(_node))
+            cout.write("docker run -d --restart=always --name={0}-net --net=none busybox /bin/init\n".format(_node))
+            cout.write("{0}pid=$(docker inspect --format '{{{{.State.Pid}}}}' {0}-net)\n".format(_node))
+            cout.write("ln -sf /proc/${{{0}pid}}/ns/net /var/run/netns/{0}\n".format(_node))
+            cout.write("# Connecting containers together\n")
+            for _intf in CEOS[_node].intfs:
+                _tmp_intf = CEOS[_node].intfs[_intf]
+                if _node in  _tmp_intf['veth'].split('-')[0]:
+                    cout.write("ip link set {0} netns {1} name {2} up\n".format(_tmp_intf['veth'].split('-')[0], _node, _tmp_intf['port']))
+                else:
+                    cout.write("ip link set {0} netns {1} name {2} up\n".format(_tmp_intf['veth'].split('-')[1], _node, _tmp_intf['port']))
+            # Get MGMT VETHS
+            cout.write("ip link add {0}-eth0 type veth peer name {0}-mgmt\n".format(_node))
+            cout.write("brctl addif {0} {1}-mgmt\n".format(MGMT_BRIDGE, _node))
+            cout.write("ip link set {0}-eth0 netns {0} name eth0 up\n".format(_node))
+            cout.write("ip link set {0}-mgmt up\n".format(_node))
+            cout.write("sleep 1\n")
+            cout.write("docker run -d --name={0} --net=container:{0}-net --ip {1} --privileged -v {2}/{0}:/mnt/flash:Z -e INTFTYPE=et -e MGMT_INTF=eth0 -e ETBA=1 -e SKIP_ZEROTOUCH_BARRIER_IN_SYSDBINIT=1 -e CEOS=1 -e EOS_PLATFORM=ceoslab -e container=docker -i -t ceosimage:{3} /sbin/init systemd.setenv=INTFTYPE=et systemd.setenv=MGMT_INTF=eth0 systemd.setenv=ETBA=1 systemd.setenv=SKIP_ZEROTOUCH_BARRIER_IN_SYSDBINIT=1 systemd.setenv=CEOS=1 systemd.setenv=EOS_PLATFORM=ceoslab systemd.setenv=container=docker\n".format(_node, CEOS[_node].ip, CEOS_NODES, CEOS_VERSION))
 
 if __name__ == '__main__':
     pS('OK', 'Starting cEOS Builder')
