@@ -6,6 +6,7 @@ import time
 import shutil
 import yaml
 from rcvpapi.rcvpapi import *
+from datetime import datetime
 import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
@@ -39,8 +40,9 @@ def pS(mstat,mtype):
     """
     Function to send output from service file to Syslog
     """
+    cur_dt = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     mmes = "\t" + mtype
-    print("[{0}] {1}".format(mstat,mmes.expandtabs(7 - len(mstat))))
+    print("[{0}] [{1}] {2}".format(cur_dt, mstat, mmes.expandtabs(7 - len(mstat))))
 
 
 
@@ -125,9 +127,11 @@ def main():
             res = cvp_clnt.impConfiglet("static",configletName,configletConfig)
             pS("OK", "{0} Configlet: {1}".format(res[0],configletName))
    # Perform a check to see if there any pending tasks to be executed due to configlet update
-   sleep(5)
+   sleep(10)
+   pS("INFO", "Checking for any pending tasks")
    cvp_clnt.getAllTasks("pending")
    if cvp_clnt.tasks['pending']:
+      pS("INFO", "Pending tasks found, will be executing")
       task_response = cvp_clnt.execAllTasks("pending")
       # Perform check to see if there are any existing tasks to be executed
       if task_response:
