@@ -1,6 +1,5 @@
 [Unit]
 Description=Creates a new lab UI for modules
-Requires=atdFiles.service
 After=atdFiles.service
 
 [Service]

@@ -1,6 +1,5 @@
 [Unit]
 Description=Automatically updates configlets
-Requires=atdFiles.service
 After=atdFiles.service
 
 [Service]
