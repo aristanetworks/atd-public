@@ -275,6 +275,6 @@ if __name__ == '__main__':
         else:
             pS("OK","CVP is already configured")
     else:
-        pS("INFO","CVP is not present in this topology, disabling cvpUpdater")
-        system("systemctl disable cvpUpdater")
-        system("systemctl stop cvpUpdater")
+        pS("INFO","CVP is not present in this topology, preventing future run of cvpUpdater")
+        with open(CVP_CONFIG_FILE,'w') as tf:
+            tf.write("CVP_CONFIGURED\n")
