@@ -106,9 +106,11 @@ for configletName in configlets:
          print("{0} Configlet: {1}".format(res[0],configletName))
 
 # Perform a check to see if there any pending tasks to be executed due to configlet update
-sleep(5)
+sleep(10)
+print("Performing check for pending tasks.")
 cvp_clnt.getAllTasks("pending")
 if cvp_clnt.tasks['pending']:
+   print("Pending tasks found, will execute")
    task_response = cvp_clnt.execAllTasks("pending")
    # Perform check to see if there are any existing tasks to be executed
    if task_response:
@@ -126,5 +128,7 @@ if cvp_clnt.tasks['pending']:
             else:
                   print("Task ID: {0} Status: {1}, Waiting 10 seconds...".format(task_id, task_status))
                   sleep(10)
+else:
+   print("No pending tasks found")
 
 print("Configlet sync complete")
