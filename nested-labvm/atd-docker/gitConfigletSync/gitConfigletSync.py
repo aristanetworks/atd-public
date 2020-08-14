@@ -149,6 +149,8 @@ def main():
                else:
                      pS("INFO", "Task ID: {0} Status: {1}, Waiting 10 seconds...".format(task_id, task_status))
                      sleep(10)
+   else:
+      pS("INFO", "No pending tasks found to be executed.")
 
 
 if __name__ == '__main__':
