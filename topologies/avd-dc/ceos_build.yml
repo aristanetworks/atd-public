@@ -1,0 +1,313 @@
+ceos_version: 4.24.1.1f
+nodes:
+  - SPINE1:
+      # interfaces: 8
+      ip_addr: 192.168.0.101
+      neighbors:
+        - neighborDevice: LEAF1A
+          neighborPort: Ethernet1
+          port: Ethernet1
+        - neighborDevice: LEAF2A
+          neighborPort: Ethernet1
+          port: Ethernet2
+        - neighborDevice: LEAF2B
+          neighborPort: Ethernet1
+          port: Ethernet3
+        - neighborDevice: SVC3A
+          neighborPort: Ethernet1
+          port: Ethernet4
+        - neighborDevice: SVC3B
+          neighborPort: Ethernet1
+          port: Ethernet5
+        - neighborDevice: BL1A
+          neighborPort: Ethernet1
+          port: Ethernet6
+        - neighborDevice: BL1B
+          neighborPort: Ethernet1
+          port: Ethernet7
+  - SPINE2:
+      # interfaces: 8
+      ip_addr: 192.168.0.102
+      neighbors:
+        - neighborDevice: LEAF1A
+          neighborPort: Ethernet1
+          port: Ethernet1
+        - neighborDevice: LEAF2A
+          neighborPort: Ethernet2
+          port: Ethernet2
+        - neighborDevice: LEAF2B
+          neighborPort: Ethernet2
+          port: Ethernet3
+        - neighborDevice: SVC3A
+          neighborPort: Ethernet2
+          port: Ethernet4
+        - neighborDevice: SVC3B
+          neighborPort: Ethernet2
+          port: Ethernet5
+        - neighborDevice: BL1A
+          neighborPort: Ethernet2
+          port: Ethernet6
+        - neighborDevice: BL1B
+          neighborPort: Ethernet2
+          port: Ethernet7
+  - SPINE3:
+      # interfaces: 8
+      ip_addr: 192.168.0.103
+      neighbors:
+        - neighborDevice: LEAF1A
+          neighborPort: Ethernet3
+          port: Ethernet1
+        - neighborDevice: LEAF2A
+          neighborPort: Ethernet3
+          port: Ethernet2
+        - neighborDevice: LEAF2B
+          neighborPort: Ethernet3
+          port: Ethernet3
+        - neighborDevice: SVC3A
+          neighborPort: Ethernet3
+          port: Ethernet4
+        - neighborDevice: SVC3B
+          neighborPort: Ethernet3
+          port: Ethernet5
+        - neighborDevice: BL1A
+          neighborPort: Ethernet3
+          port: Ethernet6
+        - neighborDevice: BL1B
+          neighborPort: Ethernet3
+          port: Ethernet7
+  - SPINE4:
+      # interfaces: 8
+      ip_addr: 192.168.0.104
+      neighbors:
+        - neighborDevice: LEAF1A
+          neighborPort: Ethernet4
+          port: Ethernet1
+        - neighborDevice: LEAF2A
+          neighborPort: Ethernet4
+          port: Ethernet2
+        - neighborDevice: LEAF2B
+          neighborPort: Ethernet4
+          port: Ethernet3
+        - neighborDevice: SVC3A
+          neighborPort: Ethernet4
+          port: Ethernet4
+        - neighborDevice: SVC3B
+          neighborPort: Ethernet4
+          port: Ethernet5
+        - neighborDevice: BL1A
+          neighborPort: Ethernet4
+          port: Ethernet6
+        - neighborDevice: BL1B
+          neighborPort: Ethernet4
+          port: Ethernet7
+  - LEAF1A:
+      # interfaces: 8
+      ip_addr: 192.168.0.105
+      neighbors:
+        - neighborDevice: SPINE1
+          neighborPort: Ethernet1
+          port: Ethernet1
+        - neighborDevice: SPINE2
+          neighborPort: Ethernet1
+          port: Ethernet2
+        - neighborDevice: SPINE3
+          neighborPort: Ethernet1
+          port: Ethernet3
+        - neighborDevice: SPINE4
+          neighborPort: Ethernet1
+          port: Ethernet4
+  - LEAF2A:
+      # interfaces: 8
+      ip_addr: 192.168.0.106
+      neighbors:
+        - neighborDevice: SPINE1
+          neighborPort: Ethernet2
+          port: Ethernet1
+        - neighborDevice: SPINE2
+          neighborPort: Ethernet2
+          port: Ethernet2
+        - neighborDevice: SPINE3
+          neighborPort: Ethernet2
+          port: Ethernet3
+        - neighborDevice: SPINE4
+          neighborPort: Ethernet2
+          port: Ethernet4
+        - neighborDevice: LEAF2B
+          neighborPort: Ethernet5
+          port: Ethernet5
+        - neighborDevice: LEAF2B
+          neighborPort: Ethernet6
+          port: Ethernet6
+        - neighborDevice: L2LEAF1A
+          neighborPort: Ethernet1
+          port: Ethernet7
+  - LEAF2B:
+      # interfaces: 8
+      ip_addr: 192.168.0.107
+      neighbors:
+        - neighborDevice: SPINE1
+          neighborPort: Ethernet3
+          port: Ethernet1
+        - neighborDevice: SPINE2
+          neighborPort: Ethernet3
+          port: Ethernet2
+        - neighborDevice: SPINE3
+          neighborPort: Ethernet3
+          port: Ethernet3
+        - neighborDevice: SPINE4
+          neighborPort: Ethernet3
+          port: Ethernet4
+        - neighborDevice: LEAF2A
+          neighborPort: Ethernet5
+          port: Ethernet5
+        - neighborDevice: LEAF2A
+          neighborPort: Ethernet6
+          port: Ethernet6
+        - neighborDevice: LEAF2A
+          neighborPort: Ethernet6
+          port: Ethernet6
+        - neighborDevice: L2LEAF1A
+          neighborPort: Ethernet2
+          port: Ethernet7
+  - SVC3A:
+      # interfaces: 8
+      ip_addr: 192.168.0.108
+      neighbors:
+        - neighborDevice: SPINE1
+          neighborPort: Ethernet4
+          port: Ethernet1
+        - neighborDevice: SPINE2
+          neighborPort: Ethernet4
+          port: Ethernet2
+        - neighborDevice: SPINE3
+          neighborPort: Ethernet4
+          port: Ethernet3
+        - neighborDevice: SPINE4
+          neighborPort: Ethernet4
+          port: Ethernet4
+        - neighborDevice: SVC3B
+          neighborPort: Ethernet5
+          port: Ethernet5
+        - neighborDevice: SVC3B
+          neighborPort: Ethernet6
+          port: Ethernet6
+        - neighborDevice: L2LEAF2A
+          neighborPort: Ethernet1
+          port: Ethernet7
+        - neighborDevice: L2LEAF2B
+          neighborPort: Ethernet1
+          port: Ethernet8
+  - SVC3B:
+      # interfaces: 8
+      ip_addr: 192.168.0.109
+      neighbors:
+        - neighborDevice: SPINE1
+          neighborPort: Ethernet5
+          port: Ethernet1
+        - neighborDevice: SPINE2
+          neighborPort: Ethernet5
+          port: Ethernet2
+        - neighborDevice: SPINE3
+          neighborPort: Ethernet5
+          port: Ethernet3
+        - neighborDevice: SPINE4
+          neighborPort: Ethernet5
+          port: Ethernet4
+        - neighborDevice: SVC3A
+          neighborPort: Ethernet5
+          port: Ethernet5
+        - neighborDevice: SVC3A
+          neighborPort: Ethernet6
+          port: Ethernet6
+        - neighborDevice: L2LEAF2A
+          neighborPort: Ethernet2
+          port: Ethernet7
+        - neighborDevice: L2LEAF2B
+          neighborPort: Ethernet2
+          port: Ethernet8
+  - BL1A:
+      # interfaces: 8
+      ip_addr: 192.168.0.110
+      neighbors:
+        - neighborDevice: SPINE1
+          neighborPort: Ethernet6
+          port: Ethernet1
+        - neighborDevice: SPINE2
+          neighborPort: Ethernet6
+          port: Ethernet2
+        - neighborDevice: SPINE3
+          neighborPort: Ethernet6
+          port: Ethernet3
+        - neighborDevice: SPINE4
+          neighborPort: Ethernet6
+          port: Ethernet4
+        - neighborDevice: BL1B
+          neighborPort: Ethernet5
+          port: Ethernet5
+        - neighborDevice: BL1B
+          neighborPort: Ethernet6
+          port: Ethernet6
+  - BL1B:
+      # interfaces: 8
+      ip_addr: 192.168.0.111
+      neighbors:
+        - neighborDevice: SPINE1
+          neighborPort: Ethernet7
+          port: Ethernet1
+        - neighborDevice: SPINE2
+          neighborPort: Ethernet7
+          port: Ethernet2
+        - neighborDevice: SPINE3
+          neighborPort: Ethernet7
+          port: Ethernet3
+        - neighborDevice: SPINE4
+          neighborPort: Ethernet7
+          port: Ethernet4
+        - neighborDevice: BL1A
+          neighborPort: Ethernet5
+          port: Ethernet5
+        - neighborDevice: BL1A
+          neighborPort: Ethernet6
+          port: Ethernet6
+  - L2LEAF1A:
+      # interfaces: 8
+      ip_addr: 192.168.0.112
+      neighbors:
+        - neighborDevice: LEAF2A
+          neighborPort: Ethernet7
+          port: Ethernet1
+        - neighborDevice: LEAF2B
+          neighborPort: Ethernet7
+          port: Ethernet2
+  - L2LEAF2A:
+      # interfaces: 8
+      ip_addr: 192.168.0.113
+      neighbors:
+        - neighborDevice: SVC3A
+          neighborPort: Ethernet7
+          port: Ethernet1
+        - neighborDevice: SVC3B
+          neighborPort: Ethernet7
+          port: Ethernet2
+        - neighborDevice: L2LEAF2B
+          neighborPort: Ethernet3
+          port: Ethernet3
+        - neighborDevice: L2LEAF2B
+          neighborPort: Ethernet4
+          port: Ethernet4
+  - L2LEAF2B:
+      # interfaces: 8
+      ip_addr: 192.168.0.114
+      neighbors:
+        - neighborDevice: SVC3A
+          neighborPort: Ethernet8
+          port: Ethernet1
+        - neighborDevice: SVC3B
+          neighborPort: Ethernet8
+          port: Ethernet2
+        - neighborDevice: L2LEAF2A
+          neighborPort: Ethernet3
+          port: Ethernet3
+        - neighborDevice: L2LEAF2A
+          neighborPort: Ethernet4
+          port: Ethernet4
