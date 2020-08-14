@@ -1,7 +1,7 @@
 [Unit]
-Description=Automatically configures CVP with EOS devices depending on the topology
-Required=cvpUpdater.service
-After=cvpUpdater.service
+Description=Creates a new lab UI for modules
+Requires=atdFiles.service
+After=atdFiles.service
 
 [Service]
 Type=forking
