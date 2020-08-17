@@ -318,20 +318,20 @@ def main():
             while menu_mode:
                 try:
                     if menu_mode == 'MAIN':
-                    main_menu()
+                      main_menu()
                     elif menu_mode == 'DEVICE_SSH':
-                    device_menu()
+                      device_menu()
                     elif 'LAB_' in menu_mode:
-                    lab_options_menu()
+                      lab_options_menu()
                     elif menu_mode == 'EXIT':
-                    print('User exited.')
-                    quit()
+                      print('User exited.')
+                      quit()
                 except KeyboardInterrupt:
                     if menu_mode == 'MAIN':
-                    print('User exited.')
-                    quit()
+                      print('User exited.')
+                      quit()
                     else:
-                    menu_mode = 'MAIN'
+                      menu_mode = 'MAIN'
 
         else:
             os.system("/usr/lib/openssh/sftp-server")
