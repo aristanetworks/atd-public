@@ -3,6 +3,8 @@ VxLAN
 
 .. note:: The manually-entered configlet below as part of this lab is equivalent to ``Leaf3-VXLAN-Lab-Full``.
 
+**To access the command line of particular switch, click on that switch or CloudVision in the topology diagram at the top of the lab guide.**
+
 
 1. Log into CloudVision and find **leaf3** on the **Devices** page
 
