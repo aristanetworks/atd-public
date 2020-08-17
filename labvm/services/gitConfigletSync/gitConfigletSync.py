@@ -129,11 +129,11 @@ if __name__ == '__main__':
       # Check if cvpUpdater has run
       if os.path.exists(CVP_CONFIG_FILE):
          # Start the main Service
-         pS("OK","Initial ATD Topo Boot, exiting")
-      else:
          pS("INFO", "Starting configlet sync...")
          main()
          pS("OK","Completed Configlet Sync")
+      else:
+         pS("OK","Initial ATD Topo Boot, exiting")
    else:
       pS("INFO","CVP is not present in this topology, disabling gitConfigletSync")
       os.system("systemctl disable gitConfigletSync")
