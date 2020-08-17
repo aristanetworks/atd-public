@@ -103,7 +103,7 @@ def device_menu():
     print("98. Shell (shell/bash)")
     print("99. Back to Main Menu (main/exit) - CTRL + c")
     print("")
-    user_input = input("What would you like to do? ")
+    user_input = input("What would you like to do? ").replace(' ', '')
 
     # Check to see if input is in device_dict
     counter = 1
@@ -167,7 +167,7 @@ def lab_options_menu():
       print("98. SSH to Devices (ssh)")
       print("99. Back to Main Menu (main/exit) - CTRL + c\n")
       
-      user_input = input("\nWhat would you like to do?: ")
+      user_input = input("\nWhat would you like to do?: ").replace(' ', '')
 
       # Check to see if digit is in lab_options dict
       try:
@@ -219,7 +219,7 @@ def lab_options_menu():
       print("99. Back to Main Menu (main/exit) - CTRL + c\n")
 
       # User Input
-      user_input = input("What would you like to do?: ")
+      user_input = input("What would you like to do?: ").replace(' ', '')
 
       # Check to see if input is in commands_dict
       try:
@@ -284,7 +284,7 @@ def main_menu():
     print("99. Exit LabVM (quit/exit) - CTRL + c")
     print("")
 
-    user_input = input("What would you like to do?: ")
+    user_input = input("What would you like to do?: ").replace(' ', '')
     
     # Check user input to see which menu to change to
     try:
