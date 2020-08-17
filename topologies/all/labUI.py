@@ -90,7 +90,9 @@ def parseLabHTML(html, lab_tag, mod_tag):
     for html_img in parsed.find_all("img"):
         # Update the image path:
         html_img['src'] = html_img['src'].replace('_images', 'labguides/_images')
-        html_img['href'] = html_img['href'].replace('_images', 'labguides/_images')
+    for html_a in parsed.find_all("a"):
+        if '_images' in html_a['href']:
+            html_a['href'] = html_a['href'].replace('_images', 'labguides/_images')
     return(parsed)
     
 
