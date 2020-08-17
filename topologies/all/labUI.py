@@ -22,22 +22,25 @@ class topoRequestHandler(tornado.web.RequestHandler):
     def get(self):
         if 'lab' in self.request.arguments:
             lab_module = self.get_argument("lab")
-            if lab_module in MOD_YAML:
-                labguide = getLabHTML(lab_module)
-                if labguide:
-                    labguide_js = modifyLabScripts(labguide.head.find_all("script",{"type":"text/javascript"}), 'js')
-                    labguide_css = modifyLabScripts(labguide.head.find_all("link",{"type":"text/css"}), 'css')
-                    # Set Vars for index render
-                    self.render(
-                        BASE_PATH + 'index.html',
-                        JS = labguide_js,
-                        CSS = labguide_css,
-                        MOD_NAME = MOD_YAML[lab_module]['name'],
-                        NODE_IP = getPublicIP(),
-                        MOD_IMG = 'labguides/_images/{0}'.format(MOD_YAML[lab_module]['image']),
-                        NODES = MOD_YAML[lab_module]['nodes'],
-                        LABGUIDE = parseLabHTML(labguide, lab_module)
-                    )
+            if 'ucn-' in lab_module or 'cvp-' in lab_module:
+                lab, mod = lab_module.split('-')
+                if lab in MOD_YAML:
+                    if mod in MOD_YAML[lab]:
+                        labguide = getLabHTML(lab_module)
+                        if labguide:
+                            labguide_js = modifyLabScripts(labguide.head.find_all("script",{"type":"text/javascript"}), 'js')
+                            labguide_css = modifyLabScripts(labguide.head.find_all("link",{"type":"text/css"}), 'css')
+                            # Set Vars for index render
+                            self.render(
+                                BASE_PATH + 'index.html',
+                                JS = labguide_js,
+                                CSS = labguide_css,
+                                MOD_NAME = MOD_YAML[lab][mod]['name'],
+                                NODE_IP = getPublicIP(),
+                                MOD_IMG = 'labguides/_images/modules/{0}'.format(MOD_YAML[lab][mod]['image']),
+                                NODES = MOD_YAML[lab][mod]['nodes'],
+                                LABGUIDE = parseLabHTML(labguide, lab, mod)
+                            )
     
 # ===============================
 # Utility Functions
@@ -74,7 +77,7 @@ def modifyLabScripts(html, tag_type):
             tag[tag_name] = 'labguides/{0}'.format(tag[tag_name])
     return(html)
 
-def parseLabHTML(html, lab_tag):
+def parseLabHTML(html, lab_tag, mod_tag):
     """
     Function to parse through html document and parse out/remove
     unnecessary data.
@@ -85,8 +88,8 @@ def parseLabHTML(html, lab_tag):
     parsed.select('h1')[0].extract()
     # Remove the lab diagram
     for html_img in parsed.find_all("img"):
-        if lab_tag in html_img.get("alt"):
-            html_img.extract()
+        # Update the image path:
+        html_img['src'] = html_img['src'].replace('_images', 'labguides/_images')
     return(parsed)
     
 

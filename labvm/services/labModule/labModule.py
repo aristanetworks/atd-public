@@ -75,8 +75,9 @@ def main(atd_yaml):
     Parameters:
     atd_yaml = Ruamel.YAML object container of ACCESS_INFO 
     """
-    lab_topo = MODULES[atd_yaml[APP_KEY]]['topo']
-    lab_module = MODULES[atd_yaml[APP_KEY]]['module']
+    lab, mod = atd_yaml[APP_KEY].split('-')
+    lab_topo = MODULES[mod]['topo']
+    lab_module = MODULES[mod]['module']
     pS("INFO", "Configuring the lab for {0}".format(lab_module))
     system('echo -e "\n" | {0} -t {1} -l {2}'.format(CONFIGURE_TOPOLOGY, lab_topo, lab_module))
     pS("OK", "Lab has been configured.")
@@ -90,9 +91,11 @@ if __name__ == '__main__':
     # Perform check to see if lab parameter is available
     if APP_KEY in atd_yaml:
         # Check to see if a value has been set for the parameter:
-        if atd_yaml[APP_KEY] != 'none':
+        if '-' in atd_yaml[APP_KEY]:
+            # Split out the lab and module from app
+            lab, mod = atd_yaml[APP_KEY].split('-')
             # Check if module is in MODULES
-            if atd_yaml[APP_KEY] in MODULES:
+            if mod in MODULES:
                 # Perform loop check to verify that CVP has been configured and cvpUpdated has completed.
                 while not path.exists(CVP_CONFIG_FIILE):
                     # If it check hasn't passed, sleep 10 seconds.

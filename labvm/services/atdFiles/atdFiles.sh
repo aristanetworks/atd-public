@@ -1,5 +1,13 @@
 #!/bin/bash
 
+# Add in while wait check until ACCESS_INFO is available
+   
+while : ; do
+    [[ -f "/etc/ACCESS_INFO.yaml" ]] && break
+    echo "Pausing until file exists."
+    sleep 1
+done
+
 # Find out what topology is running
 TOPO=$(cat /etc/ACCESS_INFO.yaml | shyaml get-value topology)
 ARISTA_PWD=$(cat /etc/ACCESS_INFO.yaml | shyaml get-value login_info.jump_host.pw)
@@ -27,6 +35,7 @@ curl -sL https://deb.nodesource.com/setup_14.x | sudo bash -
 apt install python3-pip nodejs -y
 
 # Install python3 ruamel.yaml
+pip3 install --upgrade pip
 pip3 install ruamel.yaml bs4 tornado scp paramiko rcvpapi
 
 # Setup NPM and webssh2
@@ -103,4 +112,13 @@ mkdir /var/www/html/atd/labguides/
 
 # Put the new HTML and PDF in the proper directories
 mv /tmp/atd/topologies/$TOPO/labguides/build/latex/ATD.pdf /var/www/html/atd/labguides/
-mv /tmp/atd/topologies/$TOPO/labguides/build/html/* /var/www/html/atd/labguides/ && chown -R www-data:www-data /var/www/html/atd/labguides
+mv /tmp/atd/topologies/$TOPO/labguides/build/html/* /var/www/html/atd/labguides/
+
+# Copy over the modules images to the web directory
+if [ -d /tmp/atd/topologies/$TOPO/labguides/source/images/modules ]
+then
+    cp -r /tmp/atd/topologies/$TOPO/labguides/source/images/modules /var/www/html/atd/labguides/_images/
+fi
+
+# Change the permission for the web directory files
+chown -R www-data:www-data /var/www/html/atd/labguides
