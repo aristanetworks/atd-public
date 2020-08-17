@@ -29,7 +29,7 @@ VxLAN
 3. Create the VXLAN configlet
 
 * click on Provisioining, click on configlets in the left selection column
-* click the + sign in the Configlets list toolbar
+* click the **+** sign in the Configlets list toolbar
 * create a configlet called Leaf3-VXLAN-Lab-Full-user
 
 .. code-block:: text
