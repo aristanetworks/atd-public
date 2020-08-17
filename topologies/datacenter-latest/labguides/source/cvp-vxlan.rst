@@ -15,30 +15,28 @@ VxLAN
           equivalent to ``Leaf3-VXLAN-Lab-Full``.
 
 
-1. Log into CloudVision and find Leaf3 on the **Devices** page.
+1. Log into CloudVision and find Leaf3 on the **Devices** page
 * The username to access CloudVision is ``arista`` and the password is ``{REPLACE_ARISTA}``
    
-   * Search for ``leaf3`` in the **Device** column of the inventory table.
-
-        .. image:: images/cvp-vxlan/leaf3-inventory-table.png
-           :align: center
-           :width: 50 %
-
-   * Click on **leaf3**.
+* Search for ``leaf3`` in the **Device** column of the inventory table.
+    .. image:: images/cvp-vxlan/leaf3-inventory-table.png
+        :align: center
+        :width: 50 %
+* Click on **leaf3**.
 
 2. Review the current vxlan information in CVP
 * Click on VXLAN in the left selection columnn under ``Switching``
 
-    * ``Note:`` ``leaf3`` currently has no VXLAN configuration
+    .. note: ``leaf3`` currently has no VXLAN configuration
 
-       .. image:: images/cvp-vxlan/leaf3-vxlan-pre.png
-          :align: center
-          :width: 50%
+    .. image:: images/cvp-vxlan/leaf3-vxlan-pre.png
+       :align: center
+       :width: 50%
 
 3. Create the VXLAN configlet
 * Click on Provisioining, click on configlets in the left selection column
 
-* Click the + sign in the Configlets list toolbar
+* click the + sign in the Configlets list toolbar
 
 * create a configlet called Leaf3-VXLAN-Lab-Full-user
     .. code-block:: text
@@ -148,7 +146,7 @@ VxLAN
 6. Verify VLXAN operation with CVP Telemetry
 * from ``Device Inventory``, click on ``leaf3``
 
-* click on VXLAN in the left selection column under Switchign
+* click on VXLAN in the left selection column under Switching
     ``Note:`` you will now see the VLANs, VNI mappings related to VXLAN
 
         .. image:: images/cvp-vxlan/leaf3-vxlan-verification.png
