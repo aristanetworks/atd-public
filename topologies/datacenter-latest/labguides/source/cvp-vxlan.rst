@@ -18,21 +18,46 @@ VxLAN
 
 * Click on **leaf3**
 
-2. Review the current vxlan information in CVP
+2. Review the current VXLAN information in CVP
 
-* Click on VXLAN in the left selection columnn under **Switching**
+* Click on **VXLAN** in the left selection column under **Switching**
 
 .. image:: images/cvp-vxlan/leaf3-vxlan-pre.png
     :align: center
     :width: 50%
 
-* **Note:** **leaf3** currently has no VXLAN configuration
+* **Note:** leaf3 currently has no VXLAN configuration
+
+* Click on **Topology View** 
+* Click the **Link Overlay** dropdown in the left selection column
+
+.. image:: images/cvp-vxlan/leaf3-vxlan-before.png
+    :align: center
+    :width: 50%
+
+* Click the **VXLANs** selection, also click and view **VLANs** selection
+* **Note:** You should see VLAN 12 on ``leaf3`` & ``leaf4``
+* **Note:** You should see that ``leaf4`` has both VLAN 12 and VNI 1212 with a dashed line to ``leaf2``
+* **Note:** You should not see VLAN 12 or VNI 1212 as a dashed line from leaf3 to leaf2
+
+.. image:: images/cvp-vxlan/leaf3-vxlan-vlan-before.png
+    :align: center
+    :width: 50%
+
+.. image:: images/cvp-vxlan/leaf3-vxlan-vni-before.png
+    :align: center
+    :width: 50%
 
 3. Create the VXLAN configlet
 
-* click on Provisioining, click on configlets in the left selection column
-* click the **+** sign in the Configlets list toolbar
-* create a configlet called Leaf3-VXLAN-Lab-Full-user
+* Click on **Provisioning**, click on configlets in the left selection column
+* Click the **+** sign in the Configlets list toolbar
+
+.. image:: images/cvp-vxlan/leaf3-vxlan-configlet-list.png
+    :align: center
+    :width: 50%
+
+* Create a configlet called ``Leaf3-VXLAN-Lab-Full-user``
 
 .. code-block:: text
 
@@ -59,13 +84,13 @@ VxLAN
       vxlan flood vtep 172.16.0.34
 
 
-* add the CLI text from above to the new configlet
+* Add the CLI text from above to the new configlet
 
 .. image:: images/cvp-vxlan/leaf3-vxlan-configlet.png
     :align: center
     :width: 50%
 
-* validate configlet syntax on **leaf3**
+* Validate configlet syntax on **leaf3**
 
 .. image:: images/cvp-vxlan/leaf3-vxlan-configlet-validate.png
     :align: center
@@ -73,20 +98,20 @@ VxLAN
 
 4. Assign VXLAN configlet to **leaf3**
 
-* Click on Provisioning, click on **Network Provisioning** in left selection column
-* right click on Leaf3, click on manage configlets, search for Leaf3-VXLAN 
+* **Click on Provisioning**, then click on **Network Provisioning** in left selection column
+* right click on **leaf3**, Click on manage->Configlets, search for ``Leaf3-VXLAN``
 
 .. image:: images/cvp-vxlan/leaf3-vxlan-configlet-manage.png
     :align: center
     :width: 50% 
 
-* click the checkbox next to Leaf3-VXLAN-Lab-Full-user
+* Click the checkbox next to ``Leaf3-VXLAN-Lab-Full-user``
 
 .. image:: images/cvp-vxlan/leaf3-vxlan-configlet-assign.png
     :align: center
     :width: 50% 
 
-* click **validate**, review the new lines
+* Click **Validate**, review the new lines added to the **Designed Configuration**
 
 .. image:: images/cvp-vxlan/leaf3-vxlan-configlet-assign-validate.png
     :align: center
@@ -98,8 +123,8 @@ VxLAN
     :align: center
     :width: 50% 
 
-* Click **save** on the Network Provisioning main view
-    .. note: a **Task** will be generated
+* Click **Save** on the **Network Provisioning** main view
+   **Note:** a **Task** will be generated
 
 .. image:: images/cvp-vxlan/leaf3-vxlan-configlet-main-save.png
     :align: center
@@ -107,54 +132,54 @@ VxLAN
 
 5. Create a **Change Control** with the generated Task
 
-* click **Tasks** from the left selection column
+* Click **Tasks** from the left selection column
 
-* click the checkbox next to the generated task
+* Click the checkbox next to the generated task from the pool of **Assignable Tasks**
 
 .. image:: images/cvp-vxlan/leaf3-vxlan-cc-task.png
     :align: center
     :width: 50% 
 
-* click **+** Create Change Control with 1 Task
+* Click **+** Create Change Control with 1 Task
 
 .. image:: images/cvp-vxlan/leaf3-vxlan-cc-create-cc.png
     :align: center
     :width: 50% 
 
-* click **Review and Approve** on the Change Control that was created
+* Click **Review and Approve** on the newly created **Change Control**
 
 .. image:: images/cvp-vxlan/leaf3-vxlan-cc-review-approve.png
     :align: center
     :width: 50% 
 
-* click **Execute Change Control** in upper right of the UI
+* Click **Execute Change Control** in upper right of the UI
 
 .. image:: images/cvp-vxlan/leaf3-vxlan-cc-execute.png
     :align: center
     :width: 50% 
 
-* click **Execute** in the resulting confirmation dialog box
+* Click **Execute** in the resulting confirmation dialog box
 
 .. image:: images/cvp-vxlan/leaf3-vxlan-cc-execute-confirm.png
     :align: center
     :width: 50% 
 
-6. Verify VLXAN operation with CVP Telemetry
+6. Verify VXLAN operation with CVP Telemetry
 
-* from **Device Inventory** click on **leaf3**
-* click on VXLAN in the left selection column under Switching
+* From **Device** page **Inventory** click on **leaf3**
+* Click on VXLAN in the left selection column under **Switching**
 
 .. image:: images/cvp-vxlan/leaf3-vxlan-verification.png
  :align: center
  :width: 50% 
 
-* **Note:** you will now see the VLANs, VNI mappings related to VXLAN
+* **Note:** you should now see the VLANs to VNI mappings related the to VXLAN configuration on ``leaf3``
 
-* ping ``host1`` from ``host2``
+* Ping ``host1`` from ``host2``
     
 .. code-block:: text
 
-    host1#ping 172.16.112.201
+    host1# ping 172.16.112.201
     PING 172.16.112.201 (172.16.112.201) 72(100) bytes of data.
     80 bytes from 172.16.112.201: icmp_seq=1 ttl=64 time=0.248 ms
     80 bytes from 172.16.112.201: icmp_seq=2 ttl=64 time=0.165 ms
@@ -167,20 +192,40 @@ VxLAN
     rtt min/avg/max/mdev = 0.146/0.178/0.248/0.037 ms, ipg/ewma 0.421/0.211 ms
     host1#
 
-* again, click on VXLAN in the left selection column under **Switching**
+* Again, click on **VXLAN** in the left selection column under **Switching**
 
 .. image:: images/cvp-vxlan/leaf3-vxlan-verification-mac.png
     :align: center
     :width: 50% 
 
-* **Note:** In addition to VLAN, VNI Mappings, you will see an entry in the ``VXLAN MAC Address Table`` section
+* **Note:** In addition to the VLAN to VNI Mappings, you will see an entry in the ``VXLAN MAC Address Table`` section
 
-* click on the MAC Address Table for Leaf3 in left selection column
+* Click on the **MAC Address Table** for ``leaf3`` in left selection column
 
 .. image:: images/cvp-vxlan/leaf3-vxlan-verification-mac-table.png
     :align: center
     :width: 50% 
 
-* **Note:** You will see the local MAC Address of Host2 on port-channel 4 and the remote MAC Address of Host1 showing port vx1
+* **Note:** You will see the local MAC Address of Host2 on Port-Channel 4 and the remote MAC Address of Host1 showing port ``Vxlan1``
+
+* Click on **Topology View** 
+* Click the **Link Overlay** dropdown in the left selection column
+
+.. image:: images/cvp-vxlan/leaf3-vxlan-before.png
+    :align: center
+    :width: 50%
+
+* Click the **VXLANs** selection, also click and view **VLANs** selection
+* **Note:** You should see VLAN 12 on ``leaf3`` & ``leaf4``
+* **Note:** You should see that ``leaf4`` has both VLAN 12 and VNI 1212 with a dashed line to ``leaf2``
+* **Note:** You should not see VLAN 12 or VNI 1212 as a dashed line from leaf3 to leaf2
+
+.. image:: images/cvp-vxlan/leaf3-vxlan-vlan-after.png
+    :align: center
+    :width: 50%
+
+.. image:: images/cvp-vxlan/leaf3-vxlan-vni-after.png
+    :align: center
+    :width: 50%
 
 **LAB COMPLETE!**
