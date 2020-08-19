@@ -98,7 +98,7 @@ VxLAN
 
 4. Assign the VXLAN configlet to **leaf3**
 
-* **Click on Provisioning**, then click on **Network Provisioning** in left selection column
+* Click on **Provisioning**, then click on **Network Provisioning** in the left selection column
 * right click on **leaf3**, Click on manage->Configlets, search for ``Leaf3-VXLAN``
 
 .. image:: images/cvp-vxlan/leaf3-vxlan-configlet-manage.png
