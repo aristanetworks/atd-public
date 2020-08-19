@@ -215,7 +215,7 @@ VxLAN
     :align: center
     :width: 50%
 
-* Click the **VXLANs** selection, also click and view **VLANs** selection
+* Click the **VXLANs** selection, also click and view the **VLANs** selection
 * **Note:** You should see VLAN 12 on ``leaf3`` & ``leaf4``
 * **Note:** You should see that ``leaf4`` has both VLAN 12 and VNI 1212 with a dashed line to ``leaf2``
 * **Note:** You should **now** see VLAN 12 and VNI 1212 as a dashed line from leaf3 to leaf2, indicating VLAN 12 is extended via VNI 1212
