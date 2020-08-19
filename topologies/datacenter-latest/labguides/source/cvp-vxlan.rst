@@ -50,7 +50,7 @@ VxLAN
 
 3. Create the VXLAN configlet
 
-* Click on **Provisioning**, click on configlets in the left selection column
+* Click on **Provisioning**, click on **Configlets** in the left selection column
 * Click the **+** sign in the Configlets list toolbar
 
 .. image:: images/cvp-vxlan/leaf3-vxlan-configlet-list.png
