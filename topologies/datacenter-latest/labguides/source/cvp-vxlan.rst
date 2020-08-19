@@ -96,7 +96,7 @@ VxLAN
     :align: center
     :width: 50% 
 
-4. Assign VXLAN configlet to **leaf3**
+4. Assign the VXLAN configlet to **leaf3**
 
 * **Click on Provisioning**, then click on **Network Provisioning** in left selection column
 * right click on **leaf3**, Click on manage->Configlets, search for ``Leaf3-VXLAN``
