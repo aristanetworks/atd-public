@@ -140,7 +140,7 @@ VxLAN
     :align: center
     :width: 50% 
 
-* Click **+** Create Change Control with 1 Task
+* Click **+ Create Change Control with 1 Task**
 
 .. image:: images/cvp-vxlan/leaf3-vxlan-cc-create-cc.png
     :align: center
