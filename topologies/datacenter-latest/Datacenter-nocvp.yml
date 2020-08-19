@@ -7,6 +7,7 @@ only_add_to_inventory: false
 custom_ami_names: false
 preconfigured: false
 topology_link: true
+reboot_veos_nodes: true
 
 nodes:
   - spine1:
