@@ -28,7 +28,7 @@ VxLAN
 
 * **Note:** leaf3 currently has no VXLAN configuration
 
-* Click on **Topology View** 
+* Click on **Topology** in the navigation bar at the top of the page 
 * Click the **Link Overlay** dropdown in the left selection column
 
 .. image:: images/cvp-vxlan/leaf3-vxlan-before.png
