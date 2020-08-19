@@ -130,7 +130,7 @@ VxLAN
     :align: center
     :width: 50% 
 
-5. Create a **Change Control** with the generated Task
+5. Create a Change Control with the generated Task
 
 * Click **Tasks** from the left selection column
 
