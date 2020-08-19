@@ -124,7 +124,7 @@ VxLAN
     :width: 50% 
 
 * Click **Save** on the **Network Provisioning** main view
-   **Note:** a **Task** will be generated
+   **Note:** a Task will be generated
 
 .. image:: images/cvp-vxlan/leaf3-vxlan-configlet-main-save.png
     :align: center
