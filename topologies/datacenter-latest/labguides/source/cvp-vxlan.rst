@@ -167,7 +167,7 @@ VxLAN
 6. Verify VXLAN operation with CVP Telemetry
 
 * From **Device** page **Inventory** click on **leaf3**
-* Click on VXLAN in the left selection column under **Switching**
+* Click on **VXLAN** in the left selection column under **Switching**
 
 .. image:: images/cvp-vxlan/leaf3-vxlan-verification.png
  :align: center
