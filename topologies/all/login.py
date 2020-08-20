@@ -32,6 +32,9 @@ login_info = access_info['login_info']
 nodes = access_info['nodes']
 veos_info = nodes['veos']
 
+# Instantiate ConfigureTopology
+configure = ConfigureTopology()
+
 # Set default menu mode
 menu_mode = 'MAIN'
 previous_menu = ''
