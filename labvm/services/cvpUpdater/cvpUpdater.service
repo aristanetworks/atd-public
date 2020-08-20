@@ -1,6 +1,5 @@
 [Unit]
 Description=Automatically configures CVP with EOS devices depending on the topology
-Required=atdFiles.service
 After=atdFiles.service
 
 [Service]

@@ -110,11 +110,11 @@ been defined for AAA and VLANs.
 
 |
 
-12. The screen will refresh and a 'T' for task will appear above each switches; generating tasks that need to run to push the configuration change.
+12. The screen will refresh and a 'T' for task will appear above each device, representing that tasks have been generated that need to run to push the configuration change.
 
 |
 
-13. Click the 'Task' notification on the top right.
+13. Click 'Tasks' in the left navigation column.
 
 |
 
@@ -123,7 +123,7 @@ been defined for AAA and VLANs.
 
 |
 
-14. Check each 'Pending' task and click the 'Create Change Control with 9 Tasks' button.
+14. Check each Task in the 'Assignable Tasks' section, then click the 'Create Change Control with 9 Tasks' button.
 
 |
 

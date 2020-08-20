@@ -123,7 +123,7 @@ been defined for AAA and VLANs.
 
 |
 
-14. Check each Task in the 'Assignable Tasks' section, thenclick the 'Create Change Control with 9 Tasks' button.
+14. Check each Task in the 'Assignable Tasks' section, then click the 'Create Change Control with 9 Tasks' button.
 
 |
 

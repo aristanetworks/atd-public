@@ -205,4 +205,4 @@ labconfiglets:
       - "BaseIPv4_Host2"
       - "Host2-Media"
     cvx01:
-      - "BaseIPv4_Cvx01"  
+      - "BaseIPv4_Cvx01"

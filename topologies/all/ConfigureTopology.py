@@ -29,6 +29,7 @@ show zerotouch | grep ZeroTouch
 ztp_cancel = """enable
 zerotouch cancel
 """
+
 class ConfigureTopology():
 
     def __init__(self):
@@ -58,7 +59,6 @@ class ConfigureTopology():
         device.removeConfiglets(client, configlets_to_remove)
         client.addDeviceConfiglets(device, configlets_to_remain)
         client.applyConfiglets(device)
-
 
     def get_device_info(self,client):
         eos_devices = []
@@ -213,21 +213,21 @@ class ConfigureTopology():
         else:
             # Open up defaults
             f = open('/home/arista/cvp/cvp_info.yaml')
-            cvpInfo = YAML.load(f)
+            cvp_info = YAML.load(f)
             f.close()
 
-            cvpConfigs = cvpInfo["cvp_info"]["configlets"]
-            infraConfigs = cvpConfigs["containers"]["Tenant"]
+            cvp_configs = cvp_info["cvp_info"]["configlets"]
+            infra_configs = cvp_configs["containers"]["Tenant"]
 
             self.send_to_syslog("INFO","Setting up {0} lab".format(selected_lab))
             for node in access_info["nodes"]["veos"]:
-                deviceConfig = ""
+                device_config = ""
                 hostname = node["hostname"]
-                baseConfigs = cvpConfigs["netelements"]
-                configs = baseConfigs[hostname] + infraConfigs + lab_configlets[selected_lab][hostname]
+                base_configs = cvp_configs["netelements"]
+                configs = base_configs[hostname] + infra_configs + lab_configlets[selected_lab][hostname]
                 configs = list(dict.fromkeys(configs))
                 for config in configs:
                     with open('/tmp/atd/topologies/{0}/configlets/{1}'.format(access_info['topology'], config), 'r') as configlet:
-                        deviceConfig += configlet.read()
+                        device_config += configlet.read()
                 self.send_to_syslog("INFO","Pushing {0} config for {1} on IP {2} with configlets: {3}".format(selected_lab,hostname,node["ip"],configs))
-                self.push_bare_config(hostname, node["ip"], deviceConfig)
+                self.push_bare_config(hostname, node["ip"], device_config)

@@ -5,3 +5,4 @@ serviceUpdaters:
   - gitConfigletSync
   - cvpUpdater
   - sslUpdater
+  - labModule
