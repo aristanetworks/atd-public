@@ -30,9 +30,6 @@ zerotouch cancel
 """
 class ConfigureTopology():
 
-    def __init__(self):
-        pass
-
     def remove_configlets(self, client, device, lab_configlets):
         """
         Removes all configlets except the ones defined here or starting with SYS_

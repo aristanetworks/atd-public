@@ -11,7 +11,7 @@ from rcvpapi.rcvpapi import *
 import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 import time
-from ConfigureTopology.ConfigureTopology import ConfigureTopology
+from ConfigureTopology import ConfigureTopology
 
 
 
