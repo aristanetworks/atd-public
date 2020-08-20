@@ -25,25 +25,6 @@ lab_list:
       - "bash /home/arista/Broadcaster/pushHostMediaConfig.sh"
     description: "Media - Reset All Devices to Broadcaster Base (media-reset)"
 labconfiglets:
-  media-setup:    
-    spine1:
-      - "BaseIPv4_Spine1"
-    spine2:
-      - "BaseIPv4_Spine2"
-    leaf1:
-      - "BaseIPv4_Leaf1"
-    leaf2:
-      - "BaseIPv4_Leaf2"
-    leaf3:
-      - "BaseIPv4_Leaf3"
-    leaf4:
-      - "BaseIPv4_Leaf4"
-    host1:
-      - "BaseIPv4_Host1"
-    host2:
-      - "BaseIPv4_Host2"
-    cvx01:
-      - "BaseIPv4_Cvx01"
   media-reset:
     spine1:
       - "BaseIPv4_Spine1"
@@ -205,4 +186,4 @@ labconfiglets:
       - "BaseIPv4_Host2"
       - "Host2-Media"
     cvx01:
-      - "BaseIPv4_Cvx01"
+      - "BaseIPv4_Cvx01"  
