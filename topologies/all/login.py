@@ -11,7 +11,7 @@ from rcvpapi.rcvpapi import *
 import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 import time
-from ConfigureTopology.ConfigureTopology import *
+from ConfigureTopology.ConfigureTopology import ConfigureTopology
 
 
 
@@ -228,7 +228,7 @@ def lab_options_menu():
       try:
           if user_input.lower() in options_dict:
               previous_menu = menu_mode
-              ConfigureTopology.deploy_lab(selected_menu=options_dict[user_input]['selected_menu'],selected_lab=options_dict[user_input]['selected_lab'])
+              configure.deploy_lab(selected_menu=options_dict[user_input]['selected_menu'],selected_lab=options_dict[user_input]['selected_lab'])
           elif user_input == '97' or user_input.lower() == 'back':
               if menu_mode == previous_menu:
                   menu_mode = 'MAIN'
@@ -292,7 +292,7 @@ def main_menu():
     # Check user input to see which menu to change to
     # try:
     if user_input.lower() in options_dict:
-        ConfigureTopology.deploy_lab(selected_menu=options_dict[user_input]['selected_menu'],selected_lab=options_dict[user_input]['selected_lab'])
+        configure.deploy_lab(selected_menu=options_dict[user_input]['selected_menu'],selected_lab=options_dict[user_input]['selected_lab'])
     elif user_input == '98' or user_input.lower() == 'ssh':
       previous_menu = menu_mode
       menu_mode = 'DEVICE_SSH'
