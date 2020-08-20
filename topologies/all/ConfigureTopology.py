@@ -10,15 +10,16 @@ from scp import SCPClient
 import requests
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 import logging
+import os
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 DEBUG = False
 
 # Cmds to copy bare startup to running
-cpRunStart = """enable
+cp_run_start = """enable
 copy running-config startup-config
 """
-cpStartRun = """enable
+cp_start_run = """enable
 copy startup-config running-config
 """
 # Cmds to grab ZTP status
@@ -124,19 +125,19 @@ class ConfigureTopology():
         Pushes a bare config to the EOS device.
         """
         # Write config to tmp file
-        deviceConfig = "/tmp/" + veos_host + ".cfg"
-        with open(deviceConfig,"a") as tmpConfig:
-            tmpConfig.write(veos_config)
+        device_config = "/tmp/" + veos_host + ".cfg"
+        with open(device_config,"a") as tmp_config:
+            tmp_config.write(veos_config)
 
         DEVREBOOT = False
         veos_ssh = paramiko.SSHClient()
         veos_ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         veos_ssh.connect(hostname=veos_ip, username="root", password="", port="50001")
         scp = SCPClient(veos_ssh.get_transport())
-        scp.put(deviceConfig,remote_path="/mnt/flash/startup-config")
+        scp.put(device_config,remote_path="/mnt/flash/startup-config")
         scp.close()
-        veos_ssh.exec_command('FastCli -c "{0}"'.format(cpStartRun))
-        veos_ssh.exec_command('FastCli -c "{0}"'.format(cpRunStart))
+        veos_ssh.exec_command('FastCli -c "{0}"'.format(cp_start_run))
+        veos_ssh.exec_command('FastCli -c "{0}"'.format(cp_run_start))
         stdin, stdout, stderr = veos_ssh.exec_command('FastCli -c "{0}"'.format(ztp_cmds))
         ztp_out = stdout.readlines()
         if 'Active' in ztp_out[0]:
@@ -206,6 +207,14 @@ class ConfigureTopology():
                         pass
                 
                 if len(tasks_running) == 0:
+
+                    # Execute additional commands in linux if needed
+                    if len(additional_commands) > 0:
+                        print('Running additional setup commands...')
+
+                        for command in additional_commands:
+                            os.system(command)
+
                     input("Lab Setup Completed. Please press Enter to continue...")
                     all_tasks_completed = True
                 else:
@@ -231,3 +240,12 @@ class ConfigureTopology():
                         device_config += configlet.read()
                 self.send_to_syslog("INFO","Pushing {0} config for {1} on IP {2} with configlets: {3}".format(selected_lab,hostname,node["ip"],configs))
                 self.push_bare_config(hostname, node["ip"], device_config)
+
+                # Execute additional commands in linux if needed
+                if len(additional_commands) > 0:
+                    print('Running additional setup commands...')
+
+                    for command in additional_commands:
+                        os.system(command)
+
+                input("Lab Setup Completed. Please press Enter to continue...")
