@@ -31,7 +31,8 @@ pip3 install rcvpapi
 rm -rf /var/www/html/atd/labguides/
 
 # Make sure login.py and ConfigureTopology.py is current
-cp /tmp/atd/topologies/all/ConfigureTopology.py /usr/local/bin/ConfigureTopology.py
+cp /tmp/atd/topologies/all/ConfigureTopology.py /usr/local/bin/ConfigureTopology/ConfigureTopology.py
+cp /tmp/atd/topologies/all/__init__.py /usr/local/bin/ConfigureTopology/__init__.py
 cp /tmp/atd/topologies/all/login.py /usr/local/bin/login.py
 
 # Add files to arista home
