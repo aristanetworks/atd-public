@@ -29,9 +29,9 @@ show zerotouch | grep ZeroTouch
 ztp_cancel = """enable
 zerotouch cancel
 """
-class ConfigureTopology():
+class ConfigureTopology:
 
-    def remove_configlets(client, device, lab_configlets):
+    def remove_configlets(self,client, device, lab_configlets):
         """
         Removes all configlets except the ones defined here or starting with SYS_
         Define base configlets that are to be untouched
@@ -57,7 +57,7 @@ class ConfigureTopology():
         client.applyConfiglets(device)
 
 
-    def get_device_info(client):
+    def get_device_info(self,client):
         eos_devices = []
         for dev in client.inventory:
             tmp_eos = client.inventory[dev]
@@ -67,7 +67,7 @@ class ConfigureTopology():
         return(eos_devices)
 
 
-    def update_topology(client,lab,configlets):
+    def update_topology(self,client,lab,configlets):
         # Get all the devices in CVP
         devices = self.get_device_info(client)
         # Loop through all devices
@@ -91,7 +91,7 @@ class ConfigureTopology():
         # Perform a single Save Topology by default
         client.saveTopology()
 
-    def print_usage(topologies):
+    def print_usage(self,topologies):
         # Function to print help menu with valid topologies
         print('Usage:')
         print('')
@@ -103,7 +103,7 @@ class ConfigureTopology():
         print('')
         quit()
 
-    def send_to_syslog(mstat,mtype):
+    def send_to_syslog(self,mstat,mtype):
         """
         Function to send output from service file to Syslog
         Parameters:
@@ -116,7 +116,7 @@ class ConfigureTopology():
             print("[{0}] {1}".format(mstat,mmes.expandtabs(7 - len(mstat))))
 
 
-    def push_bare_config(veos_host, veos_ip, veos_config):
+    def push_bare_config(self,veos_host, veos_ip, veos_config):
         """
         Pushes a bare config to the EOS device.
         """
@@ -144,7 +144,7 @@ class ConfigureTopology():
         veos_ssh.close()
         return(DEVREBOOT)
 
-    def deploy_lab(selected_menu,selected_lab):
+    def deploy_lab(self,selected_menu,selected_lab):
 
         # Check for additional commands in lab yaml file
         lab_file = open('/home/arista/menus/{0}'.format(selected_menu + '.yaml'))
