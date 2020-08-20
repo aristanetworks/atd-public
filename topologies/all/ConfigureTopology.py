@@ -29,7 +29,7 @@ show zerotouch | grep ZeroTouch
 ztp_cancel = """enable
 zerotouch cancel
 """
-class ConfigureTopology:
+class ConfigureTopology():
 
     def remove_configlets(self,client, device, lab_configlets):
         """
@@ -144,7 +144,7 @@ class ConfigureTopology:
         veos_ssh.close()
         return(DEVREBOOT)
 
-    def deploy_lab(selected_menu,selected_lab,self):
+    def deploy_lab(self,selected_menu,selected_lab):
 
         # Check for additional commands in lab yaml file
         lab_file = open('/home/arista/menus/{0}'.format(selected_menu + '.yaml'))
