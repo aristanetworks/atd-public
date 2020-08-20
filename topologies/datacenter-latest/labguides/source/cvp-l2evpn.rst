@@ -263,7 +263,6 @@ L2 EVPN
 .. raw:: html
  
  <pre>
-
     !! Configure physical interface et4 for LACP and Port-Channel4 in access vlan 12
     interface Port-Channel4
       switchport mode access
