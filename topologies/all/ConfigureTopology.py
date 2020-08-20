@@ -175,9 +175,9 @@ class ConfigureTopology:
                     while not cvp_clnt:
                         try:
                             cvp_clnt = CVPCON(access_info['nodes']['cvp'][0]['internal_ip'],c_login['user'],c_login['pw'])
-                            self.send_to_syslog("OK","Connected to CVP at {0}".format(access_info['nodes']['cvp'][0]['internal_ip']))
+                            send_to_syslog("OK","Connected to CVP at {0}".format(access_info['nodes']['cvp'][0]['internal_ip']))
                         except:
-                            self.send_to_syslog("ERROR", "CVP is currently unavailable....Retrying in 30 seconds.")
+                            send_to_syslog("ERROR", "CVP is currently unavailable....Retrying in 30 seconds.")
                             time.sleep(30)
 
             # Config the topology
