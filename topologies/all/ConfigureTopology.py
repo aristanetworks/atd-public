@@ -3,7 +3,8 @@
 import getopt
 import sys
 from rcvpapi.rcvpapi import *
-import yaml, syslog, time
+import syslog, time
+from ruamel.yaml import YAML
 import paramiko
 from scp import SCPClient
 import requests
@@ -209,7 +210,7 @@ class ConfigureTopology():
         else:
             # Open up defaults
             f = open('/home/arista/cvp/cvp_info.yaml')
-            cvpInfo = yaml.safe_load(f)
+            cvpInfo = YAML.load(f)
             f.close()
 
             cvpConfigs = cvpInfo["cvp_info"]["configlets"]
