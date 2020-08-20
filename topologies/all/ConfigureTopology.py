@@ -29,7 +29,11 @@ show zerotouch | grep ZeroTouch
 ztp_cancel = """enable
 zerotouch cancel
 """
-class ConfigureTopology:
+class ConfigureTopology():
+
+    def __init__(self,selected_menu,selected_lab):
+        self.selected_menu = selected_menu
+        self.selected_lab = selected_lab
 
     def remove_configlets(self,client, device, lab_configlets):
         """
@@ -67,7 +71,7 @@ class ConfigureTopology:
         return(eos_devices)
 
 
-    def update_topology(self,client,lab,configlets):
+    def update_topology(self,client,configlets):
         # Get all the devices in CVP
         devices = self.get_device_info(client)
         # Loop through all devices
@@ -78,7 +82,7 @@ class ConfigureTopology:
             
             # Define a list of configlets built off of the lab yaml file
             lab_configlets = []
-            for configlet_name in configlets[lab][device_name]:
+            for configlet_name in configlets[self.selected_lab][device_name]:
                 lab_configlets.append(configlet_name)
 
             # Remove unnecessary configlets
@@ -144,16 +148,16 @@ class ConfigureTopology:
         veos_ssh.close()
         return(DEVREBOOT)
 
-    def deploy_lab(self,selected_menu,selected_lab):
+    def deploy_lab(self):
 
         # Check for additional commands in lab yaml file
-        lab_file = open('/home/arista/menus/{0}'.format(selected_menu + '.yaml'))
+        lab_file = open('/home/arista/menus/{0}'.format(self.selected_menu + '.yaml'))
         lab_info = YAML().load(lab_file)
         lab_file.close()
 
         additional_commands = []
-        if 'additional_commands' in lab_info['lab_list'][selected_lab]:
-            additional_commands = lab_info['lab_list'][selected_lab]['additional_commands']
+        if 'additional_commands' in lab_info['lab_list'][self.selected_lab]:
+            additional_commands = lab_info['lab_list'][self.selected_lab]['additional_commands']
 
         # Get access info for the topology
         f = open('/etc/ACCESS_INFO.yaml')
@@ -164,7 +168,7 @@ class ConfigureTopology:
         lab_configlets = lab_info['labconfiglets']
 
         # Send message that deployment is beginning
-        print("Starting deployment for {0} - {1} lab...".format(selected_menu,selected_lab))
+        print("Starting deployment for {0} - {1} lab...".format(self.selected_menu,self.selected_lab))
 
         # Check if the topo has CVP
         if 'cvp' in access_info['nodes']:
@@ -181,14 +185,14 @@ class ConfigureTopology:
                             time.sleep(30)
 
             # Config the topology
-            self.update_topology(cvp_clnt,selected_lab,lab_configlets)
+            self.update_topology(cvp_clnt,lab_configlets)
             
             # Execute all tasks generated from reset_devices()
             print('Gathering task information...')
             cvp_clnt.getAllTasks("pending")
             tasks_to_check = cvp_clnt.tasks['pending']
             cvp_clnt.execAllTasks("pending")
-            self.send_to_syslog("OK", 'Completed setting devices to topology: {}'.format(selected_lab))
+            self.send_to_syslog("OK", 'Completed setting devices to topology: {}'.format(self.selected_lab))
 
             print('Waiting on change control to finish executing...')
             all_tasks_completed = False
@@ -216,15 +220,15 @@ class ConfigureTopology:
             cvpConfigs = cvpInfo["cvp_info"]["configlets"]
             infraConfigs = cvpConfigs["containers"]["Tenant"]
 
-            self.send_to_syslog("INFO","Setting up {0} lab".format(selected_lab))
+            self.send_to_syslog("INFO","Setting up {0} lab".format(self.selected_lab))
             for node in access_info["nodes"]["veos"]:
                 deviceConfig = ""
                 hostname = node["hostname"]
                 baseConfigs = cvpConfigs["netelements"]
-                configs = baseConfigs[hostname] + infraConfigs + lab_configlets[selected_lab][hostname]
+                configs = baseConfigs[hostname] + infraConfigs + lab_configlets[self.selected_lab][hostname]
                 configs = list(dict.fromkeys(configs))
                 for config in configs:
                     with open('/tmp/atd/topologies/{0}/configlets/{1}'.format(access_info['topology'], config), 'r') as configlet:
                         deviceConfig += configlet.read()
-                self.send_to_syslog("INFO","Pushing {0} config for {1} on IP {2} with configlets: {3}".format(selected_lab,hostname,node["ip"],configs))
+                self.send_to_syslog("INFO","Pushing {0} config for {1} on IP {2} with configlets: {3}".format(self.selected_lab,hostname,node["ip"],configs))
                 self.push_bare_config(hostname, node["ip"], deviceConfig)
