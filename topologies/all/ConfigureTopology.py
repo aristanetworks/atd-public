@@ -65,12 +65,12 @@ class ConfigureTopology():
 
         configlets = self.client.getConfigletsByNetElementId(device)
         for configlet in configlets['configletList']:
-            if configlet['name'] not in base_configlets or configlet['name'] not in lab_configlets:
-                configlets_to_remove.append(configlet['name'])
-                self.send_to_syslog("INFO", "Configlet {0} not part of base on {1} - Removing from device".format(configlet['name'], device.hostname))
-            elif configlet['name'] in base_configlets:
+            if configlet['name'] in base_configlets:
                 configlets_to_remain.append(configlet['name'])
                 self.send_to_syslog("INFO", "Configlet {0} is part of the base on {1} - Configlet will remain.".format(configlet['name'], device.hostname))
+            elif configlet['name'] not in base_configlets or configlet['name'] not in lab_configlets:
+                configlets_to_remove.append(configlet['name'])
+                self.send_to_syslog("INFO", "Configlet {0} not part of base on {1} - Removing from device".format(configlet['name'], device.hostname))
             else:
                 pass
         device.removeConfiglets(configlets_to_remove)
