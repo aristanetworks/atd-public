@@ -68,17 +68,17 @@ class ConfigureTopology():
             if configlet['name'] in base_configlets:
                 configlets_to_remain.append(configlet['name'])
                 self.send_to_syslog("INFO", "Configlet {0} is part of the base on {1} - Configlet will remain.".format(configlet['name'], device.hostname))
-            elif configlet['name'] not in base_configlets or configlet['name'] not in lab_configlets:
+            elif configlet['name'] not in lab_configlets:
                 configlets_to_remove.append(configlet['name'])
-                print(configlet['name'])
-                print(configlets_to_remove)
-                print(lab_configlets)
-                self.send_to_syslog("INFO", "Configlet {0} not part of base on {1} - Removing from device".format(configlet['name'], device.hostname))
+                self.send_to_syslog("INFO", "Configlet {0} not part of lab configlets on {1} - Removing from device".format(configlet['name'], device.hostname))
             else:
                 pass
-        device.removeConfiglets(configlets_to_remove)
-        self.client.addDeviceConfiglets(device, configlets_to_remain)
-        self.client.applyConfiglets(device)
+        if len(configlets_to_remain > 0):
+            device.removeConfiglets(configlets_to_remove)
+            self.client.addDeviceConfiglets(device, configlets_to_remain)
+            self.client.applyConfiglets(device)
+        else:
+            pass
 
     def get_device_info(self):
         eos_devices = []
