@@ -84,6 +84,12 @@ def main():
     Main Function if this is the initial deployment for the ATD/CVP
     """
     cvp_clnt = ""
+    while not path.exists(topo_file):
+        sleep(5)
+        pS("INFO", "Topo file not found, waiting.")
+    while not path.exists(cvp_file):
+        sleep(5)
+        pS("INFO", "CVP build file not found, waiting.")
     atd_yaml = getTopoInfo(topo_file)
     cvp_yaml = getTopoInfo(cvp_file)
     eos_cnt_map = eosContainerMapper(cvp_yaml['cvp_info']['containers'])
