@@ -31,6 +31,42 @@ ztp_cancel = """enable
 zerotouch cancel
 """
 
+# Create class to create client connection for use in ConfigureTopology class
+class ConnectCVP():
+    
+    def __init__(self,access_info):
+        self.access_info = access_info
+        self._connect()
+
+    def _send_to_syslog(self,mstat,mtype):
+        """
+        Function to send output from service file to Syslog
+        Parameters:
+        mstat = Message Status, ie "OK", "INFO" (required)
+        mtype = Message to be sent/displayed (required)
+        """
+        mmes = "\t" + mtype
+        logging.info("[{0}] {1}".format(mstat,mmes.expandtabs(7 - len(mstat))))
+        if DEBUG:
+            print("[{0}] {1}".format(mstat,mmes.expandtabs(7 - len(mstat))))
+
+    def _connect(self):
+        # Adding new connection to CVP via rcvpapi
+        cvp_clnt = ''
+        for c_login in self.access_info['login_info']['cvp']['shell']:
+            if c_login['user'] == 'arista':
+                while not cvp_clnt:
+                    try:
+                        cvp_clnt = CVPCON(self.access_info['nodes']['cvp'][0]['internal_ip'],c_login['user'],c_login['pw'])
+                        self._send_to_syslog("OK","Connected to CVP at {0}".format(self.access_info['nodes']['cvp'][0]['internal_ip']))
+                        return cvp_clnt
+                    except:
+                        self._send_to_syslog("ERROR", "CVP is currently unavailable....Retrying in 30 seconds.")
+                        time.sleep(30)
+
+
+
+# Create class to handle configuring the topology
 class ConfigureTopology():
 
     def __init__(self,client):
@@ -169,28 +205,18 @@ class ConfigureTopology():
         # Send message that deployment is beginning
         print("Starting deployment for {0} - {1} lab...".format(selected_menu,selected_lab))
 
-        # Check if the topo has CVP
+        # Check if the topo has CVP, and if it does, create CVP connection
         if 'cvp' in access_info['nodes']:
-            # Adding new connection to CVP via rcvpapi
-            cvp_clnt = ''
-            for c_login in access_info['login_info']['cvp']['shell']:
-                if c_login['user'] == 'arista':
-                    while not cvp_clnt:
-                        try:
-                            cvp_clnt = CVPCON(access_info['nodes']['cvp'][0]['internal_ip'],c_login['user'],c_login['pw'])
-                            self.send_to_syslog("OK","Connected to CVP at {0}".format(access_info['nodes']['cvp'][0]['internal_ip']))
-                        except:
-                            self.send_to_syslog("ERROR", "CVP is currently unavailable....Retrying in 30 seconds.")
-                            time.sleep(30)
+            self.client = ConnectCVP(access_info)
 
             # Config the topology
-            self.update_topology(cvp_clnt,selected_lab,lab_configlets)
+            self.update_topology(self.client,selected_lab,lab_configlets)
             
             # Execute all tasks generated from reset_devices()
             print('Gathering task information...')
-            cvp_clnt.getAllTasks("pending")
-            tasks_to_check = cvp_clnt.tasks['pending']
-            cvp_clnt.execAllTasks("pending")
+            self.client.getAllTasks("pending")
+            tasks_to_check = self.client.tasks['pending']
+            self.client.execAllTasks("pending")
             self.send_to_syslog("OK", 'Completed setting devices to topology: {}'.format(selected_lab))
 
             print('Waiting on change control to finish executing...')
@@ -198,9 +224,9 @@ class ConfigureTopology():
             while not all_tasks_completed:
                 tasks_running = []
                 for task in tasks_to_check:
-                    if cvp_clnt.getTaskStatus(task['workOrderId'])['taskStatus'] != 'Completed':
+                    if self.client.getTaskStatus(task['workOrderId'])['taskStatus'] != 'Completed':
                         tasks_running.append(task)
-                    elif cvp_clnt.getTaskStatus(task['workOrderId'])['taskStatus'] == 'Failed':
+                    elif self.client.getTaskStatus(task['workOrderId'])['taskStatus'] == 'Failed':
                         print('Task {0} failed.'.format(task['workOrderId']))
                     else:
                         pass
