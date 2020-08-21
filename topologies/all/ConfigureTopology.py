@@ -33,21 +33,20 @@ zerotouch cancel
 
 class ConfigureTopology():
 
-    def __init__(self):
-        pass
+    def __init__(self,client):
+        self.client = client
 
-    def remove_configlets(self,client, device, lab_configlets):
+    def remove_configlets(self,device,lab_configlets):
         """
-        Removes all configlets except the ones defined here or starting with SYS_
+        Removes all configlets except the ones defined as 'base'
         Define base configlets that are to be untouched
-        mext = lab type to keep track of which base configlets to keep.  Added for RATD and RATD-Ring
         """
         base_configlets = ['ATD-INFRA']
         
         configlets_to_remove = []
         configlets_to_remain = base_configlets
 
-        configlets = client.getConfigletsByNetElementId(device)
+        configlets = self.client.getConfigletsByNetElementId(device)
         for configlet in configlets['configletList']:
             if configlet['name'] not in base_configlets or configlet['name'] not in lab_configlets:
                 configlets_to_remove.append(configlet['name'])
@@ -57,23 +56,23 @@ class ConfigureTopology():
                 self.send_to_syslog("INFO", "Configlet {0} is part of the base on {1} - Configlet will remain.".format(configlet['name'], device.hostname))
             else:
                 pass
-        device.removeConfiglets(client, configlets_to_remove)
-        client.addDeviceConfiglets(device, configlets_to_remain)
-        client.applyConfiglets(device)
+        device.removeConfiglets(configlets_to_remove)
+        self.client.addDeviceConfiglets(device, configlets_to_remain)
+        self.client.applyConfiglets(device)
 
-    def get_device_info(self,client):
+    def get_device_info(self):
         eos_devices = []
-        for dev in client.inventory:
-            tmp_eos = client.inventory[dev]
+        for dev in self.client.inventory:
+            tmp_eos = self.client.inventory[dev]
             tmp_eos_sw = CVPSWITCH(dev, tmp_eos['ipAddress'])
-            tmp_eos_sw.updateDevice(client)
+            tmp_eos_sw.updateDevice(self.client)
             eos_devices.append(tmp_eos_sw)
         return(eos_devices)
 
 
-    def update_topology(self,client,lab,configlets):
+    def update_topology(self,lab,configlets):
         # Get all the devices in CVP
-        devices = self.get_device_info(client)
+        devices = self.get_device_info(self.client)
         # Loop through all devices
         
         for device in devices:
@@ -89,11 +88,11 @@ class ConfigureTopology():
             self.remove_configlets(client, device, lab_configlets)
 
             # Apply the configlets to the device
-            client.addDeviceConfiglets(device, lab_configlets)
-            client.applyConfiglets(device)
+            self.client.addDeviceConfiglets(device, lab_configlets)
+            self.client.applyConfiglets(device)
 
         # Perform a single Save Topology by default
-        client.saveTopology()
+        self.client.saveTopology()
 
     def print_usage(self,topologies):
         # Function to print help menu with valid topologies
