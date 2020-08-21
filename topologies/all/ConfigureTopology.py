@@ -73,7 +73,7 @@ class ConfigureTopology():
                 self.send_to_syslog("INFO", "Configlet {0} not part of lab configlets on {1} - Removing from device".format(configlet['name'], device.hostname))
             else:
                 pass
-        if len(configlets_to_remain > 0):
+        if len(configlets_to_remain) > 0:
             device.removeConfiglets(configlets_to_remove)
             self.client.addDeviceConfiglets(device, configlets_to_remain)
             self.client.applyConfiglets(device)
