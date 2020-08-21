@@ -226,7 +226,7 @@ L2 EVPN
     :width: 50% 
 
 
-* Under **Snapshot Configuration** enter ip-bgp-evpn-summary under Name 
+* Under **Snapshot Configuration** enter ``ip-bgp-evpn-summary`` under Name 
 * In the **Commands** dialog enter the following commands
 
 .. code-block:: text
