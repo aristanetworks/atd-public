@@ -46,8 +46,8 @@ class ConnectCVP():
         mtype = Message to be sent/displayed (required)
         """
         mmes = "\t" + mtype
-        logging.info("[{0}] {1}".format(mstat,mmes.expandtabs(7 - len(mstat))))
-        if DEBUG:
+        syslog.syslog("[{0}] {1}".format(mstat,mmes.expandtabs(7 - len(mstat))))
+        if pDEBUG:
             print("[{0}] {1}".format(mstat,mmes.expandtabs(7 - len(mstat))))
 
     def _connect(self):
@@ -140,8 +140,8 @@ class ConfigureTopology():
         mtype = Message to be sent/displayed (required)
         """
         mmes = "\t" + mtype
-        logging.info("[{0}] {1}".format(mstat,mmes.expandtabs(7 - len(mstat))))
-        if DEBUG:
+        syslog.syslog("[{0}] {1}".format(mstat,mmes.expandtabs(7 - len(mstat))))
+        if pDEBUG:
             print("[{0}] {1}".format(mstat,mmes.expandtabs(7 - len(mstat))))
 
 
