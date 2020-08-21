@@ -72,7 +72,7 @@ class ConfigureTopology():
     def __init__(self,selected_menu,selected_lab):
         self.selected_menu = selected_menu
         self.selected_lab = selected_lab
-        deploy_lab()
+        self.deploy_lab()
 
     def remove_configlets(self,device,lab_configlets):
         """
