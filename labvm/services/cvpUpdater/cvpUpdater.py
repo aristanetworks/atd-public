@@ -109,6 +109,9 @@ def main():
         # ==========================================
         # Add configlets into CVP
         # ==========================================
+        while not path.exists(configlet_location):
+            sleep(FILE_DELAY)
+            pS("INFO", "Configlets directory not found, waiting...")
         if path.exists(configlet_location):
             pS("OK","Configlet directory exists")
             pro_cfglt = listdir(configlet_location)
