@@ -31,8 +31,8 @@ login_info = access_info['login_info']
 nodes = access_info['nodes']
 veos_info = nodes['veos']
 
-# Instantiate ConfigureTopology
-configure = ConfigureTopology()
+# Instantiate ConfigureTopology for deployments
+deployment = ConfigureTopology()
 
 # Set default menu mode
 menu_mode = 'MAIN'
@@ -227,7 +227,7 @@ def lab_options_menu():
       try:
           if user_input.lower() in options_dict:
               previous_menu = menu_mode
-              configure.deploy_lab(selected_menu=options_dict[user_input]['selected_menu'],selected_lab=options_dict[user_input]['selected_lab'])
+              deployment(selected_menu=options_dict[user_input]['selected_menu'],selected_lab=options_dict[user_input]['selected_lab'])
           elif user_input == '97' or user_input.lower() == 'back':
               if menu_mode == previous_menu:
                   menu_mode = 'MAIN'
@@ -291,7 +291,7 @@ def main_menu():
     # Check user input to see which menu to change to
     try:
       if user_input.lower() in options_dict:
-          configure.deploy_lab(selected_menu=options_dict[user_input]['selected_menu'],selected_lab=options_dict[user_input]['selected_lab'])
+          deployment(selected_menu=options_dict[user_input]['selected_menu'],selected_lab=options_dict[user_input]['selected_lab'])
       elif user_input == '98' or user_input.lower() == 'ssh':
         previous_menu = menu_mode
         menu_mode = 'DEVICE_SSH'
