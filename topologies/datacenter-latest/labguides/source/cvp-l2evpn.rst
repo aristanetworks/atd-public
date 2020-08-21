@@ -259,8 +259,8 @@ L2 EVPN
 * Click **Provisioning**, then click **Configlets**
 * Search for ``l2vpn`` then click **Leaf3-l2vpn-Lab-Full-user**
 * Click the **edit** button and add the following configuration lines in **bold** below, to the configlet created in step (4.)
-* **Note:** For simplicity add the new lines in the same position and order as they appear in bold below 
-* **Note:** This step will add an L2VPN to ``leaf3`` to extend a VLAN using VXLAN from ``leaf3`` to ``leaf1``
+* **Note:** For simplicity add the new lines in the same position and order as they appear in **bold** below 
+* **Note:** This step will add an L2VPN to ``leaf3`` to extend VLAN 12 using VXLAN from ``leaf3`` to ``leaf1``
 
 .. image:: images/cvp-l2vpn/leaf3-l2vpn-edit-configlet.png
     :align: center
@@ -310,7 +310,6 @@ L2 EVPN
     vxlan udp-port 4789
     vxlan vlan 12 vni 1200</b>
     !
-
     !! Configure routing protocol BGP Underlay
     router bgp 65103
       router-id 172.16.0.5
@@ -336,8 +335,7 @@ L2 EVPN
     <b>vlan 12
     rd 3.3.3.3:12
     route-target both 1:12
-    redistribute learned
-    </b>
+    redistribute learned</b>
     !
     !! Enable address family evpn for the SPINE-EVPN-TRANSIT peer group
     address-family evpn
@@ -355,11 +353,11 @@ L2 EVPN
 
 9. Verify l2vpn VXLAN operation with CVP Telemetry
 
-* Using the method described in step (7.), create a new snapshot called vxlan-info with the following Commands
+* Using the method described in step (7.), create a new snapshot called ``vxlan-info`` with the following Commands
 
-  **Note:** This verification can also be done on the CLI of ``leaf``` and ``leaf3``
+  **Note:** This verification can also be done on the CLI of ``leaf1`` and ``leaf3``
 
-* Select ``leaf1`` and leaf3`` under the **Devices** dropdown of the new Snapshot configuration
+* Select ``leaf1`` and ``leaf3`` under the **Devices** dropdown of the new Snapshot configuration
 
 * Add the following commands to the **Commands** field of the new snapshot
 
@@ -417,12 +415,12 @@ L2 EVPN
     :align: center
     :width: 50% 
 
-* **Note:** You will see the local MAC Address of Host2 on Port-Channel 4 and the remote MAC Address of Host1 showing port ``Vxlan1``
+* **Note:** You will see the local MAC Address of Host2 on Port-Channel 4 and the remote MAC Address of Host1 via port ``Vxlan1``
 
 * Review the snapshot ``vxlan-info`` created earlier in step (9.)
-* **Note:** ``show bgp evpn route-type imet`` will show the VXLAN flood lists dynamically built by BGP EVPN
+* **Note:** ``show bgp evpn route-type imet`` will show the VXLAN flood lists dynamically built and distributed by BGP EVPN
 * **Note:** ``show bgp evpn route-type mac-ip`` will show the VXLAN mac to IP bindings being sent via BGP EVPN 
-* **Note:** ``show vxlan address-table`` will show the VLAN, MAC Address and VXLAN interface and remote VTEP
+* **Note:** ``show vxlan address-table`` will show the VLAN, MAC Address and VXLAN interface and remote VTEP IP
 
 .. image:: images/cvp-l2vpn/leaf3-l2vpn-vxlan-info-snapshot.png
     :align: center
