@@ -131,7 +131,7 @@ L2 EVPN
     :align: center
     :width: 50%
 
-* Validate configlet syntax on **leaf3**
+* Validate configlet syntax on ``leaf3``
 
 .. image:: images/cvp-l2vpn/leaf3-l2vpn-configlet-validate.png
     :align: center
