@@ -219,7 +219,7 @@ L2 EVPN
     :align: center
     :width: 50% 
 
-* Click **or create a new configuration** in the center of the screen
+* Click **or create a new configuration** in the center of the **Snapshot Configuration** screen
 
 .. image:: images/cvp-l2vpn/leaf3-l2vpn-snapshot-config-new.png
     :align: center
