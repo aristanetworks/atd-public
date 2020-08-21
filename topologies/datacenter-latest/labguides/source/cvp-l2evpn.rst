@@ -43,7 +43,7 @@ L2 EVPN
 
 * Click the **VXLANs** selection, also click and view the **VLANs** selection
 * **Note:** You should see VLAN 1 on ``leaf3`` & ``leaf1``
-* **Note:** You should not see VLAN 12 or VNI 1212 as a dashed line from leaf3 to other leaf switches
+* **Note:** You should not see VLAN 12 or VNI 1200 as a dashed line from leaf3 to other leaf switches
 
 4. Create the EVPN L2VPN configlet
 
