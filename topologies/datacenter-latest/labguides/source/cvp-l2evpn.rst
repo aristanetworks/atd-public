@@ -1,3 +1,7 @@
+.. # define a hard line break for HTML
+.. |br| raw:: html
+
+   <br /
 
 L2 EVPN
 =======
@@ -11,8 +15,10 @@ L2 EVPN
 .. image:: images/cvp-l2vpn/leaf3-inventory-table.png
     :align: center
     :width: 50 %
+|br|
 
 * Click on **leaf3**
+|br|
 
 2. Review the current **running-config** routing agent information in CVP
 
@@ -21,8 +27,10 @@ L2 EVPN
 .. image:: images/cvp-l2vpn/leaf3-l2vpn-running-config.png
     :align: center
     :width: 50%
+|br|
 
 * Verify that ``service routing protocols model multi-agent`` line is in the current **running-config**
+|br|
 
 3. Review the current VXLAN information in CVP
 
@@ -31,6 +39,7 @@ L2 EVPN
 .. image:: images/cvp-l2vpn/leaf3-l2vpn-vxlan-pre.png
     :align: center
     :width: 50%
+|br|
 
 * **Note:** leaf3 currently has no VXLAN configuration
 
@@ -40,10 +49,12 @@ L2 EVPN
 .. image:: images/cvp-l2vpn/leaf3-l2vpn-vxlan-before.png
     :align: center
     :width: 50%
+|br|
 
 * Click the **VXLANs** selection, also click and view the **VLANs** selection
 * **Note:** You should see VLAN 1 on ``leaf3`` & ``leaf1``
 * **Note:** You should not see VLAN 12 or VNI 1200 as a dashed line from ``leaf3`` to other leaf switches
+|br|
 
 4. Create the EVPN L2VPN configlet
 
@@ -53,6 +64,7 @@ L2 EVPN
 .. image:: images/cvp-l2vpn/leaf3-l2vpn-configlet-list.png
     :align: center
     :width: 50%
+|br|
 
 * Create a configlet called ``Leaf3-l2vpn-Lab-Full-user``
 
@@ -130,16 +142,19 @@ L2 EVPN
 .. image:: images/cvp-l2vpn/leaf3-l2vpn-configlet.png
     :align: center
     :width: 50%
+|br|
 
 * Validate configlet syntax on ``leaf3``
 
 .. image:: images/cvp-l2vpn/leaf3-l2vpn-configlet-validate.png
     :align: center
     :width: 50% 
+|br|
 
 .. image:: images/cvp-l2vpn/leaf3-l2vpn-configlet-validate2.png
     :align: center
     :width: 50% 
+|br|
 
 5. Assign the EVPN configlet to ``leaf3``
 
@@ -149,24 +164,28 @@ L2 EVPN
 .. image:: images/cvp-l2vpn/leaf3-l2vpn-configlet-manage.png
     :align: center
     :width: 50% 
+|br|
 
 * Click the checkbox next to ``Leaf3-l2vpn-Lab-Full-user``
 
 .. image:: images/cvp-l2vpn/leaf3-l2vpn-configlet-assign.png
     :align: center
     :width: 50% 
+|br|
 
 * Click **Validate**, review the new lines added to the **Designed Configuration**
 
 .. image:: images/cvp-l2vpn/leaf3-l2vpn-configlet-assign-validate.png
     :align: center
     :width: 35% 
+|br|
 
 * click **save**
 
 .. image:: images/cvp-l2vpn/leaf3-l2vpn-configlet-assign-validate-compare.png
     :align: center
     :width: 50% 
+|br|
 
 * Click **Save** on the **Network Provisioning** main view
 
@@ -175,6 +194,7 @@ L2 EVPN
 .. image:: images/cvp-l2vpn/leaf3-l2vpn-configlet-main-save.png
     :align: center
     :width: 50% 
+|br|
 
 6. Create a **Change Control** with the generated Task
 
@@ -185,30 +205,35 @@ L2 EVPN
 .. image:: images/cvp-l2vpn/leaf3-l2vpn-cc-task.png
     :align: center
     :width: 50% 
+|br|
 
 * Click **+ Create Change Control with 1 Task**
 
 .. image:: images/cvp-l2vpn/leaf3-l2vpn-cc-create-cc.png
     :align: center
     :width: 50% 
+|br|
 
 * Click **Review and Approve** on the newly created **Change Control**
 
 .. image:: images/cvp-l2vpn/leaf3-l2vpn-cc-review-approve.png
     :align: center
     :width: 50% 
+|br|
 
 * Click **Execute Change Control** in upper right of the UI
 
 .. image:: images/cvp-l2vpn/leaf3-l2vpn-cc-execute.png
     :align: center
     :width: 50% 
+|br|
 
 * Click **Execute** in the resulting confirmation dialog box
 
 .. image:: images/cvp-l2vpn/leaf3-l2vpn-cc-execute-confirm.png
     :align: center
     :width: 50% 
+|br|
 
 7. Verify the EVPN BGP protocol overlay
 
@@ -218,12 +243,14 @@ L2 EVPN
 .. image:: images/cvp-l2vpn/leaf3-l2vpn-snapshot-config.png
     :align: center
     :width: 50% 
+|br|
 
 * Click **or create a new configuration** in the center of the **Snapshot Configuration** screen
 
 .. image:: images/cvp-l2vpn/leaf3-l2vpn-snapshot-config-new.png
     :align: center
     :width: 50% 
+|br|
 
 
 * Under **Snapshot Configuration** enter ``ip-bgp-evpn-summary`` under Name 
@@ -240,6 +267,7 @@ L2 EVPN
 .. image:: images/cvp-l2vpn/leaf3-l2vpn-snapshot-config-content.png
     :align: center
     :width: 50% 
+|br|
 
 * Click **Save**
 
@@ -253,6 +281,7 @@ L2 EVPN
 .. image:: images/cvp-l2vpn/leaf3-l2vpn-snapshot-ip-bgp-evpn-summary.png
     :align: center
     :width: 50% 
+|br|
 
 8. Add the L2VPN VXLAN configuration to the previously created configlet ``Leaf3-l2vpn-Lab-Full-user``
 
@@ -265,6 +294,7 @@ L2 EVPN
 .. image:: images/cvp-l2vpn/leaf3-l2vpn-edit-configlet.png
     :align: center
     :width: 50% 
+|br|
 
 
 .. raw:: html
@@ -348,8 +378,7 @@ L2 EVPN
     </pre>
 
 * Repeat the process described in step (6.) to push the additional configuration to ``leaf3``
-
-
+|br|
 
 9. Verify l2vpn VXLAN operation with CVP Telemetry
 
@@ -374,6 +403,7 @@ L2 EVPN
 .. image:: images/cvp-l2vpn/leaf3-l2vpn-snapshot-vxlan-info.png
     :align: center
     :width: 50%
+|br|
 
 * From **Device** page **Inventory** click on **leaf3**
 * Click on **VXLAN** in the left selection column under **Switching**
@@ -381,6 +411,7 @@ L2 EVPN
 .. image:: images/cvp-l2vpn/leaf3-l2vpn-vxlan-verification.png
  :align: center
  :width: 50% 
+|br|
 
 * **Note:** you should now see the VLANs to VNI mappings related the to VXLAN configuration on ``leaf3``
 
@@ -406,6 +437,7 @@ L2 EVPN
 .. image:: images/cvp-l2vpn/leaf3-l2vpn-vxlan-verification-mac.png
     :align: center
     :width: 50% 
+|br|
 
 * **Note:** In addition to the VLAN to VNI Mappings, you will see an entry in the ``VXLAN MAC Address Table`` section
 
@@ -414,6 +446,7 @@ L2 EVPN
 .. image:: images/cvp-l2vpn/leaf3-l2vpn-vxlan-verification-mac-table.png
     :align: center
     :width: 50% 
+|br|
 
 * **Note:** You will see the local MAC Address of Host2 on Port-Channel 4 and the remote MAC Address of Host1 via port ``Vxlan1``
 
@@ -425,6 +458,7 @@ L2 EVPN
 .. image:: images/cvp-l2vpn/leaf3-l2vpn-vxlan-info-snapshot.png
     :align: center
     :width: 50% 
+|br|
 
 * Click on **Topology View** 
 * Click the **Link Overlay** dropdown in the left selection column
@@ -432,6 +466,7 @@ L2 EVPN
 .. image:: images/cvp-l2vpn/leaf3-l2vpn-vxlan-before.png
     :align: center
     :width: 50%
+|br|
 
 * Click the **VXLANs** selection, also click and view the **VLANs** selection
 * **Note:** You should see VLAN 12 on ``leaf3`` & ``leaf1``
@@ -441,9 +476,11 @@ L2 EVPN
 .. image:: images/cvp-l2vpn/leaf3-l2vpn-vxlan-vlan-after.png
     :align: center
     :width: 50%
+|br|
 
 .. image:: images/cvp-l2vpn/leaf3-l2vpn-vxlan-vni-after.png
     :align: center
     :width: 50%
+|br|
 
 **LAB COMPLETE!**
