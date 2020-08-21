@@ -31,41 +31,6 @@ ztp_cancel = """enable
 zerotouch cancel
 """
 
-# Create class to create client connection for use in ConfigureTopology class
-class ConnectCVP():
-    
-    def __init__(self,access_info):
-        self.access_info = access_info
-        self._connect()
-
-    def _send_to_syslog(self,mstat,mtype):
-        """
-        Function to send output from service file to Syslog
-        Parameters:
-        mstat = Message Status, ie "OK", "INFO" (required)
-        mtype = Message to be sent/displayed (required)
-        """
-        mmes = "\t" + mtype
-        syslog.syslog("[{0}] {1}".format(mstat,mmes.expandtabs(7 - len(mstat))))
-        if pDEBUG:
-            print("[{0}] {1}".format(mstat,mmes.expandtabs(7 - len(mstat))))
-
-    def _connect(self):
-        # Adding new connection to CVP via rcvpapi
-        cvp_clnt = ''
-        for c_login in self.access_info['login_info']['cvp']['shell']:
-            if c_login['user'] == 'arista':
-                while not cvp_clnt:
-                    try:
-                        cvp_clnt = CVPCON(self.access_info['nodes']['cvp'][0]['internal_ip'],c_login['user'],c_login['pw'])
-                        self._send_to_syslog("OK","Connected to CVP at {0}".format(self.access_info['nodes']['cvp'][0]['internal_ip']))
-                        return cvp_clnt
-                    except:
-                        self._send_to_syslog("ERROR", "CVP is currently unavailable....Retrying in 30 seconds.")
-                        time.sleep(30)
-
-
-
 # Create class to handle configuring the topology
 class ConfigureTopology():
 
@@ -73,6 +38,20 @@ class ConfigureTopology():
         self.selected_menu = selected_menu
         self.selected_lab = selected_lab
         self.deploy_lab()
+
+    def connect_to_cvp(self,access_info):
+        # Adding new connection to CVP via rcvpapi
+        cvp_clnt = ''
+        for c_login in access_info['login_info']['cvp']['shell']:
+            if c_login['user'] == 'arista':
+                while not cvp_clnt:
+                    try:
+                        cvp_clnt = CVPCON(access_info['nodes']['cvp'][0]['internal_ip'],c_login['user'],c_login['pw'])
+                        self.send_to_syslog("OK","Connected to CVP at {0}".format(access_info['nodes']['cvp'][0]['internal_ip']))
+                        return cvp_clnt
+                    except:
+                        self.send_to_syslog("ERROR", "CVP is currently unavailable....Retrying in 30 seconds.")
+                        time.sleep(30)
 
     def remove_configlets(self,device,lab_configlets):
         """
@@ -197,7 +176,7 @@ class ConfigureTopology():
 
         # Check if the topo has CVP, and if it does, create CVP connection
         if 'cvp' in access_info['nodes']:
-            self.client = ConnectCVP(access_info)
+            self.client = self.connect_to_cvp(access_info)
 
             # Config the topology
             self.update_topology(lab_configlets)
