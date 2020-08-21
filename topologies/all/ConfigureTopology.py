@@ -72,7 +72,7 @@ class ConfigureTopology():
 
     def update_topology(self,lab,configlets):
         # Get all the devices in CVP
-        devices = self.get_device_info(self.client)
+        devices = self.get_device_info()
         # Loop through all devices
         
         for device in devices:
