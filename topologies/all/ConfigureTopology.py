@@ -120,7 +120,7 @@ class ConfigureTopology():
         """
         mmes = "\t" + mtype
         syslog.syslog("[{0}] {1}".format(mstat,mmes.expandtabs(7 - len(mstat))))
-        if pDEBUG:
+        if DEBUG:
             print("[{0}] {1}".format(mstat,mmes.expandtabs(7 - len(mstat))))
 
 
