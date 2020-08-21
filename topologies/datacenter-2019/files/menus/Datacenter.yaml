@@ -82,15 +82,19 @@ labconfiglets:
     leaf1:
       - "BaseIPv4_Leaf1"
       - "Leaf1-BGP-Lab"
+      - "VLANs"
     leaf2:
       - "BaseIPv4_Leaf2"
       - "Leaf2-BGP-Lab"
+      - "VLANs"
     leaf3:
       - "BaseIPv4_Leaf3"
       - "Leaf3-BGP-Lab"
+      - "VLANs"
     leaf4:
       - "BaseIPv4_Leaf4"
       - "Leaf4-BGP-Lab"
+      - "VLANs"
     cvx01:
       - "BaseIPv4_Cvx01"
       - "cvx01-Controller"
