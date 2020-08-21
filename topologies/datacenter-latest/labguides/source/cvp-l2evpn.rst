@@ -169,7 +169,8 @@ L2 EVPN
     :width: 50% 
 
 * Click **Save** on the **Network Provisioning** main view
-   **Note:** a Task will be generated
+
+* **Note:** a Task will be generated
 
 .. image:: images/cvp-l2vpn/leaf3-l2vpn-configlet-main-save.png
     :align: center
@@ -219,6 +220,12 @@ L2 EVPN
     :width: 50% 
 
 * Click **or create a new configuration** in the center of the screen
+
+.. image:: images/cvp-l2vpn/leaf3-l2vpn-snapshot-config-new.png
+    :align: center
+    :width: 50% 
+
+
 * Under **Snapshot Configuration** enter ip-bgp-evpn-summary under Name 
 * In the **Commands** dialog enter the following commands
 
