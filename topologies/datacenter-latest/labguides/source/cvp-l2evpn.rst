@@ -258,7 +258,7 @@ L2 EVPN
 
 * Click **Provisioning**, then click **Configlets**
 * Search for ``l2vpn`` then click **Leaf3-l2vpn-Lab-Full-user**
-* Click the edit button and add the following configuration lines in **bold** to the configlet created in step (4.)
+* Click the **edit** button and add the following configuration lines in **bold** below, to the configlet created in step (4.)
 * **Note:** For simplicity add the new lines in the same position and order as they appear in bold below 
 * **Note:** This step will add an L2VPN to ``leaf3`` to extend a VLAN using VXLAN from ``leaf3`` to ``leaf1``
 
