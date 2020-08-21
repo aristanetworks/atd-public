@@ -74,7 +74,7 @@ class ConfigureTopology():
             else:
                 pass
         if len(configlets_to_remain) > 0:
-            device.removeConfiglets(configlets_to_remove)
+            device.removeConfiglets(self.client,configlets_to_remove)
             self.client.addDeviceConfiglets(device, configlets_to_remain)
             self.client.applyConfiglets(device)
         else:
