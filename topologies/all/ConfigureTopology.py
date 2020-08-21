@@ -71,6 +71,7 @@ class ConfigureTopology():
             elif configlet['name'] not in base_configlets or configlet['name'] not in lab_configlets:
                 configlets_to_remove.append(configlet['name'])
                 print(configlets_to_remove)
+                print(lab_configlets)
                 self.send_to_syslog("INFO", "Configlet {0} not part of base on {1} - Removing from device".format(configlet['name'], device.hostname))
             else:
                 pass
