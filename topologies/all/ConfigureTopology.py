@@ -85,7 +85,7 @@ class ConfigureTopology():
                 lab_configlets.append(configlet_name)
 
             # Remove unnecessary configlets
-            self.remove_configlets(client, device, lab_configlets)
+            self.remove_configlets(device, lab_configlets)
 
             # Apply the configlets to the device
             self.client.addDeviceConfiglets(device, lab_configlets)
