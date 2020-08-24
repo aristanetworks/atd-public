@@ -1,15 +1,8 @@
 #!/usr/bin/python3
 import os
 import sys
-import signal
 import re
 from ruamel.yaml import YAML
-import json
-from datetime import timedelta, datetime, timezone, date
-import getopt
-import urllib3
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-import time
 from ConfigureTopology.ConfigureTopology import ConfigureTopology
 
 
@@ -41,10 +34,6 @@ previous_menu = ''
 
 def text_to_int(text):
   return int(text) if text.isdigit() else text
-
-def signal_handler(signal, frame):
-    print("\n")
-    quit()
 
 def natural_keys(text):
   return [ text_to_int(char) for char in re.split(r'(\d+)', text) ]
