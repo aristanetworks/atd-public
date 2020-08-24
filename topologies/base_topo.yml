@@ -1,20 +1,20 @@
 ---
 topologies:
   datacenter-latest: 
-    branch: v1.0.20200804b
+    branch: v1.0.20200824a
     image: base-atd-datacenter-e4-24-1f-c2020-1-1-20200804
     cpu: 30
     ram: 60
   routing:
-    branch: nested-release
+    branch: v1.0.20200824a
     image: base-atd-routing-e4-24-1f-c2020-1-1-20200701-u
     cpu: 36
     ram: 90
   training:
-    branch: v1.0.20200804a
-    image: base-training-e4-24-1f-c2020-1-1-20200804-u
-    cpu: 42
-    ram: 64
+    branch: v1.0.20200824a
+    image: base-training-e4-24-1f-c2020-1-1-20200821
+    cpu: 36
+    ram: 72
   kane:
     branch: nested-release
     image: base-kane-e4-24-1f-c2020-1-1-20200714
