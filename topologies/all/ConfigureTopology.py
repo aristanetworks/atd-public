@@ -1,17 +1,11 @@
 #!/usr/bin/env python3
 
-import getopt
-import sys
 from rcvpapi.rcvpapi import *
 import syslog, time
 from ruamel.yaml import YAML
 import paramiko
 from scp import SCPClient
-import requests
-from requests.packages.urllib3.exceptions import InsecureRequestWarning
-import logging
 import os
-requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 DEBUG = False
 
