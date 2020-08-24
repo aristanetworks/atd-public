@@ -213,7 +213,7 @@ class ConfigureTopology():
         else:
             # Open up defaults
             f = open('/home/arista/cvp/cvp_info.yaml')
-            cvp_info = YAML.load(f)
+            cvp_info = YAML().load(f)
             f.close()
 
             cvp_configs = cvp_info["cvp_info"]["configlets"]
