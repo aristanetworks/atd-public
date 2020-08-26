@@ -75,6 +75,10 @@ cp /home/arista/infra/user-mapping.xml /etc/guacamole/
 # Update file permissions in /home/arista
 chown -R arista:arista /home/arista
 
+# Update file permissions in /home/aristagui
+
+chown -R aristagui:aristagui /home/aristagui
+
 # Update all occurrences for the arista lab credentials
 
 if [ $AR_LEN == 7 ]
