@@ -5,7 +5,8 @@ import syslog, time
 from ruamel.yaml import YAML
 import paramiko
 from scp import SCPClient
-import osimport urllib3
+import os
+import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
