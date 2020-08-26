@@ -10,7 +10,7 @@ Media Intro to IP Lab
 
    1. Type ``labs`` at the Main Menu prompt. This will bring up additional lab menu selections.
    2. Type ``media`` at this prompt to open the media lab section.
-   3. Type ``media-setup`` at this prompt and wait for the process to run.
+   3. Type ``media-intro`` at this prompt and wait for the process to run.
    4. The script will configure the topology with the exception of **Leaf 4**. The main task is to configure the remaining device so there is connectivity between the two hosts
 
 

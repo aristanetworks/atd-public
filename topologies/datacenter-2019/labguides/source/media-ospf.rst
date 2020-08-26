@@ -10,10 +10,9 @@ Media OSPF Lab
 
    1. Type ``labs`` at the Main Menu prompt. This will bring up additional lab menu selections.
    2. Type ``media`` at this prompt to open the media lab section (If you were previously in the Media Labs Menu, you can type ``back`` to go back).
-   3. If this is your first media lab, type ``media-setup`` at this prompt and wait for the process to run to prepare the lab environment.
-   4. Type ``media-ospf`` at the prompt. The script will configure the topology with the exception of **Leaf 4**.
+   3. Type ``media-ospf`` at the prompt. The script will configure the topology with the exception of **Leaf 4**.
 
-   5. On **Spine 2**, verify OSPF operation (it should not be operating correctly) and you will see all the routes currently in the environment.
+   4. On **Spine 2**, verify OSPF operation (it should not be operating correctly) and you will see all the routes currently in the environment.
 
         .. code-block:: text
 
