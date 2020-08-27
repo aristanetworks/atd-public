@@ -63,7 +63,7 @@ Step #2: Revert the change
 To roll back, we need to use the ``git revert`` command, coupled
 with ``HEAD``. ``HEAD`` is the Git method of saying the last commit (in the
 checked out branch). If you revert the last commit it will bring you
-back to the commitbefore the latest commit.
+back to the commit before the latest commit.
 
 You can also use this command to revert to any other commit - useful if
 you want to roll back to 2 weeks and 30 commits ago.
