@@ -19,6 +19,9 @@ Topology Detailed View:
 Lab 1: IP Underlay Control-Plane Buildout
 ===============================================
 
+    .. note:: To begin this lab, go to the ssh login menu, select the *labs* option or option *97*, then go to *EVPN Class Guide*,
+        then execute option *1* or *lab1* to deploy the topology.
+
     #. Reachability between loopbacks is required, reachability to Point-to-Point underlay prefixes is optional
 
     #. Must use a routing protocol to accomplish this task
@@ -45,6 +48,9 @@ Lab 1: IP Underlay Control-Plane Buildout
 Lab 2: EVPN Control-Plane Provisioning
 ==============================================
 
+    .. note:: If you are starting out in this lab, go to the ssh login menu, select the *labs* option or option *97*, then go to *EVPN Class Guide*,
+        then execute option *2* or *lab2* to deploy the topology.
+
     #. Enable peering in the EVPN address-family between Spine and Leaf switches
 
     #. A globally unique loopback must be used as the source of these peerings
@@ -68,6 +74,9 @@ Lab 2: EVPN Control-Plane Provisioning
 Lab 3: MLAG
 ========================
 
+    .. note:: If you are starting out in this lab, go to the ssh login menu, select the *labs* option or option *97*, then go to *EVPN Class Guide*,
+        then execute option *3* or *lab3* to deploy the topology.
+
     #. Devices will be dual-homed to VTEPs, with the expectation that an LACP port-channel will be formed, and forwarding will be active/active
 
     #. Each pair of VTEPs will be deployed with a physical interconnect between each other
@@ -88,6 +97,9 @@ Lab 3: MLAG
 
 Lab 4: Layer2 VPN Service Provisioning
 ==============================================
+
+    .. note:: If you are starting out in this lab, go to the ssh login menu, select the *labs* option or option *97*, then go to *EVPN Class Guide*,
+        then execute option *4* or *lab4* to deploy the topology.
 
     #. All L2VPN services will be provided via VXLAN data-plane encapsulation
 
@@ -117,6 +129,9 @@ Lab 4: Layer2 VPN Service Provisioning
 
 Lab 5: Layer3 VPN Service Provisioning
 =============================================
+
+    .. note:: If you are starting out in this lab, go to the ssh login menu, select the *labs* option or option *97*, then go to *EVPN Class Guide*,
+        then execute option *5* or *lab5* to deploy the topology.
 
     #. All L3VPN services will be provided via VXLAN data-plane encapsulation
 
@@ -149,6 +164,10 @@ Lab 5: Layer3 VPN Service Provisioning
 
 Lab 6: Day-2 Ops
 ======================
+
+    .. note:: If you are starting out in this lab, go to the ssh login menu, select the *labs* option or option *97*, then go to *EVPN Class Guide*,
+        then execute option *6* or *lab6* to deploy the topology.
+
     #. A new VLAN / L2VPN service has been requested
 
         #. VLAN 25 will be used for this task
@@ -194,7 +213,8 @@ Lab 6: Day-2 Ops
 Lab 7: Troubleshooting
 ===========================
 
-**Use the SSH Lab Menu to Deploy Environments before the start of each lab.**
+    .. note:: You *must* use the ssh login menu to deploy each of these scenarios. Select the *labs* option or option *97*, then go to *EVPN Class Guide*,
+        then execute the appropriate option for each scenario.
 
     #. Scenario A
 
