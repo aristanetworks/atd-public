@@ -202,7 +202,7 @@ Lab 2: EVPN Control-Plane Provisioning
     .. code-block:: html
 
         router bgp 65000
-        bgp listen range 1.1.1.0/24 peer group EVPN-OVERLAY-PEERS peer-filter LEAF-AS-RANGE
+        bgp listen range 1.1.1.0/24 peer-group EVPN-OVERLAY-PEERS peer-filter LEAF-AS-RANGE
         neighbor EVPN-OVERLAY-PEERS peer group
         neighbor EVPN-OVERLAY-PEERS next-hop-unchanged
         neighbor EVPN-OVERLAY-PEERS update-source Loopback0
