@@ -948,7 +948,7 @@ LEAF1:
         vrf A
         ip address 201.0.0.101/32
         !
-        ip virtual source-nat vrf A address 201.0.0.101
+        ip address virtual source-nat vrf A address 201.0.0.101
 
 LEAF2:
 
@@ -958,7 +958,7 @@ LEAF2:
         vrf A
         ip address 201.0.0.102/32
         !
-        ip virtual source-nat vrf A address 201.0.0.102
+        ip address virtual source-nat vrf A address 201.0.0.102
 
 LEAF3:
 
@@ -968,7 +968,7 @@ LEAF3:
         vrf A
         ip address 201.0.0.103/32
         !
-        ip virtual source-nat vrf A address 201.0.0.103 
+        ip addressz virtual source-nat vrf A address 201.0.0.103 
 
 LEAF4:
 
@@ -978,4 +978,4 @@ LEAF4:
         vrf A
         ip address 201.0.0.104/32
         !
-        ip virtual source-nat vrf A address 201.0.0.104
+        ip address virtual source-nat vrf A address 201.0.0.104
