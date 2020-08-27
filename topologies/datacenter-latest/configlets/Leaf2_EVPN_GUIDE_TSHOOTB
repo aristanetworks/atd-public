@@ -85,8 +85,6 @@ interface Vxlan1
 !
 ip virtual-router mac-address aa:aa:bb:bb:cc:cc
 !
-ip route 0.0.0.0/0 192.168.0.254
-!
 ip routing
 ip routing vrf A
 !
