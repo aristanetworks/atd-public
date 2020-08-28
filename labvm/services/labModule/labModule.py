@@ -12,7 +12,7 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 topo_file = '/etc/ACCESS_INFO.yaml'
 CVP_CONFIG_FIILE = '/home/arista/.cvpState.txt'
-pDEBUG = True
+pDEBUG = False
 CONFIGURE_TOPOLOGY = "/usr/local/bin/ConfigureTopology.py"
 APP_KEY = 'app'
 sleep_delay = 30
@@ -80,6 +80,7 @@ def main(atd_yaml):
     Parameters:
     atd_yaml = Ruamel.YAML object container of ACCESS_INFO 
     """
+    cvp_clnt = ""
     # Create connection to CVP
     for c_login in atd_yaml['login_info']['cvp']['shell']:
         if c_login['user'] == 'arista':
