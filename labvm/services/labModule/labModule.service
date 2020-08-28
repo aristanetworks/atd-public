@@ -1,6 +1,6 @@
 [Unit]
 Description=Creates a new lab UI for modules
-After=atdFiles.service
+After=gitConfigletSync.service
 
 [Service]
 Type=forking
