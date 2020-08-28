@@ -97,7 +97,6 @@ def device_menu():
     counter = 1
     try:
       if user_input.lower() in device_dict:
-          previous_menu = menu_mode
           os.system('ssh ' + device_dict[user_input])
       elif user_input == '96' or user_input.lower() == 'screen':
           os.system('/usr/bin/screen')
