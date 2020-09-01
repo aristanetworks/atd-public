@@ -276,7 +276,7 @@ L2 EVPN
 * Click **ip-bgp-evpn-summary** 
 * **Note:** Under ``show bgp evpn summary`` you should see that there are two **overlay** BGP peers, peered with the loopback0 interface IP address
 * **Note:** Under ``show ip bgp summary`` you should see that there are two **underlay** BGP peers, peered with the p2p interfaces (Et2 & Et3) IP addresses
-* **Note:** Under ``show ip route bgp`` you should see that there are a number of ECMP routes to networks via the loopbacks of the peers  
+* **Note:** Under ``show ip route bgp`` you should see that there are a number of ECMP routes to networks via the p2p interfaces (ET2 & ET3) of the peers  
 
 .. image:: images/cvp-l2vpn/leaf3-l2vpn-snapshot-ip-bgp-evpn-summary.png
     :align: center
