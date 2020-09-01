@@ -134,7 +134,7 @@ VxLAN
     :width: 50% 
 |br|
 
-* click **save**
+* click **Save**
 
 .. image:: images/cvp-vxlan/leaf3-vxlan-configlet-assign-validate-compare.png
     :align: center
