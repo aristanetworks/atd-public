@@ -31,9 +31,10 @@ zerotouch cancel
 # Create class to handle configuring the topology
 class ConfigureTopology():
 
-    def __init__(self,selected_menu,selected_lab):
+    def __init__(self,selected_menu,selected_lab,public_module_flag=False):
         self.selected_menu = selected_menu
         self.selected_lab = selected_lab
+        self.public_module_flag = public_module_flag
         self.deploy_lab()
 
     def connect_to_cvp(self,access_info):
@@ -209,7 +210,10 @@ class ConfigureTopology():
                         for command in additional_commands:
                             os.system(command)
 
-                    input("Lab Setup Completed. Please press Enter to continue...")
+                    if not self.public_module_flag:
+                        input('Lab Setup Completed. Please press Enter to continue...')
+                    else:
+                        self.send_to_syslog("OK", 'Lab Setup Completed.')
                     all_tasks_completed = True
                 else:
                     pass

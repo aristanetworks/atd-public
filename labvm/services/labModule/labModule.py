@@ -79,7 +79,7 @@ def main(atd_yaml):
     lab_topo = MODULES[mod]['topo']
     lab_module = MODULES[mod]['module']
     pS("INFO", "Configuring the lab for {0}".format(lab_module))
-    ConfigureTopology(selected_menu=lab_topo,selected_lab=lab_module)
+    ConfigureTopology(selected_menu=lab_topo,selected_lab=lab_module,public_module_flag=True)
     pS("OK", "Lab has been configured.")
 
 if __name__ == '__main__':
