@@ -180,7 +180,7 @@ L2 EVPN
     :width: 35% 
 |br|
 
-* click **save**
+* click **Save**
 
 .. image:: images/cvp-l2vpn/leaf3-l2vpn-configlet-assign-validate-compare.png
     :align: center
