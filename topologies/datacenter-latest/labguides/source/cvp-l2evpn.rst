@@ -382,7 +382,7 @@ L2 EVPN
 
 9. Verify l2vpn VXLAN operation with CVP Telemetry
 
-* Using the method described in step (7.), create a new snapshot called ``vxlan-info`` with the following Commands
+* Using the method described in step (7.), create a new snapshot called ``vxlan-info``
 
   **Note:** This verification can also be done on the CLI of ``leaf1`` and ``leaf3``
 
