@@ -5,11 +5,11 @@ from ruamel.yaml import YAML
 from os import path, system
 from time import sleep
 import syslog
+from ConfigureTopology.ConfigureTopology import ConfigureTopology
 
 topo_file = '/etc/ACCESS_INFO.yaml'
 CVP_CONFIG_FIILE = '/home/arista/.cvpState.txt'
 pDEBUG = True
-CONFIGURE_TOPOLOGY = "/usr/local/bin/ConfigureTopology.py"
 APP_KEY = 'app'
 
 # Module mapping for default_lab tag to map for use with ConfigureTopology
@@ -79,7 +79,7 @@ def main(atd_yaml):
     lab_topo = MODULES[mod]['topo']
     lab_module = MODULES[mod]['module']
     pS("INFO", "Configuring the lab for {0}".format(lab_module))
-    system('echo -e "\n" | {0} -t {1} -l {2}'.format(CONFIGURE_TOPOLOGY, lab_topo, lab_module))
+    ConfigureTopology(selected_menu=lab_topo,selected_lab=lab_module)
     pS("OK", "Lab has been configured.")
 
 if __name__ == '__main__':
