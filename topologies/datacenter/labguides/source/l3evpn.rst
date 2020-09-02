@@ -12,7 +12,7 @@ L3 EVPN
 
 2. On **leaf3**, configure EOS to Mutli-Agent and add loopback0
 
-   1. **leaf3** enable the Multi-Agent
+   1. **leaf3** enable the Multi-Agent **(Already configured and enabled on the switch)**
 
         .. code-block:: text
 
@@ -58,12 +58,12 @@ L3 EVPN
             router bgp 65103
               router-id 172.16.0.5
               maximum-paths 2 ecmp 2
-              neighbor SPINE peer-group
+              neighbor SPINE peer group
               neighbor SPINE remote-as 65001
-              neighbor SPINE fall-over bfd
+              neighbor SPINE bfd
               neighbor SPINE maximum-routes 12000
-              neighbor 172.16.200.9 peer-group SPINE
-              neighbor 172.16.200.25 peer-group SPINE
+              neighbor 172.16.200.9 peer group SPINE
+              neighbor 172.16.200.25 peer group SPINE
               redistribute connected
 
 3. Verify Underlay on **every** leaf and spine:
@@ -79,17 +79,18 @@ L3 EVPN
 
         configure
         router bgp 65103
-          neighbor SPINE-EVPN-TRANSIT peer-group
+          neighbor SPINE-EVPN-TRANSIT peer group
           neighbor SPINE-EVPN-TRANSIT next-hop-unchanged
           neighbor SPINE-EVPN-TRANSIT update-source Loopback0
           neighbor SPINE-EVPN-TRANSIT ebgp-multihop
           neighbor SPINE-EVPN-TRANSIT send-community extended
           neighbor SPINE-EVPN-TRANSIT remote-as 65001
           neighbor SPINE-EVPN-TRANSIT maximum-routes 0
-          neighbor 172.16.0.1 peer-group SPINE-EVPN-TRANSIT
-          neighbor 172.16.0.2 peer-group SPINE-EVPN-TRANSIT
+          neighbor 172.16.0.1 peer group SPINE-EVPN-TRANSIT
+          neighbor 172.16.0.2 peer group SPINE-EVPN-TRANSIT
         !
         address-family evpn
+          bgp next-hop-unchanged
           neighbor SPINE-EVPN-TRANSIT activate
         !
         address-family ipv4
@@ -109,17 +110,17 @@ L3 EVPN
         .. code-block:: text
 
             configure
-            vrf definition vrf1
+            vrf instance vrf1
             !
             ip routing vrf vrf1
             !
             router bgp 65103
               vrf vrf1
-              rd 3.3.3.3:1001
-              route-target import evpn 1:1001
-              route-target export evpn 1:1001
-              redistribute connected
-              redistribute static
+                rd 3.3.3.3:1001
+                route-target import evpn 1:1001
+                route-target export evpn 1:1001
+                redistribute connected
+                redistribute static
               exit
             !
             exit
@@ -135,11 +136,11 @@ L3 EVPN
             interface Vlan2003
               mtu 9000
               no autostate
-              vrf forwarding vrf1
+              vrf vrf1
               ip address virtual 172.16.116.1/24
             !
             interface Loopback901
-              vrf forwarding vrf1
+              vrf vrf1
               ip address 200.200.200.2/32
             !
 
@@ -166,9 +167,8 @@ L3 EVPN
 
         .. code-block:: text
 
-            enable
             ping 172.16.116.100
-
+        
    3. On **leaf1** and **leaf3**
 
         .. code-block:: text

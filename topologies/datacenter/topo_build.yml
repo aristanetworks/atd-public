@@ -1,22 +1,21 @@
 cloud_service: aws:adc
 default_interfaces: 8
-default_subnet:  "{{ provider.aws['adc_private_m1'].private_subnet }}"
-default_ami_name: EOS-4.20.7M.vxlan.32.img 
-default_sg: "{{ provider.aws['adc_private_m1'].security_group }}"
+default_ami_name: 4.23.0.1F-E
 cvp_instance: singlenode
-cvp_version: cvp-2018.2.2.adc.atd.topo.3
-#cvp_version: cvp-2018.2.3.vxlan.rpm.atd.adc
-eni_s_d_check: false
-deployment_type: "adc-atd"
-topology_name: 'datacenter'
-custom_ami_names: true
-preconfigured: true
+cvp_version: 2019.1.2
+topology_name: datacenter-latest
+external_configuration: true
+only_add_to_inventory: false
+custom_ami_names: false
+preconfigured: false
 topology_link: true
+host_cpu: 4
+cvp_cpu: 16
+veos_cpu: 1
 
 nodes:
   - spine1:
       # interfaces: 8
-      ami_name: 3-spine1-EOS-4.21.2F
       ip_addr: 192.168.0.10
       neighbors:
         - neighborDevice: spine2
@@ -37,7 +36,6 @@ nodes:
 
   - spine2:
       # interfaces: 8
-      ami_name: 3-spine2-EOS-4.21.2F
       ip_addr: 192.168.0.11
       neighbors:
         - neighborDevice: spine1
@@ -58,8 +56,7 @@ nodes:
 
   - leaf1:
       # interfaces: 8
-      ami_name: 3-leaf1-EOS-4.21.2F
-      ip_addr: 192.168.0.14
+      ip_addr: 192.168.0.12
       neighbors:
         - neighborDevice: leaf2
           neighborPort: Ethernet1
@@ -80,8 +77,7 @@ nodes:
 
   - leaf2:
       # interfaces: 8
-      ami_name: 3-leaf2-EOS-4.21.2F
-      ip_addr: 192.168.0.15
+      ip_addr: 192.168.0.13
       neighbors:
         - neighborDevice: leaf1
           neighborPort: Ethernet1
@@ -102,8 +98,7 @@ nodes:
 
   - leaf3:
       # interfaces: 8
-      ami_name: 3-leaf3-EOS-4.21.2F
-      ip_addr: 192.168.0.16
+      ip_addr: 192.168.0.14
       neighbors:
         - neighborDevice: leaf4
           neighborPort: Ethernet1
@@ -124,8 +119,7 @@ nodes:
 
   - leaf4:
       # interfaces: 8
-      ami_name: 3-leaf4-EOS-4.21.2F
-      ip_addr: 192.168.0.17
+      ip_addr: 192.168.0.15
       neighbors:
         - neighborDevice: leaf3
           neighborPort: Ethernet1
@@ -146,8 +140,7 @@ nodes:
 
   - host1:
       # interfaces: 8
-      ami_name: 3-host1-EOS-4.21.2F
-      ip_addr: 192.168.0.31
+      ip_addr: 192.168.0.16
       neighbors:
         - neighborDevice: leaf1
           neighborPort: Ethernet4
@@ -164,8 +157,7 @@ nodes:
 
   - host2:
       # interfaces: 8
-      ami_name: 3-host2-EOS-4.21.2F 
-      ip_addr: 192.168.0.32
+      ip_addr: 192.168.0.17
       neighbors:
         - neighborDevice: leaf3
           neighborPort: Ethernet4
@@ -181,13 +173,6 @@ nodes:
           port: Ethernet4
 
   - cvx01:
-      ami_name: 3-cvx01-EOS-4.21.2F
-      ip_addr: 192.168.0.44
+      ip_addr: 192.168.0.18
       neighbors: []
-
-  - atd_jump_host:
-      neighbors: []
-      ami_name: "adc-atd-labvm.i-0e295ae444a9483f3"
-      ip_addr: 192.168.0.4
-      # subnet: "{{ provider.aws['adc_public_jump_host'].private_subnet }}"
-      # sg: "{{ provider.aws['adc_public_jump_host'].security_group }}"
+  

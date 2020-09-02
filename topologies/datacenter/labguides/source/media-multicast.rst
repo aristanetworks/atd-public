@@ -7,7 +7,11 @@ Advanced Networking for Media Engineers
 .. note:: To simplify the training using our multicast topology, this exercise will disable Leaf2 and Leaf3.  This lab is a continuation of the concepts from the previous Broadcast Engineer Labs
 
 1. Log into the **LabAccess** jumpserver:
-    1. Type ``media-mcast`` at the prompt. The script will pre-configure the topology with the exception of Leaf4 and Hosts 1 & 2
+
+   1. Type ``labs`` or option ``97`` at the Main Menu prompt. This will bring up additional lab menu selections.
+   2. Type ``media`` or option ``2`` at this prompt to open the media lab section (If you were previously in the Media Labs Menu, you can type ``back`` or option ``97`` to go back).
+   3. If this is your first media lab, type ``media-setup`` or option ``1`` at this prompt and wait for the process to run to prepare the lab environment.
+   4. Type ``media-mcast`` or option ``6`` at the prompt. The script will pre-configure the topology with the exception of Leaf4 and Hosts 1 & 2.
 
 2. Create Vlan 46 & SVI for host access vlan on **Leaf 4**.
     1. On **Leaf 4** we will create an vlan and a SVI
@@ -201,10 +205,13 @@ Advanced Networking for Media Engineers
 
     .. code-block:: text
 
-        Select Menu Option# 8
+        Select Host 2 from main menu
         Confirm Gateway of Host 1 is accessible at 172.16.15.1 and the Host 1 At 172.16.15.5
 
-        host2> enable
+         ping 172.16.15.1
+         ping 172.16.15.5
+        
+        ex.
         host2# ping 172.16.15.1
         host2# ping 172.16.15.5
 
@@ -261,8 +268,7 @@ Advanced Networking for Media Engineers
 
     .. code-block:: text
 
-        What would you like to do? 7
-        host1> enable
+        On Host 1 type the following:
         host1# bash
         [arista@host1 ~]$ /mnt/flash/mcast-source.sh
 
@@ -306,8 +312,7 @@ Advanced Networking for Media Engineers
 
     .. code-block:: text
 
-        What would you like to do? 8
-        host2> enable
+        On Host 2 type the following:
         host2# bash
         [arista@host2 ~]$ /mnt/flash/mcast-receiver.sh
 

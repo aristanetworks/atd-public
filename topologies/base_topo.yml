@@ -1,6 +1,6 @@
 ---
 topologies:
-  datacenter-latest:
+  datacenter:
     dev:
       2019:
         branch: nested-release
