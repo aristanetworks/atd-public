@@ -1,18 +1,54 @@
 ---
 topologies:
-  datacenter-latest: 
+  datacenter-latest:
+    dev:
+      2019:
+        branch: nested-release
+        image: base-atd-datacenter-e4-24-1f-c2020-1-1-20200804
+      2020:
+        branch: nested-release
+        image: base-atd-datacenter-e4-24-1f-c2020-1-1-20200804
+    prod:
+      2020:
+        branch: v1.0.20200824a
+        image: base-atd-datacenter-e4-24-1f-c2020-1-1-20200804
+    desc: 'Two Spines, Four Leafs. Focused on EOS fundamentals within the Data Center.'
     branch: v1.0.20200824a
     image: base-atd-datacenter-e4-24-1f-c2020-1-1-20200804
+    name: 'Datacenter'
+    access: standard
     cpu: 30
     ram: 60
   routing:
+    dev:
+      2020:
+        branch: nested-release
+        image: base-atd-routing-e4-24-1f-c2020-1-1-20200701-u
+    prod:
+      2020:
+        branch: v1.0.20200824a
+        image: base-atd-routing-e4-24-1f-c2020-1-1-20200701-u
+    desc: 'Twenty nodes. Focused on advanced routing, L2VPN and L3VPN topics'
     branch: v1.0.20200824a
     image: base-atd-routing-e4-24-1f-c2020-1-1-20200701-u
+    name: 'Advanced Routing'
+    access: standard
     cpu: 36
     ram: 90
   training:
+    dev:
+      2020:
+        branch: nested-release
+        image: base-training-e4-24-1f-c2020-1-1-20200821
+    prod:
+      2020:
+        branch: v1.0.20200824a
+        image: base-training-e4-24-1f-c2020-1-1-20200821
+    desc: 'Four Spines, Four Leafs. For use by the Arista Training Team.'
     branch: v1.0.20200824a
     image: base-training-e4-24-1f-c2020-1-1-20200821
+    name: 'Training'
+    access: admin
     cpu: 36
     ram: 72
   kane:
