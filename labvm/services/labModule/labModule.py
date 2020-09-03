@@ -116,8 +116,10 @@ def main(atd_yaml):
                     if vresponse['data'] == 'success':
                         pS("OK", "{0} is up and reachable at {1}".format(vnode, cvp_clnt.inventory[vnode]['ipAddress']))
                         break
+                    else:
+                        pS("INFO", "{0} is NOT reachable at {1}. Sleeping {2} seconds.".format(vnode, cvp_clnt.inventory[vnode]['ipAddress'], sleep_delay))
+                        sleep(sleep_delay)
                 else:
-                    pS("INFO", "{0} is NOT reachable at {1}. Sleeping {2} seconds.".format(vnode, cvp_clnt.inventory[vnode]['ipAddress'], sleep_delay))
                     sleep(sleep_delay)
     else:
         # Get the current devices from ACCESS_INFO
