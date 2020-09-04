@@ -1,0 +1,21 @@
+service routing protocols model multi-agent
+!
+hostname leaf4
+!
+interface Ethernet2
+   description SPINE1
+   no switchport
+   ip address 10.104.201.104/24
+!
+interface Ethernet3
+   description SPINE2
+   no switchport
+   ip address 10.104.202.104/24
+!
+interface Loopback0
+   ip address 1.1.1.104/32
+!
+interface Management1
+   ip address 192.168.0.17/24
+   no lldp transmit
+   no lldp receive

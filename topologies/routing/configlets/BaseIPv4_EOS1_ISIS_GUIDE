@@ -1,0 +1,39 @@
+hostname eos1
+!
+interface Ethernet1
+   description EOS2
+   no switchport
+   ip address 10.1.2.1/24
+!
+interface Ethernet2
+   description EOS7
+   no switchport
+   ip address 10.1.7.1/24
+!
+interface Ethernet3
+   description EOS11
+   no switchport
+   ip address 10.1.11.1/24
+!
+interface Ethernet4
+   description EOS6
+   no switchport
+   ip address 10.1.6.1/24
+!
+interface Ethernet5
+   description EOS5
+   no switchport
+   ip address 10.1.5.1/24
+!
+interface Ethernet6
+   description EOS17
+   no switchport
+   ip address 10.1.17.1/24
+!
+interface Loopback0
+   ip address 1.1.1.1/32
+!
+interface Management1
+   ip address 192.168.0.10/24
+   no lldp transmit
+   no lldp receive

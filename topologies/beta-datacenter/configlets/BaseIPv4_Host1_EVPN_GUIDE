@@ -1,0 +1,44 @@
+alias a cli vrf HostA
+alias b cli vrf HostB
+alias def cli vrf default
+!
+hostname host1
+!
+vlan 10
+   name Ten
+!
+vrf instance HostA
+!
+vrf instance HostB
+!
+interface Port-Channel10
+   description HostA
+   no switchport
+   vrf HostA
+   ip address 10.10.10.100/24
+!
+interface Ethernet1
+   no switchport
+   channel-group 10 mode active
+   lacp timer fast
+!
+interface Ethernet2
+   no switchport
+   channel-group 10 mode active
+   lacp timer fast
+!
+interface Ethernet4
+   no switchport
+   vrf HostB
+   ip address 20.20.20.100/24
+!
+interface Management1
+   no lldp transmit
+   no lldp receive
+   ip address 192.168.0.31/24
+!
+ip route vrf HostB 0.0.0.0/0 20.20.20.1
+ip route vrf HostA 0.0.0.0/0 10.10.10.1
+!
+ip routing vrf HostB
+ip routing vrf HostA

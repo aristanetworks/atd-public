@@ -1,0 +1,40 @@
+alias c cli vrf HostC
+alias d cli vrf HostD
+alias def cli vrf default
+!
+hostname host2
+!
+vrf instance HostC
+!
+vrf instance HostD
+!
+interface Port-Channel20
+   no switchport
+   vrf HostC
+   ip address 30.30.30.100/24
+!
+interface Ethernet1
+   no switchport
+   channel-group 20 mode active
+!
+interface Ethernet2
+   no switchport
+   channel-group 20 mode active
+!
+interface Ethernet3
+!
+interface Ethernet4
+   no switchport
+   vrf HostD
+   ip address 10.10.10.200/24
+!
+interface Management1
+   no lldp transmit
+   no lldp receive
+   ip address 192.168.0.32/24
+!
+ip route vrf HostC 0.0.0.0/0 30.30.30.1
+ip route vrf HostD 0.0.0.0/0 10.10.10.1
+!
+ip routing vrf HostC
+ip routing vrf HostD

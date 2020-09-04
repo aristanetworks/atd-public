@@ -14,6 +14,7 @@ tacacs-server key 7 070E33455D1D18
 tacacs-server host 192.168.0.4
 !
 management api http-commands
+   protocol http
    no shutdown
 !
 event-handler iptables-vxlan
@@ -27,3 +28,6 @@ event-handler ovs-restart
    delay 30
    asynchronous
 !
+dns domain arista.lab
+!
+ip routing

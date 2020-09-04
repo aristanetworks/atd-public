@@ -6,11 +6,3 @@ interface Management1
    ip address 192.168.0.16/24
    no lldp transmit
    no lldp receive
-!
-dns domain arista.lab
-ip routing
-!! ip route 0.0.0.0/0 192.168.0.1
-!
-management api http-commands
-   no shutdown
-   protocol http

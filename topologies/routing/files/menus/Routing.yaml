@@ -1,32 +1,23 @@
 ---
 lab_list:
   reset:
-  -   command: "/usr/local/bin/ConfigureTopology.py -t Routing -l reset"
-      description: "Reset All Devices to Base IPv4 (reset)"
+    description: "Reset All Devices to Base IPv4 (reset)"
   sr: 
-  -   command: "/usr/local/bin/ConfigureTopology.py -t Routing -l sr"
-      description: "Start at Section 2: Segment-Routing (sr)"
+    description: "Start at Section 2: Segment-Routing (sr)"
   evpn: 
-  -   command: "/usr/local/bin/ConfigureTopology.py -t Routing -l evpn"
-      description: "Start at Section 3: EVPN Control-Plane (evpn)"
+    description: "Start at Section 3: EVPN Control-Plane (evpn)"
   c1l3vpn: 
-  -   command: "/usr/local/bin/ConfigureTopology.py -t Routing -l c1l3vpn"
-      description: "Start at Section 4: Customer-1 L3VPN (c1l3vpn)"
+    description: "Start at Section 4: Customer-1 L3VPN (c1l3vpn)"
   c2l2vpn: 
-  -   command: "/usr/local/bin/ConfigureTopology.py -t Routing -l c2l2vpn"
-      description: "Start at Section 8: Customer-2 L2VPN (c2l2vpn)"
+    description: "Start at Section 8: Customer-2 L2VPN (c2l2vpn)"
   c3eline: 
-  -   command: "/usr/local/bin/ConfigureTopology.py -t Routing -l c3eline"
-      description: "Start at Section 10: Customer-3 E-LINE (c3eline)"
+    description: "Start at Section 10: Customer-3 E-LINE (c3eline)"
   c4l3vpn: 
-  -   command: "/usr/local/bin/ConfigureTopology.py -t Routing -l c4l3vpn"
-      description: "Start at Section 11: Customer-4 L3VPN (c4l3vpn)"
+    description: "Start at Section 11: Customer-4 L3VPN (c4l3vpn)"
   centsvc: 
-  -   command: "/usr/local/bin/ConfigureTopology.py -t Routing -l centsvc"
-      description: "Start at Section 13: Centralized Services (centsvc)"
+    description: "Start at Section 13: Centralized Services (centsvc)"
   complete: 
-  -   command: "/usr/local/bin/ConfigureTopology.py -t Routing -l complete"
-      description: "Complete all Sections (complete)"
+    description: "Complete all Sections (complete)"
 labconfiglets:
   reset:
     eos1:
@@ -94,6 +85,30 @@ labconfiglets:
     eos8:
       - "BaseIPv4_EOS8"
       - "IS-IS_EOS8"
+    eos9:
+      - "BaseIPv4_EOS9"
+    eos10:
+      - "BaseIPv4_EOS10"
+    eos11:
+      - "BaseIPv4_EOS11"
+    eos12:
+      - "BaseIPv4_EOS12"
+    eos13:
+      - "BaseIPv4_EOS13"
+    eos14:
+      - "BaseIPv4_EOS14"
+    eos15:
+      - "BaseIPv4_EOS15"
+    eos16:
+      - "BaseIPv4_EOS16"
+    eos17:
+      - "BaseIPv4_EOS17"
+    eos18:
+      - "BaseIPv4_EOS18"
+    eos19:
+      - "BaseIPv4_EOS19"
+    eos20:
+      - "BaseIPv4_EOS20"
   evpn:
     eos1:
       - "BaseIPv4_EOS1"
@@ -127,6 +142,30 @@ labconfiglets:
       - "BaseIPv4_EOS8"
       - "IS-IS_EOS8"
       - "SR_EOS8"
+    eos9:
+      - "BaseIPv4_EOS9"
+    eos10:
+      - "BaseIPv4_EOS10"
+    eos11:
+      - "BaseIPv4_EOS11"
+    eos12:
+      - "BaseIPv4_EOS12"
+    eos13:
+      - "BaseIPv4_EOS13"
+    eos14:
+      - "BaseIPv4_EOS14"
+    eos15:
+      - "BaseIPv4_EOS15"
+    eos16:
+      - "BaseIPv4_EOS16"
+    eos17:
+      - "BaseIPv4_EOS17"
+    eos18:
+      - "BaseIPv4_EOS18"
+    eos19:
+      - "BaseIPv4_EOS19"
+    eos20:
+      - "BaseIPv4_EOS20"
   c1l3vpn:
     eos1:
       - "BaseIPv4_EOS1"
@@ -167,6 +206,30 @@ labconfiglets:
       - "IS-IS_EOS8"
       - "SR_EOS8"
       - "EVPN_PEERING_EOS8"
+    eos9:
+      - "BaseIPv4_EOS9"
+    eos10:
+      - "BaseIPv4_EOS10"
+    eos11:
+      - "BaseIPv4_EOS11"
+    eos12:
+      - "BaseIPv4_EOS12"
+    eos13:
+      - "BaseIPv4_EOS13"
+    eos14:
+      - "BaseIPv4_EOS14"
+    eos15:
+      - "BaseIPv4_EOS15"
+    eos16:
+      - "BaseIPv4_EOS16"
+    eos17:
+      - "BaseIPv4_EOS17"
+    eos18:
+      - "BaseIPv4_EOS18"
+    eos19:
+      - "BaseIPv4_EOS19"
+    eos20:
+      - "BaseIPv4_EOS20"
   c2l2vpn:
     eos1:
       - "BaseIPv4_EOS1"
@@ -209,7 +272,11 @@ labconfiglets:
       - "IS-IS_EOS8"
       - "SR_EOS8"
       - "EVPN_PEERING_EOS8"
-      - "Customer1_L3VPN_EOS8" 
+      - "Customer1_L3VPN_EOS8"     
+    eos9:
+      - "BaseIPv4_EOS9"
+    eos10:
+      - "BaseIPv4_EOS10"
     eos11:
       - "BaseIPv4_EOS11"
       - "Customer1_L3VPN_EOS11"
@@ -219,9 +286,21 @@ labconfiglets:
     eos13:
       - "BaseIPv4_EOS13"
       - "Customer1_L3VPN_EOS13"
+    eos14:
+      - "BaseIPv4_EOS14"
     eos15:
       - "BaseIPv4_EOS15"
       - "Customer1_L3VPN_EOS15"
+    eos16:
+      - "BaseIPv4_EOS16"
+    eos17:
+      - "BaseIPv4_EOS17"
+    eos18:
+      - "BaseIPv4_EOS18"
+    eos19:
+      - "BaseIPv4_EOS19"
+    eos20:
+      - "BaseIPv4_EOS20"
   c3eline:
     eos1:
       - "BaseIPv4_EOS1"
@@ -291,6 +370,16 @@ labconfiglets:
     eos15:
       - "BaseIPv4_EOS15"
       - "Customer1_L3VPN_EOS15"
+    eos16:
+      - "BaseIPv4_EOS16"
+    eos17:
+      - "BaseIPv4_EOS17"
+    eos18:
+      - "BaseIPv4_EOS18"
+    eos19:
+      - "BaseIPv4_EOS19"
+    eos20:
+      - "BaseIPv4_EOS20"
   c4l3vpn:
     eos1:
       - "BaseIPv4_EOS1"
@@ -368,6 +457,12 @@ labconfiglets:
     eos17:
       - "BaseIPv4_EOS17"
       - "Customer3_E-LINE_EOS17"
+    eos18:
+      - "BaseIPv4_EOS18"
+    eos19:
+      - "BaseIPv4_EOS19"
+    eos20:
+      - "BaseIPv4_EOS20"
   centsvc:
     eos1:
       - "BaseIPv4_EOS1"
@@ -453,6 +548,8 @@ labconfiglets:
     eos19:
       - "BaseIPv4_EOS19"
       - "Customer4_L3VPN_EOS19"
+    eos20:
+      - "BaseIPv4_EOS20"
   complete:
     eos1:
       - "BaseIPv4_EOS1"

@@ -1,12 +1,12 @@
 cloud_service: aws:adc
 default_interfaces: 8
-default_ami_name: 4.24.1F
+default_ami_name: cloud-deploy-veos-4.24.1F
 cvp_instance: singlenode
-cvp_version: 2020.1.1
+cvp_version: cloud-deploy-cvp-2020.1.1
 topology_name: datacenter-latest
 external_configuration: true
 only_add_to_inventory: false
-custom_ami_names: false
+custom_ami_names: true
 preconfigured: false
 topology_link: true
 
@@ -172,4 +172,8 @@ nodes:
   - cvx01:
       ip_addr: 192.168.0.44
       neighbors: []
-  
+      
+  - atd_jump_host:
+      neighbors: []
+      ami_name: "cloud-deploy-jh-2020-08-28"
+      ip_addr: 192.168.0.4

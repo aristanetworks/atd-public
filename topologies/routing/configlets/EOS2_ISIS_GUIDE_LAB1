@@ -1,0 +1,30 @@
+ip routing
+!
+interface Ethernet1
+   isis enable 1
+   isis circuit-type level-2
+   isis network point-to-point
+interface Ethernet2
+   isis enable 1
+   isis circuit-type level-2
+   isis network point-to-point
+interface Ethernet3
+   isis enable 1
+   isis circuit-type level-2
+   isis network point-to-point
+interface Ethernet4
+   isis enable 1
+   isis circuit-type level-2
+   isis network point-to-point
+interface Ethernet5
+   isis enable 1
+   isis circuit-type level-2
+   isis network point-to-point
+!
+interface Loopback0
+   isis enable 1
+!
+router isis 1
+   net 49.0000.0000.0000.0002.00
+   is-type level-2
+   address-family ipv4 unicast

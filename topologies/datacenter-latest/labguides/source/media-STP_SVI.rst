@@ -8,12 +8,11 @@ Media STP and SVI Lab
 
 1. Log into the **LabAccess** jumpserver:
 
-   1. Type ``labs`` or option ``97`` at the Main Menu prompt. This will bring up additional lab menu selections.
-   2. Type ``media`` or option ``2`` at this prompt to open the media lab section (If you were previously in the Media Labs Menu, you can type ``back`` or option ``97`` to go back).
-   3. If this is your first media lab, type ``media-setup`` or option ``1`` at this prompt and wait for the process to run to prepare the lab environment.
-   4. Type ``media-vlan`` or option ``3`` at the prompt. The script will configure the topology with the exception of **Leaf 4**.
+   1. Type ``labs`` at the Main Menu prompt. This will bring up additional lab menu selections.
+   2. Type ``media`` at this prompt to open the media lab section (If you were previously in the Media Labs Menu, you can type ``back`` to go back).
+   3. Type ``media-vlan`` at the prompt. The script will configure the topology with the exception of **Leaf 4**.
 
-   5. On **Spine 2**, verify spanning-tree operation with the topology, you should see **Spine 1** as the root bridge by viewing the Bridge ID and the interfaces designated as a Root port.  Root ports points towards the root bridge, which in this case would be Spine 1.  When you run the following command which interfaces would you expect to be your root port(s)?
+   4. On **Spine 2**, verify spanning-tree operation with the topology, you should see **Spine 1** as the root bridge by viewing the Bridge ID and the interfaces designated as a Root port.  Root ports points towards the root bridge, which in this case would be Spine 1.  When you run the following command which interfaces would you expect to be your root port(s)?
 
         .. code-block:: text
 

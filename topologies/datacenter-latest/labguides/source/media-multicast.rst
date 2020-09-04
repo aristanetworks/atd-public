@@ -8,10 +8,9 @@ Advanced Networking for Media Engineers
 
 1. Log into the **LabAccess** jumpserver:
 
-   1. Type ``labs`` or option ``97`` at the Main Menu prompt. This will bring up additional lab menu selections.
-   2. Type ``media`` or option ``2`` at this prompt to open the media lab section (If you were previously in the Media Labs Menu, you can type ``back`` or option ``97`` to go back).
-   3. If this is your first media lab, type ``media-setup`` or option ``1`` at this prompt and wait for the process to run to prepare the lab environment.
-   4. Type ``media-mcast`` or option ``6`` at the prompt. The script will pre-configure the topology with the exception of Leaf4 and Hosts 1 & 2.
+   1. Type ``labs`` at the Main Menu prompt. This will bring up additional lab menu selections.
+   2. Type ``media`` at this prompt to open the media lab section (If you were previously in the Media Labs Menu, you can type ``back`` to go back).
+   3. Type ``media-mcast`` at the prompt. The script will pre-configure the topology with the exception of Leaf4 and Hosts 1 & 2.
 
 2. Create Vlan 46 & SVI for host access vlan on **Leaf 4**.
     1. On **Leaf 4** we will create an vlan and a SVI

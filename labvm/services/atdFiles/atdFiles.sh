@@ -34,7 +34,7 @@ curl -sL https://deb.nodesource.com/setup_14.x | sudo bash -
 # Install Python3-pip
 apt install python3-pip nodejs -y
 
-# Install python3 ruamel.yaml
+# Install python3 modules
 pip3 install --upgrade pip
 pip3 install ruamel.yaml bs4 tornado scp paramiko rcvpapi
 
@@ -51,10 +51,11 @@ forever start /opt/webssh2/app/index.js
 rm -rf /var/www/html/atd/labguides/
 
 # Make sure login.py and ConfigureTopology.py is current
+mkdir /usr/local/bin/ConfigureTopology
+cp /tmp/atd/topologies/all/ConfigureTopology.py /usr/local/bin/ConfigureTopology/ConfigureTopology.py
+cp /tmp/atd/topologies/all/__init__.py /usr/local/bin/ConfigureTopology/__init__.py
 cp /tmp/atd/topologies/all/login.py /usr/local/bin/login.py
-cp /tmp/atd/topologies/all/ConfigureTopology.py /usr/local/bin/ConfigureTopology.py
 cp /tmp/atd/topologies/all/labUI.py /usr/local/bin/labUI.py
-chmod +x /usr/local/bin/ConfigureTopology.py
 chmod +x /usr/local/bin/labUI.py
 
 # Copy over new nginx config if it exists and restart service
@@ -73,6 +74,10 @@ cp /home/arista/infra/user-mapping.xml /etc/guacamole/
 
 # Update file permissions in /home/arista
 chown -R arista:arista /home/arista
+
+# Update file permissions in /home/aristagui
+
+chown -R aristagui:aristagui /home/aristagui
 
 # Update all occurrences for the arista lab credentials
 

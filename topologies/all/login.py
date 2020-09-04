@@ -1,14 +1,17 @@
 #!/usr/bin/python3
 import os
 import sys
-import signal
 import re
 from ruamel.yaml import YAML
+from ConfigureTopology.ConfigureTopology import ConfigureTopology
+
 
 
 ######################################
 ########## Global Variables ##########
 ######################################
+DEBUG = False
+__version__ = "2.1"
 
 # Open ACCESS_INFO.yaml and load the variables
 f = open('/etc/ACCESS_INFO.yaml')
@@ -32,10 +35,6 @@ previous_menu = ''
 def text_to_int(text):
   return int(text) if text.isdigit() else text
 
-def signal_handler(signal, frame):
-    print("\n")
-    quit()
-
 def natural_keys(text):
   return [ text_to_int(char) for char in re.split(r'(\d+)', text) ]
 
@@ -55,6 +54,7 @@ def sort_veos(vd):
   for t_veos in tmp_l:
     fin_l.append(tmp_d[t_veos])
   return(fin_l)
+
 
 def device_menu():
     global menu_mode
@@ -91,13 +91,12 @@ def device_menu():
     print("98. Shell (shell/bash)")
     print("99. Back to Main Menu (main/exit) - CTRL + c")
     print("")
-    user_input = input("What would you like to do? ")
+    user_input = input("What would you like to do? ").replace(' ', '')
 
     # Check to see if input is in device_dict
     counter = 1
     try:
       if user_input.lower() in device_dict:
-          previous_menu = menu_mode
           os.system('ssh ' + device_dict[user_input])
       elif user_input == '96' or user_input.lower() == 'screen':
           os.system('/usr/bin/screen')
@@ -155,7 +154,7 @@ def lab_options_menu():
       print("98. SSH to Devices (ssh)")
       print("99. Back to Main Menu (main/exit) - CTRL + c\n")
       
-      user_input = input("\nWhat would you like to do?: ")
+      user_input = input("\nWhat would you like to do?: ").replace(' ', '')
 
       # Check to see if digit is in lab_options dict
       try:
@@ -182,7 +181,7 @@ def lab_options_menu():
     elif 'LAB_' in menu_mode and menu_mode != 'LAB_OPTIONS':
       
       # Create Commands dict to save commands and later execute based on matching the counter to a dict key
-      commands_dict = {}
+      options_dict = {}
 
       # Open yaml for the lab option (minus 'LAB_' from menu mode) and load the variables
       menu_file = open('/home/arista/menus/' + menu_mode[4:])
@@ -194,9 +193,9 @@ def lab_options_menu():
       
       counter = 1
       for lab in menu_info['lab_list']:
-        print("{0}. {1}".format(str(counter),menu_info['lab_list'][lab][0]['description']))
-        commands_dict[str(counter)] = menu_info['lab_list'][lab][0]['command']
-        commands_dict[lab] = menu_info['lab_list'][lab][0]['command']
+        print("{0}. {1}".format(str(counter),menu_info['lab_list'][lab]['description']))
+        options_dict[str(counter)] = {'selected_lab': lab, 'selected_menu': menu_mode[4:].replace('.yaml', '')}
+        options_dict[lab] = {'selected_lab': lab, 'selected_menu': menu_mode[4:].replace('.yaml', '')}
         counter += 1
       print('\n')
 
@@ -207,13 +206,13 @@ def lab_options_menu():
       print("99. Back to Main Menu (main/exit) - CTRL + c\n")
 
       # User Input
-      user_input = input("What would you like to do?: ")
+      user_input = input("What would you like to do?: ").replace(' ', '')
 
       # Check to see if input is in commands_dict
       try:
-          if user_input.lower() in commands_dict:
+          if user_input.lower() in options_dict:
               previous_menu = menu_mode
-              os.system(commands_dict[user_input])
+              ConfigureTopology(selected_menu=options_dict[user_input]['selected_menu'],selected_lab=options_dict[user_input]['selected_lab'])
           elif user_input == '97' or user_input.lower() == 'back':
               if menu_mode == previous_menu:
                   menu_mode = 'MAIN'
@@ -240,8 +239,8 @@ def main_menu():
     print("\n\n==========Main Menu==========\n")
     print("Please select from the following options: ")
 
-    # Create Commands dict to save commands and later execute based on matching the counter to a dict key
-    commands_dict = {}
+    # Create options dict to later send to deploy_lab
+    options_dict = {}
 
     # Open yaml for the default yaml and read what file to lookup for default menu
     default_menu_file = open('/home/arista/menus/default.yaml')
@@ -257,10 +256,11 @@ def main_menu():
 
     
     counter = 1
+    menu = default_menu_info['default_menu'].replace('.yaml', '')
     for lab in menu_info['lab_list']:
-      print("{0}. {1}".format(str(counter),menu_info['lab_list'][lab][0]['description']))
-      commands_dict[str(counter)] = menu_info['lab_list'][lab][0]['command']
-      commands_dict[lab] = menu_info['lab_list'][lab][0]['command']
+      print("{0}. {1}".format(str(counter),menu_info['lab_list'][lab]['description']))
+      options_dict[str(counter)] = {'selected_lab': lab, 'selected_menu': menu}
+      options_dict[lab] = {'selected_lab': lab, 'selected_menu': menu}
       counter += 1
     print('\n')
 
@@ -271,12 +271,12 @@ def main_menu():
     print("99. Exit LabVM (quit/exit) - CTRL + c")
     print("")
 
-    user_input = input("What would you like to do?: ")
+    user_input = input("What would you like to do?: ").replace(' ', '')
     
     # Check user input to see which menu to change to
     try:
-      if user_input.lower() in commands_dict:
-          os.system(commands_dict[user_input])
+      if user_input.lower() in options_dict:
+          ConfigureTopology(selected_menu=options_dict[user_input]['selected_menu'],selected_lab=options_dict[user_input]['selected_lab'])
       elif user_input == '98' or user_input.lower() == 'ssh':
         previous_menu = menu_mode
         menu_mode = 'DEVICE_SSH'
@@ -298,32 +298,34 @@ def main_menu():
 
 def main():
     if os.getuid() != 0:
-      global menu_mode
-      # Create Menu Manager
+        global menu_mode
+        # Create Menu Manager
 
-      if sys.stdout.isatty():
-        while menu_mode:
-          try:
-            if menu_mode == 'MAIN':
-              main_menu()
-            elif menu_mode == 'DEVICE_SSH':
-              device_menu()
-            elif 'LAB_' in menu_mode:
-              lab_options_menu()
-            elif menu_mode == 'EXIT':
-              print('User exited.')
-              quit()
-          except KeyboardInterrupt:
-            if menu_mode == 'MAIN':
-              print('User exited.')
-              quit()
-            else:
-              menu_mode = 'MAIN'
-      else:
-        os.system("/usr/lib/openssh/sftp-server")
+        if sys.stdout.isatty():
+            while menu_mode:
+                try:
+                    if menu_mode == 'MAIN':
+                      main_menu()
+                    elif menu_mode == 'DEVICE_SSH':
+                      device_menu()
+                    elif 'LAB_' in menu_mode:
+                      lab_options_menu()
+                    elif menu_mode == 'EXIT':
+                      print('User exited.')
+                      quit()
+                except KeyboardInterrupt:
+                    if menu_mode == 'MAIN':
+                      print('User exited.')
+                      quit()
+                    else:
+                      menu_mode = 'MAIN'
+
+        else:
+            os.system("/usr/lib/openssh/sftp-server")
+    
     else:
+
       os.system("/bin/bash")
-
-
+        
 if __name__ == '__main__':
     main()

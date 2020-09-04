@@ -1,0 +1,60 @@
+interface Loopback1
+   description Shared MLAG VTEP Loopback
+   ip address 2.2.2.12/32
+!
+Vlan 4093
+   name MLAG_iBGP
+vlan 4094
+   name MLAGPEER
+   trunk group MLAGPEER
+!
+interface Vlan4093
+   description MLAG iBGP Peering
+   ip address 192.0.0.2/24
+!
+interface Vlan4094
+   description MLAG PEER SYNC
+   no autostate
+   ip address 10.0.0.2/30
+!
+no spanning-tree vlan-id 4094
+!
+interface Ethernet1
+   description MLAG Link to LEAF2
+   channel-group 1000 mode active
+!
+interface Port-Channel1000
+   description MLAG PEER-LINK
+   switchport mode trunk
+   switchport trunk group MLAGPEER
+!
+mlag configuration
+   domain-id 1000
+   local-interface Vlan4094
+   peer-address 10.0.0.1
+   peer-link Port-Channel1000
+   reload-delay mlag 330
+   reload-delay non-mlag 300
+!
+interface Ethernet4
+   description HostA
+   channel-group 10 mode active
+!
+interface Port-Channel10
+   mlag 10
+   spanning-tree portfast
+!
+interface vxlan1
+ vxlan virtual-router encapsulation mac-address mlag-system-id
+!
+router bgp 65012
+   neighbor MLAG-IPv4-UNDERLAY-PEER peer group
+   neighbor MLAG-IPv4-UNDERLAY-PEER remote-as 65012
+   neighbor MLAG-IPv4-UNDERLAY-PEER next-hop-self
+   neighbor MLAG-IPv4-UNDERLAY-PEER password @rista123
+   neighbor MLAG-IPv4-UNDERLAY-PEER send-community
+   neighbor MLAG-IPv4-UNDERLAY-PEER maximum-routes 12000
+   neighbor 192.0.0.1 peer group MLAG-IPv4-UNDERLAY-PEER
+!
+   address-family ipv4
+      neighbor MLAG-IPv4-UNDERLAY-PEER activate
