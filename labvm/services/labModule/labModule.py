@@ -4,13 +4,18 @@
 from ruamel.yaml import YAML
 from os import path, system
 from time import sleep
+from rcvpapi.rcvpapi import *
+from subprocess import call, PIPE
 import syslog
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 from ConfigureTopology.ConfigureTopology import ConfigureTopology
 
 topo_file = '/etc/ACCESS_INFO.yaml'
 CVP_CONFIG_FIILE = '/home/arista/.cvpState.txt'
 pDEBUG = True
 APP_KEY = 'app'
+sleep_delay = 30
 
 # Module mapping for default_lab tag to map for use with ConfigureTopology
 MODULES = {
@@ -56,6 +61,20 @@ def getTopoInfo(yaml_file):
     topoInfo.close()
     return(topoYaml)
 
+def pingHost(host_ip):
+    """
+    Function to send a single ping to a host to check reachability.
+    Parameters:
+    host_ip = IP Address for the host (str)
+    """
+    base_cmds = ['ping', '-c1', '-w1']
+    ping_cmds = base_cmds + [host_ip]
+    ping_host = call(ping_cmds, stdout=PIPE, stderr=PIPE)
+    if ping_host:
+        return(False)
+    else:
+        return(True)
+
 def pS(mstat,mtype):
     """
     Function to send output from service file to Syslog
@@ -75,6 +94,45 @@ def main(atd_yaml):
     Parameters:
     atd_yaml = Ruamel.YAML object container of ACCESS_INFO 
     """
+    # Check if CVP is configured in topo, if not perform a different check
+    if 'cvp' in atd_yaml['nodes']:
+        cvp_clnt = ""
+        # Create connection to CVP
+        for c_login in atd_yaml['login_info']['cvp']['shell']:
+            if c_login['user'] == 'arista':
+                while not cvp_clnt:
+                    try:
+                        cvp_clnt = CVPCON(atd_yaml['nodes']['cvp'][0]['ip'],c_login['user'],c_login['pw'])
+                        pS("OK","Connected to CVP at {0}".format(atd_yaml['nodes']['cvp'][0]['ip']))
+                    except:
+                        pS("ERROR","CVP is currently unavailable....Retrying in {0} seconds.".format(sleep_delay))
+                        sleep(sleep_delay)
+        # Get CVP Inventory and iterate through all connected devices to verify connectivity
+        for vnode in cvp_clnt.inventory:
+            while True:
+                vresponse = cvp_clnt.ipConnectivityTest(cvp_clnt.inventory[vnode]['ipAddress'])
+                if 'data' in vresponse:
+                    if vresponse['data'] == 'success':
+                        pS("OK", "{0} is up and reachable at {1}".format(vnode, cvp_clnt.inventory[vnode]['ipAddress']))
+                        break
+                    else:
+                        pS("INFO", "{0} is NOT reachable at {1}. Sleeping {2} seconds.".format(vnode, cvp_clnt.inventory[vnode]['ipAddress'], sleep_delay))
+                        sleep(sleep_delay)
+                else:
+                    sleep(sleep_delay)
+    else:
+        # Get the current devices from ACCESS_INFO
+        for vnode in atd_yaml['nodes']['veos']:
+            while True:
+                if pingHost(vnode['internal_ip']):
+                    pS("OK", "{0} is up and reachable at {1}".format(vnode['hostname'], vnode['internal_ip']))
+                    break
+                else:
+                    pS("INFO", "{0} is NOT reachable at {1}. Sleeping {2} seconds.".format(vnode['hostname'], vnode['internal_ip'], sleep_delay))
+                    sleep(sleep_delay)
+    pS("OK", "All Devices are registered and reachable.")
+
+    # Continue to configure topology
     lab, mod = atd_yaml[APP_KEY].split('-')
     lab_topo = MODULES[mod]['topo']
     lab_module = MODULES[mod]['module']

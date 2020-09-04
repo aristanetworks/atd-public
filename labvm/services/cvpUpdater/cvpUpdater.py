@@ -11,6 +11,7 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 topo_file = '/etc/ACCESS_INFO.yaml'
 CVP_CONFIG_FILE = '/home/arista/.cvpState.txt'
 CVP_CONTAINERS = []
+FILE_DELAY = 10
 
 # Temporary file_path location for CVP Custom info
 cvp_file = '/home/arista/cvp/cvp_info.yaml'
@@ -84,6 +85,12 @@ def main():
     Main Function if this is the initial deployment for the ATD/CVP
     """
     cvp_clnt = ""
+    while not path.exists(topo_file):
+        sleep(FILE_DELAY)
+        pS("INFO", "Topo file not found, waiting.")
+    while not path.exists(cvp_file):
+        sleep(FILE_DELAY)
+        pS("INFO", "CVP build file not found, waiting.")
     atd_yaml = getTopoInfo(topo_file)
     cvp_yaml = getTopoInfo(cvp_file)
     eos_cnt_map = eosContainerMapper(cvp_yaml['cvp_info']['containers'])
@@ -102,6 +109,9 @@ def main():
         # ==========================================
         # Add configlets into CVP
         # ==========================================
+        while not path.exists(configlet_location):
+            sleep(FILE_DELAY)
+            pS("INFO", "Configlets directory not found, waiting...")
         if path.exists(configlet_location):
             pS("OK","Configlet directory exists")
             pro_cfglt = listdir(configlet_location)

@@ -1,3 +1,8 @@
+.. # define a hard line break for HTML
+.. |br| raw:: html
+
+   <br />
+
 VxLAN
 =====
 
@@ -15,8 +20,10 @@ VxLAN
 .. image:: images/cvp-vxlan/leaf3-inventory-table.png
     :align: center
     :width: 50 %
+|br|
 
 * Click on **leaf3**
+|br|
 
 2. Review the current VXLAN information in CVP
 
@@ -25,6 +32,7 @@ VxLAN
 .. image:: images/cvp-vxlan/leaf3-vxlan-pre.png
     :align: center
     :width: 50%
+|br|
 
 * **Note:** leaf3 currently has no VXLAN configuration
 
@@ -34,6 +42,7 @@ VxLAN
 .. image:: images/cvp-vxlan/leaf3-vxlan-before.png
     :align: center
     :width: 50%
+|br|
 
 * Click the **VXLANs** selection, also click and view the **VLANs** selection
 * **Note:** You should see VLAN 12 on ``leaf3`` & ``leaf4``
@@ -43,10 +52,12 @@ VxLAN
 .. image:: images/cvp-vxlan/leaf3-vxlan-vlan-before.png
     :align: center
     :width: 50%
+|br|
 
 .. image:: images/cvp-vxlan/leaf3-vxlan-vni-before.png
     :align: center
     :width: 50%
+|br|
 
 3. Create the VXLAN configlet
 
@@ -56,6 +67,7 @@ VxLAN
 .. image:: images/cvp-vxlan/leaf3-vxlan-configlet-list.png
     :align: center
     :width: 50%
+|br|
 
 * Create a configlet called ``Leaf3-VXLAN-Lab-Full-user``
 
@@ -89,12 +101,14 @@ VxLAN
 .. image:: images/cvp-vxlan/leaf3-vxlan-configlet.png
     :align: center
     :width: 50%
+|br|
 
 * Validate configlet syntax on **leaf3**
 
 .. image:: images/cvp-vxlan/leaf3-vxlan-configlet-validate.png
     :align: center
     :width: 50% 
+|br|
 
 4. Assign the VXLAN configlet to **leaf3**
 
@@ -104,24 +118,28 @@ VxLAN
 .. image:: images/cvp-vxlan/leaf3-vxlan-configlet-manage.png
     :align: center
     :width: 50% 
+|br|
 
 * Click the checkbox next to ``Leaf3-VXLAN-Lab-Full-user``
 
 .. image:: images/cvp-vxlan/leaf3-vxlan-configlet-assign.png
     :align: center
     :width: 50% 
+|br|
 
 * Click **Validate**, review the new lines added to the **Designed Configuration**
 
 .. image:: images/cvp-vxlan/leaf3-vxlan-configlet-assign-validate.png
     :align: center
-    :width: 35% 
+    :width: 50% 
+|br|
 
-* click **save**
+* click **Save**
 
 .. image:: images/cvp-vxlan/leaf3-vxlan-configlet-assign-validate-compare.png
     :align: center
     :width: 50% 
+|br|
 
 * Click **Save** on the **Network Provisioning** main view
    **Note:** a Task will be generated
@@ -129,6 +147,7 @@ VxLAN
 .. image:: images/cvp-vxlan/leaf3-vxlan-configlet-main-save.png
     :align: center
     :width: 50% 
+|br|
 
 5. Create a Change Control with the generated Task
 
@@ -139,30 +158,35 @@ VxLAN
 .. image:: images/cvp-vxlan/leaf3-vxlan-cc-task.png
     :align: center
     :width: 50% 
+|br|
 
 * Click **+ Create Change Control with 1 Task**
 
 .. image:: images/cvp-vxlan/leaf3-vxlan-cc-create-cc.png
     :align: center
     :width: 50% 
+|br|
 
 * Click **Review and Approve** on the newly created **Change Control**
 
 .. image:: images/cvp-vxlan/leaf3-vxlan-cc-review-approve.png
     :align: center
     :width: 50% 
+|br|
 
 * Click **Execute Change Control** in upper right of the UI
 
 .. image:: images/cvp-vxlan/leaf3-vxlan-cc-execute.png
     :align: center
     :width: 50% 
+|br|
 
 * Click **Execute** in the resulting confirmation dialog box
 
 .. image:: images/cvp-vxlan/leaf3-vxlan-cc-execute-confirm.png
     :align: center
     :width: 50% 
+|br|
 
 6. Verify VXLAN operation with CVP Telemetry
 
@@ -172,6 +196,7 @@ VxLAN
 .. image:: images/cvp-vxlan/leaf3-vxlan-verification.png
  :align: center
  :width: 50% 
+|br|
 
 * **Note:** you should now see the VLANs to VNI mappings related the to VXLAN configuration on ``leaf3``
 
@@ -205,6 +230,7 @@ VxLAN
 .. image:: images/cvp-vxlan/leaf3-vxlan-verification-mac-table.png
     :align: center
     :width: 50% 
+|br|
 
 * **Note:** You will see the local MAC Address of Host2 on Port-Channel 4 and the remote MAC Address of Host1 showing port ``Vxlan1``
 
@@ -214,6 +240,7 @@ VxLAN
 .. image:: images/cvp-vxlan/leaf3-vxlan-before.png
     :align: center
     :width: 50%
+|br|
 
 * Click the **VXLANs** selection, also click and view the **VLANs** selection
 * **Note:** You should see VLAN 12 on ``leaf3`` & ``leaf4``
@@ -223,9 +250,11 @@ VxLAN
 .. image:: images/cvp-vxlan/leaf3-vxlan-vlan-after.png
     :align: center
     :width: 50%
+|br|
 
 .. image:: images/cvp-vxlan/leaf3-vxlan-vni-after.png
     :align: center
     :width: 50%
+|br|
 
 **LAB COMPLETE!**
