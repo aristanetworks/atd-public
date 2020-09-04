@@ -154,7 +154,7 @@ services:
       - /home/atdadmin/robot:/home/robot
       - /etc/atd/ACCESS_INFO.yaml:/etc/atd/ACCESS_INFO.yaml
       - /home/arista/arista-dir:/home/arista:rw
-      - /opt/atd/topologies/datacenter-latest/topo_build.yml:/etc/ACCESS_INFO.yaml
+      - /opt/atd/topologies:/opt/atd/topologies
   ansible:
     container_name: atd-ansible-avd
     image: mpergament/avd-cpv-atd-nested:latest
