@@ -3,7 +3,7 @@
 	"context": "..",
 	"dockerFile": "Dockerfile",
 	"settings": { 
-		"terminal.integrated.shell.linux": "/bin/bash"
+		"terminal.integrated.shell.linux": "/bin/zsh"
 	},
 	"extensions": [
 		"redhat.vscode-yaml",
@@ -18,6 +18,12 @@
 	"mounts": [ 
 		"source=${localEnv:HOME}/.ssh,target=/home/atddev/.ssh,type=bind,consistency=cached",
 		"source=${localEnv:HOME}/.gitconfig,target=/home/atddev/.gitconfig,type=bind,consistency=cached"
+# Added for review as part of zsh and adding ansible config support with vault pass		
+		"source=${localEnv:HOME}/.zshrc,target=/home/atddev/.zshrc,type=bind,consistency=cached",
+		"source=${localEnv:HOME}/.zshenv,target=/home/atddev/.zshenv,type=bind,consistency=cached",
+		"source=${localEnv:HOME}/.vimrc,target=/home/atddev/.vimrc,type=bind,consistency=cached",
+		"source=${localEnv:HOME}/.vault_pass,target=/home/atddev/.vault_pass,type=bind,consistency=cached",
+		"source=${localEnv:HOME}/.ansible.cfg,target=/home/atddev/.ansible.cfg,type=bind,consistency=cached",
 	],
 	"remoteUser": "atddev"
 }
