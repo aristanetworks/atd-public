@@ -6,6 +6,8 @@ service routing protocols model multi-agent
 !
 dns domain atd.lab
 !
+ntp server 192.168.0.1 iburst source Management1
+!
 tacacs-server key 7 070E33455D1D18
 tacacs-server host 192.168.0.4
 !

@@ -19,6 +19,8 @@ alias intdesc
 !
 dns domain arista.lab
 !
+ntp server 192.168.0.1 iburst source Management1
+!
 aaa authentication login default local
 aaa authorization exec default local
 !
