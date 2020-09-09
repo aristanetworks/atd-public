@@ -13,7 +13,8 @@
 		"ms-kubernetes-tools.vscode-kubernetes-tools",
 		"github.vscode-pull-request-github",
 		"lextudio.restructuredtext",
-		"aristapublisher.eos"
+		"aristapublisher.eos",
+    "eamodio.gitlens"
 	],
 	"mounts": [ 
 		"source=${localEnv:HOME}/.ssh,target=/home/atddev/.ssh,type=bind,consistency=cached",
