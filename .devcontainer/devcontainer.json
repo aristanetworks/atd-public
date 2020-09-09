@@ -14,12 +14,11 @@
 		"github.vscode-pull-request-github",
 		"lextudio.restructuredtext",
 		"aristapublisher.eos",
-    "eamodio.gitlens"
+		"eamodio.gitlens"
 	],
 	"mounts": [ 
 		"source=${localEnv:HOME}/.ssh,target=/home/atddev/.ssh,type=bind,consistency=cached",
-		"source=${localEnv:HOME}/.gitconfig,target=/home/atddev/.gitconfig,type=bind,consistency=cached"
-# Added for review as part of zsh and adding ansible config support with vault pass		
+		"source=${localEnv:HOME}/.gitconfig,target=/home/atddev/.gitconfig,type=bind,consistency=cached",
 		"source=${localEnv:HOME}/.zshrc,target=/home/atddev/.zshrc,type=bind,consistency=cached",
 		"source=${localEnv:HOME}/.zshenv,target=/home/atddev/.zshenv,type=bind,consistency=cached",
 		"source=${localEnv:HOME}/.vimrc,target=/home/atddev/.vimrc,type=bind,consistency=cached",
