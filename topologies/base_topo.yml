@@ -4,7 +4,7 @@ topologies:
     dev:
       2020:
         branch: nested-release
-        image: base-atd-datacenter-e4-24-1f-c2020-1-1-20200902-u
+        image: base-atd-datacenter-e4-24-1f-c2020-1-1-20200909-u
     prod:
       2020:
         branch: v1.0.20200902a
