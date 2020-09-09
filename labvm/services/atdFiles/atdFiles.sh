@@ -25,12 +25,23 @@ done
 
 
 # Adding in temporary pip install/upgrade for rCVP API
+pip install rcvpapi
 pip install --upgrade rcvpapi
+
+# Add current Node.js repo
+curl -sL https://deb.nodesource.com/setup_14.x | sudo bash -
+
+# Install Python3-pip
+apt install python3-pip nodejs -y
 
 # Install python3 modules
 pip3 install --upgrade pip
+pip3 install ruamel.yaml bs4 tornado scp paramiko rcvpapi
 
 # Setup NPM and webssh2
+npm install forever -g
+git clone https://github.com/billchurch/webssh2.git /opt/webssh2
+cp /tmp/atd/topologies/all/webssh2-config.json /opt/webssh2/app/config.json
 sed -i "s/{REPLACE_ARISTA}/$LAB_ARISTA_PWD/g" /opt/webssh2/app/config.json
 npm --prefix /opt/webssh2/app install --production
 npm --prefix /opt/webssh2/app install forever
