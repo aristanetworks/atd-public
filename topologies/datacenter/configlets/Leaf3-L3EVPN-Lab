@@ -23,7 +23,9 @@ interface Ethernet4
 !
 interface Ethernet5
    channel-group 5 mode active
-
+!
+interface Ethernet6
+   shutdown
 !
 interface Loopback0
    ip address 172.16.0.5/32
