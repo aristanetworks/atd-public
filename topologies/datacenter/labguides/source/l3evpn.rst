@@ -42,6 +42,9 @@ L3 EVPN
               channel-group 5 mode active
               no shutdown
             !
+            interface Ethernet6
+              shutdown
+            !
             interface Loopback0
               ip address 172.16.0.5/32
             !

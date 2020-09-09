@@ -47,6 +47,9 @@ L2 EVPN
         interface Ethernet5
           shutdown
         !
+        interface Ethernet6
+          shutdown
+        !
         interface Loopback0
           ip address 172.16.0.5/32
         !

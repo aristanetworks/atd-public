@@ -38,6 +38,10 @@ MLAG
             interface ethernet 1
               switchport mode trunk
               channel-group 10 mode active
+            !
+            interface ethernet 6
+              switchport mode trunk
+              channel-group 10 mode active
 
       .. note::
        A *channel-group* is a group of interfaces on a single Arista switch. A *channel-group* is associated with a *port-channel* interface immediately upon its creation. The *channel-group* command implicitly creates the matching *port-channel* with the same ID, which is *10* in this case. The *switchport mode trunk* command allows all VLANs on *port-channel 10*.
