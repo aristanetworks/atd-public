@@ -26,14 +26,13 @@ done
 
 # Adding in temporary pip install/upgrade for rCVP API
 pip install --upgrade rcvpapi
+pip3 install --upgrade rcvpapi
 
 # Install python3 modules
 pip3 install --upgrade pip
 
 # Setup NPM and webssh2
 sed -i "s/{REPLACE_ARISTA}/$LAB_ARISTA_PWD/g" /opt/webssh2/app/config.json
-npm --prefix /opt/webssh2/app install --production
-npm --prefix /opt/webssh2/app install forever
 forever start /opt/webssh2/app/index.js
 
 # Clean up previous stuff to make sure it's current
