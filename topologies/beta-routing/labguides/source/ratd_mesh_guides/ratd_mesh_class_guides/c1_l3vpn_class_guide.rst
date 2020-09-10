@@ -1,4 +1,4 @@
-Deploy L3VPN Servers for Customer-1
+Deploy L3VPN Service for Customer-1
 =====================================================
 
    .. image:: ../../images/RATD-Section4+5+6+7-Image.png

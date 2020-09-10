@@ -16,7 +16,10 @@ Welcome to the Arista Routing ATD documentation!
    ratd_mesh_guides/ratd_mesh_class_guides/evpn_setup_class_guide.rst
    ratd_mesh_guides/ratd_mesh_class_guides/c1_l3vpn_class_guide.rst
    ratd_mesh_guides/ratd_mesh_class_guides/l3vpn_mp_class_guide.rst
-   ratd_mesh_guides/ratd_mesh_class_guides/ratd_mesh_class_guide.rst
+   ratd_mesh_guides/ratd_mesh_class_guides/c2_l2vpn_class_guide.rst
+   ratd_mesh_guides/ratd_mesh_class_guides/c3_eline_class_guide.rst
+   ratd_mesh_guides/ratd_mesh_class_guides/c4_l3vpn_class_guide.rst
+   ratd_mesh_guides/ratd_mesh_class_guides/cent_svcs_l3vpn_class_guide.rst
 
 .. toctree::
    :maxdepth: 1
