@@ -9,18 +9,18 @@ Welcome to the Arista Routing ATD documentation!
 
 .. toctree::
    :maxdepth: 1
-   :caption: Routing
+   :caption: Routing ATD - Full Mesh Topology - Class Guide Only
 
-   RATD.rst
-
-.. toctree::
-   :maxdepth: 1
-   :caption: Routing Ring Topology
-
-   RATD_RING.rst
+   ratd_mesh_class_guide.rst
 
 .. toctree::
    :maxdepth: 1
-   :caption: Routing Ring Topology
+   :caption: Routing ATD - Ring Topology - Class Guide Only
 
-   ISIS_CLASS_GUIDE.rst
+   ratd_ring_class_guide.rst
+
+.. toctree::
+   :maxdepth: 1
+   :caption: ISIS Protocol - Class Guide
+
+   isis_class_guide.rst
