@@ -62,10 +62,10 @@ Prepare to offer VPN services to customers via MP-BGP EVPN control-plane
       :align: center
 
    #. BGP Autonomous System 100 is leveraged by the Service Provider.
-
+ 
       :Question:
-      Do all nodes within the Service Provider need to run BGP? Why, or why not?
-
+         Do all nodes within the Service Provider Network need to run BGP? Why or Why not?
+   
    #. Enable BGP EVPN peering within the service provider.
 
       - BGP Router-ID should be Loopback0 with a 32-bit value.
