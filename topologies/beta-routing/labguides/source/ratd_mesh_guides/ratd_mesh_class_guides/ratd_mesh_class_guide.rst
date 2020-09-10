@@ -1,164 +1,166 @@
-Routing ATD - Full Mesh Topology - Class Guide
+Routing ATD - Mesh Topology - Full Class Guide
 =====================================================
 
-.. image:: images/RATD-Topo-Image.png
+.. image:: ../../images/RATD-Topo-Image.png
    :align: center
 
+==========================================================
 Deploy IS-IS as the Service Provider Underlay IGP
 ==========================================================
 
-   .. image:: images/RATD-Section1+2-Image.png
+   .. image:: ../../images/RATD-Section1+2-Image.png
       :align: center
-  
-   a.	IS-IS will be leveraged to carry underlay IPv4 prefix reachability information
-  
-   b.	All nodes should be within the same flooding domain
-  
-   c.	All nodes should only maintain a Level-2 database
-  
-   d.	Ensure that there are no unnecessary Pseudonodes within the topology
-  
-   e.	(Optional) Only advertise reachability information for /32 loopback interfaces into the LSDB
-  
-   f.	Once this task has been completed, all Service Provider nodes should be able to ping all other node loopback addresses
 
+   #. Configure IS-IS to carry underlay IPv4 prefix reachability information.
+  
+      - All nodes should be within the same flooding domain.
+  
+      - All nodes should only maintain a Level-2 database.
+  
+      - Ensure that there are no unnecessary Pseudonodes within the topology.
+  
+   #. (Optional) Only advertise reachability information for /32 loopback interfaces into the LSDB.
+  
+      - Once this task has been completed, all Service Provider nodes should be able to ping all other node loopback addresses.
+
+=========================================================================
 Establish MPLS transport label distribution via Segment-Routing
 =========================================================================
 
-   a.	Enable Segment-Routing extensions to IS-IS, leveraging MPLS data plane encapsulation
+   #. Enable Segment-Routing extensions to IS-IS, leveraging MPLS data plane encapsulation.
+
+      - The Segment Routing Global Block (SRGB) label range should be 900,000 – 965,535 on all Service Provider nodes.
    
-   b.	The Segment Routing Global Block (SRGB) label range should be 900,000 – 965,535 on all Service Provider nodes
-   
-   c.	Each node should have a globally unique Node SID equal to 900,000 + NodeID
+   #. Configure each node should with a globally unique Node SID equal to 900,000 + NodeID.
  
-      i.	For example, EOS1 should have a Node SID of 900,001
+      - For example, EOS1 should have a Node SID of 900,001.
    
-   d.	Review IS-IS adjacency SIDs on EOS2 and EOS5
+   #. Review IS-IS adjacency SIDs on EOS2 and EOS5.
  
-      i.	Is there overlap?
- 
-      ii.	If so, will this present an issue? Why or Why not?
+      :Question:
+         Is there overlap? If so, will this present an issue? Why or Why not?
    
-   e.	Validate that all Service Provider nodes have a globally unique Node SID
+   #. Validate that all Service Provider nodes have a globally unique Node SID.
    
-   f.	To protect against black holes, and reduce convergence time:
- 
-      i.	Enable the equivalent of IGP Sync and Session-Protection within the Segment-Routing domain
+   #. To protect against black holes, and reduce convergence time, enable the equivalent of IGP Sync and Session-Protection within the Segment-Routing domain.
    
-   g.	Once this task has been completed, all Service Provider nodes should have an LSP established for reachability between loopbacks
+   #. Once this task has been completed, all Service Provider nodes should have an LSP established for reachability between loopbacks.
 
-       .. code-block:: text
+      .. code-block:: text
 
-         ping mpls segment-routing ip x.x.x.x/32 source y.y.y.y
+       ping mpls segment-routing ip x.x.x.x/32 source y.y.y.y
 
-       .. code-block:: text
+      .. code-block:: text
 
-         traceroute mpls segment-routing ip x.x.x.x/32 source y.y.y.y
+       traceroute mpls segment-routing ip x.x.x.x/32 source y.y.y.y
 
+==================================================================================
 Prepare to offer VPN services to customers via MP-BGP EVPN control-plane
 ==================================================================================
 
-   .. image:: images/RATD-Section3-Image.png
+   .. image:: ../../images/RATD-Section3-Image.png
       :align: center
- 
-   a.	BGP Autonomous System 100 is leveraged by the Service Provider
- 
-   b.	Do all nodes within the Service Provider need to run BGP? Why, or why not?
-  
-   c.	Enable BGP EVPN peering within the service provider
-  
-      i.	BGP Router-ID should be Loopback0 32-bit value
-  
-      ii.	Loopback0 IP address should be used for all BGP peerings
-  
-      iii.	All PE nodes must be capable of advertising and receiving reachability information to/from all other PE nodes
-  
-      iv.	A full mesh of peerings must not be used to accomplish this task
-  
-      v.	EOS5 should act as the peering point for all PE nodes
-  
-      vi.	Disable any unnecessary BGP AFI/SAFI peerings
-  
-      vii.	Use MPLS as the data-plane encapsulation / VPN label distribution
 
+   #. BGP Autonomous System 100 is leveraged by the Service Provider.
+
+      :Question:
+      Do all nodes within the Service Provider need to run BGP? Why, or why not?
+
+   #. Enable BGP EVPN peering within the service provider.
+
+      - BGP Router-ID should be Loopback0 with a 32-bit value.
+
+      - Loopback0 IP address should be used for all BGP peerings.
+
+      - All PE nodes must be capable of advertising and receiving reachability information to/from all other PE nodes.
+
+      - A full mesh of peerings must not be used to accomplish this task.
+
+      - EOS5 should act as the peering point for all PE nodes.
+
+      - Disable any unnecessary BGP AFI/SAFI peerings.
+
+      - Use MPLS as the data-plane encapsulation / VPN label distribution.
+
+===================================================================================
 Prepare for Customer-1 Layer3 VPN Services
 ===================================================================================
 
-   .. image:: images/RATD-Section4+5+6+7-Image.png
+   .. image:: ../../images/RATD-Section4+5+6+7-Image.png
       :align: center
    
-   a.	Customer-1 CE Nodes: EOS11, EOS13, EOS15
+   #. On all PE nodes that are connected to Customer-1 CE nodes, define VRF “A”.
    
-   b.	On all PE nodes that are connected to Customer-1 CE nodes:
+      - Ensure IPv4 Unicast Forwarding is enabled.
    
-      i.	Define VRF “A”
+      - Route-Target for import and export should be 1:1.
    
-         1.	IPv4 Unicast Forwarding
+      - Route-Distinguisher should be X.X.X.X:1 (X = Node-ID).
    
-         2.	Route-Target for import and export should be 1:1
-   
-         3.	Route-Distinguisher should be X.X.X.X:1 (X = Node-ID)
-   
-      ii.	Place the appropriate interfaces on the PE nodes into VRF “A”
+   #. Place the appropriate interfaces on the PE nodes into VRF “A”.
 
+=========================================================================
 Configure Customer-1 CE devices
 =========================================================================
    
-   a.	EOS11, EOS12 and EOS13 should all run OSPF process 100 in area 0
+   #. Configure EOS11, EOS12 and EOS13 to run OSPF process 100 in area 0.
    
-   b.	Advertise all connected interfaces into OSPF using a network statement
+   #. Advertise all connected interfaces into OSPF using a network statement.
    
-   c.	Once this task is complete; EOS11, EOS12, and EOS13 should be able to ping each other’s loopbacks and directly connected interfaces
+      - Once this task is complete; EOS11, EOS12, and EOS13 should be able to ping each other’s loopbacks and directly connected interfaces
 
+=========================================================================
 Establish PE-CE peering with Customer-1
 =========================================================================
    
-   a.	EOS11 EOS12 should be in BGP AS 123
-      
-      i.	EOS11 and EOS12 should originate the following networks via BGP (any method of network origination is acceptable)
-      
-         1.	11.11.11.11/32
-      
-         2.	12.12.12.12/32
-      
-         3.	13.13.13.13/32
+   #. Configure EOS11 and EOS12 for BGP AS 123.
+
+      - EOS11 and EOS12 should originate the following networks via BGP (any method of network origination is acceptable):
+
+         - 11.11.11.11/32
+
+         - 12.12.12.12/32
+
+         - 13.13.13.13/32
    
-   b.	EOS15 should be in BGP AS 15
+   #. Configure EOS15 for BGP AS 15.
    
-      i.	EOS15 should originate the following networks via BGP (any method of network origination is acceptable)
+      - EOS15 should originate the following networks via BGP (any method of network origination is acceptable):
    
-         1.	15.15.15.15/32
+         - 15.15.15.15/32
    
-   c.	Establish eBGP IPv4 Unicast peering between Customer-1 CE and Service Provider PE devices. These peerings should be within the Customer-1 VPN (VRF)
+   #. Establish eBGP IPv4 Unicast peering between Customer-1 CE and Service Provider PE devices. These peerings should be within the Customer-1 VPN (VRF).
    
-   d.	EOS12 should have the following output from a ‘show ip route ospf’ command:
-      
-      .. image:: images/RATD_Section6_Task_D.png
+   #. Ensure EOS12 should has the following output from a ‘show ip route ospf’ command:
+
+      .. image:: ../../images/RATD_Section6_Task_D.png
          :align: center   
    
-   e.	EOS15 should have the following output from a ‘show ip route bgp’ command:
+   #. Ensure EOS15 should has the following output from a ‘show ip route bgp’ command:
 
-      .. image:: images/RATD_Section6_Task_E.png
+      .. image:: ../../images/RATD_Section6_Task_E.png
          :align: center   
  
-   f.	Once this task is complete, all Customer-1 CE devices should be able to ping each other’s Loopback0 interface when sourcing the pings from their own Loopback0 interface
+   #. Verify reachability between all Customer-1 CE devices by pinging each other’s Loopback0 interface while sourcing the pings from their own Loopback0 interface.
 
-L3VPN Multi-Pathing
+=========================================================================
+Enable L3VPN Multi-Pathing
 =========================================================================
   
-   a.	When pinging from EOS15 to EOS12, multiple paths should be leveraged across the Service Provider; distributing the load between EOS1 and EOS6
+   #.	Ensure that traffic from EOS15 to EOS12 uses multiple paths across the Service Provider network, distributing the load between EOS1 and EOS6.
   
-   b.	It is ok to adjust the isis metric on the link between EOS6 and EOS8 in order to force multi-pathing to occur
+      - It is ok to adjust the isis metric on the link between EOS6 and EOS8 in order to force multi-pathing to occur.
   
-   c.	EOS8 should have the following output from a ‘show ip route vrf A 12.12.12.12’ command (label may vary, this is ok):
+   #. EOS8 should have the following output from a ‘show ip route vrf A 12.12.12.12’ command (label may vary, this is ok):
   
-      .. image:: images/RATD_Section7_Task_C.png
+      .. image:: ../../images/RATD_Section7_Task_C.png
          :align: center   
 
+=========================================================================
 Prepare for Customer-2 Layer2 VPN E-LAN Services
 =========================================================================
 
-   .. image:: images/RATD-Section8+9.png
+   .. image:: ../../images/RATD-Section8+9.png
       :align: center
    
    a.	Customer-2 CE Nodes: EOS9, EOS10, EOS14
@@ -183,6 +185,7 @@ Prepare for Customer-2 Layer2 VPN E-LAN Services
    
       ii.	MLAG must not be used to accomplish this task
 
+=========================================================================
 Configure the Customer-2 CE Nodes
 =========================================================================
  
@@ -198,20 +201,21 @@ Configure the Customer-2 CE Nodes
  
       ii.	EOS3:
  
-         .. image:: images/RATD_Section9_Task_D_EOS3.png
+         .. image:: ../../images/RATD_Section9_Task_D_EOS3.png
             :align: center   
       
       iii.	EOS6:
       
-         .. image:: images/RATD_Section9_Task_D_EOS6.png
+         .. image:: ../../images/RATD_Section9_Task_D_EOS6.png
             :align: center
 
    e.	Once this task is complete; EOS9, EOS10 and EOS14 should all form OSPF adjacencies with each other. These devices should all be able to ping each other’s Loopback0 interfaces when sourcing the ping from their Loopback0 interface
 
+=========================================================================
 Configure Customer-3 E-LINE Service
 =========================================================================
 
-   .. image:: images/RATD-Section10-Image.png
+   .. image:: ../../images/RATD-Section10-Image.png
       :align: center
 
    a.	Customer-3 requires that EOS16 and EOS17 appear as directly Layer2 adjacent to each other
@@ -222,10 +226,11 @@ Configure Customer-3 E-LINE Service
    
    d.	When this task is complete EOS16 and EOS17 should form an OSPF adjacency with each other, and be able to ping each other’s loopbacks
 
+=========================================================================
 Prepare for Customer-4 Layer3 VPN Services
 =========================================================================
 
-   .. image:: images/RATD-Section11+12-Image.png
+   .. image:: ../../images/RATD-Section11+12-Image.png
       :align: center
   
    a.	Customer-4 CE Nodes: EOS18, EOS19
@@ -242,6 +247,7 @@ Prepare for Customer-4 Layer3 VPN Services
   
       ii.	Place the appropriate interfaces on the PE nodes into VRF “B”
 
+=========================================================================
 Establish PE-CE peering with Customer-4
 =========================================================================
  
@@ -259,10 +265,11 @@ Establish PE-CE peering with Customer-4
    
    c.	Once this task is complete, Customer-4 CE devices should be able to ping each other’s Loopback0 interface when sourcing the pings from their own Loopback0 interface
 
+=========================================================================
 Offer Centralized Services to L3VPN Customers
 =========================================================================
 
-   .. image:: images/RATD-Section13-Image.png
+   .. image:: ../../images/RATD-Section13-Image.png
       :align: center
   
    a.	EOS20 is providing a centralized service to L3VPN customers
