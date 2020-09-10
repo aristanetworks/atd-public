@@ -1,13 +1,13 @@
 Routing ATD Lab Guide - Ring Topology
 ==========================================
 
-.. image:: images/RATD_RING-Topo-ImageNoAristaLogo.png
+.. image:: ../../images/RATD_RING-Topo-ImageNoAristaLogo.png
    :align: center
 
 1.	Deploy IS-IS as the Service Provider Underlay IGP
 ==========================================================
 
-   .. image:: images/RATD_RING-Section1+2-Image.png
+   .. image:: ../../images/RATD_RING-Section1+2-Image.png
       :align: center
   
    a.	IS-IS will be leveraged to carry underlay IPv4 prefix reachability information
@@ -58,7 +58,7 @@ Routing ATD Lab Guide - Ring Topology
 3.	Prepare to offer VPN services to customers via MP-BGP EVPN control-plane
 ==================================================================================
 
-   .. image:: images/RATD_RING-Section3-Image.png
+   .. image:: ../../images/RATD_RING-Section3-Image.png
       :align: center
  
    a.	BGP Autonomous System 100 is leveraged by the Service Provider
@@ -84,7 +84,7 @@ Routing ATD Lab Guide - Ring Topology
 4.	Prepare for Customer-1 Layer3 VPN Services
 ===================================================================================
 
-   .. image:: images/RATD_RING-Section4+5+6+7-Image.png
+   .. image:: ../../images/RATD_RING-Section4+5+6+7-Image.png
       :align: center
    
    a.	Customer-1 CE Nodes: EOS11, EOS13, EOS15
@@ -133,12 +133,12 @@ Routing ATD Lab Guide - Ring Topology
    
    d.	EOS12 should have the following output from a ‘show ip route ospf’ command:
       
-      .. image:: images/RATD_Section6_Task_D.png
+      .. image:: ../../images/RATD_Section6_Task_D.png
          :align: center   
    
    e.	EOS15 should have the following output from a ‘show ip route bgp’ command:
 
-      .. image:: images/RATD_Section6_Task_E.png
+      .. image:: ../../images/RATD_Section6_Task_E.png
          :align: center   
  
    f.	Once this task is complete, all Customer-1 CE devices should be able to ping each other’s Loopback0 interface when sourcing the pings from their own Loopback0 interface
@@ -152,13 +152,13 @@ Routing ATD Lab Guide - Ring Topology
   
    c.	EOS8 should have the following output from a ‘show ip route vrf A 12.12.12.12’ command (label may vary, this is ok):
   
-      .. image:: images/RATD_RING_Section7_Task_C.png
+      .. image:: ../../images/RATD_RING_Section7_Task_C.png
          :align: center   
 
 8.	Prepare for Customer-2 Layer2 VPN E-LAN Services
 =========================================================================
 
-   .. image:: images/RATD_RING-Section8+9.png
+   .. image:: ../../images/RATD_RING-Section8+9.png
       :align: center
    
    a.	Customer-2 CE Nodes: EOS9, EOS10, EOS14
@@ -198,12 +198,12 @@ Routing ATD Lab Guide - Ring Topology
  
       ii.	EOS3:
  
-         .. image:: images/RATD_Section9_Task_D_EOS3.png
+         .. image:: ../../images/RATD_Section9_Task_D_EOS3.png
             :align: center   
       
       iii.	EOS6:
       
-         .. image:: images/RATD_Section9_Task_D_EOS6.png
+         .. image:: ../../images/RATD_Section9_Task_D_EOS6.png
             :align: center
 
    e.	Once this task is complete; EOS9, EOS10 and EOS14 should all form OSPF adjacencies with each other. These devices should all be able to ping each other’s Loopback0 interfaces when sourcing the ping from their Loopback0 interface
@@ -211,7 +211,7 @@ Routing ATD Lab Guide - Ring Topology
 10. Configure Customer-3 E-LINE Service
 =========================================================================
 
-   .. image:: images/RATD_RING-Section10-Image.png
+   .. image:: ../../images/RATD_RING-Section10-Image.png
       :align: center
 
    a.	Customer-3 requires that EOS16 and EOS17 appear as directly Layer2 adjacent to each other
@@ -225,7 +225,7 @@ Routing ATD Lab Guide - Ring Topology
 11.	Prepare for Customer-4 Layer3 VPN Services
 =========================================================================
 
-   .. image:: images/RATD_RING-Section11+12-Image.png
+   .. image:: ../../images/RATD_RING-Section11+12-Image.png
       :align: center
   
    a.	Customer-4 CE Nodes: EOS18, EOS19
@@ -262,7 +262,7 @@ Routing ATD Lab Guide - Ring Topology
 13.	Offer Centralized Services to L3VPN Customers
 =========================================================================
 
-   .. image:: images/RATD_RING-Section13-Image.png
+   .. image:: ../../images/RATD_RING-Section13-Image.png
       :align: center
   
    a.	EOS20 is providing a centralized service to L3VPN customers

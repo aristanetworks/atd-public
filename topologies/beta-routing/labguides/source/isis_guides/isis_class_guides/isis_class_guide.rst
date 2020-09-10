@@ -1,13 +1,13 @@
 IS-IS Class Guide
 =====================
 
-.. image:: images/IS-IS_Topology_Image.png
+.. image:: ../../images/IS-IS_Topology_Image.png
    :align: center
 
 Lab 1: Configure IS-IS as a Single Flood Domain
 ==========================================================
 
-  .. image:: images/IS-IS_Lab1_and_Lab2.png
+  .. image:: ../../images/IS-IS_Lab1_and_Lab2.png
     :align: center
 
 .. note:: IP addressing is already configured for all labs.
@@ -59,7 +59,7 @@ Tasks:
 Lab 2: Loopback Only Advertisements in LSPs
 ==========================================================
 
-  .. image:: images/IS-IS_Lab1_and_Lab2.png
+  .. image:: ../../images/IS-IS_Lab1_and_Lab2.png
     :align: center
 
 Prep:
@@ -102,7 +102,7 @@ Tasks:
 Lab 3: Broadcast Network
 ==========================================================
 
-  .. image:: images/IS-IS_Lab3.png
+  .. image:: ../../images/IS-IS_Lab3.png
     :align: center
 
 Prep:
