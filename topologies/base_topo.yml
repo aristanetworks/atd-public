@@ -17,7 +17,7 @@ topologies:
   routing:
     dev:
       2020.1:
-        branch: nested-2020.1
+        branch: nested/2020.1
         image: base-atd-routing-e4-24-1f-c2020-1-1-20200701-u
     prod:
       2020.1:
@@ -31,7 +31,7 @@ topologies:
   training:
     dev:
       2020.1:
-        branch: nested-2020.1
+        branch: nested/2020.1
         image: base-training-e4-24-1f-c2020-1-1-20200821
     prod:
       2020.1:
