@@ -1,7 +1,7 @@
 Establish MPLS transport label distribution via Segment-Routing
 =========================================================================
 
-   .. image:: ../../images/RATD-Section1+2-Image.png
+   .. image:: ../../images/RATD_RING-Section1+2-Image.png
       :align: center
 
     #. Enable Segment-Routing extensions to IS-IS, leveraging MPLS data plane encapsulation.
@@ -12,7 +12,7 @@ Establish MPLS transport label distribution via Segment-Routing
  
         - For example, EOS1 should have a Node SID of 900,001.
    
-    #. Review IS-IS adjacency SIDs on EOS2 and EOS5.
+    #. Review IS-IS adjacency SIDs on EOS7 and EOS8.
  
         :Question:
             Is there overlap? If so, will this present an issue? Why or Why not?
