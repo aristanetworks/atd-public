@@ -1,6 +1,9 @@
 Establish MPLS transport label distribution via Segment-Routing
 =========================================================================
 
+   .. image:: ../../images/RATD-Section1+2-Image.png
+      :align: center
+
     #. Enable Segment-Routing extensions to IS-IS, leveraging MPLS data plane encapsulation
       
         - The Segment Routing Global Block (SRGB) label range should be 900,000 – 965,535 on all Service Provider nodes
