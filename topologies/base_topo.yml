@@ -2,10 +2,10 @@
 topologies:
   datacenter:
     dev:
-      2020:
+      2020.1:
         branch: nested-2020.1
         image: base-atd-datacenter-e4-24-1f-c2020-1-1-20200909-u
-      2020.1:
+      2020:
         branch: nested-2020.1
         image: base-atd-datacenter-e4-24-1f-c2020-1-1-20200909-u
     prod:
