@@ -1,10 +1,10 @@
-Routing ATD Lab Guide
-=====================
+Routing ATD - Full Mesh Topology - Class Guide
+=====================================================
 
 .. image:: images/RATD-Topo-Image.png
    :align: center
 
-1.	Deploy IS-IS as the Service Provider Underlay IGP
+Deploy IS-IS as the Service Provider Underlay IGP
 ==========================================================
 
    .. image:: images/RATD-Section1+2-Image.png
@@ -22,12 +22,12 @@ Routing ATD Lab Guide
   
    f.	Once this task has been completed, all Service Provider nodes should be able to ping all other node loopback addresses
 
-2.	Establish MPLS transport label distribution via Segment-Routing
+Establish MPLS transport label distribution via Segment-Routing
 =========================================================================
 
    a.	Enable Segment-Routing extensions to IS-IS, leveraging MPLS data plane encapsulation
    
-   b.	The Segment Routing Global Block (SRBG) label range should be 900,000 – 965,535 on all Service Provider nodes
+   b.	The Segment Routing Global Block (SRGB) label range should be 900,000 – 965,535 on all Service Provider nodes
    
    c.	Each node should have a globally unique Node SID equal to 900,000 + NodeID
  
@@ -55,7 +55,7 @@ Routing ATD Lab Guide
 
          traceroute mpls segment-routing ip x.x.x.x/32 source y.y.y.y
 
-3.	Prepare to offer VPN services to customers via MP-BGP EVPN control-plane
+Prepare to offer VPN services to customers via MP-BGP EVPN control-plane
 ==================================================================================
 
    .. image:: images/RATD-Section3-Image.png
@@ -81,7 +81,7 @@ Routing ATD Lab Guide
   
       vii.	Use MPLS as the data-plane encapsulation / VPN label distribution
 
-4.	Prepare for Customer-1 Layer3 VPN Services
+Prepare for Customer-1 Layer3 VPN Services
 ===================================================================================
 
    .. image:: images/RATD-Section4+5+6+7-Image.png
@@ -101,7 +101,7 @@ Routing ATD Lab Guide
    
       ii.	Place the appropriate interfaces on the PE nodes into VRF “A”
 
-5.	Configure Customer-1 CE devices
+Configure Customer-1 CE devices
 =========================================================================
    
    a.	EOS11, EOS12 and EOS13 should all run OSPF process 100 in area 0
@@ -110,7 +110,7 @@ Routing ATD Lab Guide
    
    c.	Once this task is complete; EOS11, EOS12, and EOS13 should be able to ping each other’s loopbacks and directly connected interfaces
 
-6.	Establish PE-CE peering with Customer-1
+Establish PE-CE peering with Customer-1
 =========================================================================
    
    a.	EOS11 EOS12 should be in BGP AS 123
@@ -143,7 +143,7 @@ Routing ATD Lab Guide
  
    f.	Once this task is complete, all Customer-1 CE devices should be able to ping each other’s Loopback0 interface when sourcing the pings from their own Loopback0 interface
 
-7.	L3VPN Multi-Pathing
+L3VPN Multi-Pathing
 =========================================================================
   
    a.	When pinging from EOS15 to EOS12, multiple paths should be leveraged across the Service Provider; distributing the load between EOS1 and EOS6
@@ -155,7 +155,7 @@ Routing ATD Lab Guide
       .. image:: images/RATD_Section7_Task_C.png
          :align: center   
 
-8.	Prepare for Customer-2 Layer2 VPN E-LAN Services
+Prepare for Customer-2 Layer2 VPN E-LAN Services
 =========================================================================
 
    .. image:: images/RATD-Section8+9.png
@@ -183,7 +183,7 @@ Routing ATD Lab Guide
    
       ii.	MLAG must not be used to accomplish this task
 
-9.	Configure the Customer-2 CE Nodes
+Configure the Customer-2 CE Nodes
 =========================================================================
  
    a.	EOS9, EOS10 and EOS14 should all run OSPF process 200 in area 0
@@ -208,7 +208,7 @@ Routing ATD Lab Guide
 
    e.	Once this task is complete; EOS9, EOS10 and EOS14 should all form OSPF adjacencies with each other. These devices should all be able to ping each other’s Loopback0 interfaces when sourcing the ping from their Loopback0 interface
 
-10. Configure Customer-3 E-LINE Service
+Configure Customer-3 E-LINE Service
 =========================================================================
 
    .. image:: images/RATD-Section10-Image.png
@@ -222,7 +222,7 @@ Routing ATD Lab Guide
    
    d.	When this task is complete EOS16 and EOS17 should form an OSPF adjacency with each other, and be able to ping each other’s loopbacks
 
-11.	Prepare for Customer-4 Layer3 VPN Services
+Prepare for Customer-4 Layer3 VPN Services
 =========================================================================
 
    .. image:: images/RATD-Section11+12-Image.png
@@ -242,7 +242,7 @@ Routing ATD Lab Guide
   
       ii.	Place the appropriate interfaces on the PE nodes into VRF “B”
 
-12.	Establish PE-CE peering with Customer-4
+Establish PE-CE peering with Customer-4
 =========================================================================
  
    a.	EOS18 and EOS19 should be in BGP AS 200
@@ -259,7 +259,7 @@ Routing ATD Lab Guide
    
    c.	Once this task is complete, Customer-4 CE devices should be able to ping each other’s Loopback0 interface when sourcing the pings from their own Loopback0 interface
 
-13.	Offer Centralized Services to L3VPN Customers
+Offer Centralized Services to L3VPN Customers
 =========================================================================
 
    .. image:: images/RATD-Section13-Image.png
