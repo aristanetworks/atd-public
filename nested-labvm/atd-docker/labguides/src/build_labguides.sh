@@ -22,7 +22,7 @@ sphinx-build -b latex source build
 # Build the lab guides PDF
 make latexpdf
 
-rm /root/labguides/web/*
+rm -r /root/labguides/web/*
 
 # Put the new HTML and PDF in the proper directories
 mv /root/labguides/build/latex/ATD.pdf /root/labguides/web/
