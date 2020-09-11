@@ -9,18 +9,36 @@ Welcome to the Arista Routing ATD documentation!
 
 .. toctree::
    :maxdepth: 1
-   :caption: Routing
+   :caption: Routing ATD - Mesh Topology - Class Guide Only
 
-   RATD.rst
+   ratd_mesh_guides/ratd_mesh_class_guides/ratd_mesh_topo.rst
+   ratd_mesh_guides/ratd_mesh_class_guides/isis_underlay_class_guide.rst
+   ratd_mesh_guides/ratd_mesh_class_guides/sr_transport_class_guide.rst
+   ratd_mesh_guides/ratd_mesh_class_guides/evpn_setup_class_guide.rst
+   ratd_mesh_guides/ratd_mesh_class_guides/c1_l3vpn_class_guide.rst
+   ratd_mesh_guides/ratd_mesh_class_guides/l3vpn_mp_class_guide.rst
+   ratd_mesh_guides/ratd_mesh_class_guides/c2_l2vpn_class_guide.rst
+   ratd_mesh_guides/ratd_mesh_class_guides/c3_eline_class_guide.rst
+   ratd_mesh_guides/ratd_mesh_class_guides/c4_l3vpn_class_guide.rst
+   ratd_mesh_guides/ratd_mesh_class_guides/cent_svcs_l3vpn_class_guide.rst
 
 .. toctree::
    :maxdepth: 1
-   :caption: Routing Ring Topology
+   :caption: Routing ATD - Ring Topology - Class Guide Only
 
-   RATD_RING.rst
+   ratd_ring_guides/ratd_ring_class_guides/ratd_ring_topo.rst
+   ratd_ring_guides/ratd_ring_class_guides/isis_underlay_class_guide.rst
+   ratd_ring_guides/ratd_ring_class_guides/sr_transport_class_guide.rst
+   ratd_ring_guides/ratd_ring_class_guides/evpn_setup_class_guide.rst
+   ratd_ring_guides/ratd_ring_class_guides/c1_l3vpn_class_guide.rst
+   ratd_ring_guides/ratd_ring_class_guides/l3vpn_mp_class_guide.rst
+   ratd_ring_guides/ratd_ring_class_guides/c2_l2vpn_class_guide.rst
+   ratd_ring_guides/ratd_ring_class_guides/c3_eline_class_guide.rst
+   ratd_ring_guides/ratd_ring_class_guides/c4_l3vpn_class_guide.rst
+   ratd_ring_guides/ratd_ring_class_guides/cent_svcs_l3vpn_class_guide.rst
 
 .. toctree::
    :maxdepth: 1
-   :caption: Routing Ring Topology
+   :caption: ISIS Protocol Configuration - Class Guide
 
-   ISIS_CLASS_GUIDE.rst
+   isis_guides/isis_class_guides/isis_class_guide.rst
