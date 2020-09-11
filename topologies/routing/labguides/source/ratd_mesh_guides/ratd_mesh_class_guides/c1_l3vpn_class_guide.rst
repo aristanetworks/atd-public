@@ -5,7 +5,7 @@ Deploy L3VPN Service for Customer-1
       :align: center
 
 ===================================================================================
-Prepare for Customer-1 Layer3 VPN Services
+Prepare for Customer-1 Layer 3 VPN Services
 ===================================================================================
    
    #. On all PE nodes that are connected to Customer-1 CE nodes, define VRF “A”.

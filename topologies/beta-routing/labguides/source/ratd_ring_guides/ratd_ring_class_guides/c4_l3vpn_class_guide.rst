@@ -5,7 +5,7 @@ Deploy L3VPN Service for Customer-4
       :align: center
 
 =========================================================================
-Prepare for Customer-4 Layer3 VPN Services
+Prepare for Customer-4 Layer 3 VPN Services
 =========================================================================
 
    #. On all PE nodes that are connected to Customer-4 CE nodes, define VRF "B".
