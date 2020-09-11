@@ -15,7 +15,7 @@ Connecting
 
 |
 
-.. image:: images/connecting_1.png
+.. image:: images/ratd_menu.png
    :align: center
 
 |
