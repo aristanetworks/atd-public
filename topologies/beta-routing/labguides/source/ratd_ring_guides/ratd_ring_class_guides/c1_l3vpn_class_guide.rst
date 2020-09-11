@@ -1,7 +1,7 @@
 Deploy L3VPN Service for Customer-1
 =====================================================
 
-   .. image:: ../../images/RATD_RING-Section4+5+6+7-Image.png
+   .. image:: ../../images/ratd_ring_images/ratd_ring_c1_l3vpn.png
       :align: center
 
 ===================================================================================
@@ -52,12 +52,12 @@ Establish PE-CE peering with Customer-1
    
    #. Ensure EOS12 should has the following output from a ‘show ip route ospf’ command:
      
-      .. image:: ../../images/RATD_Section6_Task_D.png
+      .. image:: ../../images/ratd_common_images/ratd_c1_l3vpn_ospf.png
          :align: center   
    
    #. Ensure EOS15 should has the following output from a ‘show ip route bgp’ command:
 
-      .. image:: ../../images/RATD_Section6_Task_E.png
+      .. image:: ../../images/ratd_common_images/ratd_c1_l3vpn_bgp.png
          :align: center   
  
    #. Verify reachability between all Customer-1 CE devices by pinging each other’s Loopback0 interface while sourcing the pings from their own Loopback0 interface.

@@ -1,7 +1,7 @@
 Deploy Customer-3 E-LINE Service
 =========================================================================
 
-   .. image:: ../../images/RATD-Section10-Image.png
+   .. image:: ../../images/ratd_mesh_images/ratd_mesh_c3_eline.png
       :align: center
 
    #. Configure a P2P E-LINE service enabling direct Layer 2 adjacency between Customer-3 nodes EOS16 and EOS17.

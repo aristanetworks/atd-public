@@ -1,7 +1,7 @@
 Offer Centralized Services to L3VPN Customers
 =========================================================================
 
-   .. image:: ../../images/RATD-Section13-Image.png
+   .. image:: ../../images/ratd_mesh_images/ratd_mesh_cent_svcs_l3vpn.png
       :align: center
   
    #. Configure EOS20 for BGP ASN 500.

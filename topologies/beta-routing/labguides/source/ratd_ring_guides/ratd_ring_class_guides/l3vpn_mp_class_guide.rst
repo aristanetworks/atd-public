@@ -11,5 +11,5 @@ Enable L3VPN Multi-Pathing
 
          The specific labels may vary in your output.
   
-      .. image:: ../../images/RATD_RING_Section7_Task_C.png
+      .. image:: ../../images/ratd_ring_images/ratd_ring_l3vpn_mp.png
          :align: center 

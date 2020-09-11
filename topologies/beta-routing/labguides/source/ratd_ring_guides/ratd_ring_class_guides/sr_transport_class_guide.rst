@@ -1,7 +1,7 @@
 Establish MPLS transport label distribution via Segment-Routing
 =========================================================================
 
-   .. image:: ../../images/RATD_RING-Section1+2-Image.png
+   .. image:: ../../images/ratd_ring_images/ratd_ring_isis_sr.png
       :align: center
 
     #. Enable Segment-Routing extensions to IS-IS, leveraging MPLS data plane encapsulation.

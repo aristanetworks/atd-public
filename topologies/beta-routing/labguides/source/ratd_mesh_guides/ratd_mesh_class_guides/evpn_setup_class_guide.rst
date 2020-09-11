@@ -1,7 +1,7 @@
 Prepare to offer VPN services to customers via MP-BGP EVPN control-plane
 ==================================================================================
 
-   .. image:: ../../images/RATD-Section3-Image.png
+   .. image:: ../../images/ratd_mesh_images/ratd_mesh_evpn.png
       :align: center
 
    #. BGP Autonomous System 100 is leveraged by the Service Provider

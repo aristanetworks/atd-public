@@ -1,7 +1,7 @@
 Deploy L3VPN Service for Customer-4
 =====================================================
 
-   .. image:: ../../images/RATD_RING-Section11+12-Image.png
+   .. image:: ../../images/ratd_ring_images/ratd_ring_c4_l3vpn.png
       :align: center
 
 =========================================================================

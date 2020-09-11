@@ -1,7 +1,7 @@
 Deploy IS-IS as the Service Provider Underlay IGP
 ==========================================================
 
-   .. image:: ../../images/RATD_RING-Section1+2-Image.png
+   .. image:: ../../images/ratd_ring_images/ratd_ring_isis_sr.png
       :align: center
   
    #. Configure IS-IS to carry underlay IPv4 prefix reachability information.

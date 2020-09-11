@@ -1,7 +1,7 @@
 Deploy L2VPN Service for Customer-2
 =====================================================
 
-   .. image:: ../../images/RATD-Section8+9.png
+   .. image:: ../../images/ratd_mesh_images/ratd_mesh_c2_l2vpn.png
       :align: center
 
 =========================================================================
@@ -44,12 +44,12 @@ Configure the Customer-2 CE Nodes
  
       - EOS3:
  
-         .. image:: ../../images/RATD_Section9_Task_D_EOS3.png
+         .. image:: ../../images/ratd_common_images/ratd_c2_l2vpn_mp_1.png
             :align: center   
       
       - EOS6:
       
-         .. image:: ../../images/RATD_Section9_Task_D_EOS6.png
+         .. image:: ../../images/ratd_common_images/ratd_c2_l2vpn_mp_2.png
             :align: center
 
    #. Confirm that EOS9, EOS10 and EOS14 have formed OSPF adjacencies with each other. These devices should all be able to ping each other’s Loopback0 interfaces when sourcing the ping from their Loopback0 interface.
