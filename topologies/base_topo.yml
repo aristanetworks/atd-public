@@ -11,7 +11,7 @@ topologies:
     prod:
       2020.1:
         branch: v1.0.20200910a
-        image: base-atd-datacenter-e4-24-1f-c2020-1-1-20200902-u
+        image: base-atd-datacenter-e4-24-1f-c2020-1-1-20200909-u
     desc: 'Two Spines, Four Leafs. Focused on EOS fundamentals within the Data Center.'
     name: 'Datacenter'
     access: standard
