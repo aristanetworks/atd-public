@@ -16,7 +16,7 @@
 		"aristapublisher.eos",
 		"eamodio.gitlens"
 	],
-	"postCreateCommand": "cd /tmp; wget https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh && sh install.sh --unattended && if [ -d ~/dotfiles ]; then rm ~/.zshrc; fi && /usr/local/bin/dotbot -c ~/dotfiles/install.conf.yaml",
+	"postCreateCommand": "cd /tmp; wget https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh && sh install.sh --unattended && if [ -d ~/dotfiles ]; then rm ~/.zshrc; /usr/local/bin/dotbot -c ~/dotfiles/install.conf.yaml; fi",
 	"mounts": [ 
 		"source=${localEnv:HOME}/.ssh,target=/home/atddev/.ssh,type=bind,consistency=cached"
 	],
