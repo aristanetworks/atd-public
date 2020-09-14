@@ -44,7 +44,7 @@ Deploy IS-IS as the Service Provider Underlay IGP
 #. Configure the IS-IS routing protocol on the **EOS1** router using the following steps.
 
    #. Enable IS-IS with an instance ID of ``100`` and define a **NET** or Network Entity Title. For the 
-      NET, use the format of ``49.1111.0000.000`` **EOS ID** ``.00`` where ``1111`` is the IS-IS area 
+      NET, use the format of ``49.1111.0000.000`` **(EOS ID)** ``.00`` where ``1111`` is the IS-IS area 
       ID and ``0000.000`` **(EOS ID)** is the System ID.
 
       .. note::

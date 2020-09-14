@@ -1,4 +1,4 @@
-Welcome to the Arista Routing ATD documentation!
+Welcome to the Arista Routing ATD Documentation!
 ========================================================
 
 .. toctree::
