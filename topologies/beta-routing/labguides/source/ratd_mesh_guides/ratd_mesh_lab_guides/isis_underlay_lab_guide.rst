@@ -6,12 +6,12 @@ Deploy IS-IS as the Service Provider Underlay IGP
   
 .. note::
    The labs of the Routing ATD are structured to build on each other. The 
-   lab options menu will complete all lab configurations prior to the step selected 
+   Lab Options Menu will complete all lab configurations prior to the step selected 
    so you can always begin from a clean starting point.
 
 #. Log into the **LabAccess** jumpserver to prepare the lab environment.
 
-   #. Type ``reset`` or Lab Option 1 at the prompt. The script will configure the topology 
+   #. Type ``reset`` or Lab Option 1 at the Lab Selection Menu. The script will configure the topology 
       with the necessary base IPv4 addressing for the labs.
 
       .. admonition:: Did you know?
@@ -19,6 +19,8 @@ Deploy IS-IS as the Service Provider Underlay IGP
          The ``reset`` option (and all other options) makes use of CloudVision Portal APIs 
          to apply "configlets" to each EOS node ensuring they have the proper IPv4 configuration.
          
+#. Prior to configuration, verify the topology's base status.
+
    #. On **EOS1**, verify interface configurations and neighbors.
 
       .. note::
@@ -169,7 +171,7 @@ Deploy IS-IS as the Service Provider Underlay IGP
 
          ping 2.2.2.2 source 1.1.1.1
 
-#. Configure the remain Service Provider nodes (**EOS3 - EOS8**) for IS-IS using the steps above. Verify routing tables 
+#. Configure the remaining Service Provider nodes (**EOS3 - EOS8**) for IS-IS using the steps above. Verify routing tables 
    only show advertised Loopback0 interfaces for all nodes.
 
 
