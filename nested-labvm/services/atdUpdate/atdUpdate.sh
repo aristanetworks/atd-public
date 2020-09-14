@@ -54,3 +54,9 @@ su atdadmin -c 'docker-compose up -d --remove-orphans'
 echo 'y' | docker image prune
 
 systemctl restart sshd
+
+# if cEOS Startup present, run it
+if [ "/opt/ceos/scripts/Startup.sh" ]
+then
+    bash /opt/ceos/scripts/Startup.sh
+fi
