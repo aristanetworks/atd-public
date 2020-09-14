@@ -147,8 +147,9 @@ def main(args):
     else:
         pS("iBerg", "Error creating directory.")
     create_output.append("#!/bin/bash\n")
-    startup_output.append("#!/bin/bash\n")
     create_output.append("ip netns add atd\n")
+    startup_output.append("#!/bin/bash\n")
+    startup_output.append("ip netns add atd\n")
     # Get the veths created
     create_output.append("# Creating veths\n")
     for _veth in VETH_PAIRS:
