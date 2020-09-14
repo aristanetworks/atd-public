@@ -155,6 +155,7 @@ def main(args):
     for _veth in VETH_PAIRS:
         _v1, _v2 = _veth.split("-")
         create_output.append("ip link add {0} type veth peer name {1}\n".format(_v1, _v2))
+        startup_output.append("ip link add {0} type veth peer name {1}\n".format(_v1, _v2))
     create_output.append("#\n#\n# Creating anchor containers\n#\n")
     # Create initial anchor containers
     for _node in CEOS:
