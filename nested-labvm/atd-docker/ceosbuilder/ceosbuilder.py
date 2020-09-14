@@ -123,7 +123,20 @@ def main(args):
     """
     create_output = []
     startup_output = []
-    FILE_BUILD = YAML().load(open('ceos_build.yml', 'r'))
+    while True:
+        if exists(FILE_TOPO):
+            break
+        else:
+            sleep(sleep_delay)
+    try:
+        host_yaml = YAML().load(open(FILE_TOPO, 'r'))
+        TOPO_TAG = host_yaml['topology']
+    except:
+        print("File not found")
+    if args.topo:
+        FILE_BUILD = YAML().load(open(REPO_TOPO + TOPO_TAG + '/topo_build.yml', 'r'))
+    else:
+        FILE_BUILD = YAML().load(open('ceos_build.yml', 'r'))
     NODES = FILE_BUILD['nodes']
     for vdev in NODES:
         vdevn = list(vdev.keys())[0]
@@ -177,7 +190,7 @@ def main(args):
 if __name__ == '__main__':
     pS('OK', 'Starting cEOS Builder')
     parser = argparse.ArgumentParser()
-    parser.add_argument("-t", "--tag", type=str, help="Tag name for topology", default=None, required=False)
+    parser.add_argument("-t", "--topo", action="store_true", help="Use Topo of topology", default=False, required=False)
     parser.add_argument("-f", "--file", type=str, help="Custom Topology build file", default=None, required=False)
     args = parser.parse_args()
     #TODO add in logic to load custom build file. Default to tag's build file
