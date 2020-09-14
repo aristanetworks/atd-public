@@ -11,14 +11,14 @@ Welcome to the Arista Routing ATD documentation!
    :maxdepth: 1
    :caption: Routing ATD - Mesh Topology - Full Lab Guide
 
-   ratd_mesh_guides/ratd_mesh_lab_guides/ratd_mesh_topo.rst
+   ratd_mesh_guides/ratd_mesh_lab_guides/ratd_mesh_topo_lab_guide.rst
    ratd_mesh_guides/ratd_mesh_lab_guides/isis_underlay_lab_guide.rst
 
 .. toctree::
    :maxdepth: 1
    :caption: Routing ATD - Mesh Topology - Class Guide Only
 
-   ratd_mesh_guides/ratd_mesh_class_guides/ratd_mesh_topo.rst
+   ratd_mesh_guides/ratd_mesh_class_guides/ratd_mesh_topo_class_guide.rst
    ratd_mesh_guides/ratd_mesh_class_guides/isis_underlay_class_guide.rst
    ratd_mesh_guides/ratd_mesh_class_guides/sr_transport_class_guide.rst
    ratd_mesh_guides/ratd_mesh_class_guides/evpn_setup_class_guide.rst
@@ -33,13 +33,13 @@ Welcome to the Arista Routing ATD documentation!
    :maxdepth: 1
    :caption: Routing ATD - Ring Topology - Full Lab Guide
 
-   ratd_ring_guides/ratd_ring_lab_guides/ratd_ring_topo.rst
+   ratd_ring_guides/ratd_ring_lab_guides/ratd_ring_topo_lab_guide.rst
 
 .. toctree::
    :maxdepth: 1
    :caption: Routing ATD - Ring Topology - Class Guide Only
 
-   ratd_ring_guides/ratd_ring_class_guides/ratd_ring_topo.rst
+   ratd_ring_guides/ratd_ring_class_guides/ratd_ring_topo_class_guide.rst
    ratd_ring_guides/ratd_ring_class_guides/isis_underlay_class_guide.rst
    ratd_ring_guides/ratd_ring_class_guides/sr_transport_class_guide.rst
    ratd_ring_guides/ratd_ring_class_guides/evpn_setup_class_guide.rst
