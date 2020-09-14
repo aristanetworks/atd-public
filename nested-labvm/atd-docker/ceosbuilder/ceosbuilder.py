@@ -121,18 +121,8 @@ def main(args):
     """
     Main Function to build out cEOS files.
     """
-    # while True:
-    #     if exists(FILE_TOPO):
-    #         break
-    #     else:
-    #         sleep(sleep_delay)
-    # try:
-    #     host_yaml = YAML().load(open(FILE_TOPO, 'r'))
-    #     TOPO_TAG = host_yaml['topology']
-    # except:
-    #     pS("iBerg", "File not found")
-    # # Grab topo build file
-    # FILE_BUILD = YAML().load(open(REPO_TOPO + TOPO_TAG + '/topo_build.yml', 'r'))
+    create_output = []
+    startup_output = []
     FILE_BUILD = YAML().load(open('ceos_build.yml', 'r'))
     NODES = FILE_BUILD['nodes']
     for vdev in NODES:
@@ -143,39 +133,40 @@ def main(args):
         pS("OK", "Directory is present now.")
     else:
         pS("iBerg", "Error creating directory.")
+    create_output.append("#!/bin/bash\n")
+    startup_output.append("#!/bin/bash\n")
+    create_output.append("ip netns add atd\n")
+    # Get the veths created
+    create_output.append("# Creating veths\n")
+    for _veth in VETH_PAIRS:
+        _v1, _v2 = _veth.split("-")
+        create_output.append("ip link add {0} type veth peer name {1}\n".format(_v1, _v2))
+    create_output.append("#\n#\n# Creating anchor containers\n#\n")
+    # Create initial anchor containers
+    for _node in CEOS:
+        create_output.append("# Getting {0} nodes plubming\n".format(_node))
+        create_output.append("docker run -d --restart=always --name={0}-net --net=none busybox /bin/init\n".format(_node))
+        create_output.append("{0}pid=$(docker inspect --format '{{{{.State.Pid}}}}' {0}-net)\n".format(_node))
+        create_output.append("ln -sf /proc/${{{0}pid}}/ns/net /var/run/netns/{0}\n".format(_node))
+        create_output.append("# Connecting containers together\n")
+        for _intf in CEOS[_node].intfs:
+            _tmp_intf = CEOS[_node].intfs[_intf]
+            if _node in  _tmp_intf['veth'].split('-')[0]:
+                create_output.append("ip link set {0} netns {1} name {2} up\n".format(_tmp_intf['veth'].split('-')[0], _node, _tmp_intf['port']))
+            else:
+                create_output.append("ip link set {0} netns {1} name {2} up\n".format(_tmp_intf['veth'].split('-')[1], _node, _tmp_intf['port']))
+        # Get MGMT VETHS
+        create_output.append("ip link add {0}-eth0 type veth peer name {0}-mgmt\n".format(_node))
+        create_output.append("brctl addif {0} {1}-mgmt\n".format(MGMT_BRIDGE, _node))
+        create_output.append("ip link set {0}-eth0 netns {0} name eth0 up\n".format(_node))
+        create_output.append("ip link set {0}-mgmt up\n".format(_node))
+        create_output.append("sleep 1\n")
+        create_output.append("docker run -d --name={0} --net=container:{0}-net --ip {1} --privileged -v {2}/{0}:/mnt/flash:Z -e INTFTYPE=et -e MGMT_INTF=eth0 -e ETBA=1 -e SKIP_ZEROTOUCH_BARRIER_IN_SYSDBINIT=1 -e CEOS=1 -e EOS_PLATFORM=ceoslab -e container=docker -i -t ceosimage:{3} /sbin/init systemd.setenv=INTFTYPE=et systemd.setenv=MGMT_INTF=eth0 systemd.setenv=ETBA=1 systemd.setenv=SKIP_ZEROTOUCH_BARRIER_IN_SYSDBINIT=1 systemd.setenv=CEOS=1 systemd.setenv=EOS_PLATFORM=ceoslab systemd.setenv=container=docker\n".format(_node, CEOS[_node].ip, CEOS_NODES, CEOS_VERSION))
+
     # Create the initial deployment files
     with open(CEOS_SCRIPTS + 'Create.sh', 'w') as cout:
-        # Write initial bash line
-        cout.write("#!/bin/bash\n")
-        cout.write("ip netns add atd\n")
-        # cout.write("set -x -e\n")
-        # Get the veths created
-        cout.write("# Creating veths\n")
-        print(str(VETH_PAIRS))
-        for _veth in VETH_PAIRS:
-            _v1, _v2 = _veth.split("-")
-            cout.write("ip link add {0} type veth peer name {1}\n".format(_v1, _v2))
-        cout.write("#\n#\n# Creating anchor containers\n#\n")
-        # Create initial anchor containers
-        for _node in CEOS:
-            cout.write("# Getting {0} nodes plubming\n".format(_node))
-            cout.write("docker run -d --restart=always --name={0}-net --net=none busybox /bin/init\n".format(_node))
-            cout.write("{0}pid=$(docker inspect --format '{{{{.State.Pid}}}}' {0}-net)\n".format(_node))
-            cout.write("ln -sf /proc/${{{0}pid}}/ns/net /var/run/netns/{0}\n".format(_node))
-            cout.write("# Connecting containers together\n")
-            for _intf in CEOS[_node].intfs:
-                _tmp_intf = CEOS[_node].intfs[_intf]
-                if _node in  _tmp_intf['veth'].split('-')[0]:
-                    cout.write("ip link set {0} netns {1} name {2} up\n".format(_tmp_intf['veth'].split('-')[0], _node, _tmp_intf['port']))
-                else:
-                    cout.write("ip link set {0} netns {1} name {2} up\n".format(_tmp_intf['veth'].split('-')[1], _node, _tmp_intf['port']))
-            # Get MGMT VETHS
-            cout.write("ip link add {0}-eth0 type veth peer name {0}-mgmt\n".format(_node))
-            cout.write("brctl addif {0} {1}-mgmt\n".format(MGMT_BRIDGE, _node))
-            cout.write("ip link set {0}-eth0 netns {0} name eth0 up\n".format(_node))
-            cout.write("ip link set {0}-mgmt up\n".format(_node))
-            cout.write("sleep 1\n")
-            cout.write("docker run -d --name={0} --net=container:{0}-net --ip {1} --privileged -v {2}/{0}:/mnt/flash:Z -e INTFTYPE=et -e MGMT_INTF=eth0 -e ETBA=1 -e SKIP_ZEROTOUCH_BARRIER_IN_SYSDBINIT=1 -e CEOS=1 -e EOS_PLATFORM=ceoslab -e container=docker -i -t ceosimage:{3} /sbin/init systemd.setenv=INTFTYPE=et systemd.setenv=MGMT_INTF=eth0 systemd.setenv=ETBA=1 systemd.setenv=SKIP_ZEROTOUCH_BARRIER_IN_SYSDBINIT=1 systemd.setenv=CEOS=1 systemd.setenv=EOS_PLATFORM=ceoslab systemd.setenv=container=docker\n".format(_node, CEOS[_node].ip, CEOS_NODES, CEOS_VERSION))
+        for _create in create_output:
+            cout.write(_create)
 
 if __name__ == '__main__':
     pS('OK', 'Starting cEOS Builder')
