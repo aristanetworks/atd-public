@@ -14,4 +14,4 @@ RUN chown -R atdadmin:atdadmin .
 
 USER atdadmin
 
-CMD ["python", "ceosbuilder"]
+CMD ["python", "ceosbuilder.py"]
