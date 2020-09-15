@@ -56,7 +56,7 @@ echo 'y' | docker image prune
 systemctl restart sshd
 
 # if cEOS Startup present, run it
-if [ "/opt/ceos/scripts/.ceos.txt" ]
+if [ -f "/opt/ceos/scripts/.ceos.txt" ]
 then
     while : ; do
         [[ -f "/opt/ceos/scripts/Startup.sh" ]] && break
