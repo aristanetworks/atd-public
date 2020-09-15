@@ -14,7 +14,7 @@ Deploy IS-IS as the Service Provider Underlay IGP
       .. note::
 
          If you only partially completed Lab 1 or would like to ensure a clean starting point, 
-         executing the Lab Menu Option will ensure the proper 4configurations are in place to start 
+         executing the Lab Menu Option will ensure the proper configurations are in place to start 
          on all nodes.
 
 #. With IS-IS in place as the IGP for Loopback reachability, enable IS-IS Segment Routing on **EOS1**.
@@ -107,7 +107,9 @@ Deploy IS-IS as the Service Provider Underlay IGP
 
       .. note::
       
-         As mentioned, these labels are dynamically allocted by EOS out of the ``isis (dynamic)`` label range.
+         As mentioned, these labels are dynamically allocted by EOS out of the ``isis (dynamic)`` label range. Also 
+         note that unlike Node SIDs, Adj. SIDs are only locally significant to the router, so they may overlap 
+         between the various nodes in the topology.
 
       .. code-block:: text
 
