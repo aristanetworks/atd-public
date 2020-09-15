@@ -56,7 +56,12 @@ echo 'y' | docker image prune
 systemctl restart sshd
 
 # if cEOS Startup present, run it
-if [ "/opt/ceos/scripts/Startup.sh" ]
+if [ "/opt/ceos/scripts/.ceos.txt" ]
 then
+    while : ; do
+        [[ -f "/opt/ceos/scripts/Startup.sh" ]] && break
+        echo "Pausing until file exists."
+        sleep 1
+    done
     bash /opt/ceos/scripts/Startup.sh
 fi

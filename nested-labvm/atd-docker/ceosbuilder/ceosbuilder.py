@@ -197,7 +197,8 @@ def main(args):
             startup_output.append("ip link set {0}-mgmt up\n".format(_node))
             startup_output.append("sleep 1\n")
             startup_output.append("docker run -d --name={0} --net=container:{0}-net --ip {1} --privileged -v {2}/{0}:/mnt/flash:Z -e INTFTYPE=et -e MGMT_INTF=eth0 -e ETBA=1 -e SKIP_ZEROTOUCH_BARRIER_IN_SYSDBINIT=1 -e CEOS=1 -e EOS_PLATFORM=ceoslab -e container=docker -i -t ceosimage:{3} /sbin/init systemd.setenv=INTFTYPE=et systemd.setenv=MGMT_INTF=eth0 systemd.setenv=ETBA=1 systemd.setenv=SKIP_ZEROTOUCH_BARRIER_IN_SYSDBINIT=1 systemd.setenv=CEOS=1 systemd.setenv=EOS_PLATFORM=ceoslab systemd.setenv=container=docker\n".format(_node, CEOS[_node].ip, CEOS_NODES, CEOS_VERSION))
-            # startup_output.append("docker start {0}\n".format(_node))
+        create_output.append('touch {0}ceos.txt'.format(CEOS_SCRIPTS))
+        startup_output.append('rm -- "$0"\n')
 
         # Create the initial deployment files
         with open(CEOS_SCRIPTS + 'Create.sh', 'w') as cout:
