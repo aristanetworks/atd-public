@@ -167,6 +167,7 @@ def main(args):
             startup_output.append("ip link add {0} type veth peer name {1}\n".format(_v1, _v2))
         create_output.append("#\n#\n# Creating anchor containers\n#\n")
         # Create initial anchor containers
+        create_output.append("mdir {0}\n".format(CEOS_NODES))
         create_output.append("cp -r {0}{1}/files/ceos/* {2}/\n".format(REPO_TOPO, TOPO_TAG, CEOS_NODES))
         for _node in CEOS:
             create_output.append("# Getting {0} nodes plubming\n".format(_node))
