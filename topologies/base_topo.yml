@@ -19,6 +19,9 @@ topologies:
           2020.2:
             branch: nested-release
             image: base-atd-datacenter-e4-24-2-1f-c2020-2-1-20200911
+            eos:
+              - 4.24.1.1F
+              - 4.24.2.1F
     prod:
       2020.1:
         veos:
