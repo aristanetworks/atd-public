@@ -13,6 +13,7 @@ Welcome to the Arista Routing ATD Documentation!
 
    ratd_mesh_guides/ratd_mesh_lab_guides/ratd_mesh_topo_lab_guide.rst
    ratd_mesh_guides/ratd_mesh_lab_guides/isis_underlay_lab_guide.rst
+   ratd_mesh_guides/ratd_mesh_lab_guides/evpn_setup_lab_guide.rst
 
 .. toctree::
    :maxdepth: 1
