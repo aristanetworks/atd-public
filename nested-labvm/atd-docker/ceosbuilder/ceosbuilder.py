@@ -16,7 +16,7 @@ REPO_TOPO = REPO_PATH + 'topologies/'
 AVAIL_TOPO = REPO_TOPO + 'available_topo.yaml'
 MGMT_BRIDGE = 'vmgmt'
 sleep_delay = 30
-CEOS_VERSION = '4.24.1.1f'
+CEOS_VERSION = '4.24.1.1F'
 
 VETH_PAIRS = []
 CEOS = {}
@@ -139,7 +139,7 @@ def main(args):
             _CEOS = True
     if _CEOS:
         try:
-            CEOS_VERSION = host_yaml['version'].lower()
+            CEOS_VERSION = host_yaml['version'].upper()
         except:
             pS("INFO", "Version parameter not found.")
         if args.topo:
