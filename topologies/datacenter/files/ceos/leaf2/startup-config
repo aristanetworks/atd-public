@@ -1,4 +1,4 @@
-username arista privilege 15 role network-admin secret sha512 /SHqFkj.vjr5wO94/WnnFBvgfd2j/gsP.
+username arista privilege 15 secret 5 $1$4VjIjfd1$XkUVulbNDESHFzcxDU.Tk1
 !
 management api http-commands
    no shutdown
