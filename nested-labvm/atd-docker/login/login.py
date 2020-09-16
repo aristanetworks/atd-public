@@ -105,9 +105,6 @@ def device_menu():
         if 'port' in additional_ssh_node:
             device_dict[str(counter)]['port'] = additional_ssh_node['port']
             device_dict[additional_ssh_node['hostname']]['port'] = additional_ssh_node['port']
-        if 'username' in additional_ssh_node:
-            device_dict[str(counter)]['username'] = additional_ssh_node['username']
-            device_dict[additional_ssh_node['hostname']]['username'] = additional_ssh_node['username']
         counter += 1
 
 
