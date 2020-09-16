@@ -159,7 +159,7 @@ services:
       - /opt/atd/topologies:/opt/atd/topologies
   ansible:
     container_name: atd-ansible-avd
-    image: mpergament/avd-cpv-atd-nested:latest
+    image: atddocker_ansible_gui:1.0
     restart: always
     ports:
       - "2222:22/tcp"
@@ -167,7 +167,7 @@ services:
       - atd_nginx
     volumes:
       - /home/atdadmin/ansible:/home/ansible
-      - /home/arista/.ssh:/home/arista/.ssh:rw
+      - /home/arista/.ssh:/home/ansible/.ssh:rw
 
 networks:
   guac_net:
