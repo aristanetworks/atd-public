@@ -161,10 +161,8 @@ services:
     container_name: atd-ansible-avd
     image: atddocker_ansible_gui:1.0
     restart: always
-    ports:
-      - "2222:22/tcp"
     networks:
-      - atd_nginx
+      - guac_net
     volumes:
       - /home/atdadmin/ansible:/home/ansible
       - /home/arista/.ssh:/home/ansible/.ssh:rw
