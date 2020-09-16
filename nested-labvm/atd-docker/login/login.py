@@ -95,19 +95,19 @@ def device_menu():
     counter = 1
     for veos in veos_info_sorted:
         print("{0}. {1} ({2})".format(str(counter),veos['hostname'],veos['hostname']))
-        device_dict[str(counter)] = veos['ip_addr']
-        device_dict[veos['hostname']] = veos['ip_addr']
+        device_dict[str(counter)] = { 'ip_addr': veos['ip_addr'] }
+        device_dict[veos['hostname']] = { 'ip_addr': veos['ip_addr'] }
         counter += 1
     for additional_ssh_node in additional_ssh_nodes_sorted:
         print("{0}. {1} ({2})".format(str(counter),additional_ssh_node['hostname'],additional_ssh_node['hostname']))
-        device_dict[str(counter)] = additional_ssh_node['ip_addr']
-        device_dict[additional_ssh_node['hostname']] = additional_ssh_node['ip_addr']
+        device_dict[str(counter)] = { 'ip_addr': additional_ssh_node['ip_addr'] }
+        device_dict[additional_ssh_node['hostname']] = { 'ip_addr': additional_ssh_node['ip_addr'] }
         if 'port' in additional_ssh_node:
           device_dict[str(counter)]
           device_dict[additional_ssh_node['hostname']]['port'] = additional_ssh_node['port']
         counter += 1
 
-    print(device_dict)
+
     
     print("\nOther Options: ")
     print("96. Screen (screen) - Opens a screen session to each of the hosts")
@@ -123,9 +123,9 @@ def device_menu():
       if user_input.lower() in device_dict:
           previous_menu = menu_mode
           if 'port' in device_dict[user_input]:
-              os.system('ssh -o StrictHostKeyChecking=no arista@{0} -p {1}'.format(device_dict[user_input],device_dict[user_input]['port']))
+              os.system('ssh -o StrictHostKeyChecking=no arista@{0} -p {1}'.format(device_dict[user_input]['ip_addr'],device_dict[user_input]['port']))
           else:
-            os.system('ssh -o StrictHostKeyChecking=no arista@' + device_dict[user_input])
+            os.system('ssh -o StrictHostKeyChecking=no arista@' + device_dict[user_input]['ip_addr'])
       elif user_input == '96' or user_input.lower() == 'screen':
           os.system('/usr/bin/screen')
       elif user_input == '97' or user_input.lower() == 'back':
