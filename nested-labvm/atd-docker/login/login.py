@@ -123,13 +123,9 @@ def device_menu():
     # Check to see if input is in device_dict
     counter = 1
     try:
-      ssh_command = ''
+      ssh_command = 'ssh -o StrictHostKeyChecking=no arista@{0}'.format(device_dict[user_input]['ip_addr'])
       if user_input.lower() in device_dict:
           previous_menu = menu_mode
-          if 'username' in device_dict[user_input]:
-            ssh_command += 'ssh -o StrictHostKeyChecking=no {0}@{1}'.format(device_dict[user_input]['username'],device_dict[user_input]['ip_addr'])
-          else:
-            ssh_command += 'ssh -o StrictHostKeyChecking=no arista@{0}'.format(device_dict[user_input]['ip_addr'])
           if 'port' in device_dict[user_input]:
               ssh_command += ' -p {0}'.format(device_dict[user_input]['port'])
           else:
