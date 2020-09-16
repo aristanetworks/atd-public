@@ -23,6 +23,8 @@ services:
     image: atddocker_login:1.0
     restart: always
     hostname: devbox
+    networks:
+      - atd_nginx
     environment:
       - PYTHONUNBUFFERED=1
     volumes:
