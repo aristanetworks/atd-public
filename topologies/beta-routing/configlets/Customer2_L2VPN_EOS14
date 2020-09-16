@@ -8,6 +8,7 @@ interface Ethernet2
 !
 interface Port-Channel14
    description PEs: EOS6,EOS8
+   no switchport
    ip address 10.0.0.14/24
 !
 router ospf 200

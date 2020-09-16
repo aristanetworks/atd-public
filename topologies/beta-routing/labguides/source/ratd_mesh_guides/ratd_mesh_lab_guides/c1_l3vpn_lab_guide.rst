@@ -13,7 +13,7 @@ Deploy L3VPN Service for Customer-1
       with the necessary base IPv4 addressing, IS-IS IGP, enable SR extensions for MPLS and BGP EVPN.
    
 #. Customer-1 is attached to three Service Provider nodes, **EOS1**, **EOS6** and **EOS8**. These will be our Provider 
-   Edge, or **PE** nodes. Since this customer will require are Layer 3 VPN Service, create an isolated VRF for their 
+   Edge, or **PE** nodes. Since this customer will require a Layer 3 VPN Service, create an isolated VRF for their 
    traffic and use EVPN to advertise the customer networks to other interested PEs.
 
    #. Create a VRF Instance called ``A`` on **EOS1**, **EOS6** and **EOS8**.
@@ -30,7 +30,7 @@ Deploy L3VPN Service for Customer-1
          !
          ip routing vrf A
 
-   #. Place to interface attached to the Customer Edge, or **CE**, node for Customer-1 into VRF ``A`` on **EOS1** to 
+   #. Place the interface attached to the Customer Edge, or **CE**, node for Customer-1 into VRF ``A`` on **EOS1** to 
       ensure their traffic remains isolated.
 
       .. note::
@@ -62,7 +62,7 @@ Deploy L3VPN Service for Customer-1
             vrf A
             ip address 10.8.15.8/24
 
-   #. Now leverage BGP EVPN to advertise reachability of any routes learned in VRF ``A`` from the customer to by setting 
+   #. Now leverage BGP EVPN to advertise reachability of any routes learned in VRF ``A`` from the customer by setting 
       a Route Distinguisher, or **RD**, and a Route Target, or **RT**, within BGP on **EOS1**. It should have a unique 
       **RD** following the format of **<Loopback0 IP>** ``:1`` and the **RT** on all routers in the VPN should match as 
       ``1:1``.
@@ -83,7 +83,7 @@ Deploy L3VPN Service for Customer-1
                route-target import evpn 1:1
                route-target export evpn 1:1
 
-   #. Repeat the above step for **EOS6** and **EOS8**, adjusting the RD and using the same RT.
+   #. Repeat the above step for **EOS6** and **EOS8**, adjusting the **RD** and using the same **RT**.
 
       **EOS6**
 

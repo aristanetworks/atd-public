@@ -10,7 +10,7 @@ interface Port-Channel9
    switchport access vlan 20
    !
    evpn ethernet-segment
-      identifier 0000:0200:0200:1000:0608
+      identifier 0000:0200:0200:1000:0304
       route-target import 00:02:00:01:00:20
    lacp system-id 0000.0000.0034
    spanning-tree portfast

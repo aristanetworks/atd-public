@@ -8,6 +8,7 @@ interface Ethernet2
 !
 interface Port-Channel9
    description PEs: EOS3,EOS4
+   no switchport
    ip address 10.0.0.9/24
 !
 router ospf 200
