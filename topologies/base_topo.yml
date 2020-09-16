@@ -2,16 +2,37 @@
 topologies:
   datacenter:
     dev:
-      2020.1:
-        branch: nested/2020.1
-        image: base-atd-datacenter-e4-24-1f-c2020-1-1-20200909-u
-      2020.2:
-        branch: nested-release
-        image: base-atd-datacenter-e4-24-2-1f-c2020-2-1-20200911
+      veos:
+        cpu: 30
+        ram: 60
+        cvp:
+          2020.1:
+            branch: nested/2020.1
+            image: base-atd-datacenter-e4-24-1f-c2020-1-1-20200909-u
+            eos:
+              - 4.24.1F
+          2020.2:
+            branch: nested-release
+            image: base-atd-datacenter-e4-24-2-1f-c2020-2-1-20200911
+            eos:
+              - 4.24.2.1F
+      ceos:
+        cpu: 24
+        ram: 36
+        cvp:
+          2020.2:
+            branch: ceos-nested
+            image: base-atd-ceos-datacenter-e4-24-2-1f-c2020-2-1-20200916-u
+            eos:
+              - 4.24.1.1F
+              - 4.24.2.1F
     prod:
       2020.1:
-        branch: v1.0.20200910a
-        image: base-atd-datacenter-e4-24-1f-c2020-1-1-20200909-u
+        veos:
+          cpu: 30
+          ram: 60
+          branch: v1.0.20200910a
+          image: base-atd-datacenter-e4-24-1f-c2020-1-1-20200909-u
     desc: 'Two Spines, Four Leafs. Focused on EOS fundamentals within the Data Center.'
     name: 'Datacenter'
     access: standard
@@ -19,12 +40,20 @@ topologies:
     ram: 60
   routing:
     dev:
-      2020.1:
-        branch: nested/2020.1
-        image: base-atd-routing-e4-24-1f-c2020-1-1-20200701-u
-      2020.2:
-        branch: nested-release
-        image: base-atd-routing-e4-24-2-1f-c2020-2-1-20200911
+      veos:
+        cpu: 44
+        ram: 90
+        cvp:
+          2020.1:
+            branch: nested/2020.1
+            image: base-atd-routing-e4-24-1f-c2020-1-1-20200701-u
+            eos:
+              - 4.24.1F
+          2020.2:
+            branch: nested-release
+            image: base-atd-routing-e4-24-2-1f-c2020-2-1-20200911
+            eos:
+              - 4.24.2.1F
     prod:
       2020.1:
         branch: v1.0.20200910a
@@ -36,9 +65,15 @@ topologies:
     ram: 90
   training:
     dev:
-      2020.1:
-        branch: nested/2020.1
-        image: base-training-e4-24-1f-c2020-1-1-20200916-u
+      veos:
+        cpu: 36
+        ram: 72
+        cvp:
+          2020.1:
+            branch: nested/2020.1
+            image: base-training-e4-24-1f-c2020-1-1-20200916-u
+            eos:
+              - 4.24.1F
     prod:
       2020.1:
         branch: v1.0.20200910a
