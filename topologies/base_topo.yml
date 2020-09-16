@@ -21,7 +21,7 @@ topologies:
         ram: 36
         cvp:
           2020.2:
-            branch: nested-release
+            branch: ceos-nested
             image: base-atd-ceos-datacenter-e4-24-2-1f-c2020-2-1-20200914
             eos:
               - 4.24.1.1F
