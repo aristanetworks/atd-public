@@ -57,7 +57,9 @@ Prepare to offer VPN services to customers via MP-BGP EVPN control-plane
       .. note::
 
          In EOS, the ``send-community`` command alone will send all communities.  You can selectively 
-         enable them if you would prefer to send only extended. EVPN requires the use of extended communities.
+         enable them if you would prefer to send only extended. EVPN requires the use of extended communities. Also 
+         note that EOS by default includes a ``maximum-routes`` setting of 12,000 for all BGP peers to prevent 
+         a peer from sending more routes than expected.  This value can be changed per network requirements.
 
       .. code-block:: text
 
