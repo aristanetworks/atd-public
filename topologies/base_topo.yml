@@ -38,11 +38,11 @@ topologies:
     dev:
       2020.1:
         branch: nested/2020.1
-        image: base-training-e4-24-1f-c2020-1-1-20200821
+        image: base-training-e4-24-1f-c2020-1-1-20200916-u
     prod:
       2020.1:
         branch: v1.0.20200910a
-        image: base-training-e4-24-1f-c2020-1-1-20200821
+        image: base-training-e4-24-1f-c2020-1-1-20200916-u
     desc: 'Four Spines, Four Leafs. For use by the Arista Training Team.'
     name: 'Training'
     access: admin
