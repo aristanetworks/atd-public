@@ -103,8 +103,11 @@ def device_menu():
         device_dict[str(counter)] = { 'ip_addr': additional_ssh_node['ip_addr'] }
         device_dict[additional_ssh_node['hostname']] = { 'ip_addr': additional_ssh_node['ip_addr'] }
         if 'port' in additional_ssh_node:
-          device_dict[str(counter)]
-          device_dict[additional_ssh_node['hostname']]['port'] = additional_ssh_node['port']
+            device_dict[str(counter)]['port'] = additional_ssh_node['port']
+            device_dict[additional_ssh_node['hostname']]['port'] = additional_ssh_node['port']
+        if 'username' in additional_ssh_node:
+            device_dict[str(counter)]['username'] = additional_ssh_node['username']
+            device_dict[additional_ssh_node['hostname']]['username'] = additional_ssh_node['username']
         counter += 1
 
 
@@ -120,12 +123,19 @@ def device_menu():
     # Check to see if input is in device_dict
     counter = 1
     try:
+      ssh_command = ''
       if user_input.lower() in device_dict:
           previous_menu = menu_mode
-          if 'port' in device_dict[user_input]:
-              os.system('ssh -o StrictHostKeyChecking=no arista@{0} -p {1}'.format(device_dict[user_input]['ip_addr'],device_dict[user_input]['port']))
+          if 'username' in device_dict[user_input]:
+            ssh_command += 'ssh -o StrictHostKeyChecking=no {0}@{1}'.format(device_dict[user_input]['username'],device_dict[user_input]['ip_addr'])
           else:
-            os.system('ssh -o StrictHostKeyChecking=no arista@' + device_dict[user_input]['ip_addr'])
+            ssh_command += 'ssh -o StrictHostKeyChecking=no arista@{0}'.format(device_dict[user_input]['ip_addr'])
+          if 'port' in device_dict[user_input]:
+              ssh_command += ' -p {0}'.format(device_dict[user_input]['port'])
+          else:
+            pass
+          # Execute ssh command
+          os.system(ssh_command)
       elif user_input == '96' or user_input.lower() == 'screen':
           os.system('/usr/bin/screen')
       elif user_input == '97' or user_input.lower() == 'back':
