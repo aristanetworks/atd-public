@@ -197,5 +197,5 @@ nodes:
   
 additional_ssh_nodes:
   - ansible:
-      ip_address: 192.168.0.1
+      ip_addr: 192.168.0.1
       port: 2222
