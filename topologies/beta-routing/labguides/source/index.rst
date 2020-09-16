@@ -53,6 +53,6 @@ Welcome to the Arista Routing ATD Documentation!
 
 .. toctree::
    :maxdepth: 1
-   :caption: ISIS Protocol Configuration - Class Guide
+   :caption: IS-IS Protocol Configuration - Class Guide
 
    isis_guides/isis_class_guides/isis_class_guide.rst
