@@ -30,6 +30,7 @@ except:
   sys.exit("topo_build not available")
 
 veos_info = topoinfo['nodes']
+additional_ssh_nodes = topoinfo['additional_ssh_nodes']
 
 # Set default menu mode
 menu_mode = 'MAIN'
@@ -77,6 +78,7 @@ def device_menu():
 
     # Sort veos instances
     veos_info_sorted = sort_veos(veos_info)
+    additional_ssh_nodes_sorted = sort_veos(additional_ssh_nodes)
     print("\n\n*****************************************")
     print("*****Jump Host for Arista Test Drive*****")
     print("*****************************************")
@@ -96,6 +98,16 @@ def device_menu():
         device_dict[str(counter)] = veos['ip_addr']
         device_dict[veos['hostname']] = veos['ip_addr']
         counter += 1
+    for additional_ssh_node in additional_ssh_nodes_sorted:
+        print("{0}. {1} ({2})".format(str(counter),additional_ssh_node['hostname'],additional_ssh_node['hostname']))
+        device_dict[str(counter)] = additional_ssh_node['ip_addr']
+        device_dict[additional_ssh_node['hostname']] = additional_ssh_node['ip_addr']
+        if 'port' in additional_ssh_node:
+          device_dict[str(counter)]
+          device_dict[additional_ssh_node['hostname']]['port'] = additional_ssh_node['port']
+        counter += 1
+
+    print(device_dict)
     
     print("\nOther Options: ")
     print("96. Screen (screen) - Opens a screen session to each of the hosts")
@@ -110,7 +122,10 @@ def device_menu():
     try:
       if user_input.lower() in device_dict:
           previous_menu = menu_mode
-          os.system('ssh -o StrictHostKeyChecking=no arista@' + device_dict[user_input])
+          if 'port' in device_dict[user_input]:
+              os.system('ssh -o StrictHostKeyChecking=no arista@{0} -p {1}'.format(device_dict[user_input],device_dict[user_input]['port']))
+          else:
+            os.system('ssh -o StrictHostKeyChecking=no arista@' + device_dict[user_input])
       elif user_input == '96' or user_input.lower() == 'screen':
           os.system('/usr/bin/screen')
       elif user_input == '97' or user_input.lower() == 'back':

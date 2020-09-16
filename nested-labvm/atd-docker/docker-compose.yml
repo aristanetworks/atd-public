@@ -165,6 +165,7 @@ services:
       - atd_nginx
     volumes:
       - /home/atdadmin/ansible:/home/ansible
+      - /home/arista/.ssh:/home/arista/.ssh:rw
 
 networks:
   guac_net:
