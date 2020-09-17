@@ -116,16 +116,19 @@ def destinationValidate(topo_tag):
     if not exists(DATA_OUTPUT):
         mkdir(DATA_OUTPUT)
 
-def createMac(dev_id):
+def createMac(dev_type, dev_id):
     """
     Function to build dev specific MAC Address.
     """
-    if dev_id < 10:
-        return('b{0}'.format(dev_id))
-    elif dev_id >= 10 and dev_id < 20:
-        return('c{0}'.format(dev_id - 10))
-    elif dev_id >=20 and dev_id < 30:
-        return('d{0}'.format(dev_id - 20))
+    if dev_type == 'cvp':
+        return('a{0}'.format(dev_id))
+    else:
+        if dev_id < 10:
+            return('b{0}'.format(dev_id))
+        elif dev_id >= 10 and dev_id < 20:
+            return('c{0}'.format(dev_id - 10))
+        elif dev_id >=20 and dev_id < 30:
+            return('d{0}'.format(dev_id - 20))
 
 def getCPUs(start_cpu,cpu_total=0):
     """
@@ -151,6 +154,7 @@ def pS(mstat,mtype):
 
 def main(uargs):
     global DATA_OUTPUT
+    CVP_NODES_CPUS = []
     while True:
         if exists(FILE_TOPO):
             break
@@ -164,10 +168,19 @@ def main(uargs):
     FILE_BUILD = YAML().load(open(REPO_TOPO + TOPO_TAG + '/topo_build.yml', 'r'))
     host_cpu_count = FILE_BUILD['host_cpu']
     cvp_cpu_count = FILE_BUILD['cvp_cpu']
+    cvp_node_count = FILE_BUILD['cvp_nodes']
     veos_cpu_count = FILE_BUILD['veos_cpu']
-    CVP_CPU_START = int(host_cpu_count / 2)
-    VEOS_CPU_START = int(CVP_CPU_START + (cvp_cpu_count / 2))
-    CVP_CPUS = getCPUs(CVP_CPU_START, cvp_cpu_count)
+    if cvp_node_count == 1:
+        CVP_CPU_START = int(host_cpu_count / 2)
+        CVP_CPUS = getCPUs(CVP_CPU_START, cvp_cpu_count)
+        CVP_NODES_CPUS.append(CVP_CPUS)
+        VEOS_CPU_START = int(CVP_CPU_START + (cvp_cpu_count / 2))
+    else:
+        _node_start = int(host_cpu_count / 2)
+        for _cvp_node in range(cvp_node_count):
+            CVP_NODES_CPUS.append(getCPUs(_node_start, cvp_cpu_count))
+            _node_start = int(_node_start + (cvp_cpu_count / 2))
+        VEOS_CPU_START = _node_start
     VEOS_CPUS = getCPUs(VEOS_CPU_START)
     NODES = FILE_BUILD['nodes']
     DATA_OUTPUT += TOPO_TAG + "/"
@@ -180,62 +193,58 @@ def main(uargs):
     # Output as script OVS Bridge deletion
     deleteOVS(TOPO_TAG)
     # Create xml file for CVP KVM Node
-    # Open base cvp xml
-    tree = ET.parse(BASE_XML_CVP)
-    root = tree.getroot()
-    # Add CPU Configuration
-    vcpu = ET.SubElement(root, 'vcpu', attrib={
-        'placement': 'static',
-        'cpuset': CVP_CPUS
-    })
-    vcpu.text = str(cvp_cpu_count)
-    # Export out xml for CVP node
-    tree.write(DATA_OUTPUT + 'cvp.xml')
-    KOUT_LINES.append("sudo virsh define cvp.xml")
-    KOUT_LINES.append("sudo virsh start cvp")
-    KOUT_LINES.append("sudo virsh autostart cvp")
-    pS("OK", "Created Virsh commands for cvp")
-
-
-    # Create xml files for vEOS KVM Nodes
-    node_counter = 0
-    for vdev in VEOS_NODES:
-        # Open base XML file
-        tree = ET.parse(BASE_XML_VEOS)
+    for _cvp in range(cvp_node_count):
+        # Open base cvp xml
+        tree = ET.parse(BASE_XML_CVP)
         root = tree.getroot()
-        # Get to the device section and add interfaces
-        xdev = root.find('./devices')
         # Add name item for KVM domain
         vname = ET.SubElement(root, 'name')
-        vname.text = vdev
-        # Add CPU configuration
+        vname.text = 'cvp{0}'.format(_cvp + 1)
+        # Add CPU Configuration
         vcpu = ET.SubElement(root, 'vcpu', attrib={
             'placement': 'static',
-            'cpuset': VEOS_CPUS
+            'cpuset': CVP_NODES_CPUS[_cvp]
         })
-        vcpu.text = str(veos_cpu_count)
+        vcpu.text = str(cvp_cpu_count)
+        # Get to the device section and add interfaces
+        xdev = root.find('./devices')
         # Add/Create disk location for xml
-        tmp_disk = ET.SubElement(xdev, 'disk', attrib={
+        tmp_disk1 = ET.SubElement(xdev, 'disk', attrib={
             'type': 'file',
             'device': 'disk'
         })
-        ET.SubElement(tmp_disk, 'driver', attrib={
+        ET.SubElement(tmp_disk1, 'driver', attrib={
             'name': 'qemu',
             'type': 'qcow2',
             'cache': 'directsync',
             'io': 'native'
         })
-        ET.SubElement(tmp_disk, 'source', attrib={'file': '/var/lib/libvirt/images/veos/{0}.qcow2'.format(vdev)})
-        ET.SubElement(tmp_disk, 'target', attrib={
-            'dev': 'hda',
-            'bus': 'ide'
+        ET.SubElement(tmp_disk1, 'source', attrib={'file': '/var/lib/libvirt/images/cvp{0}/disk1.qcow2'.format(_cvp + 1)})
+        ET.SubElement(tmp_disk1, 'target', attrib={
+            'dev': 'vda',
+            'bus': 'virtio'
         })
-        ET.SubElement(tmp_disk, 'alias', attrib={'name': 'ide0-0-0'})
+        # Second disk for CVP
+        tmp_disk2 = ET.SubElement(xdev, 'disk', attrib={
+            'type': 'file',
+            'device': 'disk'
+        })
+        ET.SubElement(tmp_disk2, 'driver', attrib={
+            'name': 'qemu',
+            'type': 'qcow2',
+            'cache': 'directsync',
+            'io': 'native'
+        })
+        ET.SubElement(tmp_disk2, 'source', attrib={'file': '/var/lib/libvirt/images/cvp{0}/disk2.qcow2'.format(_cvp + 1)})
+        ET.SubElement(tmp_disk2, 'target', attrib={
+            'dev': 'vdb',
+            'bus': 'virtio'
+        })
         # Starting interface section
         tmp_int = ET.SubElement(xdev, 'interface', attrib={'type': 'bridge'})
         ET.SubElement(tmp_int, 'source', attrib={'bridge': 'vmgmt'})
-        ET.SubElement(tmp_int, 'mac', attrib={'address': '00:1c:73:{0}:c6:01'.format(createMac(node_counter))})
-        ET.SubElement(tmp_int, 'target', attrib={'dev': vdev})
+        ET.SubElement(tmp_int, 'mac', attrib={'address': '00:1c:73:{0}:c6:01'.format(createMac('cvp', _cvp))})
+        ET.SubElement(tmp_int, 'target', attrib={'dev': 'cvp{0}'.format(_cvp + 1)})
         ET.SubElement(tmp_int, 'model', attrib={'type': 'virtio'})
         ET.SubElement(tmp_int, 'address', attrib={
             'type': 'pci',
@@ -244,33 +253,100 @@ def main(uargs):
             'slot': '0x03',
             'function': '0x0'
         })
-        # Interface specific links
-        d_intf_counter = 1
-        for vintf in VEOS_NODES[vdev].intfs:
-            tmp_dev = VEOS_NODES[vdev].intfs[vintf]
+        # Export out xml for CVP node
+        tree.write(DATA_OUTPUT + 'cvp{0}.xml'.format(_cvp + 1))
+        if _cvp + 1 == cvp_node_count:
+            KOUT_LINES.append("sudo mv /var/lib/libvirt/images/cvp /var/lib/libvirt/images/cvp{0}".format(_cvp + 1))
+        else:
+            KOUT_LINES.append("sudo mkdir /var/lib/libvirt/images/cvp{0}".format(_cvp + 1))
+            KOUT_LINES.append("sudo cp -r /var/lib/libvirt/images/cvp/disk* /var/lib/libvirt/images/cvp{0}/".format(_cvp + 1))
+        KOUT_LINES.append("sudo virsh define cvp{0}.xml".format(_cvp + 1))
+        KOUT_LINES.append("sudo virsh start cvp{0}".format(_cvp + 1))
+        KOUT_LINES.append("sudo virsh autostart cvp{0}".format(_cvp + 1))
+        pS("OK", "Created Virsh commands for cvp{0}".format(_cvp + 1))
+
+    if 'eos_type' in host_yaml:
+        if host_yaml['eos_type'] == 'veos':
+            VEOS = True
+        else:
+            VEOS = False
+    else:
+        VEOS = True
+    if VEOS:
+        # Create xml files for vEOS KVM Nodes
+        node_counter = 0
+        for vdev in VEOS_NODES:
+            # Open base XML file
+            tree = ET.parse(BASE_XML_VEOS)
+            root = tree.getroot()
+            # Get to the device section and add interfaces
+            xdev = root.find('./devices')
+            # Add name item for KVM domain
+            vname = ET.SubElement(root, 'name')
+            vname.text = vdev
+            # Add CPU configuration
+            vcpu = ET.SubElement(root, 'vcpu', attrib={
+                'placement': 'static',
+                'cpuset': VEOS_CPUS
+            })
+            vcpu.text = str(veos_cpu_count)
+            # Add/Create disk location for xml
+            tmp_disk = ET.SubElement(xdev, 'disk', attrib={
+                'type': 'file',
+                'device': 'disk'
+            })
+            ET.SubElement(tmp_disk, 'driver', attrib={
+                'name': 'qemu',
+                'type': 'qcow2',
+                'cache': 'directsync',
+                'io': 'native'
+            })
+            ET.SubElement(tmp_disk, 'source', attrib={'file': '/var/lib/libvirt/images/veos/{0}.qcow2'.format(vdev)})
+            ET.SubElement(tmp_disk, 'target', attrib={
+                'dev': 'hda',
+                'bus': 'ide'
+            })
+            ET.SubElement(tmp_disk, 'alias', attrib={'name': 'ide0-0-0'})
+            # Starting interface section
             tmp_int = ET.SubElement(xdev, 'interface', attrib={'type': 'bridge'})
-            ET.SubElement(tmp_int, 'source', attrib={'bridge': tmp_dev['bridge']})
-            ET.SubElement(tmp_int, 'target', attrib={'dev': '{0}x{1}'.format(vdev, tmp_dev['port'].replace('X',''))})
+            ET.SubElement(tmp_int, 'source', attrib={'bridge': 'vmgmt'})
+            ET.SubElement(tmp_int, 'mac', attrib={'address': '00:1c:73:{0}:c6:01'.format(createMac('veos', node_counter))})
+            ET.SubElement(tmp_int, 'target', attrib={'dev': vdev})
             ET.SubElement(tmp_int, 'model', attrib={'type': 'virtio'})
-            ET.SubElement(tmp_int, 'virtualport', attrib={'type': 'openvswitch'})
             ET.SubElement(tmp_int, 'address', attrib={
                 'type': 'pci',
                 'domain': '0x0000',
                 'bus': '0x00',
                 'slot': '0x03',
-                'function': '0x{0}'.format(d_intf_counter)
+                'function': '0x0'
             })
-            # Increment the counter
-            d_intf_counter += 1
-        # Export/write of xml for node
-        tree.write(DATA_OUTPUT + '{0}.xml'.format(vdev))
-        KOUT_LINES.append("sudo cp /var/lib/libvirt/images/veos/base/veos.qcow2 /var/lib/libvirt/images/veos/{0}.qcow2".format(vdev))
-        KOUT_LINES.append("sudo virsh define {0}.xml".format(vdev))
-        KOUT_LINES.append("sudo virsh start {0}".format(vdev))
-        KOUT_LINES.append("sudo virsh autostart {0}".format(vdev))
-        pS("OK", "Created Virsh commands for {0}".format(vdev))
-        # Increment the node counter
-        node_counter += 1
+            # Interface specific links
+            d_intf_counter = 1
+            for vintf in VEOS_NODES[vdev].intfs:
+                tmp_dev = VEOS_NODES[vdev].intfs[vintf]
+                tmp_int = ET.SubElement(xdev, 'interface', attrib={'type': 'bridge'})
+                ET.SubElement(tmp_int, 'source', attrib={'bridge': tmp_dev['bridge']})
+                ET.SubElement(tmp_int, 'target', attrib={'dev': '{0}x{1}'.format(vdev, tmp_dev['port'].replace('X',''))})
+                ET.SubElement(tmp_int, 'model', attrib={'type': 'virtio'})
+                ET.SubElement(tmp_int, 'virtualport', attrib={'type': 'openvswitch'})
+                ET.SubElement(tmp_int, 'address', attrib={
+                    'type': 'pci',
+                    'domain': '0x0000',
+                    'bus': '0x00',
+                    'slot': '0x03',
+                    'function': '0x{0}'.format(d_intf_counter)
+                })
+                # Increment the counter
+                d_intf_counter += 1
+            # Export/write of xml for node
+            tree.write(DATA_OUTPUT + '{0}.xml'.format(vdev))
+            KOUT_LINES.append("sudo cp /var/lib/libvirt/images/veos/base/veos.qcow2 /var/lib/libvirt/images/veos/{0}.qcow2".format(vdev))
+            KOUT_LINES.append("sudo virsh define {0}.xml".format(vdev))
+            KOUT_LINES.append("sudo virsh start {0}".format(vdev))
+            KOUT_LINES.append("sudo virsh autostart {0}".format(vdev))
+            pS("OK", "Created Virsh commands for {0}".format(vdev))
+            # Increment the node counter
+            node_counter += 1
     with open(DATA_OUTPUT + TOPO_TAG + '-kvm-create.sh', 'w') as kout:
         for kli in KOUT_LINES:
             kout.write("{0}\n".format(kli))

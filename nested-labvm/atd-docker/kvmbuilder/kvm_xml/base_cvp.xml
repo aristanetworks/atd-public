@@ -1,5 +1,4 @@
-<domain id="1" type="kvm">
-  <name>cvp</name>
+<domain id="@random_id@" type="kvm">
   <memory unit="MiB">22528</memory>
   <currentMemory unit="MiB">22528</currentMemory>
   <os>
@@ -24,16 +23,6 @@
   </pm>
   <devices>
     <emulator>/usr/libexec/qemu-kvm</emulator>
-    <disk device="disk" type="file">
-      <driver cache="directsync" io="native" name="qemu" type="qcow2" />
-      <source file="/var/lib/libvirt/images/cvp/disk1.qcow2" />
-      <target bus="virtio" dev="vda" />
-    </disk>
-    <disk device="disk" type="file">
-      <driver cache="directsync" io="native" name="qemu" type="qcow2" />
-      <source file="/var/lib/libvirt/images/cvp/disk2.qcow2" />
-      <target bus="virtio" dev="vdb" />
-    </disk>
     <disk device="cdrom" type="file">
       <driver name="qemu" type="raw" />
       <source file="" />
@@ -69,13 +58,6 @@
       <alias name="virtio-serial0" />
       <address bus="0x00" domain="0x0000" function="0x0" slot="0x07" type="pci" />
     </controller>
-    <interface type='bridge'>
-      <source bridge='vmgmt' />
-      <mac address='00:1c:73:a0:c6:01'/>
-      <target dev='cvp1'/>
-      <model type='virtio'/>
-      <alias name='net0'/>
-    </interface>
     <serial type="pty">
       <source path="/dev/pts/3" />
       <target port="0" />

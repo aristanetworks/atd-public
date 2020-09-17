@@ -9,9 +9,10 @@ only_add_to_inventory: false
 custom_ami_names: false
 preconfigured: false
 topology_link: true
-host_cpu: 6
+host_cpu: 4
 cvp_cpu: 16
-veos_cpu: 1
+cvp_nodes: 1
+veos_cpu: 2
 
 nodes:
   - eos1:
