@@ -10,7 +10,6 @@ topologies:
             branch: nested/2020.1
             image: base-atd-datacenter-ceos-c2020-1-1-20200917
             eos:
-              - 4.24.0F
               - 4.24.1.1F
               - 4.24.2.1F
           2020.2:
