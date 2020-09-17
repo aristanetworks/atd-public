@@ -18,3 +18,7 @@ docker build -t atddocker_jenkins:1.0 jenkins/.
 docker build -t atddocker_uptime:1.0 uptime/.
 docker build -t atddocker_uilanding:1.0 uilanding/.
 docker build -t atddocker_ceosbuilder:1.0 ceosbuilder/.
+
+# Pull any remote repo images
+docker pull mpergament/avd-cpv-atd-nested:latest
+docker pull mpergament/aristarobot:latest
