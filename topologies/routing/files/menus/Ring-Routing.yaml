@@ -246,6 +246,7 @@ labconfiglets:
       - "SR_EOS6"
       - "EVPN_PEERING_EOS6_RING"
       - "Customer1_L3VPN_EOS6_RING"
+      - "Customer1_L3VPN_MP_EOS6_RING"
     eos7:
       - "BaseIPv4_EOS7"
       - "IS-IS_EOS7"
@@ -256,7 +257,8 @@ labconfiglets:
       - "IS-IS_EOS8"
       - "SR_EOS8"
       - "EVPN_PEERING_EOS8_RING"
-      - "Customer1_L3VPN_EOS8_RING" 
+      - "Customer1_L3VPN_EOS8_RING"
+      - "Customer1_L3VPN_MP_EOS8_RING"
     eos9:
       - "BaseIPv4_EOS9"
     eos10:
@@ -314,6 +316,7 @@ labconfiglets:
       - "SR_EOS6"
       - "EVPN_PEERING_EOS6_RING"
       - "Customer1_L3VPN_EOS6_RING"
+      - "Customer1_L3VPN_MP_EOS6_RING"
       - "Customer2_L2VPN_EOS6"
     eos7:
       - "BaseIPv4_EOS7"
@@ -327,6 +330,7 @@ labconfiglets:
       - "SR_EOS8"
       - "EVPN_PEERING_EOS8_RING"
       - "Customer1_L3VPN_EOS8_RING"
+      - "Customer1_L3VPN_MP_EOS8_RING"
       - "Customer2_L2VPN_EOS8"
     eos9:
       - "BaseIPv4_EOS9"
@@ -390,6 +394,7 @@ labconfiglets:
       - "SR_EOS6"
       - "EVPN_PEERING_EOS6_RING"
       - "Customer1_L3VPN_EOS6_RING"
+      - "Customer1_L3VPN_MP_EOS6_RING"
       - "Customer2_L2VPN_EOS6"
     eos7:
       - "BaseIPv4_EOS7"
@@ -403,6 +408,7 @@ labconfiglets:
       - "SR_EOS8"
       - "EVPN_PEERING_EOS8_RING"
       - "Customer1_L3VPN_EOS8_RING"
+      - "Customer1_L3VPN_MP_EOS8_RING"
       - "Customer2_L2VPN_EOS8"
     eos9:
       - "BaseIPv4_EOS9"
@@ -468,6 +474,7 @@ labconfiglets:
       - "SR_EOS6"
       - "EVPN_PEERING_EOS6_RING"
       - "Customer1_L3VPN_EOS6_RING"
+      - "Customer1_L3VPN_MP_EOS6_RING"
       - "Customer2_L2VPN_EOS6"
     eos7:
       - "BaseIPv4_EOS7"
@@ -482,6 +489,7 @@ labconfiglets:
       - "SR_EOS8"
       - "EVPN_PEERING_EOS8_RING"
       - "Customer1_L3VPN_EOS8_RING"
+      - "Customer1_L3VPN_MP_EOS8_RING"
       - "Customer2_L2VPN_EOS8"
       - "Customer4_L3VPN_EOS8"
     eos9:
@@ -552,6 +560,7 @@ labconfiglets:
       - "SR_EOS6"
       - "EVPN_PEERING_EOS6_RING"
       - "Customer1_L3VPN_EOS6_RING"
+      - "Customer1_L3VPN_MP_EOS6_RING"
       - "Customer2_L2VPN_EOS6"
       - "SharedServices_EOS6"
     eos7:
@@ -568,6 +577,7 @@ labconfiglets:
       - "SR_EOS8"
       - "EVPN_PEERING_EOS8_RING"
       - "Customer1_L3VPN_EOS8_RING"
+      - "Customer1_L3VPN_MP_EOS8_RING"
       - "Customer2_L2VPN_EOS8"
       - "Customer4_L3VPN_EOS8"
     eos9:

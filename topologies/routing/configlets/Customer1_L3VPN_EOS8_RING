@@ -4,9 +4,6 @@ interface Ethernet2
    vrf CUSTOMER-1
    ip address 10.8.15.8/24
 !
-interface Ethernet3
-  isis metric 40
-!
 ip routing vrf CUSTOMER-1
 !
 router bgp 100

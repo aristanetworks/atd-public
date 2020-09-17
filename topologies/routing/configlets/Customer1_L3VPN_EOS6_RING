@@ -1,8 +1,5 @@
 vrf instance CUSTOMER-1
 !
-interface Ethernet2
-   isis metric 40
-!
 interface Ethernet3
    vrf CUSTOMER-1
    ip address 10.6.13.6/24
