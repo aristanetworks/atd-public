@@ -29,7 +29,7 @@ Deploy L3VPN Service for Customer-4
          !
          ip routing vrf CUSTOMER-4
 
-   #. Place the interface attached to the **CE**, node for Customer-4 into VRF ``B`` on **EOS7** to ensure their 
+   #. Place the interface attached to the **CE**, node for Customer-4 into VRF ``CUSTOMER-4`` on **EOS7** to ensure their 
       traffic remains isolated.
 
       .. code-block:: text
