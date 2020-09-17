@@ -32,8 +32,8 @@ Deploy E-LINE Service for Customer-3
             no lldp receive
 
    #. On **EOS1** and **EOS4**, create the logical patch name ``C3-E-LINE`` between the local CE interface and the 
-      Virtual Private Wire Service, or **VPWS**, that will be created with a VPWS name of ``C3`` and a pseudowire name 
-      of ``EOS16-EOS17``.
+      Virtual Private Wire Service, or **VPWS**, that will be created with a VPWS name of ``CUSTOMER-3`` and a pseudowire 
+      name of ``EOS16-EOS17``.
 
       .. note::
 
@@ -45,7 +45,7 @@ Deploy E-LINE Service for Customer-3
          patch panel
             patch C3-E-LINE
                connector 1 interface Ethernet6
-               connector 2 pseudowire bgp vpws C3 pseudowire EOS16-EOS17
+               connector 2 pseudowire bgp vpws CUSTOMER-3 pseudowire EOS16-EOS17
 
    #. On **EOS1**, leverage EVPN to advertise the Layer 1 Service to the Route Reflector using the same VPWS and pseudowire 
       name as the previous step. In addtion, use the format of **<Loopback0 IP>** ``:3`` as the RD and ``3:1617`` as the RT. 
@@ -61,7 +61,7 @@ Deploy E-LINE Service for Customer-3
 
          router bgp 100
             !
-            vpws C3
+            vpws CUSTOMER-3
                rd 1.1.1.1:3
                route-target import export evpn 3:1617
                !
@@ -74,7 +74,7 @@ Deploy E-LINE Service for Customer-3
 
          router bgp 100
             !
-            vpws C3
+            vpws CUSTOMER-3
                rd 4.4.4.4:3
                route-target import export evpn 3:1617
                !

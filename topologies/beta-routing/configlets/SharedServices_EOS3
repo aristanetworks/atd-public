@@ -18,9 +18,9 @@ route-map RM-IMPORT-CUST-SVC permit 10
 router bgp 100
    !
    vrf SVC
-      rd 3.3.3.3:3
+      rd 3.3.3.3:5
       route-target import evpn 500:500
-      route-target export evpn 3:3
+      route-target export evpn 5:5
       neighbor 10.3.20.20 remote-as 500
       neighbor 10.3.20.20 maximum-routes 12000 
       !

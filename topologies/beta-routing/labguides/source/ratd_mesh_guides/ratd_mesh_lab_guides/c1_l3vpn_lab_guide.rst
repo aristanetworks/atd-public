@@ -16,7 +16,7 @@ Deploy L3VPN Service for Customer-1
    Edge, or **PE** nodes. Since this customer will require a Layer 3 VPN Service, create an isolated VRF for their 
    traffic and use EVPN to advertise the customer networks to other interested PEs.
 
-   #. Create a VRF Instance called ``A`` on **EOS1**, **EOS6** and **EOS8**.
+   #. Create a VRF Instance called ``CUSTOMER-1`` on **EOS1**, **EOS6** and **EOS8**.
 
       .. note::
 
@@ -26,22 +26,22 @@ Deploy L3VPN Service for Customer-1
 
       .. code-block:: text
 
-         vrf instance A
+         vrf instance CUSTOMER-1
          !
-         ip routing vrf A
+         ip routing vrf CUSTOMER-1
 
-   #. Place the interface attached to the Customer Edge, or **CE**, node for Customer-1 into VRF ``A`` on **EOS1** to 
-      ensure their traffic remains isolated.
+   #. Place the interface attached to the Customer Edge, or **CE**, node for Customer-1 into VRF ``CUSTOMER-1`` on 
+      **EOS1** to ensure their traffic remains isolated.
 
       .. note::
 
-         When an interface is moved from one VRF to another, in this case from the ``default`` VRF into our defined ``A`` 
-         VRF, any IP settings, including address, will be removed and will need to be reapplied.
+         When an interface is moved from one VRF to another, in this case from the ``default`` VRF into our defined 
+         ``CUSTOMER-1`` VRF, any IP settings, including address, will be removed and will need to be reapplied.
 
       .. code-block:: text
 
          interface Ethernet3
-            vrf A
+            vrf CUSTOMER-1
             ip address 10.1.11.1/24
 
    #. Repeat the above step for the interfaces on **EOS6** and **EOS8** attached to Customer-1 CE devices.
@@ -51,7 +51,7 @@ Deploy L3VPN Service for Customer-1
       .. code-block:: text
 
          interface Ethernet3
-            vrf A
+            vrf CUSTOMER-1
             ip address 10.6.13.6/24
 
       **EOS8**
@@ -59,13 +59,13 @@ Deploy L3VPN Service for Customer-1
       .. code-block:: text
 
          interface Ethernet2
-            vrf A
+            vrf CUSTOMER-1
             ip address 10.8.15.8/24
 
-   #. Now leverage BGP EVPN to advertise reachability of any routes learned in VRF ``A`` from the customer by setting 
-      a Route Distinguisher, or **RD**, and a Route Target, or **RT**, within BGP on **EOS1**. It should have a unique 
-      **RD** following the format of **<Loopback0 IP>** ``:1`` and the **RT** on all routers in the VPN should match as 
-      ``1:1``.
+   #. Now leverage BGP EVPN to advertise reachability of any routes learned in VRF ``CUSTOMER-1`` from the customer by 
+      setting a Route Distinguisher, or **RD**, and a Route Target, or **RT**, within BGP on **EOS1**. It should have a 
+      unique **RD** following the format of **<Loopback0 IP>** ``:1`` and the **RT** on all routers in the VPN should match 
+      as ``1:1``.
 
       .. note::
 
@@ -78,7 +78,7 @@ Deploy L3VPN Service for Customer-1
 
          router bgp 100
             !
-            vrf A
+            vrf CUSTOMER-1
                rd 1.1.1.1:1
                route-target import evpn 1:1
                route-target export evpn 1:1
@@ -91,7 +91,7 @@ Deploy L3VPN Service for Customer-1
 
          router bgp 100
             !
-            vrf A
+            vrf CUSTOMER-1
                rd 6.6.6.6:1
                route-target import evpn 1:1
                route-target export evpn 1:1
@@ -102,7 +102,7 @@ Deploy L3VPN Service for Customer-1
 
          router bgp 100
             !
-            vrf A
+            vrf CUSTOMER-1
                rd 8.8.8.8:1
                route-target import evpn 1:1
                route-target export evpn 1:1
@@ -120,7 +120,7 @@ Deploy L3VPN Service for Customer-1
 
          router bgp 100
             !
-            vrf A
+            vrf CUSTOMER-1
                neighbor 10.1.11.11 remote-as 123
                neighbor 10.1.11.11 maximum-routes 12000 
                !
@@ -135,7 +135,7 @@ Deploy L3VPN Service for Customer-1
 
          router bgp 100
             !
-            vrf A
+            vrf CUSTOMER-1
                neighbor 10.6.13.13 remote-as 123
                neighbor 10.6.13.13 maximum-routes 12000 
                !
@@ -148,7 +148,7 @@ Deploy L3VPN Service for Customer-1
 
          router bgp 100
             !
-            vrf A
+            vrf CUSTOMER-1
                neighbor 10.8.15.15 remote-as 15
                neighbor 10.8.15.15 maximum-routes 12000 
                !
@@ -160,7 +160,7 @@ Deploy L3VPN Service for Customer-1
 
       .. code-block:: text
 
-         show running-config section vrf.A
+         show running-config section CUSTOMER-1
          show vrf
 
 #. Now that the PE nodes are configured, configure CE nodes **EOS11**, **EOS12**, **EOS13**, and **EOS15** for 
@@ -283,8 +283,8 @@ Deploy L3VPN Service for Customer-1
 
       .. code-block:: text
 
-         show ip bgp summary vrf A
-         show ip bgp neighbor 10.1.11.11 routes vrf A
+         show ip bgp summary vrf CUSTOMER-1
+         show ip bgp neighbor 10.1.11.11 routes vrf CUSTOMER-1
    
    #. Now validate the EVPN routes are exchanged between the PE nodes **EOS1**, **EOS6**, and **EOS8** via the Route 
       Relector.
@@ -305,7 +305,7 @@ Deploy L3VPN Service for Customer-1
 
       .. code-block:: text
 
-         show ip route vrf A
+         show ip route vrf CUSTOMER-1
          show mpls route
 
 #. To show the ability for Equal Cost Multi-Pathing, or **ECMP**, to automatically occur where applicable on the Service 
@@ -348,7 +348,7 @@ Deploy L3VPN Service for Customer-1
 
       .. code-block:: text
 
-         show ip route vrf A
+         show ip route vrf CUSTOMER-1
 
 
 **LAB COMPLETE!**

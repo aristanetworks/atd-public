@@ -6,11 +6,11 @@ interface Ethernet6
 patch panel
    patch C3-E-LINE
       connector 1 interface Ethernet6
-      connector 2 pseudowire bgp vpws C3 pseudowire EOS16-EOS17
+      connector 2 pseudowire bgp vpws CUSTOMER-3 pseudowire EOS16-EOS17
 !
 router bgp 100
    !
-   vpws C3
+   vpws CUSTOMER-3
       rd 1.1.1.1:3
       route-target import export evpn 3:1617
       !

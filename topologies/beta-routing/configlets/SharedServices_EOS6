@@ -9,6 +9,6 @@ route-map RM-EXPORT-TO-SVC permit 20
 !
 router bgp 100
    !
-   vrf A
-      route-target import evpn 3:3
+   vrf CUSTOMER-1
+      route-target import evpn 5:5
       route-target export evpn route-map RM-EXPORT-TO-SVC

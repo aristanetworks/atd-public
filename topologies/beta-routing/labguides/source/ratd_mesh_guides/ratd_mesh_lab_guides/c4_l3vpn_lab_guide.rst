@@ -29,7 +29,7 @@ Deploy L3VPN Service for Customer-4
          !
          ip routing vrf CUSTOMER-4
 
-   #. Place the interface attached to the **CE**, node for Customer-4 into VRF ``CUSTOMER-4`` on **EOS7** to ensure their 
+   #. Place the interface attached to the **CE** node for Customer-4 into VRF ``CUSTOMER-4`` on **EOS7** to ensure their 
       traffic remains isolated.
 
       .. code-block:: text
@@ -112,7 +112,7 @@ Deploy L3VPN Service for Customer-4
 #. Now that the PE nodes are configured, configure CE nodes **EOS18** and **EOS19** for Layer 3 attachment to the 
    Service Provider network.
 
-   #. Configure the BGP peerings to the PE devices on **EOS18** and **EOS19** ensuring that each router'sLoopback0 
+   #. Configure the BGP peerings to the PE devices on **EOS18** and **EOS19** ensuring that each router's Loopback0 
       address is advertised to the attached PE.
 
       .. note::

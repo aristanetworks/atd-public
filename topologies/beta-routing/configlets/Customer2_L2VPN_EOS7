@@ -10,6 +10,6 @@ router bgp 100
    maximum-paths 2
    !
    vlan 20
-      rd 7.7.7.7:20
+      rd 7.7.7.7:2
       route-target both 2:20
       redistribute learned

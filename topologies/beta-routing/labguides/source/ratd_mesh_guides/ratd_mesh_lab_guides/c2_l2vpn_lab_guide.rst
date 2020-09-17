@@ -101,7 +101,7 @@ Deploy L2VPN Service for Customer-2
 
    #. Configure BGP EVPN to advertise reachability of any MACs learned in VLAN ``20`` from the customer by setting 
       an **RD** and an **RT**, within BGP on **EOS7**. It should have a unique **RD** following the format of 
-      **<Loopback0 IP>** ``:20`` and the **RT** on all routers in the VPN should match as ``2:20``. Additionally, 
+      **<Loopback0 IP>** ``:2`` and the **RT** on all routers in the VPN should match as ``2:20``. Additionally, 
       ensure BGP is configured for ECMP where applicable.
 
       .. note::
@@ -116,7 +116,7 @@ Deploy L2VPN Service for Customer-2
             maximum-paths 2
             !
             vlan 20
-               rd 7.7.7.7:20
+               rd 7.7.7.7:2
                route-target both 2:20
                redistribute learned
 
@@ -131,7 +131,7 @@ Deploy L2VPN Service for Customer-2
             maximum-paths 2
             !
             vlan 20
-               rd 3.3.3.3:20
+               rd 3.3.3.3:2
                route-target both 2:20
                redistribute learned
 
@@ -143,7 +143,7 @@ Deploy L2VPN Service for Customer-2
             maximum-paths 2
             !
             vlan 20
-               rd 4.4.4.4:20
+               rd 4.4.4.4:2
                route-target both 2:20
                redistribute learned
 
@@ -155,7 +155,7 @@ Deploy L2VPN Service for Customer-2
             maximum-paths 2
             !
             vlan 20
-               rd 6.6.6.6:20
+               rd 6.6.6.6:2
                route-target both 2:20
                redistribute learned
 
@@ -167,7 +167,7 @@ Deploy L2VPN Service for Customer-2
             maximum-paths 2
             !
             vlan 20
-               rd 8.8.8.8:20
+               rd 8.8.8.8:2
                route-target both 2:20
                redistribute learned
 
