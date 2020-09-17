@@ -1,5 +1,5 @@
-Deploy IS-IS as the Service Provider Underlay IGP
-==========================================================
+Establish MPLS transport label distribution via Segment-Routing
+==================================================================
 
 .. image:: ../../images/ratd_mesh_images/ratd_mesh_isis_sr.png
    :align: center

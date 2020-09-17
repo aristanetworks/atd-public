@@ -1,4 +1,4 @@
-Deploy Customer-3 E-LINE Service
+Deploy E-LINE Service for Customer-3
 =========================================================================
 
 .. image:: ../../images/ratd_ring_images/ratd_ring_c3_eline.png

@@ -1,21 +1,18 @@
-mpls ldp
-   router-id 1.1.1.1
-   transport-address interface Loopback0
-   no shutdown
-   !
-   pseudowires
-      mtu 9000
-      !
-      pseudowire PW1
-         neighbor 4.4.4.4
-         pseudowire-id 1617
-!
-patch panel
-   patch EOS4-PW1
-      connector 1 interface Ethernet6
-      connector 2 pseudowire ldp PW1
-!
 interface Ethernet6
    no switchport
    no lldp transmit
    no lldp receive
+!
+patch panel
+   patch C3-E-LINE
+      connector 1 interface Ethernet6
+      connector 2 pseudowire bgp vpws C3 pseudowire EOS16-EOS17
+!
+router bgp 100
+   !
+   vpws C3
+      rd 1.1.1.1:3
+      route-target import export evpn 3:1617
+      !
+      pseudowire EOS16-EOS17
+         evpn vpws id local 16 remote 17
