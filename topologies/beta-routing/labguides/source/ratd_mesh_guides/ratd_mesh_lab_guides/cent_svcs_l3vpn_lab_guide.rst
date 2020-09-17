@@ -99,13 +99,19 @@ Offer Centralized Services to L3VPN Customers
 
       .. note::
 
-         Unlike our previous L3VPN setups, for the Centralized Service model, we will only need to ``export`` the routes 
-         learned in the ``SVC`` VRF with this **RT**. In a later step, we will see how inter-VRF route-leaking can be 
-         controlled using a separate **RT** for import.
+         The PE Nodes attached to Customer-1 and Customer-2 will handle the ``export`` of the routes for **EOS12** and **EOS19** 
+         with the proper **RT**, so on **EOS3** we only need to worry about importing EVPN Type-5 routes with ``500:500`` into the 
+         Centralized Services VRF.
 
       .. code-block:: text
 
          router bgp 100
+            !
+            vrf SVC
+               route-target import evpn 500:500
+
+   #. Now, 
+
 
 
 

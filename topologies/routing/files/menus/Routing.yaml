@@ -606,7 +606,6 @@ labconfiglets:
       - "Customer1_L3VPN_EOS8"
       - "Customer2_L2VPN_EOS8"
       - "Customer4_L3VPN_EOS8"
-      - "SharedServices_EOS8"
     eos9:
       - "BaseIPv4_EOS9"
       - "Customer2_L2VPN_EOS9"

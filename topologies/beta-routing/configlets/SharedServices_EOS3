@@ -8,13 +8,6 @@ interface Ethernet6
 !
 ip routing vrf SVC
 !
-ip prefix-list PL-ALLROUTES seq 10 permit 0.0.0.0/0 le 32
-!
-ip community-list regexp CL-CUST-SVC-IMPORT permit 500:500
-!
-route-map RM-IMPORT-CUST-SVC permit 10
-   match community CL-CUST-SVC-IMPORT exact-match
-!
 router bgp 100
    !
    vrf SVC

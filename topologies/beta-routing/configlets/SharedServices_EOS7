@@ -1,14 +1,14 @@
-ip prefix-list PL-SVCACCESS seq 10 permit 12.12.12.12/32
-ip prefix-list PL-SVCACCESS seq 20 permit 19.19.19.19/32
+ip prefix-list SVC-ACCESS seq 10 permit 12.12.12.12/32
+ip prefix-list SVC-ACCESS seq 20 permit 19.19.19.19/32
 !
-route-map RM-EXPORT-TO-SVC permit 10
-   match ip address prefix-list PL-SVCACCESS
+route-map EXPORT-TO-SVC permit 10
+   match ip address prefix-list SVC-ACCESS
    set extcommunity rt 500:500 additive
 !
-route-map RM-EXPORT-TO-SVC permit 20
+route-map EXPORT-TO-SVC permit 20
 !
 router bgp 100
    !
    vrf CUSTOMER-4
       route-target import evpn 5:5
-      route-target export evpn route-map RM-EXPORT-TO-SVC
+      route-target export evpn route-map EXPORT-TO-SVC
