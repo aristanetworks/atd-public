@@ -10,15 +10,15 @@ Deploy L3VPN Service for Customer-4
 Prepare for Customer-4 Layer 3 VPN Services
 =========================================================================
 
-#. On all PE nodes that are connected to Customer-4 CE nodes, define VRF "B".
+#. On all PE nodes that are connected to Customer-4 CE nodes, define VRF "CUSTOMER-4".
 
    - Ensure IPv4 Unicast Forwarding is enabled.
 
-   - Route-Target for import and export should be 2:2.
+   - Route-Target for import and export should be 4:4.
 
-   - Route-Distinguisher should be X.X.X.X:2 (X = Node-ID).
+   - Route-Distinguisher should be X.X.X.X:4 (X = Node-ID).
 
-#. Place the appropriate interfaces on the PE nodes into VRF “B”.
+#. Place the appropriate interfaces on the PE nodes into VRF “CUSTOMER-4”.
 
 =========================================================================
 Establish PE-CE peering with Customer-4

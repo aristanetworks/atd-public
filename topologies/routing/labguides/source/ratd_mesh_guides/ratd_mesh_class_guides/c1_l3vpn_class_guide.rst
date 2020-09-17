@@ -10,7 +10,7 @@ Deploy L3VPN Service for Customer-1
 Prepare for Customer-1 Layer 3 VPN Services
 ===================================================================================
    
-#. On all PE nodes that are connected to Customer-1 CE nodes, define VRF “A”.
+#. On all PE nodes that are connected to Customer-1 CE nodes, define VRF "CUSTOMER-1".
 
    - Ensure IPv4 Unicast Forwarding is enabled.
 
@@ -18,7 +18,7 @@ Prepare for Customer-1 Layer 3 VPN Services
 
    - Route-Distinguisher should be X.X.X.X:1 (X = Node-ID).
 
-#. Place the appropriate interfaces on the PE nodes into VRF “A”.
+#. Place the appropriate interfaces on the PE nodes into VRF “CUSTOMER-1”.
 
 =========================================================================
 Configure Customer-1 CE devices
@@ -72,7 +72,7 @@ Enable L3VPN Multi-Pathing
 
    - It is ok to adjust the isis metric on the link between EOS6 and EOS8 in order to force multi-pathing to occur.
 
-#. EOS8 should have the following output from a ‘show ip route vrf A 12.12.12.12’ command:
+#. EOS8 should have the following output from a ‘show ip route vrf CUSTOMER-1 12.12.12.12’ command:
 
    .. note::
 

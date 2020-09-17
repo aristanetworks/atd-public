@@ -16,7 +16,7 @@ Prepare for Customer-2 Layer 2 VPN E-LAN Services
 
    - Route-Target for import and export should be 2:20.
 
-   - Route-Distinguisher should be X.X.X.X:20 (X = Node-ID).
+   - Route-Distinguisher should be X.X.X.X:2 (X = Node-ID).
 
    - Ensure that all known MAC addresses in VLAN 20 are originated/advertised via BGP to other PE Nodes.
 
