@@ -10,6 +10,7 @@ RUN apt update && apt install -y sudo \
                                  zsh \
                                  zsh-syntax-highlighting \
                                  zsh-doc \
+                                 less \
                                  liquidprompt
 
 RUN apt -y dist-upgrade
