@@ -65,7 +65,7 @@ su atdadmin -c 'bash docker_build.sh'
 
 su atdadmin -c 'docker-compose up -d --remove-orphans'
 
-su atdadmin -c 'docker-compose restart'
+su atdadmin -c 'docker restart atd-login'
 
 echo 'y' | docker image prune
 
