@@ -21,23 +21,24 @@ topologies:
         ram: 36
         cvp:
           2020.2:
-            branch: ceos-nested
+            branch: nested-release
             image: base-atd-ceos-datacenter-e4-24-2-1f-c2020-2-1-20200916-u
             eos:
               - 4.24.1.1F
               - 4.24.2.1F
     prod:
-      2020.1:
-        veos:
-          cpu: 30
-          ram: 60
-          branch: v1.0.20200910a
-          image: base-atd-datacenter-e4-24-1f-c2020-1-1-20200909-u
+      veos:
+        cpu: 30
+        ram: 60
+        cvp:
+          2020.1:
+            branch: v1.0.20200910a
+            image: base-atd-datacenter-e4-24-1f-c2020-1-1-20200909-u
+            eos:
+              - 4.24.1F
     desc: 'Two Spines, Four Leafs. Focused on EOS fundamentals within the Data Center.'
     name: 'Datacenter'
     access: standard
-    cpu: 30
-    ram: 60
   routing:
     dev:
       veos:
@@ -55,14 +56,18 @@ topologies:
             eos:
               - 4.24.2.1F
     prod:
-      2020.1:
-        branch: v1.0.20200910a
-        image: base-atd-routing-e4-24-1f-c2020-1-1-20200701-u
+      veos:
+        cpu: 44
+        ram: 90
+        cvp:
+          2020.1:
+            branch: v1.0.20200910a
+            image: base-atd-routing-e4-24-1f-c2020-1-1-20200701-u
+            eos:
+              - 4.24.1F
     desc: 'Twenty nodes. Focused on advanced routing, L2VPN and L3VPN topics'
     name: 'Advanced Routing'
     access: standard
-    cpu: 44
-    ram: 90
   training:
     dev:
       veos:
@@ -75,11 +80,15 @@ topologies:
             eos:
               - 4.24.1F
     prod:
-      2020.1:
-        branch: v1.0.20200910a
-        image: base-training-e4-24-1f-c2020-1-1-20200916-u
+      veos:
+        cpu: 36
+        ram: 72
+        cvp:
+          2020.1:
+            branch: v1.0.20200910a
+            image: base-training-e4-24-1f-c2020-1-1-20200916-u
+            eos:
+              - 4.24.1F
     desc: 'Four Spines, Four Leafs. For use by the Arista Training Team.'
     name: 'Training'
     access: admin
-    cpu: 36
-    ram: 72
