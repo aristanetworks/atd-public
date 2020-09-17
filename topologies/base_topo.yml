@@ -2,6 +2,24 @@
 topologies:
   datacenter:
     dev:
+      ceos:
+        cpu: 24
+        ram: 36
+        cvp:
+          2020.1:
+            branch: nested/2020.1
+            image: base-atd-datacenter-ceos-c2020-1-1-20200917
+            eos:
+              - 4.23.1F
+              - 4.24.0F
+              - 4.24.1.1F
+              - 4.24.2.1F
+          2020.2:
+            branch: nested-release
+            image: base-atd-ceos-datacenter-e4-24-2-1f-c2020-2-1-20200916-u
+            eos:
+              - 4.24.1.1F
+              - 4.24.2.1F
       veos:
         cpu: 30
         ram: 60
@@ -15,16 +33,6 @@ topologies:
             branch: nested-release
             image: base-atd-datacenter-e4-24-2-1f-c2020-2-1-20200911
             eos:
-              - 4.24.2.1F
-      ceos:
-        cpu: 24
-        ram: 36
-        cvp:
-          2020.2:
-            branch: nested-release
-            image: base-atd-ceos-datacenter-e4-24-2-1f-c2020-2-1-20200916-u
-            eos:
-              - 4.24.1.1F
               - 4.24.2.1F
     prod:
       veos:
