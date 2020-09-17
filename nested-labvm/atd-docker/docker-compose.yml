@@ -161,7 +161,6 @@ services:
     container_name: atd-ansible-avd
     image: atddocker_ansiblegui:1.0
     restart: always
-    hostname: devbox
     privileged: true
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
