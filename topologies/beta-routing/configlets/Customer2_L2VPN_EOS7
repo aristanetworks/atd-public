@@ -2,7 +2,6 @@ vlan 20
    name Customer2_E-LAN
 !
 interface Ethernet2
-   description EOS10
    switchport access vlan 20
    spanning-tree portfast
 !

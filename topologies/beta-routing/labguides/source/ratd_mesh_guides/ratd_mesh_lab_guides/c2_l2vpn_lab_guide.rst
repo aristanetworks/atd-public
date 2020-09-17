@@ -241,11 +241,9 @@ Deploy L2VPN Service for Customer-2
             ip address 10.0.0.9/24
          !
          interface Ethernet1
-            no switchport
             channel-group 9 mode active
          !
          interface Ethernet2
-            no switchport
             channel-group 9 mode active
          !
          router ospf 200
@@ -280,11 +278,9 @@ Deploy L2VPN Service for Customer-2
             ip address 10.0.0.14/24
          !
          interface Ethernet1
-            no switchport
             channel-group 14 mode active
          !
          interface Ethernet2
-            no switchport
             channel-group 14 mode active
          !
          router ospf 200

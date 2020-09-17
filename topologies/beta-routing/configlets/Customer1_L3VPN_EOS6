@@ -1,15 +1,13 @@
 vrf instance CUSTOMER-1
 !
-ip routing vrf CUSTOMER-1
-!
 interface Ethernet2
    isis metric 30
 !
 interface Ethernet3
-   description EOS13
-   no switchport
    vrf CUSTOMER-1
    ip address 10.6.13.6/24
+!
+ip routing vrf CUSTOMER-1
 !
 router bgp 100
    maximum-paths 2

@@ -1,8 +1,6 @@
 vrf instance CUSTOMER-4
 !
 interface Ethernet4
-   description EOS19
-   no switchport
    vrf CUSTOMER-4
    ip address 10.7.19.7/24
 !

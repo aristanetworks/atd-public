@@ -1,4 +1,3 @@
-ip prefix-list SVC-ACCESS seq 10 permit 12.12.12.12/32
 ip prefix-list SVC-ACCESS seq 20 permit 19.19.19.19/32
 !
 route-map EXPORT-TO-SVC permit 10
