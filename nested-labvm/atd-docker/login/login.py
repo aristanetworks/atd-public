@@ -51,25 +51,25 @@ def natural_keys(text):
   return [ text_to_int(char) for char in re.split(r'(\d+)', text) ]
 
 def sort_veos(vd):
-  if vd == None:
-    return
-  tmp_l = []
-  tmp_d = {}
-  fin_l = []
-  for t_veos in vd:
-    t_veos_name = list(t_veos.keys())[0]
-    tmp_l.append(t_veos_name)
-    tmp_d[t_veos_name] = dict(t_veos[t_veos_name])
-    tmp_d[t_veos_name]['hostname'] = t_veos_name
-  tmp_l.sort(key=natural_keys)
-  # If cvx in list, move to end
-  if 'cvx' in tmp_l[0]:
+    if vd == None:
+        return
+    tmp_l = []
+    tmp_d = {}
+    fin_l = []
+    for t_veos in vd:
+        t_veos_name = list(t_veos.keys())[0]
+        tmp_l.append(t_veos_name)
+        tmp_d[t_veos_name] = dict(t_veos[t_veos_name])
+        tmp_d[t_veos_name]['hostname'] = t_veos_name
+    tmp_l.sort(key=natural_keys)
+    # If cvx in list, move to end
+    if 'cvx' in tmp_l[0]:
         tmp_cvx = tmp_l[0]
         tmp_l.pop(0)
         tmp_l.append(tmp_cvx)
-  for t_veos in tmp_l:
-    fin_l.append(tmp_d[t_veos])
-  return(fin_l)
+    for t_veos in tmp_l:
+        fin_l.append(tmp_d[t_veos])
+    return(fin_l)
 
 def device_menu():
     global menu_mode
@@ -123,31 +123,31 @@ def device_menu():
 
     # Check to see if input is in device_dict
     counter = 1
-    try:
-      ssh_command = 'ssh -o StrictHostKeyChecking=no arista@{0}'.format(device_dict[user_input]['ip_addr'])
-      if user_input.lower() in device_dict:
-          previous_menu = menu_mode
-          if 'port' in device_dict[user_input]:
-              ssh_command += ' -p {0}'.format(device_dict[user_input]['port'])
-          else:
-            pass
-          # Execute ssh command
-          os.system(ssh_command)
-      elif user_input == '96' or user_input.lower() == 'screen':
-          os.system('/usr/bin/screen')
-      elif user_input == '97' or user_input.lower() == 'back':
-          if menu_mode == previous_menu:
-              menu_mode = 'MAIN'
-          else:
-              menu_mode = previous_menu
-      elif user_input == '98' or user_input.lower() == 'bash' or user_input.lower() == 'shell':
-          os.system('/bin/bash')
-      elif user_input == '99' or user_input.lower() == 'main' or user_input == '99' or user_input.lower() == 'exit':
-          menu_mode = 'MAIN'
-      else:
-          print("Invalid Input")
-    except:
-      print("Invalid Input")
+    # try:
+    ssh_command = 'ssh -o StrictHostKeyChecking=no arista@{0}'.format(device_dict[user_input]['ip_addr'])
+    if user_input.lower() in device_dict:
+        previous_menu = menu_mode
+        if 'port' in device_dict[user_input]:
+            ssh_command += ' -p {0}'.format(device_dict[user_input]['port'])
+        else:
+          pass
+        # Execute ssh command
+        os.system(ssh_command)
+    elif user_input == '96' or user_input.lower() == 'screen':
+        os.system('/usr/bin/screen')
+    elif user_input == '97' or user_input.lower() == 'back':
+        if menu_mode == previous_menu:
+            menu_mode = 'MAIN'
+        else:
+            menu_mode = previous_menu
+    elif user_input == '98' or user_input.lower() == 'bash' or user_input.lower() == 'shell':
+        os.system('/bin/bash')
+    elif user_input == '99' or user_input.lower() == 'main' or user_input == '99' or user_input.lower() == 'exit':
+        menu_mode = 'MAIN'
+    else:
+        print("Invalid Input")
+    # except:
+    #   print("Invalid Input")
 
 
 
