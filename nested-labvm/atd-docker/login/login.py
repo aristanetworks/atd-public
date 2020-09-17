@@ -51,6 +51,8 @@ def natural_keys(text):
   return [ text_to_int(char) for char in re.split(r'(\d+)', text) ]
 
 def sort_veos(vd):
+  if vd == None:
+    return
   tmp_l = []
   tmp_d = {}
   fin_l = []
@@ -79,6 +81,7 @@ def device_menu():
     # Sort veos instances
     veos_info_sorted = sort_veos(veos_info)
     additional_ssh_nodes_sorted = sort_veos(additional_ssh_nodes)
+    
     print("\n\n*****************************************")
     print("*****Jump Host for Arista Test Drive*****")
     print("*****************************************")
@@ -98,14 +101,15 @@ def device_menu():
         device_dict[str(counter)] = { 'ip_addr': veos['ip_addr'] }
         device_dict[veos['hostname']] = { 'ip_addr': veos['ip_addr'] }
         counter += 1
-    for additional_ssh_node in additional_ssh_nodes_sorted:
-        print("{0}. {1} ({2})".format(str(counter),additional_ssh_node['hostname'],additional_ssh_node['hostname']))
-        device_dict[str(counter)] = { 'ip_addr': additional_ssh_node['ip_addr'] }
-        device_dict[additional_ssh_node['hostname']] = { 'ip_addr': additional_ssh_node['ip_addr'] }
-        if 'port' in additional_ssh_node:
-            device_dict[str(counter)]['port'] = additional_ssh_node['port']
-            device_dict[additional_ssh_node['hostname']]['port'] = additional_ssh_node['port']
-        counter += 1
+    if additional_ssh_nodes_sorted != None:
+      for additional_ssh_node in additional_ssh_nodes_sorted:
+          print("{0}. {1} ({2})".format(str(counter),additional_ssh_node['hostname'],additional_ssh_node['hostname']))
+          device_dict[str(counter)] = { 'ip_addr': additional_ssh_node['ip_addr'] }
+          device_dict[additional_ssh_node['hostname']] = { 'ip_addr': additional_ssh_node['ip_addr'] }
+          if 'port' in additional_ssh_node:
+              device_dict[str(counter)]['port'] = additional_ssh_node['port']
+              device_dict[additional_ssh_node['hostname']]['port'] = additional_ssh_node['port']
+          counter += 1
 
 
     
