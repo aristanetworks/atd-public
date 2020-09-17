@@ -1,4 +1,4 @@
-Routing ATD Class Guide - Ring Topology
+Routing ATD Lab Guide - Ring Topology
 =================================================
 
 .. image:: ../../images/ratd_ring_images/ratd_ring_topo.png

@@ -1,4 +1,4 @@
-Routing ATD Class Guide - Mesh Topology
+Routing ATD Lab Guide - Mesh Topology
 =================================================
 
 .. image:: ../../images/ratd_mesh_images/ratd_mesh_topo.png
