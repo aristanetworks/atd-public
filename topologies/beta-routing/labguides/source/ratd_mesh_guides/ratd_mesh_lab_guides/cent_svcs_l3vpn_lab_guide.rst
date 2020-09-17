@@ -94,14 +94,14 @@ Offer Centralized Services to L3VPN Customers
 #. With the Centralized Service attached to the Service Provider network, configure restricted access to the service IP 
    of ``20.20.20.20`` without using ACLs, allowing only **EOS12** and **EOS19** to access the Service.
 
-   #. First, define a new **RT** of ``500:500`` that will be used for importing routes from **EOS12** and **EOS19** into the ``SVC`` 
-      VRF on **EOS3**
+   #. First, define a new **RT** of ``500:500`` that will be used for importing routes from **EOS12** and **EOS19** into the 
+      ``SVC`` VRF on **EOS3**
 
       .. note::
 
-         The PE Nodes attached to Customer-1 and Customer-2 will handle the ``export`` of the routes for **EOS12** and **EOS19** 
-         with the proper **RT**, so on **EOS3** we only need to worry about importing EVPN Type-5 routes with ``500:500`` into the 
-         Centralized Services VRF.
+         The PE Nodes attached to Customer-1 and Customer-2 will handle the ``export`` of the routes for **EOS12** and 
+         **EOS19** with the proper **RT**, so on **EOS3** we only need to worry about importing EVPN Type-5 routes with 
+         ``500:500`` into the Centralized Services VRF.
 
       .. code-block:: text
 
@@ -110,15 +110,147 @@ Offer Centralized Services to L3VPN Customers
             vrf SVC
                route-target import evpn 500:500
 
-   #. Now, 
+   #. Now, export the route for ``12.12.12.12/32`` from the Customer-1 VRF on PE nodes **EOS1** and **EOS6** using the 
+      **RT** of ``500:500``. To ensure only the route for **EOS12** is exported on the PEs, use a Route-Map and Prefix-List 
+      to control application of the **RT**.
 
+      .. note::
 
+         Applying the route-map to the EVPN ``export`` statement will allow ``500:500`` to be tagged onto the EVPN Type-5 
+         route in addition to the Customer-1 default **RT** of ``1:1``.
 
+      .. code-block:: text
 
+         ip prefix-list SVC-ACCESS seq 10 permit 12.12.12.12/32
+         !
+         route-map EXPORT-TO-SVC permit 10
+            match ip address prefix-list SVC-ACCESS
+            set extcommunity rt 500:500 additive
+         !
+         route-map EXPORT-TO-SVC permit 20
+         !
+         router bgp 100
+            !
+            vrf CUSTOMER-1
+               route-target export evpn route-map EXPORT-TO-SVC
 
+   #. Similarly, on **EOS7**, configure a Route-Map and Prefix-List to export the route for **EOS19**, ``19.19.19.19/32``, 
+      with the **RT** of ``500:500``.
+
+      .. code-block:: text
+
+         ip prefix-list SVC-ACCESS seq 10 permit 19.19.19.19/32
+         !
+         route-map EXPORT-TO-SVC permit 10
+            match ip address prefix-list SVC-ACCESS
+            set extcommunity rt 500:500 additive
+         !
+         route-map EXPORT-TO-SVC permit 20
+         !
+         router bgp 100
+            !
+            vrf CUSTOMER-4
+               route-target export evpn route-map EXPORT-TO-SVC
+
+   #. Now, allow PEs **EOS1** and **EOS6** to import the route for the Centralized Service with the **RT** of ``5:5`` into 
+      the VRF for Customer-1.
+
+      .. note::
+
+         This will allow the PEs to advertise the route for the Centralized Service, ``20.20.20.20/32``, to the attached CE 
+         nodes.
+
+      .. code-block:: text
+
+         router bgp 100
+            !
+            vrf CUSTOMER-1
+               route-target import evpn 5:5
+
+   #. Finally, repeat the above step on **EOS7** to import the Centralized Service route into the VRF for Customer-4.
+
+      .. code-block:: text
+
+         router bgp 100
+            !
+            vrf CUSTOMER-4
+               route-target import evpn 5:5
+
+#. With the necessary inter-VRF route leaking configuration in place, validate the **EOS12** and **EOS19** can reach the 
+   Centralized Service while other CE nodes for the Customers cannot.
+
+   #. View the routing tables of **EOS12** and **EOS19** to ensure the route for the Centralized Service, ``20.20.20.20/32`` 
+      is present.
+
+      .. note::
+
+         **EOS19** will receive the route directly via the BGP peering to the adjacent PE node. **EOS12** will have the route 
+         received via OSPF where it was redistributed by the Customer-1 CE nodes **EOS11** and **EOS13**.
+
+      .. code-block:: text
+
+         show ip route 20.20.20.20
+
+   #. Verify connectivity from **EOS12** and **EOS19** to the Centralized Service at ``20.20.20.20`` from each router's 
+      Loopback0 IP.
+
+      **EOS12**
+
+      .. code-block:: text
+
+         ping 20.20.20.20 source 12.12.12.12
+
+      **EOS19**
+
+      .. code-block:: text
+
+         ping 20.20.20.20 source 19.19.19.19
+
+   #. Display the routing table of **EOS20** to ensure only the routes for the allowed Customer nodes are present.
+
+      .. note::
+
+         Only routes for the Loopback0 interfaces of **EOS12** and **EOS19** should be learned from the Service Provider 
+         network.   
+
+      .. code-block:: text
+
+         show ip route bgp
+
+   #. Confirm that other Customer-1 and Customer-2 nodes cannot access the Centralized Service.
+
+      .. note::
+
+         **EOS11** and **EOS13** will have the route for the Centralized Service, but since the Centralized Service does not 
+         have a return route, no connections can be completed. Other customer nodes will not have the route at all.
+
+      .. code-block:: text
+
+         show ip route bgp
+         ping 20.20.20.20 source **<Loopback0 IP>**
+
+#. On the Service Provider network, verify that the Centralized Service routes and approved Customer node routes are being 
+   exchanged with the proper EVPN and MPLS information.
+
+   #. On **EOS3**, verify the incoming routes for forwarding path for **EOS12** and **EOS19** from the ``SVC`` VRF.
+
+      .. note::
+
+         The EVPN routes have two RTs attached to them; one from the standard L3VPN export and one from the Route-Map to 
+         ensure it is imported properly into the ``SVC`` VRF. Since the Route-Map has the ``additive`` keyword, it will allow 
+         both to be present and not overwrite.
+
+      .. code-block:: text
+
+         show bgp evpn route-type ip-prefix ipv4 detail | section 500:500
+         show ip route vrf SVC
+
+   #. On **EOS6**, verify the incoming routes for forwarding path for **EOS20**  from the ``CUSTOMER-1`` VRF.
+
+      .. code-block:: text
+
+         show bgp evpn route-type ip-prefix ipv4 detail | section 5:5
+         show ip route vrf CUSTOMER-1
 
 
 **LAB COMPLETE!**
-#. Allow CE devices EOS12 and EOS19 to access the Centralized Service at 20.20.20.20.
-
-   - EOS11, EOS13, EOS15 and EOS18 must not be able to ping 20.20.20.20.
