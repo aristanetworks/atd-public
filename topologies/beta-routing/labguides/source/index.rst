@@ -18,6 +18,7 @@ Welcome to the Arista Routing ATD Documentation!
    ratd_mesh_guides/ratd_mesh_lab_guides/c1_l3vpn_lab_guide.rst
    ratd_mesh_guides/ratd_mesh_lab_guides/c2_l2vpn_lab_guide.rst
    ratd_mesh_guides/ratd_mesh_lab_guides/c3_eline_lab_guide.rst
+   ratd_mesh_guides/ratd_mesh_lab_guides/c4_l3vpn_lab_guide.rst
 
 .. toctree::
    :maxdepth: 1

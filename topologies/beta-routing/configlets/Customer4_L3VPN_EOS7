@@ -1,24 +1,20 @@
-vrf instance B
+vrf instance CUSTOMER-4
 !
 interface Ethernet4
    description EOS19
    no switchport
-   vrf B
+   vrf CUSTOMER-4
    ip address 10.7.19.7/24
 !
-ip routing vrf B
-!
-route-map RM-ASOVERRIDE permit 10
-   set as-path match all replacement 100
+ip routing vrf CUSTOMER-4
 !
 router bgp 100
    !
-   vrf B
-      rd 7.7.7.7:2
-      route-target import evpn 2:2
-      route-target export evpn 2:2
+   vrf CUSTOMER-4
+      rd 7.7.7.7:4
+      route-target import evpn 4:4
+      route-target export evpn 4:4
       neighbor 10.7.19.19 remote-as 200
-      neighbor 10.7.19.19 route-map RM-ASOVERRIDE out
       neighbor 10.7.19.19 maximum-routes 12000 
       !
       address-family ipv4
