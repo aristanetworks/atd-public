@@ -49,7 +49,8 @@ Deploy E-LINE Service for Customer-3
 
    #. On **EOS1**, leverage EVPN to advertise the Layer 1 Service to the Route Reflector using the same VPWS and pseudowire 
       name as the previous step. In addtion, use the format of **<Loopback0 IP>** ``:3`` as the RD and ``3:1617`` as the RT. 
-      Finally, set the local VPWS ID to ``16`` and the remote VPWS ID to ``17``.
+      Finally, set the local VPWS ID to ``16`` and the remote VPWS ID to ``17``. These values must be unique within the VPWS 
+      instance.
 
       .. note::
 
