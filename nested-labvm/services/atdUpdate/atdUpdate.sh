@@ -63,7 +63,9 @@ cd /opt/atd/nested-labvm/atd-docker
 
 su atdadmin -c 'bash docker_build.sh'
 
-su atdadmin -c 'docker-compose up -d --remove-orphans --force-recreate'
+su atdadmin -c 'docker-compose up -d --remove-orphans'
+
+su atdadmin -c 'docker-compose restart'
 
 echo 'y' | docker image prune
 
