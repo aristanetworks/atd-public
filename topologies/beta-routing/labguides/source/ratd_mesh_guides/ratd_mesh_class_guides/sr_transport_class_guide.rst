@@ -1,4 +1,4 @@
-Establish MPLS transport label distribution via Segment-Routing
+Establish MPLS Transport Label Distribution via Segment-Routing
 =========================================================================
 
 .. image:: ../../images/ratd_mesh_images/ratd_mesh_isis_sr.png

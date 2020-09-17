@@ -2,7 +2,6 @@ vlan 20
    name Customer2_E-LAN
 !
 interface Ethernet2
-   description EOS10
    switchport access vlan 20
    spanning-tree portfast
 !
@@ -10,6 +9,6 @@ router bgp 100
    maximum-paths 2
    !
    vlan 20
-      rd 7.7.7.7:20
+      rd 7.7.7.7:2
       route-target both 2:20
       redistribute learned

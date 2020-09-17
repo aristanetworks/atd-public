@@ -1,4 +1,4 @@
-Prepare to offer VPN services to customers via MP-BGP EVPN control-plane
+Prepare to Offer VPN Services to Customers via MP-BGP EVPN Control-Plane
 ==================================================================================
 
 .. image:: ../../images/ratd_ring_images/ratd_ring_evpn.png

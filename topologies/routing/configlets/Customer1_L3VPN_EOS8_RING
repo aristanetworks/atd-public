@@ -1,20 +1,18 @@
-vrf instance A
-!
-ip routing vrf A
+vrf instance CUSTOMER-1
 !
 interface Ethernet2
-   description EOS15
-   no switchport
-   vrf A
+   vrf CUSTOMER-1
    ip address 10.8.15.8/24
 !
 interface Ethernet3
   isis metric 40
 !
+ip routing vrf CUSTOMER-1
+!
 router bgp 100
    maximum-paths 2
    !
-  vrf A
+  vrf CUSTOMER-1
       rd 8.8.8.8:1
       route-target import evpn 1:1
       route-target export evpn 1:1

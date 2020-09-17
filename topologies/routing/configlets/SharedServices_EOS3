@@ -8,19 +8,12 @@ interface Ethernet6
 !
 ip routing vrf SVC
 !
-ip prefix-list PL-ALLROUTES seq 10 permit 0.0.0.0/0 le 32
-!
-ip community-list regexp CL-CUST-SVC-IMPORT permit 500:500
-!
-route-map RM-IMPORT-CUST-SVC permit 10
-   match community CL-CUST-SVC-IMPORT exact-match
-!
 router bgp 100
    !
    vrf SVC
-      rd 3.3.3.3:3
+      rd 3.3.3.3:5
       route-target import evpn 500:500
-      route-target export evpn 3:3
+      route-target export evpn 5:5
       neighbor 10.3.20.20 remote-as 500
       neighbor 10.3.20.20 maximum-routes 12000 
       !

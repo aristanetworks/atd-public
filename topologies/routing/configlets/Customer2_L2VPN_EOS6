@@ -1,10 +1,6 @@
 vlan 20
    name Customer2_E-LAN
 !
-interface Ethernet6
-   description EOS14
-   channel-group 14 mode active
-!
 interface Port-Channel14
    description CE-EOS14
    switchport access vlan 20
@@ -15,10 +11,13 @@ interface Port-Channel14
    lacp system-id 0000.0000.0068
    spanning-tree portfast
 !
+interface Ethernet6
+   channel-group 14 mode active
+!
 router bgp 100
    maximum-paths 2
    !
    vlan 20
-      rd 6.6.6.6:20
+      rd 6.6.6.6:2
       route-target both 2:20
       redistribute learned
