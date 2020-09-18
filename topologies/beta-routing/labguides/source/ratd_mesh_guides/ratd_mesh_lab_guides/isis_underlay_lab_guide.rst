@@ -5,9 +5,10 @@ Deploy IS-IS as the Service Provider Underlay IGP
    :align: center
   
 .. note::
-   The labs of the Routing ATD are structured to build on each other. The 
-   Lab Options Menu will complete all lab configurations prior to the step selected 
-   so you can always begin from a clean starting point.
+   The Base Labs of the Routing ATD are structured to build on each other. You should complete 
+   all Base Labs before moving onto Supplemental Labs. Alternatively, using the Lab Selection 
+   Menus will complete configurations for prior labs as necessary. Supplemental Labs can be 
+   completed in any order.
 
 #. Log into the **LabAccess** jumpserver to prepare the lab environment.
 
