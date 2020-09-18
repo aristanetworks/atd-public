@@ -1,25 +1,25 @@
 ---
 lab_list:
-  base-mesh:
-    description: "Complete Base Lab Setup for the Mesh Topology (base-mesh)"
-  c1l3vpn-mesh: 
-    description: "Prepare Environment to Start at the Customer-1 L3VPN Lab (c1l3vpn-mesh)"
-  c2l2vpn-mesh: 
-    description: "Prepare Environment to Start at the Customer-2 L2VPN Lab (c2l2vpn-mesh)"
-  c3eline-mesh: 
-    description: "Prepare Environment to Start at the Customer-3 E-LINE Lab (c3eline-mesh)"
-  tilfa-mesh:
-    description: "Prepare Environment to Start at the TI-LFA Fast Reroute Lab (tilfa-mesh)"
-  srte-mesh:
-    description: "Prepare Environment to Start at the SR Traffic Engineering Lab (srte-mesh)"
-  c4l3vpn-mesh: 
-    description: "Prepare Environment to Start at the Customer-4 L3VPN Lab (c4l3vpn-mesh)"
-  centsvc-mesh: 
-    description: "Prepare Environment to Start at the Centralized Services Lab (centsvc-mesh)"
-  complete-mesh: 
-    description: "Complete all Additional Lab Sections for the Mesh Topology (complete-mesh)"
+  base:
+    description: "Complete Base Lab Setup for the Mesh Topology (base)"
+  c1l3vpn: 
+    description: "Prepare Environment to Start at the Customer-1 L3VPN Lab (c1l3vpn)"
+  c2l2vpn: 
+    description: "Prepare Environment to Start at the Customer-2 L2VPN Lab (c2l2vpn)"
+  c3eline: 
+    description: "Prepare Environment to Start at the Customer-3 E-LINE Lab (c3eline)"
+  tilfa:
+    description: "Prepare Environment to Start at the TI-LFA Fast Reroute Lab (tilfa)"
+  srte:
+    description: "Prepare Environment to Start at the SR Traffic Engineering Lab (srte)"
+  c4l3vpn: 
+    description: "Prepare Environment to Start at the Customer-4 L3VPN Lab (c4l3vpn)"
+  centsvc: 
+    description: "Prepare Environment to Start at the Centralized Services Lab (centsvc)"
+  complete: 
+    description: "Complete All Supplemental Lab Sections for the Mesh Topology (complete)"
 labconfiglets:
-  base-mesh:
+  base:
     eos1:
       - "BaseIPv4_EOS1"
       - "IS-IS_EOS1"
@@ -83,7 +83,7 @@ labconfiglets:
       - "BaseIPv4_EOS19"
     eos20:
       - "BaseIPv4_EOS20"
-  c1l3vpn-mesh:
+  c1l3vpn:
     eos1:
       - "BaseIPv4_EOS1"
       - "IS-IS_EOS1"
@@ -147,7 +147,7 @@ labconfiglets:
       - "BaseIPv4_EOS19"
     eos20:
       - "BaseIPv4_EOS20"
-  c2l2vpn-mesh:
+  c2l2vpn:
     eos1:
       - "BaseIPv4_EOS1"
       - "IS-IS_EOS1"
@@ -211,7 +211,7 @@ labconfiglets:
       - "BaseIPv4_EOS19"
     eos20:
       - "BaseIPv4_EOS20"
-  c3eline-mesh:
+  c3eline:
     eos1:
       - "BaseIPv4_EOS1"
       - "IS-IS_EOS1"
@@ -275,7 +275,7 @@ labconfiglets:
       - "BaseIPv4_EOS19"
     eos20:
       - "BaseIPv4_EOS20"
-  tilfa-mesh:
+  tilfa:
     eos1:
       - "BaseIPv4_EOS1"
       - "IS-IS_EOS1"
@@ -358,7 +358,7 @@ labconfiglets:
       - "BaseIPv4_EOS19"
     eos20:
       - "BaseIPv4_EOS20"
-  srte-mesh:
+  srte:
     eos1:
       - "BaseIPv4_EOS1"
       - "IS-IS_EOS1"
@@ -449,7 +449,7 @@ labconfiglets:
       - "BaseIPv4_EOS19"
     eos20:
       - "BaseIPv4_EOS20"
-  c4l3vpn-mesh:
+  c4l3vpn:
     eos1:
       - "BaseIPv4_EOS1"
       - "IS-IS_EOS1"
@@ -522,7 +522,7 @@ labconfiglets:
       - "BaseIPv4_EOS19"
     eos20:
       - "BaseIPv4_EOS20"
-  centsvc-mesh:
+  centsvc:
     eos1:
       - "BaseIPv4_EOS1"
       - "IS-IS_EOS1"
@@ -599,7 +599,7 @@ labconfiglets:
       - "Customer4_L3VPN_EOS19"
     eos20:
       - "BaseIPv4_EOS20"
-  complete-mesh:
+  complete:
     eos1:
       - "BaseIPv4_EOS1"
       - "IS-IS_EOS1"

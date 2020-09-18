@@ -6,7 +6,6 @@ interface Ethernet2
    spanning-tree portfast
 !
 router bgp 100
-   maximum-paths 2
    !
    vlan 20
       rd 7.7.7.7:2

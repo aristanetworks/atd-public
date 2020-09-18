@@ -1,25 +1,25 @@
 ---
 lab_list:
-  base-ring:
-    description: "Complete Base Lab Setup for the Ring Topology (base-ring)"
-  c1l3vpn-ring: 
-    description: "Prepare Environment to Start at the Customer-1 L3VPN Lab (c1l3vpn-ring)"
-  c2l2vpn-ring: 
-    description: "Prepare Environment to Start at the Customer-2 L2VPN Lab (c2l2vpn-ring)"
-  c3eline-ring: 
-    description: "Prepare Environment to Start at the Customer-3 E-LINE Lab (c3eline-ring)"
-  tilfa-ring:
-    description: "Prepare Environment to Start at the TI-LFA Fast Reroute Lab (tilfa-ring)"
-  srte-ring:
-    description: "Prepare Environment to Start at the SR Traffic Engineering Lab (srte-ring)"
-  c4l3vpn-ring: 
-    description: "Prepare Environment to Start at the Customer-4 L3VPN Lab (c4l3vpn-ring)"
-  centsvc-ring: 
-    description: "Prepare Environment to Start at the Centralized Services Lab (centsvc-ring)"
-  complete-ring: 
-    description: "Complete all Additional Lab Sections for the Ring Topology (complete-ring)"
+  base:
+    description: "Complete Base Lab Setup for the Ring Topology (base)"
+  c1l3vpn: 
+    description: "Prepare Environment to Start at the Customer-1 L3VPN Lab (c1l3vpn)"
+  c2l2vpn: 
+    description: "Prepare Environment to Start at the Customer-2 L2VPN Lab (c2l2vpn)"
+  c3eline: 
+    description: "Prepare Environment to Start at the Customer-3 E-LINE Lab (c3eline)"
+  tilfa:
+    description: "Prepare Environment to Start at the TI-LFA Fast Reroute Lab (tilfa)"
+  srte:
+    description: "Prepare Environment to Start at the SR Traffic Engineering Lab (srte)"
+  c4l3vpn: 
+    description: "Prepare Environment to Start at the Customer-4 L3VPN Lab (c4l3vpn)"
+  centsvc: 
+    description: "Prepare Environment to Start at the Centralized Services Lab (centsvc)"
+  complete: 
+    description: "Complete All Supplemental Lab Sections for the Ring Topology (complete)"
 labconfiglets:
-  base-ring:
+  base:
     eos1:
       - "BaseIPv4_EOS1_RING"
       - "IS-IS_EOS1_RING"
@@ -78,7 +78,7 @@ labconfiglets:
       - "BaseIPv4_EOS19"
     eos20:
       - "BaseIPv4_EOS20"
-  c1l3vpn-ring:
+  c1l3vpn:
     eos1:
       - "BaseIPv4_EOS1_RING"
       - "IS-IS_EOS1_RING"
@@ -137,7 +137,7 @@ labconfiglets:
       - "BaseIPv4_EOS19"
     eos20:
       - "BaseIPv4_EOS20"
-  c2l2vpn-ring:
+  c2l2vpn:
     eos1:
       - "BaseIPv4_EOS1_RING"
       - "IS-IS_EOS1_RING"
@@ -196,7 +196,7 @@ labconfiglets:
       - "BaseIPv4_EOS19"
     eos20:
       - "BaseIPv4_EOS20"
-  c3eline-ring:
+  c3eline:
     eos1:
       - "BaseIPv4_EOS1_RING"
       - "IS-IS_EOS1_RING"
@@ -255,7 +255,7 @@ labconfiglets:
       - "BaseIPv4_EOS19"
     eos20:
       - "BaseIPv4_EOS20"
-  tilfa-ring:
+  tilfa:
     eos1:
       - "BaseIPv4_EOS1_RING"
       - "IS-IS_EOS1_RING"
@@ -333,7 +333,7 @@ labconfiglets:
       - "BaseIPv4_EOS19"
     eos20:
       - "BaseIPv4_EOS20"
-  srte-ring:
+  srte:
     eos1:
       - "BaseIPv4_EOS1_RING"
       - "IS-IS_EOS1_RING"
@@ -417,7 +417,7 @@ labconfiglets:
       - "BaseIPv4_EOS19"
     eos20:
       - "BaseIPv4_EOS20"
-  c4l3vpn-ring:
+  c4l3vpn:
     eos1:
       - "BaseIPv4_EOS1_RING"
       - "IS-IS_EOS1_RING"
@@ -483,7 +483,7 @@ labconfiglets:
       - "BaseIPv4_EOS19"
     eos20:
       - "BaseIPv4_EOS20"
-  centsvc-ring:
+  centsvc:
     eos1:
       - "BaseIPv4_EOS1_RING"
       - "IS-IS_EOS1_RING"
@@ -553,7 +553,7 @@ labconfiglets:
       - "Customer4_L3VPN_EOS19"
     eos20:
       - "BaseIPv4_EOS20"
-  complete-ring:
+  complete:
     eos1:
       - "BaseIPv4_EOS1_RING"
       - "IS-IS_EOS1_RING"

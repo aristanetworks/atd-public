@@ -15,7 +15,6 @@ interface Ethernet1
    channel-group 9 mode active
 !
 router bgp 100
-   maximum-paths 2
    !
    vlan 20
       rd 4.4.4.4:2

@@ -1,15 +1,15 @@
 ---
 lab_list:
-  reset-ring:
-    description: "Reset Environment to Initial IPv4 Settings for the Ring Topology (reset-ring)"
-  sr-ring: 
-    description: "Prepare Environment to Start at the IS-IS Segment Routing Lab (sr-ring)"
-  evpn-ring: 
-    description: "Prepare Environment to Start at the EVPN Control-Plane Setup Lab (evpn-ring)"
-  base-ring: 
-    description: "Complete all Base Lab Sections for the Ring Topology (base-ring)"
+  reset:
+    description: "Reset Environment to Initial IPv4 Settings for the Ring Topology (reset)"
+  sr: 
+    description: "Prepare Environment to Start at the IS-IS Segment Routing Lab (sr)"
+  evpn: 
+    description: "Prepare Environment to Start at the EVPN Control-Plane Setup Lab (evpn)"
+  base: 
+    description: "Complete All Base Lab Sections for the Ring Topology (base)"
 labconfiglets:
-  reset-ring:
+  reset:
     eos1:
       - "BaseIPv4_EOS1_RING"
     eos2:
@@ -50,7 +50,7 @@ labconfiglets:
       - "BaseIPv4_EOS19"
     eos20:
       - "BaseIPv4_EOS20"
-  sr-ring:
+  sr:
     eos1:
       - "BaseIPv4_EOS1_RING"
       - "IS-IS_EOS1_RING"
@@ -97,7 +97,7 @@ labconfiglets:
       - "BaseIPv4_EOS19"
     eos20:
       - "BaseIPv4_EOS20"
-  evpn-ring:
+  evpn:
     eos1:
       - "BaseIPv4_EOS1_RING"
       - "IS-IS_EOS1_RING"
@@ -150,7 +150,7 @@ labconfiglets:
       - "BaseIPv4_EOS19"
     eos20:
       - "BaseIPv4_EOS20"
-  base-ring:
+  base:
     eos1:
       - "BaseIPv4_EOS1_RING"
       - "IS-IS_EOS1_RING"

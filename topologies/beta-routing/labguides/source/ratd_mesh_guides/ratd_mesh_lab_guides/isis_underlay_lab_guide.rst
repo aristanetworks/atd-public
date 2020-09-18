@@ -11,13 +11,17 @@ Deploy IS-IS as the Service Provider Underlay IGP
 
 #. Log into the **LabAccess** jumpserver to prepare the lab environment.
 
-   #. Type ``reset`` or Lab Option 1 at the Lab Selection Menu. The script will configure the topology 
-      with the necessary base IPv4 addressing for the labs.
+   #. From the Main Menu, type ``labs`` or Option 97 for ``Additional Labs``.
+
+   #. Type ``mesh-topology-base-labs`` to access the Base Setup Labs.
+
+   #. Type ``reset`` at the Labs Selection Menu. The script will configure the topology 
+      with the necessary prerequisites.
 
       .. admonition:: Did you know?
 
          The ``reset`` option (and all other options) makes use of CloudVision Portal APIs 
-         to apply "configlets" to each EOS node ensuring they have the proper IPv4 configuration.
+         to apply "configlets" to each EOS node ensuring they have the proper configuration.
          
 #. Prior to configuration, verify the topology's base status.
 

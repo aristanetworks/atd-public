@@ -6,11 +6,14 @@ Deploy L3VPN Service for Customer-1
 
 |
 
-#. If you did not fully complete the previous EVPN Setup lab, log into the **LabAccess** jumpserver to prepare the 
-   lab environment.
+#. Log into the **LabAccess** jumpserver to prepare the lab environment.
 
-   #. Type ``c1l3vpn`` or Lab Option 4 at the prompt. The script will configure the topology 
-      with the necessary base IPv4 addressing, IS-IS IGP, enable SR extensions for MPLS and BGP EVPN.
+   #. From the Main Menu, type ``labs`` or Option 97 for ``Additional Labs``.
+
+   #. Type ``mesh-topology-supplemental-labs`` to access the Supplemental Labs.
+
+   #. Type ``c1l3vpn`` at the Labs Selection Menu. The script will configure the topology 
+      with the necessary prerequisites.
    
 #. Customer-1 is attached to three Service Provider nodes, **EOS1**, **EOS6** and **EOS8**. These will be our Provider 
    Edge, or **PE** nodes. Since this customer will require a Layer 3 VPN Service, create an isolated VRF for their 
@@ -332,17 +335,6 @@ Deploy L3VPN Service for Customer-1
 
          interface Ethernet3
             isis metric 30
-
-   #. Adjust BGP on **EOS1**, **EOS6**, and **EOS8** so that it will allow for more than a single path.
-
-      .. note::
-
-         Unlike IGPs, BGP must be told explicitly to do ECMP using the ``maximum-paths`` command.
-
-      .. code-block:: text
-
-         router bgp 100
-            maximum-paths 2
 
    #. Re-verify the forwarding path for the Customer-1 VRF on **EOS1**, **EOS6**, and **EOS8** to see ECMP is now available.
 

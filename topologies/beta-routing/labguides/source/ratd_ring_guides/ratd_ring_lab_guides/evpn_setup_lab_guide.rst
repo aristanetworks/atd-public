@@ -6,11 +6,14 @@ Prepare to Offer VPN Services to Customers via MP-BGP EVPN Control-Plane
 
 |
 
-#. If you did not fully complete the previous ISIS-SR lab, log into the **LabAccess** jumpserver to prepare the lab 
-   environment.
+#. Log into the **LabAccess** jumpserver to prepare the lab environment.
 
-   #. Type ``evpn-ring`` or Lab Option 3 at the Ring Routing Labs prompt. The script will configure the topology with the 
-      necessary base IPv4 addressing, IS-IS IGP and enable SR extensions for MPLS.
+   #. From the Main Menu, type ``labs`` or Option 97 for ``Additional Labs``.
+
+   #. Type ``ring-topology-base-labs`` to access the Base Setup Labs.
+
+   #. Type ``evpn`` at the Labs Selection Menu. The script will configure the topology 
+      with the necessary prerequisites.
 
 #. We will now leverage BGP as the control-plane for our VPNs in the Service Provider network. Specifically, we will use iBGP 
    with a Route Reflector to ease the configuration load and not require us to setup a full mesh of BGP peerings.  Configure 
@@ -31,6 +34,19 @@ Prepare to Offer VPN Services to Customers via MP-BGP EVPN Control-Plane
          router bgp 100
             router-id 8.8.8.8
             no bgp default ipv4-unicast
+
+   #. Allow BGP to utilize ECMP when available by increasing the Maximum Paths allowed for a route.
+
+      .. note::
+
+         By default, BGP will only install a single best-path. In a network with multiple equal paths 
+         available, this setting will allow BGP to load balance across the available paths. This is 
+         covered further in a later lab.
+
+      .. code-block:: text
+
+         router bgp 100
+            maximum-paths 2
 
    #. Activate the EVPN address-family within BGP and set the data-plane encapsulation type 
       to MPLS.
@@ -116,6 +132,7 @@ Prepare to Offer VPN Services to Customers via MP-BGP EVPN Control-Plane
          router bgp 100
             router-id 1.1.1.1
             no bgp default ipv4-unicast
+            maximum-paths 2
             neighbor 8.8.8.8 remote-as 100
             neighbor 8.8.8.8 update-source Loopback0
             neighbor 8.8.8.8 send-community

@@ -6,11 +6,14 @@ Deploy E-LINE Service for Customer-3
 
 |
 
-#. If you did not fully complete the previous Customer-2 L2VPN lab, log into the **LabAccess** jumpserver to prepare the 
-   lab environment.
+#. Log into the **LabAccess** jumpserver to prepare the lab environment.
 
-   #. Type ``c3eline-ring`` or Lab Option 6 at the Ring Routing Labs prompt. The script will configure the topology 
-      with the necessary base IPv4 addressing, IS-IS IGP, enable SR extensions for MPLS and BGP EVPN.
+   #. From the Main Menu, type ``labs`` or Option 97 for ``Additional Labs``.
+
+   #. Type ``ring-topology-supplemental-labs`` to access the Supplemental Labs.
+
+   #. Type ``c3eline`` at the Labs Selection Menu. The script will configure the topology 
+      with the necessary prerequisites.
 
 #. Customer-3 is attached to two Service Provider nodes, **EOS1** and **EOS4**. These will be **PE** nodes. Since this 
    customer will require a Layer 1 Wire Service, create a local patch and use EVPN to advertise the customers port to 

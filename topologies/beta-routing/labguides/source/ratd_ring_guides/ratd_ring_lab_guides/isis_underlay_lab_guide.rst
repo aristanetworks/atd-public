@@ -5,22 +5,23 @@ Deploy IS-IS as the Service Provider Underlay IGP
    :align: center
   
 .. note::
-   The labs of the Routing ATD are structured to build on each other. The Lab Options Menu will complete all lab 
-   configurations prior to the step selected so you can always begin from a clean starting point.
+   The labs of the Routing ATD are structured to build on each other. The 
+   Lab Options Menu will complete all lab configurations prior to the step selected 
+   so you can always begin from a clean starting point.
 
 #. Log into the **LabAccess** jumpserver to prepare the lab environment.
 
-   #. To access the Ring Topology Labs, from the Main Menu, type ``labs`` or Option 97 for ``Additional Labs``.
+   #. From the Main Menu, type ``labs`` or Option 97 for ``Additional Labs``.
 
-   #. Type ``ring-routing`` or Option 2 for the ``Ring Routing`` labs.
+   #. Type ``ring-topology-base-labs`` to access the Base Setup Labs.
 
-   #. Type ``reset-ring`` or Lab Option 1 at the Ring Routing Labs Selection Menu. The script will configure the topology 
-      with the necessary base IPv4 addressing for the labs.
+   #. Type ``reset`` at the Labs Selection Menu. The script will configure the topology 
+      with the necessary prerequisites.
 
       .. admonition:: Did you know?
 
-         The ``reset-ring`` option (and all other options) makes use of CloudVision Portal APIs to apply "configlets" to each 
-         EOS node ensuring they have the proper IPv4 configuration.
+         The ``reset`` option (and all other options) makes use of CloudVision Portal APIs 
+         to apply "configlets" to each EOS node ensuring they have the proper configuration.
          
 #. Prior to configuration, verify the topology's base status.
 

@@ -6,11 +6,14 @@ Deploy L3VPN Service for Customer-4
 
 |
 
-#. If you did not fully complete the previous EVPN Setup lab, log into the **LabAccess** jumpserver to prepare the 
-   lab environment.
+#. Log into the **LabAccess** jumpserver to prepare the lab environment.
 
-   #. Type ``c4l3vpn-ring`` or Lab Option 7 at the Ring Routing Labs prompt. The script will configure the topology 
-      with the necessary base IPv4 addressing, IS-IS IGP, enable SR extensions for MPLS and BGP EVPN.
+   #. From the Main Menu, type ``labs`` or Option 97 for ``Additional Labs``.
+
+   #. Type ``ring-topology-supplemental-labs`` to access the Supplemental Labs.
+
+   #. Type ``c4l3vpn`` at the Labs Selection Menu. The script will configure the topology 
+      with the necessary prerequisites.
    
 #. Customer-4 is attached to two Service Provider nodes, **EOS7** and **EOS8**. These will be our **PE** nodes. 
    Since this customer will require a Layer 3 VPN Service, create an isolated VRF for their traffic and use EVPN 

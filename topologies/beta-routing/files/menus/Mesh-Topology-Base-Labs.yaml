@@ -1,15 +1,15 @@
 ---
 lab_list:
-  reset-mesh:
-    description: "Reset Environment to Initial IPv4 Settings for the Mesh Topology (reset-mesh)"
-  sr-mesh: 
-    description: "Prepare Environment to Start at the IS-IS Segment Routing Lab (sr-mesh)"
-  evpn-mesh: 
-    description: "Prepare Environment to Start at the EVPN Control-Plane Setup Lab (evpn-mesh)"
-  base-mesh: 
-    description: "Complete all Base Lab Sections for the Mesh Topology (base-mesh)"
+  reset:
+    description: "Reset Environment to Initial IPv4 Settings for the Mesh Topology (reset)"
+  sr: 
+    description: "Prepare Environment to Start at the IS-IS Segment Routing Lab (sr)"
+  evpn: 
+    description: "Prepare Environment to Start at the EVPN Control-Plane Setup Lab (evpn)"
+  base: 
+    description: "Complete All Base Lab Sections for the Mesh Topology (base)"
 labconfiglets:
-  reset-mesh:
+  reset:
     eos1:
       - "BaseIPv4_EOS1"
     eos2:
@@ -50,7 +50,7 @@ labconfiglets:
       - "BaseIPv4_EOS19"
     eos20:
       - "BaseIPv4_EOS20"
-  sr-mesh:
+  sr:
     eos1:
       - "BaseIPv4_EOS1"
       - "IS-IS_EOS1"
@@ -99,7 +99,7 @@ labconfiglets:
       - "BaseIPv4_EOS19"
     eos20:
       - "BaseIPv4_EOS20"
-  evpn-mesh:
+  evpn:
     eos1:
       - "BaseIPv4_EOS1"
       - "IS-IS_EOS1"
@@ -156,7 +156,7 @@ labconfiglets:
       - "BaseIPv4_EOS19"
     eos20:
       - "BaseIPv4_EOS20"
-  base-mesh:
+  base:
     eos1:
       - "BaseIPv4_EOS1"
       - "IS-IS_EOS1"
