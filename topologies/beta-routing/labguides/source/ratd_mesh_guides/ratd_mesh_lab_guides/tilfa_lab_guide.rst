@@ -10,7 +10,7 @@ Enable TI-LFA Fast Reroute for ISIS-SR
 
    #. From the Main Menu, type ``labs`` or Option 97 for ``Additional Labs``.
 
-   #. Type ``mesh-topology-supplemental-labs`` to access the Base Setup Labs.
+   #. Type ``mesh-topology-supplemental-labs`` to access the Supplemental Labs.
 
    #. Type ``tilfa`` at the Labs Selection Menu. The script will configure the topology 
       with the necessary prerequisites.
@@ -23,7 +23,9 @@ Enable TI-LFA Fast Reroute for ISIS-SR
 
          TI-LFA will calculate backup paths between the IS-IS enabled nodes assuming that the 
          primary best path has failed. In the event of an actual failure, hardware forwarding would 
-         switch to this backup path in 50 ms. This would normally be paired with BFD monitoring.
+         switch to this backup path in 50 ms. This would normally be paired with BFD monitoring. In the 
+         virtual ATD labs, it is not possible to simulate actual failures, but the TI-LFA control-plane 
+         can still be validated.
 
       .. code-block:: text
 
