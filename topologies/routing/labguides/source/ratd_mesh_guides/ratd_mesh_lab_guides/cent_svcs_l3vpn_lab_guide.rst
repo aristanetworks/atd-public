@@ -6,11 +6,14 @@ Offer Centralized Services to L3VPN Customers
 
 |
 
-#. If you did not fully complete the previous Customer-4 L3VPN Setup lab, log into the **LabAccess** jumpserver to prepare 
-   the lab environment.
+#. Log into the **LabAccess** jumpserver to prepare the lab environment.
 
-   #. Type ``centsvc`` or Lab Option 8 at the prompt. The script will configure the topology with the necessary base IPv4 
-      addressing, IS-IS IGP, enable SR extensions for MPLS and BGP EVPN as well as the Customer-1 and Customer-4 L3VPNs.
+   #. From the Main Menu, type ``labs`` or Option 97 for ``Additional Labs``.
+
+   #. Type ``mesh-topology-supplemental-labs`` to access the Supplemental Labs.
+
+   #. Type ``centsvc`` at the Labs Selection Menu. The script will configure the topology 
+      with the necessary prerequisites.
 
 #. The Centralized Service is attached to Service Provider node **EOS3**. These will be our **PE** node. Since this 
    Centralized Service will be accessed via a Layer 3 VPN Service, create an isolated VRF for its traffic and use EVPN 

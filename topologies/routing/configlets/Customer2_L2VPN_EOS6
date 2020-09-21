@@ -15,7 +15,6 @@ interface Ethernet6
    channel-group 14 mode active
 !
 router bgp 100
-   maximum-paths 2
    !
    vlan 20
       rd 6.6.6.6:2

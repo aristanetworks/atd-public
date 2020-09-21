@@ -6,11 +6,14 @@ Deploy L2VPN Service for Customer-2
 
 |
 
-#. If you did not fully complete the previous Customer-1 L3VPN lab, log into the **LabAccess** jumpserver to prepare the 
-   lab environment.
+#. Log into the **LabAccess** jumpserver to prepare the lab environment.
 
-   #. Type ``c2l2vpn-ring`` or Lab Option 5 at the Ring Routing Labs prompt. The script will configure the topology 
-      with the necessary base IPv4 addressing, IS-IS IGP, enable SR extensions for MPLS and BGP EVPN.
+   #. From the Main Menu, type ``labs`` or Option 97 for ``Additional Labs``.
+
+   #. Type ``ring-topology-supplemental-labs`` to access the Supplemental Labs.
+
+   #. Type ``c2l2vpn`` at the Labs Selection Menu. The script will configure the topology 
+      with the necessary prerequisites.
 
 #. Customer-2 is attached to five Service Provider nodes, **EOS3**, **EOS4**, **EOS6**, **EOS7** and **EOS8**. These 
    will be **PE** nodes. Since this customer will require a Layer 2 VPN Service, create a VLAN for their traffic and 
@@ -101,8 +104,7 @@ Deploy L2VPN Service for Customer-2
 
    #. Configure BGP EVPN to advertise reachability of any MACs learned in VLAN ``20`` from the customer by setting 
       an **RD** and an **RT**, within BGP on **EOS7**. It should have a unique **RD** following the format of 
-      **<Loopback0 IP>** ``:2`` and the **RT** on all routers in the VPN should match as ``2:20``. Additionally, 
-      ensure BGP is configured for ECMP where applicable.
+      **<Loopback0 IP>** ``:2`` and the **RT** on all routers in the VPN should match as ``2:20``.
 
       .. note::
 
@@ -113,7 +115,6 @@ Deploy L2VPN Service for Customer-2
       .. code-block:: text
 
          router bgp 100
-            maximum-paths 2
             !
             vlan 20
                rd 7.7.7.7:2
@@ -128,7 +129,6 @@ Deploy L2VPN Service for Customer-2
       .. code-block:: text
 
          router bgp 100
-            maximum-paths 2
             !
             vlan 20
                rd 3.3.3.3:2
@@ -140,7 +140,6 @@ Deploy L2VPN Service for Customer-2
       .. code-block:: text
 
          router bgp 100
-            maximum-paths 2
             !
             vlan 20
                rd 4.4.4.4:2
@@ -152,7 +151,6 @@ Deploy L2VPN Service for Customer-2
       .. code-block:: text
 
          router bgp 100
-            maximum-paths 2
             !
             vlan 20
                rd 6.6.6.6:2
@@ -164,7 +162,6 @@ Deploy L2VPN Service for Customer-2
       .. code-block:: text
 
          router bgp 100
-            maximum-paths 2
             !
             vlan 20
                rd 8.8.8.8:2

@@ -1,0 +1,211 @@
+---
+lab_list:
+  reset:
+    description: "Reset Environment to Initial IPv4 Settings for the Ring Topology (reset)"
+  sr: 
+    description: "Prepare Environment to Start at the IS-IS Segment Routing Lab (sr)"
+  evpn: 
+    description: "Prepare Environment to Start at the EVPN Control-Plane Setup Lab (evpn)"
+  base: 
+    description: "Complete All Base Lab Sections for the Ring Topology (base)"
+labconfiglets:
+  reset:
+    eos1:
+      - "BaseIPv4_EOS1_RING"
+    eos2:
+      - "BaseIPv4_EOS2_RING"
+    eos3:
+      - "BaseIPv4_EOS3_RING"
+    eos4:
+      - "BaseIPv4_EOS4_RING"
+    eos5:
+      - "BaseIPv4_EOS5_RING"
+    eos6:
+      - "BaseIPv4_EOS6_RING"
+    eos7:
+      - "BaseIPv4_EOS7"
+    eos8:
+      - "BaseIPv4_EOS8"
+    eos9:
+      - "BaseIPv4_EOS9"
+    eos10:
+      - "BaseIPv4_EOS10"
+    eos11:
+      - "BaseIPv4_EOS11"
+    eos12:
+      - "BaseIPv4_EOS12"
+    eos13:
+      - "BaseIPv4_EOS13"
+    eos14:
+      - "BaseIPv4_EOS14"
+    eos15:
+      - "BaseIPv4_EOS15"
+    eos16:
+      - "BaseIPv4_EOS16"
+    eos17:
+      - "BaseIPv4_EOS17"
+    eos18:
+      - "BaseIPv4_EOS18"
+    eos19:
+      - "BaseIPv4_EOS19"
+    eos20:
+      - "BaseIPv4_EOS20"
+  sr:
+    eos1:
+      - "BaseIPv4_EOS1_RING"
+      - "IS-IS_EOS1_RING"
+    eos2:
+      - "BaseIPv4_EOS2_RING"
+    eos3:
+      - "BaseIPv4_EOS3_RING"
+      - "IS-IS_EOS3_RING"
+    eos4:
+      - "BaseIPv4_EOS4_RING"
+      - "IS-IS_EOS4_RING"
+    eos5:
+      - "BaseIPv4_EOS5_RING"
+    eos6:
+      - "BaseIPv4_EOS6_RING"
+      - "IS-IS_EOS6_RING"
+    eos7:
+      - "BaseIPv4_EOS7"
+      - "IS-IS_EOS7"
+    eos8:
+      - "BaseIPv4_EOS8"
+      - "IS-IS_EOS8"
+    eos9:
+      - "BaseIPv4_EOS9"
+    eos10:
+      - "BaseIPv4_EOS10"
+    eos11:
+      - "BaseIPv4_EOS11"
+    eos12:
+      - "BaseIPv4_EOS12"
+    eos13:
+      - "BaseIPv4_EOS13"
+    eos14:
+      - "BaseIPv4_EOS14"
+    eos15:
+      - "BaseIPv4_EOS15"
+    eos16:
+      - "BaseIPv4_EOS16"
+    eos17:
+      - "BaseIPv4_EOS17"
+    eos18:
+      - "BaseIPv4_EOS18"
+    eos19:
+      - "BaseIPv4_EOS19"
+    eos20:
+      - "BaseIPv4_EOS20"
+  evpn:
+    eos1:
+      - "BaseIPv4_EOS1_RING"
+      - "IS-IS_EOS1_RING"
+      - "SR_EOS1"
+    eos2:
+      - "BaseIPv4_EOS2_RING"
+    eos3:
+      - "BaseIPv4_EOS3_RING"
+      - "IS-IS_EOS3_RING"
+      - "SR_EOS3"
+    eos4:
+      - "BaseIPv4_EOS4_RING"
+      - "IS-IS_EOS4_RING"
+      - "SR_EOS4"
+    eos5:
+      - "BaseIPv4_EOS5_RING"
+    eos6:
+      - "BaseIPv4_EOS6_RING"
+      - "IS-IS_EOS6_RING"
+      - "SR_EOS6"
+    eos7:
+      - "BaseIPv4_EOS7"
+      - "IS-IS_EOS7"
+      - "SR_EOS7"
+    eos8:
+      - "BaseIPv4_EOS8"
+      - "IS-IS_EOS8"
+      - "SR_EOS8"
+    eos9:
+      - "BaseIPv4_EOS9"
+    eos10:
+      - "BaseIPv4_EOS10"
+    eos11:
+      - "BaseIPv4_EOS11"
+    eos12:
+      - "BaseIPv4_EOS12"
+    eos13:
+      - "BaseIPv4_EOS13"
+    eos14:
+      - "BaseIPv4_EOS14"
+    eos15:
+      - "BaseIPv4_EOS15"
+    eos16:
+      - "BaseIPv4_EOS16"
+    eos17:
+      - "BaseIPv4_EOS17"
+    eos18:
+      - "BaseIPv4_EOS18"
+    eos19:
+      - "BaseIPv4_EOS19"
+    eos20:
+      - "BaseIPv4_EOS20"
+  base:
+    eos1:
+      - "BaseIPv4_EOS1_RING"
+      - "IS-IS_EOS1_RING"
+      - "SR_EOS1"
+      - "EVPN_PEERING_EOS1_RING"
+    eos2:
+      - "BaseIPv4_EOS2_RING"
+    eos3:
+      - "BaseIPv4_EOS3_RING"
+      - "IS-IS_EOS3_RING"
+      - "SR_EOS3"
+      - "EVPN_PEERING_EOS3_RING"
+    eos4:
+      - "BaseIPv4_EOS4_RING"
+      - "IS-IS_EOS4_RING"
+      - "SR_EOS4"
+      - "EVPN_PEERING_EOS4_RING"
+    eos5:
+      - "BaseIPv4_EOS5_RING"
+    eos6:
+      - "BaseIPv4_EOS6_RING"
+      - "IS-IS_EOS6_RING"
+      - "SR_EOS6"
+      - "EVPN_PEERING_EOS6_RING"
+    eos7:
+      - "BaseIPv4_EOS7"
+      - "IS-IS_EOS7"
+      - "SR_EOS7"
+      - "EVPN_PEERING_EOS7_RING"
+    eos8:
+      - "BaseIPv4_EOS8"
+      - "IS-IS_EOS8"
+      - "SR_EOS8"
+      - "EVPN_PEERING_EOS8_RING"
+    eos9:
+      - "BaseIPv4_EOS9"
+    eos10:
+      - "BaseIPv4_EOS10"
+    eos11:
+      - "BaseIPv4_EOS11"
+    eos12:
+      - "BaseIPv4_EOS12"
+    eos13:
+      - "BaseIPv4_EOS13"
+    eos14:
+      - "BaseIPv4_EOS14"
+    eos15:
+      - "BaseIPv4_EOS15"
+    eos16:
+      - "BaseIPv4_EOS16"
+    eos17:
+      - "BaseIPv4_EOS17"
+    eos18:
+      - "BaseIPv4_EOS18"
+    eos19:
+      - "BaseIPv4_EOS19"
+    eos20:
+      - "BaseIPv4_EOS20"

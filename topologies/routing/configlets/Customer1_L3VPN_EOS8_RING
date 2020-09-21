@@ -7,7 +7,6 @@ interface Ethernet2
 ip routing vrf CUSTOMER-1
 !
 router bgp 100
-   maximum-paths 2
    !
   vrf CUSTOMER-1
       rd 8.8.8.8:1

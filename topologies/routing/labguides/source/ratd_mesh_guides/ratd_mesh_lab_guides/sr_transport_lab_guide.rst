@@ -6,16 +6,14 @@ Establish MPLS Transport Label Distribution via Segment-Routing
   
 |
 
-#. If you did not fully complete the previous IS-IS lab, log into the **LabAccess** jumpserver to prepare the lab environment.
+#. Log into the **LabAccess** jumpserver to prepare the lab environment.
 
-   #. Type ``sr`` or Lab Option 2 at the prompt. The script will configure the topology 
-      with the necessary base IPv4 addressing as well as the IS-IS underlay protocol.
+   #. From the Main Menu, type ``labs`` or Option 97 for ``Additional Labs``.
 
-      .. note::
+   #. Type ``mesh-topology-base-labs`` to access the Base Setup Labs.
 
-         If you only partially completed Lab 1 or would like to ensure a clean starting point, 
-         executing the Lab Menu Option will ensure the proper configurations are in place to start 
-         on all nodes.
+   #. Type ``sr`` at the Labs Selection Menu. The script will configure the topology 
+      with the necessary prerequisites.
 
 #. With IS-IS in place as the IGP for Loopback reachability, enable IS-IS Segment Routing on **EOS1**.
 

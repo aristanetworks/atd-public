@@ -5,19 +5,24 @@ Deploy IS-IS as the Service Provider Underlay IGP
    :align: center
   
 .. note::
-   The labs of the Routing ATD are structured to build on each other. The 
-   Lab Options Menu will complete all lab configurations prior to the step selected 
-   so you can always begin from a clean starting point.
+   The Base Labs of the Routing ATD are structured to build on each other. You should complete 
+   all Base Labs before moving onto Supplemental Labs. Alternatively, using the Lab Selection 
+   Menus will complete configurations for prior labs as necessary. Supplemental Labs can be 
+   completed in any order.
 
 #. Log into the **LabAccess** jumpserver to prepare the lab environment.
 
-   #. Type ``reset`` or Lab Option 1 at the Lab Selection Menu. The script will configure the topology 
-      with the necessary base IPv4 addressing for the labs.
+   #. From the Main Menu, type ``labs`` or Option 97 for ``Additional Labs``.
+
+   #. Type ``mesh-topology-base-labs`` to access the Base Setup Labs.
+
+   #. Type ``reset`` at the Labs Selection Menu. The script will configure the topology 
+      with the necessary prerequisites.
 
       .. admonition:: Did you know?
 
          The ``reset`` option (and all other options) makes use of CloudVision Portal APIs 
-         to apply "configlets" to each EOS node ensuring they have the proper IPv4 configuration.
+         to apply "configlets" to each EOS node ensuring they have the proper configuration.
          
 #. Prior to configuration, verify the topology's base status.
 

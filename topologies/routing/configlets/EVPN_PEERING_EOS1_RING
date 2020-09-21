@@ -1,6 +1,7 @@
 router bgp 100
    router-id 1.1.1.1
    no bgp default ipv4-unicast
+   maximum-paths 2
    neighbor 8.8.8.8 remote-as 100
    neighbor 8.8.8.8 update-source Loopback0
    neighbor 8.8.8.8 send-community
