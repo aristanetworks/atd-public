@@ -609,7 +609,7 @@ labconfiglets:
       - "Customer3_E-LINE_EOS1"
       - "SharedServices_EOS1"
       - "TI-LFA"
-      - "SR-TE_PLACEHOLDER"
+      - "SR-TE_EOS1"
     eos2:
       - "BaseIPv4_EOS2"
       - "IS-IS_EOS2"
@@ -623,7 +623,7 @@ labconfiglets:
       - "Customer2_L2VPN_EOS3"
       - "SharedServices_EOS3"
       - "TI-LFA"
-      - "SR-TE_PLACEHOLDER"
+      - "SR-TE_EOS3"
     eos4:
       - "BaseIPv4_EOS4"
       - "IS-IS_EOS4"
@@ -632,7 +632,7 @@ labconfiglets:
       - "Customer2_L2VPN_EOS4"
       - "Customer3_E-LINE_EOS4"
       - "TI-LFA"
-      - "SR-TE_PLACEHOLDER"
+      - "SR-TE_EOS4"
     eos5:
       - "BaseIPv4_EOS5"
       - "IS-IS_EOS5"
@@ -649,7 +649,7 @@ labconfiglets:
       - "Customer2_L2VPN_EOS6"
       - "SharedServices_EOS6"
       - "TI-LFA"
-      - "SR-TE_PLACEHOLDER"
+      - "SR-TE_EOS6"
     eos7:
       - "BaseIPv4_EOS7"
       - "IS-IS_EOS7"
@@ -659,7 +659,6 @@ labconfiglets:
       - "Customer4_L3VPN_EOS7"
       - "SharedServices_EOS7"
       - "TI-LFA"
-      - "SR-TE_PLACEHOLDER"
     eos8:
       - "BaseIPv4_EOS8"
       - "IS-IS_EOS8"
@@ -670,7 +669,7 @@ labconfiglets:
       - "Customer2_L2VPN_EOS8"
       - "Customer4_L3VPN_EOS8"
       - "TI-LFA"
-      - "SR-TE_PLACEHOLDER"
+      - "SR-TE_EOS8"
     eos9:
       - "BaseIPv4_EOS9"
       - "Customer2_L2VPN_EOS9"

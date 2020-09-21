@@ -1,0 +1,12 @@
+ip prefix-list CUSTOMER-1_EOS12 seq 10 permit 12.12.12.12/32
+!
+route-map CUSTOMER-1_IN permit 10
+   match ip address prefix-list CUSTOMER-1_EOS12
+   set extcommunity color 12 additive
+!
+route-map CUSTOMER-1_IN permit 20
+!
+router bgp 100
+   !
+   vrf CUSTOMER-1
+      neighbor 10.6.13.13 route-map CUSTOMER-1_IN in

@@ -19,6 +19,7 @@ Welcome to the Arista Routing ATD Documentation!
    ratd_mesh_guides/ratd_mesh_lab_guides/c2_l2vpn_lab_guide.rst
    ratd_mesh_guides/ratd_mesh_lab_guides/c3_eline_lab_guide.rst
    ratd_mesh_guides/ratd_mesh_lab_guides/tilfa_lab_guide.rst
+   ratd_mesh_guides/ratd_mesh_lab_guides/srte_lab_guide.rst
    ratd_mesh_guides/ratd_mesh_lab_guides/c4_l3vpn_lab_guide.rst
    ratd_mesh_guides/ratd_mesh_lab_guides/cent_svcs_l3vpn_lab_guide.rst 
 
@@ -48,6 +49,7 @@ Welcome to the Arista Routing ATD Documentation!
    ratd_ring_guides/ratd_ring_lab_guides/c2_l2vpn_lab_guide.rst
    ratd_ring_guides/ratd_ring_lab_guides/c3_eline_lab_guide.rst
    ratd_ring_guides/ratd_ring_lab_guides/tilfa_lab_guide.rst
+   ratd_ring_guides/ratd_ring_lab_guides/srte_lab_guide.rst
    ratd_ring_guides/ratd_ring_lab_guides/c4_l3vpn_lab_guide.rst
    ratd_ring_guides/ratd_ring_lab_guides/cent_svcs_l3vpn_lab_guide.rst 
 
