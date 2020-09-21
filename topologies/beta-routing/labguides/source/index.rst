@@ -34,6 +34,8 @@ Welcome to the Arista Routing ATD Documentation!
    ratd_mesh_guides/ratd_mesh_class_guides/c1_l3vpn_class_guide.rst
    ratd_mesh_guides/ratd_mesh_class_guides/c2_l2vpn_class_guide.rst
    ratd_mesh_guides/ratd_mesh_class_guides/c3_eline_class_guide.rst
+   ratd_mesh_guides/ratd_mesh_class_guides/tilfa_class_guide.rst
+   ratd_mesh_guides/ratd_mesh_class_guides/srte_class_guide.rst
    ratd_mesh_guides/ratd_mesh_class_guides/c4_l3vpn_class_guide.rst
    ratd_mesh_guides/ratd_mesh_class_guides/cent_svcs_l3vpn_class_guide.rst 
 
@@ -64,6 +66,8 @@ Welcome to the Arista Routing ATD Documentation!
    ratd_ring_guides/ratd_ring_class_guides/c1_l3vpn_class_guide.rst
    ratd_ring_guides/ratd_ring_class_guides/c2_l2vpn_class_guide.rst
    ratd_ring_guides/ratd_ring_class_guides/c3_eline_class_guide.rst
+   ratd_ring_guides/ratd_ring_class_guides/tilfa_class_guide.rst
+   ratd_ring_guides/ratd_ring_class_guides/srte_class_guide.rst
    ratd_ring_guides/ratd_ring_class_guides/c4_l3vpn_class_guide.rst
    ratd_ring_guides/ratd_ring_class_guides/cent_svcs_l3vpn_class_guide.rst
 
