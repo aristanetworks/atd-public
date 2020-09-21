@@ -7,6 +7,16 @@ Welcome to the Arista Routing ATD Documentation!
 
    connecting.rst 
 
+=================================================
+Lab Guides vs. Class Guides
+=================================================
+
+Both Lab Guides and Class Guides cover the same content and labs. The **Lab** Guides in the Routing ATD are meant to provide 
+example configurations with step-by-step instruction on setting up IS-IS, Segment Routing, BGP EVPN, etc. The **Class** 
+Guides, in contrast are meant to provide high-level direction on the steps necessary to deploy the Service Provider network 
+while not providing explicit examples of configurations to use. This implies that the operator is familiar with the 
+configurations necessary to deploy IS-IS, Segment Routing, BGP EVPN, etc.
+
 .. toctree::
    :maxdepth: 1
    :caption: Routing ATD - Mesh Topology - Full Lab Guide
