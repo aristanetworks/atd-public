@@ -98,8 +98,6 @@ RUN echo 'arista ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
 RUN usermod -aG wheel arista
 
-RUN su arista
-
 RUN curl https://raw.githubusercontent.com/arista-netdevops-community/atd-avd/master/setup.sh | bash
 
 RUN pip3 install --upgrade pip
@@ -111,6 +109,8 @@ RUN pip3 install -r requirements.txt
 RUN wget --quiet https://raw.githubusercontent.com/aristanetworks/ansible-avd/devel/development/requirements-dev.txt
 
 RUN pip3 install -r requirements-dev.txt
+
+RUN chown -R arista:arista /home/arista/arista-ansible
 
 EXPOSE 3389 22
 
