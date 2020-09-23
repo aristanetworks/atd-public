@@ -100,6 +100,16 @@ RUN usermod -aG wheel arista
 
 RUN curl https://raw.githubusercontent.com/arista-netdevops-community/atd-avd/master/setup.sh | bash
 
+RUN pip3 install --upgrade pip
+
+RUN wget --quiet https://raw.githubusercontent.com/aristanetworks/ansible-avd/devel/development/requirements.txt
+
+RUN pip3 install -r requirements.txt
+
+RUN wget --quiet https://raw.githubusercontent.com/aristanetworks/ansible-avd/devel/development/requirements-dev.txt
+
+RUN pip3 install -r requirements-dev.txt
+
 EXPOSE 3389 22
 
 CMD ["/usr/sbin/init"]
