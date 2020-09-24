@@ -10,7 +10,7 @@ Enable TI-LFA Fast Reroute for ISIS-SR
 
    #. From the Main Menu, type ``labs`` or Option 97 for ``Additional Labs``.
 
-   #. Type ``mesh-topology-supplemental-labs`` to access the Supplemental Labs.
+   #. Type ``mesh-topology-sr-evpn-supplemental-labs`` to access the Supplemental Labs.
 
    #. Type ``tilfa`` at the Labs Selection Menu. The script will configure the topology 
       with the necessary prerequisites.

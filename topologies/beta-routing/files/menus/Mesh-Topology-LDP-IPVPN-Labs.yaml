@@ -1,0 +1,684 @@
+---
+lab_list:
+  reset:
+    description: "Reset Environment to Initial IPv4 and IPv6 Settings for the Mesh Topology (reset)"
+  ldp: 
+    description: "Prepare Environment to Start at the LDP Lab (ldp)"
+  ipvpn: 
+    description: "Prepare Environment to Start at the IP-VPN Control-Plane Setup Lab (ipvpn)"
+  c1l3vpn: 
+    description: "Prepare Environment to Start at the Customer-1 L3VPN Lab (c1l3vpn)"
+  c3eline: 
+    description: "Prepare Environment to Start at the Customer-3 E-LINE Lab (c3eline)"
+  c4l3vpn: 
+    description: "Prepare Environment to Start at the Customer-4 L3VPN Lab (c4l3vpn)"
+  centsvc: 
+    description: "Prepare Environment to Start at the Centralized Services Lab (centsvc)"
+  complete: 
+    description: "Complete All LDP and IP-VPN Lab Sections for the Mesh Topology (complete)"
+labconfiglets:
+  reset:
+    eos1:
+      - "BaseIPv4_EOS1"
+      - "BaseIPv6_EOS1"
+    eos2:
+      - "BaseIPv4_EOS2"
+      - "BaseIPv6_EOS2"
+    eos3:
+      - "BaseIPv4_EOS3"
+      - "BaseIPv6_EOS3"
+    eos4:
+      - "BaseIPv4_EOS4"
+      - "BaseIPv6_EOS4"
+    eos5:
+      - "BaseIPv4_EOS5"
+      - "BaseIPv6_EOS5"
+    eos6:
+      - "BaseIPv4_EOS6"
+      - "BaseIPv6_EOS6"
+    eos7:
+      - "BaseIPv4_EOS7"
+      - "BaseIPv6_EOS7"
+    eos8:
+      - "BaseIPv4_EOS8"
+      - "BaseIPv6_EOS8"
+    eos9:
+      - "BaseIPv4_EOS9"
+    eos10:
+      - "BaseIPv4_EOS10"
+    eos11:
+      - "BaseIPv4_EOS11"
+      - "BaseIPv6_EOS11"
+    eos12:
+      - "BaseIPv4_EOS12"
+    eos13:
+      - "BaseIPv4_EOS13"
+      - "BaseIPv6_EOS13"
+    eos14:
+      - "BaseIPv4_EOS14"
+    eos15:
+      - "BaseIPv4_EOS15"
+      - "BaseIPv6_EOS15"
+    eos16:
+      - "BaseIPv4_EOS16"
+    eos17:
+      - "BaseIPv4_EOS17"
+    eos18:
+      - "BaseIPv4_EOS18"
+      - "BaseIPv6_EOS18"
+    eos19:
+      - "BaseIPv4_EOS19"
+      - "BaseIPv6_EOS19"
+    eos20:
+      - "BaseIPv4_EOS20"
+      - "BaseIPv6_EOS20"
+  ldp:
+    eos1:
+      - "BaseIPv4_EOS1"
+      - "BaseIPv6_EOS1"
+      - "IS-IS_EOS1"
+      - "IS-IS_IPv6"
+    eos2:
+      - "BaseIPv4_EOS2"
+      - "BaseIPv6_EOS2"
+      - "IS-IS_EOS2"
+      - "IS-IS_IPv6"
+    eos3:
+      - "BaseIPv4_EOS3"
+      - "BaseIPv6_EOS3"
+      - "IS-IS_EOS3"
+      - "IS-IS_IPv6"
+    eos4:
+      - "BaseIPv4_EOS4"
+      - "BaseIPv6_EOS4"
+      - "IS-IS_EOS4"
+      - "IS-IS_IPv6"
+    eos5:
+      - "BaseIPv4_EOS5"
+      - "BaseIPv6_EOS5"
+      - "IS-IS_EOS5"
+      - "IS-IS_IPv6"
+    eos6:
+      - "BaseIPv4_EOS6"
+      - "BaseIPv6_EOS6"
+      - "IS-IS_EOS6"
+      - "IS-IS_IPv6"
+    eos7:
+      - "BaseIPv4_EOS7"
+      - "BaseIPv6_EOS7"
+      - "IS-IS_EOS7"
+      - "IS-IS_IPv6"
+    eos8:
+      - "BaseIPv4_EOS8"
+      - "BaseIPv6_EOS8"
+      - "IS-IS_EOS8"
+      - "IS-IS_IPv6"
+    eos9:
+      - "BaseIPv4_EOS9"
+    eos10:
+      - "BaseIPv4_EOS10"
+    eos11:
+      - "BaseIPv4_EOS11"
+      - "BaseIPv6_EOS11"
+    eos12:
+      - "BaseIPv4_EOS12"
+    eos13:
+      - "BaseIPv4_EOS13"
+      - "BaseIPv6_EOS13"
+    eos14:
+      - "BaseIPv4_EOS14"
+    eos15:
+      - "BaseIPv4_EOS15"
+      - "BaseIPv6_EOS15"
+    eos16:
+      - "BaseIPv4_EOS16"
+    eos17:
+      - "BaseIPv4_EOS17"
+    eos18:
+      - "BaseIPv4_EOS18"
+      - "BaseIPv6_EOS18"
+    eos19:
+      - "BaseIPv4_EOS19"
+      - "BaseIPv6_EOS19"
+    eos20:
+      - "BaseIPv4_EOS20"
+      - "BaseIPv6_EOS20"
+  ipvpn:
+    eos1:
+      - "BaseIPv4_EOS1"
+      - "BaseIPv6_EOS1"
+      - "IS-IS_EOS1"
+      - "IS-IS_IPv6"
+      - "LDP_EOS1"
+    eos2:
+      - "BaseIPv4_EOS2"
+      - "BaseIPv6_EOS2"
+      - "IS-IS_EOS2"
+      - "IS-IS_IPv6"
+      - "LDP_EOS2"
+    eos3:
+      - "BaseIPv4_EOS3"
+      - "BaseIPv6_EOS3"
+      - "IS-IS_EOS3"
+      - "IS-IS_IPv6"
+      - "LDP_EOS3"
+    eos4:
+      - "BaseIPv4_EOS4"
+      - "BaseIPv6_EOS4"
+      - "IS-IS_EOS4"
+      - "IS-IS_IPv6"
+      - "LDP_EOS4"
+    eos5:
+      - "BaseIPv4_EOS5"
+      - "BaseIPv6_EOS5"
+      - "IS-IS_EOS5"
+      - "IS-IS_IPv6"
+      - "LDP_EOS5"
+    eos6:
+      - "BaseIPv4_EOS6"
+      - "BaseIPv6_EOS6"
+      - "IS-IS_EOS6"
+      - "IS-IS_IPv6"
+      - "LDP_EOS6"
+    eos7:
+      - "BaseIPv4_EOS7"
+      - "BaseIPv6_EOS7"
+      - "IS-IS_EOS7"
+      - "IS-IS_IPv6"
+      - "LDP_EOS7"
+    eos8:
+      - "BaseIPv4_EOS8"
+      - "BaseIPv6_EOS8"
+      - "IS-IS_EOS8"
+      - "IS-IS_IPv6"
+      - "LDP_EOS8"
+    eos9:
+      - "BaseIPv4_EOS9"
+    eos10:
+      - "BaseIPv4_EOS10"
+    eos11:
+      - "BaseIPv4_EOS11"
+      - "BaseIPv6_EOS11"
+    eos12:
+      - "BaseIPv4_EOS12"
+    eos13:
+      - "BaseIPv4_EOS13"
+      - "BaseIPv6_EOS13"
+    eos14:
+      - "BaseIPv4_EOS14"
+    eos15:
+      - "BaseIPv4_EOS15"
+      - "BaseIPv6_EOS15"
+    eos16:
+      - "BaseIPv4_EOS16"
+    eos17:
+      - "BaseIPv4_EOS17"
+    eos18:
+      - "BaseIPv4_EOS18"
+      - "BaseIPv6_EOS18"
+    eos19:
+      - "BaseIPv4_EOS19"
+      - "BaseIPv6_EOS19"
+    eos20:
+      - "BaseIPv4_EOS20"
+      - "BaseIPv6_EOS20"
+  c1l3vpn:
+    eos1:
+      - "BaseIPv4_EOS1"
+      - "BaseIPv6_EOS1"
+      - "IS-IS_EOS1"
+      - "IS-IS_IPv6"
+      - "LDP_EOS1"
+      - "IPVPN_PEERING_EOS1"
+    eos2:
+      - "BaseIPv4_EOS2"
+      - "BaseIPv6_EOS2"
+      - "IS-IS_EOS2"
+      - "IS-IS_IPv6"
+      - "LDP_EOS2"
+    eos3:
+      - "BaseIPv4_EOS3"
+      - "BaseIPv6_EOS3"
+      - "IS-IS_EOS3"
+      - "IS-IS_IPv6"
+      - "LDP_EOS3"
+      - "IPVPN_PEERING_EOS3"
+    eos4:
+      - "BaseIPv4_EOS4"
+      - "BaseIPv6_EOS4"
+      - "IS-IS_EOS4"
+      - "IS-IS_IPv6"
+      - "LDP_EOS4"
+      - "IPVPN_PEERING_EOS4"
+    eos5:
+      - "BaseIPv4_EOS5"
+      - "BaseIPv6_EOS5"
+      - "IS-IS_EOS5"
+      - "IS-IS_IPv6"
+      - "LDP_EOS5"
+      - "IPVPN_PEERING_EOS5"
+    eos6:
+      - "BaseIPv4_EOS6"
+      - "BaseIPv6_EOS6"
+      - "IS-IS_EOS6"
+      - "IS-IS_IPv6"
+      - "LDP_EOS6"
+      - "IPVPN_PEERING_EOS6"
+    eos7:
+      - "BaseIPv4_EOS7"
+      - "BaseIPv6_EOS7"
+      - "IS-IS_EOS7"
+      - "IS-IS_IPv6"
+      - "LDP_EOS7"
+      - "IPVPN_PEERING_EOS7"
+    eos8:
+      - "BaseIPv4_EOS8"
+      - "BaseIPv6_EOS8"
+      - "IS-IS_EOS8"
+      - "IS-IS_IPv6"
+      - "LDP_EOS8"
+      - "IPVPN_PEERING_EOS8"
+    eos9:
+      - "BaseIPv4_EOS9"
+    eos10:
+      - "BaseIPv4_EOS10"
+    eos11:
+      - "BaseIPv4_EOS11"
+      - "BaseIPv6_EOS11"
+    eos12:
+      - "BaseIPv4_EOS12"
+    eos13:
+      - "BaseIPv4_EOS13"
+      - "BaseIPv6_EOS13"
+    eos14:
+      - "BaseIPv4_EOS14"
+    eos15:
+      - "BaseIPv4_EOS15"
+      - "BaseIPv6_EOS15"
+    eos16:
+      - "BaseIPv4_EOS16"
+    eos17:
+      - "BaseIPv4_EOS17"
+    eos18:
+      - "BaseIPv4_EOS18"
+      - "BaseIPv6_EOS18"
+    eos19:
+      - "BaseIPv4_EOS19"
+      - "BaseIPv6_EOS19"
+    eos20:
+      - "BaseIPv4_EOS20"
+      - "BaseIPv6_EOS20"
+  c3eline:
+    eos1:
+      - "BaseIPv4_EOS1"
+      - "BaseIPv6_EOS1"
+      - "IS-IS_EOS1"
+      - "IS-IS_IPv6"
+      - "LDP_EOS1"
+      - "IPVPN_PEERING_EOS1"
+    eos2:
+      - "BaseIPv4_EOS2"
+      - "BaseIPv6_EOS2"
+      - "IS-IS_EOS2"
+      - "IS-IS_IPv6"
+      - "LDP_EOS2"
+    eos3:
+      - "BaseIPv4_EOS3"
+      - "BaseIPv6_EOS3"
+      - "IS-IS_EOS3"
+      - "IS-IS_IPv6"
+      - "LDP_EOS3"
+      - "IPVPN_PEERING_EOS3"
+    eos4:
+      - "BaseIPv4_EOS4"
+      - "BaseIPv6_EOS4"
+      - "IS-IS_EOS4"
+      - "IS-IS_IPv6"
+      - "LDP_EOS4"
+      - "IPVPN_PEERING_EOS4"
+    eos5:
+      - "BaseIPv4_EOS5"
+      - "BaseIPv6_EOS5"
+      - "IS-IS_EOS5"
+      - "IS-IS_IPv6"
+      - "LDP_EOS5"
+      - "IPVPN_PEERING_EOS5"
+    eos6:
+      - "BaseIPv4_EOS6"
+      - "BaseIPv6_EOS6"
+      - "IS-IS_EOS6"
+      - "IS-IS_IPv6"
+      - "LDP_EOS6"
+      - "IPVPN_PEERING_EOS6"
+    eos7:
+      - "BaseIPv4_EOS7"
+      - "BaseIPv6_EOS7"
+      - "IS-IS_EOS7"
+      - "IS-IS_IPv6"
+      - "LDP_EOS7"
+      - "IPVPN_PEERING_EOS7"
+    eos8:
+      - "BaseIPv4_EOS8"
+      - "BaseIPv6_EOS8"
+      - "IS-IS_EOS8"
+      - "IS-IS_IPv6"
+      - "LDP_EOS8"
+      - "IPVPN_PEERING_EOS8"
+    eos9:
+      - "BaseIPv4_EOS9"
+    eos10:
+      - "BaseIPv4_EOS10"
+    eos11:
+      - "BaseIPv4_EOS11"
+      - "BaseIPv6_EOS11"
+    eos12:
+      - "BaseIPv4_EOS12"
+    eos13:
+      - "BaseIPv4_EOS13"
+      - "BaseIPv6_EOS13"
+    eos14:
+      - "BaseIPv4_EOS14"
+    eos15:
+      - "BaseIPv4_EOS15"
+      - "BaseIPv6_EOS15"
+    eos16:
+      - "BaseIPv4_EOS16"
+    eos17:
+      - "BaseIPv4_EOS17"
+    eos18:
+      - "BaseIPv4_EOS18"
+      - "BaseIPv6_EOS18"
+    eos19:
+      - "BaseIPv4_EOS19"
+      - "BaseIPv6_EOS19"
+    eos20:
+      - "BaseIPv4_EOS20"
+      - "BaseIPv6_EOS20"
+  c4l3vpn:
+    eos1:
+      - "BaseIPv4_EOS1"
+      - "BaseIPv6_EOS1"
+      - "IS-IS_EOS1"
+      - "IS-IS_IPv6"
+      - "LDP_EOS1"
+      - "IPVPN_PEERING_EOS1"
+      - "Customer1_L3VPN_EOS1_IPVPN"
+    eos2:
+      - "BaseIPv4_EOS2"
+      - "BaseIPv6_EOS2"
+      - "IS-IS_EOS2"
+      - "IS-IS_IPv6"
+      - "LDP_EOS2"
+    eos3:
+      - "BaseIPv4_EOS3"
+      - "BaseIPv6_EOS3"
+      - "IS-IS_EOS3"
+      - "IS-IS_IPv6"
+      - "LDP_EOS3"
+      - "IPVPN_PEERING_EOS3"
+    eos4:
+      - "BaseIPv4_EOS4"
+      - "BaseIPv6_EOS4"
+      - "IS-IS_EOS4"
+      - "IS-IS_IPv6"
+      - "LDP_EOS4"
+      - "IPVPN_PEERING_EOS4"
+    eos5:
+      - "BaseIPv4_EOS5"
+      - "BaseIPv6_EOS5"
+      - "IS-IS_EOS5"
+      - "IS-IS_IPv6"
+      - "LDP_EOS5"
+      - "IPVPN_PEERING_EOS5"
+    eos6:
+      - "BaseIPv4_EOS6"
+      - "BaseIPv6_EOS6"
+      - "IS-IS_EOS6"
+      - "IS-IS_IPv6"
+      - "LDP_EOS6"
+      - "IPVPN_PEERING_EOS6"
+      - "Customer1_L3VPN_EOS6_IPVPN"
+    eos7:
+      - "BaseIPv4_EOS7"
+      - "BaseIPv6_EOS7"
+      - "IS-IS_EOS7"
+      - "IS-IS_IPv6"
+      - "LDP_EOS7"
+      - "IPVPN_PEERING_EOS7"
+    eos8:
+      - "BaseIPv4_EOS8"
+      - "BaseIPv6_EOS8"
+      - "IS-IS_EOS8"
+      - "IS-IS_IPv6"
+      - "LDP_EOS8"
+      - "IPVPN_PEERING_EOS8"
+      - "Customer1_L3VPN_EOS8_IPVPN"
+    eos9:
+      - "BaseIPv4_EOS9"
+    eos10:
+      - "BaseIPv4_EOS10"
+    eos11:
+      - "BaseIPv4_EOS11"
+      - "BaseIPv6_EOS11"
+      - "Customer1_L3VPN_EOS11_IPVPN"
+    eos12:
+      - "BaseIPv4_EOS12"
+    eos13:
+      - "BaseIPv4_EOS13"
+      - "BaseIPv6_EOS13"
+      - "Customer1_L3VPN_EOS13_IPVPN"
+    eos14:
+      - "BaseIPv4_EOS14"
+    eos15:
+      - "BaseIPv4_EOS15"
+      - "BaseIPv6_EOS15"
+      - "Customer1_L3VPN_EOS15_IPVPN"
+    eos16:
+      - "BaseIPv4_EOS16"
+    eos17:
+      - "BaseIPv4_EOS17"
+    eos18:
+      - "BaseIPv4_EOS18"
+      - "BaseIPv6_EOS18"
+    eos19:
+      - "BaseIPv4_EOS19"
+      - "BaseIPv6_EOS19"
+    eos20:
+      - "BaseIPv4_EOS20"
+      - "BaseIPv6_EOS20"
+  centsvc:
+    eos1:
+      - "BaseIPv4_EOS1"
+      - "BaseIPv6_EOS1"
+      - "IS-IS_EOS1"
+      - "IS-IS_IPv6"
+      - "LDP_EOS1"
+      - "IPVPN_PEERING_EOS1"
+      - "Customer1_L3VPN_EOS1_IPVPN"
+    eos2:
+      - "BaseIPv4_EOS2"
+      - "BaseIPv6_EOS2"
+      - "IS-IS_EOS2"
+      - "IS-IS_IPv6"
+      - "LDP_EOS2"
+    eos3:
+      - "BaseIPv4_EOS3"
+      - "BaseIPv6_EOS3"
+      - "IS-IS_EOS3"
+      - "IS-IS_IPv6"
+      - "LDP_EOS3"
+      - "IPVPN_PEERING_EOS3"
+    eos4:
+      - "BaseIPv4_EOS4"
+      - "BaseIPv6_EOS4"
+      - "IS-IS_EOS4"
+      - "IS-IS_IPv6"
+      - "LDP_EOS4"
+      - "IPVPN_PEERING_EOS4"
+    eos5:
+      - "BaseIPv4_EOS5"
+      - "BaseIPv6_EOS5"
+      - "IS-IS_EOS5"
+      - "IS-IS_IPv6"
+      - "LDP_EOS5"
+      - "IPVPN_PEERING_EOS5"
+    eos6:
+      - "BaseIPv4_EOS6"
+      - "BaseIPv6_EOS6"
+      - "IS-IS_EOS6"
+      - "IS-IS_IPv6"
+      - "LDP_EOS6"
+      - "IPVPN_PEERING_EOS6"
+      - "Customer1_L3VPN_EOS6_IPVPN"
+    eos7:
+      - "BaseIPv4_EOS7"
+      - "BaseIPv6_EOS7"
+      - "IS-IS_EOS7"
+      - "IS-IS_IPv6"
+      - "LDP_EOS7"
+      - "IPVPN_PEERING_EOS7"
+      - "Customer4_L3VPN_EOS7_IPVPN"
+    eos8:
+      - "BaseIPv4_EOS8"
+      - "BaseIPv6_EOS8"
+      - "IS-IS_EOS8"
+      - "IS-IS_IPv6"
+      - "LDP_EOS8"
+      - "IPVPN_PEERING_EOS8"
+      - "Customer1_L3VPN_EOS8_IPVPN"
+      - "Customer4_L3VPN_EOS8_IPVPN"
+    eos9:
+      - "BaseIPv4_EOS9"
+    eos10:
+      - "BaseIPv4_EOS10"
+    eos11:
+      - "BaseIPv4_EOS11"
+      - "BaseIPv6_EOS11"
+      - "Customer1_L3VPN_EOS11_IPVPN"
+    eos12:
+      - "BaseIPv4_EOS12"
+    eos13:
+      - "BaseIPv4_EOS13"
+      - "BaseIPv6_EOS13"
+      - "Customer1_L3VPN_EOS13_IPVPN"
+    eos14:
+      - "BaseIPv4_EOS14"
+    eos15:
+      - "BaseIPv4_EOS15"
+      - "BaseIPv6_EOS15"
+      - "Customer1_L3VPN_EOS15_IPVPN"
+    eos16:
+      - "BaseIPv4_EOS16"
+    eos17:
+      - "BaseIPv4_EOS17"
+    eos18:
+      - "BaseIPv4_EOS18"
+      - "BaseIPv6_EOS18"
+      - "Customer4_L3VPN_EOS18_IPVPN"
+    eos19:
+      - "BaseIPv4_EOS19"
+      - "BaseIPv6_EOS19"
+      - "Customer4_L3VPN_EOS19_IPVPN"
+    eos20:
+      - "BaseIPv4_EOS20"
+      - "BaseIPv6_EOS20"
+  complete:
+    eos1:
+      - "BaseIPv4_EOS1"
+      - "BaseIPv6_EOS1"
+      - "IS-IS_EOS1"
+      - "IS-IS_IPv6"
+      - "LDP_EOS1"
+      - "IPVPN_PEERING_EOS1"
+      - "Customer1_L3VPN_EOS1_IPVPN"
+      - "SharedServices_EOS1_IPVPN"
+    eos2:
+      - "BaseIPv4_EOS2"
+      - "BaseIPv6_EOS2"
+      - "IS-IS_EOS2"
+      - "IS-IS_IPv6"
+      - "LDP_EOS2"
+    eos3:
+      - "BaseIPv4_EOS3"
+      - "BaseIPv6_EOS3"
+      - "IS-IS_EOS3"
+      - "IS-IS_IPv6"
+      - "LDP_EOS3"
+      - "IPVPN_PEERING_EOS3"
+      - "SharedServices_EOS3_IPVPN"
+    eos4:
+      - "BaseIPv4_EOS4"
+      - "BaseIPv6_EOS4"
+      - "IS-IS_EOS4"
+      - "IS-IS_IPv6"
+      - "LDP_EOS4"
+      - "IPVPN_PEERING_EOS4"
+    eos5:
+      - "BaseIPv4_EOS5"
+      - "BaseIPv6_EOS5"
+      - "IS-IS_EOS5"
+      - "IS-IS_IPv6"
+      - "LDP_EOS5"
+      - "IPVPN_PEERING_EOS5"
+    eos6:
+      - "BaseIPv4_EOS6"
+      - "BaseIPv6_EOS6"
+      - "IS-IS_EOS6"
+      - "IS-IS_IPv6"
+      - "LDP_EOS6"
+      - "IPVPN_PEERING_EOS6"
+      - "Customer1_L3VPN_EOS6_IPVPN"
+    eos7:
+      - "BaseIPv4_EOS7"
+      - "BaseIPv6_EOS7"
+      - "IS-IS_EOS7"
+      - "IS-IS_IPv6"
+      - "LDP_EOS7"
+      - "IPVPN_PEERING_EOS7"
+      - "Customer4_L3VPN_EOS7_IPVPN"
+      - "SharedServices_EOS7_IPVPN"
+    eos8:
+      - "BaseIPv4_EOS8"
+      - "BaseIPv6_EOS8"
+      - "IS-IS_EOS8"
+      - "IS-IS_IPv6"
+      - "LDP_EOS8"
+      - "IPVPN_PEERING_EOS8"
+      - "Customer1_L3VPN_EOS8_IPVPN"
+      - "Customer4_L3VPN_EOS8_IPVPN"
+    eos9:
+      - "BaseIPv4_EOS9"
+    eos10:
+      - "BaseIPv4_EOS10"
+    eos11:
+      - "BaseIPv4_EOS11"
+      - "BaseIPv6_EOS11"
+      - "Customer1_L3VPN_EOS11_IPVPN"
+    eos12:
+      - "BaseIPv4_EOS12"
+    eos13:
+      - "BaseIPv4_EOS13"
+      - "BaseIPv6_EOS13"
+      - "Customer1_L3VPN_EOS13_IPVPN"
+    eos14:
+      - "BaseIPv4_EOS14"
+    eos15:
+      - "BaseIPv4_EOS15"
+      - "BaseIPv6_EOS15"
+      - "Customer1_L3VPN_EOS15_IPVPN"
+    eos16:
+      - "BaseIPv4_EOS16"
+    eos17:
+      - "BaseIPv4_EOS17"
+    eos18:
+      - "BaseIPv4_EOS18"
+      - "BaseIPv6_EOS18"
+      - "Customer4_L3VPN_EOS18_IPVPN"
+    eos19:
+      - "BaseIPv4_EOS19"
+      - "BaseIPv6_EOS19"
+      - "Customer4_L3VPN_EOS19_IPVPN"
+    eos20:
+      - "BaseIPv4_EOS20"
+      - "BaseIPv6_EOS20"
+      - "SharedServices_EOS20_IPVPN"

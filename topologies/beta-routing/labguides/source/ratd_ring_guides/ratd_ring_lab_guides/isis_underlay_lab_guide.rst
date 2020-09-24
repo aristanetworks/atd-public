@@ -14,7 +14,7 @@ Deploy IS-IS as the Service Provider Underlay IGP
 
    #. From the Main Menu, type ``labs`` or Option 97 for ``Additional Labs``.
 
-   #. Type ``ring-topology-base-labs`` to access the Base Setup Labs.
+   #. Type ``ring-topology-sr-evpn-base-labs`` to access the Base Setup Labs.
 
    #. Type ``reset`` at the Labs Selection Menu. The script will configure the topology 
       with the necessary prerequisites.
