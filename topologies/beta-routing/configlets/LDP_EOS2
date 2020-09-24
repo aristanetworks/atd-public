@@ -1,6 +1,25 @@
+interface Ethernet1
+   mpls ldp interface
+!
+interface Ethernet2
+   mpls ldp interface
+!
+interface Ethernet3
+   mpls ldp interface
+!
+interface Ethernet4
+   mpls ldp interface
+!
+interface Ethernet5
+   mpls ldp interface
+!
+interface Loopback0
+   mpls ldp interface
+!
 mpls ip
 !
 mpls ldp
    router-id interface Loopback0
    transport-address interface Loopback0
+   interface disabled default
    no shutdown

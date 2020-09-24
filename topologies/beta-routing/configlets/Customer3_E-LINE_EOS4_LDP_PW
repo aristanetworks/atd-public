@@ -1,0 +1,17 @@
+interface Ethernet6
+   no lldp transmit
+   no lldp receive
+!
+mpls ldp
+   !
+   pseudowires
+      mtu 9000
+      !
+      pseudowire EOS16-EOS17
+         neighbor 1.1.1.1
+         pseudowire-id 1617
+!
+patch panel
+   patch C3-E-LINE
+      connector 1 interface Ethernet6
+      connector 2 pseudowire ldp EOS16-EOS17

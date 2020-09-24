@@ -1,0 +1,3 @@
+router isis 100
+   !
+   address-family ipv6 unicast

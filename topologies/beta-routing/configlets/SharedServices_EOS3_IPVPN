@@ -1,0 +1,29 @@
+vrf instance SVC
+!
+interface Ethernet6
+   vrf SVC
+   ip address 10.3.20.3/24
+   ip address fd00:3:20::3/64
+!
+ip routing vrf SVC
+!
+ipv6 unicast-routing vrf SVC
+!
+router bgp 100
+   !
+   vrf SVC
+      rd 3.3.3.3:5
+      route-target import vpn-ipv4 500:500
+      route-target import vpn-ipv6 500:500
+      route-target export vpn-ipv4 5:5
+      route-target export vpn-ipv6 5:5
+      neighbor 10.3.20.20 remote-as 500
+      neighbor 10.3.20.20 maximum-routes 12000 
+      neighbor fd00:3:20::20 remote-as 500
+      neighbor fd00:3:20::20 maximum-routes 12000 
+      !
+      address-family ipv4
+         neighbor 10.3.20.20 activate
+      !
+      address-family ipv6
+         neighbor fd00:3:20::20 activate

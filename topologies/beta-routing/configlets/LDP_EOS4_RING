@@ -1,12 +1,6 @@
 interface Ethernet2
    mpls ldp interface
 !
-interface Ethernet3
-   mpls ldp interface
-!
-interface Ethernet4
-   mpls ldp interface
-!
 interface Ethernet5
    mpls ldp interface
 !

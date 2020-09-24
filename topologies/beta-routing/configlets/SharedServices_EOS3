@@ -1,8 +1,6 @@
 vrf instance SVC
 !
 interface Ethernet6
-   description EOS20
-   no switchport
    vrf SVC
    ip address 10.3.20.3/24
 !
