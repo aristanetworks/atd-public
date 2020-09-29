@@ -157,13 +157,14 @@ class ConfigureTopology():
         self.client.getRecentTasks(50)
         tasks_in_progress = False
         for task in self.client.tasks['recent']:
-            print('task {0} status: {1}'.format(task['workOrderId'],task['workOrderUserDefinedStatus']))
             if 'in progress' in task['workOrderUserDefinedStatus'].lower():
+                self.send_to_syslog('INFO', 'Task Check: Task {0} status: {1}'.format(task['workOrderId'],task['workOrderUserDefinedStatus']))
                 tasks_in_progress = True
             else:
                 pass
         
         if tasks_in_progress:
+            self.send_to_syslog('INFO', 'Tasks in progress. Waiting for 10 seconds.')
             print('Tasks are currently executing. Waiting 10 seconds...')
             time.sleep(10)
             self.check_for_tasks()
@@ -199,73 +200,73 @@ class ConfigureTopology():
         if 'cvp' in access_info['nodes']:
             self.client = self.connect_to_cvp(access_info)
 
-        self.check_for_tasks()
+            self.check_for_tasks()
 
-        #     # Config the topology
-        #     self.update_topology(lab_configlets)
+            # Config the topology
+            self.update_topology(lab_configlets)
             
-        #     # Execute all tasks generated from reset_devices()
-        #     print('Gathering task information...')
-        #     self.client.getAllTasks("pending")
-        #     tasks_to_check = self.client.tasks['pending']
-        #     self.client.execAllTasks("pending")
-        #     self.send_to_syslog("OK", 'Completed setting devices to topology: {}'.format(self.selected_lab))
+            # Execute all tasks generated from reset_devices()
+            print('Gathering task information...')
+            self.client.getAllTasks("pending")
+            tasks_to_check = self.client.tasks['pending']
+            self.client.execAllTasks("pending")
+            self.send_to_syslog("OK", 'Completed setting devices to topology: {}'.format(self.selected_lab))
 
-        #     print('Waiting on change control to finish executing...')
-        #     all_tasks_completed = False
-        #     while not all_tasks_completed:
-        #         tasks_running = []
-        #         for task in tasks_to_check:
-        #             if self.client.getTaskStatus(task['workOrderId'])['taskStatus'] != 'Completed':
-        #                 tasks_running.append(task)
-        #             elif self.client.getTaskStatus(task['workOrderId'])['taskStatus'] == 'Failed':
-        #                 print('Task {0} failed.'.format(task['workOrderId']))
-        #             else:
-        #                 pass
+            print('Waiting on change control to finish executing...')
+            all_tasks_completed = False
+            while not all_tasks_completed:
+                tasks_running = []
+                for task in tasks_to_check:
+                    if self.client.getTaskStatus(task['workOrderId'])['taskStatus'] != 'Completed':
+                        tasks_running.append(task)
+                    elif self.client.getTaskStatus(task['workOrderId'])['taskStatus'] == 'Failed':
+                        print('Task {0} failed.'.format(task['workOrderId']))
+                    else:
+                        pass
                 
-        #         if len(tasks_running) == 0:
+                if len(tasks_running) == 0:
 
-        #             # Execute additional commands in linux if needed
-        #             if len(additional_commands) > 0:
-        #                 print('Running additional setup commands...')
+                    # Execute additional commands in linux if needed
+                    if len(additional_commands) > 0:
+                        print('Running additional setup commands...')
 
-        #                 for command in additional_commands:
-        #                     os.system(command)
+                        for command in additional_commands:
+                            os.system(command)
 
-        #             if not self.public_module_flag:
-        #                 input('Lab Setup Completed. Please press Enter to continue...')
-        #             else:
-        #                 self.send_to_syslog("OK", 'Lab Setup Completed.')
-        #             all_tasks_completed = True
-        #         else:
-        #             pass
-        # else:
-        #     # Open up defaults
-        #     f = open('/home/arista/cvp/cvp_info.yaml')
-        #     cvp_info = YAML().load(f)
-        #     f.close()
+                    if not self.public_module_flag:
+                        input('Lab Setup Completed. Please press Enter to continue...')
+                    else:
+                        self.send_to_syslog("OK", 'Lab Setup Completed.')
+                    all_tasks_completed = True
+                else:
+                    pass
+        else:
+            # Open up defaults
+            f = open('/home/arista/cvp/cvp_info.yaml')
+            cvp_info = YAML().load(f)
+            f.close()
 
-        #     cvp_configs = cvp_info["cvp_info"]["configlets"]
-        #     infra_configs = cvp_configs["containers"]["Tenant"]
+            cvp_configs = cvp_info["cvp_info"]["configlets"]
+            infra_configs = cvp_configs["containers"]["Tenant"]
 
-        #     self.send_to_syslog("INFO","Setting up {0} lab".format(self.selected_lab))
-        #     for node in access_info["nodes"]["veos"]:
-        #         device_config = ""
-        #         hostname = node["hostname"]
-        #         base_configs = cvp_configs["netelements"]
-        #         configs = base_configs[hostname] + infra_configs + lab_configlets[self.selected_lab][hostname]
-        #         configs = list(dict.fromkeys(configs))
-        #         for config in configs:
-        #             with open('/tmp/atd/topologies/{0}/configlets/{1}'.format(access_info['topology'], config), 'r') as configlet:
-        #                 device_config += configlet.read()
-        #         self.send_to_syslog("INFO","Pushing {0} config for {1} on IP {2} with configlets: {3}".format(self.selected_lab,hostname,node["ip"],configs))
-        #         self.push_bare_config(hostname, node["ip"], device_config)
+            self.send_to_syslog("INFO","Setting up {0} lab".format(self.selected_lab))
+            for node in access_info["nodes"]["veos"]:
+                device_config = ""
+                hostname = node["hostname"]
+                base_configs = cvp_configs["netelements"]
+                configs = base_configs[hostname] + infra_configs + lab_configlets[self.selected_lab][hostname]
+                configs = list(dict.fromkeys(configs))
+                for config in configs:
+                    with open('/tmp/atd/topologies/{0}/configlets/{1}'.format(access_info['topology'], config), 'r') as configlet:
+                        device_config += configlet.read()
+                self.send_to_syslog("INFO","Pushing {0} config for {1} on IP {2} with configlets: {3}".format(self.selected_lab,hostname,node["ip"],configs))
+                self.push_bare_config(hostname, node["ip"], device_config)
 
-        #         # Execute additional commands in linux if needed
-        #         if len(additional_commands) > 0:
-        #             print('Running additional setup commands...')
+                # Execute additional commands in linux if needed
+                if len(additional_commands) > 0:
+                    print('Running additional setup commands...')
 
-        #             for command in additional_commands:
-        #                 os.system(command)
+                    for command in additional_commands:
+                        os.system(command)
 
-        #         input("Lab Setup Completed. Please press Enter to continue...")
+                input("Lab Setup Completed. Please press Enter to continue...")
