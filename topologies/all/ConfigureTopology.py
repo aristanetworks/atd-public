@@ -187,7 +187,7 @@ class ConfigureTopology():
         if 'cvp' in access_info['nodes']:
             self.client = self.connect_to_cvp(access_info)
 
-        check_for_tasks()
+        self.check_for_tasks()
 
         #     # Config the topology
         #     self.update_topology(lab_configlets)
