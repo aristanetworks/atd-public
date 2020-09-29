@@ -189,16 +189,6 @@ class ConfigureTopology():
 
         check_for_tasks()
 
-
-        def getRecentTasks(self, end_task=50):
-            """
-            Function that gets recent to the amount given for end_task.
-            Parameters:
-            end_task: Integer for the number of tasks wanted.
-            """
-            response = self._sendRequest("GET",self.cvp_api['getAllTasks'] + "?startIndex=0&endIndex={0}".format(str(end_task))
-            self.tasks['recent'] = response['data']
-
         #     # Config the topology
         #     self.update_topology(lab_configlets)
             
