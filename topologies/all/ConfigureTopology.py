@@ -160,7 +160,7 @@ class ConfigureTopology():
             if 'in progress' in task['workOrderUserDefinedStatus'].lower():
                 tasks_in_progress = True
             else:
-                pass
+                print('task {0} status: {1}'.format(task['workOrderId'],task['workOrderUserDefinedStatus']))
         
         if tasks_in_progress:
             print('Tasks are currently executing. Waiting 10 seconds...')
