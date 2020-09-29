@@ -108,8 +108,6 @@ RUN wget --quiet https://raw.githubusercontent.com/aristanetworks/ansible-avd/de
 
 RUN pip3 install -r requirements-dev.txt
 
-RUN chown -R arista:arista /home/arista/arista-ansible
-
 EXPOSE 3389 22
 
 CMD ["/usr/sbin/init"]
