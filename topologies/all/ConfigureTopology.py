@@ -154,9 +154,8 @@ class ConfigureTopology():
         return(DEVREBOOT)
 
     def check_for_tasks(self):
-        tasks_in_progress = False
-        tasks = self.client.getRecentTasks(50)
-        for task in tasks:
+        self.client.getRecentTasks(50)
+        for task in self.client.tasks['recent']:
             print(task)
 
 
