@@ -155,8 +155,20 @@ class ConfigureTopology():
 
     def check_for_tasks(self):
         self.client.getRecentTasks(50)
+        tasks_in_progress = False
         for task in self.client.tasks['recent']:
-            print(task)
+            if 'in progress' in task['workOrderUserDefinedStatus']:
+                tasks_in_progress = True
+            else:
+                pass
+        
+        if tasks_in_progress:
+            print('Tasks are currently executing. Waiting 10 seconds...')
+            time.sleep(10)
+            self.check_for_tasks()
+
+        else:
+            return
 
 
     def deploy_lab(self):
@@ -186,7 +198,6 @@ class ConfigureTopology():
         if 'cvp' in access_info['nodes']:
             self.client = self.connect_to_cvp(access_info)
 
-        self.check_for_tasks()
 
         #     # Config the topology
         #     self.update_topology(lab_configlets)
