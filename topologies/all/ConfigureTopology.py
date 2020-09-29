@@ -157,10 +157,11 @@ class ConfigureTopology():
         self.client.getRecentTasks(50)
         tasks_in_progress = False
         for task in self.client.tasks['recent']:
+            print('task {0} status: {1}'.format(task['workOrderId'],task['workOrderUserDefinedStatus']))
             if 'in progress' in task['workOrderUserDefinedStatus'].lower():
                 tasks_in_progress = True
             else:
-                print('task {0} status: {1}'.format(task['workOrderId'],task['workOrderUserDefinedStatus']))
+                pass
         
         if tasks_in_progress:
             print('Tasks are currently executing. Waiting 10 seconds...')
