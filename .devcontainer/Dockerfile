@@ -1,6 +1,19 @@
 FROM python:3.8.1
 
-RUN apt update && apt install -y sudo vim git zip cloc
+RUN apt update && apt install -y sudo \
+                                 vim \
+                                 git \
+                                 zip \
+                                 cloc \
+                                 lastpass-cli \
+                                 dnsutils \
+                                 zsh \
+                                 zsh-syntax-highlighting \
+                                 zsh-doc \
+                                 less \
+                                 liquidprompt
+
+RUN apt -y dist-upgrade
 
 ARG USERNAME=atddev
 ARG USER_UID=1000
@@ -11,12 +24,12 @@ RUN groupadd --gid $USER_GID $USERNAME \
     && useradd --uid $USER_UID --gid $USER_GID -m $USERNAME \
     #
     # [Optional] Add sudo support. Omit if you don't need to install software after connecting.
-    && apt-get update \
-    && apt-get install -y sudo \
+    # && apt-get update \ # redundant
+    # && apt-get install -y sudo \ # redundant
     && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
     && chmod 0440 /etc/sudoers.d/$USERNAME
 
 RUN pip install --upgrade pip
-RUN pip install docutils rstcheck sphinx sphinx-bootstrap-theme sphinx-autobuild rcvpapi ruamel.yaml Pyyaml lxml jsonrpclib ansible cvprac pyeapi pylint tornado apscheduler pymongo 
+RUN pip install dotbot docutils rstcheck sphinx sphinx-bootstrap-theme sphinx-autobuild rcvpapi ruamel.yaml Pyyaml lxml jsonrpclib ansible cvprac pyeapi pylint tornado apscheduler pymongo 
 
 USER $USERNAME
