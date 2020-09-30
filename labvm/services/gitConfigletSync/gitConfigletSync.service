@@ -5,7 +5,7 @@ After=atdFiles.service
 [Service]
 Type=forking
 ExecStart=/usr/local/bin/gitConfigletSync.py
-TimeoutStartSec=180
+TimeoutStartSec=900
 Restart=on-failure
 RestartSec=60
 
