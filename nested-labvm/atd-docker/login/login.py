@@ -30,6 +30,7 @@ except:
   sys.exit("topo_build not available")
 
 veos_info = topoinfo['nodes']
+additional_ssh_nodes = topoinfo['additional_ssh_nodes']
 
 # Set default menu mode
 menu_mode = 'MAIN'
@@ -50,23 +51,25 @@ def natural_keys(text):
   return [ text_to_int(char) for char in re.split(r'(\d+)', text) ]
 
 def sort_veos(vd):
-  tmp_l = []
-  tmp_d = {}
-  fin_l = []
-  for t_veos in vd:
-    t_veos_name = list(t_veos.keys())[0]
-    tmp_l.append(t_veos_name)
-    tmp_d[t_veos_name] = dict(t_veos[t_veos_name])
-    tmp_d[t_veos_name]['hostname'] = t_veos_name
-  tmp_l.sort(key=natural_keys)
-  # If cvx in list, move to end
-  if 'cvx' in tmp_l[0]:
+    if vd == None:
+        return
+    tmp_l = []
+    tmp_d = {}
+    fin_l = []
+    for t_veos in vd:
+        t_veos_name = list(t_veos.keys())[0]
+        tmp_l.append(t_veos_name)
+        tmp_d[t_veos_name] = dict(t_veos[t_veos_name])
+        tmp_d[t_veos_name]['hostname'] = t_veos_name
+    tmp_l.sort(key=natural_keys)
+    # If cvx in list, move to end
+    if 'cvx' in tmp_l[0]:
         tmp_cvx = tmp_l[0]
         tmp_l.pop(0)
         tmp_l.append(tmp_cvx)
-  for t_veos in tmp_l:
-    fin_l.append(tmp_d[t_veos])
-  return(fin_l)
+    for t_veos in tmp_l:
+        fin_l.append(tmp_d[t_veos])
+    return(fin_l)
 
 def device_menu():
     global menu_mode
@@ -77,6 +80,8 @@ def device_menu():
 
     # Sort veos instances
     veos_info_sorted = sort_veos(veos_info)
+    additional_ssh_nodes_sorted = sort_veos(additional_ssh_nodes)
+    
     print("\n\n*****************************************")
     print("*****Jump Host for Arista Test Drive*****")
     print("*****************************************")
@@ -93,9 +98,20 @@ def device_menu():
     counter = 1
     for veos in veos_info_sorted:
         print("{0}. {1} ({2})".format(str(counter),veos['hostname'],veos['hostname']))
-        device_dict[str(counter)] = veos['ip_addr']
-        device_dict[veos['hostname']] = veos['ip_addr']
+        device_dict[str(counter)] = { 'ip_addr': veos['ip_addr'] }
+        device_dict[veos['hostname']] = { 'ip_addr': veos['ip_addr'] }
         counter += 1
+    if additional_ssh_nodes_sorted != None:
+      for additional_ssh_node in additional_ssh_nodes_sorted:
+          print("{0}. {1} ({2})".format(str(counter),additional_ssh_node['hostname'],additional_ssh_node['hostname']))
+          device_dict[str(counter)] = { 'ip_addr': additional_ssh_node['ip_addr'] }
+          device_dict[additional_ssh_node['hostname']] = { 'ip_addr': additional_ssh_node['ip_addr'] }
+          if 'port' in additional_ssh_node:
+              device_dict[str(counter)]['port'] = additional_ssh_node['port']
+              device_dict[additional_ssh_node['hostname']]['port'] = additional_ssh_node['port']
+          counter += 1
+
+
     
     print("\nOther Options: ")
     print("96. Screen (screen) - Opens a screen session to each of the hosts")
@@ -107,25 +123,31 @@ def device_menu():
 
     # Check to see if input is in device_dict
     counter = 1
-    try:
-      if user_input.lower() in device_dict:
-          previous_menu = menu_mode
-          os.system('ssh -o StrictHostKeyChecking=no arista@' + device_dict[user_input])
-      elif user_input == '96' or user_input.lower() == 'screen':
-          os.system('/usr/bin/screen')
-      elif user_input == '97' or user_input.lower() == 'back':
-          if menu_mode == previous_menu:
-              menu_mode = 'MAIN'
-          else:
-              menu_mode = previous_menu
-      elif user_input == '98' or user_input.lower() == 'bash' or user_input.lower() == 'shell':
-          os.system('/bin/bash')
-      elif user_input == '99' or user_input.lower() == 'main' or user_input == '99' or user_input.lower() == 'exit':
-          menu_mode = 'MAIN'
-      else:
-          print("Invalid Input")
-    except:
-      print("Invalid Input")
+    # try:
+    if user_input.lower() in device_dict:
+        ssh_command = 'ssh -o StrictHostKeyChecking=no arista@{0}'.format(device_dict[user_input]['ip_addr'])
+        previous_menu = menu_mode
+        if 'port' in device_dict[user_input]:
+            ssh_command += ' -p {0}'.format(device_dict[user_input]['port'])
+        else:
+          pass
+        # Execute ssh command
+        os.system(ssh_command)
+    elif user_input == '96' or user_input.lower() == 'screen':
+        os.system('/usr/bin/screen')
+    elif user_input == '97' or user_input.lower() == 'back':
+        if menu_mode == previous_menu:
+            menu_mode = 'MAIN'
+        else:
+            menu_mode = previous_menu
+    elif user_input == '98' or user_input.lower() == 'bash' or user_input.lower() == 'shell':
+        os.system('/bin/bash')
+    elif user_input == '99' or user_input.lower() == 'main' or user_input == '99' or user_input.lower() == 'exit':
+        menu_mode = 'MAIN'
+    else:
+        print("Invalid Input")
+    # except:
+    #   print("Invalid Input")
 
 
 
