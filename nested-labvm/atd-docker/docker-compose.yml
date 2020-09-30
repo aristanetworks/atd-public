@@ -63,6 +63,16 @@ services:
       - /etc/atd:/etc/atd:ro
       - /opt/atd:/opt/atd:ro
       - /home/atdadmin/KVM_scripts:/home/atdadmin/kvm:rw
+  ceosbuilder:
+    container_name: atd-ceosbuilder
+    image: atddocker_ceosbuilder:1.0
+    restart: on-failure
+    environment:
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - /etc/atd:/etc/atd:ro
+      - /opt/atd:/opt/atd:ro
+      - /opt/ceos:/opt/ceos:rw
   uilanding:
     container_name: atd-uilanding
     image: atddocker_uilanding:1.0

@@ -11,6 +11,13 @@ else
     REPO=$(cat /etc/atd/ATD_REPO.yaml | python3 -m shyaml get-value public-repo)
 fi
 
+if [ "$(cat /etc/atd/ACCESS_INFO.yaml | grep eos_type)" ]
+then
+    EOS_TYPE=$(cat /etc/atd/ACCESS_INFO.yaml | python3 -m shyaml get-value eos_type)
+else
+    EOS_TYPE=veos
+fi
+
 rm -rf /opt/atd
 
 git clone --branch $BRANCH $REPO /opt/atd
@@ -30,6 +37,13 @@ cp /opt/atd/nested-labvm/services/atdUpdate/atdUpdate.sh /usr/local/bin/
 cp /opt/atd/nested-labvm/services/atdUpdate/atdUpdate.service /etc/systemd/system/
 
 systemctl daemon-reload
+
+# Update the base configlets for ceos/veos mgmt numbering
+
+if [ $EOS_TYPE == 'ceos' ]
+then
+    sed -i 's/Management1/Management0/g' /opt/atd/topologies/$TOPO/configlets/*
+fi
 
 # Add files to arista home
 rsync -av /opt/atd/topologies/$TOPO/files/ /home/arista/arista-dir
@@ -51,6 +65,19 @@ su atdadmin -c 'bash docker_build.sh'
 
 su atdadmin -c 'docker-compose up -d --remove-orphans'
 
+su atdadmin -c 'docker restart atd-login'
+
 echo 'y' | docker image prune
 
 systemctl restart sshd
+
+# if cEOS Startup present, run it
+if [ -f "/opt/ceos/scripts/.ceos.txt" ]
+then
+    while : ; do
+        [[ -f "/opt/ceos/scripts/Startup.sh" ]] && break
+        echo "Pausing until file exists."
+        sleep 1
+    done
+    bash /opt/ceos/scripts/Startup.sh
+fi
