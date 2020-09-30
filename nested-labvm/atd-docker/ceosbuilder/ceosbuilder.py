@@ -174,6 +174,7 @@ def main(args):
             create_output.append("docker run -d --restart=always --name={0}-net --net=none busybox /bin/init\n".format(_node))
             create_output.append("{0}pid=$(docker inspect --format '{{{{.State.Pid}}}}' {0}-net)\n".format(_node))
             create_output.append("ln -sf /proc/${{{0}pid}}/ns/net /var/run/netns/{0}\n".format(_node))
+            startup_output.append("docker stop {0}\n".format(_node))
             startup_output.append("docker rm {0}\n".format(_node))
             startup_output.append("{0}pid=$(docker inspect --format '{{{{.State.Pid}}}}' {0}-net)\n".format(_node))
             startup_output.append("ln -sf /proc/${{{0}pid}}/ns/net /var/run/netns/{0}\n".format(_node))

@@ -19,6 +19,14 @@
             <param name="password">arista</param>
             <param name="ignore-cert">true</param>
         </connection>
+        <connection name="ansible-gui">
+            <protocol>rdp</protocol>
+            <param name="hostname">atd-ansible-avd</param>
+            <param name="port">3389</param>
+            <param name="username">arista</param>
+            <param name="password">arista</param>
+            <param name="ignore-cert">true</param>
+        </connection>
         <connection name="devbox-ssh">
             <protocol>ssh</protocol>
             <param name="hostname">192.168.0.1</param>
