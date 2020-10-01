@@ -2,6 +2,7 @@
 import os
 import sys
 import re
+import syslog
 from ruamel.yaml import YAML
 from ConfigureTopology.ConfigureTopology import ConfigureTopology
 
@@ -54,6 +55,18 @@ def sort_veos(vd):
   for t_veos in tmp_l:
     fin_l.append(tmp_d[t_veos])
   return(fin_l)
+
+def send_to_syslog(self,mstat,mtype):
+    """
+    Function to send output from service file to Syslog
+    Parameters:
+    mstat = Message Status, ie "OK", "INFO" (required)
+    mtype = Message to be sent/displayed (required)
+    """
+    mmes = "\t" + mtype
+    syslog.syslog("[{0}] {1}".format(mstat,mmes.expandtabs(7 - len(mstat))))
+    if DEBUG:
+        print("[{0}] {1}".format(mstat,mmes.expandtabs(7 - len(mstat))))
 
 
 def device_menu():
@@ -113,7 +126,7 @@ def device_menu():
           print("Invalid Input")
     except KeyboardInterrupt:
         print('Stopped due to keyboard interrupt.')
-        ConfigureTopology.send_to_syslog('ERROR', 'Keyboard interrupt.')
+        send_to_syslog('ERROR', 'Keyboard interrupt.')
     except:
        print("Invalid Input")
 
@@ -178,7 +191,7 @@ def lab_options_menu():
               print("Invalid Input")
       except KeyboardInterrupt:
           print('Stopped due to keyboard interrupt.')
-          ConfigureTopology.send_to_syslog('ERROR', 'Keyboard interrupt.')
+          send_to_syslog('ERROR', 'Keyboard interrupt.')
       except:
         print("Invalid Input")
 
@@ -233,7 +246,7 @@ def lab_options_menu():
               print("Invalid Input")
       except KeyboardInterrupt:
           print('Stopped due to keyboard interrupt.')
-          ConfigureTopology.send_to_syslog('ERROR', 'Keyboard interrupt.')
+          send_to_syslog('ERROR', 'Keyboard interrupt.')
       except:
           print("Invalid Input")
 
@@ -298,7 +311,7 @@ def main_menu():
         print("Invalid Input")
     except KeyboardInterrupt:
         print('Stopped due to keyboard interrupt.')
-        ConfigureTopology.send_to_syslog('ERROR', 'Keyboard interrupt.')
+        send_to_syslog('ERROR', 'Keyboard interrupt.')
     except:
         print("Invalid Input")
 
@@ -326,7 +339,7 @@ def main():
                       print('User exited.')
                       quit()
                 except KeyboardInterrupt:
-                    ConfigureTopology.send_to_syslog('INFO', 'Script fully exited due to keyboard interrupt.')
+                    send_to_syslog('INFO', 'Script fully exited due to keyboard interrupt.')
                     if menu_mode == 'MAIN':
                       print('User exited.')
                       quit()
