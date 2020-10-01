@@ -132,7 +132,7 @@ Deploy E-LINE Service for Customer-3
 
       .. note::
 
-         Take note of the ``MPLS label`` assigned to the local and remote nodes and that they differ, since the VPN label 
+         Take note of the ``MPLS label`` assigned to the local and remote nodes and that they may differ, since the VPN label 
          for the E-LINE service is locally significant.
 
       .. code-block:: text

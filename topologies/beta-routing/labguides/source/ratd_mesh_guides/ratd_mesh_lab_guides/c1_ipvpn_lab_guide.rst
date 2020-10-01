@@ -32,7 +32,7 @@ Deploy L3VPN Service for Customer-1
          !
          ip routing vrf CUSTOMER-1
          !
-         ipv6 unicast-routing
+         ipv6 unicast-routing vrf CUSTOMER-1
 
    #. Place the interface attached to the Customer Edge, or **CE**, node for Customer-1 into VRF ``CUSTOMER-1`` on 
       **EOS1** to ensure their traffic remains isolated.
