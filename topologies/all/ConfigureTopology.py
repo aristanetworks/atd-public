@@ -194,6 +194,7 @@ class ConfigureTopology():
         lab_configlets = lab_info['labconfiglets']
 
         # Send message that deployment is beginning
+        self.send_to_syslog('INFO', 'Starting deployment for {0} - {1} lab...'.format(self.selected_menu,self.selected_lab))
         print("Starting deployment for {0} - {1} lab...".format(self.selected_menu,self.selected_lab))
 
         # Check if the topo has CVP, and if it does, create CVP connection
@@ -207,8 +208,10 @@ class ConfigureTopology():
             
             # Execute all tasks generated from reset_devices()
             print('Gathering task information...')
+            self.send_to_syslog("INFO", 'Gathering task information')
             self.client.getAllTasks("pending")
             tasks_to_check = self.client.tasks['pending']
+            self.send_to_syslog('INFO', 'Relative tasks: {0}'.format(tasks_to_check))
             self.client.execAllTasks("pending")
             self.send_to_syslog("OK", 'Completed setting devices to topology: {}'.format(self.selected_lab))
 
@@ -229,12 +232,14 @@ class ConfigureTopology():
                     # Execute additional commands in linux if needed
                     if len(additional_commands) > 0:
                         print('Running additional setup commands...')
+                        self.send_to_syslog('INFO', 'Running additional setup commands.')
 
                         for command in additional_commands:
                             os.system(command)
 
                     if not self.public_module_flag:
                         input('Lab Setup Completed. Please press Enter to continue...')
+                        self.send_to_syslog("OK", 'Lab Setup Completed.')
                     else:
                         self.send_to_syslog("OK", 'Lab Setup Completed.')
                     all_tasks_completed = True

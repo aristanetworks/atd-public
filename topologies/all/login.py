@@ -111,8 +111,11 @@ def device_menu():
           menu_mode = 'MAIN'
       else:
           print("Invalid Input")
+    except KeyboardInterrupt:
+        print('Stopped due to keyboard interrupt.')
+        ConfigureTopology.send_to_syslog('ERROR', 'Keyboard interrupt.')
     except:
-      print("Invalid Input")
+       print("Invalid Input")
 
 
 
@@ -173,6 +176,9 @@ def lab_options_menu():
               menu_mode = 'MAIN'
           else:
               print("Invalid Input")
+      except KeyboardInterrupt:
+          print('Stopped due to keyboard interrupt.')
+          ConfigureTopology.send_to_syslog('ERROR', 'Keyboard interrupt.')
       except:
         print("Invalid Input")
 
@@ -225,8 +231,11 @@ def lab_options_menu():
               menu_mode = 'MAIN'
           else:
               print("Invalid Input")
+      except KeyboardInterrupt:
+          print('Stopped due to keyboard interrupt.')
+          ConfigureTopology.send_to_syslog('ERROR', 'Keyboard interrupt.')
       except:
-        print("Invalid Input")
+          print("Invalid Input")
 
 def main_menu():
     global menu_mode
@@ -287,6 +296,9 @@ def main_menu():
         menu_mode = 'EXIT'
       else:
         print("Invalid Input")
+    except KeyboardInterrupt:
+        print('Stopped due to keyboard interrupt.')
+        ConfigureTopology.send_to_syslog('ERROR', 'Keyboard interrupt.')
     except:
         print("Invalid Input")
 
@@ -314,6 +326,7 @@ def main():
                       print('User exited.')
                       quit()
                 except KeyboardInterrupt:
+                    ConfigureTopology.send_to_syslog('INFO', 'Script fully exited due to keyboard interrupt.')
                     if menu_mode == 'MAIN':
                       print('User exited.')
                       quit()
