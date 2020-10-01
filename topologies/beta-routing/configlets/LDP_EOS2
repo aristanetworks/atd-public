@@ -21,8 +21,13 @@ mpls ip
 mpls ldp
    router-id interface Loopback0
    transport-address interface Loopback0
+   neighbor hello-redundancy
    interface disabled default
    no shutdown
+   !
+   graceful-restart role speaker
+      timer state-holding 500
+      timer reconnect 500
 !
 router isis 100
    mpls ldp sync default

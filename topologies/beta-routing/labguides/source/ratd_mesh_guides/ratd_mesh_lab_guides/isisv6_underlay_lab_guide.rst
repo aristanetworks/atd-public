@@ -1,7 +1,7 @@
 Deploy IS-IS as the Service Provider Underlay IGP
 ==========================================================
 
-.. image:: ../../images/ratd_mesh_images/ratd_mesh_isis_sr.png
+.. image:: ../../images/ratd_mesh_images/ratd_mesh_isis_ldp.png
    :align: center
   
 .. note::
@@ -13,7 +13,7 @@ Deploy IS-IS as the Service Provider Underlay IGP
 
    #. From the Main Menu, type ``labs`` or Option 97 for ``Additional Labs``.
 
-   #. Type ``mesh-topology-ldp-ipvpn-base-labs`` to access the Base Setup Labs.
+   #. Type ``mesh-topology-ldp-ipvpn-base-labs`` to access the LDP and IPVPN Labs.
 
    #. Type ``reset`` at the Labs Selection Menu. The script will configure the topology 
       with the necessary prerequisites.
@@ -215,6 +215,7 @@ Deploy IS-IS as the Service Provider Underlay IGP
          show isis neighbors
          show isis interface
          show isis database detail
+         show isis dynamic flooding topology
 
       .. note::
 
