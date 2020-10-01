@@ -2,21 +2,33 @@ router bgp 100
    router-id 5.5.5.5
    no bgp default ipv4-unicast
    maximum-paths 2
-   neighbor PE-RRCLIENTS peer group
-   neighbor PE-RRCLIENTS remote-as 100
-   neighbor PE-RRCLIENTS update-source Loopback0
-   neighbor PE-RRCLIENTS route-reflector-client
-   neighbor PE-RRCLIENTS send-community
-   neighbor PE-RRCLIENTS maximum-routes 12000 
-   neighbor 1.1.1.1 peer group PE-RRCLIENTS
-   neighbor 3.3.3.3 peer group PE-RRCLIENTS
-   neighbor 4.4.4.4 peer group PE-RRCLIENTS
-   neighbor 6.6.6.6 peer group PE-RRCLIENTS
-   neighbor 7.7.7.7 peer group PE-RRCLIENTS
-   neighbor 8.8.8.8 peer group PE-RRCLIENTS
+   neighbor PE-RRCLIENTS-V4 peer group
+   neighbor PE-RRCLIENTS-V4 remote-as 100
+   neighbor PE-RRCLIENTS-V4 update-source Loopback0
+   neighbor PE-RRCLIENTS-V4 route-reflector-client
+   neighbor PE-RRCLIENTS-V4 send-community
+   neighbor PE-RRCLIENTS-V4 maximum-routes 12000
+   neighbor PE-RRCLIENTS-V6 peer group
+   neighbor PE-RRCLIENTS-V6 remote-as 100
+   neighbor PE-RRCLIENTS-V6 update-source Loopback0
+   neighbor PE-RRCLIENTS-V6 route-reflector-client
+   neighbor PE-RRCLIENTS-V6 send-community
+   neighbor PE-RRCLIENTS-V6 maximum-routes 12000 
+   neighbor 1.1.1.1 peer group PE-RRCLIENTS-V4
+   neighbor 3.3.3.3 peer group PE-RRCLIENTS-V4
+   neighbor 4.4.4.4 peer group PE-RRCLIENTS-V4
+   neighbor 6.6.6.6 peer group PE-RRCLIENTS-V4
+   neighbor 7.7.7.7 peer group PE-RRCLIENTS-V4
+   neighbor 8.8.8.8 peer group PE-RRCLIENTS-V4
+   neighbor 1:1:1::1 peer group PE-RRCLIENTS-V6
+   neighbor 3:3:3::3 peer group PE-RRCLIENTS-V6
+   neighbor 4:4:4::4 peer group PE-RRCLIENTS-V6
+   neighbor 6:6:6::6 peer group PE-RRCLIENTS-V6
+   neighbor 7:7:7::7 peer group PE-RRCLIENTS-V6
+   neighbor 8:8:8::8 peer group PE-RRCLIENTS-V6
    !
    address-family vpn-ipv4
-      neighbor PE-RRCLIENTS activate
+      neighbor PE-RRCLIENTS-V4 activate
    !
    address-family vpn-ipv6
-      neighbor PE-RRCLIENTS activate
+      neighbor PE-RRCLIENTS-V6 activate
