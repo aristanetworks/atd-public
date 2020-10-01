@@ -17,8 +17,8 @@ router bgp 100
       route-target import vpn-ipv6 1:1
       route-target export vpn-ipv4 1:1
       route-target export vpn-ipv6 1:1
-      neighbor fd00:1:11::11 remote-as 123
-      neighbor fd00:1:11::11 maximum-routes 12000 
+      neighbor 10.1.11.11 remote-as 123
+      neighbor 10.1.11.11 maximum-routes 12000 
       neighbor fd00:1:11::11 remote-as 123
       neighbor fd00:1:11::11 maximum-routes 12000 
       !

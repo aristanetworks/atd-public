@@ -640,6 +640,7 @@ labconfiglets:
       - "LDP_EOS1"
       - "IPVPN_PEERING_EOS1"
       - "Customer1_L3VPN_EOS1_IPVPN"
+      - "Customer3_E-LINE_EOS1_LDP_PW"
       - "SharedServices_EOS1_IPVPN"
     eos2:
       - "BaseIPv4_EOS2"
@@ -665,6 +666,7 @@ labconfiglets:
       - "IS-IS_Advanced"
       - "LDP_EOS4"
       - "IPVPN_PEERING_EOS4"
+      - "Customer3_E-LINE_EOS4_LDP_PW"
     eos5:
       - "BaseIPv4_EOS5"
       - "BaseIPv6_EOS5"
@@ -724,8 +726,10 @@ labconfiglets:
       - "Customer1_L3VPN_EOS15_IPVPN"
     eos16:
       - "BaseIPv4_EOS16"
+      - "Customer3_E-LINE_EOS16"
     eos17:
       - "BaseIPv4_EOS17"
+      - "Customer3_E-LINE_EOS17"
     eos18:
       - "BaseIPv4_EOS18"
       - "BaseIPv6_EOS18"

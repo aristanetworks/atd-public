@@ -16,9 +16,7 @@ router bgp 100
    neighbor 8.8.8.8 peer group PE-RRCLIENTS
    !
    address-family vpn-ipv4
-      neighbor default encapsulation mpls
       neighbor PE-RRCLIENTS activate
    !
    address-family vpn-ipv6
-      neighbor default encapsulation mpls
       neighbor PE-RRCLIENTS activate
