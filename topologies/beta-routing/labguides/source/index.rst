@@ -19,7 +19,7 @@ configurations necessary to deploy IS-IS, Segment Routing, BGP EVPN, etc.
 
 .. toctree::
    :maxdepth: 1
-   :caption: Routing ATD - Mesh Topology - Full Lab Guide
+   :caption: Routing ATD - Mesh Topology - Full ISIS-SR and EVPN Lab Guide
 
    ratd_mesh_guides/ratd_mesh_lab_guides/ratd_mesh_topo_lab_guide.rst
    ratd_mesh_guides/ratd_mesh_lab_guides/isis_underlay_lab_guide.rst
@@ -35,7 +35,7 @@ configurations necessary to deploy IS-IS, Segment Routing, BGP EVPN, etc.
 
 .. toctree::
    :maxdepth: 1
-   :caption: Routing ATD - Mesh Topology - Class Guide Only
+   :caption: Routing ATD - Mesh Topology - ISIS-SR and EVPN Class Guide Only
 
    ratd_mesh_guides/ratd_mesh_class_guides/ratd_mesh_topo_class_guide.rst
    ratd_mesh_guides/ratd_mesh_class_guides/isis_underlay_class_guide.rst
@@ -51,7 +51,20 @@ configurations necessary to deploy IS-IS, Segment Routing, BGP EVPN, etc.
 
 .. toctree::
    :maxdepth: 1
-   :caption: Routing ATD - Ring Topology - Full Lab Guide
+   :caption: Routing ATD - Mesh Topology - Full LDP and IP-VPN Lab Guide
+
+   ratd_mesh_guides/ratd_mesh_lab_guides/ratd_mesh_topo_lab_guide.rst
+   ratd_mesh_guides/ratd_mesh_lab_guides/isisv6_underlay_lab_guide.rst
+   ratd_mesh_guides/ratd_mesh_lab_guides/ldp_transport_lab_guide.rst
+   ratd_mesh_guides/ratd_mesh_lab_guides/ipvpn_setup_lab_guide.rst
+   ratd_mesh_guides/ratd_mesh_lab_guides/c1_ipvpn_lab_guide.rst
+   ratd_mesh_guides/ratd_mesh_lab_guides/c3_ldppw_lab_guide.rst
+   ratd_mesh_guides/ratd_mesh_lab_guides/c4_ipvpn_lab_guide.rst
+   ratd_mesh_guides/ratd_mesh_lab_guides/cent_svcs_ipvpn_lab_guide.rst 
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Routing ATD - Ring Topology - Full ISIS-SR and EVPN Lab Guide
 
    ratd_ring_guides/ratd_ring_lab_guides/ratd_ring_topo_lab_guide.rst
    ratd_ring_guides/ratd_ring_lab_guides/isis_underlay_lab_guide.rst
@@ -67,7 +80,7 @@ configurations necessary to deploy IS-IS, Segment Routing, BGP EVPN, etc.
 
 .. toctree::
    :maxdepth: 1
-   :caption: Routing ATD - Ring Topology - Class Guide Only
+   :caption: Routing ATD - Ring Topology - ISIS-SR and EVPN Class Guide Only
 
    ratd_ring_guides/ratd_ring_class_guides/ratd_ring_topo_class_guide.rst
    ratd_ring_guides/ratd_ring_class_guides/isis_underlay_class_guide.rst

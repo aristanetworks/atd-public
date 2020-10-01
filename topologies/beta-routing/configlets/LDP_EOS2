@@ -23,3 +23,6 @@ mpls ldp
    transport-address interface Loopback0
    interface disabled default
    no shutdown
+!
+router isis 100
+   mpls ldp sync default
