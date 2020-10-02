@@ -1,7 +1,7 @@
 Deploy L3VPN Service for Customer-4
 =====================================================
 
-.. image:: ../../images/ratd_mesh_images/ratd_mesh_c4_l3vpn.png
+.. image:: ../../images/ratd_ring_images/ratd_ring_c4_l3vpn.png
    :align: center
 
 |
@@ -10,7 +10,7 @@ Deploy L3VPN Service for Customer-4
 
    #. From the Main Menu, type ``labs`` or Option 97 for ``Additional Labs``.
 
-   #. Type ``mesh-topology-ldp-ipvpn-labs`` to access the LDP and IPVPN Labs.
+   #. Type ``ring-topology-ldp-ipvpn-labs`` to access the LDP and IPVPN Labs.
 
    #. Type ``c4l3vpn`` at the Labs Selection Menu. The script will configure the topology with the necessary prerequisites.
    

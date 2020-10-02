@@ -1,7 +1,7 @@
 Prepare to Offer VPN Services to Customers via MP-BGP IP-VPN Control-Plane
 ==================================================================================
 
-.. image:: ../../images/ratd_mesh_images/ratd_mesh_ipvpn.png
+.. image:: ../../images/ratd_ring_images/ratd_ring_ipvpn.png
    :align: center
 
 |
@@ -10,16 +10,15 @@ Prepare to Offer VPN Services to Customers via MP-BGP IP-VPN Control-Plane
 
    #. From the Main Menu, type ``labs`` or Option 97 for ``Additional Labs``.
 
-   #. Type ``mesh-topology-ldp-ipvpn-labs`` to access the LDP and IPVPN Labs.
+   #. Type ``ring-topology-ldp-ipvpn-labs`` to access the LDP and IPVPN Labs.
 
    #. Type ``ipvpn`` at the Labs Selection Menu. The script will configure the topology with the necessary prerequisites.
 
 #. We will now leverage BGP as the control-plane for our VPNs in the Service Provider network. Specifically, we will use 
    iBGP with a Route Reflector to ease the configuration load and not require us to setup a full mesh of BGP peerings. 
-   Configure **EOS5** as the Route Reflector in the Service Provider Network.
+   Configure **EOS8** as the Route Reflector in the Service Provider Network.
 
-   #. On **EOS5**, enable BGP with ASN 100.  Also set a router-id and disable the IPv4 
-      Unicast Address-Family within BGP.
+   #. On **EOS8**, enable BGP with ASN 100.  Also set a router-id and disable the IPv4 Unicast Address-Family within BGP.
 
       .. note::
 
@@ -30,7 +29,7 @@ Prepare to Offer VPN Services to Customers via MP-BGP IP-VPN Control-Plane
       .. code-block:: text
 
          router bgp 100
-            router-id 5.5.5.5
+            router-id 8.8.8.8
             no bgp default ipv4-unicast
 
    #. Allow BGP to utilize ECMP when available by increasing the Maximum Paths allowed for a route.
@@ -78,7 +77,8 @@ Prepare to Offer VPN Services to Customers via MP-BGP IP-VPN Control-Plane
       .. note::
 
          Since BGP is only providing our VPN control-plane, only PE nodes attached to customer devices will require the BGP 
-         peering. In this topology **EOS2** is not a PE but a P router and as such will not have any BGP configuration.
+         peering. In this topology, all active nodes are functioning as **PE** so will require BGP EVPN peerings to the 
+         Route Reflector.
 
       .. code-block:: text
 
@@ -88,9 +88,8 @@ Prepare to Offer VPN Services to Customers via MP-BGP IP-VPN Control-Plane
             neighbor 4.4.4.4 peer group PE-RRCLIENTS
             neighbor 6.6.6.6 peer group PE-RRCLIENTS
             neighbor 7.7.7.7 peer group PE-RRCLIENTS
-            neighbor 8.8.8.8 peer group PE-RRCLIENTS
 
-   #. Verify configuration on **EOS5**.  Since the other routers are not yet configured, there will be no peerings to check 
+   #. Verify configuration on **EOS8**.  Since the other routers are not yet configured, there will be no peerings to check 
       as of yet.
 
       .. code-block:: text
@@ -99,15 +98,10 @@ Prepare to Offer VPN Services to Customers via MP-BGP IP-VPN Control-Plane
 
 #. Now configure the PE nodes in the Service Provider network as the Route Reflector clients.
 
-   #. Again, this will be iBGP and the peerings will look very similar to the setup on **EOS5**. However, we will not need 
+   #. Again, this will be iBGP and the peerings will look very similar to the setup on **EOS8**. However, we will not need 
       to leverage a peer group as all PE nodes will only peer with the route-reflector. The below example is for **EOS1**. 
-      Repeat this for all other Service Provider nodes with the **exception** of **EOS2**, changing the router-id to match 
-      Loopback0.
-
-      .. note::
-
-         On PE nodes, you will see a slightly different AF configuration where we enable MPLS as the data-plane. Since these 
-         routers are originating VPNs, we want to ensure they set themselves as the next-hop in BGP when advertising them.
+      Repeat this for all other Service Provider nodes (**EOS2** and **EOS5** are disabled in the Ring), changing the 
+      router-id to match Loopback0.
 
       .. code-block:: text
 
@@ -115,22 +109,22 @@ Prepare to Offer VPN Services to Customers via MP-BGP IP-VPN Control-Plane
             router-id 1.1.1.1
             no bgp default ipv4-unicast
             maximum-paths 2
-            neighbor 5.5.5.5 remote-as 100
-            neighbor 5.5.5.5 update-source Loopback0
-            neighbor 5.5.5.5 send-community
-            neighbor 5.5.5.5 maximum-routes 12000 
+            neighbor 8.8.8.8 remote-as 100
+            neighbor 8.8.8.8 update-source Loopback0
+            neighbor 8.8.8.8 send-community
+            neighbor 8.8.8.8 maximum-routes 12000 
             !
             address-family vpn-ipv4
                neighbor default encapsulation mpls next-hop-self source-interface Loopback0
-               neighbor 5.5.5.5 activate
+               neighbor 8.8.8.8 activate
             !
             address-family vpn-ipv6
                neighbor default encapsulation mpls next-hop-self source-interface Loopback0
-               neighbor 5.5.5.5 activate
+               neighbor 8.8.8.8 activate
 
 #. Once all other PE nodes are configured, verify BGP peerings are in place.
 
-   #. All PE nodes will only have one BGP peer, while the **EOS5** as the route-reflector will peer with all other PE nodes. 
+   #. All PE nodes will only have one BGP peer, while the **EOS8** as the route-reflector will peer with all other PE nodes. 
       You will see the peerings as ``Established`` but no routes should be exchanged as no VPNs are configured. Also note 
       that the standard ``show ip bgp summary`` command should have no output since the IPv4 unicast AF is not activated.
 

@@ -1,7 +1,7 @@
 Deploy IS-IS as the Service Provider Underlay IGP
 ==========================================================
 
-.. image:: ../../images/ratd_mesh_images/ratd_mesh_isis_ldp.png
+.. image:: ../../images/ratd_ring_images/ratd_ring_isis_ldp.png
    :align: center
   
 .. note::
@@ -13,7 +13,7 @@ Deploy IS-IS as the Service Provider Underlay IGP
 
    #. From the Main Menu, type ``labs`` or Option 97 for ``Additional Labs``.
 
-   #. Type ``mesh-topology-ldp-ipvpn-labs`` to access the LDP and IPVPN Labs.
+   #. Type ``ring-topology-ldp-ipvpn-labs`` to access the LDP and IPVPN Labs.
 
    #. Type ``reset`` at the Labs Selection Menu. The script will configure the topology 
       with the necessary prerequisites.
@@ -152,11 +152,11 @@ Deploy IS-IS as the Service Provider Underlay IGP
 #. Configure IS-IS interfaces on **EOS1**.
 
    #. All links connecting to other SP routers (EOS1 through EOS8) will form IS-IS adjacenies. Configure 
-      the link between **EOS1** and **EOS2** as an IS-IS interface.
+      the link between **EOS1** and **EOS7** as an IS-IS interface.
 
       .. code-block:: text
 
-         interface Ethernet1
+         interface Ethernet2
             isis enable 100
 
    #. Additionally, since this is point to point link to a level-2 router, we will define those characteristics 
@@ -164,7 +164,7 @@ Deploy IS-IS as the Service Provider Underlay IGP
 
       .. code-block:: text
 
-         interface Ethernet1
+         interface Ethernet2
             isis circuit-type level-2
             isis network point-to-point
 
@@ -174,8 +174,8 @@ Deploy IS-IS as the Service Provider Underlay IGP
       .. admonition:: Pro-Tip
 
          You can configure multiple interfaces at once using ranges and separators in EOS. For example, **EOS1** 
-         interfaces Et2, 4 and 5 require IS-IS configuration, but the commands are the same for all interfaces. 
-         You can type ``interface Ethernet2,4-5`` to enter configurations for all three at once.
+         interfaces Et2 and 4 require IS-IS configuration, but the commands are the same for all interfaces. 
+         You can type ``interface Ethernet2,4`` to enter configurations for both at once.
 
    #. Next, the Loopback0 interface needs to be activated as an IS-IS interface.
 
@@ -197,16 +197,16 @@ Deploy IS-IS as the Service Provider Underlay IGP
          In addtion, this command works in conjunction with the ``advertise passive-only`` command in our IS-IS 
          protocol configuration. It ensures only our passive (i.e. Loopback0) interfaces will be advertised.
 
-#. Since no other routers have been configured, there are no peers as of yet. Configure **EOS2** using the same 
+#. Since no other routers have been configured, there are no peers as of yet. Configure **EOS7** using the same 
    steps above.
 
    .. note::
 
-      Each EOS node requires a unique NET. Following the format described above, **EOS2** will have a NET 
-      of ``49.1111.0000.0002.00`` under the IS-IS configuration. In addtion, interfaces Et1 through 5 are all 
-      attached to SP routers so will require IS-IS configuration.
+      Each EOS node requires a unique NET. Following the format described above, **EOS7** will have a NET 
+      of ``49.1111.0000.0007.00`` under the IS-IS configuration. In addtion, interfaces Et1 3 are attached to SP routers 
+      so will require IS-IS configuration.
 
-#. With both **EOS1** and **EOS2** configured, verify IS-IS peering and route advertisement.
+#. With both **EOS1** and **EOS7** configured, verify IS-IS peering and route advertisement.
 
    #. Verify IS-IS adjacency and LSDB.
 
@@ -227,15 +227,15 @@ Deploy IS-IS as the Service Provider Underlay IGP
 
          show ip route
 
-   #. Test reachability between Loopback0 interfaces from **EOS1** to **EOS2**.
+   #. Test reachability between Loopback0 interfaces from **EOS1** to **EOS7**.
 
       .. code-block:: text
 
-         ping 2.2.2.2 source 1.1.1.1
-         ping ipv6 2:2:2::2 source 1:1:1::1
+         ping 7.7.7.7 source 1.1.1.1
+         ping ipv6 7:7:7::7 source 1:1:1::1
 
-#. Configure the remaining Service Provider nodes (**EOS3 - EOS8**) for IS-IS using the steps above. Verify routing tables 
-   only show advertised Loopback0 interfaces for all nodes.
+#. Configure the remaining Service Provider nodes (**EOS3, EOS4, EOS6, and EOS8**) for IS-IS using the steps above. Verify 
+   routing tables only show advertised Loopback0 interfaces for all nodes.
 
 
 **LAB COMPLETE!**

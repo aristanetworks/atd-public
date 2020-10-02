@@ -48,8 +48,7 @@ Prepare to Offer VPN Services to Customers via MP-BGP EVPN Control-Plane
          router bgp 100
             maximum-paths 2
 
-   #. Activate the EVPN address-family within BGP and set the data-plane encapsulation type 
-      to MPLS.
+   #. Activate the EVPN address-family within BGP and set the data-plane encapsulation type to MPLS.
 
       .. note::
 
@@ -62,7 +61,7 @@ Prepare to Offer VPN Services to Customers via MP-BGP EVPN Control-Plane
          router bgp 100
             !
             address-family evpn
-               neighbor default encapsulation mpls
+               neighbor default encapsulation mpls next-hop-self source-interface Loopback0
 
    #. To simplify BGP configuration, create a **peer group** to apply common BGP attributes 
       to the other EOS nodes in the Service Provider network that will act as Route Reflector 
@@ -120,12 +119,6 @@ Prepare to Offer VPN Services to Customers via MP-BGP EVPN Control-Plane
       to leverage a peer group as all PE nodes will only peer with the Route Reflector.  The below example is for **EOS1**. 
       Repeat this for all other active Service Provider nodes (**EOS2** and **EOS5** are disabled in the Ring), changing the 
       router-id to match Loopback0.
-
-      .. note::
-
-         On PE nodes, you will see a slightly different EVPN configuration when enabling MPLS as the 
-         data-plane.  Since these routers are originating VPNs, we want to ensure they set themselves 
-         as the next-hop in BGP when advertising them.
 
       .. code-block:: text
 

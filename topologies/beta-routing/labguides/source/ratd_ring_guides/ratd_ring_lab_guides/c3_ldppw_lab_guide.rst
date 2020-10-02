@@ -1,7 +1,7 @@
 Deploy E-LINE Service for Customer-3
 =========================================================================
 
-.. image:: ../../images/ratd_mesh_images/ratd_mesh_c3_eline.png
+.. image:: ../../images/ratd_ring_images/ratd_ring_c3_eline.png
    :align: center
 
 |
@@ -10,7 +10,7 @@ Deploy E-LINE Service for Customer-3
 
    #. From the Main Menu, type ``labs`` or Option 97 for ``Additional Labs``.
 
-   #. Type ``mesh-topology-ldp-ipvpn-labs`` to access the LDP and IPVPN Labs.
+   #. Type ``ring-topology-ldp-ipvpn-labs`` to access the LDP and IPVPN Labs.
 
    #. Type ``c3eline`` at the Labs Selection Menu. The script will configure the topology with the necessary prerequisites.
 

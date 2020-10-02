@@ -1,7 +1,7 @@
 Deploy L3VPN Service for Customer-1
 =====================================================
 
-.. image:: ../../images/ratd_mesh_images/ratd_mesh_c1_l3vpn.png
+.. image:: ../../images/ratd_ring_images/ratd_ring_c1_l3vpn.png
    :align: center
 
 |
@@ -10,7 +10,7 @@ Deploy L3VPN Service for Customer-1
 
    #. From the Main Menu, type ``labs`` or Option 97 for ``Additional Labs``.
 
-   #. Type ``mesh-topology-ldp-ipvpn-labs`` to access the LDP and IPVPN Labs.
+   #. Type ``ring-topology-ldp-ipvpn-labs`` to access the LDP and IPVPN Labs.
 
    #. Type ``c1l3vpn`` at the Labs Selection Menu. The script will configure the topology with the necessary prerequisites.
    
@@ -386,14 +386,14 @@ Deploy L3VPN Service for Customer-1
       .. code-block:: text
 
          interface Ethernet2
-            isis metric 30
+            isis metric 40
 
       **EOS8**
 
       .. code-block:: text
 
          interface Ethernet3
-            isis metric 30
+            isis metric 40
 
    #. Re-verify the forwarding path for the Customer-1 VRF on **EOS1**, **EOS6**, and **EOS8** to see ECMP is now available.
 

@@ -1,7 +1,7 @@
 Establish MPLS Transport Label Distribution via LDP
 ==================================================================
 
-.. image:: ../../images/ratd_mesh_images/ratd_mesh_isis_ldp.png
+.. image:: ../../images/ratd_ring_images/ratd_ring_isis_ldp.png
    :align: center
   
 |
@@ -10,7 +10,7 @@ Establish MPLS Transport Label Distribution via LDP
 
    #. From the Main Menu, type ``labs`` or Option 97 for ``Additional Labs``.
 
-   #. Type ``mesh-topology-ldp-ipvpn-labs`` to access the LDP and IPVPN Labs.
+   #. Type ``ring-topology-ldp-ipvpn-labs`` to access the LDP and IPVPN Labs.
 
    #. Type ``ldp`` at the Labs Selection Menu. The script will configure the topology 
       with the necessary prerequisites.
@@ -47,16 +47,10 @@ Establish MPLS Transport Label Distribution via LDP
 
       .. code-block:: text
 
-         interface Ethernet1
-            mpls ldp interface
-         !
          interface Ethernet2
             mpls ldp interface
          !
          interface Ethernet4
-            mpls ldp interface
-         !
-         interface Ethernet5
             mpls ldp interface
          !
          interface Loopback0
@@ -127,8 +121,8 @@ Establish MPLS Transport Label Distribution via LDP
 
          show mpls label ranges
 
-#. Repeat the above configuration steps on the other Service Provider nodes (**EOS2 - EOS8**) while only activating LDP on 
-   the necessary interfaces for each device.
+#. Repeat the above configuration steps on the other Service Provider nodes (**EOS3, EOS4, EOS6, and EOS8**) while only 
+   activating LDP on the necessary interfaces for each device.
 
 #. Now that the LDP topology is deployed, verify MPLS label advertisement and reachability. These steps can 
    be performed on any of the Service Provider EOS nodes.
