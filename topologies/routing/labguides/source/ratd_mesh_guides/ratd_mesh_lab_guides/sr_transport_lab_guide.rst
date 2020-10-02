@@ -10,7 +10,7 @@ Establish MPLS Transport Label Distribution via Segment-Routing
 
    #. From the Main Menu, type ``labs`` or Option 97 for ``Additional Labs``.
 
-   #. Type ``mesh-topology-base-labs`` to access the Base Setup Labs.
+   #. Type ``mesh-topology-evpn-base-labs`` to access the Base Setup Labs.
 
    #. Type ``sr`` at the Labs Selection Menu. The script will configure the topology 
       with the necessary prerequisites.

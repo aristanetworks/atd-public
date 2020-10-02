@@ -10,7 +10,7 @@ Deploy L3VPN Service for Customer-4
 
    #. From the Main Menu, type ``labs`` or Option 97 for ``Additional Labs``.
 
-   #. Type ``mesh-topology-supplemental-labs`` to access the Supplemental Labs.
+   #. Type ``mesh-topology-evpn-supplemental-labs`` to access the Supplemental Labs.
 
    #. Type ``c4l3vpn`` at the Labs Selection Menu. The script will configure the topology 
       with the necessary prerequisites.
