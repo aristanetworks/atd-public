@@ -1,7 +1,7 @@
 ---
 lab_list:
   reset:
-    description: "Reset Environment to Initial IPv4 and IPv6 Settings for the Mesh Topology (reset)"
+    description: "Reset Environment to Initial IPv4 and IPv6 Settings for the Ring Topology (reset)"
   ldp: 
     description: "Prepare Environment to Start at the LDP Lab (ldp)"
   ipvpn: 
@@ -15,7 +15,7 @@ lab_list:
   centsvc: 
     description: "Prepare Environment to Start at the Centralized Services Lab (centsvc)"
   complete: 
-    description: "Complete All LDP and IP-VPN Lab Sections for the Mesh Topology (complete)"
+    description: "Complete All LDP and IP-VPN Lab Sections for the Ring Topology (complete)"
 labconfiglets:
   reset:
     eos1:
