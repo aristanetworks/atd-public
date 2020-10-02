@@ -10,7 +10,7 @@ Prepare to Offer VPN Services to Customers via MP-BGP IP-VPN Control-Plane
 
    #. From the Main Menu, type ``labs`` or Option 97 for ``Additional Labs``.
 
-   #. Type ``mesh-topology-ldp-ipvpn-labs`` to access the LDP and IPVPN Labs.
+   #. Type ``mesh-topology-ipvpn-labs`` to access the LDP and IPVPN Labs.
 
    #. Type ``ipvpn`` at the Labs Selection Menu. The script will configure the topology with the necessary prerequisites.
 

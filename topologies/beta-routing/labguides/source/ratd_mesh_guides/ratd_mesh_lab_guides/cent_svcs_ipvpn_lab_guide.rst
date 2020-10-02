@@ -10,7 +10,7 @@ Offer Centralized Services to L3VPN Customers
 
    #. From the Main Menu, type ``labs`` or Option 97 for ``Additional Labs``.
 
-   #. Type ``mesh-topology-ldp-ipvpn-labs`` to access the LDP and IPVPN Labs.
+   #. Type ``mesh-topology-ipvpn-labs`` to access the LDP and IPVPN Labs.
 
    #. Type ``centsvcs`` at the Labs Selection Menu. The script will configure the topology with the necessary prerequisites.
 

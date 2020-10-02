@@ -10,7 +10,7 @@ Leverage SR-TE to Steer VPN Traffic
 
    #. From the Main Menu, type ``labs`` or Option 97 for ``Additional Labs``.
 
-   #. Type ``mesh-topology-sr-evpn-supplemental-labs`` to access the Supplemental Labs.
+   #. Type ``mesh-topology-evpn-supplemental-labs`` to access the Supplemental Labs.
 
    #. Type ``srte`` at the Labs Selection Menu. The script will configure the topology 
       with the necessary prerequisites.
