@@ -323,15 +323,16 @@ Deploy L3VPN Service for Customer-1
 
    #. Test IPv4 connectivity from **EOS12** to **EOS15** using Loopback0 IP addressing.
 
+      .. note::
+
+         In the ATD labs, only connectivty of IPv4 traffic can be validated in L3VPNs. There is a limitation in the 
+         functionality of vEOS-lab, which the ATD labs are built on, in that it is unable to forward MPLS-decapsulated IPv6 
+         traffic to CE nodes. The control-plane for IPv6 based VPNs can still be fully built and validated as it would in 
+         a real environment with physical hardware.
+
       .. code-block:: text
 
          ping 15.15.15.15 source 12.12.12.12
-
-   #. Test IPv6 connectivity from **EOS11** to **EOS15** using Loopback0 IP addressing.
-
-      .. code-block:: text
-
-         ping ipv6 15:15:15::15 source 11:11:11::11
 
 #. From the Service Provider nodes, verify route exchange and MPLS control-plane status.
 

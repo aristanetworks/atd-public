@@ -3,7 +3,7 @@ vrf instance SVC
 interface Ethernet6
    vrf SVC
    ip address 10.3.20.3/24
-   ip address fd00:3:20::3/64
+   ipv6 address fd00:3:20::3/64
 !
 ip routing vrf SVC
 !

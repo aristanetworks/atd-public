@@ -195,10 +195,14 @@ Deploy L3VPN Service for Customer-4
 
    #. Test connectivity from **EOS18** to **EOS19** using Loopback0 IP addressing.
 
+      .. note::
+
+         As seen previously, MPLS tunneling of IPv6 traffic does not function in vEOS-lab. The control-plane should form 
+         correctly and can be verified using show commands.
+
       .. code-block:: text
 
          ping 19.19.19.19 source 18.18.18.18
-         ping ipv6 19:19:19::19 source 18:18:18::18
 
 #. From the Service Provider nodes, verify route exchange and MPLS control-plane status.
 
