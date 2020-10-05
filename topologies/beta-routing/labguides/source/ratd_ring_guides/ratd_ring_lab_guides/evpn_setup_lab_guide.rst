@@ -93,9 +93,10 @@ Prepare to Offer VPN Services to Customers via MP-BGP EVPN Control-Plane
 
       .. note::
 
-         Since BGP EVPN is only providing our VPN control-plane, only PE nodes attached to customer devices will require 
-         the BGP peering.  In this topology, all active nodes are functioning as **PE** so will require BGP EVPN peerings 
-         to the Route Reflector.
+         Since BGP EVPN is only providing our VPN control-plane, only Provider Edge (or **PE**) nodes, which are nodes 
+         attached to customer devices, will require the BGP peering. This is in contrast to Provider (or **P**) nodes, 
+         which only connect to other Service Provider nodes. In this topology, all active nodes are functioning as **PE** 
+         so will require BGP EVPN peerings to the Route Reflector.
 
       .. code-block:: text
 

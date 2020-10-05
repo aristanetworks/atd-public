@@ -362,7 +362,8 @@ Deploy L2VPN Service for Customer-2
          show bgp evpn route-type ethernet-segment esi 0000:0200:0200:1000:0304 detail 
          show bgp evpn instance
 
-   #. Verify Layer 2 ECMP towards remotely attached CE MAC of **EOS14** towards **EOS6** and **EOS8** from **EOS3**.
+   #. Verify Layer 2 ECMP towards remotely attached CE MAC of **EOS14** towards **EOS6** and **EOS8** by running the 
+      following commands on **EOS3**.
 
       .. note::
 
