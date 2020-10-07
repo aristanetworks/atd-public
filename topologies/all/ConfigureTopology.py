@@ -211,7 +211,7 @@ class ConfigureTopology():
             self.send_to_syslog("INFO", 'Gathering task information')
             self.client.getAllTasks("pending")
             tasks_to_check = self.client.tasks['pending']
-            self.send_to_syslog('INFO', 'Relative tasks: {0}'.format([task['workOrderId'] for task in tasks_to_check]))
+            self.send_to_syslog('INFO', 'Relevant tasks: {0}'.format([task['workOrderId'] for task in tasks_to_check]))
             self.client.execAllTasks("pending")
             self.send_to_syslog("OK", 'Completed setting devices to topology: {}'.format(self.selected_lab))
 
