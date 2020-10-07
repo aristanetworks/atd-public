@@ -56,7 +56,7 @@ def sort_veos(vd):
     fin_l.append(tmp_d[t_veos])
   return(fin_l)
 
-def send_to_syslog(self,mstat,mtype):
+def send_to_syslog(mstat,mtype):
     """
     Function to send output from service file to Syslog
     Parameters:
