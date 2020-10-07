@@ -128,7 +128,7 @@ def device_menu():
         print('Stopped due to keyboard interrupt.')
         send_to_syslog('ERROR', 'Keyboard interrupt.')
     except:
-       print("Invalid Input")
+        print("Invalid Input")
 
 
 
@@ -193,7 +193,7 @@ def lab_options_menu():
           print('Stopped due to keyboard interrupt.')
           send_to_syslog('ERROR', 'Keyboard interrupt.')
       except:
-        print("Invalid Input")
+          print("Invalid Input")
 
 
 
