@@ -153,7 +153,28 @@ class ConfigureTopology():
         veos_ssh.close()
         return(DEVREBOOT)
 
+    def check_for_tasks(self):
+        self.client.getRecentTasks(50)
+        tasks_in_progress = False
+        for task in self.client.tasks['recent']:
+            if 'in progress' in task['workOrderUserDefinedStatus'].lower():
+                self.send_to_syslog('INFO', 'Task Check: Task {0} status: {1}'.format(task['workOrderId'],task['workOrderUserDefinedStatus']))
+                tasks_in_progress = True
+            else:
+                pass
+        
+        if tasks_in_progress:
+            self.send_to_syslog('INFO', 'Tasks in progress. Waiting for 10 seconds.')
+            print('Tasks are currently executing. Waiting 10 seconds...')
+            time.sleep(10)
+            self.check_for_tasks()
+
+        else:
+            return
+
+
     def deploy_lab(self):
+
 
         # Check for additional commands in lab yaml file
         lab_file = open('/home/arista/menus/{0}'.format(self.selected_menu + '.yaml'))
@@ -173,19 +194,24 @@ class ConfigureTopology():
         lab_configlets = lab_info['labconfiglets']
 
         # Send message that deployment is beginning
+        self.send_to_syslog('INFO', 'Starting deployment for {0} - {1} lab...'.format(self.selected_menu,self.selected_lab))
         print("Starting deployment for {0} - {1} lab...".format(self.selected_menu,self.selected_lab))
 
         # Check if the topo has CVP, and if it does, create CVP connection
         if 'cvp' in access_info['nodes']:
             self.client = self.connect_to_cvp(access_info)
 
+            self.check_for_tasks()
+
             # Config the topology
             self.update_topology(lab_configlets)
             
             # Execute all tasks generated from reset_devices()
             print('Gathering task information...')
+            self.send_to_syslog("INFO", 'Gathering task information')
             self.client.getAllTasks("pending")
             tasks_to_check = self.client.tasks['pending']
+            self.send_to_syslog('INFO', 'Relevant tasks: {0}'.format([task['workOrderId'] for task in tasks_to_check]))
             self.client.execAllTasks("pending")
             self.send_to_syslog("OK", 'Completed setting devices to topology: {}'.format(self.selected_lab))
 
@@ -206,12 +232,14 @@ class ConfigureTopology():
                     # Execute additional commands in linux if needed
                     if len(additional_commands) > 0:
                         print('Running additional setup commands...')
+                        self.send_to_syslog('INFO', 'Running additional setup commands.')
 
                         for command in additional_commands:
                             os.system(command)
 
                     if not self.public_module_flag:
                         input('Lab Setup Completed. Please press Enter to continue...')
+                        self.send_to_syslog("OK", 'Lab Setup Completed.')
                     else:
                         self.send_to_syslog("OK", 'Lab Setup Completed.')
                     all_tasks_completed = True
