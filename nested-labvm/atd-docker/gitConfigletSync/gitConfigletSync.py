@@ -1,6 +1,5 @@
 #!/usr/bin/python
 
-from cvprac.cvp_client import CvpClient
 import os
 import time
 import shutil
@@ -79,21 +78,6 @@ def main():
    # rcvpapi clnt var container
    cvp_clnt = ""
 
-   # Initialize the client
-   clnt = CvpClient()
-
-   # Attempt to connect to CVP, if it's not available wait 60 seconds
-   attempts = 0
-   while 1:
-      try: 
-         clnt.connect(cvpNodes, cvpUsername, cvpPassword)
-         if clnt.api.get_cvp_info()['version']:
-            break
-      except:
-         attempts += 1
-         pS("INFO", "Cannot connect to CVP waiting 1 minute attempt {0}".format(attempts))
-         time.sleep(60)
-
    # Adding new connection to CVP via rcvpapi
    while not cvp_clnt:
       try:
@@ -132,6 +116,7 @@ def main():
    cvp_clnt.getAllTasks("pending")
    if cvp_clnt.tasks['pending']:
       pS("INFO", "Pending tasks found, will be executing")
+      sleep(10)
       task_response = cvp_clnt.execAllTasks("pending")
       # Perform check to see if there are any existing tasks to be executed
       if task_response:
