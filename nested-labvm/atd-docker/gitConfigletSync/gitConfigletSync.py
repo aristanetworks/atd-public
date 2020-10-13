@@ -115,9 +115,14 @@ def main():
    pS("INFO", "Checking for any pending tasks")
    cvp_clnt.getAllTasks("pending")
    if cvp_clnt.tasks['pending']:
-      pS("INFO", "Pending tasks found, will be executing")
-      sleep(10)
+      pS("INFO", "{0} Pending tasks found, will be executing".format(len(cvp_clnt.tasks['pending'])))
       task_response = cvp_clnt.execAllTasks("pending")
+      sleep(10)
+      while len(cvp_clnt.tasks['pending']) > 0:
+         pS("INFO", "{0} Pending tasks found, will be executing".format(len(cvp_clnt.tasks['pending'])))
+         _tmp_response = cvp_clnt.execAllTasks("pending")
+         sleep(5)
+         cvp_clnt.getAllTasks("pending")
       # Perform check to see if there are any existing tasks to be executed
       if task_response:
          pS("OK", "All pending tasks are executing")
