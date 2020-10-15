@@ -222,6 +222,7 @@ Deploy L3VPN Service for Customer-1
 
          router bgp 123
             router-id 11.11.11.11
+            distance bgp 20 200 200
             neighbor 10.1.11.1 remote-as 100
             neighbor 10.1.11.1 maximum-routes 12000 
             network 11.11.11.11/32
@@ -237,6 +238,7 @@ Deploy L3VPN Service for Customer-1
 
          router bgp 123
             router-id 13.13.13.13
+            distance bgp 20 200 200
             neighbor 10.6.13.6 remote-as 100
             neighbor 10.6.13.6 maximum-routes 12000 
             network 11.11.11.11/32

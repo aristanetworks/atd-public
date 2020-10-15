@@ -3,6 +3,7 @@ interface Ethernet2
 !
 router bgp 123
    router-id 11.11.11.11
+   distance bgp 20 200 200
    neighbor 10.1.11.1 remote-as 100
    neighbor 10.1.11.1 maximum-routes 12000
    neighbor fd00:1:11::1 remote-as 100
