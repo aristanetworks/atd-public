@@ -67,6 +67,13 @@ Deploy IS-IS as the Service Provider Underlay IGP
    #. Set the IS-IS level to level-2 and activate the IPv4 unicast address-family to ensure the router will hold all backbone 
       IPv4 routes.
 
+      .. note::
+
+         Our topology will maintain only IS-IS level-2 adjacenies. This will give us a single backbone 
+         area where all routes will be learned by all routers (similar to an OSPF topology where all 
+         routers are in area 0). This is sufficient for smaller topologies where there isn't a need to 
+         segment flooding domains.
+
       .. code-block:: text
 
          router isis 100

@@ -88,7 +88,7 @@ Deploy L2VPN Service for Customer-2
             spanning-tree portfast
          !
          interface Ethernet6
-            channel-group 9 mode active
+            channel-group 14 mode active
       
       **EOS8**
 
@@ -100,7 +100,7 @@ Deploy L2VPN Service for Customer-2
             spanning-tree portfast
          !
          interface Ethernet4
-            channel-group 9 mode active
+            channel-group 14 mode active
 
    #. Configure BGP EVPN to advertise reachability of any MACs learned in VLAN ``20`` from the customer by setting 
       an **RD** and an **RT**, within BGP on **EOS7**. It should have a unique **RD** following the format of 
@@ -362,7 +362,8 @@ Deploy L2VPN Service for Customer-2
          show bgp evpn route-type ethernet-segment esi 0000:0200:0200:1000:0304 detail 
          show bgp evpn instance
 
-   #. Verify Layer 2 ECMP towards remotely attached CE MAC of **EOS14** towards **EOS6** and **EOS8** from **EOS3**.
+   #. Verify Layer 2 ECMP towards remotely attached CE MAC of **EOS14** towards **EOS6** and **EOS8** by running the 
+      following commands on **EOS3**.
 
       .. note::
 

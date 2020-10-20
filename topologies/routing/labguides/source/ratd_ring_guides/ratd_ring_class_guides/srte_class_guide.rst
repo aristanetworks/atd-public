@@ -51,5 +51,10 @@ Steer Customer-3 E-LINE Traffic
 
    - Traffic should follow the pictured path bidirectionally.
 
+   .. note::
+
+      Due to a limitation in software forwarding in vEOS-lab, forwarding of VPWS traffic into SR-TE tunnels does not function and as such, we cannot 
+      verify functionality via ICMP, etc. All control-plane functions should be verified using the commands above. Steering of VPWS traffic in 
+      hardware platforms functions as expected.
 
 **LAB COMPLETE!**
