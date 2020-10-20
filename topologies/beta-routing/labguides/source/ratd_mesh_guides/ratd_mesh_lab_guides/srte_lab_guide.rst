@@ -400,15 +400,11 @@ Leverage SR-TE to Steer VPN Traffic
          show patch panel forwarding
          show tunnel fib traffic-engineering segment-routing policy
 
-   #. Finally, verify connectivty to **EOS17** on **EOS16**.
-
       .. note::
 
-         Since the Service Provider is emulating a LINE service, ``traceroute`` would not provide additional path hints.
-
-      .. code-block:: text
-
-         ping 17.17.17.17 source 16.16.16.16
+         Due to a limitation in software forwarding in vEOS-lab, forwarding of VPWS traffic into SR-TE tunnels does not function and as such, we cannot 
+         verify functionality via ICMP, etc. All control-plane functions should be verified using the commands above. Steering of VPWS traffic in 
+         hardware platforms functions as expected.
 
 
 **LAB COMPLETE!**
