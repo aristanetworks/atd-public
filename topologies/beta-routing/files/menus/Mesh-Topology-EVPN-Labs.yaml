@@ -1,7 +1,11 @@
 ---
 lab_list:
-  base:
-    description: "Complete Base Lab Setup for the Mesh Topology (base)"
+  reset:
+    description: "Reset Environment to Initial IPv4 Settings for the Mesh Topology (reset)"
+  sr: 
+    description: "Prepare Environment to Start at the IS-IS Segment Routing Lab (sr)"
+  evpn: 
+    description: "Prepare Environment to Start at the EVPN Control-Plane Setup Lab (evpn)"
   c1l3vpn: 
     description: "Prepare Environment to Start at the Customer-1 L3VPN Lab (c1l3vpn)"
   c2l2vpn: 
@@ -19,12 +23,101 @@ lab_list:
   complete: 
     description: "Complete All Supplemental Lab Sections for the Mesh Topology (complete)"
 labconfiglets:
-  base:
+  reset:
+    eos1:
+      - "BaseIPv4_EOS1"
+    eos2:
+      - "BaseIPv4_EOS2"
+    eos3:
+      - "BaseIPv4_EOS3"
+    eos4:
+      - "BaseIPv4_EOS4"
+    eos5:
+      - "BaseIPv4_EOS5"
+    eos6:
+      - "BaseIPv4_EOS6"
+    eos7:
+      - "BaseIPv4_EOS7"
+    eos8:
+      - "BaseIPv4_EOS8"
+    eos9:
+      - "BaseIPv4_EOS9"
+    eos10:
+      - "BaseIPv4_EOS10"
+    eos11:
+      - "BaseIPv4_EOS11"
+    eos12:
+      - "BaseIPv4_EOS12"
+    eos13:
+      - "BaseIPv4_EOS13"
+    eos14:
+      - "BaseIPv4_EOS14"
+    eos15:
+      - "BaseIPv4_EOS15"
+    eos16:
+      - "BaseIPv4_EOS16"
+    eos17:
+      - "BaseIPv4_EOS17"
+    eos18:
+      - "BaseIPv4_EOS18"
+    eos19:
+      - "BaseIPv4_EOS19"
+    eos20:
+      - "BaseIPv4_EOS20"
+  sr:
+    eos1:
+      - "BaseIPv4_EOS1"
+      - "IS-IS_EOS1"
+    eos2:
+      - "BaseIPv4_EOS2"
+      - "IS-IS_EOS2"
+    eos3:
+      - "BaseIPv4_EOS3"
+      - "IS-IS_EOS3"
+    eos4:
+      - "BaseIPv4_EOS4"
+      - "IS-IS_EOS4"
+    eos5:
+      - "BaseIPv4_EOS5"
+      - "IS-IS_EOS5"
+    eos6:
+      - "BaseIPv4_EOS6"
+      - "IS-IS_EOS6"
+    eos7:
+      - "BaseIPv4_EOS7"
+      - "IS-IS_EOS7"
+    eos8:
+      - "BaseIPv4_EOS8"
+      - "IS-IS_EOS8"
+    eos9:
+      - "BaseIPv4_EOS9"
+    eos10:
+      - "BaseIPv4_EOS10"
+    eos11:
+      - "BaseIPv4_EOS11"
+    eos12:
+      - "BaseIPv4_EOS12"
+    eos13:
+      - "BaseIPv4_EOS13"
+    eos14:
+      - "BaseIPv4_EOS14"
+    eos15:
+      - "BaseIPv4_EOS15"
+    eos16:
+      - "BaseIPv4_EOS16"
+    eos17:
+      - "BaseIPv4_EOS17"
+    eos18:
+      - "BaseIPv4_EOS18"
+    eos19:
+      - "BaseIPv4_EOS19"
+    eos20:
+      - "BaseIPv4_EOS20"
+  evpn:
     eos1:
       - "BaseIPv4_EOS1"
       - "IS-IS_EOS1"
       - "SR_EOS1"
-      - "EVPN_PEERING_EOS1"
     eos2:
       - "BaseIPv4_EOS2"
       - "IS-IS_EOS2"
@@ -33,32 +126,26 @@ labconfiglets:
       - "BaseIPv4_EOS3"
       - "IS-IS_EOS3"
       - "SR_EOS3"
-      - "EVPN_PEERING_EOS3"
     eos4:
       - "BaseIPv4_EOS4"
       - "IS-IS_EOS4"
       - "SR_EOS4"
-      - "EVPN_PEERING_EOS4"
     eos5:
       - "BaseIPv4_EOS5"
       - "IS-IS_EOS5"
       - "SR_EOS5"
-      - "EVPN_PEERING_EOS5"
     eos6:
       - "BaseIPv4_EOS6"
       - "IS-IS_EOS6"
       - "SR_EOS6"
-      - "EVPN_PEERING_EOS6"
     eos7:
       - "BaseIPv4_EOS7"
       - "IS-IS_EOS7"
       - "SR_EOS7"
-      - "EVPN_PEERING_EOS7"
     eos8:
       - "BaseIPv4_EOS8"
       - "IS-IS_EOS8"
       - "SR_EOS8"
-      - "EVPN_PEERING_EOS8"
     eos9:
       - "BaseIPv4_EOS9"
     eos10:
