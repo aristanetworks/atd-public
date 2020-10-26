@@ -1,21 +1,21 @@
 ---
 lab_list:
   reset:
-    description: "Reset Environment to Initial IPv4 and IPv6 Settings for the Mesh Topology (reset)"
+    description: "Reset Topology to Initial IPv4 and IPv6 Settings for Mesh Topology (reset)"
   ldp: 
-    description: "Prepare Environment to Start at the LDP Lab (ldp)"
+    description: "Prepare Topology to Start at the LDP Lab (ldp)"
   ipvpn: 
-    description: "Prepare Environment to Start at the IP-VPN Control-Plane Setup Lab (ipvpn)"
+    description: "Prepare Topology to Start at the IP-VPN Control-Plane Setup Lab (ipvpn)"
   c1l3vpn: 
-    description: "Prepare Environment to Start at the Customer-1 L3VPN Lab (c1l3vpn)"
+    description: "Prepare Topology to Start at the Customer-1 L3VPN Lab (c1l3vpn)"
   c3eline: 
-    description: "Prepare Environment to Start at the Customer-3 E-LINE Lab (c3eline)"
+    description: "Prepare Topology to Start at the Customer-3 E-LINE Lab (c3eline)"
   c4l3vpn: 
-    description: "Prepare Environment to Start at the Customer-4 L3VPN Lab (c4l3vpn)"
+    description: "Prepare Topology to Start at the Customer-4 L3VPN Lab (c4l3vpn)"
   centsvc: 
-    description: "Prepare Environment to Start at the Centralized Services Lab (centsvc)"
+    description: "Prepare Topology to Start at the Centralized Services Lab (centsvc)"
   complete: 
-    description: "Complete All LDP and IP-VPN Lab Sections for the Mesh Topology (complete)"
+    description: "Complete All IP-VPN Lab Sections for Mesh Topology (complete)"
 labconfiglets:
   reset:
     eos1:

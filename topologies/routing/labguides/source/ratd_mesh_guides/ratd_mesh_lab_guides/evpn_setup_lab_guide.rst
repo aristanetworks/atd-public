@@ -10,7 +10,7 @@ Prepare to Offer VPN Services to Customers via MP-BGP EVPN Control-Plane
 
    #. From the Main Menu, type ``labs`` or Option 97 for ``Additional Labs``.
 
-   #. Type ``mesh-topology-evpn-base-labs`` to access the Base Setup Labs.
+   #. Type or select the option for ``mesh-topology-evpn-labs`` to access the EVPN Labs.
 
    #. Type ``evpn`` at the Labs Selection Menu. The script will configure the topology 
       with the necessary prerequisites.

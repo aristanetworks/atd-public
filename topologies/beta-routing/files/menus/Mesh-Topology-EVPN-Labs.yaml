@@ -1,27 +1,27 @@
 ---
 lab_list:
   reset:
-    description: "Reset Environment to Initial IPv4 Settings for the Mesh Topology (reset)"
+    description: "Reset Topology to Initial IPv4 Settings for Mesh Topology (reset)"
   sr: 
-    description: "Prepare Environment to Start at the IS-IS Segment Routing Lab (sr)"
+    description: "Prepare Topology to Start at the IS-IS Segment Routing Lab (sr)"
   evpn: 
-    description: "Prepare Environment to Start at the EVPN Control-Plane Setup Lab (evpn)"
+    description: "Prepare Topology to Start at the EVPN Control-Plane Setup Lab (evpn)"
   c1l3vpn: 
-    description: "Prepare Environment to Start at the Customer-1 L3VPN Lab (c1l3vpn)"
+    description: "Prepare Topology to Start at the Customer-1 L3VPN Lab (c1l3vpn)"
   c2l2vpn: 
-    description: "Prepare Environment to Start at the Customer-2 L2VPN Lab (c2l2vpn)"
+    description: "Prepare Topology to Start at the Customer-2 L2VPN Lab (c2l2vpn)"
   c3eline: 
-    description: "Prepare Environment to Start at the Customer-3 E-LINE Lab (c3eline)"
+    description: "Prepare Topology to Start at the Customer-3 E-LINE Lab (c3eline)"
   tilfa:
-    description: "Prepare Environment to Start at the TI-LFA Fast Reroute Lab (tilfa)"
+    description: "Prepare Topology to Start at the TI-LFA Fast ReRoute Lab (tilfa)"
   srte:
-    description: "Prepare Environment to Start at the SR Traffic Engineering Lab (srte)"
+    description: "Prepare Topology to Start at the SR Traffic Engineering Lab (srte)"
   c4l3vpn: 
-    description: "Prepare Environment to Start at the Customer-4 L3VPN Lab (c4l3vpn)"
+    description: "Prepare Topology to Start at the Customer-4 L3VPN Lab (c4l3vpn)"
   centsvc: 
-    description: "Prepare Environment to Start at the Centralized Services Lab (centsvc)"
+    description: "Prepare Topology to Start at the Centralized Services Lab (centsvc)"
   complete: 
-    description: "Complete All Supplemental Lab Sections for the Mesh Topology (complete)"
+    description: "Complete All EVPN Lab Sections for Mesh Topology (complete)"
 labconfiglets:
   reset:
     eos1:
