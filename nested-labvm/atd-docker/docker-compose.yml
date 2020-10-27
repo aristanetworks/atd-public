@@ -75,7 +75,7 @@ services:
       - /opt/ceos:/opt/ceos:rw
   uilanding:
     container_name: atd-uilanding
-    image: atddocker_uilanding:1.1
+    image: atddocker_uilanding:1.0
     restart: always
     environment:
       - PYTHONUNBUFFERED=1
@@ -104,7 +104,7 @@ services:
       - "1813:1813/udp"
   nginx:
     container_name: atd-nginx
-    image: atddocker_nginx:1.1
+    image: atddocker_nginx:1.0
     restart: always
     depends_on:
       - uilanding
