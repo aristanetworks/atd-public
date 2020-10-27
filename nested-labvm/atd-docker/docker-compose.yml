@@ -112,6 +112,10 @@ services:
       - jenkins
     ports:
       - "80:80/tcp"
+      - "443:443/tcp"
+    volumes:
+      - /opt/nginx/certs/cert.crt:/etc/nginx/certs/cert.crt
+      - /opt/nginx/certs/cert.key:/etc/nginx/certs/cert.key
     networks:
       - atd_nginx
   desktop:
