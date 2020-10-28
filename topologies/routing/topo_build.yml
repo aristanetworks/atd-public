@@ -301,3 +301,4 @@ nodes:
           neighborPort: Ethernet6
           port: Ethernet1
 
+additional_ssh_nodes:
