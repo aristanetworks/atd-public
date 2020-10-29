@@ -23,13 +23,13 @@ topologies:
         ram: 60
         cvp:
           2020.1:
-            branch: nginx-ssl
-            image: base-atd-datacenter-e4-24-1f-c2020-1-1-20201027-u
+            branch: nested/2020.1
+            image: base-atd-datacenter-e4-24-1f-c2020-1-1-20201029-u
             eos:
               - 4.24.1F
           2020.2:
-            branch: nginx-ssl
-            image: base-atd-datacenter-e4-24-2-1f-c2020-2-1-20201027-u
+            branch: nested-release
+            image: base-atd-datacenter-e4-24-2-1f-c2020-2-1-20201029-u
             eos:
               - 4.24.2.1F
     prod:
@@ -53,7 +53,7 @@ topologies:
         cvp:
           2020.1:
             branch: nested/2020.1
-            image: base-atd-routing-e4-24-1f-c2020-1-1-20200701-u
+            image: base-atd-routing-e4-24-1f-c2020-1-1-20201029-u
             eos:
               - 4.24.1F
           2020.2:
@@ -92,7 +92,7 @@ topologies:
         cvp:
           2020.1:
             branch: nested/2020.1
-            image: base-training-e4-24-1f-c2020-1-1-20200916-u
+            image: base-training-e4-24-1f-c2020-1-1-20201029-u
             eos:
               - 4.24.1F
     prod:

@@ -34,9 +34,13 @@ sed -i "s/{ARISTA_REPLACE}/$APWD/g" /opt/atd/topologies/$TOPO/files/infra/user-m
 # Update atdUpdate service
 
 cp /opt/atd/nested-labvm/services/atdUpdate/atdUpdate.sh /usr/local/bin/
-cp /opt/atd/nested-labvm/services/atdUpdate/atdUpdate.service /etc/systemd/system/
 
-systemctl daemon-reload
+# Removing systemd file copy over for future
+# To be deprecated.
+
+# cp /opt/atd/nested-labvm/services/atdUpdate/atdUpdate.service /etc/systemd/system/
+
+# systemctl daemon-reload
 
 # Update the base configlets for ceos/veos mgmt numbering
 
