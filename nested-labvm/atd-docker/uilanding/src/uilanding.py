@@ -82,11 +82,9 @@ class topoRequestHandler(BaseHandler):
                 self.redirect('/login')
             return()
         else:
-            node_ip = getPublicIP()
             self.render(
                 BASE_PATH + 'index.html',
-                ARISTA_PWD=host_yaml['login_info']['jump_host']['pw'],
-                PUBLIC_IP=node_ip
+                ARISTA_PWD=host_yaml['login_info']['jump_host']['pw']
             )
     
 # ===============================
