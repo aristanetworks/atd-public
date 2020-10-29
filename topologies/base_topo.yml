@@ -58,7 +58,7 @@ topologies:
               - 4.24.1F
           2020.2:
             branch: nested-release
-            image: base-atd-routing-e4-24-2-1f-c2020-2-1-20200911
+            image: base-atd-routing-e4-24-2-1f-c2020-2-1-20201029-u
             eos:
               - 4.24.2.1F
       ceos:
