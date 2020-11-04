@@ -114,10 +114,21 @@ services:
       - "80:80/tcp"
       - "443:443/tcp"
     volumes:
+      - nginx_log:/var/log/nginx:rw
       - /opt/nginx/certs/cert.crt:/etc/nginx/certs/cert.crt
       - /opt/nginx/certs/cert.key:/etc/nginx/certs/cert.key
     networks:
       - atd_nginx
+  monitor:
+    container_name: atd-monitor
+    image: atddocker_monitor:1.0
+    restart: always
+    depends_on:
+      - nginx
+    volumes:
+      - nginx_log:/var/log/nginx:ro
+      - /etc/atd:/etc/atd:ro
+      - /var/log/wtmp:/var/log/wtmp:ro
   desktop:
     container_name: atd-desktop
     image: atddocker_desktop:1.0
@@ -191,3 +202,4 @@ volumes:
   atd_http:
   jenkins_home:
   cvp_dir:
+  nginx_log:
