@@ -1,5 +1,5 @@
-FROM nginx:1.17.3
+FROM nginx:1.19.3
 
 COPY src/atd.conf /etc/nginx/conf.d/
 
-EXPOSE 80
+EXPOSE 80 443
