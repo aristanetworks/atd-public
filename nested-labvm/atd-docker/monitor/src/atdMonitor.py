@@ -210,6 +210,7 @@ def main():
             sleep(QUERY_TIMEOUT)
 
 if __name__ == '__main__':
+    pS("Starting instance monitoring...")
     atdmonitor = main()
     if atdmonitor:
         pS("Instance is shutting down")
