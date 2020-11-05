@@ -123,6 +123,8 @@ services:
     container_name: atd-monitor
     image: atddocker_monitor:1.0
     restart: always
+    environment:
+      - PYTHONUNBUFFERED=1
     depends_on:
       - nginx
     volumes:
