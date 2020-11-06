@@ -51,21 +51,15 @@ def openYAML(fpath):
     except:
         return("File not available")
 
-def openFile(fpath, num_lines=0, flast=False):
+def openFile(fpath, flast=False):
     """
     Function to open and read the contents of a file.
     """
-    _logs = []
     try:
         with open(fpath, 'r') as tmp_file:
             _file = tmp_file.readlines()
-            _file = _file.split('\n')
-            if num_lines:
-                for _entry in _file[::-1][1:num_lines]:
-                    _logs.append(_entry)
-                return(_logs)
-            elif flast:
-                return(_file[len(_file) - 2])
+            if flast:
+                return(_file[-1])
             else:
                 return(_file)
     except:
