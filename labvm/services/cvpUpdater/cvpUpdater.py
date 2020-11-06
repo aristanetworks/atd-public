@@ -15,7 +15,7 @@ FILE_DELAY = 10
 
 # Temporary file_path location for CVP Custom info
 cvp_file = '/home/arista/cvp/cvp_info.yaml'
-pDEBUG = True
+pDEBUG = False
 
 # ==================================
 # Start of Global Functions

@@ -13,7 +13,7 @@ from ConfigureTopology.ConfigureTopology import ConfigureTopology
 
 topo_file = '/etc/ACCESS_INFO.yaml'
 CVP_CONFIG_FIILE = '/home/arista/.cvpState.txt'
-pDEBUG = True
+pDEBUG = False
 APP_KEY = 'app'
 sleep_delay = 30
 

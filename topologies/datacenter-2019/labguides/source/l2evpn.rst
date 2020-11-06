@@ -88,10 +88,9 @@ L2 EVPN
         configure
         router bgp 65103
           neighbor SPINE-EVPN-TRANSIT peer group
-          neighbor SPINE-EVPN-TRANSIT next-hop-unchanged
           neighbor SPINE-EVPN-TRANSIT update-source Loopback0
           neighbor SPINE-EVPN-TRANSIT ebgp-multihop
-          neighbor SPINE-EVPN-TRANSIT send-community extended
+          neighbor SPINE-EVPN-TRANSIT send-community
           neighbor SPINE-EVPN-TRANSIT remote-as 65001
           neighbor SPINE-EVPN-TRANSIT maximum-routes 0
           neighbor 172.16.0.1 peer group SPINE-EVPN-TRANSIT

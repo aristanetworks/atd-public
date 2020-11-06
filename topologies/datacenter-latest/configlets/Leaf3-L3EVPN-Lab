@@ -72,7 +72,6 @@ router bgp 65103
    redistribute connected
    !
    address-family evpn
-      bgp next-hop-unchanged
       neighbor SPINE-EVPN-TRANSIT activate
    !
    address-family ipv4
