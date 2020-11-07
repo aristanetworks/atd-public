@@ -147,7 +147,7 @@ def main():
                     else:
                         LAST_LOGS['ssh']['timestamp'] = _boot_time
             else:
-                LAST_LOGS['ssh']['timestamp'] = _boot_tim
+                LAST_LOGS['ssh']['timestamp'] = _boot_time
                 pS("No sessions have been created since boot")
         # Get nginx Logs
         pS("Getting nginx Logs")
