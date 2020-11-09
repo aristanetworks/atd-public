@@ -183,7 +183,7 @@ def main():
         else:
             LAST_LOGS['nginx']['log_time'] = _boot_time
             pS("NGINX Logs are empty, using boot time.")
-        if LAST_LOGS['nginx']['log'] and LAST_LOGS['ssh']['timestamp']:
+        if LAST_LOGS['nginx']['log_time'] and LAST_LOGS['ssh']['timestamp']:
             _stale_sessions = False
             # Perform Checks on NGINX
             _nginx_timedelta = datetime.now(tz=timezone.utc) - LAST_LOGS['nginx']['log_time']
