@@ -13,7 +13,7 @@ import requests
 
 SLEEP_DELAY = 10
 QUERY_TIMEOUT= 10 * 60
-INACTIVITY_THRESHOLD = 3 * 60 * 60
+INACTIVITY_THRESHOLD = 1 * 30 * 60
 COUNTER_THRESHOLD = 10
 ATD_ACCESS_PATH = '/etc/atd/ACCESS_INFO.yaml'
 NGINX_LOG_PATH = '/var/log/nginx/atd-access.log'
