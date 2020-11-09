@@ -148,7 +148,10 @@ def main():
                         LAST_LOGS['ssh']['timestamp'] = _boot_time
             else:
                 LAST_LOGS['ssh']['timestamp'] = _boot_time
-                pS("No sessions have been created since boot")
+                pS("No sessions have been created since boot, using boot time")
+        else:
+            LAST_LOGS['ssh']['timestamp'] = _boot_time
+            pS("No sessions logs found, using boot time.")
         # Get nginx Logs
         pS("Getting nginx Logs")
         _nginx_logs = openFile(NGINX_LOG_PATH, True)
@@ -176,10 +179,10 @@ def main():
                     else:
                         LAST_LOGS['nginx']['log_time'] = LAST_LOGS['nginx']['timestamp']
             else:
-                LAST_LOGS['nginx']['log_time'] = _boot_time
                 pS("No Change in NGINX Logs")
         else:
-            pS("NGINX Logs are empty")
+            LAST_LOGS['nginx']['log_time'] = _boot_time
+            pS("NGINX Logs are empty, using boot time.")
         if LAST_LOGS['nginx']['log'] and LAST_LOGS['ssh']['timestamp']:
             _stale_sessions = False
             # Perform Checks on NGINX
