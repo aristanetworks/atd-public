@@ -36,7 +36,7 @@ class topoRequestHandler(tornado.web.RequestHandler):
                                 JS = labguide_js,
                                 CSS = labguide_css,
                                 MOD_NAME = MOD_YAML[lab][mod]['name'],
-                                NODE_IP = getPublicIP(),
+                                NODE_IP = self.request.host,
                                 MOD_IMG = 'labguides/_images/modules/{0}'.format(MOD_YAML[lab][mod]['image']),
                                 NODES = MOD_YAML[lab][mod]['nodes'],
                                 LABGUIDE = parseLabHTML(labguide, lab, mod)
