@@ -273,5 +273,8 @@ class ConfigureTopology():
 
                     for command in additional_commands:
                         os.system(command)
-
-                input("Lab Setup Completed. Please press Enter to continue...")
+            if not self.public_module_flag:
+                input('Lab Setup Completed. Please press Enter to continue...')
+                self.send_to_syslog("OK", 'Lab Setup Completed.')
+            else:
+                self.send_to_syslog("OK", 'Lab Setup Completed.')
