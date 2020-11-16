@@ -64,6 +64,8 @@ then
     chown www-data:www-data /var/www/html/atd/index.php
     sed -i "s/{REPLACE_PWD}/$ARISTA_PWD/g" /var/www/html/atd/index.php
     sed -i "s/{CVP_PWD}/$CVP_ARISTA_PWD/g" /var/www/html/atd/index.php
+    # Disable iptables port forward to CVP
+    iptables -t nat -D PREROUTING 1
     cp /tmp/atd/topologies/all/ssl_nginx.conf /etc/nginx/sites-enabled/default
 else
     echo "Old Jumphost build..."
@@ -104,8 +106,6 @@ sed -i "s/{REPLACE_ARISTA}/$LAB_ARISTA_PWD/g" /tmp/atd/topologies/$TOPO/labguide
 # Update the Arista user password for connecting to the labvm
 sed -i "s/{REPLACE_PWD}/$ARISTA_PWD/g" /tmp/atd/topologies/$TOPO/labguides/source/*.rst
 
-# Disable iptables port forward to CVP
-iptables -t nat -D PREROUTING 1
 
 # Perform check for module lab
 if [ ! -z "$(grep "app" /etc/ACCESS_INFO.yaml)" ] && [ -d "/home/arista/modules" ]
