@@ -36,7 +36,7 @@
       <map name="image_map">
         {% for node in NODES %}
           {% if node == "CVP" %}
-            <area onmouseover="displayHint(event)" onmouseout="displayHint(event)" alt="{{ escape(node) }}" title="{{ escape(node) }}" href="https://{{ NODE_IP }}" target="_blank" coords="{{ escape(NODES[node]['coords']) }}" shape="rect">
+            <area onmouseover="displayHint(event)" onmouseout="displayHint(event)" alt="{{ escape(node) }}" title="{{ escape(node) }}" href="https://{{ NODE_IP }}/cv" target="_blank" coords="{{ escape(NODES[node]['coords']) }}" shape="rect">
           {% else %}
 	          <area onmouseover="displayHint(event)" onmouseout="displayHint(event)" alt="{{ escape(node) }}" title="{{ escape(node) }}" href="http://{{ NODE_IP }}/ssh/host/{{ escape(NODES[node]['ip']) }}" target="_blank" coords="{{ escape(NODES[node]['coords']) }}" shape="rect">
           {% end %}
