@@ -63,7 +63,7 @@
                         <td>Lab Frontend</td> <td>arista</td> <td>@rista123</td>
                     </tr>
                     <tr>
-                        <td>CVP</td> <td>arista</td> <td>arista1</td>
+                        <td>CVP</td> <td>arista</td> <td>{CVP_PWD}</td>
                     </tr>
                     <tr>
                         <td>IPAM</td> <td>arista</td> <td>Arista123</td>

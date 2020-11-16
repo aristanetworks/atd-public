@@ -12,7 +12,7 @@ done
 TOPO=$(cat /etc/ACCESS_INFO.yaml | shyaml get-value topology)
 ARISTA_PWD=$(cat /etc/ACCESS_INFO.yaml | shyaml get-value login_info.jump_host.pw)
 
-# Get the current arista password:
+# Get the current vEOS arista password:
 for i in $(seq 1 $(cat /etc/ACCESS_INFO.yaml | shyaml get-length login_info.veos))
 do
 TMP=$((i-1))
@@ -22,6 +22,16 @@ then
     AR_LEN=$( echo -n $LAB_ARISTA_PWD | wc -m)
 fi
 done
+# Get the current CVP arista password:
+for i in $(seq 1 $(cat /etc/ACCESS_INFO.yaml | shyaml get-length login_info.cvp.shell))
+do
+TMP=$((i-1))
+if [ $( cat /etc/ACCESS_INFO.yaml | shyaml get-value login_info.cvp.shell.$TMP.user ) = "arista" ]
+then
+    CVP_ARISTA_PWD=$( cat /etc/ACCESS_INFO.yaml | shyaml get-value login_info.cvp.shell.$TMP.pw )
+fi
+done
+
 
 
 # Adding in temporary pip install/upgrade for rCVP API
@@ -53,6 +63,7 @@ then
     cp /tmp/atd/topologies/all/index.php /var/www/html/atd/index.php
     chown www-data:www-data /var/www/html/atd/index.php
     sed -i "s/{REPLACE_PWD}/$ARISTA_PWD/g" /var/www/html/atd/index.php
+    sed -i "s/{CVP_PWD}/$CVP_ARISTA_PWD/g" /var/www/html/atd/index.php
     cp /tmp/atd/topologies/all/ssl_nginx.conf /etc/nginx/sites-enabled/default
 else
     echo "Onld Jumphost build..."
