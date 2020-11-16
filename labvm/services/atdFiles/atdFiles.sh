@@ -66,7 +66,7 @@ then
     sed -i "s/{CVP_PWD}/$CVP_ARISTA_PWD/g" /var/www/html/atd/index.php
     cp /tmp/atd/topologies/all/ssl_nginx.conf /etc/nginx/sites-enabled/default
 else
-    echo "Onld Jumphost build..."
+    echo "Old Jumphost build..."
     cp /tmp/atd/topologies/all/nginx.conf /etc/nginx/sites-enabled/default
 fi
 
