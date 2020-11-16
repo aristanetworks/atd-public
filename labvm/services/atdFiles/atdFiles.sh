@@ -46,17 +46,22 @@ cp /tmp/atd/topologies/all/login.py /usr/local/bin/login.py
 cp /tmp/atd/topologies/all/labUI.py /usr/local/bin/labUI.py
 chmod +x /usr/local/bin/labUI.py
 
-# Copy over new index.php
-cp /tmp/atd/topologies/all/index.php /var/www/html/atd/index.php
-chown www-data:www-data /var/www/html/atd/index.php
-sed -i "s/{REPLACE_PWD}/$ARISTA_PWD/g" /var/www/html/atd/index.php
-
-# Copy over new nginx config if it exists and restart service
-if [ ! -z '/tmp/atd/topologies/all/nginx.conf' ]
+# Perform check for newer jumphost
+if [ ! -z '/etc/nginx/certs/star_atd_arista_com.crt' ]
 then
+    echo "New Jumphost build..."
+    cp /tmp/atd/topologies/all/index.php /var/www/html/atd/index.php
+    chown www-data:www-data /var/www/html/atd/index.php
+    sed -i "s/{REPLACE_PWD}/$ARISTA_PWD/g" /var/www/html/atd/index.php
+    cp /tmp/atd/topologies/all/ssl_nginx.conf /etc/nginx/sites-enabled/default
+else
+    echo "Onld Jumphost build..."
     cp /tmp/atd/topologies/all/nginx.conf /etc/nginx/sites-enabled/default
-    systemctl restart nginx
 fi
+
+# Restart nginx
+echo "Restarting NGINX"
+systemctl restart nginx
 
 # Add files to arista home
 rsync -av /tmp/atd/topologies/$TOPO/files/ /home/arista
