@@ -57,7 +57,7 @@ cp /tmp/atd/topologies/all/labUI.py /usr/local/bin/labUI.py
 chmod +x /usr/local/bin/labUI.py
 
 # Perform check for newer jumphost
-if [ ! -z '/etc/nginx/certs/star_atd_arista_com.crt' ]
+if [ -f '/etc/nginx/certs/star_atd_arista_com.crt' ]
 then
     echo "New Jumphost build..."
     cp /tmp/atd/topologies/all/index.php /var/www/html/atd/index.php
