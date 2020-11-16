@@ -46,6 +46,11 @@ cp /tmp/atd/topologies/all/login.py /usr/local/bin/login.py
 cp /tmp/atd/topologies/all/labUI.py /usr/local/bin/labUI.py
 chmod +x /usr/local/bin/labUI.py
 
+# Copy over new index.php
+cp /tmp/atd/topologies/all/index.php /var/www/html/atd/index.php
+chown www-data:www-data /var/www/html/atd/index.php
+sed -i "s/{REPLACE_PWD}/$ARISTA_PWD/g" /var/www/html/atd/index.php
+
 # Copy over new nginx config if it exists and restart service
 if [ ! -z '/tmp/atd/topologies/all/nginx.conf' ]
 then
