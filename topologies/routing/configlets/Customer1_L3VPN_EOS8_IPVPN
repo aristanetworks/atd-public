@@ -1,0 +1,29 @@
+vrf instance CUSTOMER-1
+!
+interface Ethernet2
+   vrf CUSTOMER-1
+   ip address 10.8.15.8/24
+   ipv6 address fd00:8:15::8/64
+!
+ip routing vrf CUSTOMER-1
+!
+ipv6 unicast-routing vrf CUSTOMER-1
+!
+router bgp 100
+   !
+  vrf CUSTOMER-1
+      rd 8.8.8.8:1
+      route-target import vpn-ipv4 1:1
+      route-target import vpn-ipv6 1:1
+      route-target export vpn-ipv4 1:1
+      route-target export vpn-ipv6 1:1
+      neighbor 10.8.15.15 remote-as 15
+      neighbor 10.8.15.15 maximum-routes 12000 
+      neighbor fd00:8:15::15 remote-as 15
+      neighbor fd00:8:15::15 maximum-routes 12000
+      !
+      address-family ipv4
+         neighbor 10.8.15.15 activate
+      !
+      address-family ipv6
+         neighbor fd00:8:15::15 activate

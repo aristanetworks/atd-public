@@ -1,0 +1,13 @@
+router bgp 500
+   router-id 20.20.20.20
+   neighbor 10.3.20.3 remote-as 100
+   neighbor 10.3.20.3 maximum-routes 12000 
+   neighbor fd00:3:20::3 remote-as 100
+   neighbor fd00:3:20::3 maximum-routes 12000
+   !
+   address-family ipv4
+      network 20.20.20.20/32
+   !
+   address-family ipv6
+      neighbor fd00:3:20::3 activate
+      network 20:20:20::20/128

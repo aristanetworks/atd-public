@@ -1,6 +1,7 @@
 hostname eos17
 !
 interface Ethernet1
+   description EOS1
    no switchport
    ip address 10.16.17.17/24
 !

@@ -1,0 +1,36 @@
+ip extcommunity-list CUSTOMER-2 permit rt 2:20
+ip extcommunity-list CUSTOMER-3 permit rt 3:1617
+!
+route-map EVPN-COLORING permit 10
+   match extcommunity CUSTOMER-2
+   set extcommunity color 10 additive
+!
+route-map EVPN-COLORING permit 15
+   match extcommunity CUSTOMER-3
+   set extcommunity color 1617 additive
+!
+route-map EVPN-COLORING permit 20
+!
+router bgp 100
+   !
+   address-family evpn
+      neighbor 8.8.8.8 route-map EVPN-COLORING in
+!
+router traffic-engineering
+   segment-routing
+      rib system-colored-tunnel-rib
+      !
+      policy endpoint 1.1.1.1 color 1617
+         binding-sid 1001617
+         description STEER TRAFFIC TO EOS17
+         !
+         path-group preference 100
+            segment-list label-stack 900007 900001
+      !
+      policy endpoint 7.7.7.7 color 10
+         binding-sid 1000710
+         description STEER TRAFFIC TO EOS10
+         !
+         path-group preference 100
+            segment-list label-stack 900008 900001 900007
+   router-id ipv4 4.4.4.4
