@@ -115,8 +115,8 @@ services:
       - "443:443/tcp"
     volumes:
       - nginx_log:/var/log/nginx:rw
-      - /opt/nginx/certs/cert.crt:/etc/nginx/certs/cert.crt
-      - /opt/nginx/certs/cert.key:/etc/nginx/certs/cert.key
+      - /etc/atd:/etc/atd:ro
+      - /opt/nginx/certs:/opt/nginx/certs:ro
     networks:
       - atd_nginx
   monitor:
