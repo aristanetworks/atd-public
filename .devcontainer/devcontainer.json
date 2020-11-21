@@ -3,18 +3,23 @@
 	"context": "..",
 	"dockerFile": "Dockerfile",
 	"settings": { 
-		"terminal.integrated.shell.linux": "/bin/bash"
+		"terminal.integrated.shell.linux": "/bin/zsh"
 	},
 	"extensions": [
 		"redhat.vscode-yaml",
 		"ms-python.python",
 		"ms-kubernetes-tools.vscode-kubernetes-tools",
-		"ms-azuretools.vscode-docker",
-		"ms-kubernetes-tools.vscode-kubernetes-tools"
+//		"ms-azuretools.vscode-docker",
+		"ms-kubernetes-tools.vscode-kubernetes-tools",
+		"github.vscode-pull-request-github",
+		"lextudio.restructuredtext",
+		"aristapublisher.eos",
+		"eamodio.gitlens"
 	],
+	"postCreateCommand": "cd /tmp; wget https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh && sh install.sh --unattended && if [ -d ~/dotfiles ]; then rm ~/.zshrc; /usr/local/bin/dotbot -c ~/dotfiles/install.conf.yaml; fi",
 	"mounts": [ 
-		"source=${localEnv:HOME}/.ssh,target=/home/atddev/.ssh,type=bind,consistency=cached",
-		"source=${localEnv:HOME}/.gitconfig,target=/home/atddev/.gitconfig,type=bind,consistency=cached"
+		"source=${localEnv:HOME}/.ssh,target=/home/atddev/.ssh,type=bind,consistency=cached"
 	],
 	"remoteUser": "atddev"
 }
+ 
