@@ -18,6 +18,12 @@ topologies:
             eos:
               - 4.24.1.1F
               - 4.24.2.1F
+          2020.4:
+            branch: nginx-ssl
+            image: base-atd-datacenter-ceos-c2020-4-0-2021123
+            eos:
+              - 4.24.1.1F
+              - 4.24.2.1F
       veos:
         cpu: 30
         ram: 60
