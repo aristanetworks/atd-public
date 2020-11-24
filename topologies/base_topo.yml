@@ -26,7 +26,7 @@ topologies:
               - 4.24.2.1F
       veos:
         cpu: 30
-        ram: 60
+        ram: 64
         cvp:
           2020.1:
             branch: nested/2020.1
@@ -41,7 +41,7 @@ topologies:
     prod:
       veos:
         cpu: 30
-        ram: 60
+        ram: 64
         cvp:
           2020.1:
             branch: v2020.1-20201029b
