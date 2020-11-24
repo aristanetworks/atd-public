@@ -7,19 +7,19 @@ topologies:
         ram: 36
         cvp:
           2020.1:
-            branch: nginx-ssl
+            branch: nested-release
             image: base-atd-datacenter-ceos-c2020-1-1-20201124-u
             eos:
               - 4.24.1.1F
               - 4.24.2.1F
           2020.2:
-            branch: nginx-ssl
+            branch: nested-release
             image: base-atd-datacenter-ceos-c2020-2-1-20201124-u
             eos:
               - 4.24.1.1F
               - 4.24.2.1F
           2020.4:
-            branch: nginx-ssl
+            branch: nested-release
             image: base-atd-datacenter-ceos-c2020-4-0-2021124-u
             eos:
               - 4.24.1.1F
