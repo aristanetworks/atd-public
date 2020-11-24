@@ -26,7 +26,7 @@ while True:
 salt = uuid.uuid4().hex
 
 accounts = {
-    hashlib.sha512((host_yaml['login_info']['jump_host']['user'] + salt).encode('utf-8')).hexdigest(): hashlib.sha512((host_yaml['login_info']['jump_host']['user'] + salt).encode('utf-8')).hexdigest()
+    hashlib.sha512((host_yaml['login_info']['jump_host']['user'] + salt).encode('utf-8')).hexdigest(): hashlib.sha512((host_yaml['login_info']['jump_host']['pw'] + salt).encode('utf-8')).hexdigest()
 }
 
 class BaseHandler(tornado.web.RequestHandler):
@@ -41,7 +41,7 @@ class LoginHandler(BaseHandler):
                 decoded_cred = decodeID(self.get_argument('auth'))
                 tmp_username_hash = hashlib.sha512((decoded_cred['user'] + salt).encode('utf-8')).hexdigest()
                 if tmp_username_hash in accounts:
-                    tmp_pwd_hash = hashlib.sha512((decoded_cred['user'] + salt).encode('utf-8')).hexdigest()
+                    tmp_pwd_hash = hashlib.sha512((decoded_cred['pwd'] + salt).encode('utf-8')).hexdigest()
                     if tmp_pwd_hash == accounts[tmp_username_hash]:
                         AUTH = True
             except:

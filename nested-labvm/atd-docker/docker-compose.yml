@@ -112,8 +112,25 @@ services:
       - jenkins
     ports:
       - "80:80/tcp"
+      - "443:443/tcp"
+    volumes:
+      - nginx_log:/var/log/nginx:rw
+      - /etc/atd:/etc/atd:ro
+      - /opt/nginx/certs:/opt/nginx/certs:ro
     networks:
       - atd_nginx
+  monitor:
+    container_name: atd-monitor
+    image: atddocker_monitor:1.0
+    restart: always
+    environment:
+      - PYTHONUNBUFFERED=1
+    depends_on:
+      - nginx
+    volumes:
+      - nginx_log:/var/log/nginx:ro
+      - /etc/atd:/etc/atd:ro
+      - /var/log/wtmp:/var/log/wtmp:ro
   desktop:
     container_name: atd-desktop
     image: atddocker_desktop:1.0
@@ -187,3 +204,4 @@ volumes:
   atd_http:
   jenkins_home:
   cvp_dir:
+  nginx_log:
