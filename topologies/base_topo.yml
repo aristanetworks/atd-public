@@ -8,19 +8,19 @@ topologies:
         cvp:
           2020.1:
             branch: nginx-ssl
-            image: base-atd-datacenter-ceos-c2020-1-1-20201027-u
+            image: base-atd-datacenter-ceos-c2020-1-1-20201124-u
             eos:
               - 4.24.1.1F
               - 4.24.2.1F
           2020.2:
             branch: nginx-ssl
-            image: base-atd-datacenter-ceos-c2020-2-1-20201027-u
+            image: base-atd-datacenter-ceos-c2020-2-1-20201124-u
             eos:
               - 4.24.1.1F
               - 4.24.2.1F
           2020.4:
             branch: nginx-ssl
-            image: base-atd-datacenter-ceos-c2020-4-0-2021123
+            image: base-atd-datacenter-ceos-c2020-4-0-2021124-u
             eos:
               - 4.24.1.1F
               - 4.24.2.1F
@@ -30,12 +30,12 @@ topologies:
         cvp:
           2020.1:
             branch: nested/2020.1
-            image: base-atd-datacenter-e4-24-1f-c2020-1-1-20201029-u
+            image: base-atd-datacenter-e4-24-1f-c2020-1-1-20201124-u
             eos:
               - 4.24.1F
           2020.2:
             branch: nested-release
-            image: base-atd-datacenter-e4-24-2-1f-c2020-2-1-20201029-u
+            image: base-atd-datacenter-e4-24-2-1f-c2020-2-1-20201124-u
             eos:
               - 4.24.2.1F
     prod:
@@ -59,12 +59,12 @@ topologies:
         cvp:
           2020.1:
             branch: nested/2020.1
-            image: base-atd-routing-e4-24-1f-c2020-1-1-20201029-u
+            image: base-atd-routing-e4-24-1f-c2020-1-1-20201124-u
             eos:
               - 4.24.1F
           2020.2:
             branch: nested-release
-            image: base-atd-routing-e4-24-2-1f-c2020-2-1-20201029-u
+            image: base-atd-routing-e4-24-2-1f-c2020-2-1-20201124-u
             eos:
               - 4.24.2.1F
       ceos:
@@ -73,7 +73,7 @@ topologies:
         cvp:
           2020.1:
             branch: nested/2020.1
-            image: base-atd-routing-ceos-c2020-1-1-20200917
+            image: base-atd-routing-ceos-c2020-1-1-20201124-u
             eos:
               - 4.24.1.1F
               - 4.24.2.1F
@@ -98,7 +98,7 @@ topologies:
         cvp:
           2020.1:
             branch: nested/2020.1
-            image: base-training-e4-24-1f-c2020-1-1-20201029-u
+            image: base-training-e4-24-1f-c2020-1-1-20201124-u
             eos:
               - 4.24.1F
     prod:
