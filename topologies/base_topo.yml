@@ -44,8 +44,8 @@ topologies:
         ram: 64
         cvp:
           2020.1:
-            branch: v2020.1-20201029b
-            image: base-atd-datacenter-e4-24-1f-c2020-1-1-20201029-u
+            branch: v2020.1-20201124a
+            image: base-atd-datacenter-e4-24-1f-c2020-1-1-20201124-u
             eos:
               - 4.24.1F
     desc: 'Two Spines, Four Leafs. Focused on EOS fundamentals within the Data Center.'
