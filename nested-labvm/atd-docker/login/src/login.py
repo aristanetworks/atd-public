@@ -31,6 +31,9 @@ try:
 except:
   sys.exit("topo_build not available")
 
+veos_info = topoinfo['nodes']
+additional_ssh_nodes = topoinfo['additional_ssh_nodes']
+
 # Set default menu mode
 menu_mode = 'MAIN'
 previous_menu = ''
