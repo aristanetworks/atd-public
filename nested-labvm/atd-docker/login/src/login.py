@@ -50,8 +50,10 @@ def sort_veos(vd):
   tmp_d = {}
   fin_l = []
   for t_veos in vd:
-    tmp_l.append(t_veos['hostname'])
-    tmp_d[t_veos['hostname']] = t_veos
+        t_veos_name = list(t_veos.keys())[0]
+        tmp_l.append(t_veos_name)
+        tmp_d[t_veos_name] = dict(t_veos[t_veos_name])
+        tmp_d[t_veos_name]['hostname'] = t_veos_name
   tmp_l.sort(key=natural_keys)
   # If cvx in list, move to end
   if 'cvx' in tmp_l[0]:
