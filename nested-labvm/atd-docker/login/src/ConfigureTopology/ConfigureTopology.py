@@ -44,8 +44,8 @@ class ConfigureTopology():
             if c_login['user'] == 'arista':
                 while not cvp_clnt:
                     try:
-                        cvp_clnt = CVPCON(access_info['nodes']['cvp'][0]['internal_ip'],c_login['user'],c_login['pw'])
-                        self.send_to_syslog("OK","Connected to CVP at {0}".format(access_info['nodes']['cvp'][0]['internal_ip']))
+                        cvp_clnt = CVPCON(access_info['nodes']['cvp'][0]['ip'],c_login['user'],c_login['pw'])
+                        self.send_to_syslog("OK","Connected to CVP at {0}".format(access_info['nodes']['cvp'][0]['ip']))
                         return cvp_clnt
                     except:
                         self.send_to_syslog("ERROR", "CVP is currently unavailable....Retrying in 30 seconds.")
