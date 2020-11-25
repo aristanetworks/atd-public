@@ -11,7 +11,6 @@ from ConfigureTopology.ConfigureTopology import ConfigureTopology
 ######################################
 ########## Global Variables ##########
 ######################################
-DEBUG = False
 __version__ = "2.1"
 
 # Open ACCESS_INFO.yaml and load the variables
@@ -75,9 +74,7 @@ def send_to_syslog(mstat,mtype):
     mtype = Message to be sent/displayed (required)
     """
     mmes = "\t" + mtype
-    syslog.syslog("[{0}] {1}".format(mstat,mmes.expandtabs(7 - len(mstat))))
-    if DEBUG:
-        print("[{0}] {1}".format(mstat,mmes.expandtabs(7 - len(mstat))))
+    print("[{0}] {1}".format(mstat,mmes.expandtabs(7 - len(mstat))))
 
 
 def device_menu():
