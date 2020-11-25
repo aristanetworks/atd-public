@@ -2,9 +2,11 @@ hostname eos9
 !
 interface Ethernet1
    description EOS4
+   no switchport
 !
 interface Ethernet2
    description EOS3
+   no switchport
 !
 interface Loopback0
    ip address 9.9.9.9/32

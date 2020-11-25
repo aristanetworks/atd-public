@@ -1,6 +1,7 @@
 router bgp 100
    router-id 8.8.8.8
    no bgp default ipv4-unicast
+   maximum-paths 2
    neighbor PE-RRCLIENTS peer group
    neighbor PE-RRCLIENTS remote-as 100
    neighbor PE-RRCLIENTS update-source Loopback0

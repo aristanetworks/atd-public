@@ -6,10 +6,6 @@ service routing protocols model multi-agent
 !
 dns domain arista.lab
 !
-tacacs-server key 7 070E33455D1D18
-tacacs-server host 192.168.0.4
-!
-aaa authentication login default local
 aaa authorization exec default local
 !
 username admin privilege 15 role network-admin secret 5 $1$5O85YVVn$HrXcfOivJEnISTMb6xrJc.

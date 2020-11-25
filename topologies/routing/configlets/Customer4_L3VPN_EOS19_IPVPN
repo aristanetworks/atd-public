@@ -1,0 +1,15 @@
+router bgp 200
+   router-id 19.19.19.19
+   neighbor 10.7.19.7 remote-as 100
+   neighbor 10.7.19.7 allowas-in 1
+   neighbor 10.7.19.7 maximum-routes 12000 
+   neighbor fd00:7:19::7 remote-as 100
+   neighbor fd00:7:19::7 allowas-in 1
+   neighbor fd00:7:19::7 maximum-routes 12000
+   !
+   address-family ipv4
+      network 19.19.19.19/32
+   !
+   address-family ipv6
+      neighbor fd00:7:19::7 activate
+      network 19:19:19::19/128

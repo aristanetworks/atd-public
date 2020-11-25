@@ -1,0 +1,19 @@
+interface Ethernet1
+   ipv6 address fd00:2:3::2/64
+!
+interface Ethernet2
+   ipv6 address fd00:2:4::2/64
+!
+interface Ethernet3
+   ipv6 address fd00:2:5::2/64
+!
+interface Ethernet4
+   ipv6 address fd00:2:6::2/64
+!
+interface Ethernet5
+   ipv6 address fd00:1:2::2/64
+!
+interface Loopback0
+   ipv6 address 2:2:2::2/128
+!
+ipv6 unicast-routing

@@ -1,6 +1,33 @@
+interface Ethernet1
+   mpls ldp interface
+!
+interface Ethernet2
+   mpls ldp interface
+!
+interface Ethernet3
+   mpls ldp interface
+!
+interface Ethernet4
+   mpls ldp interface
+!
+interface Ethernet5
+   mpls ldp interface
+!
+interface Loopback0
+   mpls ldp interface
+!
 mpls ip
 !
 mpls ldp
    router-id interface Loopback0
    transport-address interface Loopback0
+   neighbor hello-redundancy
+   interface disabled default
    no shutdown
+   !
+   graceful-restart role speaker
+      timer state-holding 500
+      timer reconnect 500
+!
+router isis 100
+   mpls ldp sync default

@@ -1,0 +1,7 @@
+interface Ethernet1
+   ipv6 address fd00:3:20::20/64
+!
+interface Loopback0
+   ipv6 address 20:20:20::20/128
+!
+ipv6 unicast-routing
