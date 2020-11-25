@@ -186,7 +186,7 @@ class ConfigureTopology():
             additional_commands = lab_info['lab_list'][self.selected_lab]['additional_commands']
 
         # Get access info for the topology
-        f = open('/etc/ACCESS_INFO.yaml')
+        f = open('/etc/atd/ACCESS_INFO.yaml')
         access_info = YAML().load(f)
         f.close()
 
@@ -262,7 +262,7 @@ class ConfigureTopology():
                 configs = base_configs[hostname] + infra_configs + lab_configlets[self.selected_lab][hostname]
                 configs = list(dict.fromkeys(configs))
                 for config in configs:
-                    with open('/tmp/atd/topologies/{0}/configlets/{1}'.format(access_info['topology'], config), 'r') as configlet:
+                    with open('/opt/atd/topologies/{0}/configlets/{1}'.format(access_info['topology'], config), 'r') as configlet:
                         device_config += configlet.read()
                 self.send_to_syslog("INFO","Pushing {0} config for {1} on IP {2} with configlets: {3}".format(self.selected_lab,hostname,node["ip"],configs))
                 self.push_bare_config(hostname, node["ip"], device_config)
