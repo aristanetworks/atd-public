@@ -1,0 +1,18 @@
+router traffic-engineering
+   segment-routing
+      rib system-colored-tunnel-rib
+      !
+      policy endpoint 1.1.1.1 color 12
+         binding-sid 1000112
+         description STEER TRAFFIC TO EOS12
+         !
+         path-group preference 100
+            segment-list label-stack 900004 900003 900007 900001
+      !
+      policy endpoint 6.6.6.6 color 12
+         binding-sid 1000612
+         description STEER TRAFFIC TO EOS12
+         !
+         path-group preference 100
+            segment-list label-stack 900004 900003 900007 900001 900006
+   router-id ipv4 8.8.8.8

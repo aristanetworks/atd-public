@@ -10,7 +10,7 @@ Prepare to Offer VPN Services to Customers via MP-BGP EVPN Control-Plane
 
    #. From the Main Menu, type ``labs`` or Option 97 for ``Additional Labs``.
 
-   #. Type ``mesh-topology-base-labs`` to access the Base Setup Labs.
+   #. Type or select the option for ``mesh-topology-evpn-labs`` to access the EVPN Labs.
 
    #. Type ``evpn`` at the Labs Selection Menu. The script will configure the topology 
       with the necessary prerequisites.
@@ -95,9 +95,11 @@ Prepare to Offer VPN Services to Customers via MP-BGP EVPN Control-Plane
 
       .. note::
 
-         Since BGP EVPN is only providing our VPN control-plane, only PE nodes attached to customer 
-         devices will require the BGP peering.  In this topology **EOS2** is not a PE but a P router and as 
-         such will not have any BGP configuration.
+         Since BGP EVPN is only providing our VPN control-plane, only Provider Edge (or **PE**) nodes, which are nodes 
+         attached to customer devices, will require the BGP peering. This is in contrast to Provider (or **P**) nodes, 
+         which only connect to other Service Provider nodes.  In this topology **EOS2** is not a PE but a P router and as 
+         such will not have any BGP configuration. It only needs to know about the MPLS transport labels to label switch 
+         from one node to the other and will not terminate any customer VPNs.
 
       .. code-block:: text
 

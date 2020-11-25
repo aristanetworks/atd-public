@@ -10,7 +10,7 @@ Deploy L3VPN Service for Customer-1
 
    #. From the Main Menu, type ``labs`` or Option 97 for ``Additional Labs``.
 
-   #. Type ``ring-topology-supplemental-labs`` to access the Supplemental Labs.
+   #. Type ``ring-topology-evpn-supplemental-labs`` to access the Supplemental Labs.
 
    #. Type ``c1l3vpn`` at the Labs Selection Menu. The script will configure the topology 
       with the necessary prerequisites.
@@ -75,7 +75,7 @@ Deploy L3VPN Service for Customer-1
          The **RD** can be used to determine the origination point of the VPN route and the **RT** is used by the routers 
          in the Service Provider network to determine if they should import the advertised route into their local routing 
          table(s). If they receive a VPN route, they check the **RT** value and see if they have a matching **RT** configured 
-         in BGP. If they do, the import the route into the associated VRF. If they do not, they ignore the route.
+         in BGP. If they do, they import the route into the associated VRF. If they do not, they ignore the route.
 
       .. code-block:: text
 
@@ -159,7 +159,7 @@ Deploy L3VPN Service for Customer-1
                   neighbor 10.8.15.15 activate
 
    #. Verify configurations and VRF status. There will be no routes or BGP peers in our VRF as of yet since we have not 
-      peered with the CE devices.
+      configured and peered with the CE devices.
 
       .. code-block:: text
 
@@ -222,6 +222,7 @@ Deploy L3VPN Service for Customer-1
 
          router bgp 123
             router-id 11.11.11.11
+            distance bgp 20 200 200
             neighbor 10.1.11.1 remote-as 100
             neighbor 10.1.11.1 maximum-routes 12000 
             network 11.11.11.11/32
@@ -237,6 +238,7 @@ Deploy L3VPN Service for Customer-1
 
          router bgp 123
             router-id 13.13.13.13
+            distance bgp 20 200 200
             neighbor 10.6.13.6 remote-as 100
             neighbor 10.6.13.6 maximum-routes 12000 
             network 11.11.11.11/32
