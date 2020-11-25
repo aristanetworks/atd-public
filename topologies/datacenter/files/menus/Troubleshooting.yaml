@@ -1,59 +1,84 @@
 ---
 lab_list:
   tshoot-intro:
-  -   command: "/usr/local/bin/ConfigureTopology.py -t Troubleshooting -l tshoot-intro"
-      description: "Troubleshooting Lab 1 (tshoot-intro)"
+    description: "Troubleshooting Lab 1 (tshoot-intro)"
 #  tshoot-sp:
-#  -   command: "/usr/local/bin/ConfigureTopology.py -t tshoot-sp"
 #      description: "Troubleshooting Lab 2 (tshoot-sp)"
 #  tshoot-automation:
-#  -   command: "/usr/local/bin/ConfigureTopology.py -t tshoot-automation"
 #      description: "Troubleshooting Lab 3 (tshoot-automation)"
 labconfiglets:
   tshoot-intro:
     spine1:
+      - "BaseIPv4_Spine1"
       - "tshoot-spine1-Tshoot-intro"
     spine2:
+      - "BaseIPv4_Spine2"
       - "tshoot-default"
     leaf1:
+      - "BaseIPv4_Leaf1"
       - "tshoot-leaf1-Tshoot-intro"
     leaf2:
+      - "BaseIPv4_Leaf2"
       - "tshoot-leaf2-Tshoot-intro"
     leaf3:
+      - "BaseIPv4_Leaf3"
       - "tshoot-default"
     leaf4:
+      - "BaseIPv4_Leaf4"
       - "tshoot-default"
     host1:
+      - "BaseIPv4_Host1"
       - "tshoot-host1-Tshoot-intro"
     host2:
+      - "BaseIPv4_Host2"
       - "tshoot-default"
+    cvx01:
+      - "BaseIPv4_Cvx01"
   tshoot-sp:
     spine1:
+      - "BaseIPv4_Spine1"
       - "tshoot-spine1-Tshoot-sp"
     spine2:
+      - "BaseIPv4_Spine2"
       - "tshoot-spine2-Tshoot-sp"
     leaf1:
+      - "BaseIPv4_Leaf1"
       - "tshoot-leaf1-Tshoot-sp"
     leaf2:
+      - "BaseIPv4_Leaf2"
       - "tshoot-default"
     leaf3:
+      - "BaseIPv4_Leaf3"
       - "tshoot-default"
     leaf4:
+      - "BaseIPv4_Leaf4"
       - "tshoot-leaf4-Tshoot-sp"
     host1:
+      - "BaseIPv4_Host1"
       - "tshoot-host1-Tshoot-sp"
     host2:
+      - "BaseIPv4_Host2"
       - "tshoot-host2-Tshoot-sp"
+    cvx01:
+      - "BaseIPv4_Cvx01"
 #  tshoot-automation:
 #    spine1:
+#      - "BaseIPv4_Spine1"
 #      - "tshoot-spine1-Tshoot-automation"
 #    spine2:
+#      - "BaseIPv4_Spine2"
 #      - "tshoot-spine2-Tshoot-automation"
 #    leaf1:
+#      - "BaseIPv4_Leaf1"
 #      - "tshoot-leaf1-Tshoot-automation"
 #    leaf2:
+#      - "BaseIPv4_Leaf2"
 #      - "tshoot-leaf2-Tshoot-automation"
 #    leaf3:
+#      - "BaseIPv4_Leaf3"
 #     - "tshoot-leaf3-Tshoot-automation"
 #    leaf4:
+#      - "BaseIPv4_Leaf4"
 #      - "tshoot-leaf4-Tshoot-automation"
+#    cvx01:
+#      - "BaseIPv4_Cvx01"

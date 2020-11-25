@@ -33,14 +33,11 @@ MLAG
 
             configure
             interface port-channel 10
+              description MLAG PEER LINK - LEAF3
               switchport mode trunk
 
             interface ethernet 1
-              switchport mode trunk
-              channel-group 10 mode active
-            !
-            interface ethernet 6
-              switchport mode trunk
+              description MLAG PEER LINK - LEAF3
               channel-group 10 mode active
 
       .. note::
@@ -67,7 +64,6 @@ MLAG
 
             interface port-channel 10
               switchport trunk group MLAGPEER
-              exit
 
             no spanning-tree vlan-id 4094
 
@@ -97,12 +93,17 @@ MLAG
 
             configure
             interface port-channel 34
+              description MLAG - SPINE1 & 2
               switchport mode trunk
               mlag 34
 
-            interface ethernet 2-3
+            interface ethernet 2
+              description SPINE1
               channel-group 34 mode active
-              switchport mode trunk
+
+            interface ethernet 3
+              description SPINE2
+              channel-group 34 mode active
 
       .. note::
        The *mlag 34* (see #2.5) assigns an MLAG ID to *interface port-channel 34*. MLAG peer switches form an MLAG when each switch configures the same MLAG ID to a port-channel interface. This is **different** than the MLAG *domain-id* (see #2.4). The global-scope *mlag* command above (see #2.4) just enters the global MLAG configuration scope of the Arista switch.
@@ -113,10 +114,12 @@ MLAG
 
             configure
             interface port-channel 4
+              description MLAG - HOST2
               switchport access vlan 12
               mlag 4
 
             interface ethernet 4
+              description HOST2
               channel-group 4 mode active
 
             interface ethernet5
@@ -140,11 +143,10 @@ MLAG
             show lldp neighbors
             show interfaces trunk
 
-   3. Validate connectivity from **Host1** to **Host2** by logging into **Host1** through the menu (option 7) or using screen.
+   3. Validate connectivity from **Host1** to **Host2** by logging into **Host1** through the menu (option 1 in ssh menu) or using screen.
 
         .. code-block:: text
 
-              enable
               ping 172.16.112.202
 
 |

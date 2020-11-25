@@ -1,126 +1,189 @@
 ---
 lab_list:
-  media-setup:
-  -   command: "bash /home/arista/Broadcaster/pushHostMediaConfig.sh"
-      description: "Setup Broadcast Engineer Training (media-setup)"
   media-intro:
-  -   command: "/usr/local/bin/ConfigureTopology.py -t Media -l media-intro"
-      description: "Media - IP Intro (media-intro)"
+    additional_commands: 
+    - "bash /home/arista/Broadcaster/pushHostMediaConfig.sh"
+    description: "Media - IP Intro (media-intro)"
   media-vlan:
-  -   command: "/usr/local/bin/ConfigureTopology.py -t Media -l media-vlan"
-      description: "Media - VLAN STP (media-vlan)"
+    additional_commands: 
+      - "bash /home/arista/Broadcaster/pushHostMediaConfig.sh"
+    description: "Media - VLAN STP (media-vlan)"
   media-ospf:
-  -   command: "/usr/local/bin/ConfigureTopology.py -t Media -l media-ospf"
-      description: "Media - OSPF (media-ospf)"
+    additional_commands: 
+      - "bash /home/arista/Broadcaster/pushHostMediaConfig.sh"
+    description: "Media - OSPF (media-ospf)"
   media-bgp:
-  -   command: "/usr/local/bin/ConfigureTopology.py -t Media -l media-bgp"
-      description: "Media - BGP  (media-bgp)"
+    additional_commands: 
+      - "bash /home/arista/Broadcaster/pushHostMediaConfig.sh"
+    description: "Media - BGP  (media-bgp)"
   media-mcast:
-  -   command: "/usr/local/bin/ConfigureTopology.py -t Media -l media-mcast"
-      description: "Media - Multicast (media-mcast)"
+    additional_commands: 
+      - "bash /home/arista/Broadcaster/pushHostMediaConfig.sh"
+    description: "Media - Multicast (media-mcast)"
   media-reset:
-  -   command: "/usr/local/bin/ConfigureTopology.py -t Media -l media-reset"
-      description: "Media - Reset All Devices to Broadcaster Base (media-reset)"
+    additional_commands: 
+      - "bash /home/arista/Broadcaster/pushHostMediaConfig.sh"
+    description: "Media - Reset All Devices to Broadcaster Base (media-reset)"
 labconfiglets:
   media-reset:
-      spine1:
-        - "media-spine1-IP-Intro-start"
-      spine2:
-        - "media-spine2-IP-Intro-start"
-      leaf1:
-        - "media-leaf1-IP-Intro-start"
-      leaf2:
-        - "media-leaf2-IP-Intro-start"
-      leaf3:
-        - "media-leaf3-IP-Intro-start"
-      leaf4:
-        - "media-leaf4-IP-Intro-start"
-      host1:
-        - "Host1-Media"
-      host2:
-        - "Host2-Media"
-  media-intro:
     spine1:
+      - "BaseIPv4_Spine1"
       - "media-spine1-IP-Intro-start"
     spine2:
+      - "BaseIPv4_Spine2"
       - "media-spine2-IP-Intro-start"
     leaf1:
+      - "BaseIPv4_Leaf1"
       - "media-leaf1-IP-Intro-start"
     leaf2:
+      - "BaseIPv4_Leaf2"
       - "media-leaf2-IP-Intro-start"
     leaf3:
+      - "BaseIPv4_Leaf3"
       - "media-leaf3-IP-Intro-start"
     leaf4:
+      - "BaseIPv4_Leaf4"
       - "media-leaf4-IP-Intro-start"
     host1:
+      - "BaseIPv4_Host1"
       - "Host1-Media"
     host2:
+      - "BaseIPv4_Host2"
       - "Host2-Media"
+    cvx01:
+      - "BaseIPv4_Cvx01"
+  media-intro:
+    spine1:
+      - "BaseIPv4_Spine1"
+      - "media-spine1-IP-Intro-start"
+    spine2:
+      - "BaseIPv4_Spine2"
+      - "media-spine2-IP-Intro-start"
+    leaf1:
+      - "BaseIPv4_Leaf1"
+      - "media-leaf1-IP-Intro-start"
+    leaf2:
+      - "BaseIPv4_Leaf2"
+      - "media-leaf2-IP-Intro-start"
+    leaf3:
+      - "BaseIPv4_Leaf3"
+      - "media-leaf3-IP-Intro-start"
+    leaf4:
+      - "BaseIPv4_Leaf4"
+      - "media-leaf4-IP-Intro-start"
+    host1:
+      - "BaseIPv4_Host1"
+      - "Host1-Media"
+    host2:
+      - "BaseIPv4_Host2"
+      - "Host2-Media"
+    cvx01:
+      - "BaseIPv4_Cvx01"      
   media-vlan:
     spine1:
+      - "BaseIPv4_Spine1"
       - "media-spine1-VLAN-STP-start"
     spine2:
+      - "BaseIPv4_Spine2"
       - "media-spine2-VLAN-STP-start"
     leaf1:
+      - "BaseIPv4_Leaf1"
       - "media-leaf1-VLAN-STP-start"
     leaf2:
+      - "BaseIPv4_Leaf2"
       - "media-leaf2-VLAN-STP-start"
     leaf3:
+      - "BaseIPv4_Leaf3"
       - "media-leaf3-VLAN-STP-start"
     leaf4:
+      - "BaseIPv4_Leaf4"
       - "media-leaf4-VLAN-STP-start"
     host1:
+      - "BaseIPv4_Host1"
       - "Host1-Media"
     host2:
+      - "BaseIPv4_Host2"
       - "Host2-Media"
+    cvx01:
+    - "BaseIPv4_Cvx01"  
   media-ospf:
     spine1:
+      - "BaseIPv4_Spine1"
       - "media-spine1-OSPF-start"
     spine2:
+      - "BaseIPv4_Spine2"
       - "media-spine2-OSPF-start"
     leaf1:
+      - "BaseIPv4_Leaf1"
       - "media-leaf1-OSPF-start"
     leaf2:
+      - "BaseIPv4_Leaf2"
       - "media-leaf2-OSPF-start"
     leaf3:
+      - "BaseIPv4_Leaf3"
       - "media-leaf3-OSPF-start"
     leaf4:
+      - "BaseIPv4_Leaf4"
       - "media-leaf4-OSPF-start"
     host1:
+      - "BaseIPv4_Host1"
       - "Host1-Media"
     host2:
+      - "BaseIPv4_Host2"
       - "Host2-Media"
+    cvx01:
+      - "BaseIPv4_Cvx01"  
   media-bgp:
     spine1:
+      - "BaseIPv4_Spine1"
       - "media-spine1-BGP-start"
     spine2:
+      - "BaseIPv4_Spine2"
       - "media-spine2-BGP-start"
     leaf1:
+      - "BaseIPv4_Leaf1"
       - "media-leaf1-BGP-start"
     leaf2:
+      - "BaseIPv4_Leaf2"
       - "media-leaf2-BGP-start"
     leaf3:
+      - "BaseIPv4_Leaf3"
       - "media-leaf3-BGP-start"
     leaf4:
+      - "BaseIPv4_Leaf4"
       - "media-leaf4-BGP-start"
     host1:
+      - "BaseIPv4_Host1"
       - "Host1-Media"
     host2:
+      - "BaseIPv4_Host2"
       - "Host2-Media"
+    cvx01:
+      - "BaseIPv4_Cvx01"  
   media-mcast:
     spine1:
+      - "BaseIPv4_Spine1"
       - "media-spine1-Multicast-lab"
     spine2:
+      - "BaseIPv4_Spine2"
       - "media-spine2-Multicast-lab"
     leaf1:
+      - "BaseIPv4_Leaf1"
       - "media-leaf1-Multicast-lab"
     leaf2:
+      - "BaseIPv4_Leaf2"
       - "media-leaf2-Multicast-lab"
     leaf3:
+      - "BaseIPv4_Leaf3"
       - "media-leaf3-Multicast-lab"
     leaf4:
+      - "BaseIPv4_Leaf4"
       - "media-leaf4-Multicast-lab"
     host1:
+      - "BaseIPv4_Host1"
       - "Host1-Media"
     host2:
+      - "BaseIPv4_Host2"
       - "Host2-Media"
+    cvx01:
+      - "BaseIPv4_Cvx01"  

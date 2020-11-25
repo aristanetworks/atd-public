@@ -16,6 +16,3 @@ interface Ethernet4
 interface Ethernet5
    shutdown
 !
-interface Ethernet6
-   shutdown
-!

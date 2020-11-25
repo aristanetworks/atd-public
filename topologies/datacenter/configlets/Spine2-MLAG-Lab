@@ -44,11 +44,6 @@ interface Ethernet5
    switchport mode trunk
    channel-group 34 mode active
 !
-interface Ethernet6
-   description MLAG PEER LINK - SPINE1
-   switchport mode trunk
-   channel-group 10 mode active
-!
 interface Vlan12
    ip address 172.16.112.3/24
    ip virtual-router address 172.16.112.1

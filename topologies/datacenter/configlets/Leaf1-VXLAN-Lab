@@ -38,11 +38,6 @@ interface Ethernet4
 interface Ethernet5
    shutdown
 !
-interface Ethernet6
-   description MLAG PEER LINK - LEAF2
-   switchport mode trunk
-   channel-group 10 mode active
-!
 interface Vlan4094
    description MLAG PEER LINK - LEAF2
    ip address 172.16.12.1/30
