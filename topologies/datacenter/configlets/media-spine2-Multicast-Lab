@@ -15,6 +15,8 @@ interface Ethernet5
    no switchport
    ip address 172.16.200.25/30
    ip pim sparse-mode
+interface Ethernet6
+   shutdown
 interface Loopback0
    ip address 172.16.0.3/32
 ip routing

@@ -7,20 +7,20 @@ topologies:
         ram: 36
         cvp:
           2020.1:
-            branch: nginx-ssl
+            branch: nested-release
             image: base-atd-datacenter-ceos-c2020-1-1-20201124-u
             eos:
               - 4.24.1.1F
               - 4.24.2.1F
           2020.2:
-            branch: nginx-ssl
+            branch: nested-release
             image: base-atd-datacenter-ceos-c2020-2-1-20201124-u
             eos:
               - 4.24.1.1F
               - 4.24.2.1F
           2020.4:
-            branch: nginx-ssl
-            image: base-atd-datacenter-ceos-c2020-4-0-2021124-u
+            branch: nested-release
+            image: base-atd-datacenter-ceos-c2020-4-0-20201124-u
             eos:
               - 4.24.1.1F
               - 4.24.2.1F
@@ -44,8 +44,8 @@ topologies:
         ram: 64
         cvp:
           2020.1:
-            branch: v2020.1-20201029b
-            image: base-atd-datacenter-e4-24-1f-c2020-1-1-20201029-u
+            branch: v2020.1-20201124a
+            image: base-atd-datacenter-e4-24-1f-c2020-1-1-20201124-u
             eos:
               - 4.24.1F
     desc: 'Two Spines, Four Leafs. Focused on EOS fundamentals within the Data Center.'
@@ -83,8 +83,8 @@ topologies:
         ram: 90
         cvp:
           2020.1:
-            branch: v2020.1-20201029b
-            image: base-atd-routing-e4-24-1f-c2020-1-1-20201029-u
+            branch: v2020.1-20201124a
+            image: base-atd-routing-e4-24-1f-c2020-1-1-20201124-u
             eos:
               - 4.24.1F
     desc: 'Twenty nodes. Focused on advanced routing, L2VPN and L3VPN topics'
@@ -107,8 +107,8 @@ topologies:
         ram: 72
         cvp:
           2020.1:
-            branch: v2020.1-20201029b
-            image: base-training-e4-24-1f-c2020-1-1-20201029-u
+            branch: v2020.1-20201124a
+            image: base-training-e4-24-1f-c2020-1-1-20201124-u
             eos:
               - 4.24.1F
     desc: 'Four Spines, Four Leafs. For use by the Arista Training Team.'

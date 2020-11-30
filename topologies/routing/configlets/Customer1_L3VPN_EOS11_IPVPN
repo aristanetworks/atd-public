@@ -1,0 +1,24 @@
+interface Ethernet2
+   ip ospf network point-to-point
+!
+router bgp 123
+   router-id 11.11.11.11
+   distance bgp 20 200 200
+   neighbor 10.1.11.1 remote-as 100
+   neighbor 10.1.11.1 maximum-routes 12000
+   neighbor fd00:1:11::1 remote-as 100
+   neighbor fd00:1:11::1 maximum-routes 12000
+   !
+   address-family ipv4
+      network 11.11.11.11/32
+      network 12.12.12.12/32
+      network 13.13.13.13/32
+   !
+   address-family ipv6
+      neighbor fd00:1:11::1 activate
+      network 11:11:11::11/128
+!
+router ospf 100
+   redistribute bgp
+   network 0.0.0.0/0 area 0.0.0.0
+   max-lsa 12000

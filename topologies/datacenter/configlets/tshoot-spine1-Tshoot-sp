@@ -27,6 +27,8 @@ interface Ethernet5
    no switchport
    ip address 10.127.24.2/24
 !
+interface Ethernet6
+   shutdown
 !
 interface Loopback0
    description BGP router-Id

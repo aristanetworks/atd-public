@@ -28,6 +28,8 @@ interface Ethernet4
 !
 interface Ethernet5
 shut
+interface Ethernet6
+   shutdown
 !
 !
 interface Loopback0

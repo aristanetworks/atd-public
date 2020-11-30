@@ -1,0 +1,333 @@
+---
+lab_list:
+  lab1:
+    description: "Lab 1: Underlay Control-Plane Buildout (lab1)"
+  lab2:
+    description: "Lab 2: EVPN Control-Plane Provisioning (lab2)"
+  lab3:
+    description: "Lab 3: MLAG (lab3)"
+  lab4:
+    description: "Lab 4: Layer2 VPN Service Provisioning (lab4)"
+  lab5:
+    description: "Lab 5: Layer3 VPN Service Provisioning (lab5)"
+  complete:
+    description: "Deploy complete lab configurations (complete) - **Use this if starting Day-2 Ops Section**"
+  tshoota:
+    description: "Deploy troubleshooting scenario A (tshoota)"
+  tshootb:
+    description: "Deploy troubleshooting scenario B (tshootb)"
+  tshootc:
+    description: "Deploy troubleshooting scenario C (tshootc)"
+  reset:
+    description: "Reset All Devices to Base IPv4 (reset)"
+labconfiglets:
+  reset:
+    spine1:
+      - "BaseIPv4_Spine1_EVPN_GUIDE"
+    spine2:
+      - "BaseIPv4_Spine2_EVPN_GUIDE"
+    leaf1:
+      - "BaseIPv4_Leaf1_EVPN_GUIDE"
+    leaf2:
+      - "BaseIPv4_Leaf2_EVPN_GUIDE"
+    leaf3:
+      - "BaseIPv4_Leaf3_EVPN_GUIDE"
+    leaf4:
+      - "BaseIPv4_Leaf4_EVPN_GUIDE"
+    cvx01:
+      - "BaseIPv4_Cvx01"
+    host1:
+      - "BaseIPv4_Host1_EVPN_GUIDE"
+    host2:
+      - "BaseIPv4_Host2_EVPN_GUIDE"
+  lab1:
+    spine1:
+      - "BaseIPv4_Spine1_EVPN_GUIDE"
+    spine2:
+      - "BaseIPv4_Spine2_EVPN_GUIDE"
+    leaf1:
+      - "BaseIPv4_Leaf1_EVPN_GUIDE"
+    leaf2:
+      - "BaseIPv4_Leaf2_EVPN_GUIDE"
+    leaf3:
+      - "BaseIPv4_Leaf3_EVPN_GUIDE"
+    leaf4:
+      - "BaseIPv4_Leaf4_EVPN_GUIDE"
+    cvx01:
+      - "BaseIPv4_Cvx01"
+    host1:
+      - "BaseIPv4_Host1_EVPN_GUIDE"
+    host2:
+      - "BaseIPv4_Host2_EVPN_GUIDE"
+  lab2:
+    spine1:
+      - "BaseIPv4_Spine1_EVPN_GUIDE"
+      - "Spine1_EVPN_GUIDE_LAB1"
+    spine2:
+      - "BaseIPv4_Spine2_EVPN_GUIDE"
+      - "Spine2_EVPN_GUIDE_LAB1"
+    leaf1:
+      - "BaseIPv4_Leaf1_EVPN_GUIDE"
+      - "Leaf1_EVPN_GUIDE_LAB1"
+    leaf2:
+      - "BaseIPv4_Leaf2_EVPN_GUIDE"
+      - "Leaf2_EVPN_GUIDE_LAB1"
+    leaf3:
+      - "BaseIPv4_Leaf3_EVPN_GUIDE"
+      - "Leaf3_EVPN_GUIDE_LAB1"
+    leaf4:
+      - "BaseIPv4_Leaf4_EVPN_GUIDE"
+      - "Leaf4_EVPN_GUIDE_LAB1"
+    cvx01:
+      - "BaseIPv4_Cvx01"
+    host1:
+      - "BaseIPv4_Host1_EVPN_GUIDE"
+    host2:
+      - "BaseIPv4_Host2_EVPN_GUIDE"
+  lab3:
+    spine1:
+      - "BaseIPv4_Spine1_EVPN_GUIDE"
+      - "Spine1_EVPN_GUIDE_LAB1"
+      - "Spine1_EVPN_GUIDE_LAB2"
+    spine2:
+      - "BaseIPv4_Spine2_EVPN_GUIDE"
+      - "Spine2_EVPN_GUIDE_LAB1"
+      - "Spine2_EVPN_GUIDE_LAB2"
+    leaf1:
+      - "BaseIPv4_Leaf1_EVPN_GUIDE"
+      - "Leaf1_EVPN_GUIDE_LAB1"
+      - "Leaf1_EVPN_GUIDE_LAB2"
+    leaf2:
+      - "BaseIPv4_Leaf2_EVPN_GUIDE"
+      - "Leaf2_EVPN_GUIDE_LAB1"
+      - "Leaf2_EVPN_GUIDE_LAB2"
+    leaf3:
+      - "BaseIPv4_Leaf3_EVPN_GUIDE"
+      - "Leaf3_EVPN_GUIDE_LAB1"
+      - "Leaf3_EVPN_GUIDE_LAB2"
+    leaf4:
+      - "BaseIPv4_Leaf4_EVPN_GUIDE"
+      - "Leaf4_EVPN_GUIDE_LAB1"
+      - "Leaf4_EVPN_GUIDE_LAB2"
+    cvx01:
+      - "BaseIPv4_Cvx01"
+    host1:
+      - "BaseIPv4_Host1_EVPN_GUIDE"
+    host2:
+      - "BaseIPv4_Host2_EVPN_GUIDE"
+  lab4:
+    spine1:
+      - "BaseIPv4_Spine1_EVPN_GUIDE"
+      - "Spine1_EVPN_GUIDE_LAB1"
+      - "Spine1_EVPN_GUIDE_LAB2"
+    spine2:
+      - "BaseIPv4_Spine2_EVPN_GUIDE"
+      - "Spine2_EVPN_GUIDE_LAB1"
+      - "Spine2_EVPN_GUIDE_LAB2"
+    leaf1:
+      - "BaseIPv4_Leaf1_EVPN_GUIDE"
+      - "Leaf1_EVPN_GUIDE_LAB1"
+      - "Leaf1_EVPN_GUIDE_LAB2"
+      - "Leaf1_EVPN_GUIDE_LAB3"
+    leaf2:
+      - "BaseIPv4_Leaf2_EVPN_GUIDE"
+      - "Leaf2_EVPN_GUIDE_LAB1"
+      - "Leaf2_EVPN_GUIDE_LAB2"
+      - "Leaf2_EVPN_GUIDE_LAB3"
+    leaf3:
+      - "BaseIPv4_Leaf3_EVPN_GUIDE"
+      - "Leaf3_EVPN_GUIDE_LAB1"
+      - "Leaf3_EVPN_GUIDE_LAB2"
+      - "Leaf3_EVPN_GUIDE_LAB3"
+    leaf4:
+      - "BaseIPv4_Leaf4_EVPN_GUIDE"
+      - "Leaf4_EVPN_GUIDE_LAB1"
+      - "Leaf4_EVPN_GUIDE_LAB2"
+      - "Leaf4_EVPN_GUIDE_LAB3"
+    cvx01:
+      - "BaseIPv4_Cvx01"
+    host1:
+      - "BaseIPv4_Host1_EVPN_GUIDE"
+    host2:
+      - "BaseIPv4_Host2_EVPN_GUIDE"
+  lab5:
+    spine1:
+      - "BaseIPv4_Spine1_EVPN_GUIDE"
+      - "Spine1_EVPN_GUIDE_LAB1"
+      - "Spine1_EVPN_GUIDE_LAB2"
+    spine2:
+      - "BaseIPv4_Spine2_EVPN_GUIDE"
+      - "Spine2_EVPN_GUIDE_LAB1"
+      - "Spine2_EVPN_GUIDE_LAB2"
+    leaf1:
+      - "BaseIPv4_Leaf1_EVPN_GUIDE"
+      - "Leaf1_EVPN_GUIDE_LAB1"
+      - "Leaf1_EVPN_GUIDE_LAB2"
+      - "Leaf1_EVPN_GUIDE_LAB3"
+      - "Leaf1_EVPN_GUIDE_LAB4"
+    leaf2:
+      - "BaseIPv4_Leaf2_EVPN_GUIDE"
+      - "Leaf2_EVPN_GUIDE_LAB1"
+      - "Leaf2_EVPN_GUIDE_LAB2"
+      - "Leaf2_EVPN_GUIDE_LAB3"
+      - "Leaf2_EVPN_GUIDE_LAB4"
+    leaf3:
+      - "BaseIPv4_Leaf3_EVPN_GUIDE"
+      - "Leaf3_EVPN_GUIDE_LAB1"
+      - "Leaf3_EVPN_GUIDE_LAB2"
+      - "Leaf3_EVPN_GUIDE_LAB3"
+      - "Leaf3_EVPN_GUIDE_LAB4"
+    leaf4:
+      - "BaseIPv4_Leaf4_EVPN_GUIDE"
+      - "Leaf4_EVPN_GUIDE_LAB1"
+      - "Leaf4_EVPN_GUIDE_LAB2"
+      - "Leaf4_EVPN_GUIDE_LAB3"
+      - "Leaf4_EVPN_GUIDE_LAB4"
+    cvx01:
+      - "BaseIPv4_Cvx01"
+    host1:
+      - "BaseIPv4_Host1_EVPN_GUIDE"
+    host2:
+      - "BaseIPv4_Host2_EVPN_GUIDE"
+  complete:
+    spine1:
+      - "BaseIPv4_Spine1_EVPN_GUIDE"
+      - "Spine1_EVPN_GUIDE_LAB1"
+      - "Spine1_EVPN_GUIDE_LAB2"
+    spine2:
+      - "BaseIPv4_Spine2_EVPN_GUIDE"
+      - "Spine2_EVPN_GUIDE_LAB1"
+      - "Spine2_EVPN_GUIDE_LAB2"
+    leaf1:
+      - "BaseIPv4_Leaf1_EVPN_GUIDE"
+      - "Leaf1_EVPN_GUIDE_LAB1"
+      - "Leaf1_EVPN_GUIDE_LAB2"
+      - "Leaf1_EVPN_GUIDE_LAB3"
+      - "Leaf1_EVPN_GUIDE_LAB4"
+      - "Leaf1_EVPN_GUIDE_LAB5"
+    leaf2:
+      - "BaseIPv4_Leaf2_EVPN_GUIDE"
+      - "Leaf2_EVPN_GUIDE_LAB1"
+      - "Leaf2_EVPN_GUIDE_LAB2"
+      - "Leaf2_EVPN_GUIDE_LAB3"
+      - "Leaf2_EVPN_GUIDE_LAB4"
+      - "Leaf2_EVPN_GUIDE_LAB5"
+    leaf3:
+      - "BaseIPv4_Leaf3_EVPN_GUIDE"
+      - "Leaf3_EVPN_GUIDE_LAB1"
+      - "Leaf3_EVPN_GUIDE_LAB2"
+      - "Leaf3_EVPN_GUIDE_LAB3"
+      - "Leaf3_EVPN_GUIDE_LAB4"
+      - "Leaf3_EVPN_GUIDE_LAB5"
+    leaf4:
+      - "BaseIPv4_Leaf4_EVPN_GUIDE"
+      - "Leaf4_EVPN_GUIDE_LAB1"
+      - "Leaf4_EVPN_GUIDE_LAB2"
+      - "Leaf4_EVPN_GUIDE_LAB3"
+      - "Leaf4_EVPN_GUIDE_LAB4"
+      - "Leaf4_EVPN_GUIDE_LAB5"
+    cvx01:
+      - "BaseIPv4_Cvx01"
+    host1:
+      - "BaseIPv4_Host1_EVPN_GUIDE"
+    host2:
+      - "BaseIPv4_Host2_EVPN_GUIDE"
+  tshoota:
+    spine1:
+      - "BaseIPv4_Spine1_EVPN_GUIDE"
+      - "Spine1_EVPN_GUIDE_LAB1"
+      - "Spine1_EVPN_GUIDE_LAB2"
+    spine2:
+      - "BaseIPv4_Spine2_EVPN_GUIDE"
+      - "Spine2_EVPN_GUIDE_LAB1"
+      - "Spine2_EVPN_GUIDE_LAB2"
+    leaf1:
+      - "BaseIPv4_Leaf1_EVPN_GUIDE"
+      - "Leaf1_EVPN_GUIDE_LAB1"
+      - "Leaf1_EVPN_GUIDE_LAB2"
+      - "Leaf1_EVPN_GUIDE_LAB3"
+      - "Leaf1_EVPN_GUIDE_LAB4"
+      - "Leaf1_EVPN_GUIDE_LAB5"
+    leaf2:
+      - "BaseIPv4_Leaf2_EVPN_GUIDE"
+      - "Leaf2_EVPN_GUIDE_LAB1"
+      - "Leaf2_EVPN_GUIDE_LAB2"
+      - "Leaf2_EVPN_GUIDE_LAB3"
+      - "Leaf2_EVPN_GUIDE_LAB4"
+      - "Leaf2_EVPN_GUIDE_LAB5"
+    leaf3:
+      - "Leaf3_EVPN_GUIDE_TSHOOTA"
+    leaf4:
+      - "Leaf4_EVPN_GUIDE_TSHOOTA"
+    cvx01:
+      - "BaseIPv4_Cvx01"
+    host1:
+      - "BaseIPv4_Host1_EVPN_GUIDE"
+    host2:
+      - "BaseIPv4_Host2_EVPN_GUIDE"
+  tshootb:
+    spine1:
+      - "BaseIPv4_Spine1_EVPN_GUIDE"
+      - "Spine1_EVPN_GUIDE_LAB1"
+      - "Spine1_EVPN_GUIDE_LAB2"
+    spine2:
+      - "BaseIPv4_Spine2_EVPN_GUIDE"
+      - "Spine2_EVPN_GUIDE_LAB1"
+      - "Spine2_EVPN_GUIDE_LAB2"
+    leaf1:
+      - "Leaf1_EVPN_GUIDE_TSHOOTB"
+    leaf2:
+      - "Leaf2_EVPN_GUIDE_TSHOOTB"
+    leaf3:
+      - "BaseIPv4_Leaf3_EVPN_GUIDE"
+      - "Leaf3_EVPN_GUIDE_LAB1"
+      - "Leaf3_EVPN_GUIDE_LAB2"
+      - "Leaf3_EVPN_GUIDE_LAB3"
+      - "Leaf3_EVPN_GUIDE_LAB4"
+      - "Leaf3_EVPN_GUIDE_LAB5"
+    leaf4:
+      - "BaseIPv4_Leaf4_EVPN_GUIDE"
+      - "Leaf4_EVPN_GUIDE_LAB1"
+      - "Leaf4_EVPN_GUIDE_LAB2"
+      - "Leaf4_EVPN_GUIDE_LAB3"
+      - "Leaf4_EVPN_GUIDE_LAB4"
+      - "Leaf4_EVPN_GUIDE_LAB5"
+    cvx01:
+      - "BaseIPv4_Cvx01"
+    host1:
+      - "BaseIPv4_Host1_EVPN_GUIDE"
+    host2:
+      - "BaseIPv4_Host2_EVPN_GUIDE"
+  tshootc:
+    spine1:
+      - "BaseIPv4_Spine1_EVPN_GUIDE"
+      - "Spine1_EVPN_GUIDE_LAB1"
+      - "Spine1_EVPN_GUIDE_LAB2"
+    spine2:
+      - "BaseIPv4_Spine2_EVPN_GUIDE"
+      - "Spine2_EVPN_GUIDE_LAB1"
+      - "Spine2_EVPN_GUIDE_LAB2"
+    leaf1:
+      - "Leaf1_EVPN_GUIDE_TSHOOTC"
+    leaf2:
+      - "Leaf2_EVPN_GUIDE_TSHOOTC"
+    leaf3:
+      - "BaseIPv4_Leaf3_EVPN_GUIDE"
+      - "Leaf3_EVPN_GUIDE_LAB1"
+      - "Leaf3_EVPN_GUIDE_LAB2"
+      - "Leaf3_EVPN_GUIDE_LAB3"
+      - "Leaf3_EVPN_GUIDE_LAB4"
+      - "Leaf3_EVPN_GUIDE_LAB5"
+    leaf4:
+      - "BaseIPv4_Leaf4_EVPN_GUIDE"
+      - "Leaf4_EVPN_GUIDE_LAB1"
+      - "Leaf4_EVPN_GUIDE_LAB2"
+      - "Leaf4_EVPN_GUIDE_LAB3"
+      - "Leaf4_EVPN_GUIDE_LAB4"
+      - "Leaf4_EVPN_GUIDE_LAB5"
+    cvx01:
+      - "BaseIPv4_Cvx01"
+    host1:
+      - "BaseIPv4_Host1_EVPN_GUIDE"
+    host2:
+      - "BaseIPv4_Host2_EVPN_GUIDE"

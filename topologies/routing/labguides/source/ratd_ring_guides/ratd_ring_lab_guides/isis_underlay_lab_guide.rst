@@ -14,7 +14,7 @@ Deploy IS-IS as the Service Provider Underlay IGP
 
    #. From the Main Menu, type ``labs`` or Option 97 for ``Additional Labs``.
 
-   #. Type ``ring-topology-base-labs`` to access the Base Setup Labs.
+   #. Type ``ring-topology-evpn-base-labs`` to access the Base Setup Labs.
 
    #. Type ``reset`` at the Labs Selection Menu. The script will configure the topology 
       with the necessary prerequisites.
@@ -66,6 +66,13 @@ Deploy IS-IS as the Service Provider Underlay IGP
 
    #. Set the IS-IS level to level-2 and activate the IPv4 unicast address-family to ensure the router will hold all backbone 
       IPv4 routes.
+
+      .. note::
+
+         Our topology will maintain only IS-IS level-2 adjacenies. This will give us a single backbone 
+         area where all routes will be learned by all routers (similar to an OSPF topology where all 
+         routers are in area 0). This is sufficient for smaller topologies where there isn't a need to 
+         segment flooding domains.
 
       .. code-block:: text
 
@@ -119,7 +126,7 @@ Deploy IS-IS as the Service Provider Underlay IGP
 
          You can configure multiple interfaces at once using ranges and separators in EOS. For example, **EOS1** interfaces 
          Et2 and 4 require IS-IS configuration, but the commands are the same for all interfaces. You can type ``interface 
-         Ethernet2,4`` to enter configurations for all three at once.
+         Ethernet2,4`` to enter configurations for both at once.
 
    #. Next, the Loopback0 interface needs to be activated as an IS-IS interface.
 

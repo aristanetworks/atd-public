@@ -1,0 +1,25 @@
+route-map RM-CONN-2-BGP permit 10
+   match ip address prefix-list PL-LOOPBACKS
+!
+route-map RM-CONN-2-BGP permit 20
+   match ip address prefix-list PL-P2P-UNDERLAY
+!
+ip prefix-list PL-LOOPBACKS seq 10 permit 1.1.1.0/24 eq 32
+ip prefix-list PL-LOOPBACKS seq 20 permit 2.2.2.0/24 eq 32
+ip prefix-list PL-P2P-UNDERLAY seq 10 permit 10.0.0.0/8 le 31
+!
+router bgp 65012
+   router-id 1.1.1.102
+   no bgp default ipv4-unicast
+   maximum-paths 2
+   neighbor IPv4-UNDERLAY-PEERS peer group
+   neighbor IPv4-UNDERLAY-PEERS remote-as 65000
+   neighbor IPv4-UNDERLAY-PEERS password @rista123
+   neighbor IPv4-UNDERLAY-PEERS send-community
+   neighbor IPv4-UNDERLAY-PEERS maximum-routes 12000 
+   neighbor 10.102.201.201 peer group IPv4-UNDERLAY-PEERS
+   neighbor 10.102.202.202 peer group IPv4-UNDERLAY-PEERS
+   redistribute connected route-map RM-CONN-2-BGP
+   !
+   address-family ipv4
+      neighbor IPv4-UNDERLAY-PEERS activate

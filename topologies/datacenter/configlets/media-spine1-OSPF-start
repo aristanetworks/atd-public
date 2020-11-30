@@ -10,6 +10,8 @@ interface Ethernet4
    shutdown
 interface Ethernet5
    shutdown
+interface Ethernet6
+   shutdown
 interface Loopback0
    ip address 10.127.255.2/32
 router ospf 100

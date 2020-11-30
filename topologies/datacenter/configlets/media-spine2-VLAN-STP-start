@@ -14,3 +14,5 @@ interface Ethernet4
 interface Ethernet5
    switchport trunk allowed vlan 100
    switchport mode trunk
+interface Ethernet6
+   shutdown
