@@ -27,6 +27,8 @@ interface Ethernet5
    !! CONNECTIVITY NOT REQUIRED
    shutdown
 !
+interface Ethernet6
+   shutdown
 interface Loopback0
    ip address 172.16.0.1/32
 !

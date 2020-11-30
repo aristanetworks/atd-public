@@ -50,6 +50,10 @@ interface Ethernet4
 interface Ethernet5
    switchport access vlan 20
 !
+interface Ethernet6
+   description MLAG Link to LEAF2
+   channel-group 1000 mode active
+!
 interface Loopback0
    ip address 1.1.1.101/32
 !

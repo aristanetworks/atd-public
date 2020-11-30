@@ -20,7 +20,11 @@ interface Vlan4094
 no spanning-tree vlan-id 4094
 !
 interface Ethernet1
-   description MLAG Link to LEAF2
+   description MLAG Link to LEAF3
+   channel-group 1000 mode active
+!
+interface Ethernet6
+   description MLAG Link to LEAF3
    channel-group 1000 mode active
 !
 interface Port-Channel1000

@@ -18,6 +18,8 @@ shut
 !
 interface Ethernet5
 shut
+interface Ethernet6
+   shutdown
 !
 !
 end

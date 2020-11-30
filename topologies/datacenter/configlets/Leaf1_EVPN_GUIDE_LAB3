@@ -23,6 +23,10 @@ interface Ethernet1
    description MLAG Link to LEAF2
    channel-group 1000 mode active
 !
+interface Ethernet6
+   description MLAG Link to LEAF2
+   channel-group 1000 mode active
+!
 interface Port-Channel1000
    description MLAG PEER-LINK
    switchport mode trunk

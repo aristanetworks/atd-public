@@ -10,3 +10,5 @@ interface Ethernet4
    ip address 172.16.46.4/24
 interface Ethernet5
    shutdown
+interface Ethernet6
+   shutdown

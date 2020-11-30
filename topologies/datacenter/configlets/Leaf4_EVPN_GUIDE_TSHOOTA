@@ -30,7 +30,7 @@ interface Port-Channel1000
    switchport trunk group MLAGPEER
 !
 interface Ethernet1
-   description MLAG Link to LEAF2
+   description MLAG Link to LEAF3
    channel-group 1000 mode active
 !
 interface Ethernet2
@@ -49,6 +49,10 @@ interface Ethernet4
 !
 interface Ethernet5
    switchport access vlan 10
+!
+interface Ethernet6
+   description MLAG Link to LEAF3
+   channel-group 1000 mode active
 !
 interface Loopback0
    ip address 1.1.1.104/32
