@@ -10,5 +10,7 @@ interface Ethernet4
    shutdown
 interface Ethernet5
    shutdown
+interface Ethernet6
+   shutdown
 ip route 172.16.15.0/24 10.127.12.1
 ip route 172.16.46.0/24 10.127.23.3

@@ -1,4 +1,4 @@
-FROM python:3.8.1
+FROM python:3.8
 
 ARG UID=1000
 
@@ -10,7 +10,7 @@ RUN apt update
 
 RUN apt install -y openssh-server vim sudo screen
 
-RUN pip install ruamel.yaml rcvpapi cvprac pyaml
+RUN pip install ruamel.yaml rcvpapi cvprac pyaml paramiko scp urllib3
 
 RUN mkdir /var/run/sshd
 
@@ -28,17 +28,19 @@ WORKDIR /home/arista
 
 RUN mkdir .ssh
 
-COPY login.py /usr/local/bin
+COPY src/login.py /usr/local/bin
 
 RUN chmod +x /usr/local/bin/login.py
 
-COPY ConfigureTopology.py /usr/local/bin
+RUN mkdir /usr/local/bin/ConfigureTopology
 
-RUN chmod +x /usr/local/bin/ConfigureTopology.py
+COPY src/ConfigureTopology/* /usr/local/bin/ConfigureTopology/
 
 RUN echo 'login.py' >> .profile
 
 RUN chown -R arista:arista .
+
+RUN pip install --upgrade rcvpapi
 
 EXPOSE 22
 

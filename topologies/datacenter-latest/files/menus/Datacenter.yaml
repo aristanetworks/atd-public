@@ -1,150 +1,225 @@
 ---
 lab_list:
   reset:
-  -   command: "/usr/local/bin/ConfigureTopology.py -t Datacenter -l reset && bash /home/arista/Broadcaster/pushHostDefaultConfig.sh"
-      description: "Reset All Devices to Base ATD (reset)"
+    additional_commands: 
+      - "bash /home/arista/Broadcaster/pushHostDefaultConfig.sh"
+    description: "Reset All Devices to Base ATD (reset)"
   mlag:
-  -   command: "/usr/local/bin/ConfigureTopology.py -t Datacenter -l mlag"
-      description: "MLAG Lab (mlag)"
+    description: "MLAG Lab (mlag)"
   bgp:
-  -   command: "/usr/local/bin/ConfigureTopology.py -t Datacenter -l bgp"
-      description: "BGP Lab (bgp)"
+    description: "BGP Lab (bgp)"
   vxlan:
-  -   command: "/usr/local/bin/ConfigureTopology.py -t Datacenter -l vxlan"
-      description: "VXLAN Lab (vxlan) excludes leaf3 instead of leaf4"
+    description: "VXLAN Lab (vxlan) excludes leaf3 instead of leaf4"
   l2evpn:
-  -   command: "/usr/local/bin/ConfigureTopology.py -t Datacenter -l l2evpn"
-      description: "EVPN Type 2 Lab (l2evpn) excludes leaf3 instead of leaf4"
+    description: "EVPN Type 2 Lab (l2evpn) excludes leaf3 instead of leaf4"
   l3evpn:
-  -   command: "/usr/local/bin/ConfigureTopology.py -t Datacenter -l l3evpn"
-      description: "EVPN Type 5 Lab (l3evpn) excludes leaf3 instead of leaf4"
+    description: "EVPN Type 5 Lab (l3evpn) excludes leaf3 instead of leaf4"
   cvp:
-  -   command: "/usr/local/bin/ConfigureTopology.py -t Datacenter -l cvp"
-      description: "CVP lab (cvp)"
+    description: "CVP lab (cvp)"
 labconfiglets:
+  reset:
+    spine1:
+      - "BaseIPv4_Spine1"
+    spine2:
+      - "BaseIPv4_Spine2"
+    leaf1:
+      - "BaseIPv4_Leaf1"
+    leaf2:
+      - "BaseIPv4_Leaf2"
+    leaf3:
+      - "BaseIPv4_Leaf3"
+    leaf4:
+      - "BaseIPv4_Leaf4"
+    cvx01:
+      - "BaseIPv4_Cvx01"
+      - "cvx01-Controller"
+    host1:
+      - "BaseIPv4_Host1"
+      - "Host1-ATD"
+    host2:
+      - "BaseIPv4_Host2"
+      - "Host2-ATD"
   mlag:
     spine1:
+      - "BaseIPv4_Spine1"
       - "Spine1-MLAG-Lab"
       - "VLANs"
     spine2:
+      - "BaseIPv4_Spine2"
       - "Spine2-MLAG-Lab"
       - "VLANs"
     leaf1:
+      - "BaseIPv4_Leaf1"
       - "Leaf1-MLAG-Lab"
       - "VLANs"
     leaf2:
+      - "BaseIPv4_Leaf2"
       - "Leaf2-MLAG-Lab"
       - "VLANs"
     leaf3:
+      - "BaseIPv4_Leaf3"
       - "Leaf3-MLAG-Lab"
       - "VLANs"
     leaf4:
+      - "BaseIPv4_Leaf4"
       - "VLANs"
     cvx01:
+      - "BaseIPv4_Cvx01"
       - "cvx01-Controller"
     host1:
+      - "BaseIPv4_Host1"
       - "Host1-ATD"
     host2:
+      - "BaseIPv4_Host2"
       - "Host2-ATD"
   bgp:
     spine1:
+      - "BaseIPv4_Spine1"
       - "Spine1-BGP-Lab"
     spine2:
+      - "BaseIPv4_Spine2"
       - "Spine2-BGP-Lab"
     leaf1:
+      - "BaseIPv4_Leaf1"
       - "Leaf1-BGP-Lab"
+      - "VLANs"
     leaf2:
+      - "BaseIPv4_Leaf2"
       - "Leaf2-BGP-Lab"
+      - "VLANs"
     leaf3:
+      - "BaseIPv4_Leaf3"
       - "Leaf3-BGP-Lab"
+      - "VLANs"
     leaf4:
+      - "BaseIPv4_Leaf4"
       - "Leaf4-BGP-Lab"
+      - "VLANs"
     cvx01:
+      - "BaseIPv4_Cvx01"
       - "cvx01-Controller"
     host1:
+      - "BaseIPv4_Host1"
       - "Host1-ATD"
     host2:
+      - "BaseIPv4_Host2"
       - "Host2-ATD"
   vxlan:
     spine1:
+      - "BaseIPv4_Spine1"
       - "Spine1-BGP-Lab"
     spine2:
+      - "BaseIPv4_Spine2"
       - "Spine2-BGP-Lab"
     leaf1:
+      - "BaseIPv4_Leaf1"
       - "Leaf1-VXLAN-Lab"
       - "VLANs"
     leaf2:
+      - "BaseIPv4_Leaf2"
       - "Leaf2-VXLAN-Lab"
       - "VLANs"
     leaf3:
+      - "BaseIPv4_Leaf3"
       - "Leaf3-VXLAN-Lab"
       - "VLANs"
     leaf4:
+      - "BaseIPv4_Leaf4"
       - "Leaf4-VXLAN-Lab"
       - "VLANs"
     cvx01:
+      - "BaseIPv4_Cvx01"
       - "cvx01-Controller"
     host1:
+      - "BaseIPv4_Host1"
       - "Host1-ATD"
     host2:
+      - "BaseIPv4_Host2"
       - "Host2-ATD"
   l2evpn:
     spine1:
+      - "BaseIPv4_Spine1"
       - "Spine1-L2EVPN-Lab"
     spine2:
+      - "BaseIPv4_Spine2"
       - "Spine2-L2EVPN-Lab"
     leaf1:
+      - "BaseIPv4_Leaf1"
       - "Leaf1-L2EVPN-Lab"
       - "VLANs"
     leaf2:
+      - "BaseIPv4_Leaf2"
       - "Leaf2-L2EVPN-Lab"
       - "VLANs"
     leaf3:
+      - "BaseIPv4_Leaf3"
       - "VLANs"
     leaf4:
+      - "BaseIPv4_Leaf4"
       - "Leaf4-L2EVPN-Lab"
       - "VLANs"
     cvx01:
+      - "BaseIPv4_Cvx01"
       - "cvx01-Controller"
     host1:
+      - "BaseIPv4_Host1"
       - "Host1-ATD"
     host2:
+      - "BaseIPv4_Host2"
       - "Host2-ATD"
   l3evpn:
     spine1:
+      - "BaseIPv4_Spine1"
       - "Spine1-L3EVPN-Lab"
     spine2:
+      - "BaseIPv4_Spine2"
       - "Spine2-L3EVPN-Lab"
     leaf1:
+      - "BaseIPv4_Leaf1"
       - "Leaf1-L3EVPN-Lab"
     leaf2:
+      - "BaseIPv4_Leaf2"
       - "Leaf2-L3EVPN-Lab"
     leaf3:
+      - "BaseIPv4_Leaf3"
       - "VLANs"
     leaf4:
+      - "BaseIPv4_Leaf4"
       - "Leaf4-L3EVPN-Lab"
     cvx01:
+      - "BaseIPv4_Cvx01"
       - "cvx01-Controller"
     host1:
+      - "BaseIPv4_Host1"
       - "Host1-ATD"
     host2:
+      - "BaseIPv4_Host2"
       - "Host2-ATD"
   cvp:
     spine1:
+      - "BaseIPv4_Spine1"
       - "Spine1-BGP-Lab"
     spine2:
+      - "BaseIPv4_Spine2"
       - "Spine2-BGP-Lab"
     leaf1:
+      - "BaseIPv4_Leaf1"
       - "Leaf1-BGP-Lab"
     leaf2:
+      - "BaseIPv4_Leaf2"
       - "Leaf2-BGP-Lab"
     leaf3:
+      - "BaseIPv4_Leaf3"
       - "Leaf3-BGP-Lab"
     leaf4:
+      - "BaseIPv4_Leaf4"
       - "Leaf4-BGP-Lab-Full"
     cvx01:
+      - "BaseIPv4_Cvx01"
       - "cvx01-Controller"
     host1:
+      - "BaseIPv4_Host1"
       - "Host1-ATD"
     host2:
+      - "BaseIPv4_Host2"
       - "Host2-ATD"

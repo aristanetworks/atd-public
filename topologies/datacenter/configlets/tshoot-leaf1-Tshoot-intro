@@ -25,6 +25,8 @@ interface Ethernet5
    switchport trunk allowed vlan 12
    switchport mode trunk
 !
+interface Ethernet6
+   shutdown
 interface Loopback0
    ip address 172.16.0.3/32
 !

@@ -1,0 +1,30 @@
+hostname eos13
+!
+vlan 100
+   name 11-12-13
+!
+interface Ethernet1
+   description EOS6
+   no switchport
+   ip address 10.6.13.13/24
+!
+interface Ethernet2
+   description EOS12
+   switchport mode trunk
+!
+interface Ethernet3
+   description EOS11
+   no switchport
+   ip address 10.11.13.13/24
+!
+interface Loopback0
+   ip address 13.13.13.13/32
+!
+interface Vlan100
+   description SVI FOR 11-12-13
+   ip address 10.100.100.13/24
+!
+interface Management1
+   ip address 192.168.0.22/24
+   no lldp transmit
+   no lldp receive

@@ -1,0 +1,16 @@
+router bgp 100
+   router-id 4.4.4.4
+   no bgp default ipv4-unicast
+   maximum-paths 2
+   neighbor 8.8.8.8 remote-as 100
+   neighbor 8.8.8.8 update-source Loopback0
+   neighbor 8.8.8.8 send-community
+   neighbor 8.8.8.8 maximum-routes 12000
+   !
+   address-family vpn-ipv4
+      neighbor 8.8.8.8 activate
+      neighbor default encapsulation mpls next-hop-self source-interface Loopback0
+   !
+   address-family vpn-ipv6
+      neighbor 8.8.8.8 activate
+      neighbor default encapsulation mpls next-hop-self source-interface Loopback0

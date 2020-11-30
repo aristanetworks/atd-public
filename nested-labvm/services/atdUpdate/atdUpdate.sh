@@ -63,7 +63,7 @@ cd /opt/atd/nested-labvm/atd-docker
 
 su atdadmin -c 'bash docker_build.sh'
 
-su atdadmin -c 'docker-compose up -d --remove-orphans'
+/usr/local/bin/docker-compose up -d --remove-orphans
 
 su atdadmin -c 'docker restart atd-login'
 

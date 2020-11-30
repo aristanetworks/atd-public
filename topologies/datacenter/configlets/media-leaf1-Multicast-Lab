@@ -13,6 +13,8 @@ interface Ethernet4
    switchport access vlan 15
 interface Ethernet5
    shutdown
+interface Ethernet6
+   shutdown
 interface Loopback0
    ip address 172.16.0.1/32
 interface Vlan15

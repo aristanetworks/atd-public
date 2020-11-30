@@ -1,0 +1,8 @@
+router isis 100
+   log-adjacency-changes
+   spf-interval 5 1000 2000
+   timers lsp generation 5 1000 2000
+   lsp flooding dynamic level-2
+   !
+   address-family ipv4 unicast
+      bfd all-interfaces

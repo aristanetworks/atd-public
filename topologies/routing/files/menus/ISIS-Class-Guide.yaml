@@ -1,0 +1,251 @@
+---
+lab_list:
+  lab1: 
+    description: "Start at Lab 1: Single Flood Domain (lab1)"
+  lab2:
+    description: "Start at Lab 2: Loopback Only Advertisements in LSPs (lab2)"
+  lab3:
+    description: "Start at Lab 3: Broadcast Network (lab3)"
+  complete: 
+    description: "Complete all Sections (complete)"
+  reset:
+    description: "Reset All Devices to Base IPv4 (reset)"
+labconfiglets:
+  reset:
+    eos1:
+      - "BaseIPv4_EOS1_ISIS_GUIDE"
+    eos2:
+      - "BaseIPv4_EOS2"
+    eos3:
+      - "BaseIPv4_EOS3_ISIS_GUIDE"
+    eos4:
+      - "BaseIPv4_EOS4_ISIS_GUIDE"
+    eos5:
+      - "BaseIPv4_EOS5"
+    eos6:
+      - "BaseIPv4_EOS6_ISIS_GUIDE"
+    eos7:
+      - "BaseIPv4_EOS7_ISIS_GUIDE"
+    eos8:
+      - "BaseIPv4_EOS8_ISIS_GUIDE"
+    eos9:
+      - "BaseIPv4_EOS9_ISIS_GUIDE"
+    eos10:
+      - "BaseIPv4_EOS10_ISIS_GUIDE"
+    eos11:
+      - "BaseIPv4_EOS11_ISIS_GUIDE"
+    eos12:
+      - "BaseIPv4_EOS12_ISIS_GUIDE"
+    eos13:
+      - "BaseIPv4_EOS13_ISIS_GUIDE"
+    eos14:
+      - "BaseIPv4_EOS14_ISIS_GUIDE"
+    eos15:
+      - "BaseIPv4_EOS15"
+    eos16:
+      - "BaseIPv4_EOS16"
+    eos17:
+      - "BaseIPv4_EOS17"
+    eos18:
+      - "BaseIPv4_EOS18"
+    eos19:
+      - "BaseIPv4_EOS19"
+    eos20:
+      - "BaseIPv4_EOS20"
+  lab1:
+    eos1:
+      - "BaseIPv4_EOS1_ISIS_GUIDE"
+    eos2:
+      - "BaseIPv4_EOS2"
+    eos3:
+      - "BaseIPv4_EOS3_ISIS_GUIDE"
+    eos4:
+      - "BaseIPv4_EOS4_ISIS_GUIDE"
+    eos5:
+      - "BaseIPv4_EOS5"
+    eos6:
+      - "BaseIPv4_EOS6_ISIS_GUIDE"
+    eos7:
+      - "BaseIPv4_EOS7_ISIS_GUIDE"
+    eos8:
+      - "BaseIPv4_EOS8_ISIS_GUIDE"
+    eos9:
+      - "BaseIPv4_EOS9_ISIS_GUIDE"
+    eos10:
+      - "BaseIPv4_EOS10_ISIS_GUIDE"
+    eos11:
+      - "BaseIPv4_EOS11_ISIS_GUIDE"
+    eos12:
+      - "BaseIPv4_EOS12_ISIS_GUIDE"
+    eos13:
+      - "BaseIPv4_EOS13_ISIS_GUIDE"
+    eos14:
+      - "BaseIPv4_EOS14_ISIS_GUIDE"
+    eos15:
+      - "BaseIPv4_EOS15"
+    eos16:
+      - "BaseIPv4_EOS16"
+    eos17:
+      - "BaseIPv4_EOS17"
+    eos18:
+      - "BaseIPv4_EOS18"
+    eos19:
+      - "BaseIPv4_EOS19"
+    eos20:
+      - "BaseIPv4_EOS20"
+  lab2:
+    eos1:
+      - "BaseIPv4_EOS1_ISIS_GUIDE"
+      - "EOS1_ISIS_GUIDE_LAB1"
+    eos2:
+      - "BaseIPv4_EOS2"
+      - "EOS2_ISIS_GUIDE_LAB1"
+    eos3:
+      - "BaseIPv4_EOS3_ISIS_GUIDE"
+      - "EOS3_ISIS_GUIDE_LAB1"
+    eos4:
+      - "BaseIPv4_EOS4_ISIS_GUIDE"
+      - "EOS4_ISIS_GUIDE_LAB1"
+    eos5:
+      - "BaseIPv4_EOS5"
+      - "EOS5_ISIS_GUIDE_LAB1"
+    eos6:
+      - "BaseIPv4_EOS6_ISIS_GUIDE"
+      - "EOS6_ISIS_GUIDE_LAB1"
+    eos7:
+      - "BaseIPv4_EOS7_ISIS_GUIDE"
+    eos8:
+      - "BaseIPv4_EOS8_ISIS_GUIDE"
+    eos9:
+      - "BaseIPv4_EOS9_ISIS_GUIDE"
+    eos10:
+      - "BaseIPv4_EOS10_ISIS_GUIDE"
+    eos11:
+      - "BaseIPv4_EOS11_ISIS_GUIDE"
+    eos12:
+      - "BaseIPv4_EOS12_ISIS_GUIDE"
+    eos13:
+      - "BaseIPv4_EOS13_ISIS_GUIDE"
+    eos14:
+      - "BaseIPv4_EOS14_ISIS_GUIDE"
+    eos15:
+      - "BaseIPv4_EOS15"
+    eos16:
+      - "BaseIPv4_EOS16"
+    eos17:
+      - "BaseIPv4_EOS17"
+    eos18:
+      - "BaseIPv4_EOS18"
+    eos19:
+      - "BaseIPv4_EOS19"
+    eos20:
+      - "BaseIPv4_EOS20"
+  lab3:
+    eos1:
+      - "BaseIPv4_EOS1_ISIS_GUIDE"
+      - "EOS1_ISIS_GUIDE_LAB1"
+      - "EOS1_ISIS_GUIDE_LAB2"
+    eos2:
+      - "BaseIPv4_EOS2"
+      - "EOS2_ISIS_GUIDE_LAB1"
+      - "EOS2_ISIS_GUIDE_LAB2"
+    eos3:
+      - "BaseIPv4_EOS3_ISIS_GUIDE"
+      - "EOS3_ISIS_GUIDE_LAB1"
+      - "EOS3_ISIS_GUIDE_LAB2"
+    eos4:
+      - "BaseIPv4_EOS4_ISIS_GUIDE"
+      - "EOS4_ISIS_GUIDE_LAB1"
+      - "EOS4_ISIS_GUIDE_LAB2"
+    eos5:
+      - "BaseIPv4_EOS5"
+      - "EOS5_ISIS_GUIDE_LAB1"
+      - "EOS5_ISIS_GUIDE_LAB2"
+    eos6:
+      - "BaseIPv4_EOS6_ISIS_GUIDE"
+      - "EOS6_ISIS_GUIDE_LAB1"
+      - "EOS6_ISIS_GUIDE_LAB2"
+    eos7:
+      - "BaseIPv4_EOS7_ISIS_GUIDE"
+    eos8:
+      - "BaseIPv4_EOS8_ISIS_GUIDE"
+    eos9:
+      - "BaseIPv4_EOS9_ISIS_GUIDE"
+    eos10:
+      - "BaseIPv4_EOS10_ISIS_GUIDE"
+    eos11:
+      - "BaseIPv4_EOS11_ISIS_GUIDE"
+    eos12:
+      - "BaseIPv4_EOS12_ISIS_GUIDE"
+    eos13:
+      - "BaseIPv4_EOS13_ISIS_GUIDE"
+    eos14:
+      - "BaseIPv4_EOS14_ISIS_GUIDE"
+    eos15:
+      - "BaseIPv4_EOS15"
+    eos16:
+      - "BaseIPv4_EOS16"
+    eos17:
+      - "BaseIPv4_EOS17"
+    eos18:
+      - "BaseIPv4_EOS18"
+    eos19:
+      - "BaseIPv4_EOS19"
+    eos20:
+      - "BaseIPv4_EOS20"
+  complete:
+    eos1:
+      - "BaseIPv4_EOS1_ISIS_GUIDE"
+      - "EOS1_ISIS_GUIDE_LAB1"
+      - "EOS1_ISIS_GUIDE_LAB2"
+    eos2:
+      - "BaseIPv4_EOS2"
+      - "EOS2_ISIS_GUIDE_LAB1"
+      - "EOS2_ISIS_GUIDE_LAB2"
+    eos3:
+      - "BaseIPv4_EOS3_ISIS_GUIDE"
+      - "EOS3_ISIS_GUIDE_LAB1"
+      - "EOS3_ISIS_GUIDE_LAB2"
+    eos4:
+      - "BaseIPv4_EOS4_ISIS_GUIDE"
+      - "EOS4_ISIS_GUIDE_LAB1"
+      - "EOS4_ISIS_GUIDE_LAB2"
+    eos5:
+      - "BaseIPv4_EOS5"
+      - "EOS5_ISIS_GUIDE_LAB1"
+      - "EOS5_ISIS_GUIDE_LAB2"
+    eos6:
+      - "BaseIPv4_EOS6_ISIS_GUIDE"
+      - "EOS6_ISIS_GUIDE_LAB1"
+      - "EOS6_ISIS_GUIDE_LAB2"
+    eos7:
+      - "BaseIPv4_EOS7_ISIS_GUIDE"
+    eos8:
+      - "BaseIPv4_EOS8_ISIS_GUIDE"
+    eos9:
+      - "BaseIPv4_EOS9_ISIS_GUIDE"
+    eos10:
+      - "BaseIPv4_EOS10_ISIS_GUIDE"
+    eos11:
+      - "BaseIPv4_EOS11_ISIS_GUIDE"
+      - "EOS11_ISIS_GUIDE_LAB3"
+    eos12:
+      - "BaseIPv4_EOS12_ISIS_GUIDE"
+      - "EOS12_ISIS_GUIDE_LAB3"
+    eos13:
+      - "BaseIPv4_EOS13_ISIS_GUIDE"
+      - "EOS13_ISIS_GUIDE_LAB3"
+    eos14:
+      - "BaseIPv4_EOS14_ISIS_GUIDE"
+    eos15:
+      - "BaseIPv4_EOS15"
+    eos16:
+      - "BaseIPv4_EOS16"
+    eos17:
+      - "BaseIPv4_EOS17"
+    eos18:
+      - "BaseIPv4_EOS18"
+    eos19:
+      - "BaseIPv4_EOS19"
+    eos20:
+      - "BaseIPv4_EOS20"

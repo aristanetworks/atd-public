@@ -8,12 +8,11 @@ Media BGP Lab
 
 1. Log into the **LabAccess** jumpserver:
 
-   1. Type ``labs`` or option ``97`` at the Main Menu prompt. This will bring up additional lab menu selections.
-   2. Type ``media`` or option ``2`` at this prompt to open the media lab section (If you were previously in the Media Labs Menu, you can type ``back`` or option ``97`` to go back).
-   3. If this is your first media lab, type ``media-setup`` or option ``1`` at this prompt and wait for the process to run to prepare the lab environment.
-   4. Type ``media-bgp`` or option ``5`` at the prompt. The script will configure the topology with the exception of **Leaf 4**.
+   1. Type ``labs`` at the Main Menu prompt. This will bring up additional lab menu selections.
+   2. Type ``media`` at this prompt to open the media lab section (If you were previously in the Media Labs Menu, you can type ``back`` to go back).
+   3. Type ``media-bgp`` at the prompt. The script will configure the topology with the exception of **Leaf 4**.
 
-   5. On **spine2**, verify the BGP operation (it should not be operating correctly) and current routing table and command outputs similar to the outputs below.
+   4. On **spine2**, verify the BGP operation (it should not be operating correctly) and current routing table and command outputs similar to the outputs below.
 
         .. code-block:: text
 

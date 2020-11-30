@@ -1,0 +1,24 @@
+interface Vxlan1
+   vxlan source-interface Loopback1
+   vxlan udp-port 4789
+   vxlan vlan 10-30 vni 10010-10030
+!
+vlan 10
+   name Ten
+vlan 30
+   name Thirty
+!
+router bgp 65034
+   vlan-aware-bundle TENANT-A
+      rd 1.1.1.104:1
+      route-target both 1:1
+      redistribute learned
+      vlan 10-30
+!
+interface Port-Channel20
+   switchport access vlan 30
+   mlag 20
+   spanning-tree portfast
+!
+interface Ethernet5
+   switchport access vlan 10

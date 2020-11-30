@@ -10,7 +10,7 @@ Establish MPLS Transport Label Distribution via Segment-Routing
 
    #. From the Main Menu, type ``labs`` or Option 97 for ``Additional Labs``.
 
-   #. Type ``mesh-topology-base-labs`` to access the Base Setup Labs.
+   #. Type or select the option for ``mesh-topology-evpn-labs`` to access the EVPN Labs.
 
    #. Type ``sr`` at the Labs Selection Menu. The script will configure the topology 
       with the necessary prerequisites.
@@ -25,6 +25,11 @@ Establish MPLS Transport Label Distribution via Segment-Routing
 
    #. Enable the Segment Routing extensions with IS-IS and assign a router-id based on the 
       router's Loopback0 address.
+
+      .. note::
+
+         You will see a notification when setting the router-id.  This simply means that if a global 
+         router-id is set, it will override this setting.  For now, this can be ignored.
 
       .. code-block:: text
 
@@ -94,14 +99,14 @@ Establish MPLS Transport Label Distribution via Segment-Routing
 
       .. note::
       
-         An MPLS label value of the ``3`` represents the implicit-null label, which signfies the destination 
+         An MPLS label value of the ``3`` represents the implicit-null label, which signifies the destination 
          or endpoint router is adjacent to this node.
 
       .. code-block:: text
 
          show isis segment-routing tunnel
 
-   #. Verify the Adjacency Segment IDs dynamically allocted to interfaces attached to ISIS-SR enabled peers.
+   #. Verify the Adjacency Segment IDs dynamically allocated to interfaces attached to ISIS-SR enabled peers.
 
       .. note::
       

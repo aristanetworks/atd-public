@@ -1,0 +1,16 @@
+ip routing
+!
+router isis 1
+   net 49.0000.0000.0000.0012.00
+   is-type level-2
+   advertise passive-only
+   address-family ipv4 unicast
+!
+interface Loopback0
+   isis enable 1
+   isis passive
+!
+interface vlan100
+   isis enable 1
+   isis circuit-type level-2
+   
