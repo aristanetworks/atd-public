@@ -30,6 +30,7 @@ sed -i "/username arista ssh-key/cusername arista ssh-key ${ARISTA_SSH}" /opt/at
 # Update arista user password for Guacamole
 
 sed -i "s/{ARISTA_REPLACE}/$APWD/g" /opt/atd/topologies/$TOPO/files/infra/user-mapping.xml
+sed -i "s/{ARISTA_REPLACE}/$APWD/g" /opt/atd/topologies/$TOPO/files/coder.yaml
 
 # Update atdUpdate service
 
