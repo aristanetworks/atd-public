@@ -40,6 +40,8 @@ RUN echo 'login.py' >> .profile
 
 RUN chown -R arista:arista .
 
+RUN pip install --upgrade rcvpapi
+
 EXPOSE 22
 
 USER arista
