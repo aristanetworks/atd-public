@@ -30,11 +30,15 @@ interface Ethernet4
 interface Ethernet5
    shutdown
 !
+interface Ethernet6
+   shutdown
+!
 interface Loopback0
    ip address 172.16.0.3/32
 !
 interface Loopback1
    ip address 1.1.1.1/32
+   ip address 99.99.99.99/32 secondary
 !
 interface Vxlan1
    vxlan source-interface Loopback1

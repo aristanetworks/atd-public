@@ -30,11 +30,15 @@ interface Ethernet4
 interface Ethernet5
    shutdown
 !
+interface Ethernet6
+   shutdown
+!
 interface Loopback0
    ip address 172.16.0.5/32
 !
 interface Loopback1
    ip address 3.3.3.3/32
+   ip address 99.99.99.99/32 secondary
 !
 interface Vxlan1
    vxlan source-interface Loopback1
@@ -68,6 +72,7 @@ router bgp 65103
       redistribute learned
    !
    address-family evpn
+      bgp next-hop-unchanged
       neighbor SPINE-EVPN-TRANSIT activate
    !
    address-family ipv4
