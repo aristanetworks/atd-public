@@ -64,6 +64,10 @@ cd /opt/atd/nested-labvm/atd-docker
 
 su atdadmin -c 'bash docker_build.sh'
 
+# Setting arista user ids for coder container
+export ArID=$(id -u arista)
+export ArGD=$(id -g arista)
+
 /usr/local/bin/docker-compose up -d --remove-orphans
 
 su atdadmin -c 'docker restart atd-login'
