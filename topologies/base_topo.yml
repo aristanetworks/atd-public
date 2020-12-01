@@ -7,13 +7,13 @@ topologies:
         ram: 36
         cvp:
           2020.1:
-            branch: nested-release
+            branch: nested/2020.1
             image: base-atd-datacenter-ceos-c2020-1-1-20201124-u
             eos:
               - 4.24.1.1F
               - 4.24.2.1F
           2020.2:
-            branch: nested-release
+            branch: n-coder
             image: base-atd-datacenter-ceos-c2020-2-1-20201124-u
             eos:
               - 4.24.1.1F
