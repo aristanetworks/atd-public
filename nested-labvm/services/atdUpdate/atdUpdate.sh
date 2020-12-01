@@ -22,6 +22,10 @@ rm -rf /opt/atd
 
 git clone --branch $BRANCH $REPO /opt/atd
 
+# Update atdUpdate service
+
+cp /opt/atd/nested-labvm/services/atdUpdate/atdUpdate.sh /usr/local/bin/
+
 # Update ssh-key in EOS configlet for Arista user
 ARISTA_SSH=$(cat /home/arista/.ssh/id_rsa.pub)
 
@@ -32,12 +36,6 @@ sed -i "/username arista ssh-key/cusername arista ssh-key ${ARISTA_SSH}" /opt/at
 sed -i "s/{ARISTA_REPLACE}/$APWD/g" /opt/atd/topologies/$TOPO/files/infra/user-mapping.xml
 sed -i "s/{ARISTA_REPLACE}/$APWD/g" /opt/atd/topologies/$TOPO/files/coder.yaml
 
-# Update atdUpdate service
-
-cp /opt/atd/nested-labvm/services/atdUpdate/atdUpdate.sh /usr/local/bin/
-# cp /opt/atd/nested-labvm/services/atdUpdate/atdUpdate.service /etc/systemd/system/
-
-# systemctl daemon-reload
 
 # Update the base configlets for ceos/veos mgmt numbering
 
@@ -71,6 +69,7 @@ export ArGD=$(id -g arista)
 /usr/local/bin/docker-compose up -d --remove-orphans
 
 su atdadmin -c 'docker restart atd-login'
+docker restart atd-coder
 
 echo 'y' | docker image prune
 
