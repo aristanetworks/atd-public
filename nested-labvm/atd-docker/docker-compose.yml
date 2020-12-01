@@ -197,7 +197,14 @@ services:
       - /home/arista/.ssh:/home/coder/.ssh:rw
       - /home/arista/GUI_Desktop/:/home/coder/project:rw
       - /home/arista/arista-dir/hosts:/etc/hosts:ro
-
+  ssh:
+    container_name: atd-ssh
+    image: atddocker_ssh:1.0
+    restart: always
+    networks:
+      - atd_nginx
+    volumes:
+      - /home/arista/arista-dir/web.json:/opt/webssh2/app/config.json:ro
 networks:
   guac_net:
   atd_nginx:
