@@ -15,6 +15,12 @@ PORT = 80
 BASE_PATH = '/opt/topo/html/'
 ATD_ACCESS_PATH = '/etc/atd/ACCESS_INFO.yaml'
 
+ArBASE_PATH = '/opt/modules/'
+MODULE_FILE = ArBASE_PATH + 'modules.yaml'
+
+with open(MODULE_FILE, 'r') as mf:
+    MOD_YAML = YAML().load(mf)
+
 # Add in check to make sure arista password has been updated
 while True:
     host_yaml = YAML().load(open(ATD_ACCESS_PATH, 'r'))
@@ -28,6 +34,8 @@ salt = uuid.uuid4().hex
 accounts = {
     hashlib.sha512((host_yaml['login_info']['jump_host']['user'] + salt).encode('utf-8')).hexdigest(): hashlib.sha512((host_yaml['login_info']['jump_host']['pw'] + salt).encode('utf-8')).hexdigest()
 }
+
+TOPO = host_yaml['topology']
 
 class BaseHandler(tornado.web.RequestHandler):
     def get_current_user(self):
@@ -52,6 +60,8 @@ class LoginHandler(BaseHandler):
         else:
             self.render(
                 BASE_PATH + 'login.html',
+                MOD_IMG = 'images/topo/{0}'.format(MOD_YAML[TOPO]['image']),
+                NODES = MOD_YAML[TOPO]['nodes'],
                 LOGIN_MESSAGE=""
             )
 
@@ -107,13 +117,6 @@ def genCookieSecret():
     """
     return(secrets.token_hex(16))
 
-def getPublicIP():
-    """
-    Function to get Public IP.
-    """
-    response = requests.get('http://ipecho.net/plain')
-    return(response.text)
-
 def pS(mtype):
     """
     Function to send output from service file to Syslog
@@ -126,7 +129,8 @@ def pS(mtype):
 if __name__ == "__main__":
     settings = {
         'cookie_secret': genCookieSecret(),
-        'login_url': "/login"
+        'login_url': "/login",
+        'static_path': ArBASE_PATH
     }
     app = tornado.web.Application([
         (r'/js/(.*)', tornado.web.StaticFileHandler, {'path': BASE_PATH +  "js/"}),

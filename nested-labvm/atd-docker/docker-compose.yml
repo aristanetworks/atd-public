@@ -82,6 +82,7 @@ services:
     volumes:
       - /etc/atd:/etc/atd:ro
       - /opt/atd:/opt/atd:ro
+      - /home/arista/arista-dir/apps/uilanding:/opt/modules:ro
     networks:
       - atd_nginx
   labguides:

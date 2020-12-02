@@ -44,6 +44,9 @@ then
     sed -i 's/Management1/Management0/g' /opt/atd/topologies/$TOPO/configlets/*
 fi
 
+# Copy topo image to app directory
+rsync -av /opt/atd/topologies/$TOPO/atd-topo.png /opt/atd/topologies/$TOPO/files/apps/uilanding
+
 # Add files to arista home
 rsync -av /opt/atd/topologies/$TOPO/files/ /home/arista/arista-dir
 rsync -av /opt/atd/topologies/$TOPO/files/infra /home/arista/
