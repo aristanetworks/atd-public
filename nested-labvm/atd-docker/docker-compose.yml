@@ -190,6 +190,7 @@ services:
     image: atddocker_coder:1.0
     restart: always
     user: $ArID:$ArGD
+    command: /home/coder/project
     networks:
       - atd_nginx
     volumes:
