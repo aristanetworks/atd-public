@@ -299,5 +299,5 @@ nodes:
 
   - atd_jump_host:
       neighbors: []
-      ami_name: "cloud-deploy-jh-2020-11-13"
+      ami_name: "cloud-deploy-jh-2020-12-01"
       ip_addr: "192.168.0.4"
