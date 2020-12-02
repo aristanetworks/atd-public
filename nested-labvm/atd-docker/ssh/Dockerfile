@@ -1,4 +1,4 @@
-FROM node:8.6
+FROM node:15.3
 
 ARG TAG=0.3.0
 
