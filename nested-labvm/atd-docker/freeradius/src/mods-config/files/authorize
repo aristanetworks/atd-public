@@ -3,7 +3,7 @@
 # User Accounts
 # =================================================
 
-arista	Cleartext-Password := "arista"
+arista	Cleartext-Password := "{ARISTA_REPLACE}"
 	Arista-AVPair = "shell:cvp-roles=network-admin",
 	Arista-AVPair = "shell:roles=network-admin",
 	Arista-AVPair = "shell:priv-lvl=15",

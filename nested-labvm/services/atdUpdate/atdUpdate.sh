@@ -33,8 +33,9 @@ sed -i "/username arista ssh-key/cusername arista ssh-key ${ARISTA_SSH}" /opt/at
 
 # Update arista user password for Guacamole
 
-sed -i "s/{ARISTA_REPLACE}/$APWD/g" /opt/atd/topologies/$TOPO/files/infra/user-mapping.xml
-sed -i "s/{ARISTA_REPLACE}/$APWD/g" /opt/atd/topologies/$TOPO/files/apps/coder/coder.yaml
+find /opt/atd/nested-labvm/atd-docker/*  -type f -print0 | xargs -0 sed -i "s/{ARISTA_REPLACE}/$APWD/g" 
+find /opt/atd/topologies/$TOPO/files/*  -type f -print0 | xargs -0 sed -i "s/{ARISTA_REPLACE}/$APWD/g" 
+
 
 
 # Update the base configlets for ceos/veos mgmt numbering

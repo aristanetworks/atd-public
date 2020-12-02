@@ -118,15 +118,15 @@ def main():
     eos_cnt_map = eosContainerMapper(cvp_yaml['cvp_info']['containers'])
     eos_info = getEosDevice(atd_yaml['topology'],build_yaml['nodes'],eos_cnt_map)
     configlet_location = '/opt/atd/topologies/{0}/configlets/'.format(atd_yaml['topology'])
-    for c_login in atd_yaml['login_info']['cvp']['shell']:
-        if c_login['user'] == 'arista':
-            while not cvp_clnt:
-                try:
-                    cvp_clnt = CVPCON(atd_yaml['nodes']['cvp'][0]['ip'],c_login['user'],c_login['pw'])
-                    pS("OK","Connected to CVP at {0}".format(atd_yaml['nodes']['cvp'][0]['ip']))
-                except:
-                    pS("ERROR","CVP is currently unavailable....Retrying in {0} seconds.".format(sleep_delay))
-                    sleep(sleep_delay)
+    cvpUsername = atd_yaml['login_info']['jump_host']['user']
+    cvpPassword = atd_yaml['login_info']['jump_host']['pw']
+    while not cvp_clnt:
+        try:
+            cvp_clnt = CVPCON(atd_yaml['nodes']['cvp'][0]['ip'], cvpUsername, cvpPassword)
+            pS("OK","Connected to CVP at {0}".format(atd_yaml['nodes']['cvp'][0]['ip']))
+        except:
+            pS("ERROR","CVP is currently unavailable....Retrying in {0} seconds.".format(sleep_delay))
+            sleep(sleep_delay)
     
     # Check to see if all nodes have connected to CVP before proceeding
     FILE_BUILD = YAML().load(open(REPO_TOPO + atd_yaml['topology'] + '/topo_build.yml', 'r'))
