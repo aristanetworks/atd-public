@@ -60,8 +60,6 @@ class LoginHandler(BaseHandler):
         else:
             self.render(
                 BASE_PATH + 'login.html',
-                MOD_IMG = 'images/topo/{0}'.format(MOD_YAML[TOPO]['image']),
-                NODES = MOD_YAML[TOPO]['nodes'],
                 LOGIN_MESSAGE=""
             )
 
@@ -94,6 +92,7 @@ class topoRequestHandler(BaseHandler):
         else:
             self.render(
                 BASE_PATH + 'index.html',
+                NODES = MOD_YAML[TOPO]['nodes'],
                 ARISTA_PWD=host_yaml['login_info']['jump_host']['pw']
             )
     
@@ -129,13 +128,13 @@ def pS(mtype):
 if __name__ == "__main__":
     settings = {
         'cookie_secret': genCookieSecret(),
-        'login_url': "/login",
-        'static_path': ArBASE_PATH
+        'login_url': "/login"
     }
     app = tornado.web.Application([
         (r'/js/(.*)', tornado.web.StaticFileHandler, {'path': BASE_PATH +  "js/"}),
         (r'/css/(.*)', tornado.web.StaticFileHandler, {'path': BASE_PATH +  "css/"}),
         (r'/images/(.*)', tornado.web.StaticFileHandler, {'path': BASE_PATH +  "images/"}),
+        (r'/topo/(.*)', tornado.web.StaticFileHandler, {'path': ArBASE_PATH}),
         (r'/', topoRequestHandler),
         (r'/login', LoginHandler),
     ], **settings)
