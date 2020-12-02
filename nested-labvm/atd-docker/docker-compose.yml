@@ -132,38 +132,6 @@ services:
       - nginx_log:/var/log/nginx:ro
       - /etc/atd:/etc/atd:ro
       - /var/log/wtmp:/var/log/wtmp:ro
-  # desktop:
-  #   container_name: atd-desktop
-  #   image: atddocker_desktop:1.0
-  #   restart: always
-  #   hostname: devbox
-  #   privileged: true
-  #   volumes:
-  #     - /sys/fs/cgroup:/sys/fs/cgroup:ro
-  #     - /home/arista/GUI_Desktop:/home/arista/Desktop/Files:rw
-  #     - /home/arista/.ssh:/home/arista/.ssh:rw
-  #     - /home/arista/arista-dir/hosts:/etc/hosts:ro
-  #   networks:
-  #     - guac_net
-  # guacd:
-  #   container_name: atd-guacd
-  #   image: atddocker_guacd:1.0
-  #   restart: always
-  #   networks:
-  #     - guac_net
-  # guacamole:
-  #   container_name: atd-guacamole
-  #   image: atddocker_guacamole:1.0
-  #   restart: always
-  #   volumes:
-  #     - /home/arista/infra/user-mapping.xml:/root/.guacamole/user-mapping.xml:ro
-  #   depends_on: 
-  #     - guacd
-  #   networks:
-  #     - guac_net
-  #     - atd_nginx
-  #   environment: 
-  #     - GUACD_HOSTNAME=atd-guacd
   jenkins:
     container_name: atd-jenkins
     image: atddocker_jenkins:1.0
