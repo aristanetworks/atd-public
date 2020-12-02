@@ -216,7 +216,6 @@ services:
     networks:
       - atd_nginx
 networks:
-  guac_net:
   atd_nginx:
 volumes:
   atd_labguides:
