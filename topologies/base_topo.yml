@@ -30,12 +30,12 @@ topologies:
         cvp:
           2020.1:
             branch: nested/2020.1
-            image: base-atd-datacenter-e4-24-1f-c2020-1-1-20201124-u
+            image: base-atd-datacenter-e4-24-1f-c2020-1-1-20201203u
             eos:
               - 4.24.1F
           2020.2:
             branch: nested-release
-            image: base-atd-datacenter-e4-24-2-1f-c2020-2-1-20201124-u
+            image: base-atd-datacenter-e4-24-2-1f-c2020-2-1-20201203u
             eos:
               - 4.24.2.1F
     prod:
