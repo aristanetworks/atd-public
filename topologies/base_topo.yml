@@ -20,7 +20,7 @@ topologies:
               - 4.24.2.1F
           2020.4:
             branch: nested-release
-            image: base-atd-datacenter-ceos-c2020-4-0-20201124-u
+            image: base-atd-datacenter-ceos-c2020-4-0-20201204u
             eos:
               - 4.24.1.1F
               - 4.24.2.1F
@@ -59,12 +59,12 @@ topologies:
         cvp:
           2020.1:
             branch: nested/2020.1
-            image: base-atd-routing-e4-24-1f-c2020-1-1-20201124-u
+            image: base-atd-routing-e4-24-1f-c2020-1-1-20201204u
             eos:
               - 4.24.1F
           2020.2:
             branch: nested-release
-            image: base-atd-routing-e4-24-2-1f-c2020-2-1-20201124-u
+            image: base-atd-routing-e4-24-2-1f-c2020-2-1-20201204u
             eos:
               - 4.24.2.1F
       ceos:
@@ -73,7 +73,7 @@ topologies:
         cvp:
           2020.1:
             branch: nested/2020.1
-            image: base-atd-routing-ceos-c2020-1-1-20201124-u
+            image: base-atd-routing-ceos-c2020-1-1-20201204u
             eos:
               - 4.24.1.1F
               - 4.24.2.1F
