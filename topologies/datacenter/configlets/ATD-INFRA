@@ -25,5 +25,5 @@ username arista ssh-key ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC+ERvV4GaPq3FzxY8T
 management api http-commands
    no shutdown
 !
-ip radius source-interface Management0
+ip radius source-interface Management1
 !
