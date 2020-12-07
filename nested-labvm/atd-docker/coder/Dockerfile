@@ -29,4 +29,6 @@ RUN wget --quiet https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/inst
 
 RUN sudo usermod --shell /bin/zsh coder
 
+VOLUME /home/coder/project/labfiles
+
 ENV SHELL /bin/zsh
