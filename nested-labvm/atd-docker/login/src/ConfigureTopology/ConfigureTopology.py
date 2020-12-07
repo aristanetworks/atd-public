@@ -40,16 +40,16 @@ class ConfigureTopology():
     def connect_to_cvp(self,access_info):
         # Adding new connection to CVP via rcvpapi
         cvp_clnt = ''
-        for c_login in access_info['login_info']['cvp']['shell']:
-            if c_login['user'] == 'arista':
-                while not cvp_clnt:
-                    try:
-                        cvp_clnt = CVPCON(access_info['nodes']['cvp'][0]['ip'],c_login['user'],c_login['pw'])
-                        self.send_to_syslog("OK","Connected to CVP at {0}".format(access_info['nodes']['cvp'][0]['ip']))
-                        return cvp_clnt
-                    except:
-                        self.send_to_syslog("ERROR", "CVP is currently unavailable....Retrying in 30 seconds.")
-                        time.sleep(30)
+        cvpUsername = access_info['login_info']['jump_host']['user']
+        cvpPassword = access_info['login_info']['jump_host']['pw']
+        while not cvp_clnt:
+            try:
+                cvp_clnt = CVPCON(access_info['nodes']['cvp'][0]['ip'], cvpUsername, cvpPassword)
+                self.send_to_syslog("OK","Connected to CVP at {0}".format(access_info['nodes']['cvp'][0]['ip']))
+                return cvp_clnt
+            except:
+                self.send_to_syslog("ERROR", "CVP is currently unavailable....Retrying in 30 seconds.")
+                time.sleep(30)
 
     def remove_configlets(self,device,lab_configlets):
         """
