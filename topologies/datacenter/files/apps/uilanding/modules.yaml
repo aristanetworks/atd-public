@@ -1,5 +1,4 @@
 datacenter:
-  name: "MLAG"
   image: "atd-topo.png"
   nodes:
     Spine1:

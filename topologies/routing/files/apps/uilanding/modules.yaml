@@ -1,5 +1,4 @@
-datacenter:
-  name: "MLAG"
+routing:
   image: "atd-topo.png"
   nodes:
     eos1:
