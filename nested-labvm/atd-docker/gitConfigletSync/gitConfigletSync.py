@@ -70,10 +70,12 @@ def main():
 
    # cvpNodes can be a single item or a list of the cluster
    cvpNodes = ['192.168.0.5']
-   for urole in accessinfo['login_info']['cvp']['shell']:
-      if urole['user'] == 'arista':
-         cvpUsername = urole['user']
-         cvpPassword = urole['pw']
+   cvpUsername = accessinfo['login_info']['jump_host']['user']
+   cvpPassword = accessinfo['login_info']['jump_host']['pw']
+   # for urole in accessinfo['login_info']['cvp']['shell']:
+   #    if urole['user'] == 'arista':
+   #       cvpUsername = urole['user']
+   #       cvpPassword = urole['pw']
 
    # rcvpapi clnt var container
    cvp_clnt = ""

@@ -29,8 +29,17 @@
                     <a href="/labguides/index.html" target="_blank">Lab Guides</a> <a href="/labguides/ATD.pdf" target="_blank">(PDF)</a>
                 </li>
                 <li>
-                    <a href="/guacamole" target="_blank">Lab Frontend</a>
+                    <a href="/ssh/host/192.168.0.1" target="_blank">Console Access</a>
                 </li>
+                <li>
+                    <a href="/coder" target="_blank">Programmability IDE</a>
+                </li>
+                <li>
+                    <a href="/firefox" target="_blank">WebUI</a>
+                </li>
+                <!-- <li>
+                    <a href="/guacamole" target="_blank">Lab Frontend</a>
+                </li> -->
                 <li>
                     <a href="/cv" target="_blank">CVP</a>
                 </li>
@@ -47,18 +56,30 @@
                 <h1>Arista Test Drive Lab</h1>
                 Welcome to the Arista Test Drive Lab! Please use the links on the left to navigate through the lab.
                 <br><br>
+                <h2>Topology</h2>
+                Click on a device to access CLI.
+                <br />
+                <img src="topo/atd-topo.png" usemap="#image_map">
+                <map name="image_map">
+                    {% for node in NODES %}
+                    {% if node == "CVP" %}
+                        <area alt="{{ escape(node) }}" title="{{ escape(node) }}" href="/cv" target="_blank" coords="{{ escape(NODES[node]['coords']) }}" shape="rect">
+                    {% else %}
+                        <area alt="{{ escape(node) }}" title="{{ escape(node) }}" href="/ssh/host/{{ escape(NODES[node]['ip']) }}" target="_blank" coords="{{ escape(NODES[node]['coords']) }}" shape="rect">
+                    {% end %}
+                    {% end %}
+                </map>
+                <br /><br />
                 <h2>Usernames and Passwords</h2>
                 Use the following usernames and passwords to access the ATD:
                 <br>
                 <br>
                 <table class="table table-striped">
                   <thead> <tr> <th>Device</th> <th>Username</th> <th>Password</th> </tr> </thead>
-                  <tbody> <tr>
-                    <td>Lab Frontend</td> <td>arista</td> <td>@rista123</td> </tr> <tr>
-                    <td>CVP</td> <td>arista</td> <td>arista</td> </tr> <tr>
-                    <td>Lab VM SSH</td> <td>arista</td> <td>{{ ARISTA_PWD }}</td> </tr>
-                    <td>VEOS Instances</td> <td>arista</td> <td>arista</td> </tr>
-                    <td>Jenkins</td> <td>arista</td> <td>arista</td> </tr>
+                  <tbody> 
+                    <tr><td>Lab Credentials</td> <td>arista</td> <td>{{ ARISTA_PWD }}</td> </tr>
+                    <tr><td>Programmability IDE</td> <td></td><td>{{ ARISTA_PWD }}</td></tr>
+                    <tr><td>WebUI</td> <td></td><td>@rista1</td></tr>
                   </tbody> </table>
 
                 <br>
