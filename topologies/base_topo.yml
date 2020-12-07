@@ -13,7 +13,7 @@ topologies:
               - 4.24.1.1F
               - 4.24.2.1F
           2020.2:
-            branch: n-frontend
+            branch: nested-release
             image: base-atd-datacenter-ceos-c2020-2-1-20201203u
             eos:
               - 4.24.1.1F
@@ -34,7 +34,7 @@ topologies:
             eos:
               - 4.24.1F
           2020.2:
-            branch: n-frontend
+            branch: nested-release
             image: base-atd-datacenter-e4-24-2-1f-c2020-2-1-20201203u
             eos:
               - 4.24.2.1F
@@ -63,7 +63,7 @@ topologies:
             eos:
               - 4.24.1F
           2020.2:
-            branch: n-frontend
+            branch: nested-release
             image: base-atd-routing-e4-24-2-1f-c2020-2-1-20201204u
             eos:
               - 4.24.2.1F
