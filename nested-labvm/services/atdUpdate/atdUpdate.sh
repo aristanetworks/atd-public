@@ -24,7 +24,7 @@ git clone --branch $BRANCH $REPO /opt/atd
 
 # Update atdUpdate service
 
-rsync /opt/atd/nested-labvm/services/atdUpdate/atdUpdate.sh /usr/local/bin/
+rsync -av /opt/atd/nested-labvm/services/atdUpdate/atdUpdate.sh /usr/local/bin/
 
 # Update ssh-key in EOS configlet for Arista user
 ARISTA_SSH=$(cat /home/arista/.ssh/id_rsa.pub)
