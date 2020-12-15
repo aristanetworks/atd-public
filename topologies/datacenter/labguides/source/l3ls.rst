@@ -1,7 +1,7 @@
 Layer 3 Leaf-Spine
 ==================
 
-.. image:: images/l3ls_1.png
+.. image:: images/l3ls/nested_l3ls_topo_1.png
    :align: center
 
 .. note:: Did you know the “bgp” script is composed of Python code that

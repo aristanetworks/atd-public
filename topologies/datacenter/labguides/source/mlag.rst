@@ -1,7 +1,7 @@
 MLAG
 ====
 
-.. image:: images/mlag_1.png
+.. image:: images/mlag/nested_mlag_topo_1.png
    :align: center
 
 .. note:: Did you know the “mlag” script is composed of Python code that
@@ -36,7 +36,7 @@ MLAG
               description MLAG PEER LINK - LEAF3
               switchport mode trunk
 
-            interface ethernet 1
+            interface ethernet 1,6
               description MLAG PEER LINK - LEAF3
               channel-group 10 mode active
 

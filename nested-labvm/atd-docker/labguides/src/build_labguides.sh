@@ -1,5 +1,11 @@
 #!/bin/bash
 
+while [ $(cat /etc/atd/ACCESS_INFO.yaml | shyaml get-value login_info.jump_host.pw) == 'REPLACE_PWD' ]
+do
+    echo "Password has not been updated yet. sleeping..."
+    sleep 10
+done
+
 TOPO=$(cat /etc/atd/ACCESS_INFO.yaml | shyaml get-value topology)
 ARISTA_PWD=$(cat /etc/atd/ACCESS_INFO.yaml | shyaml get-value login_info.jump_host.pw)
 

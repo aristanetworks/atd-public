@@ -5,22 +5,22 @@ Let’s create a new CloudVision configlet. CloudVision configlets are
 snippets of configuration that are used to create a switch
 configuration.
 
-All of the switches have a base Configlet Builder that was generated
-from the IP Address Management (IPAM) system. Additional Configlets have
+All of the switches have a base Configlet. Additional Configlets have
 been defined for AAA and VLANs.
 
-1. Log into the Arista Demo Cloud portal with your assigned URL. If you don’t have one, please see your ATD staff.
+1. Log into the Arista Test Drive portal with your assigned URL. If you
+   don’t have one, please see your ATD staff.
 
-.. image:: images/cvp_configlet/cvp_configlet1.png
+.. image:: images/cvp_configlet/nested_cvp_overview_1.png
    :align: center
 
 |
 
-2. Click on the link "Click Here To Access Topology" and navigate to the below page. Click the CVP link on the left side of the screen and accept any SSL warning signs that may pop up.
+2. Click on the link "Click Here To Access Topology" and navigate to the below page. Click the CVP link on the left side of the screen.
 
 |
 
-.. image:: images/cvp_configlet/cvp_configlet2.png
+.. image:: images/cvp_configlet/nested_cvp_landing_1.png
    :align: center
 
 |
