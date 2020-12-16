@@ -142,6 +142,7 @@ services:
       - atd_nginx
     volumes:
       - jenkins_home:/var/jenkins_home
+      # - coder_repo:/home/jenkins/project/labfiles/lab6/repo:rw
   robot:
     container_name: atd-robot
     image: mpergament/aristarobot:latest
@@ -164,8 +165,9 @@ services:
     volumes:
       - /home/arista/arista-dir/apps/coder/coder.yaml:/home/coder/.config/code-server/config.yaml:rw
       - /home/arista/.ssh:/home/coder/.ssh:rw
-      - /home/arista/GUI_Desktop/:/home/coder/project/persist:rw
+      - /home/arista/GUI_Desktop/persist:/home/coder/project/persist:rw
       - /home/arista/arista-dir/hosts:/etc/hosts:ro
+      - /home/arista/arista-dir/apps/coder/labfiles:/home/coder/project/labfiles:rw
   ssh:
     container_name: atd-ssh
     image: attdocker_ssh:1.0
@@ -190,5 +192,6 @@ volumes:
   atd_labguides:
   atd_http:
   jenkins_home:
+  coder_repo:
   cvp_dir:
   nginx_log:

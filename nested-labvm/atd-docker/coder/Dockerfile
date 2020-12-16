@@ -16,15 +16,17 @@ RUN wget --quiet https://raw.githubusercontent.com/aristanetworks/ansible-avd/de
 
 RUN sudo pip3 install -r requirements-dev.txt
 
-RUN mkdir -p /home/coder/project/labfiles/lab4 \
-    /home/coder/project/labfiles/lab6/repo \
-    /home/coder/project/labfiles/lab6/lab \
-    /home/coder/project/labfiles/lab6/lab/roles \
-    /home/coder/project/labfiles/lab6/lab/group_vars
+# RUN mkdir -p /home/coder/project/labfiles/lab4 \
+#     /home/coder/project/labfiles/lab6/repo \
+#     /home/coder/project/labfiles/lab6/lab \
+#     /home/coder/project/labfiles/lab6/lab/roles \
+#     /home/coder/project/labfiles/lab6/lab/group_vars
 
-COPY src/arista/labfiles/. /home/coder/project/labfiles/lab4/
+# COPY src/arista/labfiles/. /home/coder/project/labfiles/lab4/
 
-RUN chown -R coder:coder /home/coder/project/labfiles
+COPY src/.gitconfig /home/coder/
+
+RUN sudo chown -R coder:coder /home/coder
 
 RUN wget --quiet https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh || true \
     && echo 'plugins=(ansible common-aliases safe-paste git jsontools history git-extras)' >> $HOME/.zshrc \
@@ -33,6 +35,6 @@ RUN wget --quiet https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/inst
 
 RUN sudo usermod --shell /bin/zsh coder
 
-VOLUME /home/coder/project/labfiles
+VOLUME /home/coder/project
 
 ENV SHELL /bin/zsh

@@ -88,18 +88,17 @@ Let’s start out with a different looking hosts file, this time with
 every one of your leaf switches in it. Take special note of ``[leafs]`` -
 we’ll be using this later.
 
-Open **Atom**, and create the file below:
+Open the **Programmability IDE**, and create the file below:
 
 .. code-block:: ini
 
     [leafs]
+    192.168.0.12
+    192.168.0.13
     192.168.0.14
     192.168.0.15
-    192.168.0.16
-    192.168.0.17
 
-**Save** the file with the name ``hosts`` into the ``labfiles/lab6/lab`` folder found
-on your desktop.
+**Save** the file with the name ``hosts`` into the ``/home/coder/project/labfiles/lab6/lab`` folder.
 
 .. note:: You will notice that there are existing files and folders.
           Please don’t overwrite anything for this lab.
@@ -115,7 +114,7 @@ Ansible Galaxy is a website where individuals and organizations can
 freely share their roles with each other. In this case, we’ll be using
 the ``arista.eos-bridging`` role to add VLANs.
 
-In **Atom**, create the file below:
+In the **IDE**, create the file below:
 
 .. code-block:: ini
 
@@ -124,8 +123,7 @@ In **Atom**, create the file below:
       roles:
          - arista.eos-bridging
 
-Save the file with the name ``vlan.yml`` into the ``labfiles/lab6/lab`` folder
-found on your desktop.
+Save the file with the name ``vlan.yml`` into the ``/home/coder/project/labfiles/lab6/labb`` folder.
 
 Step #3: Group Variables
 ^^^^^^^^^^^^^^^^^^^^^^^^
@@ -151,7 +149,7 @@ Some more things to know about the file below:
    the \ `readme for the
    role <https://www.google.com/url?q=https://galaxy.ansible.com/arista/eos-bridging/%23readme&sa=D&ust=1523980190047000>`__\ .
 
-Open **Atom** and create the file below:
+In the **IDE** and create the file below:
 
 .. code-block:: yaml
 
@@ -168,14 +166,18 @@ Open **Atom** and create the file below:
        name: default
 
 Save the file with the name ``leafs.yml`` into
-the ``labfiles/lab6/lab/group_vars`` folder found on your desktop.
+the ``/home/coder/project/labfiles/lab6/lab/group_vars`` folder.
 
 Step #4: Jenkins
 ^^^^^^^^^^^^^^^^
 
 Go back to the ATD web landing page, and click on the **Jenkins** link:
 
-.. image:: images/day2_operations_1.png
+Once Jenkins has loaded, click on the **Login** link for access with:
+
+Username: ``arista`` Password: ``{REPLACE_PWD}``
+
+.. image:: images/day2/nested_jenkins_1.png
    :align: center
 
 |
@@ -186,7 +188,7 @@ the window.
 You will be greeted with a screen like the one below. Enter **vlan** as the
 name and select **Freestyle project**.
 
-.. image:: images/day2_operations_2.png
+.. image:: images/day2/nested_jenkins_2.png
    :align: center
 
 Click **OK**.
@@ -194,7 +196,7 @@ Click **OK**.
 Now comes the fun part.
 
 Under **Source Code Management**, check **Git** and
-enter ``/home/aristagui/Desktop/labfiles/lab6/repo`` in the **Repository URL** field.
+enter ``/home/jenkins/project/labfiles/lab6/repo`` in the **Repository URL** field.
 
 .. note:: You will see a warning, ignore it for now.
 
@@ -223,14 +225,19 @@ Step #5: Git
 ^^^^^^^^^^^^
 
 We have to commit our changes into a Git repository for Jenkins to
-detect a change and run our playbook. Let’s go back to our **labvm** and run
+detect a change and run our playbook. Let’s go back to our **IDE** and run
 a few of quick commands for our initial commit.
 
 Open a **terminal** window and type:
 
 .. code-block:: bash
 
-    cd ~/Desktop/labfiles/lab6/lab
+    cd ~/project/labfiles/lab6/lab 
+
+First we will need to prep our "remote" git repository. Type the following command:
+
+.. code-block:: bash
+    git init --bare /home/coder/project/labfiles/lab6/repo
 
 Now enter the following:
 
@@ -239,7 +246,7 @@ Now enter the following:
     git init
     git add .
     git commit -m "Initial commit"
-    git remote add origin /home/aristagui/Desktop/labfiles/lab6/repo
+    git remote add origin /home/coder/project/labfiles/lab6/repo
     git push origin master
 
 Run it
