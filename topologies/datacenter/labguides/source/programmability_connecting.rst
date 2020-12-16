@@ -4,18 +4,19 @@ Connecting to your lab machine
 1. Before we begin, let's reset the environment to clear out previous lab changes.
 If the environment was brought up fresh and you are starting from this point, you can skip step #1.
 
-SSH to the public IP address assigned to the LabAccess jumphost server (this is the IP address shown in the
-"Welcome to Arista's Demo Cloud" picture further below). The username is ``arista`` and the password is ``{REPLACE_PWD}``:
+.. image:: images/program_connecting/nested_connecting_1.png
+
+SSH to the public address assigned to the LabAccess jumphost server (this is the Topology Address shown in the "Welcome to Arista's Test Drive!" picture above). The username is ``arista`` and the password is ``{REPLACE_PWD}``:
 
     .. code-block:: text
 
-       ssh arista@x.x.x.x
-
-You will be greeted with the following menu:
+       ssh arista@{unique_address}.topo.testdrive.arista.com
 
 |
+You will be greeted with the following menu:
 
-.. image:: images/connecting_1.png
+
+.. image:: images/program_connecting/nested_connecting_2.png
    :align: center
 
 |
@@ -30,25 +31,15 @@ information (a URL) from your friendly Arista SE already. If you have not, pleas
 Once you receive your token, click on the link. You will greeted with a
 screen that looks like this:
 
-.. image:: images/programmability_connecting_2.png
+.. image:: images/program_connecting/nested_connecting_landing_1.png
    :align: center
+|
+For these labs, we will be leveraging the **Console Access**, **Programmability IDE** and **WebUI** services. Connect to each of the service by clicking on the corresponding links on the left side.
+Each service will open in a new tab in your browser.
 
-Connect to the topology by clicking the link and click on **Lab Frontend**.
-
-.. image:: images/programmability_connecting_3.png
+.. image:: images/program_connecting/nested_connecting_overview_1.png
    :align: center
+|
+To access each of the services, the credentials are listed on the **Arista Test Drive Lab** overview page in the **Usernames and Passwords** section.
 
-You will be greeted with a screen like this:
-
-.. image:: images/programmability_connecting_4.png
-   :align: center
-
-Login with the username **arista** and the password **@rista123**. This will bring
-you to the ATD Lab Page.  
-
-This lab uses Guacamole to front end both a Linux based desktop (**devbox**)
-and the Arista vEOS virtual leaf/spine lab network. We will primarily
-work out of **devbox**.
-
-.. image:: images/programmability_connecting_5.png
-   :align: center
+These services will be used to provide a ssh access to the lab, coding IDE, and a WebUI for the upcoming programmability labs.
