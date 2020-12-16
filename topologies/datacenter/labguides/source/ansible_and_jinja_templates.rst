@@ -87,7 +87,7 @@ Ansible playbook (``ntp.yml``):
         provider:
           host: "{{ ansible_host }}"
           username: "arista"
-          password: "{REPLACE_ARISTA}"
+          password: "{REPLACE_PWD}"
           authorize: yes
           transport: eapi
           validate_certs: no
@@ -211,7 +211,7 @@ Now let’s create the playbook on your desktop named ``interfaces.yml``:
         provider:
           host: "{{ ansible_host }}"
           username: "arista"
-          password: "{REPLACE_ARISTA}"
+          password: "{REPLACE_PWD}"
           authorize: yes
           transport: eapi
           validate_certs: no

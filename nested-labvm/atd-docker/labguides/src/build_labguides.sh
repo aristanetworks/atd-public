@@ -15,8 +15,7 @@ ARISTA_PWD=$(cat /etc/atd/ACCESS_INFO.yaml | shyaml get-value login_info.jump_ho
 cp -r /opt/atd/topologies/$TOPO/labguides/* /root/labguides/
 
 # Update the Arista user password for connecting to the labvm
-sed -i "s/{REPLACE_PWD}/$ARISTA_PWD/g" /root/labguides/source/connecting.rst
-sed -i "s/{REPLACE_PWD}/$ARISTA_PWD/g" /root/labguides/source/programmability_connecting.rst
+find /root/labguides/source/*  -type f -print0 | xargs -0 sed -i "s/{REPLACE_PWD}/$ARISTA_PWD/g"
 
 # chown -R arista:arista /home/arista/labguides/src/
 

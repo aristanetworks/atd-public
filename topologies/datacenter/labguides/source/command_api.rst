@@ -18,7 +18,7 @@ HTTPS: `https://192.168.0.12`
 .. image:: images/command_api/nested_firefox_1.png
    :align: center
 
-When prompted, enter in the username ``arista`` and ``{REPLACE_ARISTA}`` as the password.
+When prompted, enter in the username ``arista`` and ``{REPLACE_PWD}`` as the password.
 Accept the self-signed SSL certificate, please do so.
 
 You will be greeted with the following window:
@@ -74,7 +74,7 @@ Log into your switch, with a ssh session, or by leveraging the opened tab for th
 
 To get to the ssh menu, type in the menu option **ssh** and press Enter. Next we will connect to **leaf1**, by typing **leaf1** in the menu.
 
-When prompted, enter the arista user's password: ``{REPLACE_ARISTA}``
+When prompted, enter the arista user's password: ``{REPLACE_PWD}``
 
 Now type ``show run sec vlan`` to observe that the VLAN is present:
 
