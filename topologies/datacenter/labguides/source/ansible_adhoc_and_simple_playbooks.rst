@@ -30,18 +30,18 @@ your desktop with the filename ``hosts``.
 .. code-block:: ini
 
     [veos]
-    192.168.0.14
+    192.168.0.12
 
 This is an Ansible hosts file - you might recognize it as INI formatted!
 The top bracketed entry is a group, and the entry below it is a host.
-Save the file to your desktop.
+Save the file to your project directory.
 
 Now, let’s run an ad-hoc command. Open up your handy terminal window,
 and enter:
 
 .. code-block:: bash
 
-    ansible veos -i ~/Desktop/hosts -m raw -a "show version" -u arista -k
+    ansible veos -i hosts -m raw -a "show version" -u arista -k
 
 
 Enter the password **{REPLACE_PWD}** when prompted.
@@ -99,93 +99,99 @@ it’s doing:
 
 .. cssclass:: table-hover
 
-+-----------------------------------+-----------------------------------+
-| **Command**                       | **Description**                   |
-+-----------------------------------+-----------------------------------+
-| ``---``                           | The standard beginning of an      |
-|                                   | Ansible playbook                  |
-+-----------------------------------+-----------------------------------+
-| ``- name: Add a VLAN``            | Names the task. This will be      |
-|                                   | displayed at runtime.             |
-+-----------------------------------+-----------------------------------+
-| ``hosts: 192.168.0.14``           | Defines the host(s) to run        |
-|                                   | against. This is currently set to |
-|                                   | one host, but could be a group!   |
-+-----------------------------------+-----------------------------------+
-| ``gather_facts: no``              | Don’t gather information about    |
-|                                   | the device, just run the command. |
-|                                   | We do this for speed, but you may |
-|                                   | need to use it for some things    |
-+-----------------------------------+-----------------------------------+
-| ``connection: local``             | Sets the task to run from the     |
-|                                   | local machine                     |
-+-----------------------------------+-----------------------------------+
-|   ``vars:``                       | Defines a variable section        |
-+-----------------------------------+-----------------------------------+
-|     ``provider:``                 | Defines a provider section        |
-+-----------------------------------+-----------------------------------+
-|     ``host: "{{ ansible_host }}"``| Sets the host to run against as   |
-|                                   | an Ansible canned variable        |
-|                                   | of ``ansible_host``. This will key|
-|                                   | off ``hosts`` above. Note that    |
-|                                   | Ansible variables use {{ curly    |
-|                                   | brackets }}                       |
-+-----------------------------------+-----------------------------------+
-|       ``username: "arista"``      | Sets the username to ``arista``   |
-+-----------------------------------+-----------------------------------+
-|  ``password: "{REPLACE_PWD}"``           |  Sets the password to ``{REPLACE_PWD}``  |
-+-----------------------------------+-----------------------------------+
-|       ``authorize: yes``          | Enables once connected            |
-+-----------------------------------+-----------------------------------+
-|       ``transport: eapi``         | Uses eAPI instead of the SSH. You |
-|                                   | can do either                     |
-+-----------------------------------+-----------------------------------+
-|       ``validate_certs: no``      | Don’t validate SSL certificates   |
-+-----------------------------------+-----------------------------------+
-|   ``tasks:``                      | Begins the ``tasks`` section      |
-+-----------------------------------+-----------------------------------+
-|     ``- eos_config:``             | Tells Ansible to use              |
-|                                   | the \ `eos_config module          |
-|                                   | <http://docs.ansible              |
-|                                   | .com/ansible/latest/eos_config_mo |
-|                                   | dule.html&sa=D&ust=15239801900020 |
-|                                   | 00>`__\                           |
-+-----------------------------------+-----------------------------------+
-|        ``lines:``                 | Per the ``eos_config`` module,    |
-|                                   | define the configuration lines to |
-|                                   | be issued to the switch. There can|
-|                                   | be more than one!                 |
-+-----------------------------------+-----------------------------------+
-|          ``- name foo``           | The actual line to issue. Note    |
-|                                   | that it starts with a -. The next |
-|                                   | line would start with another -   |
-+-----------------------------------+-----------------------------------+
-|         ``parents: vlan 500``     | The parent of the lines above.    |
-|                                   | This is important for things like |
-|                                   | interfaces or VLANs. There is     |
-|                                   | always a parent above them        |
-+-----------------------------------+-----------------------------------+
-|         ``provider: "{{ provider  | Specifies the provider            |
-| }}"``                             | (connection information). This is |
-|                                   | also a variable, and it keys in   |
-|                                   | on the provider section above     |
-+-----------------------------------+-----------------------------------+
++-----------------------------------+--------------------------------------+
+| **Command**                       | **Description**                      |
++-----------------------------------+--------------------------------------+
+| ``---``                           | The standard beginning of an         |
+|                                   | Ansible playbook                     |
++-----------------------------------+--------------------------------------+
+| ``- name: Add a VLAN``            | Names the task. This will be         |
+|                                   | displayed at runtime.                |
++-----------------------------------+--------------------------------------+
+| ``hosts: 192.168.0.14``           | Defines the host(s) to run           |
+|                                   | against. This is currently set to    |
+|                                   | one host, but could be a group!      |
++-----------------------------------+--------------------------------------+
+| ``gather_facts: no``              | Don’t gather information about       |
+|                                   | the device, just run the command.    |
+|                                   | We do this for speed, but you may    |
+|                                   | need to use it for some things       |
++-----------------------------------+--------------------------------------+
+| ``connection: local``             | Sets the task to run from the        |
+|                                   | local machine                        |
++-----------------------------------+--------------------------------------+
+|   ``vars:``                       | Defines a variable section           |
++-----------------------------------+--------------------------------------+
+|     ``provider:``                 | Defines a provider section           |
++-----------------------------------+--------------------------------------+
+|     ``host: "{{ ansible_host }}"``| Sets the host to run against as      |
+|                                   | an Ansible canned variable           |
+|                                   | of ``ansible_host``. This will key   |
+|                                   | off ``hosts`` above. Note that       |
+|                                   | Ansible variables use {{ curly       |
+|                                   | brackets }}                          |
++-----------------------------------+--------------------------------------+
+|       ``username: "arista"``      | Sets the username to ``arista``      |
++-----------------------------------+--------------------------------------+
+|  ``password: "{REPLACE_PWD}"``       |  Sets the password to ``{REPLACE_PWD}`` |
++-----------------------------------+--------------------------------------+
+|       ``authorize: yes``          | Enables once connected               |
++-----------------------------------+--------------------------------------+
+|       ``transport: eapi``         | Uses eAPI instead of the SSH. You    |
+|                                   | can do either                        |
++-----------------------------------+--------------------------------------+
+|       ``validate_certs: no``      | Don’t validate SSL certificates      |
++-----------------------------------+--------------------------------------+
+|   ``tasks:``                      | Begins the ``tasks`` section         |
++-----------------------------------+--------------------------------------+
+|     ``- eos_config:``             | Tells Ansible to use                 |
+|                                   | the \ `eos_config module             |
+|                                   | <http://docs.ansible                 |
+|                                   | .com/ansible/latest/eos_config_mo    |
+|                                   | dule.html&sa=D&ust=15239801900020    |
+|                                   | 00>`__\                              |
++-----------------------------------+--------------------------------------+
+|        ``lines:``                 | Per the ``eos_config`` module,       |
+|                                   | define the configuration lines to    |
+|                                   | be issued to the switch. There can   |
+|                                   | be more than one!                    |
++-----------------------------------+--------------------------------------+
+|          ``- name foo``           | The actual line to issue. Note       |
+|                                   | that it starts with a -. The next    |
+|                                   | line would start with another -      |
++-----------------------------------+--------------------------------------+
+|         ``parents: vlan 500``     | The parent of the lines above.       |
+|                                   | This is important for things like    |
+|                                   | interfaces or VLANs. There is        |
+|                                   | always a parent above them           |
++-----------------------------------+--------------------------------------+
+|         ``provider: "{{ provider  | Specifies the provider               |
+| }}"``                             | (connection information). This is    |
+|                                   | also a variable, and it keys in      |
+|                                   | on the provider section above        |
++-----------------------------------+--------------------------------------+
 
 For all if of its lines, all this Ansible file is really doing is
 creating a vlan named ``foo`` with an ID of ``500``. Note that while this is just
 adding it to a single device, you could use this to add it to every
 switch in your fleet!
 
+First we will need to update the ``password`` value in the ``provider`` section. 
+
+Replace ``password: arista`` with ``password: {REPLACE_PWD}``
+
+Then save the file.
+
 Let’s go ahead and run it. Open up a Terminal window and type the
 following and hit **Enter**:
 
 .. code-block:: html
 
-    ansible-playbook -i ~/Desktop/labfiles/lab4/lab4-advanced-hosts ~/Desktop/labfiles/lab4/lab4-advanced-playbook.yml
+    ansible-playbook -i labfiles/lab4/lab4-advanced-hosts labfiles/lab4/lab4-advanced-playbook.yml
 
 It’ll look like this when it’s run:
 
-.. image:: images/ansible_adhoc_and_simple_playbooks_1.png
+.. image:: images/ansible_adhoc/nested_adhoc_1.png
    :align: center
 
 Note that it says ok=1 **changed=1**. This is telling you that it ran

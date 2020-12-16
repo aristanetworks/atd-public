@@ -28,11 +28,11 @@ We will use the following script:
 
 .. code-block:: python
 
-    #!/usr/bin/python
+    #!/usr/bin/env python3
 
     import pyeapi
 
-    node = pyeapi.connect(host='192.168.0.14',username='arista',password='{REPLACE_PWD}',return_node=True)
+    node = pyeapi.connect(host='192.168.0.12',username='arista',password='{REPLACE_PWD}',return_node=True)
 
     users = node.api('users')
     
@@ -44,7 +44,7 @@ What does this script do?
 
 **import pyeapi** - this imports the pyeapi module.
 
-**node = pyeapi.connect(host='192.168.0.14',username='arista',password='{REPLACE_PWD}',return_node=True)** -
+**node = pyeapi.connect(host='192.168.0.12',username='arista',password='{REPLACE_PWD}',return_node=True)** -
 instantiates the variable ``node``, and uses pyeapi to create a connection to
 the switch using the username of ``arista`` and the
 password ``{REPLACE_PWD}``. ``return_node`` allows you to use the node object to consume
@@ -70,23 +70,33 @@ the last step, and the Arista role is the predefined default role of
 Write it
 ~~~~~~~~
 
-Create a new file in the Atom editor and either write or paste the code
-in. Save it to your desktop like the previous lab.
+Create a new file in the IDE and either write or paste the code
+in. Save it to your project directory as ``/home/coder/project/add_user.py``.
 
 Run it
 ~~~~~~
 
-Run the script the same way you did in the previous lab (``python
-~/Desktop/your_script_name_here``) - allowing for the different file name.
+Run the script the same way you did in the previous lab (``python3
+add_user.py``) - allowing for the different file name.
 Wait, you didn’t save over your previous work did you?!
 
 --------------
 
 Let’s take a look and see if the user has been added switch to your
-virtual switch using the Ctrl-Alt-Shift trick and type ``show run section
-user``.
+virtual switch. Let's open a new Terminal window, by clicking on the **+** in the Terminal window.
 
-.. image:: images/pyeapi_1.png
+.. image:: images/pyeapi/nested_pyeapi_1.png
+   :align: center
+
+
+Let's ssh directly to the switch.
+
+.. code-block:: shell
+    ssh arista@192.168.0.12
+
+ ``show run section username``.
+
+.. image:: images/pyeapi/nested_pyeapi_2.png
    :align: center
 
 **Success!**

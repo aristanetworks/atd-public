@@ -53,8 +53,8 @@ Jinja template instead of ``lines`` and ``parents`` like we did in lab #4.
 Write it
 ~~~~~~~~
 
-We’re going to create 3 files for this lab in **Atom**. Once you have created
-them, save them to your **desktop**.
+We’re going to create 3 files for this lab in the **IDE**. Once you have created
+them, save them to your **project** directory.
 
 #. A hosts file named ``labhosts``, though you can reuse the one you created
    earlier
@@ -66,7 +66,7 @@ Hosts file (``labhosts``):
 .. code-block:: html
 
     [veos]
-    192.168.0.14
+    192.168.0.12
 
 Jinja2 template (``ntp.j2``):
 
@@ -105,18 +105,21 @@ indicate we’re going to use a Jinja template? Fancy!
 Run it
 ~~~~~~
 
-Assuming that you’ve saved the files to the desktop, let’s run it with
+Assuming that you’ve saved the files to the project directory, let’s run it with
 the following command:
 
 .. code-block:: html
 
-    ansible-playbook -i ~/Desktop/labhosts ~/Desktop/ntp.yml
+    ansible-playbook -i labhosts ntp.yml
+
+.. note:: If you get an error stating about Invalid Input with ``Management1``.
+        Update ``ntp.j2`` and replace ``Management1`` with ``Management0``
 
 If all goes to plan, you will see  ok=1 **changed=1**. If you were to run it
 again, it will show ok=1 **changed=0**. Idempotency strikes again! Feel free
 to check **Leaf1** to make sure the changes are there.
 
-.. image:: images/ansible_and_jinja_templates_1.png
+.. image:: images/ansible_adhoc/nested_adhoc_2.png
    :align: center
 
 For Loops
@@ -154,15 +157,17 @@ Clear as mud? Maybe this variables file will help tie it together:
 
     interfaces:
      - name: Ethernet1
-       description: leaf2.arista.test
+       description: leaf2.atd.lab
      - name: Ethernet2
-       description: spine1.arista.test
+       description: spine1.atd.lab
      - name: Ethernet3
-       description:s pine2.arista.test
+       description: spine2.atd.lab
      - name: Ethernet4
-       description:h ost1
+       description: host1
      - name: Ethernet5
        description: host2
+     - name: Ethernet6
+       description: leaf2.atd.lab
 
 Once you run the template above, it’ll generate the following
 configuration:
@@ -170,21 +175,23 @@ configuration:
 .. code-block:: html
 
     interface Ethernet1
-     description leaf2.arista.test
+     description leaf2.atd.lab
     interface Ethernet2
-     description spine1.arista.test
+     description spine1.atd.lab
     interface Ethernet3
-     description spine2.arista.test
+     description spine2.atd.lab
     interface Ethernet4
      description host1
     interface Ethernet5
      description host2
+    interface Ethernet6
+     description leaf2.atd.lab
 
 Write it
 ~~~~~~~~
 
 We will reuse the hosts file from the last lab, so let’s start by
-creating a Jinja template in **Atom** on your desktop named **interfaces.j2**:
+creating a Jinja template in the **IDE** on in your project directory named **interfaces.j2**:
 
 .. warning:: Please make absolutely certain that keep the proper spacing in the Jinja template, or Ansible will fail. 
              Jinja, like Ansible, is reliant on indentation.
@@ -217,15 +224,17 @@ Now let’s create the playbook on your desktop named ``interfaces.yml``:
           validate_certs: no
         interfaces:
           - name: Ethernet1
-            description: leaf2.arista.test
+            description: leaf2.atd.lab
           - name: Ethernet2
-            description: spine1.arista.test
+            description: spine1.atd.lab
           - name: Ethernet3
-            description: spine2.arista.test
+            description: spine2.atd.lab
           - name: Ethernet4
             description: host1
           - name: Ethernet5
             description: host2
+          - name: Ethernet6
+            description: leaf2.atd.lab
       tasks:
         - eos_config:
             src: interfaces.j2
@@ -239,12 +248,12 @@ lab.
 
 .. code-block:: bash
 
-    ansible-playbook -i ~/Desktop/labhosts ~/Desktop/interfaces.yml
+    ansible-playbook -i labhosts interfaces.yml
 
 You should see  ok=1 **changed=1**. If you were to run it again, it will
 show ok=1 changed=0.
 
-Log into Leaf1 (192.168.0.14) and run ``show interface status`` to see the
+Log into Leaf1 (192.168.0.12) and run ``show interface status`` to see the
 interface names.
 
 Bonus

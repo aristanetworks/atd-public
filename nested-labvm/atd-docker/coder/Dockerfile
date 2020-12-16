@@ -2,9 +2,11 @@ FROM codercom/code-server:3.7.4
 
 RUN sudo apt update
 
-RUN sudo apt install -y python3 git openssh-server vim nano less rsync man-db jq python3-pip wget zsh
+RUN sudo apt install -y python3 git openssh-server vim nano less rsync man-db jq python3-pip wget zsh sshpass
 
 RUN sudo pip3 install --upgrade pip
+
+RUN sudo pip3 install pyeapi jsonrpclib-pelix
 
 RUN wget --quiet https://raw.githubusercontent.com/aristanetworks/ansible-avd/devel/development/requirements.txt
 
@@ -21,6 +23,8 @@ RUN mkdir -p /home/coder/project/labfiles/lab4 \
     /home/coder/project/labfiles/lab6/lab/group_vars
 
 COPY src/arista/labfiles/. /home/coder/project/labfiles/lab4/
+
+RUN chown -R coder:coder /home/coder/project/labfiles
 
 RUN wget --quiet https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh || true \
     && echo 'plugins=(ansible common-aliases safe-paste git jsontools history git-extras)' >> $HOME/.zshrc \
