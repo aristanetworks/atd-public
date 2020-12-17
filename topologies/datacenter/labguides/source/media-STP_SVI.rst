@@ -1,7 +1,7 @@
 Media STP and SVI Lab
 ======================
 
-.. image:: images/media-STP.&.SVI.png
+.. image:: images/media_stp_svi/media_stp_svi.png
    :align: center
 
 .. note:: The Spanning-Tree protocol (STP) was initially invented in 1985 and is one of the oldest networking protocols being used in Layer 2 network topologies today. STP is classified as a network protocol that builds loop-free logical topology for Ethernet (initially bridged) networks.
