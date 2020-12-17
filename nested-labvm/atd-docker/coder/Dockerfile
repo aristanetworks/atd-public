@@ -16,14 +16,6 @@ RUN wget --quiet https://raw.githubusercontent.com/aristanetworks/ansible-avd/de
 
 RUN sudo pip3 install -r requirements-dev.txt
 
-# RUN mkdir -p /home/coder/project/labfiles/lab4 \
-#     /home/coder/project/labfiles/lab6/repo \
-#     /home/coder/project/labfiles/lab6/lab \
-#     /home/coder/project/labfiles/lab6/lab/roles \
-#     /home/coder/project/labfiles/lab6/lab/group_vars
-
-# COPY src/arista/labfiles/. /home/coder/project/labfiles/lab4/
-
 COPY src/.gitconfig /home/coder/
 
 RUN sudo chown -R coder:coder /home/coder
