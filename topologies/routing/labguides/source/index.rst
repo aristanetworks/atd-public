@@ -98,7 +98,7 @@ configurations necessary to deploy IS-IS, Segment Routing, BGP EVPN, etc.
    :maxdepth: 1
    :caption: Routing ATD - Ring Topology - Full LDP and IP-VPN Lab Guide
 
-   ratd_ring_guides/ratd_ring_lab_guides/ratd_mesh_topo_lab_guide.rst
+   ratd_ring_guides/ratd_ring_lab_guides/ratd_ring_topo_lab_guide.rst
    ratd_ring_guides/ratd_ring_lab_guides/isisv6_underlay_lab_guide.rst
    ratd_ring_guides/ratd_ring_lab_guides/ldp_transport_lab_guide.rst
    ratd_ring_guides/ratd_ring_lab_guides/ipvpn_setup_lab_guide.rst
