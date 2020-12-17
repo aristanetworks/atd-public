@@ -1,7 +1,7 @@
 Media Intro to IP Lab
 =====================
 
-.. image:: images/media-IP.Intro.png
+.. image:: images/media_intro/media_ip_intro.png
    :align: center
 
 .. note:: An IP address serves two principal functions. It identifies the host, or more specifically its network interface, and it provides the location of the host in the network, and thus the capability of establishing a path to that host. Its role has been characterized as follows: "A name indicates what we seek. An address indicates where it is. A route indicates how to get there."

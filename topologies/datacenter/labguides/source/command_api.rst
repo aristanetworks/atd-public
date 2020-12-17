@@ -6,24 +6,24 @@ feature. The Command API provides an interface to experiment with
 commands and view their request and response structure without having to
 write a script or program to test it with.
 
-Connect to **labvm** by clicking on labvm in the **Lab Frontend**.
+Connect to the **WebUI** service by clicking on the already open tab, or clicking on the **WebUI** link on the topology landing page.
 
-.. image:: images/commandapi_1.png
+.. image:: images/command_api/nested_connecting_1.png
+   :align: center
+|
+This will launch a **Firefox** instance in your browser located in your topology, not your laptop. Once logged in to access Firefox, to access the switch's Command API, type  should automatically connect to the demo
+switch’s Command API. If it doesn’t, log onto the switch enter the below address into Firefox.
+HTTPS: ``https://192.168.0.12``
+
+.. image:: images/command_api/nested_firefox_1.png
    :align: center
 
-Launch **Google Chrome** from DevBox (not your laptop) via the Guacamole interface. Chrome should automatically connect to the demo
-switch’s Command API. If it doesn’t, log onto the switch via
-HTTPS: `https://192.168.0.14 <https://192.168.0.14>`_
-
-.. image:: images/commandapi_2.png
-   :align: center
-
-When prompted, enter in the username ``arista`` and ``{REPLACE_ARISTA}`` as the password.
+When prompted, enter in the username ``arista`` and ``{REPLACE_PWD}`` as the password.
 Accept the self-signed SSL certificate, please do so.
 
 You will be greeted with the following window:
 
-.. image:: images/commandapi_3.png
+.. image:: images/command_api/nested_firefox_2.png
    :align: center
 
 Get familiar with the interface. Try entering in ``show interfaces`` and
@@ -37,7 +37,7 @@ action is the same way.
 When you successfully issue a command, notice what the response looks
 like:
 
-.. image:: images/commandapi_4.png
+.. image:: images/command_api/commandapi_4.png
    :align: center
 
 The format above is in JSON (JavaScript Object Notation). Every line has
@@ -63,20 +63,25 @@ Now try it with the following:
 
 .. code-block:: html
 
-   enable
    configure
    vlan 1000
    name test
 
 Just like if you were to login to a switch and issue those commands
 normally, the same applies here. The response indicates a success now.
-Log into your switch and observe that the VLAN is present:
 
-.. image:: images/commandapi_5.png
+Log into your switch, with a ssh session, or by leveraging the opened tab for the **Console Access** service. 
+
+To get to the ssh menu, type in the menu option **ssh** and press Enter. Next we will connect to **leaf1**, by typing **leaf1** in the menu.
+
+When prompted, enter the arista user's password: ``{REPLACE_PWD}``
+
+Now type ``show run sec vlan`` to observe that the VLAN is present:
+
+.. image:: images/command_api/nested_eos_1.png
    :align: center
 
-.. note:: To switch between your desktop and the switch, press **Control+Alt+Shift**, click **arista** at the top right of the menu, click **Home** and 
-          then expand **veos** and double click on **leaf1**. To switch back, reverse the process.
+.. note:: To exit out of the EOS CLI, simply type ``exit`` and you will return the ssh menu.
 
 Play around some more if you’d like! Check out the **Overview** and **Command Documentation**
 tabs. Also, this is running on a virtual edition of our switch, so you can also do this at home or in your work lab!
