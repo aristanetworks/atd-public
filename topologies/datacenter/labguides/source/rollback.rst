@@ -19,19 +19,19 @@ we get the checksums, we can ``diff`` them. ``Diff`` shows the difference betwe
 two items.
 
 To find the checksums, we need to use the ``git reflog`` command
-on **devbox**. The ``git reflog`` command lists every commit, their checksum, their
+in the **IDE** terminal. The ``git reflog`` command lists every commit, their checksum, their
 distance from the current commit, and the commit message.
 
-Run ``git reflog`` inside your lab6 directory (``~/Desktop/labfiles/lab6/lab``):
+Run ``git reflog`` inside your lab6 directory (``~/project/labfiles/lab6/lab``):
 
 .. code-block:: bash
 
-    aristagui@labvm:~/Desktop/labfiles/lab6/lab$ git reflog
-    30fed59 HEAD@{0}: commit: Added VLAN 2000 and 3000
-    524c2bb HEAD@{1}: commit: (initial): Initial commit
+    lab git:(master) git reflog
+    116aaae (HEAD -> master, origin/master) HEAD@{0}: commit: Added VLAN 2000 and 3000
+    2ad37af HEAD@{1}: commit (initial): Initial commit
 
-Note the two checksums, ``30fed59`` and ``524c2bb``. Let’s diff them with ``git diff
-524c2bb 30fed59``.
+Note the two checksums, ``116aaae`` and ``2ad37af`` (In this example). Let’s diff them with ``git diff
+2ad37af 116aaae``.
 
 .. note:: Your checksums will be different than in this lab guide. Please
           make sure to use your checksums from git reflog and not the ones in
@@ -39,19 +39,21 @@ Note the two checksums, ``30fed59`` and ``524c2bb``. Let’s diff them with ``gi
 
 .. code-block:: bash
 
-    aristagui@labvm:~/Desktop/labfiles/lab6/lab$ git diff 524c2bb 30fed59
+    lab git:(master) git diff 2ad37af 116aaae
     diff --git a/group_vars/leafs.yml b/group_vars/leafs.yml
-    index c17ea3b..6bf591e 100644
+    index 9481c0c..e6040b8 100644
     --- a/group_vars/leafs.yml
     +++ b/group_vars/leafs.yml
-    @@ -9,6 +9,10 @@ provider:
+    @@ -8,4 +8,9 @@ provider:
+    eos_purge_vlans: true
     vlans:
-       - vlanid: 1001
-         name: default
-    -  - vlanid: 2000
-    -    name: production
-    -  - vlanid: 3000
-    -    name: development
+      - vlanid: 1001
+      -   name: default
+    +   name: default
+    + - vlanid: 2000
+    +   name: production
+    + - vlanid: 3000
+    +   name: development
 
 The ``diff`` shows - next to lines that were removed. If we roll back, we would
 lose anything that’s different. We did want to roll those VLANs back,
@@ -72,17 +74,17 @@ Let’s revert with ``git revert HEAD``.
 
 .. code-block:: bash
 
-    aristagui@labvm:~/Desktop/labfiles/lab6/lab$ git revert HEAD
+    lab git:(master) git revert HEAD
 
 A window will pop up asking you to enter a commit message. Let’s just
 stick with the default. Hit **Ctrl-X** to save.
 
 .. code-block:: bash
 
-    aristagui@labvm:~/Desktop/labfiles/lab6/lab$ git revert HEAD
-    [master b1e1694] Revert "Added VLAN 2000 and 3000"
-    1 file changed, 4 deletions(-)
-
+    lab git:(master) git revert HEAD
+    [master 9534ae0] Revert "Added VLAN 2000 and 3000"
+    1 file changed, 0 insertion(+), 4 deletions(-)
+ 
 Note the 4 deletions - those are the 4 lines in the ``diff`` above. If you
 were to open your group_vars file, you would see that those lines are
 now missing.
@@ -92,23 +94,24 @@ revert:
 
 .. code-block:: bash
 
-    aristagui@labvm:~/Desktop/labfiles/lab6/lab$ git reflog
-    b1e1694 HEAD@{0}: revert: Revert "Added VLAN 2000 and 3000"
-    30fed59 HEAD@{1}: commit: Added VLAN 2000 and 3000
-    524c2bb HEAD@{2}: commit: (initial): Initial commit
+    lab git:(master) git reflog
+    9534ae0 (HEAD -> master) HEAD@{0}: revert: Revert "Added VLAN 2000 and 3000"
+    116aaae (origin/master) HEAD@{1}: commit: Added VLAN 2000 and 3000
+    2ad37af HEAD@{2}: commit (initial): Initial commit
 
 Now let's push our changes to our remote repo so Jenkins can pick up on the changes
 
 .. code-block:: bash
 
-    aristagui@labvm:~/Desktop/labfiles/lab6/lab$ git push origin master
-    Counting objects: 6, done.
-    Delta compression using up to 2 threads.
-    Compressing objects: 100% (5/5), done.
-    Writing objects: 100% (6/6), 783 bytes | 0 bytes/s, done.
-    Total 6 (delta 1), reused 0 (delta 0)
-    To /home/aristagui/Desktop/labfiles/lab6/repo
-        19404fc..983adb8  master -> master
+    lab git:(master) git push origin master
+    Enumerating objects: 7, done.
+    Counting objects: 100% (7/7), done.
+    Delta compression using up to 24 threads
+    Compressing objects: 100% (3/3), done.
+    Writing objects: 100% (4/4), 440 bytes | 440.00 KiB/s, done.
+    Total 4 (delta 1), reused 0 (delta 0)
+    To /home/coder/project/labfiles/lab6/repo
+        116aaae..9534ae0  master -> master
 
 Hurray!
 
