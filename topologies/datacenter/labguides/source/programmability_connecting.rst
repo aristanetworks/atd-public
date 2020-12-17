@@ -4,8 +4,6 @@ Connecting to your lab machine
 1. Before we begin, let's reset the environment to clear out previous lab changes.
 If the environment was brought up fresh and you are starting from this point, you can skip step #1.
 
-.. image:: images/program_connecting/nested_connecting_1.png
-
 SSH to the public address assigned to the LabAccess jumphost server (this is the Topology Address shown in the "Welcome to Arista's Test Drive!" picture above). The username is ``arista`` and the password is ``{REPLACE_PWD}``:
 
     .. code-block:: text

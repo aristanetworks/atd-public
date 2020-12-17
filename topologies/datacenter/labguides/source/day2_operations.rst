@@ -123,7 +123,7 @@ In the **IDE**, create the file below:
       roles:
          - arista.eos-bridging
 
-Save the file with the name ``vlan.yml`` into the ``/home/coder/project/labfiles/lab6/labb`` folder.
+Save the file with the name ``vlan.yml`` into the ``/home/coder/project/labfiles/lab6/lab`` folder.
 
 Step #3: Group Variables
 ^^^^^^^^^^^^^^^^^^^^^^^^
@@ -196,7 +196,7 @@ Click **OK**.
 Now comes the fun part.
 
 Under **Source Code Management**, check **Git** and
-enter ``/home/jenkins/project/labfiles/lab6/repo`` in the **Repository URL** field.
+enter ``/opt/labfiles/lab6/repo`` in the **Repository URL** field.
 
 .. note:: You will see a warning, ignore it for now.
 
@@ -259,7 +259,7 @@ going to use Jenkins to run the playbook.
 At a high level, the workflow of the “Run it” part of the lab looks like
 this:
 
-.. image:: images/day2_operations_3.png
+.. image:: images/day2/nested_jenkins_3.png
    :align: center
 
 Let’s start with Step 1.
@@ -267,7 +267,7 @@ Let’s start with Step 1.
 Step #1: Add a VLAN to the variables file
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Open the ``leafs.yml`` variables file in **Atom**.
+Open the ``leafs.yml`` variables file in the **IDE**.
 
 Add the following highlighted lines directly below the existing text:
 
@@ -289,11 +289,11 @@ Step #2: Add the file to the Git commit and push it
 Now, let’s add the file into Git commit and push it.We’re going to need
 to act somewhat quickly here if you want to see it run, so get ready!
 
-In a **terminal** window, type:
+In the **terminal** window, type:
 
 .. code-block:: bash
 
-    cd ~/Desktop/labfiles/lab6/lab
+    cd ~/project/labfiles/lab6/lab
 
 Now enter the following:
 
@@ -311,7 +311,7 @@ Step #3: Jenkins
 Depending on how fast you were able to switch to Jenkins, you will see
 different things. If you were quick, you will see this:
 
-.. image:: images/day2_operations_4.png
+.. image:: images/day2/nested_jenkins_4.png
    :align: center
 
 See the **vlan** build running? No worries if you weren’t able to see it,
@@ -320,13 +320,13 @@ went.
 
 From the main screen, click on **vlan**:
 
-.. image:: images/day2_operations_5.png
+.. image:: images/day2/nested_jenkins_5.png
    :align: center
 
 On the left hand side, click on the latest build which should be **#3**, but
 could be a higher or lower number.
 
-.. image:: images/day2_operations_6.png
+.. image:: images/day2/nested_jenkins_6.png
    :align: center
 
 In the left hand menu, click **Console Output**.  Scroll all the way to the
@@ -334,12 +334,11 @@ bottom to see:
 
 .. code-block:: html
 
-    PLAY RECAP
-    ***************************************************************************
-    192.168.0.14               : ok=7    changed=2    unreachable=0    failed=0
-    192.168.0.15               : ok=7    changed=2    unreachable=0    failed=0
-    192.168.0.16               : ok=7    changed=2    unreachable=0    failed=0
-    192.168.0.17               : ok=7    changed=2    unreachable=0    failed=0
+    PLAY RECAP *********************************************************************
+    192.168.0.12               : ok=7    changed=1    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0   
+    192.168.0.13               : ok=7    changed=1    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0   
+    192.168.0.14               : ok=7    changed=1    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0   
+    192.168.0.15               : ok=7    changed=1    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0   
 
 Woot, sweet success!
 

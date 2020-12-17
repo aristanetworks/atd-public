@@ -13,7 +13,7 @@ Connect to the **WebUI** service by clicking on the already open tab, or clicki
 |
 This will launch a **Firefox** instance in your browser located in your topology, not your laptop. Once logged in to access Firefox, to access the switch's Command API, type  should automatically connect to the demo
 switch’s Command API. If it doesn’t, log onto the switch enter the below address into Firefox.
-HTTPS: `https://192.168.0.12`
+HTTPS: ``https://192.168.0.12``
 
 .. image:: images/command_api/nested_firefox_1.png
    :align: center
