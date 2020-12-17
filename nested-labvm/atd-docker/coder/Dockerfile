@@ -2,9 +2,11 @@ FROM codercom/code-server:3.7.4
 
 RUN sudo apt update
 
-RUN sudo apt install -y python3 git openssh-server vim nano less rsync man-db jq python3-pip wget zsh
+RUN sudo apt install -y python3 git openssh-server vim nano less rsync man-db jq python3-pip wget zsh sshpass
 
 RUN sudo pip3 install --upgrade pip
+
+RUN sudo pip3 install pyeapi jsonrpclib-pelix
 
 RUN wget --quiet https://raw.githubusercontent.com/aristanetworks/ansible-avd/devel/development/requirements.txt
 
@@ -14,13 +16,9 @@ RUN wget --quiet https://raw.githubusercontent.com/aristanetworks/ansible-avd/de
 
 RUN sudo pip3 install -r requirements-dev.txt
 
-RUN mkdir -p /home/coder/project/labfiles/lab4 \
-    /home/coder/project/labfiles/lab6/repo \
-    /home/coder/project/labfiles/lab6/lab \
-    /home/coder/project/labfiles/lab6/lab/roles \
-    /home/coder/project/labfiles/lab6/lab/group_vars
+COPY src/.gitconfig /home/coder/
 
-COPY src/arista/labfiles/. /home/coder/project/labfiles/lab4/
+RUN sudo chown -R coder:coder /home/coder
 
 RUN wget --quiet https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh || true \
     && echo 'plugins=(ansible common-aliases safe-paste git jsontools history git-extras)' >> $HOME/.zshrc \
@@ -29,6 +27,6 @@ RUN wget --quiet https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/inst
 
 RUN sudo usermod --shell /bin/zsh coder
 
-VOLUME /home/coder/project/labfiles
+VOLUME /home/coder/project
 
 ENV SHELL /bin/zsh

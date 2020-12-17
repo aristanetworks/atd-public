@@ -1,7 +1,7 @@
 CVX
 ====
 
-.. image:: images/cvx_1.png
+.. image:: images/cvx/nested_cvx_topo_1.png
    :align: center
 
 .. note:: Did you know the CVX stands for CloudVision eXchange? CVX is simply a virtual instance of Arista's EOS known as vEOS. CVX can be run in Standalone mode (Single VM) or Multi-node (up to 3 VMs) cluster.
@@ -68,7 +68,7 @@ CVX
 
             configure
             management cvx
-              server host 192.168.0.44
+              server host 192.168.0.18
               no shutdown
 
    2. On **Leaf1**, **Leaf2**, & **Leaf4** add the CVX/VCS control place config and also remove the explicit HER flood list VTEPs. Since CVX will create the flood list for us, we don't need to explicit declare it now.

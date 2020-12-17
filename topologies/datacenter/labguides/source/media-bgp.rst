@@ -1,7 +1,7 @@
 Media BGP Lab
 =============
 
-.. image:: images/media-BGP.png
+.. image:: images/media_bgp/media_bgp.png
    :align: center
 
 .. note:: The Border Gateway Protocol (BGP) makes routing decisions based on paths (protocol is classified as a path vector) and is widely used in the backbone of the internet to redistribute information

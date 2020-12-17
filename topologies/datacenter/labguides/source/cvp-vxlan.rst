@@ -13,7 +13,7 @@ VxLAN
 
 1. Log into CloudVision and find **leaf3** on the **Devices** page
 
-* The username to access CloudVision is ``arista`` and the password is ``{REPLACE_ARISTA}``
+* The username to access CloudVision is ``arista`` and the password is ``{REPLACE_PWD}``
    
 * Search for ``leaf3`` in the **Device** column of the **inventory** table.
 

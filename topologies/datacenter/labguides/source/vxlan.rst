@@ -1,7 +1,7 @@
 VxLAN
 =====
 
-.. image:: images/vxlan_1.png
+.. image:: images/vxlan/nested_vxlan_topo_1.png
    :align: center
 
 .. note:: Did you know the ``vxlan`` script is composed of Python code that

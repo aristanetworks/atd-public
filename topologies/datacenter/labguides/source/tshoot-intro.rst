@@ -1,7 +1,7 @@
 Troubleshooting Introduction
 ============================
 
-.. image:: images/tshoot_intro_1.png
+.. image:: images/tshoot_intro/tshoot_intro_1.png
    :align: center
 
 .. note:: A set of possible answers are available here_. This hyperlink is only available to Arista employees.

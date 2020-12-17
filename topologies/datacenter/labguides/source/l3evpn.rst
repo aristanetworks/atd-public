@@ -1,7 +1,7 @@
 L3 EVPN
 =======
 
-.. image:: images/l3evpn.png
+.. image:: images/l3evpn/nested_l3evpn_topo_1.png
    :align: center
 
 .. note:: This lab exercise will not enable MLAG.
@@ -49,6 +49,9 @@ L3 EVPN
               description HOST2
               channel-group 5 mode active
               no shutdown
+            !
+            interface Ethernet6
+              shutdown
             !
             interface Loopback0
               ip address 172.16.0.5/32

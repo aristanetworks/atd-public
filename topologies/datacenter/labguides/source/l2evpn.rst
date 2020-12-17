@@ -2,7 +2,7 @@
 L2 EVPN
 =======
 
-.. image:: images/l2evpn.png
+.. image:: images/l2evpn/nested_l2evpn_topo_1.png
    :align: center
 
 .. note:: This lab exercise will not enable MLAG.
@@ -47,6 +47,9 @@ L2 EVPN
           lacp timer fast
         !
         interface Ethernet5
+          shutdown
+        !
+        interface Ethernet6
           shutdown
         !
         interface Loopback0
