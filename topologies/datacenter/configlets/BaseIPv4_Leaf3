@@ -4,8 +4,6 @@ hostname leaf3
 !
 interface Management1
    ip address 192.168.0.14/24
-   no lldp transmit
-   no lldp receive
 !
 ip routing
 !! ip route 0.0.0.0/0 192.168.0.1

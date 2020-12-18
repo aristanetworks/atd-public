@@ -33,8 +33,6 @@ interface Ethernet4
    ip address 20.20.20.100/24
 !
 interface Management1
-   no lldp transmit
-   no lldp receive
    ip address 192.168.0.16/24
 !
 ip route vrf HostB 0.0.0.0/0 20.20.20.1
