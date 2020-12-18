@@ -19,5 +19,3 @@ interface Loopback0
 !
 interface Management1
    ip address 192.168.0.12/24
-   no lldp transmit
-   no lldp receive
