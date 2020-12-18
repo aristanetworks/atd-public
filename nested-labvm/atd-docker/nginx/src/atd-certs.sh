@@ -5,4 +5,6 @@ PROJECT=$(cut -d':' -f2 <<<$(grep project /etc/atd/ACCESS_INFO.yaml) | awk '{pri
 if [ $PROJECT ]
 then
   cp -r /opt/nginx/certs/$PROJECT/* /etc/nginx/certs
+else
+  cp -r /opt/nginx/certs/alpha-atds/* /etc/nginx/certs
 fi
