@@ -238,3 +238,4 @@ servers:
         - neighborDevice: leaf4
           neighborPort: Ethernet12
           port: Ethernet2
+additional_ssh_nodes:
