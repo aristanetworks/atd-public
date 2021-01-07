@@ -50,6 +50,7 @@ topologies:
               - 4.24.1F
     desc: 'Two Spines, Four Leafs. Focused on EOS fundamentals within the Data Center.'
     name: 'Datacenter'
+    title: 'Datacenter Lab'
     access: standard
   routing:
     dev:
@@ -89,6 +90,7 @@ topologies:
               - 4.24.1F
     desc: 'Twenty nodes. Focused on advanced routing, L2VPN and L3VPN topics'
     name: 'Advanced Routing'
+    title: 'Advanced Routing Lab'
     access: standard
   training:
     dev:
@@ -113,4 +115,5 @@ topologies:
               - 4.24.1F
     desc: 'Four Spines, Four Leafs. For use by the Arista Training Team.'
     name: 'Training'
+    title: 'Training Lab'
     access: admin
