@@ -1,4 +1,4 @@
-datacenter:
+training-level2:
   image: "atd-topo.png"
   nodes:
     Spine1:
