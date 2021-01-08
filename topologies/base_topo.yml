@@ -52,6 +52,8 @@ topologies:
     name: 'Datacenter'
     title: 'Datacenter Lab'
     access: standard
+    disable_links: []
+    labguides: self
   routing:
     dev:
       veos:
@@ -92,6 +94,8 @@ topologies:
     name: 'Advanced Routing'
     title: 'Advanced Routing Lab'
     access: standard
+    disable_links: []
+    labguides: self
   training:
     dev:
       veos:
@@ -117,6 +121,8 @@ topologies:
     name: 'Training'
     title: 'Training Lab'
     access: admin
+    disable_links: [labguides, jenkins]
+    labguides: self
   # training-level2:
   #   dev:
   #     veos:
@@ -142,3 +148,32 @@ topologies:
   #   name: 'Training - Level 2'
   #   title: 'Training Level 2 Lab'
   #   access: admin
+  #   disable_links: [labguides, jenkins]
+  #   labguides: self
+  # training-level3:
+  #   dev:
+  #     veos:
+  #       cpu: 32
+  #       ram: 64
+  #       cvp:
+  #         2020.2.3:
+  #           branch: nested-release
+  #           image: base-training-e4-24-1f-c2020-1-1-20201124-u
+  #           eos:
+  #             - 4.24.2.2F
+  #   prod:
+  #     veos:
+  #       cpu: 32
+  #       ram: 64
+  #       cvp:
+  #         2020.2.3:
+  #           branch: nested-release
+  #           image: base-training-e4-24-1f-c2020-1-1-20201124-u
+  #           eos:
+  #             - 4.24.2.2F
+  #   desc: 'Level 3 Training Lab. For use by the Arista Training Team.'
+  #   name: 'Training - Level 3'
+  #   title: 'Training Level 3 Lab'
+  #   access: admin
+  #   disable_links: [labguides, jenkins]
+  #   labguides: self
