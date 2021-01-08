@@ -70,11 +70,7 @@ su atdadmin -c 'bash docker_build.sh'
 export ArID=$(id -u arista)
 export ArGD=$(id -g arista)
 
-/usr/local/bin/docker-compose up -d --remove-orphans
-
-su atdadmin -c 'docker restart atd-login'
-docker restart atd-coder
-docker restart atd-nginx
+/usr/local/bin/docker-compose up -d --remove-orphans --force-recreate
 
 echo 'y' | docker image prune
 
