@@ -36,6 +36,11 @@ accounts = {
 }
 
 TOPO = host_yaml['topology']
+# Add a check for the title parameter for legacy deployment catches
+if 'title' in host_yaml:
+    TITLE = host_yaml['title']
+else:
+    TITLE = 'Test Drive Lab'
 
 class BaseHandler(tornado.web.RequestHandler):
     def get_current_user(self):
@@ -93,7 +98,8 @@ class topoRequestHandler(BaseHandler):
             self.render(
                 BASE_PATH + 'index.html',
                 NODES = MOD_YAML[TOPO]['nodes'],
-                ARISTA_PWD=host_yaml['login_info']['jump_host']['pw']
+                ARISTA_PWD=host_yaml['login_info']['jump_host']['pw'],
+                topo_title = TITLE
             )
     
 # ===============================
