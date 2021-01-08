@@ -95,11 +95,24 @@ class topoRequestHandler(BaseHandler):
                 self.redirect('/login')
             return()
         else:
+            if 'disabled_links' in host_yaml:
+                disable_links = host_yaml['disabled_links']
+            else:
+                disable_links = []
+            if 'labguides' in host_yaml:
+                if host_yaml['labguides'] == 'self':
+                    labguides = '/labguides/index.html'
+                else:
+                    labguides = host_yaml['labguides']
+            else:
+                labguides = '/labguides/index.html'
             self.render(
                 BASE_PATH + 'index.html',
                 NODES = MOD_YAML[TOPO]['nodes'],
                 ARISTA_PWD=host_yaml['login_info']['jump_host']['pw'],
-                topo_title = TITLE
+                topo_title = TITLE,
+                disable_links = disable_links,
+                labguides = labguides
             )
     
 # ===============================
