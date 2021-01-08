@@ -4,6 +4,10 @@ daemon TerminAttr
 !
 dns domain atd.lab
 !
+service routing protocols model multi-agent
+!
+ip routing
+!
 ntp server 192.168.0.1 iburst source Management1
 !
 radius-server host 192.168.0.1 key 7 0207165218120E
