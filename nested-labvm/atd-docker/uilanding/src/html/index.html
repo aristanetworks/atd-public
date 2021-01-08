@@ -25,27 +25,36 @@
                 <br>
                 <img src="images/logotransparent.png" class="arista-logo">
                 <hr class="hr">
+                {% if "labguides" not in disable_links %}
                 <li>
-                    <a href="/labguides/index.html" target="_blank">Lab Guides</a> <a href="/labguides/ATD.pdf" target="_blank">(PDF)</a>
+                    <a href="{{ labguides }}" target="_blank">Lab Guides</a> <a href="/labguides/ATD.pdf" target="_blank">(PDF)</a>
                 </li>
+                {% endif %}
+                {% if "console" not in disable_links %}
                 <li>
                     <a href="/ssh/host/192.168.0.1" target="_blank">Console Access</a>
                 </li>
+                {% endif %}
+                {% if "ide" not in disable_links %}
                 <li>
                     <a href="/coder" target="_blank">Programmability IDE</a>
                 </li>
+                {% endif %}
+                {% if "webui" not in disable_links %}
                 <li>
                     <a href="/firefox" target="_blank">WebUI</a>
                 </li>
-                <!-- <li>
-                    <a href="/guacamole" target="_blank">Lab Frontend</a>
-                </li> -->
+                {% endif %}
+                {% if "cvp" not in disable_links %}
                 <li>
                     <a href="/cv" target="_blank">CVP</a>
                 </li>
+                {% endif %}
+                {% if "jenkins" not in disable_links %}
                 <li>
                     <a href="/jenkins" target="_blank">Jenkins</a>
                 </li>
+                {% endif %}
             </ul>
         </div>
         <!-- /#sidebar-wrapper -->
