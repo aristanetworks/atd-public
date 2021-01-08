@@ -6,19 +6,19 @@ topologies:
         cpu: 24
         ram: 36
         cvp:
-          2020.1:
+          2020.1.1:
             branch: nested/2020.1
             image: base-atd-datacenter-ceos-c2020-1-1-20210107
             eos:
               - 4.24.1.1F
               - 4.24.2.1F
-          2020.2:
+          2020.2.3:
             branch: nested-release
             image: base-atd-datacenter-ceos-c2020-2-3-20210107
             eos:
               - 4.24.1.1F
               - 4.24.2.1F
-          2020.4:
+          2020.4.0:
             branch: nested-release
             image: base-atd-datacenter-ceos-c2020-4-0-20201217u
             eos:
@@ -28,12 +28,12 @@ topologies:
         cpu: 30
         ram: 64
         cvp:
-          2020.1:
+          2020.1.1:
             branch: nested/2020.1
             image: base-atd-datacenter-e4-24-1f-c2020-1-1-20210107
             eos:
               - 4.24.1F
-          2020.2:
+          2020.2.3:
             branch: nested-release
             image: base-atd-datacenter-e4-24-2-1f-c2020-2-3-20210107
             eos:
@@ -43,7 +43,7 @@ topologies:
         cpu: 30
         ram: 64
         cvp:
-          2020.1:
+          2020.1.1:
             branch: v2020.1-20201124a
             image: base-atd-datacenter-e4-24-1f-c2020-1-1-20201124-u
             eos:
@@ -58,12 +58,12 @@ topologies:
         cpu: 44
         ram: 90
         cvp:
-          2020.1:
+          2020.1.1:
             branch: nested/2020.1
             image: base-atd-routing-e4-24-1f-c2020-1-1-20210107
             eos:
               - 4.24.1F
-          2020.2:
+          2020.2.3:
             branch: nested-release
             image: base-atd-routing-e4-24-2-1f-c2020-2-3-20210107
             eos:
@@ -72,7 +72,7 @@ topologies:
         cpu: 24
         ram: 54
         cvp:
-          2020.1:
+          2020.1.1:
             branch: nested/2020.1
             image: base-atd-routing-ceos-c2020-1-1-20210107
             eos:
@@ -83,7 +83,7 @@ topologies:
         cpu: 44
         ram: 90
         cvp:
-          2020.1:
+          2020.1.1:
             branch: v2020.1-20201124a
             image: base-atd-routing-e4-24-1f-c2020-1-1-20201124-u
             eos:
@@ -98,7 +98,7 @@ topologies:
         cpu: 36
         ram: 72
         cvp:
-          2020.1:
+          2020.1.1:
             branch: nested/2020.1
             image: base-training-e4-24-1f-c2020-1-1-20201124-u
             eos:
@@ -108,7 +108,7 @@ topologies:
         cpu: 36
         ram: 72
         cvp:
-          2020.1:
+          2020.1.1:
             branch: v2020.1-20201124a
             image: base-training-e4-24-1f-c2020-1-1-20201124-u
             eos:
