@@ -23,10 +23,11 @@ KOUT_LINES = ['#!/bin/bash','']
 
 
 class vNODE():
-    def __init__(self, node_name, node_ip, node_neighbors):
+    def __init__(self, node_name, node_ip, node_mac, node_neighbors):
         self.name = node_name
         self.name_short = parseNames(node_name)['code']
         self.ip = node_ip
+        self.sys_mac = node_mac
         self.intfs = {}
         self.portMappings(node_neighbors)
 
@@ -187,7 +188,11 @@ def main(uargs):
     # Start to build out Node create and Network creation
     for vdev in NODES:
         vdevn = list(vdev.keys())[0]
-        VEOS_NODES[vdevn] = vNODE(vdevn, vdev[vdevn]['ip_addr'], vdev[vdevn]['neighbors'])
+        if 'sys_mac' in vdev[vdevn]:
+            v_sys_mac = vdev[vdevn]['sys_mac']
+        else:
+            v_sys_mac = False
+        VEOS_NODES[vdevn] = vNODE(vdevn, vdev[vdevn]['ip_addr'], v_sys_mac, vdev[vdevn]['neighbors'])
     # Output as script OVS Bridge creation
     createOVS(TOPO_TAG)
     # Output as script OVS Bridge deletion
@@ -308,9 +313,13 @@ def main(uargs):
             })
             ET.SubElement(tmp_disk, 'alias', attrib={'name': 'ide0-0-0'})
             # Starting interface section
+            if VEOS_NODES[vdev].sys_mac:
+                tmp_sys_mac = VEOS_NODES[vdev].sys_mac
+            else:
+                tmp_sys_mac = '00:1c:73:{0}:c6:01'.format(createMac('veos', node_counter))
             tmp_int = ET.SubElement(xdev, 'interface', attrib={'type': 'bridge'})
             ET.SubElement(tmp_int, 'source', attrib={'bridge': 'vmgmt'})
-            ET.SubElement(tmp_int, 'mac', attrib={'address': '00:1c:73:{0}:c6:01'.format(createMac('veos', node_counter))})
+            ET.SubElement(tmp_int, 'mac', attrib={'address': tmp_sys_mac})
             ET.SubElement(tmp_int, 'target', attrib={'dev': vdev})
             ET.SubElement(tmp_int, 'model', attrib={'type': 'virtio'})
             ET.SubElement(tmp_int, 'address', attrib={

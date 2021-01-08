@@ -74,6 +74,7 @@ export ArGD=$(id -g arista)
 
 su atdadmin -c 'docker restart atd-login'
 docker restart atd-coder
+docker restart atd-nginx
 
 echo 'y' | docker image prune
 

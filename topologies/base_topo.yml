@@ -6,19 +6,19 @@ topologies:
         cpu: 24
         ram: 36
         cvp:
-          2020.1:
+          2020.1.1:
             branch: nested/2020.1
-            image: base-atd-datacenter-ceos-c2020-1-1-20201217u
+            image: base-atd-datacenter-ceos-c2020-1-1-20210107
             eos:
               - 4.24.1.1F
               - 4.24.2.1F
-          2020.2:
+          2020.2.3:
             branch: nested-release
-            image: base-atd-datacenter-ceos-c2020-2-1-20201217u
+            image: base-atd-datacenter-ceos-c2020-2-3-20210107
             eos:
               - 4.24.1.1F
               - 4.24.2.1F
-          2020.4:
+          2020.4.0:
             branch: nested-release
             image: base-atd-datacenter-ceos-c2020-4-0-20201217u
             eos:
@@ -28,14 +28,14 @@ topologies:
         cpu: 30
         ram: 64
         cvp:
-          2020.1:
+          2020.1.1:
             branch: nested/2020.1
-            image: base-atd-datacenter-e4-24-1f-c2020-1-1-20201217u
+            image: base-atd-datacenter-e4-24-1f-c2020-1-1-20210107
             eos:
               - 4.24.1F
-          2020.2:
+          2020.2.3:
             branch: nested-release
-            image: base-atd-datacenter-e4-24-2-1f-c2020-2-1-20201217u
+            image: base-atd-datacenter-e4-24-2-1f-c2020-2-3-20210107
             eos:
               - 4.24.2.1F
     prod:
@@ -43,13 +43,14 @@ topologies:
         cpu: 30
         ram: 64
         cvp:
-          2020.1:
+          2020.1.1:
             branch: v2020.1-20201124a
             image: base-atd-datacenter-e4-24-1f-c2020-1-1-20201124-u
             eos:
               - 4.24.1F
     desc: 'Two Spines, Four Leafs. Focused on EOS fundamentals within the Data Center.'
     name: 'Datacenter'
+    title: 'Datacenter Lab'
     access: standard
   routing:
     dev:
@@ -57,23 +58,23 @@ topologies:
         cpu: 44
         ram: 90
         cvp:
-          2020.1:
+          2020.1.1:
             branch: nested/2020.1
-            image: base-atd-routing-e4-24-1f-c2020-1-1-20201217u
+            image: base-atd-routing-e4-24-1f-c2020-1-1-20210107
             eos:
               - 4.24.1F
-          2020.2:
+          2020.2.3:
             branch: nested-release
-            image: base-atd-routing-e4-24-2-1f-c2020-2-1-20201217u
+            image: base-atd-routing-e4-24-2-1f-c2020-2-3-20210107
             eos:
               - 4.24.2.1F
       ceos:
         cpu: 24
         ram: 54
         cvp:
-          2020.1:
+          2020.1.1:
             branch: nested/2020.1
-            image: base-atd-routing-ceos-c2020-1-1-20201217u
+            image: base-atd-routing-ceos-c2020-1-1-20210107
             eos:
               - 4.24.1.1F
               - 4.24.2.1F
@@ -82,13 +83,14 @@ topologies:
         cpu: 44
         ram: 90
         cvp:
-          2020.1:
+          2020.1.1:
             branch: v2020.1-20201124a
             image: base-atd-routing-e4-24-1f-c2020-1-1-20201124-u
             eos:
               - 4.24.1F
     desc: 'Twenty nodes. Focused on advanced routing, L2VPN and L3VPN topics'
     name: 'Advanced Routing'
+    title: 'Advanced Routing Lab'
     access: standard
   training:
     dev:
@@ -96,7 +98,7 @@ topologies:
         cpu: 36
         ram: 72
         cvp:
-          2020.1:
+          2020.1.1:
             branch: nested/2020.1
             image: base-training-e4-24-1f-c2020-1-1-20201124-u
             eos:
@@ -106,11 +108,37 @@ topologies:
         cpu: 36
         ram: 72
         cvp:
-          2020.1:
+          2020.1.1:
             branch: v2020.1-20201124a
             image: base-training-e4-24-1f-c2020-1-1-20201124-u
             eos:
               - 4.24.1F
     desc: 'Four Spines, Four Leafs. For use by the Arista Training Team.'
     name: 'Training'
+    title: 'Training Lab'
     access: admin
+  # training-level2:
+  #   dev:
+  #     veos:
+  #       cpu: 32
+  #       ram: 64
+  #       cvp:
+  #         2020.2.3:
+  #           branch: nested-release
+  #           image: base-training-e4-24-1f-c2020-1-1-20201124-u
+  #           eos:
+  #             - 4.24.2.2F
+  #   prod:
+  #     veos:
+  #       cpu: 32
+  #       ram: 64
+  #       cvp:
+  #         2020.2.3:
+  #           branch: nested-release
+  #           image: base-training-e4-24-1f-c2020-1-1-20201124-u
+  #           eos:
+  #             - 4.24.2.2F
+  #   desc: 'Level 2 Training Lab. For use by the Arista Training Team.'
+  #   name: 'Training - Level 2'
+  #   title: 'Training Level 2 Lab'
+  #   access: admin
