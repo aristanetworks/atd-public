@@ -1,4 +1,4 @@
-datacenter:
+topology:
   image: "atd-topo.png"
   nodes:
     Spine1:

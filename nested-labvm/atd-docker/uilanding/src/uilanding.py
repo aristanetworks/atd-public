@@ -108,7 +108,7 @@ class topoRequestHandler(BaseHandler):
                 labguides = '/labguides/index.html'
             self.render(
                 BASE_PATH + 'index.html',
-                NODES = MOD_YAML[TOPO]['nodes'],
+                NODES = MOD_YAML['topology']['nodes'],
                 ARISTA_PWD=host_yaml['login_info']['jump_host']['pw'],
                 topo_title = TITLE,
                 disable_links = disable_links,

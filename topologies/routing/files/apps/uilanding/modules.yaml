@@ -1,4 +1,4 @@
-routing:
+topology:
   image: "atd-topo.png"
   nodes:
     eos1:
