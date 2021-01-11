@@ -104,11 +104,22 @@ def main():
       if configletName not in ignoreConfiglets:
          with open(gitTempPath + configletPath + configletName, 'r') as configletData:
             configletConfig=configletData.read()
+         new_configletName = configletName.replace(".py","")
          # Add check for ConfigletBuilder
          if '.py' in configletName:
-            new_configletName = configletName.replace(".py","")
-            res = cvp_clnt.impConfiglet("builder",new_configletName,configletConfig)
+            # Check for a form file
+            if configletName.replace('.py', '.form') in configlets:
+               pS("INFO", "Form data found for {0}".format(new_configletName))
+               with open(gitTempPath + configletPath + configletName.replace('.py', '.form'), 'r') as configletData:
+                  configletForm = configletData.read()
+               configletFormData = yaml.safe_load(configletForm)['FormList']
+            else:
+               configletFormData = []
+            res = cvp_clnt.impConfiglet("builder",new_configletName,configletConfig, configletFormData)
             pS("OK", "{0} Configlet Builder: {1}".format(res[0],new_configletName))
+         elif '.form' in configletName:
+            # Ignoring .form files here
+            pass
          else:
             res = cvp_clnt.impConfiglet("static",configletName,configletConfig)
             pS("OK", "{0} Configlet: {1}".format(res[0],configletName))

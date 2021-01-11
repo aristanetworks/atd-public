@@ -82,6 +82,82 @@ def pS(mstat,mtype):
     mmes = "\t" + mtype
     print("[{0}] {1}".format(mstat,mmes.expandtabs(7 - len(mstat))))
 
+# ============================================
+# CVP Utility Functions
+# ============================================
+
+def checkConnected(cvp_clnt, NODES):
+    """
+    Function to check if all nodes have connected and
+    are reachable via ping
+    Parameters:
+    cvp_clnt = CVP rCVPAPI client (object)
+    NODES = EOS Node yaml (dict)
+    """
+    tmp_device_count = len(cvp_clnt.inventory)
+    while len(NODES) > tmp_device_count:
+        pS("INFO", "Only {0} out of {1} nodes have registered to CVP. Sleeping {2} seconds.".format(tmp_device_count, len(NODES), sleep_delay))
+        sleep(sleep_delay)
+        cvp_clnt.getDeviceInventory()
+        tmp_device_count = len(cvp_clnt.inventory)
+    pS("OK", "All {0} out of {1} nodes have registered to CVP.".format(tmp_device_count, len(NODES)))
+    pS("INFO", "Checking to see if all nodes are reachable")
+    # Make sure all nodes are up and reachable
+    for vnode in cvp_clnt.inventory:
+        while True:
+            vresponse = cvp_clnt.ipConnectivityTest(cvp_clnt.inventory[vnode]['ipAddress'])
+            if 'data' in vresponse:
+                if vresponse['data'] == 'success':
+                    pS("OK", "{0} is up and reachable at {1}".format(vnode, cvp_clnt.inventory[vnode]['ipAddress']))
+                    break
+            else:
+                pS("INFO", "{0} is NOT reachable at {1}. Sleeping {2} seconds.".format(vnode, cvp_clnt.inventory[vnode]['ipAddress'], sleep_delay))
+                sleep(sleep_delay)
+    pS("OK", "All Devices are registered and reachable.")
+    return(True)
+
+
+def importConfiglets(cvp_clnt, cfg_dir):
+    """
+    Function to import configlets into CVP
+    Parameters:
+    cvp_clnt = CVP rCVPAPI client (object)
+    cfg_dir = Configlet directory (str)
+    """
+    if path.exists(cfg_dir):
+        pS("OK","Configlet directory exists")
+        pro_cfglt = listdir(cfg_dir)
+        for tmp_cfg in pro_cfglt:
+            if '.py' in tmp_cfg:
+                pS("INFO","Adding/Updating {0} configlet builder.".format(tmp_cfg))
+                cbname = tmp_cfg.replace('.py','')
+                # Check for a form file
+                if tmp_cfg.replace('.py', '.form') in pro_cfglt:
+                    pS("INFO", "Form data found for {0}".format(cbname))
+                    with open(cfg_dir + tmp_cfg.replace('.py', '.form'), 'r') as configletData:
+                        configletForm = configletData.read()
+                    configletFormData = YAML().load(configletForm)['FormList']
+                else:
+                    configletFormData = []
+                with open(cfg_dir + tmp_cfg,'r') as cfglt:
+                    cfg_data = cfglt.read()
+                res = cvp_clnt.impConfiglet('builder', cbname, cfg_data, configletFormData)
+                pS("OK", "{0} Configlet Builder: {1}".format(res[0],cbname))                
+            elif '.form' in tmp_cfg:
+                # Ignoring .form files here
+                pass
+            else:
+                pS("INFO","Adding/Updating {0} static configlet.".format(tmp_cfg))
+                with open(cfg_dir + tmp_cfg,'r') as cfglt:
+                    cvp_clnt.impConfiglet('static',tmp_cfg,cfglt.read())
+        pS("INFO", "All configlets imported")
+        return(True)
+    else:
+        pS("INFO","No Configlet directory found")
+        return(False)
+
+
+
 def main():
     """
     Main Function if this is the initial deployment for the ATD/CVP
@@ -131,52 +207,26 @@ def main():
     # Check to see if all nodes have connected to CVP before proceeding
     FILE_BUILD = YAML().load(open(REPO_TOPO + atd_yaml['topology'] + '/topo_build.yml', 'r'))
     NODES = FILE_BUILD['nodes']
+    # ==========================================
+    # Add Check for configlet import only
+    # ==========================================
+    if 'cvp_mode' in atd_yaml:
+        if atd_yaml['cvp_mode'] == 'configlets':
+            pS("INFO", "CVP Configlet import only mode")
+            importConfiglets(cvp_clnt, configlet_location)
+            pS("OK", "Import of configlets complete.")
+            return(True)
     if cvp_clnt:
         # ==========================================
         # Check to see how many nodes have connected
         # ==========================================
-        tmp_device_count = len(cvp_clnt.inventory)
-        while len(NODES) > tmp_device_count:
-            pS("INFO", "Only {0} out of {1} nodes have registered to CVP. Sleeping {2} seconds.".format(tmp_device_count, len(NODES), sleep_delay))
-            sleep(sleep_delay)
-            cvp_clnt.getDeviceInventory()
-            tmp_device_count = len(cvp_clnt.inventory)
-        pS("OK", "All {0} out of {1} nodes have registered to CVP.".format(tmp_device_count, len(NODES)))
-        pS("INFO", "Checking to see if all nodes are reachable")
-        # Make sure all nodes are up and reachable
-        for vnode in cvp_clnt.inventory:
-            while True:
-                vresponse = cvp_clnt.ipConnectivityTest(cvp_clnt.inventory[vnode]['ipAddress'])
-                if 'data' in vresponse:
-                    if vresponse['data'] == 'success':
-                        pS("OK", "{0} is up and reachable at {1}".format(vnode, cvp_clnt.inventory[vnode]['ipAddress']))
-                        break
-                else:
-                    pS("INFO", "{0} is NOT reachable at {1}. Sleeping {2} seconds.".format(vnode, cvp_clnt.inventory[vnode]['ipAddress'], sleep_delay))
-                    sleep(sleep_delay)
-        pS("OK", "All Devices are registered and reachable.")
+        checkConnected(cvp_clnt, NODES)
+
         # ==========================================
         # Add configlets into CVP
         # ==========================================
-        if path.exists(configlet_location):
-            pS("OK","Configlet directory exists")
-            pro_cfglt = listdir(configlet_location)
-            for tmp_cfg in pro_cfglt:
-                if '.py' in tmp_cfg:
-                    pS("INFO","Adding/Updating {0} configlet builder.".format(tmp_cfg))
-                    cbname = tmp_cfg.replace('.py','')
-                    # !!! Add section to check for .form file to import form list options
-                    with open(configlet_location + tmp_cfg,'r') as cfglt:
-                        cvp_clnt.impConfiglet('builder',cbname,cfglt.read())
-                elif '.form' in tmp_cfg:
-                    # Ignoring .form files here
-                    pass
-                else:
-                    pS("INFO","Adding/Updating {0} static configlet.".format(tmp_cfg))
-                    with open(configlet_location + tmp_cfg,'r') as cfglt:
-                        cvp_clnt.impConfiglet('static',tmp_cfg,cfglt.read())
-        else:
-            pS("INFO","No Configlet directory found")
+        importConfiglets(cvp_clnt, configlet_location)
+
         # ==========================================
         # Add new containers into CVP
         # ==========================================
