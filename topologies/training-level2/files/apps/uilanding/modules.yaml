@@ -1,4 +1,4 @@
-training-level2:
+topology:
   image: "atd-topo.png"
   nodes:
     Spine1:
