@@ -131,9 +131,18 @@ def importConfiglets(cvp_clnt, cfg_dir):
             if '.py' in tmp_cfg:
                 pS("INFO","Adding/Updating {0} configlet builder.".format(tmp_cfg))
                 cbname = tmp_cfg.replace('.py','')
-                # !!! Add section to check for .form file to import form list options
+                # Check for a form file
+                if tmp_cfg.replace('.py', '.form') in pro_cfglt:
+                    pS("INFO", "Form data found for {0}".format(cbname))
+                    with open(cfg_dir + tmp_cfg.replace('.py', '.form'), 'r') as configletData:
+                        configletForm = configletData.read()
+                    configletFormData = YAML().load(configletForm)['FormList']
+                else:
+                    configletFormData = []
                 with open(cfg_dir + tmp_cfg,'r') as cfglt:
-                    cvp_clnt.impConfiglet('builder',cbname,cfglt.read())
+                    cfg_data = cfglt.read()
+                res = cvp_clnt.impConfiglet('builder', cbname, cfg_data, configletFormData)
+                pS("OK", "{0} Configlet Builder: {1}".format(res[0],cbname))                
             elif '.form' in tmp_cfg:
                 # Ignoring .form files here
                 pass
