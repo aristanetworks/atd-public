@@ -80,6 +80,7 @@ topologies:
             eos:
               - 4.24.1.1F
               - 4.24.2.1F
+              - EFT
     prod:
       veos:
         cpu: 44
