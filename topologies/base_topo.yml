@@ -123,30 +123,30 @@ topologies:
     access: admin
     disable_links: [labguides, jenkins]
     labguides: self
-  # training-level3:
-  #   dev:
-  #     veos:
-  #       cpu: 32
-  #       ram: 64
-  #       cvp:
-  #         2020.2.3:
-  #           branch: nested-release
-  #           image: base-training-e4-24-1f-c2020-1-1-20201124-u
-  #           eos:
-  #             - 4.24.2.2F
-  #   prod:
-  #     veos:
-  #       cpu: 32
-  #       ram: 64
-  #       cvp:
-  #         2020.2.3:
-  #           branch: nested-release
-  #           image: base-training-e4-24-1f-c2020-1-1-20201124-u
-  #           eos:
-  #             - 4.24.2.2F
-  #   desc: 'Level 3 Training Lab. For use by the Arista Training Team.'
-  #   name: 'Training - Level 3'
-  #   title: 'Training Level 3 Lab'
-  #   access: admin
-  #   disable_links: [labguides, jenkins]
-  #   labguides: self
+  training-level3:
+    dev:
+      veos:
+        cpu: 36
+        ram: 72
+        cvp:
+          2020.2.3:
+            branch: nested-release
+            image: base-training-l3-e4-24-2-2f-c2020-2-3-20210111
+            eos:
+              - 4.24.2.2F
+    # prod:
+    #   veos:
+    #     cpu: 32
+    #     ram: 64
+    #     cvp:
+    #       2020.2.3:
+    #         branch: nested-release
+    #         image: base-training-l3-e4-24-2-2f-c2020-2-3-20210111
+    #         eos:
+    #           - 4.24.2.2F
+    desc: 'Level 3 Training Lab. For use by the Arista Training Team.'
+    name: 'Training - Level 3'
+    title: 'Training Level 3 Lab'
+    access: admin
+    disable_links: [labguides, jenkins]
+    labguides: self
