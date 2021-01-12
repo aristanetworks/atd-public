@@ -334,9 +334,9 @@ def main():
         global menu_mode
         # Create Menu Manager
         with open('/home/arista/menus/default.yaml') as fdefault:
-          topo_default = YAML().load(fdefault.read())
+            topo_default = YAML().load(fdefault.read())
         if topo_default['default_menu'] == 'ssh':
-          menu_mode = 'DEVICE_SSH'
+            menu_mode = 'DEVICE_SSH'
         if sys.stdout.isatty():
             while menu_mode:
                 try:
