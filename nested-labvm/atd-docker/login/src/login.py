@@ -277,11 +277,14 @@ def main_menu():
     default_menu_info = YAML().load(default_menu_file)
     default_menu_file.close()
 
-
     # Open yaml for the lab option (minus 'LAB_' from menu mode) and load the variables
-    menu_file = open('/home/arista/menus/{0}'.format(default_menu_info['default_menu']))
-    menu_info = YAML().load(menu_file)
-    menu_file.close()
+    try:
+      menu_file = open('/home/arista/menus/{0}'.format(default_menu_info['default_menu']))
+      menu_info = YAML().load(menu_file)
+      menu_file.close()
+    except:
+      print("Exiting menu")
+      quit()
 
 
     
