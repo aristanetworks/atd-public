@@ -168,6 +168,7 @@ services:
       - /home/arista/GUI_Desktop/persist:/home/coder/project/persist:rw
       - /home/arista/arista-dir/hosts:/etc/hosts:ro
       - /home/arista/arista-dir/apps/coder/labfiles:/home/coder/project/labfiles:rw
+      - /home/arista/arista-dir/.ansible.cfg:/home/coder/.ansible.cfg:rw
   ssh:
     container_name: atd-ssh
     image: attdocker_ssh:1.0
