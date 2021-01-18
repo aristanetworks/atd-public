@@ -1,4 +1,4 @@
-FROM nginx:1.19.3
+FROM nginx:latest
 
 COPY src/atd.conf /etc/nginx/conf.d/
 
