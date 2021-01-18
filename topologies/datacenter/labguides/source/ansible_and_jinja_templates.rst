@@ -61,6 +61,8 @@ them, save them to your **project** directory.
 #. A Jinja2 template named ``ntp.j2``
 #. An Ansible playbook named ``ntp.yml``
 
+.. note:: Save these files to path: ``/home/coder/project/labfiles``
+
 Hosts file (``labhosts``):
 
 .. code-block:: html
