@@ -1,0 +1,109 @@
+#jinja2: trim_blocks: False
+#jinja2: lstrip_blocks: False
+
+{% set state = item.state|default(default_switchport_state) %}
+
+{% if state == 'absent' %}
+
+interface {{ item.name }}
+   no switchport
+
+   {# If we find existing switchport config, then default settings #}
+   {# These default commands only run the first time absent is called #}
+   {% set switchport_block = _eos_config | config_block('interface ' ~ item.name, indent=3) %}
+   {% if switchport_block %}
+      {% set switchport_block_str = switchport_block | join('\n') %}
+
+      {% set mode = switchport_block_str | re_search('^switchport mode (\w+)$') %}
+      {% if mode %}
+         {% if mode != 'access' %}
+
+   default switchport mode
+
+         {% endif %}
+      {% endif %} {# mode #}
+
+      {% if switchport_block_str | re_search('^switchport trunk group \w') %}
+
+   default switchport trunk group
+
+      {% endif %} {# switchport_block_str #}
+
+      {% set native = switchport_block_str | re_search('^switchport trunk native vlan (\d+)$') %}
+      {% if native %}
+         {% if native != '1' %}
+
+   default switchport trunk native vlan
+
+         {% endif %}
+      {% endif %} {# native #}
+
+      {% set allowed = switchport_block_str | re_search('^switchport trunk allowed vlan ([-,\d]+)$') %}
+      {% if allowed %}
+         {% if allowed != '1-4096' %}
+
+   default switchport trunk allowed vlan
+
+         {% endif %}
+      {% endif %} {# allowed #}
+
+      {% set access = switchport_block_str | re_search('^switchport access vlan (\d+)$') %}
+      {% if access %}
+         {% if access != '1' %}
+
+   default switchport access vlan
+
+         {% endif %}
+      {% endif %} {# access #}
+
+   {% endif %}  {# if switchport_block #}
+
+{% elif state == 'present' %}
+
+interface {{ item.name }}
+   switchport
+   switchport mode {{ item.mode|default('access')}}
+
+   {% if item.mode == 'trunk' %}
+      {% if 'trunk_allowed_vlans' in item %}
+         {% set vlan_list = item.trunk_allowed_vlans | make_range_string %}
+
+   switchport trunk allowed vlan {{ vlan_list }}
+
+      {% endif %}
+      {% if 'trunk_groups' in item %}
+         {% for group in item.trunk_groups %}
+
+   switchport trunk group {{ group }}
+
+         {% endfor %}
+
+         {# Determine which trunk groups need to be removed #}
+         {% if eos_purge_switchport_trunk_groups %}
+            {% set switchport_block = _eos_config | config_block('interface ' ~ item.name, indent=3) %}
+            {% if switchport_block %}
+               {% set current = switchport_block | join('\n') | re_findall('^switchport trunk group (\S+)') %}
+               {% set to_remove = current | symmetric_difference(item.trunk_groups) %}
+
+               {% for group in to_remove %}
+
+    no switchport trunk group {{ group }}
+
+               {% endfor %} {# group in to_remove #}
+            {% endif %} {# switchport_block #}
+         {% endif %} {# 'trunk_groups' in item #}
+      {% endif %} {# 'trunk_allowed_vlans' in item #}
+
+      {% if 'trunk_native_vlan' in item %}
+
+   switchport trunk native vlan {{ item.trunk_native_vlan }}
+
+      {% endif %}
+   {% endif %} {# item.mode == 'trunk' #}
+
+   {% if item.mode|default('access') == 'access' and item.access_vlan %}
+
+   switchport access vlan {{ item.access_vlan }}
+
+   {% endif %}
+{% endif %}

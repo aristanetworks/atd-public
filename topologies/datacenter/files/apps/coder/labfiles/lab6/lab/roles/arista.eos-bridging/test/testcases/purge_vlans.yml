@@ -1,0 +1,101 @@
+---
+defaults:
+  module: purge_vlans
+
+testcases:
+  # Define a list of vlans and purge the remaining vlans already on the device
+  - name: Purge all vlans except those in the vlans list
+    changed: 2   # This testcase runs two tasks - one for vlans, one for purge
+    arguments:
+      eos_purge_vlans: true
+      vlans:
+        - vlanid: 10
+          name: my_vlan10
+          enable: true
+        - vlanid: 11
+          name: my_vlan11
+          enable: false
+        - vlanid: 12
+          name: my_vlan12
+        - vlanid: 31
+          name: my_vlan31
+          enable: false
+        - vlanid: 32
+          name: my_vlan32
+        - vlanid: 33
+          name: my_vlan33
+    setup: |
+      no vlan 10
+      no vlan 11
+      no vlan 12
+      vlan 21
+         name purgeme21
+         state active
+      vlan 22
+         name purgeme22
+         state suspend
+      vlan 23
+         name purgeme23
+         state active
+      vlan 24
+         name purgeme24
+         state suspend
+    present: |
+      vlan 10
+         name my_vlan10
+         state active
+      vlan 11
+         name my_vlan11
+         state suspend
+      vlan 12
+         name my_vlan12
+         state active
+      vlan 31
+         name my_vlan31
+         state suspend
+      vlan 32
+         name my_vlan32
+         state active
+      vlan 33
+         name my_vlan33
+         state active
+    absent: |
+      vlan 21
+      vlan 22
+      vlan 23
+      vlan 24
+
+  # Verify that purging vlans does not delete vlan 1, even if vlan 1 is
+  # not included in the vlans list.
+  - name: Verify vlan 1 is never purged
+    changed: 2   # This testcase runs two tasks - one for vlans, one for purge
+    arguments:
+      eos_purge_vlans: true
+      vlans:
+        - vlanid: 10
+          name: my_vlan10
+    setup: |
+      vlan 1
+      no vlan 10
+      vlan 21
+         name purgeme21
+         state active
+      vlan 22
+         name purgeme22
+         state suspend
+      vlan 23
+         name purgeme23
+         state active
+      vlan 24
+         name purgeme24
+         state suspend
+    present: |
+      vlan 1
+      vlan 10
+         name my_vlan10
+         state active
+    absent: |
+      vlan 21
+      vlan 22
+      vlan 23
+      vlan 24

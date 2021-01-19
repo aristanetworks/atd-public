@@ -1,0 +1,56 @@
+#jinja2: trim_blocks: False
+#jinja2: lstrip_blocks: False
+
+{% set state = item.state|default(default_vlan_state) %}
+
+{% if state == 'absent' %}
+   {% set vlan_block = _eos_config | config_block('vlan ' ~ item.vlanid, indent=3) %}
+   {% if vlan_block %}
+
+no vlan {{ item.vlanid }}
+
+  {% endif %}
+
+{% elif state == 'present' %}
+
+vlan {{ item.vlanid }}
+
+   {% if 'name' in item %}
+
+   name {{ item.name }}
+
+   {% endif %}
+
+   {% if 'trunk_groups' in item %}
+      {% for group in item.trunk_groups %}
+
+   trunk group {{ group }}
+
+      {% endfor %}
+
+      {# Determine which trunk groups need to be removed #}
+      {% if eos_purge_vlan_trunk_groups %}
+         {% set vlan_block = _eos_config | config_block('vlan ' ~ item.vlanid, indent=3) %}
+         {% if vlan_block %}
+            {% set current = vlan_block | join('\n') | re_findall('^trunk group (\S+)') %}
+            {% set to_remove = current | difference(item.trunk_groups) %}
+            {% for group in to_remove %}
+
+   no trunk group {{ group }}
+
+            {% endfor %} {# group in to_remove #}
+         {% endif %} {# vlan_block #}
+      {% endif %} {# eos_purge_vlan_trunk_groups #}
+
+   {% endif %} {# 'trunk_groups' in item #}
+
+   {% if item.enable|default(true) %}
+
+   state active
+
+   {% else %}
+
+   state suspend
+
+   {% endif %}
+{% endif %} {# state #}
