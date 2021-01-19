@@ -1,4 +1,4 @@
-FROM codercom/code-server:3.7.4
+FROM codercom/code-server:3.8.0
 
 RUN sudo apt update
 
@@ -18,14 +18,14 @@ RUN sudo pip3 install -r requirements-dev.txt
 
 COPY src/.gitconfig /home/coder/
 
-RUN sudo chown -R coder:coder /home/coder
-
 RUN wget --quiet https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh || true \
     && echo 'plugins=(ansible common-aliases safe-paste git jsontools history git-extras)' >> $HOME/.zshrc \
     && echo 'eval `ssh-agent -s`' >> $HOME/.zshrc \
     && echo 'export TERM=xterm' >>  $HOME/.zshrc
 
 RUN sudo usermod --shell /bin/zsh coder
+
+RUN sudo chown -R coder:coder /home/coder
 
 VOLUME /home/coder/project
 
