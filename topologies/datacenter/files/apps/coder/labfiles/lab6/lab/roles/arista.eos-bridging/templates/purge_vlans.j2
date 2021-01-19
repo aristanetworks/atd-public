@@ -1,0 +1,25 @@
+#jinja2: trim_blocks: False
+#jinja2: lstrip_blocks: False
+
+{% set vlan_list = [] %}
+{% for vlan in vlans %}
+   {% if vlan.vlanid is defined %}
+      {% set _ = vlan_list.append("%s" % vlan.vlanid) %}
+   {% endif %}
+{% endfor %}
+
+{% set config_list = _eos_config | re_findall('^vlan (\d+)') %}
+{% set tmp_list = [] %}
+{% for id in config_list %}
+   {% set _ = tmp_list.append(id) %}
+{% endfor %}
+
+{% set purge_list = tmp_list | difference(vlan_list) %}
+
+{% for vlan_id in purge_list %}
+   {% if vlan_id != '1' %} {# never remove vlan 1 as part of a purge request#}
+
+no vlan {{ vlan_id }}
+
+   {% endif %}
+{% endfor %}

@@ -1,0 +1,7 @@
+- hosts: test_hosts
+  gather_facts: no
+  connection: local
+
+  # Include the role specified by rolename, which should
+  # be rooted three directories up from this file's directory
+  roles: [{ role: "../../../{{ rolename }}" }]

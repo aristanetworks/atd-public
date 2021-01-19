@@ -1,0 +1,10 @@
+---
+ansible_connection: local
+
+provider:
+  host: "{{ inventory_hostname }}"
+  username: admin
+  password: admin
+  use_ssl: no
+  authorize: yes
+  transport: cli

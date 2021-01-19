@@ -1,0 +1,39 @@
+---
+# Determine what resources we will use for running the role:
+# If using Ansible 2.1 or lower, we can use eos_template
+# If using Ansible 2.2 or higher, we must use eos_config
+# resource_version is set to 2.2 by default (since most users will be
+# on updated versions), change it if we're running 2.1 or lower.'
+# gather_config_commands is set to the version 2.2+ format by default
+- set_fact:
+    resource_version: '2.1'
+    gather_config_commands:
+      - 'show running-config all | exclude \.\*'
+  when: ansible_version.major < 2 or
+        (ansible_version.major == 2 and ansible_version.minor < 2)
+
+# Force CLI for eos_command to ensure running config is returned properly
+- name: Gather EOS configuration
+  eos_command:
+    commands: "{{ gather_config_commands }}"
+    provider: "{{ provider | default(omit) }}"
+    auth_pass: "{{ auth_pass | default(omit) }}"
+    authorize: "{{ authorize | default(omit) }}"
+    host: "{{ host | default(omit) }}"
+    password: "{{ password | default(omit) }}"
+    port: "{{ port | default(omit) }}"
+    transport: "{{ transport | default(omit) }}"
+    use_ssl: "{{ use_ssl | default(omit) }}"
+    username: "{{ username | default(omit) }}"
+  register: output
+  no_log: "{{ no_log | default(true) }}"
+  when: _eos_config is not defined
+
+- set_fact:
+    _eos_config: "{{ output.stdout[0] }}"
+  no_log: "{{ no_log | default(true) }}"
+  when: _eos_config is not defined
+
+# Import the resource tasks based on the version of ansible in use
+- name: Include the Arista EOS Bridging resources
+  include: "tasks/resources{{ resource_version }}.yml"

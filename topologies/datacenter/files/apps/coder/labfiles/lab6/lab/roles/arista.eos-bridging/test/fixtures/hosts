@@ -1,0 +1,4 @@
+[test_hosts]
+# [test_hosts] group is the default group for Arista EOS Role Testing
+vEOS1
+vEOS2
