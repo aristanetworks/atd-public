@@ -112,7 +112,7 @@ Galaxy <https://www.google.com/url?q=https://galaxy.ansible.com/&sa=D&ust=152398
 
 Ansible Galaxy is a website where individuals and organizations can
 freely share their roles with each other. In this case, we’ll be using
-the ``arista.eos-bridging`` role to add VLANs.
+the ``arista.eos.eos_vlans`` module from the ``arista.eos`` Ansible Collection to add VLANs.
 
 In the **IDE**, create the file below:
 
