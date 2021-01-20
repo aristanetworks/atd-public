@@ -160,7 +160,7 @@ In the **IDE**, and create the file below:
     ansible_connection: ansible.netcommon.httpapi
     ansible_network_os: arista.eos.eos
     ansible_user: arista
-    ansible_password: arista63ji
+    ansible_password: {REPLACE_PWD}
     vlans:
      - vlanid: 1001
        name: default
