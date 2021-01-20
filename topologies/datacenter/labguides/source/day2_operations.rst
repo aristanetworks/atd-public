@@ -276,7 +276,7 @@ Open the ``leafs.yml`` variables file in the **IDE**.
 
 Add the following highlighted lines directly below the existing text:
 
-.. code-block:: yaml
+.. code-block:: ini
 
     vlans:
      - vlanid: 1001
