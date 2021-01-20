@@ -116,7 +116,7 @@ the ``arista.eos-bridging`` role to add VLANs.
 
 In the **IDE**, create the file below:
 
-.. code-block:: yaml
+.. code-block:: ini
 
     - hosts: leafs
       connection: local
