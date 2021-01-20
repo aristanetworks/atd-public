@@ -112,16 +112,23 @@ Galaxy <https://www.google.com/url?q=https://galaxy.ansible.com/&sa=D&ust=152398
 
 Ansible Galaxy is a website where individuals and organizations can
 freely share their roles with each other. In this case, we’ll be using
-the ``arista.eos-bridging`` role to add VLANs.
+the ``arista.eos.eos_vlans`` module from the ``arista.eos`` Ansible Collection to add VLANs.
 
 In the **IDE**, create the file below:
 
 .. code-block:: ini
 
     - hosts: leafs
-      connection: local
-      roles:
-         - arista.eos-bridging
+      connection: local
+      tasks:
+      - name: Create vlans
+        arista.eos.eos_vlans:
+          config:
+          - vlan_id: "{{ item.vlanid }}"
+            name: "{{ item.name }}"
+          state: merged
+        loop: "{{ vlans }}"
+
 
 Save the file with the name ``vlan.yml`` into the ``/home/coder/project/labfiles/lab6/lab`` folder.
 
@@ -139,31 +146,29 @@ use it for the hosts listed below ``[leafs]``!
 
 Some more things to know about the file below:
 
-#. Notice that we’re using the same ``provider`` information as the other
-   labs.
-#. ``eos_purge_vlans``: true tells the role to purge VLANs if they don’t
-   exist in the variables file. This is useful for when you need to
-   remove VLANs.
-#. ``vlans``, ``vlanid``, and ``name`` are what the ``arista.eos-bridging`` role take as an
-   input. If you want to see every variable that the role can use, see
+#. Notice that we’re using the Ansible Collections methodology and approach for this lab.
+#. ``vlans``, ``vlan_id``, and ``name`` are what the ``arista.eos.eos_vlans`` collections module take as an
+   input. If you want to see every module and variable that the collection can use, see
    the \ `readme for the
-   role <https://www.google.com/url?q=https://galaxy.ansible.com/arista/eos-bridging/%23readme&sa=D&ust=1523980190047000>`__\ .
+   role <https://github.com/ansible-collections/arista.eos>`__\ .
 
-In the **IDE** and create the file below:
+In the **IDE**, and create the file below:
 
-.. code-block:: yaml
+.. code-block:: ini
 
-    provider:
-     host: "{{ inventory_hostname }}"
-     username: arista
-     password: {REPLACE_PWD}
-     authorize: yes
-     transport: eapi
-     validate_certs: no
-    eos_purge_vlans: true
+
+    ansible_connection: ansible.netcommon.httpapi
+    ansible_network_os: arista.eos.eos
+    ansible_user: arista
+    ansible_password: {REPLACE_PWD}
     vlans:
-     - vlanid: 1001
-       name: default
+     - vlanid: 1001
+       name: default
+     - vlanid: 2000
+       name: production
+     - vlanid: 3000
+       name: development
+
 
 Save the file with the name ``leafs.yml`` into
 the ``/home/coder/project/labfiles/lab6/lab/group_vars`` folder.
@@ -271,7 +276,7 @@ Open the ``leafs.yml`` variables file in the **IDE**.
 
 Add the following highlighted lines directly below the existing text:
 
-.. code-block:: yaml
+.. code-block:: ini
 
     vlans:
      - vlanid: 1001
