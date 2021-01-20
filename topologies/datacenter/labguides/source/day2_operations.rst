@@ -147,7 +147,7 @@ use it for the hosts listed below ``[leafs]``!
 Some more things to know about the file below:
 
 #. Notice that we’re using the Ansible Collections methodology and approach for this lab.
-#. ``vlans``, ``vlanid``, and ``name`` are what the ``arista.eos.eos_vlans`` collections module take as an
+#. ``vlans``, ``vlan_id``, and ``name`` are what the ``arista.eos.eos_vlans`` collections module take as an
    input. If you want to see every module and variable that the collection can use, see
    the \ `readme for the
    role <https://github.com/ansible-collections/arista.eos>`__\ .
