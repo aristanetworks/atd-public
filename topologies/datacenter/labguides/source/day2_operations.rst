@@ -154,7 +154,7 @@ Some more things to know about the file below:
 
 In the **IDE**, and create the file below:
 
-.. code-block:: yaml
+.. code-block:: ini
 
 
     ansible_connection: ansible.netcommon.httpapi
