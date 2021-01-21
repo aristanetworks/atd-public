@@ -1,0 +1,9 @@
+cvp_info:
+  containers:
+    Tenant:
+  snapshots:
+  configlets:
+    containers:
+      Tenant:
+    netelements:
+        
