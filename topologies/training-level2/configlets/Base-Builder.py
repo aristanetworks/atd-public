@@ -2,7 +2,7 @@ from cvplibrary import CVPGlobalVariables, GlobalVariableNames, Form
 
 
 
-# Get this devices Serial 
+# Get this devices Serial
 
 
 serial = CVPGlobalVariables.getValue( GlobalVariableNames.CVP_SERIAL )
@@ -25,12 +25,12 @@ elif serial == '8823F318C30617010F15E56A40D3AE14':
 
 elif serial == '5356CC64EE6812A82D43E42F3BC0F3C5':
  IPaddress = '192.168.0.23'
- hostname = 'leaf4'
+ hostname = 'leaf3'
 
 
 elif serial == '04DADEBA6B3D1548218141BC827D02A5':
  IPaddress = '192.168.0.24'
- hostname = 'leaf3'
+ hostname = 'leaf4'
 
 elif serial == '329874C0FD77D12A30D571B6B79E9195':
  IPaddress = '192.168.0.11'
