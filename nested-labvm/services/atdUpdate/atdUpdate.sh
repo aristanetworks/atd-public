@@ -58,6 +58,14 @@ then
     rsync -av /opt/atd/topologies/$TOPO/files/scripts /home/arista/GUI_Desktop/
 fi
 
+# Perform a check for the repo directory for datacenter
+if ! [ -d "/home/arista/arista-dir/apps/coder/labfiles/lab6/repo" ] && [ $TOPO == "datacenter" ]
+then
+    mkdir /home/arista/arista-dir/apps/coder/labfiles/lab6/repo
+    cd /home/arista/arista-dir/apps/coder/labfiles/lab6/repo
+    git init --bare
+fi
+
 chown -R arista:arista /home/arista
 
 # Update ATD containers
@@ -70,6 +78,8 @@ su atdadmin -c 'bash docker_build.sh'
 export ArID=$(id -u arista)
 export ArGD=$(id -g arista)
 
+/usr/local/bin/docker-compose down
+echo 'y' | docker volume prune
 /usr/local/bin/docker-compose up -d --remove-orphans --force-recreate
 
 echo 'y' | docker image prune
