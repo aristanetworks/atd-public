@@ -2,7 +2,7 @@ from cvplibrary import CVPGlobalVariables, GlobalVariableNames, Form
 
 
 
-# Get this devices Serial 
+# Get this devices Serial
 
 
 serial = CVPGlobalVariables.getValue( GlobalVariableNames.CVP_SERIAL )
@@ -11,43 +11,53 @@ ServiceRouting = True
 
 #Create the IP address from the serial number
 
-IPaddress = '192.168.0.66'
 
-if serial == '9BD9FE8B8A0EB6F43910F5F583A9CF40':
+if serial == '4A7F6E96300132903A73A74CCF18B697':
  IPaddress = '192.168.0.21'
  hostname = 'leaf1'
 
 
-elif serial == '8823F318C30617010F15E56A40D3AE14':
+elif serial == '3831DEFC364900BF9EEFC45FEE7794E7':
  IPaddress = '192.168.0.22'
  hostname = 'leaf2'
 
 
-elif serial == '5356CC64EE6812A82D43E42F3BC0F3C5':
+elif serial == 'ED469CFA13C4017B2D19BF7EBCAD50B1':
  IPaddress = '192.168.0.23'
- hostname = 'leaf4'
-
-
-elif serial == '04DADEBA6B3D1548218141BC827D02A5':
- IPaddress = '192.168.0.24'
  hostname = 'leaf3'
 
-elif serial == '329874C0FD77D12A30D571B6B79E9195':
+
+elif serial == '434653268ABA082A2FF6B52F1367CE80':
+ IPaddress = '192.168.0.24'
+ hostname = 'leaf4'
+
+elif serial == '8085B9640BC6D8FDC1FD23D242EBF433':
  IPaddress = '192.168.0.11'
  hostname = 'spine1'
 
-elif serial == '4B49885915FFE471AB899ACDEE5B803D':
+elif serial == 'D28D62E5729AB8BF44A0BC017DEB188A':
  IPaddress = '192.168.0.12'
  hostname = 'spine2'
 
+elif serial == 'F77703A62ADE220E689A41057AA56288':
+ IPaddress = '192.168.0.13'
+ hostname = 'spine3'
 
-elif serial == 'FF5D15D80D0D3E6B8D1D060DE545627D':
+elif serial == 'D763323F00C03738A8C824D2F1DA05E8':
+ IPaddress = '192.168.0.25'
+ hostname = 'borderleaf1'
+
+elif serial == '7C16136B7483F2E2FB002E8E0646F1F0':
+ IPaddress = '192.168.0.26'
+ hostname = 'borderleaf2'
+
+elif serial == '86342B780ED73BCB30E1DFE48E26AC38':
  IPaddress = '192.168.0.51'
  ServiceRouting = False
  hostname = 'host1'
 
 
-elif serial == '94910C4142FA2F7B76DFEC1D3C761E28':
+elif serial == 'CE0B31805130945E3CE40B060E9E636D':
  IPaddress = '192.168.0.52'
  ServiceRouting = False
  hostname = 'host2'
