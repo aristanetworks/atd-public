@@ -8,6 +8,7 @@ done
 
 TOPO=$(cat /etc/atd/ACCESS_INFO.yaml | shyaml get-value topology)
 ARISTA_PWD=$(cat /etc/atd/ACCESS_INFO.yaml | shyaml get-value login_info.jump_host.pw)
+EOS_TYPE=$(cat /etc/atd/ACCESS_INFO.yaml | python3 -m shyaml get-value eos_type)
 
 # Clean up previous stuff to make sure it's current
 #rm -rf /home/arista/labguides/build
@@ -16,6 +17,11 @@ cp -r /opt/atd/topologies/$TOPO/labguides/* /root/labguides/
 
 # Update the Arista user password for connecting to the labvm
 find /root/labguides/source/*  -type f -print0 | xargs -0 sed -i "s/{REPLACE_PWD}/$ARISTA_PWD/g"
+
+if [ $EOS_TYPE == 'ceos' ]
+then
+  find /root/labguides/source/*  -type f -print0 | xargs -0 sed -i "s/Management1/Management0/g"
+fi
 
 # chown -R arista:arista /home/arista/labguides/src/
 
