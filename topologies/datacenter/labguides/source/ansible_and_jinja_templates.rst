@@ -114,9 +114,6 @@ the following command:
 
     ansible-playbook -i labhosts ntp.yml
 
-.. note:: If you get an error stating about Invalid Input with ``Management1``.
-        Update ``ntp.j2`` and replace ``Management1`` with ``Management0``
-
 If all goes to plan, you will see  ok=1 **changed=1**. If you were to run it
 again, it will show ok=1 **changed=0**. Idempotency strikes again! Feel free
 to check **Leaf1** to make sure the changes are there.

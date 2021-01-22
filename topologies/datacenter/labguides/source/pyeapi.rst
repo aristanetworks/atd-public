@@ -71,7 +71,7 @@ Write it
 ~~~~~~~~
 
 Create a new file in the IDE and either write or paste the code
-in. Save it to your project directory as ``/home/coder/project/add_user.py``.
+in. Save it to your labfiles directory as ``/home/coder/project/labfiles/add_user.py``.
 
 Run it
 ~~~~~~
