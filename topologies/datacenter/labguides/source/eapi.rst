@@ -103,7 +103,7 @@ Alternatively, if you’d just like to paste in the code, you can copy and paste
 
 Once done, save the file to your project directory.
 
-``/home/coder/project/show_version.py``
+``/home/coder/project/labfiles/show_version.py``
 
 Run it
 ~~~~~~
