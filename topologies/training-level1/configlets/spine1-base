@@ -1,0 +1,13 @@
+hostname spine1
+!
+interface Management 1
+   ip address 192.168.0.11/24
+   no lldp transmit
+   no lldp receive
+!
+service routing protocols model multi-agent
+!
+ip route 0.0.0.0/0 192.168.0.1
+!
+ip routing
+!
