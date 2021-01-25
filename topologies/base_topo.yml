@@ -8,16 +8,18 @@ topologies:
         cvp:
           2020.1.1:
             branch: nested/2020.1
-            image: base-atd-datacenter-ceos-c2020-1-1-20210121
+            image: base-atd-datacenter-ceos-c2020-1-1-20210125
             eos:
               - 4.24.1.1F
               - 4.24.2.1F
+              - 4.25.1F
           2020.2.3:
             branch: nested-release
-            image: base-atd-datacenter-ceos-c2020-2-3-20210121
+            image: base-atd-datacenter-ceos-c2020-2-3-20210125
             eos:
               - 4.24.1.1F
               - 4.24.2.1F
+              - 4.25.1F
           2020.4.0:
             branch: nested-release
             image: base-atd-datacenter-ceos-c2020-4-0-20201217u
@@ -30,12 +32,12 @@ topologies:
         cvp:
           2020.1.1:
             branch: nested/2020.1
-            image: base-atd-datacenter-e4-24-1f-c2020-1-1-20210121
+            image: base-atd-datacenter-e4-24-1f-c2020-1-1-20210125
             eos:
               - 4.24.1F
           2020.2.3:
             branch: nested-release
-            image: base-atd-datacenter-e4-24-2-1f-c2020-2-3-20210121
+            image: base-atd-datacenter-e4-24-2-1f-c2020-2-3-20210125
             eos:
               - 4.24.2.1F
     prod:
@@ -62,12 +64,12 @@ topologies:
         cvp:
           2020.1.1:
             branch: nested/2020.1
-            image: base-atd-routing-e4-24-1f-c2020-1-1-20210121
+            image: base-atd-routing-e4-24-1f-c2020-1-1-20210125
             eos:
               - 4.24.1F
           2020.2.3:
             branch: nested-release
-            image: base-atd-routing-e4-24-2-1f-c2020-2-3-20210121
+            image: base-atd-routing-e4-24-2-1f-c2020-2-3-20210125
             eos:
               - 4.24.2.1F
       ceos:
@@ -76,11 +78,11 @@ topologies:
         cvp:
           2020.1.1:
             branch: nested/2020.1
-            image: base-atd-routing-ceos-c2020-1-1-20210121
+            image: base-atd-routing-ceos-c2020-1-1-20210125
             eos:
               - 4.24.1.1F
               - 4.24.2.1F
-              - EFT
+              - 4.25.1F
     prod:
       veos:
         cpu: 44
@@ -105,7 +107,7 @@ topologies:
         cvp:
           2020.2.3:
             branch: nested-release
-            image: base-training-l1-e4-24-2-2f-c2020-2-3-20210122
+            image: base-training-l1-e4-24-2-2f-c2020-2-3-20210125
             eos:
               - 4.24.2.2F
     # prod:
@@ -132,7 +134,7 @@ topologies:
         cvp:
           2020.2.3:
             branch: nested-release
-            image: base-training-l2-e4-24-2-2f-c2020-2-3-20210121
+            image: base-training-l2-e4-24-2-2f-c2020-2-3-20210125
             eos:
               - 4.24.2.2F
     # prod:
@@ -159,7 +161,7 @@ topologies:
         cvp:
           2020.2.3:
             branch: nested-release
-            image: base-training-l3-e4-24-2-2f-c2020-2-3-20210121
+            image: base-training-l3-e4-24-2-2f-c2020-2-3-20210125
             eos:
               - 4.24.2.2F
     # prod:
