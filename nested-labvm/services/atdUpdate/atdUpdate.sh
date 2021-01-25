@@ -61,7 +61,7 @@ fi
 # Perform a check for the repo directory for datacenter
 if ! [ -d "/home/arista/arista-dir/apps/coder/labfiles/lab6/repo" ] && [ $TOPO == "datacenter" ]
 then
-    mkdir /home/arista/arista-dir/apps/coder/labfiles/lab6/repo
+    mkdir -p /home/arista/arista-dir/apps/coder/labfiles/lab6/repo
     cd /home/arista/arista-dir/apps/coder/labfiles/lab6/repo
     git init --bare
 fi
