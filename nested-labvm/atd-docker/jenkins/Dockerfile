@@ -8,7 +8,7 @@ RUN yum install -y sshpass ansible
 
 USER jenkins
 
-COPY src/users.groovy /usr/share/jenkins/ref/init.groovy.d/
+COPY src/groovy/* /usr/share/jenkins/ref/init.groovy.d/
 
 ENV JAVA_OPTS="-Djenkins.install.runSetupWizard=false -Dorg.apache.commons.jelly.tags.fmt.timeZone=America/Chicago -Dhudson.model.UsageStatistics.disabled=true"
 
