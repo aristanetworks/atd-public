@@ -135,7 +135,7 @@ services:
       - /var/log/wtmp:/var/log/wtmp:ro
   jenkins:
     container_name: atd-jenkins
-    image: atddocker_jenkins:1.1
+    image: atddocker_jenkins:1.0
     restart: always
     environment:
       - JENKINS_OPTS="--prefix=/jenkins"

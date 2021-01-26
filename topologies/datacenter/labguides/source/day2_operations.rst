@@ -126,7 +126,7 @@ In the **IDE**, create the file below:
           config:
           - vlan_id: "{{ item.vlanid }}"
             name: "{{ item.name }}"
-          state: merged
+          state: replaced
         loop: "{{ vlans }}"
 
 
@@ -164,10 +164,6 @@ In the **IDE**, and create the file below:
     vlans:
      - vlanid: 1001
        name: default
-     - vlanid: 2000
-       name: production
-     - vlanid: 3000
-       name: development
 
 
 Save the file with the name ``leafs.yml`` into
