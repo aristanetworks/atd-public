@@ -40,13 +40,24 @@ topologies:
             eos:
               - 4.24.2.1F
     prod:
+      ceos:
+        cpu: 24
+        ram: 36
+        cvp:
+          2020.1.1:
+            branch: v2020.1-20210127a
+            image: base-atd-datacenter-ceos-c2020-1-1-20210126
+            eos:
+              - 4.24.1.1F
+              - 4.24.2.1F
+              - 4.25.1F
       veos:
         cpu: 30
         ram: 64
         cvp:
           2020.1.1:
-            branch: v2020.1-20201124a
-            image: base-atd-datacenter-e4-24-1f-c2020-1-1-20201124-u
+            branch: v2020.1-20210127a
+            image: base-atd-datacenter-e4-24-1f-c2020-1-1-20210126
             eos:
               - 4.24.1F
     desc: 'Two Spines, Four Leafs. Focused on EOS fundamentals within the Data Center.'
@@ -88,8 +99,8 @@ topologies:
         ram: 90
         cvp:
           2020.1.1:
-            branch: v2020.1-20201124a
-            image: base-atd-routing-e4-24-1f-c2020-1-1-20201124-u
+            branch: v2020.1-20210127a
+            image: base-atd-routing-e4-24-1f-c2020-1-1-20210125
             eos:
               - 4.24.1F
     desc: 'Twenty nodes. Focused on advanced routing, L2VPN and L3VPN topics'
