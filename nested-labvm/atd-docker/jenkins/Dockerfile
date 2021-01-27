@@ -14,4 +14,8 @@ ENV JAVA_OPTS="-Djenkins.install.runSetupWizard=false -Dorg.apache.commons.jelly
 
 RUN /usr/local/bin/install-plugins.sh ansible git
 
-RUN ansible-galaxy collection install arista.eos
+USER root
+
+RUN ansible-galaxy collection install arista.eos -p /usr/share/ansible/collections
+
+USER jenkins
