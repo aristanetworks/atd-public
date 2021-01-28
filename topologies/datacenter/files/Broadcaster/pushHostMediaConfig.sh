@@ -25,8 +25,8 @@ echo "Copying Configs"
 # scp /home/arista/Broadcaster/media-host2.cfg 192.168.0.32:/mnt/flash
 # scp /home/arista/Broadcaster/default-host1.cfg 192.168.0.31:/mnt/flash
 # scp /home/arista/Broadcaster/default-host2.cfg 192.168.0.32:/mnt/flash
-scp  -o StrictHostKeyChecking=no /home/arista/Broadcaster/mcast-source.sh 192.168.0.17:/mnt/flash
-scp  -o StrictHostKeyChecking=no /home/arista/Broadcaster/mcast-receiver.sh 192.168.0.18:/mnt/flash
+scp  -o StrictHostKeyChecking=no /home/arista/Broadcaster/mcast-source.sh 192.168.0.16:/mnt/flash
+scp  -o StrictHostKeyChecking=no /home/arista/Broadcaster/mcast-receiver.sh 192.168.0.17:/mnt/flash
 
 # echo "Loading Configs"
 # #config replace
