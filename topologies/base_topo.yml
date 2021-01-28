@@ -60,6 +60,11 @@ topologies:
             image: base-atd-datacenter-e4-25-1f-c2020-1-1-20210126
             eos:
               - 4.25.1F
+          2020.1.0:
+            branch: v2020.1-20201124a
+            image: base-atd-datacenter-e4-24-1f-c2020-1-1-20201124-u
+            eos:
+              - 4.24.1F
     desc: 'Two Spines, Four Leafs. Focused on EOS fundamentals within the Data Center.'
     name: 'Datacenter'
     title: 'Datacenter Lab'
