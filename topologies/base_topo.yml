@@ -190,3 +190,30 @@ topologies:
     access: admin
     disable_links: [labguides, jenkins]
     labguides: self
+  training-level4:
+    dev:
+      veos:
+        cpu: 52
+        ram: 102
+        cvp:
+          2020.2.3:
+            branch: nested-release
+            image: base-training-l4-e4-24-2-2f-c2020-2-3-20210201
+            eos:
+              - 4.24.2.2F
+    # prod:
+    #   veos:
+    #     cpu: 32
+    #     ram: 64
+    #     cvp:
+    #       2020.2.3:
+    #         branch: nested-release
+    #         image: base-training-l3-e4-24-2-2f-c2020-2-3-20210111
+    #         eos:
+    #           - 4.24.2.2F
+    desc: 'Level 4 Training Lab. For use by the Arista Training Team.'
+    name: 'Training - Level 4'
+    title: 'Training Level 4 Lab'
+    access: admin
+    disable_links: [labguides, jenkins]
+    labguides: self
