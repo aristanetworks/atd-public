@@ -69,19 +69,28 @@ def parseNames(devName):
     alpha = ''
     numer = ''
     split_len = 2
-    
+    devDC = False
+    if '-dc' in devName.lower() and 'dci' != devName.lower():
+        _tmp = devName.split('-')
+        devName = _tmp[0]
+        if 'dc' in _tmp[1].lower():
+            devDC = _tmp[1]
     for char in devName:
         if char.isalpha():
             alpha += char
         elif char.isdigit():
             numer += char
     if 'ethernet' in devName.lower():
-        dev_name = 'X'
+        dev_name = ''
     else:
         dev_name = alpha[:split_len]
+    if devDC:
+        dc_code = devDC.lower().replace('c','')
+    else:
+        dc_code = ""
     devInfo = {
         'name': devName,
-        'code': dev_name + numer,
+        'code': dev_name + numer + dc_code,
     }
     return(devInfo)
 
@@ -336,7 +345,7 @@ def main(uargs):
                 tmp_dev = VEOS_NODES[vdev].intfs[vintf]
                 tmp_int = ET.SubElement(xdev, 'interface', attrib={'type': 'bridge'})
                 ET.SubElement(tmp_int, 'source', attrib={'bridge': tmp_dev['bridge']})
-                ET.SubElement(tmp_int, 'target', attrib={'dev': '{0}x{1}'.format(vdev, tmp_dev['port'].replace('X',''))})
+                ET.SubElement(tmp_int, 'target', attrib={'dev': '{0}x{1}'.format(VEOS_NODES[vdev].name_short, tmp_dev['port'].replace('X',''))})
                 ET.SubElement(tmp_int, 'model', attrib={'type': 'virtio'})
                 ET.SubElement(tmp_int, 'virtualport', attrib={'type': 'openvswitch'})
                 ET.SubElement(tmp_int, 'address', attrib={
