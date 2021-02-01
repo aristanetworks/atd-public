@@ -330,6 +330,7 @@ def main(uargs):
                 'function': '0x0'
             })
             # Interface specific links
+            d_slot_counter = 3
             d_intf_counter = 1
             for vintf in VEOS_NODES[vdev].intfs:
                 tmp_dev = VEOS_NODES[vdev].intfs[vintf]
@@ -342,11 +343,15 @@ def main(uargs):
                     'type': 'pci',
                     'domain': '0x0000',
                     'bus': '0x00',
-                    'slot': '0x03',
+                    'slot': '0x0{0}'.format(d_slot_counter),
                     'function': '0x{0}'.format(d_intf_counter)
                 })
-                # Increment the counter
-                d_intf_counter += 1
+                # Check the device increment coutner and increment the counter
+                if d_intf_counter == 7:
+                    d_slot_counter += 1
+                    d_intf_counter = 0
+                else:
+                    d_intf_counter += 1
             # Export/write of xml for node
             tree.write(DATA_OUTPUT + '{0}.xml'.format(vdev))
             KOUT_LINES.append("sudo cp /var/lib/libvirt/images/veos/base/veos.qcow2 /var/lib/libvirt/images/veos/{0}.qcow2".format(vdev))
