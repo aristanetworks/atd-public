@@ -203,7 +203,7 @@ def main():
         except:
             pS("ERROR","CVP is currently unavailable....Retrying in {0} seconds.".format(sleep_delay))
             sleep(sleep_delay)
-    
+
     # Check to see if all nodes have connected to CVP before proceeding
     FILE_BUILD = YAML().load(open(REPO_TOPO + atd_yaml['topology'] + '/topo_build.yml', 'r'))
     NODES = FILE_BUILD['nodes']

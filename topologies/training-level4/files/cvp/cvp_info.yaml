@@ -64,6 +64,7 @@ cvp_info:
     Internet:
       parent: "Provider Network"
       nodes:
+      - internet
     OOB:
       parent: Tenant
       nodes:
@@ -73,22 +74,16 @@ cvp_info:
     DCI:
       parent: Tenant
       nodes:
-      - 
+      - DCI
     CVX:
       parent: Tenant
       nodes:
-      - 
+      - CVX
   snapshots:
   configlets:
     containers:
       Tenant:
       - ATD-INFRA
-      Internet:
-      - internet-BASE
-      DCI:
-      - DCI-BASE
-      CVX:
-      - CVX-BASE
     netelements:
       borderleaf1-DC1:
       - borderleaf1-DC1-BASE
@@ -142,5 +137,11 @@ cvp_info:
       - core1-ISP2-BASE
       core2-ISP2:
       - core2-ISP2-BASE
+      internet:
+      - internet-BASE
+      DCI:
+      - DCI-BASE
+      CVX:
+      - CVX-BASE
 
         
