@@ -56,7 +56,7 @@ services:
       - cvp_dir:/home/arista/CVP_DATA:rw
   kvmbuilder:
     container_name: atd-kvmbuilder
-    image: atddocker_kvmbuilder:1.0
+    image: atddocker_kvmbuilder:1.1
     restart: on-failure
     environment:
       - PYTHONUNBUFFERED=1
