@@ -1,16 +1,15 @@
-leaf4-DC2-BASE
-    hostname leaf4-DC2
-    !
-    interface Management 1
-    ip address 192.168.0.34/24
-    no lldp transmit
-    no lldp receive
-    !
-    service routing protocols model multi-agent
-    !
-    dns domain arista.lab
-    !
-    ip route 0.0.0.0/0 192.168.0.1
-    !
-    ip routing
-    !
+hostname leaf4-DC2
+!
+interface Management 1
+   ip address 192.168.0.34/24
+   no lldp transmit
+   no lldp receive
+!
+service routing protocols model multi-agent
+!
+dns domain arista.lab
+!
+ip route 0.0.0.0/0 192.168.0.1
+!
+ip routing
+!
