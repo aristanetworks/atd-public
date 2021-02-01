@@ -232,7 +232,10 @@ def main():
         # ==========================================
         for p_cnt in cvp_yaml['cvp_info']['containers'].keys():
             if p_cnt not in cvp_clnt.containers.keys():
-                cvp_clnt.addContainer(p_cnt,"Tenant")
+                if cvp_yaml['cvp_info']['containers'][p_cnt]:
+                    cvp_clnt.addContainer(p_cnt, cvp_yaml['cvp_info']['containers'][p_cnt]['parent'])
+                else:
+                    cvp_clnt.addContainer(p_cnt,"Tenant")
                 cvp_clnt.saveTopology()
                 cvp_clnt.getAllContainers()
                 pS("OK","Added {0} container".format(p_cnt))
