@@ -67,8 +67,8 @@ def eosContainerMapper(cvpYaml):
     """
     eMap = {}
     for cnt in cvpYaml.keys():
-        if cvpYaml[cnt]:
-            for eosD in cvpYaml[cnt]:
+        if cvpYaml[cnt]['nodes']:
+            for eosD in cvpYaml[cnt]['nodes']:
                 eMap[eosD] = cnt
     return(eMap)
 
