@@ -1,8 +1,0 @@
-hostname RemoteTestNode2
-!
-interface Management1
-   ip address 192.168.0.24/24
-!
-management api http-commands
-   no shutdown
-   protocol http

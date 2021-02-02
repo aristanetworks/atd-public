@@ -1,17 +1,26 @@
 cvp_info:
   containers:
     Tenant:
+      nodes:
     Leaf:
+      parent: Tenant
+      nodes:
       - leaf1
       - leaf2
       - leaf3
       - leaf4
     Spine:
+      parent: Tenant
+      nodes:
       - spine1
       - spine2
     CVX:
+      parent: Tenant
+      nodes:
       - cvx01
     Hosts:
+      parent: Tenant
+      nodes:
       - host1
       - host2
   snapshots:
