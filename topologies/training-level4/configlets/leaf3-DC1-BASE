@@ -1,6 +1,6 @@
 hostname leaf3-DC1
 !
-interface Management 1
+interface Management1
    ip address 192.168.0.23/24
 !
 service routing protocols model multi-agent

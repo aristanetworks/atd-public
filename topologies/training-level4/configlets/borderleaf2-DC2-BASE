@@ -1,6 +1,6 @@
 hostname borderleaf2-DC2
 !
-interface Management 1
+interface Management1
    ip address 192.168.0.36/24
 !
 service routing protocols model multi-agent

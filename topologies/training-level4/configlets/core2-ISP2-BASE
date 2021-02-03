@@ -1,6 +1,6 @@
 hostname core2-ISP2
 !
-interface Management 1
+interface Management1
    ip address 192.168.0.74/24
 !
 dns domain arista.lab
