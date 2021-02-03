@@ -2,8 +2,6 @@ hostname core2-ISP2
 !
 interface Management 1
    ip address 192.168.0.74/24
-   no lldp transmit
-   no lldp receive
 !
 dns domain arista.lab
 !

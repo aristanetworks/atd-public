@@ -2,8 +2,6 @@ hostname spine3-DC1
 !
 interface Management 1
    ip address 192.168.0.13/24
-   no lldp transmit
-   no lldp receive
 !
 service routing protocols model multi-agent
 !

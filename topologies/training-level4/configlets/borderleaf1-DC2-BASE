@@ -2,8 +2,6 @@ hostname borderleaf1-DC2
 !
 interface Management 1
    ip address 192.168.0.35/24
-   no lldp transmit
-   no lldp receive
 !
 service routing protocols model multi-agent
 !
