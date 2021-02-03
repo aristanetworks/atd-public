@@ -47,10 +47,17 @@ class CEOS_NODE():
 
 def parseNames(devName):
     """
-    Function to parse and consolidate name.
+    Function to parse and consolidate name
     """
     alpha = ''
     numer = ''
+    split_len = 2
+    devDC = False
+    if '-dc' in devName.lower() and 'dci' != devName.lower():
+        _tmp = devName.split('-')
+        devName = _tmp[0]
+        if 'dc' in _tmp[1].lower():
+            devDC = _tmp[1]
     for char in devName:
         if char.isalpha():
             alpha += char
@@ -59,10 +66,14 @@ def parseNames(devName):
     if 'ethernet'in devName.lower():
         dev_name = 'et{0}'.format(numer)
     else:
-        dev_name = devName
+        dev_name = alpha[:split_len]
+    if devDC:
+        dc_code = devDC.lower().replace('c','')
+    else:
+        dc_code = ""
     devInfo = {
         'name': devName,
-        'code': dev_name
+        'code': dev_name + numer + dc_code,
     }
     return(devInfo)
 
