@@ -54,16 +54,23 @@ def parseNames(devName):
     numer = ''
     split_len = 2
     devDC = False
+    tmp_devName = ""
     if '-dc' in devName.lower() and 'dci' != devName.lower():
         _tmp = devName.split('-')
-        devName = _tmp[0]
+        tmp_devName = _tmp[0]
         if 'dc' in _tmp[1].lower():
             devDC = _tmp[1]
-    for char in devName:
-        if char.isalpha():
-            alpha += char
-        elif char.isdigit():
-            numer += char
+        for char in tmp_devName:
+            if char.isalpha():
+                alpha += char
+            elif char.isdigit():
+                numer += char
+    else:
+        for char in devName:
+            if char.isalpha():
+                alpha += char
+            elif char.isdigit():
+                numer += char
     if 'ethernet'in devName.lower():
         dev_name = 'et'
     else:
@@ -193,7 +200,7 @@ def main(args):
             create_output.append("# Connecting containers together\n")
             for _intf in CEOS[_node].intfs:
                 _tmp_intf = CEOS[_node].intfs[_intf]
-                if _node in  _tmp_intf['veth'].split('-')[0]:
+                if CEOS[_node].name_short in  _tmp_intf['veth'].split('-')[0]:
                     create_output.append("ip link set {0} netns {1} name {2} up\n".format(_tmp_intf['veth'].split('-')[0], _node, _tmp_intf['port']))
                     startup_output.append("ip link set {0} netns {1} name {2} up\n".format(_tmp_intf['veth'].split('-')[0], _node, _tmp_intf['port']))
                 else:
