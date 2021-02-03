@@ -37,8 +37,6 @@ class CEOS_NODE():
             lport = parseNames(intf['port'])
             rport = parseNames(intf['neighborPort'])
             rneigh = parseNames(intf['neighborDevice'])
-            if 'code' not in rneigh:
-                print(rneigh)
             _vethCheck = checkVETH('{0}{1}'.format(self.name_short, lport['code']), '{0}{1}'.format(rneigh['code'], rport['code']))
             if _vethCheck['status']:
                 pS("OK", "VETH Pair {0} will be created.".format(_vethCheck['name']))
@@ -161,9 +159,9 @@ def main(args):
         else:
             FILE_BUILD = YAML().load(open('ceos_build.yml', 'r'))
         NODES = FILE_BUILD['nodes']
-for vdev in NODES:
-    vdevn = list(vdev.keys())[0]
-    CEOS[vdevn] = CEOS_NODE(vdevn, vdev[vdevn]['ip_addr'], vdev[vdevn]['neighbors'])
+        for vdev in NODES:
+            vdevn = list(vdev.keys())[0]
+            CEOS[vdevn] = CEOS_NODE(vdevn, vdev[vdevn]['ip_addr'], vdev[vdevn]['neighbors'])
         # Check for CEOS Scripts Directory
         if checkDir(CEOS_SCRIPTS):
             pS("OK", "Directory is present now.")
