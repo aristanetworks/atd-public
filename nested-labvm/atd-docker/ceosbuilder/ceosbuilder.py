@@ -184,12 +184,12 @@ def main(args):
         for _node in CEOS:
             create_output.append("# Getting {0} nodes plubming\n".format(_node))
             create_output.append("docker run -d --restart=always --log-opt max-size=10k --name={0}-net --net=none busybox /bin/init\n".format(_node))
-            create_output.append("{0}pid=$(docker inspect --format '{{{{.State.Pid}}}}' {0}-net)\n".format(_node))
-            create_output.append("ln -sf /proc/${{{0}pid}}/ns/net /var/run/netns/{0}\n".format(_node))
+            create_output.append("{0}pid=$(docker inspect --format '{{{{.State.Pid}}}}' {1}-net)\n".format(_node.replace('-',''), _node))
+            create_output.append("ln -sf /proc/${{{0}pid}}/ns/net /var/run/netns/{1}\n".format(_node.replace('-',''), _node))
             startup_output.append("docker stop {0}\n".format(_node))
             startup_output.append("docker rm {0}\n".format(_node))
-            startup_output.append("{0}pid=$(docker inspect --format '{{{{.State.Pid}}}}' {0}-net)\n".format(_node))
-            startup_output.append("ln -sf /proc/${{{0}pid}}/ns/net /var/run/netns/{0}\n".format(_node))
+            startup_output.append("{0}pid=$(docker inspect --format '{{{{.State.Pid}}}}' {1}-net)\n".format(_node.replace('-',''), _node))
+            startup_output.append("ln -sf /proc/${{{0}pid}}/ns/net /var/run/netns/{1}\n".format(_node.replace('-',''), _node))
             create_output.append("# Connecting containers together\n")
             for _intf in CEOS[_node].intfs:
                 _tmp_intf = CEOS[_node].intfs[_intf]
