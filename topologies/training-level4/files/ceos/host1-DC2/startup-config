@@ -44,7 +44,7 @@ management api http-commands
 hostname host1-DC2
 !
 interface Management0
-   ip address 192.168.0.51/24
+   ip address 192.168.0.53/24
 !
 dns domain arista.lab
 !
