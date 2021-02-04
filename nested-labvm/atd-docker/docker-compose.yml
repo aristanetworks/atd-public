@@ -1,13 +1,13 @@
 version: "3"
 services:
-  sslupdater:
-    container_name: atd-sslupdater
-    image: atddocker_sslupdater:1.0
-    restart: always
-    environment:
-      - PYTHONUNBUFFERED=1
-    volumes:
-      - /etc/atd:/etc/atd:ro
+  # sslupdater:
+  #   container_name: atd-sslupdater
+  #   image: atddocker_sslupdater:1.0
+  #   restart: always
+  #   environment:
+  #     - PYTHONUNBUFFERED=1
+  #   volumes:
+  #     - /etc/atd:/etc/atd:ro
   uptime:
     container_name: atd-uptime
     image: atddocker_uptime:1.0
