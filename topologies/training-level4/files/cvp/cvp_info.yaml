@@ -54,13 +54,13 @@ cvp_info:
     ISP1:
       parent: "Provider Network"
       nodes:
-      - core1-ISP1
-      - code2-ISP1
+      - core1-isp1
+      - core2-isp1
     ISP2:
       parent: "Provider Network"
       nodes:
-      - core1-ISP2
-      - core2-ISP2
+      - core1-isp2
+      - core2-isp2
     Internet:
       parent: "Provider Network"
       nodes:
@@ -70,7 +70,7 @@ cvp_info:
       nodes:
       - OOB-DC1
       - OOB-DC2
-      - OOB-Core
+      - OOB-CORE
     DCI:
       parent: Tenant
       nodes:
@@ -88,9 +88,9 @@ cvp_info:
       borderleaf1-DC1:
       - borderleaf1-DC1-BASE
       borderleaf2-DC1:
-      - borderleaf1-DC1-BASE
-      leaf1-DC1:
       - borderleaf2-DC1-BASE
+      leaf1-DC1:
+      - leaf1-DC1-BASE
       leaf2-DC1:
       - leaf2-DC1-BASE
       leaf3-DC1:
@@ -100,7 +100,7 @@ cvp_info:
       spine1-DC1:
       - spine1-DC1-BASE
       spine2-DC1:
-      - spine1-DC1-BASE
+      - spine2-DC1-BASE
       spine3-DC1:
       - spine3-DC1-BASE
       host1-DC1:
@@ -129,13 +129,13 @@ cvp_info:
       - host1-DC2-BASE
       host2-DC2:
       - host2-DC2-BASE
-      core1-ISP1:
+      core1-isp1:
       - core1-ISP1-BASE
-      core2-ISP1:
+      core2-isp1:
       - core2-ISP1-BASE
-      core1-ISP2:
+      core1-isp2:
       - core1-ISP2-BASE
-      core2-ISP2:
+      core2-isp2:
       - core2-ISP2-BASE
       internet:
       - internet-BASE
@@ -143,5 +143,11 @@ cvp_info:
       - DCI-BASE
       CVX:
       - CVX-BASE
+      OOB-CORE:
+      - OOB-CORE-BASE
+      OOB-DC1:
+      - OOB-DC1-BASE
+      OOB-DC2:
+      - OOB-DC2-BASE
 
         
