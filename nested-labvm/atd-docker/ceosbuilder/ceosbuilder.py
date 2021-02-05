@@ -24,7 +24,7 @@ CEOS = {}
 
 NOTIFY_ADJUST = """
 echo "fs.inotify.max_user_instances = {notify_instances}" > /etc/sysctl.d/99-zatd.conf
-sysctl --system
+sysctl -w fs.inotify.max_user_instances={notify_instances}
 """
 class CEOS_NODE():
     def __init__(self, node_name, node_ip, node_neighbors):
