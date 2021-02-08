@@ -1,6 +1,7 @@
 cvp_info:
   containers:
     Tenant:
+      nodes:
   snapshots:
   configlets:
     containers:
