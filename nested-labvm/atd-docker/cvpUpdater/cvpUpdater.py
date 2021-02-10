@@ -67,8 +67,8 @@ def eosContainerMapper(cvpYaml):
     """
     eMap = {}
     for cnt in cvpYaml.keys():
-        if cvpYaml[cnt]:
-            for eosD in cvpYaml[cnt]:
+        if cvpYaml[cnt]['nodes']:
+            for eosD in cvpYaml[cnt]['nodes']:
                 eMap[eosD] = cnt
     return(eMap)
 
@@ -203,7 +203,7 @@ def main():
         except:
             pS("ERROR","CVP is currently unavailable....Retrying in {0} seconds.".format(sleep_delay))
             sleep(sleep_delay)
-    
+
     # Check to see if all nodes have connected to CVP before proceeding
     FILE_BUILD = YAML().load(open(REPO_TOPO + atd_yaml['topology'] + '/topo_build.yml', 'r'))
     NODES = FILE_BUILD['nodes']
@@ -232,7 +232,10 @@ def main():
         # ==========================================
         for p_cnt in cvp_yaml['cvp_info']['containers'].keys():
             if p_cnt not in cvp_clnt.containers.keys():
-                cvp_clnt.addContainer(p_cnt,"Tenant")
+                if cvp_yaml['cvp_info']['containers'][p_cnt]:
+                    cvp_clnt.addContainer(p_cnt, cvp_yaml['cvp_info']['containers'][p_cnt]['parent'])
+                else:
+                    cvp_clnt.addContainer(p_cnt,"Tenant")
                 cvp_clnt.saveTopology()
                 cvp_clnt.getAllContainers()
                 pS("OK","Added {0} container".format(p_cnt))

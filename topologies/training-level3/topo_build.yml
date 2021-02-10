@@ -242,32 +242,32 @@ nodes:
       sys_mac: 00:1c:73:f1:c6:01
       neighbors:
         - neighborDevice: leaf1
-          neighborPort: Ethernet5
+          neighborPort: Ethernet6
           port: Ethernet1
         - neighborDevice: leaf2
-          neighborPort: Ethernet5
+          neighborPort: Ethernet6
           port: Ethernet2
         - neighborDevice: leaf1
-          neighborPort: Ethernet6
+          neighborPort: Ethernet7
           port: Ethernet3
         - neighborDevice: leaf2
-          neighborPort: Ethernet6
+          neighborPort: Ethernet7
           port: Ethernet4
   - host2:
       ip_addr: 192.168.0.52
       sys_mac: 00:1c:73:f2:c6:01
       neighbors:
         - neighborDevice: leaf3
-          neighborPort: Ethernet5
+          neighborPort: Ethernet6
           port: Ethernet1
         - neighborDevice: leaf4
-          neighborPort: Ethernet5
+          neighborPort: Ethernet6
           port: Ethernet2
         - neighborDevice: leaf3
-          neighborPort: Ethernet6
+          neighborPort: Ethernet7
           port: Ethernet3
         - neighborDevice: leaf4
-          neighborPort: Ethernet6
+          neighborPort: Ethernet7
           port: Ethernet4
 servers:
   - server1:

@@ -16,15 +16,20 @@ REPO_TOPO = REPO_PATH + 'topologies/'
 AVAIL_TOPO = REPO_TOPO + 'available_topo.yaml'
 MGMT_BRIDGE = 'vmgmt'
 sleep_delay = 30
+NOTIFY_BASE = 1250
 CEOS_VERSION = '4.24.1.1F'
 
 VETH_PAIRS = []
 CEOS = {}
 
-
+NOTIFY_ADJUST = """
+echo "fs.inotify.max_user_instances = {notify_instances}" > /etc/sysctl.d/99-zatd.conf
+sysctl -w fs.inotify.max_user_instances={notify_instances}
+"""
 class CEOS_NODE():
     def __init__(self, node_name, node_ip, node_neighbors):
         self.name = node_name
+        self.name_short = parseNames(node_name)['code']
         self.ip = node_ip
         self.intfs = {}
         self.portMappings(node_neighbors)
@@ -36,7 +41,7 @@ class CEOS_NODE():
             lport = parseNames(intf['port'])
             rport = parseNames(intf['neighborPort'])
             rneigh = parseNames(intf['neighborDevice'])
-            _vethCheck = checkVETH('{0}{1}'.format(self.name, lport['code']), '{0}{1}'.format(rneigh['name'], rport['code']))
+            _vethCheck = checkVETH('{0}{1}'.format(self.name_short, lport['code']), '{0}{1}'.format(rneigh['code'], rport['code']))
             if _vethCheck['status']:
                 pS("OK", "VETH Pair {0} will be created.".format(_vethCheck['name']))
                 VETH_PAIRS.append(_vethCheck['name'])
@@ -47,22 +52,52 @@ class CEOS_NODE():
 
 def parseNames(devName):
     """
-    Function to parse and consolidate name.
+    Function to parse and consolidate name
     """
     alpha = ''
     numer = ''
-    for char in devName:
-        if char.isalpha():
-            alpha += char
-        elif char.isdigit():
-            numer += char
-    if 'ethernet'in devName.lower():
-        dev_name = 'et{0}'.format(numer)
+    split_len = 2
+    devDC = False
+    devCORE = False
+    tmp_devName = ""
+    if '-dc' in devName.lower() and 'dci' != devName.lower():
+        _tmp = devName.split('-')
+        tmp_devName = _tmp[0]
+        if 'dc' in _tmp[1].lower():
+            devDC = _tmp[1]
+        for char in tmp_devName:
+            if char.isalpha():
+                alpha += char
+            elif char.isdigit():
+                numer += char
+    elif '-core' in devName.lower():
+        _tmp = devName.split('-')
+        tmp_devName = _tmp[0]
+        devCORE = _tmp[1]
+        for char in tmp_devName:
+            if char.isalpha():
+                alpha += char
+            elif char.isdigit():
+                numer += char
     else:
-        dev_name = devName
+        for char in devName:
+            if char.isalpha():
+                alpha += char
+            elif char.isdigit():
+                numer += char
+    if 'ethernet'in devName.lower():
+        dev_name = 'et'
+    else:
+        dev_name = alpha[:split_len]
+    if devDC:
+        dev_code = devDC.lower().replace('c','')
+    elif devCORE:
+        dev_code = devCORE.lower().replace('ore','')
+    else:
+        dev_code = ""
     devInfo = {
         'name': devName,
-        'code': dev_name
+        'code': dev_name + numer + dev_code,
     }
     return(devInfo)
 
@@ -150,14 +185,20 @@ def main(args):
         for vdev in NODES:
             vdevn = list(vdev.keys())[0]
             CEOS[vdevn] = CEOS_NODE(vdevn, vdev[vdevn]['ip_addr'], vdev[vdevn]['neighbors'])
+        # Update NOTIFY adjust for instances
+        NOTIFY_ADD = NOTIFY_ADJUST.format(
+            notify_instances = NOTIFY_BASE * len(NODES)
+        )
         # Check for CEOS Scripts Directory
         if checkDir(CEOS_SCRIPTS):
             pS("OK", "Directory is present now.")
         else:
             pS("iBerg", "Error creating directory.")
         create_output.append("#!/bin/bash\n")
+        create_output.append(NOTIFY_ADD)
         create_output.append("ip netns add atd\n")
         startup_output.append("#!/bin/bash\n")
+        startup_output.append(NOTIFY_ADD)
         startup_output.append("ip netns add atd\n")
         # Get the veths created
         create_output.append("# Creating veths\n")
@@ -172,34 +213,34 @@ def main(args):
         for _node in CEOS:
             create_output.append("# Getting {0} nodes plubming\n".format(_node))
             create_output.append("docker run -d --restart=always --log-opt max-size=10k --name={0}-net --net=none busybox /bin/init\n".format(_node))
-            create_output.append("{0}pid=$(docker inspect --format '{{{{.State.Pid}}}}' {0}-net)\n".format(_node))
-            create_output.append("ln -sf /proc/${{{0}pid}}/ns/net /var/run/netns/{0}\n".format(_node))
+            create_output.append("{0}pid=$(docker inspect --format '{{{{.State.Pid}}}}' {1}-net)\n".format(_node.replace('-',''), _node))
+            create_output.append("ln -sf /proc/${{{0}pid}}/ns/net /var/run/netns/{1}\n".format(_node.replace('-',''), _node))
             startup_output.append("docker stop {0}\n".format(_node))
             startup_output.append("docker rm {0}\n".format(_node))
-            startup_output.append("{0}pid=$(docker inspect --format '{{{{.State.Pid}}}}' {0}-net)\n".format(_node))
-            startup_output.append("ln -sf /proc/${{{0}pid}}/ns/net /var/run/netns/{0}\n".format(_node))
+            startup_output.append("{0}pid=$(docker inspect --format '{{{{.State.Pid}}}}' {1}-net)\n".format(_node.replace('-',''), _node))
+            startup_output.append("ln -sf /proc/${{{0}pid}}/ns/net /var/run/netns/{1}\n".format(_node.replace('-',''), _node))
             create_output.append("# Connecting containers together\n")
             for _intf in CEOS[_node].intfs:
                 _tmp_intf = CEOS[_node].intfs[_intf]
-                if _node in  _tmp_intf['veth'].split('-')[0]:
+                if CEOS[_node].name_short in  _tmp_intf['veth'].split('-')[0]:
                     create_output.append("ip link set {0} netns {1} name {2} up\n".format(_tmp_intf['veth'].split('-')[0], _node, _tmp_intf['port']))
                     startup_output.append("ip link set {0} netns {1} name {2} up\n".format(_tmp_intf['veth'].split('-')[0], _node, _tmp_intf['port']))
                 else:
                     create_output.append("ip link set {0} netns {1} name {2} up\n".format(_tmp_intf['veth'].split('-')[1], _node, _tmp_intf['port']))
                     startup_output.append("ip link set {0} netns {1} name {2} up\n".format(_tmp_intf['veth'].split('-')[1], _node, _tmp_intf['port']))
             # Get MGMT VETHS
-            create_output.append("ip link add {0}-eth0 type veth peer name {0}-mgmt\n".format(_node))
-            create_output.append("brctl addif {0} {1}-mgmt\n".format(MGMT_BRIDGE, _node))
-            create_output.append("ip link set {0}-eth0 netns {0} name eth0 up\n".format(_node))
-            create_output.append("ip link set {0}-mgmt up\n".format(_node))
+            create_output.append("ip link add {0}-eth0 type veth peer name {0}-mgmt\n".format(CEOS[_node].name_short))
+            create_output.append("brctl addif {0} {1}-mgmt\n".format(MGMT_BRIDGE, CEOS[_node].name_short))
+            create_output.append("ip link set {0}-eth0 netns {1} name eth0 up\n".format(CEOS[_node].name_short, _node))
+            create_output.append("ip link set {0}-mgmt up\n".format(CEOS[_node].name_short))
             create_output.append("sleep 1\n")
-            create_output.append("docker run -d --name={0} --log-opt max-size=1m --net=container:{0}-net --ip {1} --privileged -v {2}/{0}:/mnt/flash:Z -e INTFTYPE=et -e MGMT_INTF=eth0 -e ETBA=1 -e SKIP_ZEROTOUCH_BARRIER_IN_SYSDBINIT=1 -e CEOS=1 -e EOS_PLATFORM=ceoslab -e container=docker -i -t ceosimage:{3} /sbin/init systemd.setenv=INTFTYPE=et systemd.setenv=MGMT_INTF=eth0 systemd.setenv=ETBA=1 systemd.setenv=SKIP_ZEROTOUCH_BARRIER_IN_SYSDBINIT=1 systemd.setenv=CEOS=1 systemd.setenv=EOS_PLATFORM=ceoslab systemd.setenv=container=docker\n".format(_node, CEOS[_node].ip, CEOS_NODES, CEOS_VERSION))
-            startup_output.append("ip link add {0}-eth0 type veth peer name {0}-mgmt\n".format(_node))
-            startup_output.append("brctl addif {0} {1}-mgmt\n".format(MGMT_BRIDGE, _node))
-            startup_output.append("ip link set {0}-eth0 netns {0} name eth0 up\n".format(_node))
-            startup_output.append("ip link set {0}-mgmt up\n".format(_node))
+            create_output.append("docker run -d --name={0} --log-opt max-size=1m --net=container:{0}-net --ip {1} --privileged -v /etc/sysctl.d/99-zatd.conf:/etc/sysctl.d/99-zatd.conf:ro -v {2}/{0}:/mnt/flash:Z -e INTFTYPE=et -e MGMT_INTF=eth0 -e ETBA=1 -e SKIP_ZEROTOUCH_BARRIER_IN_SYSDBINIT=1 -e CEOS=1 -e EOS_PLATFORM=ceoslab -e container=docker -i -t ceosimage:{3} /sbin/init systemd.setenv=INTFTYPE=et systemd.setenv=MGMT_INTF=eth0 systemd.setenv=ETBA=1 systemd.setenv=SKIP_ZEROTOUCH_BARRIER_IN_SYSDBINIT=1 systemd.setenv=CEOS=1 systemd.setenv=EOS_PLATFORM=ceoslab systemd.setenv=container=docker\n".format(_node, CEOS[_node].ip, CEOS_NODES, CEOS_VERSION))
+            startup_output.append("ip link add {0}-eth0 type veth peer name {0}-mgmt\n".format(CEOS[_node].name_short))
+            startup_output.append("brctl addif {0} {1}-mgmt\n".format(MGMT_BRIDGE, CEOS[_node].name_short))
+            startup_output.append("ip link set {0}-eth0 netns {1} name eth0 up\n".format(CEOS[_node].name_short, _node))
+            startup_output.append("ip link set {0}-mgmt up\n".format(CEOS[_node].name_short))
             startup_output.append("sleep 1\n")
-            startup_output.append("docker run -d --name={0} --log-opt max-size=1m --net=container:{0}-net --ip {1} --privileged -v {2}/{0}:/mnt/flash:Z -e INTFTYPE=et -e MGMT_INTF=eth0 -e ETBA=1 -e SKIP_ZEROTOUCH_BARRIER_IN_SYSDBINIT=1 -e CEOS=1 -e EOS_PLATFORM=ceoslab -e container=docker -i -t ceosimage:{3} /sbin/init systemd.setenv=INTFTYPE=et systemd.setenv=MGMT_INTF=eth0 systemd.setenv=ETBA=1 systemd.setenv=SKIP_ZEROTOUCH_BARRIER_IN_SYSDBINIT=1 systemd.setenv=CEOS=1 systemd.setenv=EOS_PLATFORM=ceoslab systemd.setenv=container=docker\n".format(_node, CEOS[_node].ip, CEOS_NODES, CEOS_VERSION))
+            startup_output.append("docker run -d --name={0} --log-opt max-size=1m --net=container:{0}-net --ip {1} --privileged -v /etc/sysctl.d/99-zatd.conf:/etc/sysctl.d/99-zatd.conf:ro -v {2}/{0}:/mnt/flash:Z -e INTFTYPE=et -e MGMT_INTF=eth0 -e ETBA=1 -e SKIP_ZEROTOUCH_BARRIER_IN_SYSDBINIT=1 -e CEOS=1 -e EOS_PLATFORM=ceoslab -e container=docker -i -t ceosimage:{3} /sbin/init systemd.setenv=INTFTYPE=et systemd.setenv=MGMT_INTF=eth0 systemd.setenv=ETBA=1 systemd.setenv=SKIP_ZEROTOUCH_BARRIER_IN_SYSDBINIT=1 systemd.setenv=CEOS=1 systemd.setenv=EOS_PLATFORM=ceoslab systemd.setenv=container=docker\n".format(_node, CEOS[_node].ip, CEOS_NODES, CEOS_VERSION))
         create_output.append('touch {0}.ceos.txt'.format(CEOS_SCRIPTS))
         startup_output.append('rm -- "$0"\n')
 

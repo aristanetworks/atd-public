@@ -69,19 +69,47 @@ def parseNames(devName):
     alpha = ''
     numer = ''
     split_len = 2
-    
-    for char in devName:
-        if char.isalpha():
-            alpha += char
-        elif char.isdigit():
-            numer += char
-    if 'ethernet' in devName.lower():
-        dev_name = 'X'
+    devDC = False
+    devCORE = False
+    tmp_devName = ""
+    if '-dc' in devName.lower() and 'dci' != devName.lower():
+        _tmp = devName.split('-')
+        tmp_devName = _tmp[0]
+        if 'dc' in _tmp[1].lower():
+            devDC = _tmp[1]
+        for char in tmp_devName:
+            if char.isalpha():
+                alpha += char
+            elif char.isdigit():
+                numer += char
+    elif '-core' in devName.lower():
+        _tmp = devName.split('-')
+        tmp_devName = _tmp[0]
+        devCORE = _tmp[1]
+        for char in tmp_devName:
+            if char.isalpha():
+                alpha += char
+            elif char.isdigit():
+                numer += char
+    else:
+        for char in devName:
+            if char.isalpha():
+                alpha += char
+            elif char.isdigit():
+                numer += char
+    if 'ethernet'in devName.lower():
+        dev_name = ''
     else:
         dev_name = alpha[:split_len]
+    if devDC:
+        dev_code = devDC.lower().replace('c','')
+    elif devCORE:
+        dev_code = devCORE.lower().replace('ore','')
+    else:
+        dev_code = ""
     devInfo = {
         'name': devName,
-        'code': dev_name + numer,
+        'code': dev_name + numer + dev_code,
     }
     return(devInfo)
 
@@ -330,23 +358,28 @@ def main(uargs):
                 'function': '0x0'
             })
             # Interface specific links
+            d_slot_counter = 3
             d_intf_counter = 1
             for vintf in VEOS_NODES[vdev].intfs:
                 tmp_dev = VEOS_NODES[vdev].intfs[vintf]
                 tmp_int = ET.SubElement(xdev, 'interface', attrib={'type': 'bridge'})
                 ET.SubElement(tmp_int, 'source', attrib={'bridge': tmp_dev['bridge']})
-                ET.SubElement(tmp_int, 'target', attrib={'dev': '{0}x{1}'.format(vdev, tmp_dev['port'].replace('X',''))})
+                ET.SubElement(tmp_int, 'target', attrib={'dev': '{0}x{1}'.format(VEOS_NODES[vdev].name_short, tmp_dev['port'].replace('X',''))})
                 ET.SubElement(tmp_int, 'model', attrib={'type': 'virtio'})
                 ET.SubElement(tmp_int, 'virtualport', attrib={'type': 'openvswitch'})
                 ET.SubElement(tmp_int, 'address', attrib={
                     'type': 'pci',
                     'domain': '0x0000',
                     'bus': '0x00',
-                    'slot': '0x03',
+                    'slot': '0x0{0}'.format(d_slot_counter),
                     'function': '0x{0}'.format(d_intf_counter)
                 })
-                # Increment the counter
-                d_intf_counter += 1
+                # Check the device increment coutner and increment the counter
+                if d_intf_counter == 7:
+                    d_slot_counter += 1
+                    d_intf_counter = 0
+                else:
+                    d_intf_counter += 1
             # Export/write of xml for node
             tree.write(DATA_OUTPUT + '{0}.xml'.format(vdev))
             KOUT_LINES.append("sudo cp /var/lib/libvirt/images/veos/base/veos.qcow2 /var/lib/libvirt/images/veos/{0}.qcow2".format(vdev))

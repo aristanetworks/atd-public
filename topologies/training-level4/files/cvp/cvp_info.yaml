@@ -1,0 +1,153 @@
+cvp_info:
+  containers:
+    Tenant:
+      nodes:
+    DC1:
+      parent: Tenant
+      nodes:
+    Leaf-DC1:
+      parent: DC1
+      nodes:
+      - borderleaf1-DC1
+      - borderleaf2-DC1
+      - leaf1-DC1
+      - leaf2-DC1
+      - leaf3-DC1
+      - leaf4-DC1
+    Spine-DC1:
+      parent: DC1
+      nodes:
+      - spine1-DC1
+      - spine2-DC1
+      - spine3-DC1
+    Host-DC1:
+      parent: DC1
+      nodes:
+      - host1-DC1
+      - host2-DC1
+    DC2:
+      parent: Tenant
+      nodes:
+    Leaf-DC2:
+      parent: DC2
+      nodes:
+      - borderleaf1-DC2
+      - borderleaf2-DC2
+      - leaf1-DC2
+      - leaf2-DC2
+      - leaf3-DC2
+      - leaf4-DC2
+    Spine-DC2:
+      parent: DC2
+      nodes:
+      - spine1-DC2
+      - spine2-DC2
+      - spine3-DC2
+    Host-DC2:
+      parent: DC2
+      nodes:
+      - host1-DC2
+      - host2-DC2
+    Provider Network:
+      parent: Tenant
+      nodes:
+    ISP1:
+      parent: "Provider Network"
+      nodes:
+      - core1-isp1
+      - core2-isp1
+    ISP2:
+      parent: "Provider Network"
+      nodes:
+      - core1-isp2
+      - core2-isp2
+    Internet:
+      parent: "Provider Network"
+      nodes:
+      - internet
+    OOB:
+      parent: Tenant
+      nodes:
+      - OOB-DC1
+      - OOB-DC2
+      - OOB-CORE
+    DCI:
+      parent: Tenant
+      nodes:
+      - DCI
+    CVX:
+      parent: Tenant
+      nodes:
+      - CVX
+  snapshots:
+  configlets:
+    containers:
+      Tenant:
+      - ATD-INFRA
+    netelements:
+      borderleaf1-DC1:
+      - borderleaf1-DC1-BASE
+      borderleaf2-DC1:
+      - borderleaf2-DC1-BASE
+      leaf1-DC1:
+      - leaf1-DC1-BASE
+      leaf2-DC1:
+      - leaf2-DC1-BASE
+      leaf3-DC1:
+      - leaf3-DC1-BASE
+      leaf4-DC1:
+      - leaf4-DC1-BASE
+      spine1-DC1:
+      - spine1-DC1-BASE
+      spine2-DC1:
+      - spine2-DC1-BASE
+      spine3-DC1:
+      - spine3-DC1-BASE
+      host1-DC1:
+      - host1-DC1-BASE
+      host2-DC1:
+      - host2-DC1-BASE
+      borderleaf1-DC2:
+      - borderleaf1-DC2-BASE
+      borderleaf2-DC2:
+      - borderleaf2-DC2-BASE
+      leaf1-DC2:
+      - leaf1-DC2-BASE
+      leaf2-DC2:
+      - leaf2-DC2-BASE
+      leaf3-DC2:
+      - leaf3-DC2-BASE
+      leaf4-DC2:
+      - leaf4-DC2-BASE
+      spine1-DC2:
+      - spine1-DC2-BASE
+      spine2-DC2:
+      - spine2-DC2-BASE
+      spine3-DC2:
+      - spine3-DC2-BASE
+      host1-DC2:
+      - host1-DC2-BASE
+      host2-DC2:
+      - host2-DC2-BASE
+      core1-isp1:
+      - core1-ISP1-BASE
+      core2-isp1:
+      - core2-ISP1-BASE
+      core1-isp2:
+      - core1-ISP2-BASE
+      core2-isp2:
+      - core2-ISP2-BASE
+      internet:
+      - internet-BASE
+      DCI:
+      - DCI-BASE
+      CVX:
+      - CVX-BASE
+      OOB-CORE:
+      - OOB-CORE-BASE
+      OOB-DC1:
+      - OOB-DC1-BASE
+      OOB-DC2:
+      - OOB-DC2-BASE
+
+        

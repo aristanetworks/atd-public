@@ -171,7 +171,7 @@ topologies:
         cvp:
           2020.2.3:
             branch: nested-release
-            image: base-training-l3-e4-24-2-2f-c2020-2-3-20210125
+            image: base-training-l3-e4-24-2-2f-c2020-2-3-20210208
             eos:
               - 4.24.2.2F
     # prod:
@@ -187,6 +187,33 @@ topologies:
     desc: 'Level 3 Training Lab. For use by the Arista Training Team.'
     name: 'Training - Level 3'
     title: 'Training Level 3 Lab'
+    access: admin
+    disable_links: [labguides, jenkins]
+    labguides: self
+  training-level4:
+    dev:
+      ceos:
+        cpu: 24
+        ram: 60
+        cvp:
+          2020.2.3:
+            branch: nested-release
+            image: base-training-l4-ceos-c2020-2-3-20210204
+            eos:
+              - 4.25.1F
+    # prod:
+    #   veos:
+    #     cpu: 32
+    #     ram: 64
+    #     cvp:
+    #       2020.2.3:
+    #         branch: nested-release
+    #         image: base-training-l3-e4-24-2-2f-c2020-2-3-20210111
+    #         eos:
+    #           - 4.24.2.2F
+    desc: 'Level 4 Training Lab. For use by the Arista Training Team.'
+    name: 'Training - Level 4'
+    title: 'Training Level 4 Lab'
     access: admin
     disable_links: [labguides, jenkins]
     labguides: self

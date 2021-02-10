@@ -1,13 +1,13 @@
 version: "3"
 services:
-  sslupdater:
-    container_name: atd-sslupdater
-    image: atddocker_sslupdater:1.0
-    restart: always
-    environment:
-      - PYTHONUNBUFFERED=1
-    volumes:
-      - /etc/atd:/etc/atd:ro
+  # sslupdater:
+  #   container_name: atd-sslupdater
+  #   image: atddocker_sslupdater:1.0
+  #   restart: always
+  #   environment:
+  #     - PYTHONUNBUFFERED=1
+  #   volumes:
+  #     - /etc/atd:/etc/atd:ro
   uptime:
     container_name: atd-uptime
     image: atddocker_uptime:1.0
@@ -56,7 +56,7 @@ services:
       - cvp_dir:/home/arista/CVP_DATA:rw
   kvmbuilder:
     container_name: atd-kvmbuilder
-    image: atddocker_kvmbuilder:1.0
+    image: atddocker_kvmbuilder:1.1
     restart: on-failure
     environment:
       - PYTHONUNBUFFERED=1

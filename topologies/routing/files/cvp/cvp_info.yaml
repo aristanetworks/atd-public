@@ -1,7 +1,10 @@
 cvp_info:
   containers:
     Tenant:
+      nodes:
     RoutingATD:
+      parent: Tenant
+      nodes:
       - eos1
       - eos2
       - eos3
