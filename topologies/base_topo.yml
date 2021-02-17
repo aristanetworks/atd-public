@@ -194,11 +194,11 @@ topologies:
     dev:
       ceos:
         cpu: 24
-        ram: 60
+        ram: 64
         cvp:
           2020.2.3:
             branch: nested-release
-            image: base-training-l4-ceos-c2020-2-3-20210204
+            image: base-training-l4-ceos-c2020-2-3-20210217
             eos:
               - 4.25.1F
     # prod:
