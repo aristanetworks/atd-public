@@ -45,7 +45,7 @@ topologies:
         ram: 36
         cvp:
           2020.1.1:
-            branch: v2020.1-20210127a
+            branch: v2020.1-20210210a
             image: base-atd-datacenter-ceos-c2020-1-1-20210126
             eos:
               - 4.24.1.1F
@@ -56,7 +56,7 @@ topologies:
         ram: 64
         cvp:
           2020.1.1:
-            branch: v2020.1-20210127a
+            branch: v2020.1-20210210a
             image: base-atd-datacenter-e4-25-1f-c2020-1-1-20210126
             eos:
               - 4.25.1F
@@ -99,7 +99,7 @@ topologies:
         ram: 90
         cvp:
           2020.1.1:
-            branch: v2020.1-20210127a
+            branch: v2020.1-20210210a
             image: base-atd-routing-e4-24-1f-c2020-1-1-20210125
             eos:
               - 4.24.1F
@@ -194,11 +194,11 @@ topologies:
     dev:
       ceos:
         cpu: 24
-        ram: 60
+        ram: 64
         cvp:
           2020.2.3:
             branch: nested-release
-            image: base-training-l4-ceos-c2020-2-3-20210204
+            image: base-training-l4-ceos-c2020-2-3-20210217
             eos:
               - 4.25.1F
     # prod:
