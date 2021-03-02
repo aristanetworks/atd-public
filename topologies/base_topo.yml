@@ -204,12 +204,12 @@ topologies:
   training-level4:
     dev:
       ceos:
-        cpu: 24
+        cpu: 36
         ram: 64
         cvp:
           2020.2.3:
             branch: nested-release
-            image: base-training-l4-ceos-c2020-2-3-20210217
+            image: base-training-l4-ceos-c2020-2-3-20210302
             eos:
               - 4.25.1F
     # prod:
