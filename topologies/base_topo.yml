@@ -204,8 +204,8 @@ topologies:
   training-level4:
     dev:
       ceos:
-        cpu: 36
-        ram: 64
+        cpu: 48
+        ram: 72
         cvp:
           2020.2.3:
             branch: nested-release
