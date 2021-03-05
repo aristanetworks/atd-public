@@ -90,9 +90,9 @@ topologies:
               - 4.24.1F
           2020.2.3:
             branch: nested-release
-            image: base-atd-routing-e4-24-2-1f-c2020-2-3-20210125
+            image: base-atd-routing-e4-25-2f-c2020-2-3-20210226
             eos:
-              - 4.24.2.1F
+              - 4.25.2F
       ceos:
         cpu: 24
         ram: 54
