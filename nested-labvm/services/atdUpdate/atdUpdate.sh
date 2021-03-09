@@ -28,8 +28,10 @@ then
     git remote set-url origin $REPO
 fi
 
-# Perform check on the current branch/tag to the targeted
+# Fetch updates from the remote repo
+git fetch
 
+# Perform check on the current branch/tag to the targeted
 if [[ "$(git branch | grep '*' | awk $'{print $2}')" = "$BRANCH" ]]
 then
     echo "Target branch matches current branch"
@@ -37,7 +39,7 @@ then
 else
     echo "Branches do not match, updating to branch $BRANCH"
     git checkout .
-    git checkout -b $BRANCH origin/$BRANCH
+    git checkout $BRANCH
 fi
 
 # Update atdUpdate service
