@@ -22,7 +22,7 @@ fi
 cd /opt/atd
 
 # Check the current repo compared to the targeted repo
-if ! [[ "$(git remote get-url origin)" = "$REPO" ]]
+if [[ ! "$(git remote get-url origin)" = "$REPO" ]]
 then
     echo "Repos do not match, updating to $REPO"
     git remote set-url origin $REPO
