@@ -32,7 +32,7 @@ fi
 git fetch
 
 # Perform check on the current branch/tag to the targeted
-if [[ "$(git branch | grep '*' | awk $'{print $2}')" = "$BRANCH" ]]
+if [[ "$(git branch --show-current)" = "$BRANCH" ]]
 then
     echo "Target branch matches current branch"
     git pull
