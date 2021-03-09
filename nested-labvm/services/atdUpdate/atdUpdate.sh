@@ -24,6 +24,7 @@ cd /opt/atd
 # Check the current repo compared to the targeted repo
 if ! [[ "$(git remote get-url origin)" = "$REPO" ]]
 then
+    echo "Repos do not match, updating to $REPO"
     git remote set-url origin $REPO
 fi
 
@@ -31,10 +32,12 @@ fi
 
 if [[ "$(git branch | grep '*' | awk $'{print $2}')" = "$BRANCH" ]]
 then
+    echo "Target branch matches current branch"
     git pull
 else
+    echo "Branches do not match, updating to branch $BRANCH"
     git checkout .
-    git checkout $BRANCH
+    git checkout -b $BRANCH origin/$BRANCH
 fi
 
 # Update atdUpdate service
