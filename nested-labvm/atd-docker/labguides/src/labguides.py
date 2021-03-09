@@ -10,11 +10,15 @@ BASE_PATH = '/root/labguides/web/'
 
 class labguideRequestHandler(tornado.web.RequestHandler):
     def get(self):
-        pS(str(self.request.uri))        
-        self.render(
-            BASE_PATH + 'index.html'
-        )
-    
+        if not self.current_user:
+            self.redirect('/login')
+            return()
+        else:
+            pS(str(self.request.uri))
+            self.render(
+                BASE_PATH + 'index.html'
+            )
+
 # ===============================
 # Utility Functions
 # ===============================

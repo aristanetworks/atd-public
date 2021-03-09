@@ -7,7 +7,7 @@ docker build --build-arg UID=$(id -u atdadmin) -t atddocker_kvmbuilder:1.1 kvmbu
 docker build --build-arg UID=$(id -u arista) -t atddocker_cvpupdater:1.0 cvpUpdater/.
 docker build --build-arg UID=$(id -u arista) -t atddocker_gitconfigletsync:1.0 gitConfigletSync/.
 # docker build --build-arg UID=$(id -u arista) -t atddocker_sslupdater:1.0 sslUpdater/.
-docker build -t atddocker_labguides:1.0 labguides/.
+docker build -t atddocker_labguides:1.1 labguides/.
 docker build -t atddocker_freerad:1.0 freeradius/.
 docker build -t atddocker_nginx:1.0 nginx/.
 docker build -t atddocker_jenkins:1.0 jenkins/.
