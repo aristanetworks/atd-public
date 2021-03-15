@@ -36,7 +36,6 @@ cvp_info:
     containers:
       Tenant:
         - ATD-INFRA
-        - VLANs
     netelements:
       spine1:
         - BaseIPv4_Spine1
