@@ -8,7 +8,7 @@ topologies:
         cvp:
           2020.1.1:
             branch: nested/2020.1
-            image: base-atd-datacenter-ceos-c2020-1-1-20210126
+            image: base-atd-datacenter-ceos-c2020-1-1-20210315u
             eos:
               - 4.24.1.1F
               - 4.24.2.1F
@@ -37,7 +37,7 @@ topologies:
         cvp:
           2020.1.1:
             branch: nested/2020.1
-            image: base-atd-datacenter-e4-25-1f-c2020-1-1-20210126
+            image: base-atd-datacenter-e4-25-1f-c2020-1-1-20210315u
             eos:
               - 4.25.1F
           2020.2.3:
