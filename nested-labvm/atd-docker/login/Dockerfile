@@ -8,7 +8,7 @@ RUN usermod -aG root arista
 
 RUN apt update
 
-RUN apt install -y openssh-server vim sudo screen
+RUN apt install -y openssh-server vim sudo screen libvirt-clients
 
 RUN pip install ruamel.yaml rcvpapi cvprac pyaml paramiko scp urllib3
 
