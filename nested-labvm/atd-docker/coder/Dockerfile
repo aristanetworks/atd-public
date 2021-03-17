@@ -1,8 +1,8 @@
-FROM codercom/code-server:3.8.0
+FROM codercom/code-server:3.9.1
 
 RUN sudo apt update
 
-RUN sudo apt install -y python3 git openssh-server vim nano less rsync man-db jq python3-pip wget zsh sshpass
+RUN sudo apt install -y python3 git openssh-server vim nano less rsync man-db jq python3-pip wget zsh sshpass libvirt-clients
 
 RUN sudo pip3 install --upgrade pip
 
