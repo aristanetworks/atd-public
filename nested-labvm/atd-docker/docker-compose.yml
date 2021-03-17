@@ -33,6 +33,7 @@ services:
       - /home/arista/arista-dir:/home/arista:rw
       - /home/arista/.ssh:/home/arista/.ssh:rw
       - /opt/sftp/uploads:/opt/sftp:ro
+      - /var/run/libvirt/libvirt-sock:/var/run/libvirt/libvirt-sock:ro
   cvpupdater:
     container_name: atd-cvpupdater
     image: atddocker_cvpupdater:1.0
@@ -157,7 +158,7 @@ services:
       - /opt/atd/topologies:/opt/atd/topologies
   coder:
     container_name: atd-coder
-    image: atddocker_coder:1.0
+    image: atddocker_coder:1.1
     restart: always
     user: $ArID:$ArGD
     command: /home/coder/project
@@ -171,6 +172,7 @@ services:
       - /home/arista/arista-dir/apps/coder/labfiles:/home/coder/project/labfiles:rw
       - /home/arista/arista-dir/.ansible.cfg:/home/coder/.ansible.cfg:rw
       - /opt/sftp/uploads:/opt/sftp:ro
+      - /var/run/libvirt/libvirt-sock:/var/run/libvirt/libvirt-sock:ro
   ssh:
     container_name: atd-ssh
     image: attdocker_ssh:1.0
