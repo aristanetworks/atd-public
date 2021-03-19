@@ -27,7 +27,7 @@ topologies:
               - 4.25.2F
           2020.3.1:
             branch: nested-release
-            image: base-atd-datacenter-e4-25-2f-c2020-3-1-20210318
+            image: base-atd-datacenter-ceos-c2020-3-1-20210318
             eos:
               - 4.25.1F
               - 4.25.2F
