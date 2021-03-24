@@ -205,6 +205,8 @@ class ConfigureTopology():
 
             # Config the topology
             self.update_topology(lab_configlets)
+            # Wait time for CVP to generate tasks
+            time.sleep(15)
             
             # Execute all tasks generated from reset_devices()
             print('Gathering task information...')
