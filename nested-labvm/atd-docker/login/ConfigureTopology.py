@@ -175,6 +175,9 @@ def main(argv):
         update_topology(cvp_clnt, lab, labconfiglets)
     else:
       print_usage(options)
+
+    # Wait time to make sure CVP has generated tasks
+    time.sleep(15)
     
     # Execute all tasks generated from reset_devices()
     print('Gathering task information...')
