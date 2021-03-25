@@ -40,6 +40,7 @@ else
     echo "Branches do not match, updating to branch $BRANCH"
     git checkout .
     git checkout $BRANCH
+    git pull
 fi
 
 # Update atdUpdate service
