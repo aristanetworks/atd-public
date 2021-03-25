@@ -158,7 +158,7 @@ services:
       - /opt/atd/topologies:/opt/atd/topologies
   coder:
     container_name: atd-coder
-    image: atddocker_coder:1.1
+    image: atddocker_coder:1.2
     restart: always
     user: $ArID:$ArGD
     command: /home/coder/project
