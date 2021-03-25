@@ -1,0 +1,400 @@
+alias conint sh interface | i connected
+alias mlag-reload bash /mnt/flash/shut_intfs && sudo shutdown now -r
+alias senz show interface counter error | nz
+alias shmc show int | awk '/^[A-Z]/ { intf = $1 } /, address is/ { print intf, $6 }'
+alias snz show interface counter | nz
+alias spd show port-channel %1 detail all
+alias sqnz show interface counter queue | nz
+alias srnz show interface counter rate | nz
+!
+alias intdesc
+   !! Usage: intdesc interface-name description
+   10 config
+   20 int %1
+   30 desc %2
+   40 exit
+!
+daemon TerminAttr
+   exec /usr/bin/TerminAttr -ingestgrpcurl=192.168.0.5:9910 -taillogs -ingestauth=key,atd-lab -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent
+   no shutdown
+!
+transceiver qsfp default-mode 4x10G
+!
+service routing protocols model multi-agent
+!
+hostname borderleaf1
+dns domain arista.lab
+!
+ntp server 192.168.0.1 iburst source Management1
+!
+radius-server host 192.168.0.1 key 7 0207165218120E
+!
+aaa group server radius atds
+   server 192.168.0.1
+!
+spanning-tree mode mstp
+!
+aaa authentication login default group atds local
+aaa authorization exec default group atds local
+aaa authorization commands all default local
+!
+no aaa root
+!
+username Script secret sha512 $6$PNfpb9anSBQ5/aia$phaa3ar5pwkntenD9WHc6Ed5b96lbW0dc0bjtwPnFLaDiCK8D5Cjl6ewP/xdNbl4PtS6Paq.3SssN8pj05NQm.
+username admin privilege 15 role network-admin secret 5 $1$5O85YVVn$HrXcfOivJEnISTMb6xrJc.
+username arista privilege 15 role network-admin secret 5 $1$4VjIjfd1$XkUVulbNDESHFzcxDU.Tk1
+username arista ssh-key ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDQ7ZFtrt/UPvj2Q0mhN49r+MIk62yqL8AQOSqkgbj9w6gM5HzR5srPSJ5qU6fUOezGt71pyC5hb1qtPv22J6aEBsWKTShDvuA+UlY6XA3g+WUtAhwYHLA/8Z688JXxiygOvIudkINk7jcur7bFRZjmenR5LmWQ3htehVJIqgxjuf0j4NSKCaxQ5pYwpsTYWMuGJJUE9pCxrNyBKMedx6WAVwFUp6wWmanI1chM6CNq7BeEkMXYb9bP33zAw/1WRfJHtbe2UYO9uOnd+zNaSQ22RTN2qzaicib4VzjWo8h13jk9GYUYEe/Fm4+6BB52M8jNEoErA2QayuDqo/S6CSwz arista@level3-midpoint-configlets-1-2b36fe4c
+!
+interface Ethernet1
+   no switchport
+   ip address 172.17.2.1/30
+!
+interface Ethernet2
+   no switchport
+   ip address 172.17.2.5/30
+!
+interface Ethernet3
+   no switchport
+   ip address 172.16.1.1/30
+!
+interface Ethernet4
+   no switchport
+   ip address 172.16.1.5/30
+!
+interface Ethernet5
+   no switchport
+   ip address 172.16.1.9/30
+!
+interface Loopback100
+   ip address 172.10.1.100/32
+!
+interface Loopback101
+   ip address 172.10.1.101/32
+!
+interface Loopback102
+   ip address 172.10.1.102/32
+!
+interface Loopback103
+   ip address 172.10.1.103/32
+!
+interface Loopback104
+   ip address 172.10.1.104/32
+!
+interface Loopback105
+   ip address 172.10.1.105/32
+!
+interface Loopback106
+   ip address 172.10.1.106/32
+!
+interface Loopback107
+   ip address 172.10.1.107/32
+!
+interface Loopback108
+   ip address 172.10.1.108/32
+!
+interface Loopback109
+   ip address 172.10.1.109/32
+!
+interface Loopback110
+   ip address 172.10.1.110/32
+!
+interface Loopback111
+   ip address 172.10.1.111/32
+!
+interface Loopback112
+   ip address 172.10.1.112/32
+!
+interface Loopback113
+   ip address 172.10.1.113/32
+!
+interface Loopback114
+   ip address 172.10.1.114/32
+!
+interface Loopback115
+   ip address 172.10.1.115/32
+!
+interface Loopback116
+   ip address 172.10.1.116/32
+!
+interface Loopback117
+   ip address 172.10.1.117/32
+!
+interface Loopback118
+   ip address 172.10.1.118/32
+!
+interface Loopback119
+   ip address 172.10.1.119/32
+!
+interface Loopback120
+   ip address 172.10.1.120/32
+!
+interface Loopback121
+   ip address 172.10.1.121/32
+!
+interface Loopback122
+   ip address 172.10.1.122/32
+!
+interface Loopback123
+   ip address 172.10.1.123/32
+!
+interface Loopback124
+   ip address 172.10.1.124/32
+!
+interface Loopback125
+   ip address 172.10.1.125/32
+!
+interface Loopback126
+   ip address 172.10.1.126/32
+!
+interface Loopback127
+   ip address 172.10.1.127/32
+!
+interface Loopback128
+   ip address 172.10.1.128/32
+!
+interface Loopback129
+   ip address 172.10.1.129/32
+!
+interface Loopback130
+   ip address 172.10.1.130/32
+!
+interface Loopback131
+   ip address 172.10.1.131/32
+!
+interface Loopback132
+   ip address 172.10.1.132/32
+!
+interface Loopback133
+   ip address 172.10.1.133/32
+!
+interface Loopback134
+   ip address 172.10.1.134/32
+!
+interface Loopback135
+   ip address 172.10.1.135/32
+!
+interface Loopback136
+   ip address 172.10.1.136/32
+!
+interface Loopback137
+   ip address 172.10.1.137/32
+!
+interface Loopback138
+   ip address 172.10.1.138/32
+!
+interface Loopback139
+   ip address 172.10.1.139/32
+!
+interface Loopback140
+   ip address 172.10.1.140/32
+!
+interface Loopback141
+   ip address 172.10.1.141/32
+!
+interface Loopback142
+   ip address 172.10.1.142/32
+!
+interface Loopback143
+   ip address 172.10.1.143/32
+!
+interface Loopback144
+   ip address 172.10.1.144/32
+!
+interface Loopback145
+   ip address 172.10.1.145/32
+!
+interface Loopback146
+   ip address 172.10.1.146/32
+!
+interface Loopback147
+   ip address 172.10.1.147/32
+!
+interface Loopback148
+   ip address 172.10.1.148/32
+!
+interface Loopback149
+   ip address 172.10.1.149/32
+!
+interface Loopback150
+   ip address 172.10.1.150/32
+!
+interface Loopback151
+   ip address 172.10.1.151/32
+!
+interface Loopback152
+   ip address 172.10.1.152/32
+!
+interface Loopback153
+   ip address 172.10.1.153/32
+!
+interface Loopback154
+   ip address 172.10.1.154/32
+!
+interface Loopback155
+   ip address 172.10.1.155/32
+!
+interface Loopback156
+   ip address 172.10.1.156/32
+!
+interface Loopback157
+   ip address 172.10.1.157/32
+!
+interface Loopback158
+   ip address 172.10.1.158/32
+!
+interface Loopback159
+   ip address 172.10.1.159/32
+!
+interface Loopback160
+   ip address 172.10.1.160/32
+!
+interface Loopback161
+   ip address 172.10.1.161/32
+!
+interface Loopback162
+   ip address 172.10.1.162/32
+!
+interface Loopback163
+   ip address 172.10.1.163/32
+!
+interface Loopback164
+   ip address 172.10.1.164/32
+!
+interface Loopback165
+   ip address 172.10.1.165/32
+!
+interface Loopback166
+   ip address 172.10.1.166/32
+!
+interface Loopback167
+   ip address 172.10.1.167/32
+!
+interface Loopback168
+   ip address 172.10.1.168/32
+!
+interface Loopback169
+   ip address 172.10.1.169/32
+!
+interface Loopback170
+   ip address 172.10.1.170/32
+!
+interface Loopback171
+   ip address 172.10.1.171/32
+!
+interface Loopback172
+   ip address 172.10.1.172/32
+!
+interface Loopback173
+   ip address 172.10.1.173/32
+!
+interface Loopback174
+   ip address 172.10.1.174/32
+!
+interface Loopback175
+   ip address 172.10.1.175/32
+!
+interface Loopback176
+   ip address 172.10.1.176/32
+!
+interface Loopback177
+   ip address 172.10.1.177/32
+!
+interface Loopback178
+   ip address 172.10.1.178/32
+!
+interface Loopback179
+   ip address 172.10.1.179/32
+!
+interface Loopback180
+   ip address 172.10.1.180/32
+!
+interface Loopback181
+   ip address 172.10.1.181/32
+!
+interface Loopback182
+   ip address 172.10.1.182/32
+!
+interface Loopback183
+   ip address 172.10.1.183/32
+!
+interface Loopback184
+   ip address 172.10.1.184/32
+!
+interface Loopback185
+   ip address 172.10.1.185/32
+!
+interface Loopback186
+   ip address 172.10.1.186/32
+!
+interface Loopback187
+   ip address 172.10.1.187/32
+!
+interface Loopback188
+   ip address 172.10.1.188/32
+!
+interface Loopback189
+   ip address 172.10.1.189/32
+!
+interface Loopback190
+   ip address 172.10.1.190/32
+!
+interface Loopback191
+   ip address 172.10.1.191/32
+!
+interface Loopback192
+   ip address 172.10.1.192/32
+!
+interface Loopback193
+   ip address 172.10.1.193/32
+!
+interface Loopback194
+   ip address 172.10.1.194/32
+!
+interface Loopback195
+   ip address 172.10.1.195/32
+!
+interface Loopback196
+   ip address 172.10.1.196/32
+!
+interface Loopback197
+   ip address 172.10.1.197/32
+!
+interface Loopback198
+   ip address 172.10.1.198/32
+!
+interface Loopback199
+   ip address 172.10.1.199/32
+!
+interface Management1
+   ip address 192.168.0.25/24
+   no lldp transmit
+   no lldp receive
+!
+ip routing
+!
+ip prefix-list local-LOOP
+   seq 10 permit 172.10.1.0/24 ge 32
+!
+ip route 0.0.0.0/0 192.168.0.1
+!
+ip radius source-interface Management1
+!
+route-map prepend permit 10
+   set as-path prepend 10 10 10
+!
+route-map redist-LOOP permit 10
+   match ip address prefix-list local-LOOP
+!
+router bgp 65500
+   neighbor spines peer group
+   neighbor spines remote-as 65100
+   neighbor spines maximum-routes 12000
+   neighbor 172.16.1.2 peer group spines
+   neighbor 172.16.1.6 peer group spines
+   neighbor 172.16.1.10 peer group spines
+   aggregate-address 172.10.1.0/24 summary-only attribute-map prepend
+   redistribute connected route-map redist-LOOP
+!
+management api http-commands
+   no shutdown
+!

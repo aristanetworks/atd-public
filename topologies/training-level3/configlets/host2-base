@@ -1,5 +1,7 @@
 hostname host2
 !
+spanning-tree mode none
+!
 interface Management 1
   ip address 192.168.0.52/24
   no lldp transmit
