@@ -7,11 +7,11 @@ RUN sudo pip3 install --upgrade pip
 
 RUN sudo pip3 install pyeapi jsonrpclib-pelix
 
-RUN wget --quiet https://raw.githubusercontent.com/aristanetworks/ansible-avd/devel/development/requirements.txt
+RUN wget --quiet https://raw.githubusercontent.com/aristanetworks/ansible-avd/devel/ansible_collections/arista/avd/requirements.txt
 
 RUN sudo pip3 install -r requirements.txt
 
-RUN wget --quiet https://raw.githubusercontent.com/aristanetworks/ansible-avd/devel/development/requirements-dev.txt
+RUN wget --quiet https://raw.githubusercontent.com/aristanetworks/ansible-avd/devel/ansible_collections/arista/avd/requirements-dev.txt
 
 RUN sudo pip3 install -r requirements-dev.txt
 
