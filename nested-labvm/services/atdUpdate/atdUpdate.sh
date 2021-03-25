@@ -18,9 +18,29 @@ else
     EOS_TYPE=veos
 fi
 
-rm -rf /opt/atd
+# Perform git repo check
+cd /opt/atd
 
-git clone --branch $BRANCH $REPO /opt/atd
+# Check the current repo compared to the targeted repo
+if [[ ! "$(git remote get-url origin)" = "$REPO" ]]
+then
+    echo "Repos do not match, updating to $REPO"
+    git remote set-url origin $REPO
+fi
+
+# Fetch updates from the remote repo
+git fetch
+
+# Perform check on the current branch/tag to the targeted
+if [[ "$(git branch --show-current)" = "$BRANCH" ]]
+then
+    echo "Target branch matches current branch"
+    git pull
+else
+    echo "Branches do not match, updating to branch $BRANCH"
+    git checkout .
+    git checkout $BRANCH
+fi
 
 # Update atdUpdate service
 
