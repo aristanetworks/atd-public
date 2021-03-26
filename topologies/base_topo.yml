@@ -13,13 +13,6 @@ topologies:
               - 4.24.1.1F
               - 4.24.2.1F
               - 4.25.1F
-          2020.2.3:
-            branch: nested-release
-            image: base-atd-datacenter-ceos-c2020-2-3-20210126
-            eos:
-              - 4.24.1.1F
-              - 4.24.2.1F
-              - 4.25.1F
           2021.2.0.a4:
             branch: nested-release
             image: base-atd-datacenter-ceos-c2021-2-0-20210318
@@ -40,11 +33,6 @@ topologies:
             image: base-atd-datacenter-e4-25-1f-c2020-1-1-20210315u
             eos:
               - 4.25.1F
-          2020.2.3:
-            branch: nested-release
-            image: base-atd-datacenter-e4-24-2-1f-c2020-2-3-20210126
-            eos:
-              - 4.24.2.1F
           2020.3.1:
             branch: nested-release
             image: base-atd-datacenter-e4-25-2f-c2020-3-1-20210318
@@ -89,7 +77,7 @@ topologies:
             eos:
               - 4.24.1F
           2020.2.3:
-            branch: nested-release
+            branch: nested/2020.2
             image: base-atd-routing-e4-25-2f-c2020-2-3-20210226
             eos:
               - 4.25.2F
@@ -127,7 +115,7 @@ topologies:
         ram: 64
         cvp:
           2020.2.3:
-            branch: nested-release
+            branch: nested/2020.2
             image: base-training-l1-e4-24-2-2f-c2020-2-3-20210125
             eos:
               - 4.24.2.2F
@@ -137,7 +125,7 @@ topologies:
     #     ram: 64
     #     cvp:
     #       2020.2.3:
-    #         branch: nested-release
+    #         branch: nested/2020.2
     #         image: base-training-l2-e4-24-2-2f-c2020-2-3-20210108
     #         eos:
     #           - 4.24.2.2F
@@ -154,7 +142,7 @@ topologies:
         ram: 64
         cvp:
           2020.2.3:
-            branch: nested-release
+            branch: nested/2020.2
             image: base-training-l2-e4-24-2-2f-c2020-2-3-20210125
             eos:
               - 4.24.2.2F
@@ -164,7 +152,7 @@ topologies:
     #     ram: 64
     #     cvp:
     #       2020.2.3:
-    #         branch: nested-release
+    #         branch: nested/2020.2
     #         image: base-training-l2-e4-24-2-2f-c2020-2-3-20210108
     #         eos:
     #           - 4.24.2.2F
@@ -181,7 +169,7 @@ topologies:
         ram: 72
         cvp:
           2020.2.3:
-            branch: nested-release
+            branch: nested/2020.2
             image: base-training-l3-e4-24-2-2f-c2020-2-3-20210208
             eos:
               - 4.24.2.2F
@@ -191,7 +179,7 @@ topologies:
     #     ram: 64
     #     cvp:
     #       2020.2.3:
-    #         branch: nested-release
+    #         branch: nested/2020.2
     #         image: base-training-l3-e4-24-2-2f-c2020-2-3-20210111
     #         eos:
     #           - 4.24.2.2F
@@ -208,7 +196,7 @@ topologies:
         ram: 64
         cvp:
           2020.2.3:
-            branch: nested-release
+            branch: nested/2020.2
             image: base-training-l4-ceos-c2020-2-3-20210217
             eos:
               - 4.25.1F
@@ -218,7 +206,7 @@ topologies:
     #     ram: 64
     #     cvp:
     #       2020.2.3:
-    #         branch: nested-release
+    #         branch: nested/2020.2
     #         image: base-training-l3-e4-24-2-2f-c2020-2-3-20210111
     #         eos:
     #           - 4.24.2.2F
