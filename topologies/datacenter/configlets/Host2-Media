@@ -17,4 +17,8 @@ ip route 172.16.0.0/16 172.16.46.4
 !
 ip routing
 !
-ip multicast-routing
+!
+router multicast
+   ipv4
+      software-forwarding sfe
+!
