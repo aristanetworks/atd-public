@@ -22,7 +22,11 @@ interface Vlan46
    ip address 172.16.46.4/24
    ip pim sparse-mode
 ip routing
-ip multicast-routing
+!
+router multicast
+   ipv4
+      software-forwarding sfe
+!
 router ospf 6500
    router-id 172.16.0.4
    passive-interface Loopback0
