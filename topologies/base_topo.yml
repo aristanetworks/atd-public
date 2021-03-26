@@ -76,9 +76,9 @@ topologies:
             image: base-atd-routing-e4-24-1f-c2020-1-1-20210125
             eos:
               - 4.24.1F
-          2020.2.3:
-            branch: nested/2020.2
-            image: base-atd-routing-e4-25-2f-c2020-2-3-20210226
+          2020.3.1:
+            branch: nested/2020.3
+            image: base-atd-routing-e4-25-2f-c2020-3-1-20210326
             eos:
               - 4.25.2F
       ceos:
