@@ -222,7 +222,10 @@ Advanced Networking for Media Engineers
 
     .. code-block:: text
 
-        ip multicast-routing
+        !
+        router multicast
+          ipv4
+              software-forwarding sfe
         !
         ip pim rp-address 172.16.0.1
         !
@@ -234,11 +237,15 @@ Advanced Networking for Media Engineers
           ip pim sparse-mode
         !
 
+    .. note:: In this lab environment, we will be leveraging the software based forwarding agent for multicast.
+    
     **Example:**
 
     .. code-block:: text
 
-        leaf4(config)#ip multicast-routing
+        leaf4(config)#router multicast
+        leaf4(config-router-multicast)#ipv4
+        leaf4(config-router-multicast-ipv4)#software-forwarding sfe
         leaf4(config)#ip pim rp-address 172.16.0.1
         leaf4(config)#int vlan 46
         leaf4(config-if-Vl46)#ip pim sparse-mode
