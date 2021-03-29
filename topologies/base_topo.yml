@@ -119,16 +119,16 @@ topologies:
             image: base-training-l1-e4-24-2-2f-c2020-2-3-20210125
             eos:
               - 4.24.2.2F
-    # prod:
-    #   veos:
-    #     cpu: 32
-    #     ram: 64
-    #     cvp:
-    #       2020.2.3:
-    #         branch: nested/2020.2
-    #         image: base-training-l2-e4-24-2-2f-c2020-2-3-20210108
-    #         eos:
-    #           - 4.24.2.2F
+    prod:
+      veos:
+        cpu: 32
+        ram: 64
+        cvp:
+          2020.2.3:
+            branch: v2020.2-20210329a
+            image: base-training-l1-e4-24-2-2f-c2020-2-3-20210125
+            eos:
+              - 4.24.2.2F
     desc: 'Level 1 Training Lab. For use by the Arista Training Team.'
     name: 'Training - Level 1'
     title: 'Training Level 1 Lab'
