@@ -17,7 +17,7 @@ cp_run_start = """enable
 copy running-config startup-config
 """
 cp_start_run = """enable
-copy startup-config running-config
+copy flash:atd-ucn-config running-config
 """
 # Cmds to grab ZTP status
 ztp_cmds = """enable
