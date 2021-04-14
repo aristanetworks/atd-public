@@ -1,0 +1,14 @@
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build',
+    '--build-arg',
+    'GCLOUD_PROJECT=${_GCLOUD_PROJECT}',
+    '-t',
+    'us.gcr.io/${_GCLOUD_PROJECT}/atddocker_coder:${_VERSION}',
+    'coder/.']
+substitutions:
+  _GCLOUD_PROJECT: beta-atds
+  _VERSION: "0.1"
+images: [
+  'us.gcr.io/${_GCLOUD_PROJECT}/atddocker_coder:${_VERSION}',
+]

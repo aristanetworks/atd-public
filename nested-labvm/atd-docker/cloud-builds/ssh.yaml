@@ -1,0 +1,17 @@
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build',
+    '--build-arg',
+    'GCLOUD_PROJECT=${_GCLOUD_PROJECT}',
+    '--build-arg',
+    'TAG=${_TAG}',
+    '-t',
+    'us.gcr.io/${_GCLOUD_PROJECT}/atddocker_ssh:${_VERSION}',
+    'ssh/.']
+substitutions:
+  _GCLOUD_PROJECT: beta-atds
+  _VERSION: "0.1"
+  _TAG: "0.3.0"
+images: [
+  'us.gcr.io/${_GCLOUD_PROJECT}/atddocker_ssh:${_VERSION}',
+]
