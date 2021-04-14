@@ -140,6 +140,7 @@ class ConfigureTopology():
         veos_ssh.connect(hostname=veos_ip, username="root", password="", port="50001")
         scp = SCPClient(veos_ssh.get_transport())
         scp.put(device_config,remote_path="/mnt/flash/startup-config")
+        scp.put(device_config,remote_path="/mnt/flash/atd-ucn-config")
         scp.close()
         veos_ssh.exec_command('FastCli -c "{0}"'.format(cp_start_run))
         veos_ssh.exec_command('FastCli -c "{0}"'.format(cp_run_start))
