@@ -28,6 +28,11 @@ ztp_cancel = """enable
 zerotouch cancel
 """
 
+# Reboot Switch
+reboot_veos = """enable
+reload now
+"""
+
 # Create class to handle configuring the topology
 class ConfigureTopology():
 
@@ -143,8 +148,8 @@ class ConfigureTopology():
         scp.put(device_config,remote_path="/mnt/flash/atd-ucn-config")
         scp.close()
         time.sleep(1)
-        veos_ssh.exec_command('FastCli -c "{0}"'.format(cp_start_run))
-        veos_ssh.exec_command('FastCli -c "{0}"'.format(cp_run_start))
+        # veos_ssh.exec_command('FastCli -c "{0}"'.format(cp_start_run))
+        # veos_ssh.exec_command('FastCli -c "{0}"'.format(cp_run_start))
         stdin, stdout, stderr = veos_ssh.exec_command('FastCli -c "{0}"'.format(ztp_cmds))
         ztp_out = stdout.readlines()
         if 'Active' in ztp_out[0]:
@@ -152,6 +157,11 @@ class ConfigureTopology():
             self.send_to_syslog("INFO", "Rebooting {0}...This will take a couple minutes to come back up".format(veos_host))
             #veos_ssh.exec_command("/sbin/reboot -f > /dev/null 2>&1 &")
             veos_ssh.exec_command('FastCli -c "{0}"'.format(ztp_cancel))
+        else:
+            DEVREBOOT = True
+            self.send_to_syslog("INFO", "Rebooting {0}...This will take a couple minutes to come back up".format(veos_host))
+            #veos_ssh.exec_command("/sbin/reboot -f > /dev/null 2>&1 &")
+            veos_ssh.exec_command('FastCli -c "{0}"'.format(reboot_veos))
         veos_ssh.close()
         return(DEVREBOOT)
 
