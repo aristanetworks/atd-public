@@ -157,7 +157,7 @@ services:
       - /var/run/libvirt/libvirt-sock:/var/run/libvirt/libvirt-sock:ro
   ssh:
     container_name: atd-ssh
-    image: us.gcr.io/beta-atds/attdocker_ssh:2.0
+    image: us.gcr.io/beta-atds/atddocker_ssh:2.0
     restart: always
     networks:
       - atd_nginx
