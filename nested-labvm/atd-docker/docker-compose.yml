@@ -140,7 +140,7 @@ services:
       - /home/arista/arista-dir/apps/coder/labfiles:/opt/labfiles:rw
   coder:
     container_name: atd-coder
-    image: us.gcr.io/alpha-atds/atddocker_coder:2.0
+    image: us.gcr.io/beta-atds/atddocker_coder:2.0
     restart: always
     user: $ArID:$ArGD
     command: /home/coder/project
@@ -157,7 +157,7 @@ services:
       - /var/run/libvirt/libvirt-sock:/var/run/libvirt/libvirt-sock:ro
   ssh:
     container_name: atd-ssh
-    image: us.gcr.io/alpha-atds/attdocker_ssh:2.0
+    image: us.gcr.io/beta-atds/attdocker_ssh:2.0
     restart: always
     networks:
       - atd_nginx
