@@ -51,6 +51,7 @@ services:
   kvmbuilder:
     container_name: atd-kvmbuilder
     image: us.gcr.io/beta-atds/atddocker_kvmbuilder:2.0
+    user: $AtID:$AtGD
     restart: on-failure
     environment:
       - PYTHONUNBUFFERED=1
