@@ -1,8 +1,6 @@
 steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build',
-    '--build-arg',
-    'GCLOUD_PROJECT=${_GCLOUD_PROJECT}',
     '-t',
     'us.gcr.io/${_GCLOUD_PROJECT}/atddocker_nginx:${_VERSION}',
     'nginx/.']
