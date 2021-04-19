@@ -144,7 +144,7 @@ topologies:
         cvp:
           2020.2.3:
             branch: nested/2020.2
-            image: base-training-l2-e4-24-2-2f-c2020-2-3-20210125
+            image: base-training-l2-e4-24-2-2f-c2020-2-3-20210419
             eos:
               - 4.24.2.2F
     # prod:
