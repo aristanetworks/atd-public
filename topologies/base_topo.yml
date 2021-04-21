@@ -38,7 +38,7 @@ topologies:
             branch: nested/2020.3
             image: base-atd-datacenter-e4-26-0f-c2020-3-1-20210421
             eos:
-              - 4.25.2F
+              - 4.26.0F
     prod:
       ceos:
         cpu: 24
@@ -81,7 +81,7 @@ topologies:
             branch: nested/2020.3
             image: base-atd-routing-e4-26-0f-c2020-3-1-20210421
             eos:
-              - 4.25.2F
+              - 4.26.0F
       ceos:
         cpu: 24
         ram: 54
