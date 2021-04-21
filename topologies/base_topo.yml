@@ -36,7 +36,7 @@ topologies:
               - 4.25.1F
           2020.3.1:
             branch: nested/2020.3
-            image: base-atd-datacenter-e4-25-2f-c2020-3-1-20210318
+            image: base-atd-datacenter-e4-26-0f-c2020-3-1-20210421
             eos:
               - 4.25.2F
     prod:
@@ -79,7 +79,7 @@ topologies:
               - 4.24.1F
           2020.3.1:
             branch: nested/2020.3
-            image: base-atd-routing-e4-25-2f-c2020-3-1-20210326
+            image: base-atd-routing-e4-26-0f-c2020-3-1-20210421
             eos:
               - 4.25.2F
       ceos:
