@@ -1,13 +1,5 @@
 version: "3"
 services:
-  # sslupdater:
-  #   container_name: atd-sslupdater
-  #   image: atddocker_sslupdater:1.0
-  #   restart: always
-  #   environment:
-  #     - PYTHONUNBUFFERED=1
-  #   volumes:
-  #     - /etc/atd:/etc/atd:ro
   uptime:
     container_name: atd-uptime
     image: atddocker_uptime:1.0
@@ -145,17 +137,6 @@ services:
     volumes:
       - jenkins_home:/var/jenkins_home
       - /home/arista/arista-dir/apps/coder/labfiles:/opt/labfiles:rw
-  robot:
-    container_name: atd-robot
-    image: mpergament/aristarobot:latest
-    restart: always
-    networks:
-      - atd_nginx
-    volumes:
-      - /home/atdadmin/robot:/home/robot
-      - /etc/atd/ACCESS_INFO.yaml:/etc/atd/ACCESS_INFO.yaml
-      - /home/arista/arista-dir:/home/arista:rw
-      - /opt/atd/topologies:/opt/atd/topologies
   coder:
     container_name: atd-coder
     image: atddocker_coder:1.2

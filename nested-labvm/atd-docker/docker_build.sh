@@ -17,7 +17,3 @@ docker build -t atddocker_ceosbuilder:1.0 ceosbuilder/.
 docker build -t atddocker_monitor:1.0 monitor/.
 docker build -t atddocker_coder:1.2 coder/.
 docker build --build-arg TAG=0.3.0 -t attdocker_ssh:1.0 ssh/.
-
-# Pull any remote repo images
-docker pull mpergament/avd-cpv-atd-nested:latest
-docker pull mpergament/aristarobot:latest
