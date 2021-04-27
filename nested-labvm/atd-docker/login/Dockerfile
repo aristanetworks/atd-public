@@ -1,10 +1,12 @@
 FROM python:3.8
 
-ARG UID=1000
+RUN adduser --disabled-password --shell /usr/local/bin/login.py --home /home/arista --gecos "" arista
 
-RUN useradd -s /usr/local/bin/login.py -m -u $UID arista
-
-RUN usermod -aG root arista
+RUN curl -SsL https://github.com/boxboat/fixuid/releases/download/v0.5/fixuid-0.5-linux-amd64.tar.gz | tar -C /usr/local/bin -xzf - && \
+    chown root:root /usr/local/bin/fixuid && \
+    chmod 4755 /usr/local/bin/fixuid && \
+    mkdir -p /etc/fixuid && \
+    printf "user: arista\ngroup: arista\n" > /etc/fixuid/config.yml
 
 RUN apt update && \
     apt install -y openssh-server vim sudo screen libvirt-clients
@@ -41,8 +43,12 @@ RUN chown -R arista:arista .
 
 RUN pip install --upgrade rcvpapi
 
+COPY src/entrypoint.sh /usr/local/bin/
+
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
 EXPOSE 22
 
 USER arista
 
-CMD ["sudo", "/usr/sbin/sshd", "-D"]
+CMD ["/usr/local/bin/entrypoint.sh"]
