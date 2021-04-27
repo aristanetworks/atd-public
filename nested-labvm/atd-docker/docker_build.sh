@@ -18,5 +18,5 @@ docker build --build-arg UID=$(id -u arista) -t atddocker_login:1.1 login/.
 # docker build --build-arg TAG=0.3.0 -t attdocker_ssh:1.0 ssh/.
 
 # Pull any remote repo images
-docker pull mpergament/avd-cpv-atd-nested:latest
-docker pull mpergament/aristarobot:latest
+# docker pull mpergament/avd-cpv-atd-nested:latest
+# docker pull mpergament/aristarobot:latest

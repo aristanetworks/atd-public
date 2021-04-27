@@ -62,6 +62,8 @@ su atdadmin -c 'bash docker_build.sh'
 # Setting arista user ids for coder container
 export ArID=$(id -u arista)
 export ArGD=$(id -g arista)
+export AtID=$(id -u atdadmin)
+export AtGD=$(id -g atdadmin)
 
 /usr/local/bin/docker-compose up -d --remove-orphans --force-recreate
 
