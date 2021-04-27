@@ -57,7 +57,7 @@ chown -R arista:arista /home/arista
 
 cd /opt/atd/nested-labvm/atd-docker
 
-su atdadmin -c 'bash docker_build.sh'
+# su atdadmin -c 'bash docker_build.sh'
 
 # Setting arista user ids for coder container
 export ArID=$(id -u arista)
