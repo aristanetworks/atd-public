@@ -26,6 +26,7 @@ git fetch
 if [[ "$(git branch --show-current)" = "$BRANCH" ]]
 then
     echo "Target branch matches current branch"
+    git checkout .
     git pull
 else
     echo "Branches do not match, updating to branch $BRANCH"
