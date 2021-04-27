@@ -95,8 +95,10 @@ services:
       - atd_nginx
   freerad:
     container_name: atd-freeradius
-    image: atddocker_freerad:1.0
+    image: us.gcr.io/beta-atds/atddocker_freerad:0.3
     restart: always
+    volumes:
+      - /opt/atd/nested-labvm/atd-docker/freeradius/src/mods-config/files/authorize:/etc/freeradius/mods-config/files/authorize:ro
     ports:
       - "1812:1812/udp"
       - "1813:1813/udp"
