@@ -12,7 +12,8 @@ services:
       - atd_nginx
   login:
     container_name: atd-login
-    image: atddocker_login:1.1
+    image: us.gcr.io/beta-atds/atddocker_login:0.1
+    user: $ArID:$ArGD
     restart: always
     hostname: devbox
     networks:
