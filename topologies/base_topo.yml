@@ -111,6 +111,11 @@ topologies:
             image: base-atd-routing-e4-26-0f-c2020-3-1-20210421
             eos:
               - 4.26.0F
+          2021.1.0:
+            branch: nested/2021.1
+            image: base-atd-routing-e4-26-0f-c2021-1-0-20210427
+            eos:
+              - 4.26.0F
       ceos:
         cpu: 24
         ram: 54
