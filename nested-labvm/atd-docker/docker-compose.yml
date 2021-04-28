@@ -85,7 +85,7 @@ services:
       - atd_nginx
   labguides:
     container_name: atd-labguides
-    image: us.gcr.io/beta-atds/atddocker_labguides:2.0
+    image: us.gcr.io/beta-atds/atddocker_labguides:2.0.1
     restart: always
     environment:
       - PYTHONUNBUFFERED=1
