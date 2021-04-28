@@ -31,7 +31,7 @@ make html
 sphinx-build -b latex source build
 
 # Build the lab guides PDF
-make latexpdf
+make latexpdf LATEXOPTS=-interaction=nonstopmode
 
 rm -r /root/labguides/web/*
 
