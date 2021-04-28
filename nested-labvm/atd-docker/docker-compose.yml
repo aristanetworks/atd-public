@@ -89,7 +89,7 @@ services:
       - atd_nginx
   labguides:
     container_name: atd-labguides
-    image: atddocker_labguides:1.1
+    image: atddocker_labguides:1.2
     restart: always
     environment:
       - PYTHONUNBUFFERED=1
