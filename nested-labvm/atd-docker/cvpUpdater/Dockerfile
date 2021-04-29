@@ -6,7 +6,7 @@ RUN curl -SsL https://github.com/boxboat/fixuid/releases/download/v0.5/fixuid-0.
     chown root:root /usr/local/bin/fixuid && \
     chmod 4755 /usr/local/bin/fixuid && \
     mkdir -p /etc/fixuid && \
-    printf "user: arista\ngroup: arista\n" > /etc/fixuid/config.yml
+    printf "user: arista\ngroup: arista\npaths:\n   - /home/arista\n   - /home/arista/CVP_DATA\n" > /etc/fixuid/config.yml
 
 RUN pip install rcvpapi \
     ruamel.yaml
@@ -24,7 +24,5 @@ COPY src/entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
 USER arista
-
-VOLUME ["/home/arista/CVP_DATA"]
 
 CMD ["/usr/local/bin/entrypoint.sh"]
