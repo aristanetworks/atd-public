@@ -1,3 +1,14 @@
+cloud_service: aws:adc
+default_interfaces: 8
+default_ami_name: 4.23.0.1F-E
+cvp_instance: singlenode
+cvp_version: 2019.1.2
+topology_name: datacenter-latest
+external_configuration: true
+only_add_to_inventory: false
+custom_ami_names: false
+preconfigured: false
+topology_link: true
 host_cpu: 4
 cvp_cpu: 16
 cvp_nodes: 1
@@ -183,5 +194,51 @@ nodes:
   - cvx01:
       ip_addr: 192.168.0.18
       neighbors: []
-  
+
+dmf:
+  nodes:
+    dmf-controller:
+      type: controller
+      ip_addr: 192.168.0.101
+      neighbors: []
+
+    dmf-filtersw:
+      type: switch
+      ip_addr: 192.168.0.102
+      dmf_sw: 1
+      interfaces:
+        eth1: 
+          connectTo: dmfab1-2
+          mode: fabric
+        eth2:
+          connectTo: le15-ho13
+          mode: tap
+        eth3:
+          connectTo: le25-ho14
+          mode: tap
+
+    dmf-deliverysw:
+      type: switch
+      ip_addr: 192.168.0.103
+      dmf_sw: 2
+      interfaces:
+        eth1:
+          connectTo: dmfab1-2
+          mode: fabric
+        eth2:
+          connectTo: dmftool1
+          mode: tool
+        eth3:
+          connectTo: dmftool2
+          mode: tool
+
+  type:
+    controller:
+      memory: 8
+      vcpu: 4
+    switch:
+      memory: 1
+      vcpu: 2
+
+
 additional_ssh_nodes:
