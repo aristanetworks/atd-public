@@ -55,6 +55,11 @@
                     <a href="/jenkins" target="_blank">Jenkins</a>
                 </li>
                 {% end %}
+                {% if "dmf" not in disable_links %}
+                <li>
+                    <a href="/dmf" target="_blank">DMF Controller</a>
+                </li>
+                {% end %}
             </ul>
         </div>
         <!-- /#sidebar-wrapper -->

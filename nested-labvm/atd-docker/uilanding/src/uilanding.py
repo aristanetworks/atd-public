@@ -106,6 +106,8 @@ class topoRequestHandler(BaseHandler):
                     labguides = host_yaml['labguides']
             else:
                 labguides = '/labguides/index.html'
+            if 'dmf' not in host_yaml:
+                disabled_links.append('dmf')
             self.render(
                 BASE_PATH + 'index.html',
                 NODES = MOD_YAML['topology']['nodes'],
