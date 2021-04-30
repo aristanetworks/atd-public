@@ -64,7 +64,7 @@ class LoginHandler(BaseHandler):
             self.redirect('/')
         else:
             self.render(
-                BASE_PATH + 'login.html',
+                BASE_PATH + 'atd-login.html',
                 LOGIN_MESSAGE=""
             )
 
@@ -77,12 +77,12 @@ class LoginHandler(BaseHandler):
                 self.redirect("/")
             else:
                 self.render(
-                    BASE_PATH + 'login.html',
+                    BASE_PATH + 'atd-login.html',
                     LOGIN_MESSAGE="Wrong username and/or password."
                 )
         else:
             self.render(
-                BASE_PATH + 'login.html',
+                BASE_PATH + 'atd-login.html',
                 LOGIN_MESSAGE="Wrong username and/or password."
             )
 
@@ -90,9 +90,9 @@ class topoRequestHandler(BaseHandler):
     def get(self):
         if not self.current_user:
             if 'auth' in self.request.arguments:
-                self.redirect('/login?auth={0}'.format(self.get_argument('auth')))
+                self.redirect('/atd-login?auth={0}'.format(self.get_argument('auth')))
             else:
-                self.redirect('/login')
+                self.redirect('/atd-login')
             return()
         else:
             if 'disabled_links' in host_yaml:
@@ -147,7 +147,7 @@ def pS(mtype):
 if __name__ == "__main__":
     settings = {
         'cookie_secret': genCookieSecret(),
-        'login_url': "/login"
+        'login_url': "/atd-login"
     }
     app = tornado.web.Application([
         (r'/js/(.*)', tornado.web.StaticFileHandler, {'path': BASE_PATH +  "js/"}),
@@ -155,7 +155,7 @@ if __name__ == "__main__":
         (r'/images/(.*)', tornado.web.StaticFileHandler, {'path': BASE_PATH +  "images/"}),
         (r'/topo/(.*)', tornado.web.StaticFileHandler, {'path': ArBASE_PATH}),
         (r'/', topoRequestHandler),
-        (r'/login', LoginHandler),
+        (r'/atd-login', LoginHandler),
     ], **settings)
     app.listen(PORT)
     print('*** Websocket Server Started on {} ***'.format(PORT))

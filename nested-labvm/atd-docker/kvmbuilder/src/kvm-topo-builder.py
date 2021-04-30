@@ -15,6 +15,7 @@ AVAIL_TOPO = REPO_TOPO + 'available_topo.yaml'
 DATA_OUTPUT = expanduser('~/kvm/')
 BASE_XML_VEOS = expanduser('~/base.xml')
 BASE_XML_CVP = expanduser('~/base_cvp.xml')
+BASE_XML_DMF = expanduser('~/base_dmf.xml')
 
 OVS_BRIDGES = []
 VEOS_NODES = {}
@@ -151,6 +152,8 @@ def createMac(dev_type, dev_id):
     """
     if dev_type == 'cvp':
         return('a{0}'.format(dev_id))
+    elif dev_type == 'dmf':
+        return('9{0}'.format(dev_id))
     else:
         if dev_id < 10:
             return('b{0}'.format(dev_id))
@@ -183,6 +186,7 @@ def pS(mstat,mtype):
 
 def main(uargs):
     global DATA_OUTPUT
+    global KOUT_LINES
     CVP_NODES_CPUS = []
     while True:
         if exists(FILE_TOPO):
@@ -221,10 +225,6 @@ def main(uargs):
         else:
             v_sys_mac = False
         VEOS_NODES[vdevn] = vNODE(vdevn, vdev[vdevn]['ip_addr'], v_sys_mac, vdev[vdevn]['neighbors'])
-    # Output as script OVS Bridge creation
-    createOVS(TOPO_TAG)
-    # Output as script OVS Bridge deletion
-    deleteOVS(TOPO_TAG)
     # Create xml file for CVP KVM Node
     for _cvp in range(cvp_node_count):
         # Open base cvp xml
@@ -389,6 +389,155 @@ def main(uargs):
             pS("OK", "Created Virsh commands for {0}".format(vdev))
             # Increment the node counter
             node_counter += 1
+
+    # Output as script OVS Bridge creation
+    createOVS(TOPO_TAG)
+    # Output as script OVS Bridge deletion
+    deleteOVS(TOPO_TAG)
+    # Create xml file for CVP KVM Node
+
+    if "dmf" in FILE_BUILD:
+        node_counter = 1
+        dmfControllerIP = FILE_BUILD['dmf']['nodes']['dmf-controller']['ip_addr']
+        for dmfNodeName in FILE_BUILD['dmf']['nodes']:
+            dmfNode = FILE_BUILD['dmf']['nodes'][dmfNodeName]
+            dmfType = dmfNode['type']
+            dmfVcpu = FILE_BUILD['dmf']['type'][dmfType]['vcpu']
+            dmfIP = dmfNode['ip_addr']
+            dmfMemory = FILE_BUILD['dmf']['type'][dmfType]['memory'] * 1024 * 1024
+            # Open base cvp xml
+            tree = ET.parse(BASE_XML_DMF)
+            root = tree.getroot()
+            # Add name item for KVM domain
+            vname = ET.SubElement(root, 'name')
+            vname.text = dmfNodeName
+            # Add CPU Configuration
+            vcpu = ET.SubElement(root, 'vcpu', attrib={
+                'placement': 'static',
+                'cpuset': VEOS_CPUS
+            })
+            vcpu.text = str(dmfVcpu)
+            memory = ET.SubElement(root, 'memory', attrib={
+                'unit': 'KiB'
+            })
+            memory.text = str(dmfMemory)
+            currentMemory = ET.SubElement(root, 'currentMemory', attrib={
+                'unit': 'KiB',
+            })
+            currentMemory.text = str(dmfMemory)
+
+            # Get to the device section and add interfaces
+            xdev = root.find('./devices')
+            # Add/Create disk location for xml
+            tmp_disk1 = ET.SubElement(xdev, 'disk', attrib={
+                'type': 'file',
+                'device': 'disk'
+            })
+            ET.SubElement(tmp_disk1, 'driver', attrib={
+                'name': 'qemu',
+                'type': 'qcow2',
+                'cache': 'directsync',
+                'io': 'native'
+            })
+            ET.SubElement(tmp_disk1, 'source', attrib={'file': '/var/lib/libvirt/images/dmf/{0}.qcow2'.format(dmfNodeName)})
+            ET.SubElement(tmp_disk1, 'target', attrib={
+                'dev': 'vda',
+                'bus': 'virtio'
+            })
+            # Starting interface section
+            tmp_int = ET.SubElement(xdev, 'interface', attrib={'type': 'bridge'})
+            ET.SubElement(tmp_int, 'source', attrib={'bridge': 'vmgmt'})
+            ET.SubElement(tmp_int, 'mac', attrib={'address': '00:1c:73:{0}:c6:01'.format(createMac('dmf', node_counter))})
+            ET.SubElement(tmp_int, 'target', attrib={'dev': '{0}'.format(dmfNodeName)})
+            ET.SubElement(tmp_int, 'model', attrib={'type': 'virtio'})
+            ET.SubElement(tmp_int, 'address', attrib={
+                'type': 'pci',
+                'domain': '0x0000',
+                'bus': '0x00',
+                'slot': '0x03',
+                'function': '0x0'
+            })
+
+
+            # Interface specific links
+            # dmfIntCount starts at 1 for eth0 aka mgmt
+            dmfIntCount = 1
+            DMF_BRIDGES = []
+            DMF_KOUT = []
+            if 'interfaces' in FILE_BUILD['dmf']['nodes'][dmfNodeName]:
+                d_slot_counter = 3
+                d_intf_counter = 1
+                for dmfInt in FILE_BUILD['dmf']['nodes'][dmfNodeName]['interfaces']:
+                    dmfIntCount += 1
+                    dmfConnectTo = FILE_BUILD['dmf']['nodes'][dmfNodeName]['interfaces'][dmfInt]['connectTo']
+                    dmfIntMode = FILE_BUILD['dmf']['nodes'][dmfNodeName]['interfaces'][dmfInt]['mode']
+                    dmfIntName = "dmf{0}x{1}".format(node_counter,dmfInt)
+                    if dmfIntMode == 'fabric' or dmfIntMode == 'tool':
+                        DMF_BRIDGES.append(dmfConnectTo)
+                        DMF_KOUT.append("sudo OFPORT=`ovs-vsctl get Interface {0} ofport`".format(dmfIntName))
+                        DMF_KOUT.append("sudo ovs-vsctl set bridge {0} fail_mode=secure".format(dmfConnectTo))
+                        DMF_KOUT.append("sudo ovs-ofctl add-flow {0} table=0,priority=0,in_port=$OFPORT,actions=flood".format(dmfConnectTo))
+                    elif dmfIntMode == 'tap':
+                        DMF_KOUT.append("BRIDGE=`sudo ovs-vsctl port-to-br {0}`".format(dmfConnectTo))
+                        DMF_KOUT.append("sudo ovs-vsctl -- set bridge $BRIDGE mirrors=@m -- --id=@{0} get Port {0} -- --id=@{1} get Port {1} -- --id=@m create Mirror name=m{0} select-dst-port=@{0} select-src-port=@{0} output-port=@{1}".format(dmfConnectTo,dmfIntName))
+
+                    tmp_int = ET.SubElement(xdev, 'interface', attrib={'type': 'bridge'})
+                    ET.SubElement(tmp_int, 'source', attrib={'bridge': dmfConnectTo})
+                    ET.SubElement(tmp_int, 'target', attrib={'dev': '{0}'.format(dmfIntName)})
+                    ET.SubElement(tmp_int, 'model', attrib={'type': 'virtio'})
+                    ET.SubElement(tmp_int, 'virtualport', attrib={'type': 'openvswitch'})
+                    ET.SubElement(tmp_int, 'address', attrib={
+                        'type': 'pci',
+                        'domain': '0x0000',
+                        'bus': '0x00',
+                        'slot': '0x0{0}'.format(d_slot_counter),
+                        'function': '0x{0}'.format(d_intf_counter)
+                    })
+                    # Check the device increment coutner and increment the counter
+                    if d_intf_counter == 7:
+                        d_slot_counter += 1
+                        d_intf_counter = 0
+                    else:
+                        d_intf_counter += 1
+
+
+
+            # Export out xml for DMF node
+            tree.write(DATA_OUTPUT + '{0}.xml'.format(dmfNodeName))
+
+            KOUT_LINES.append("sudo cp -r /var/lib/libvirt/images/dmf/{0}.qcow2 /var/lib/libvirt/images/dmf/{1}.qcow2".format(dmfType,dmfNodeName))
+            KOUT_LINES.append("sudo virsh define {0}.xml".format(dmfNodeName))
+
+            if dmfType == 'switch':
+              dmfSwID = dmfNode['dmf_sw']
+              KOUT_LINES.append("sed 's/DMF_SWITCH_IP/{0}/g' /opt/atd/nested-labvm/atd-docker/kvmbuilder/dmf-swconfig.sh > {1}-conf.sh".format(dmfIP,dmfNodeName))
+              KOUT_LINES.append("sed -i 's/DMF_CONTROLLER_IP/{0}/g' {1}-conf.sh".format(dmfControllerIP,dmfNodeName))
+              KOUT_LINES.append("sed -i 's/MAC_ADDRESS_INDEX_REPLACE/{0}/g' {1}-conf.sh".format(dmfSwID,dmfNodeName))
+              KOUT_LINES.append("sed -i 's/INTERFACE_COUNT_REPLACE/{0}/g' {1}-conf.sh".format(dmfIntCount,dmfNodeName))
+              KOUT_LINES.append("mv {0}-conf.sh CONFIGURE.sh".format(dmfNodeName))
+              KOUT_LINES.append("virt-copy-in -d {0} /opt/atd/nested-labvm/atd-docker/kvmbuilder/.profile /home/mininet/".format(dmfNodeName))
+              KOUT_LINES.append("virt-copy-in -d {0} CONFIGURE.sh /home/mininet/".format(dmfNodeName))
+              KOUT_LINES.append("mv CONFIGURE.sh {0}-conf.sh".format(dmfNodeName))
+
+            KOUT_LINES.append("sudo virsh start {0}".format(dmfNodeName))
+            KOUT_LINES.append("sudo virsh autostart {0}".format(dmfNodeName))
+            pS("OK", "Created Virsh commands for {0}".format(dmfNodeName))
+            node_counter += 1
+
+    # Combine lists and remove dupes
+    global OVS_BRIDGES
+    OVS_BRIDGES = OVS_BRIDGES + DMF_BRIDGES
+    OVS_BRIDGES = list(set(OVS_BRIDGES))
+    pS("OK","Removing dupes from OVS_BRIDGES {0}".format(OVS_BRIDGES))
+
+    # Output as script OVS Bridge creation
+    createOVS(TOPO_TAG)
+    # Output as script OVS Bridge deletion
+    deleteOVS(TOPO_TAG)
+    # Create xml file for CVP KVM Node
+
+    KOUT_LINES = KOUT_LINES + DMF_KOUT
+
     with open(DATA_OUTPUT + TOPO_TAG + '-kvm-create.sh', 'w') as kout:
         for kli in KOUT_LINES:
             kout.write("{0}\n".format(kli))
