@@ -152,6 +152,7 @@ services:
     networks:
       - atd_nginx
     volumes:
+      - /etc/atd:/etc/atd:ro
       - /home/arista/arista-dir/apps/coder/coder.yaml:/home/coder/.config/code-server/config.yaml:rw
       - /home/arista/.ssh:/home/coder/.ssh:rw
       - /home/arista/GUI_Desktop/persist:/home/coder/project/persist:rw
