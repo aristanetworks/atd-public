@@ -164,7 +164,7 @@ services:
       - /opt/atd/topologies:/opt/atd/topologies
   coder:
     container_name: atd-coder
-    image: us.gcr.io/beta-atds/atddocker_coder:2.0
+    image: us.gcr.io/beta-atds/atddocker_coder:2.0.1
     restart: always
     user: $ArID:$ArGD
     command: /home/coder/project
