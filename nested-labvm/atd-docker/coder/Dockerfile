@@ -1,11 +1,11 @@
-FROM codercom/code-server:3.9.1
+FROM codercom/code-server:3.9.3
 
 RUN sudo apt update && \
     sudo apt install -y python3 git openssh-server vim nano less rsync man-db jq python3-pip wget zsh sshpass libvirt-clients
 
 RUN sudo pip3 install --upgrade pip
 
-RUN sudo pip3 install pyeapi jsonrpclib-pelix
+RUN sudo pip3 install pyeapi jsonrpclib-pelix shyaml
 
 RUN wget --quiet https://raw.githubusercontent.com/aristanetworks/ansible-avd/devel/ansible_collections/arista/avd/requirements.txt
 
