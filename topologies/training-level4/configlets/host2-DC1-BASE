@@ -3,11 +3,8 @@ hostname host2-DC1
 spanning-tree mode none
 !
 interface Management1
+   vrf MGMT
    ip address 192.168.0.52/24
-!
-dns domain arista.lab
-!
-ip route 0.0.0.0/0 192.168.0.1
 !
 ip routing
 !

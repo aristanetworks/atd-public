@@ -1,0 +1,11 @@
+hostname internet
+!
+interface Management1
+   ip address 192.168.0.75/24
+!
+dns domain arista.lab
+!
+ip route 0.0.0.0/0 192.168.0.1
+!
+ip routing
+!
