@@ -232,7 +232,7 @@ topologies:
         cvp:
           2020.2.3:
             branch: nested/2020.2
-            image: base-training-l4-ceos-c2020-2-3-20210504
+            image: base-training-l4-ceos-c2020-2-3-20210505
             eos:
               - 4.25.1F
     # prod:
@@ -259,7 +259,7 @@ topologies:
         cvp:
           2020.2.3:
             branch: nested/2020.2
-            image: base-training-l5-ceos-c2020-2-3-20210504
+            image: base-training-l5-ceos-c2020-2-3-20210505
             eos:
               - 4.25.1F
     # prod:
