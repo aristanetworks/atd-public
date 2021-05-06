@@ -3,6 +3,7 @@
 echo "Starting atdStartup"
 
 TOPO=$(cat /etc/atd/ACCESS_INFO.yaml | python3 -m shyaml get-value topology)
+TOPONAME=$(cat /etc/atd/ACCESS_INFO.yaml | python3 -m shyaml get-value name)
 APWD=$(cat /etc/atd/ACCESS_INFO.yaml | python3 -m shyaml get-value login_info.jump_host.pw)
 
 if [ "$(cat /etc/atd/ACCESS_INFO.yaml | grep eos_type)" ]
@@ -17,11 +18,13 @@ ARISTA_SSH=$(cat /home/arista/.ssh/id_rsa.pub)
 
 sed -i "/username arista ssh-key/cusername arista ssh-key ${ARISTA_SSH}" /opt/atd/topologies/$TOPO/configlets/ATD-INFRA
 
-# Update arista user password for Guacamole
+# Update arista user password
 
 find /opt/atd/nested-labvm/atd-docker/*  -type f -print0 | xargs -0 sed -i "s/{ARISTA_REPLACE}/$APWD/g" 
 find /opt/atd/topologies/$TOPO/files/*  -type f -print0 | xargs -0 sed -i "s/{ARISTA_REPLACE}/$APWD/g" 
 
+# Update nginx config with proper server_name
+sed -i "s/REPLACE_TOPONAME/$TOPONAME/g" /opt/atd/nested-labvm/atd-docker/nginx/src/atd.conf
 
 # Update the base configlets for ceos/veos mgmt numbering
 
