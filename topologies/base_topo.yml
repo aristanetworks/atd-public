@@ -232,9 +232,10 @@ topologies:
         cvp:
           2020.2.3:
             branch: nested/2020.2
-            image: base-training-l4-ceos-c2020-2-3-20210505
+            image: base-training-l4-ceos-c2020-2-3-20210515u
             eos:
               - 4.25.1F
+              - 4.26.0F
     # prod:
     #   veos:
     #     cpu: 32
