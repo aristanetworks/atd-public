@@ -208,6 +208,11 @@ topologies:
             image: base-training-l3-e4-24-2-2f-c2020-2-3-20210415
             eos:
               - 4.24.2.2F
+          2020.2.3.e426:
+            branch: nested/2020.2
+            image: base-training-l3-e4-26-0f-c2020-2-3-20210514
+            eos:
+              - 4.26.0F
     prod:
       veos:
         cpu: 36
