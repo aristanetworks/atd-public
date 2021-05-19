@@ -87,6 +87,7 @@ topologies:
     desc: 'Two Spines, Four Leafs. Focused on EOS fundamentals within the Data Center.'
     name: 'Datacenter'
     title: 'Datacenter Lab'
+    disk_size: 300
     access: standard
     disable_links: []
     labguides: self
@@ -140,6 +141,7 @@ topologies:
     desc: 'Twenty nodes. Focused on advanced routing, L2VPN and L3VPN topics'
     name: 'Advanced Routing'
     title: 'Advanced Routing Lab'
+    disk_size: 300
     access: standard
     disable_links: []
     labguides: self
@@ -167,6 +169,7 @@ topologies:
     desc: 'Level 1 Training Lab. For use by the Arista Training Team.'
     name: 'Training - Level 1'
     title: 'Training Level 1 Lab'
+    disk_size: 300
     access: admin
     disable_links: [labguides, jenkins]
     labguides: self
@@ -194,6 +197,7 @@ topologies:
     desc: 'Level 2 Training Lab. For use by the Arista Training Team.'
     name: 'Training - Level 2'
     title: 'Training Level 2 Lab'
+    disk_size: 300
     access: admin
     disable_links: [labguides, jenkins]
     labguides: self
@@ -226,6 +230,7 @@ topologies:
     desc: 'Level 3 Training Lab. For use by the Arista Training Team.'
     name: 'Training - Level 3'
     title: 'Training Level 3 Lab'
+    disk_size: 300
     access: admin
     disable_links: [labguides, jenkins]
     labguides: self
@@ -254,6 +259,7 @@ topologies:
     desc: 'Level 4 Training Lab. For use by the Arista Training Team.'
     name: 'Training - Level 4'
     title: 'Training Level 4 Lab'
+    disk_size: 500
     access: admin
     disable_links: [labguides, jenkins]
     labguides: self
@@ -281,6 +287,7 @@ topologies:
     desc: 'Level 5 Training Lab. For use by the Arista Training Team.'
     name: 'Training - Level 5'
     title: 'Training Level 5 Lab'
+    disk_size: 500
     access: admin
     disable_links: [labguides, jenkins]
     labguides: self
