@@ -10,3 +10,4 @@ substitutions:
 images: [
   'us.gcr.io/${_GCLOUD_PROJECT}/atddocker_coder:${_VERSION}',
 ]
+timeout: 900s

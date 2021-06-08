@@ -1,4 +1,4 @@
-FROM codercom/code-server:3.9.3
+FROM codercom/code-server:3.10.2
 
 RUN sudo apt update && \
     sudo apt install -y python3 git openssh-server vim nano less rsync man-db jq python3-pip wget zsh sshpass libvirt-clients
@@ -14,6 +14,11 @@ RUN sudo pip3 install -r requirements.txt
 RUN wget --quiet https://raw.githubusercontent.com/aristanetworks/ansible-avd/devel/ansible_collections/arista/avd/requirements-dev.txt
 
 RUN sudo pip3 install -r requirements-dev.txt
+
+# Install Code extensions
+COPY src/vs-extensions.txt /home/coder/
+
+RUN while IFS= read -r line; do code-server --install-extension $line; done < /home/coder/vs-extensions.txt
 
 COPY src/.gitconfig /home/coder/
 
