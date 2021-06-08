@@ -2,9 +2,117 @@ hostname host1-DC3
 !
 spanning-tree mode none
 !
+
+vrf instance VLAN30
+vrf instance VLAN31
+vrf instance VLAN32
+vrf instance VLAN33
+vrf instance VLAN34
+vrf instance VLAN15
+vrf instance VLAN16
+vrf instance VLAN17
+vrf instance VLAN18
+vrf instance VLAN19
+!
+vlan 30
+name VLAN30
+vlan 31
+name VLAN31
+vlan 32
+name VLAN32
+vlan 33
+name VLAN33
+vlan 34
+name VLAN34
+vlan 15
+name VLAN15
+vlan 16
+name VLAN16
+vlan 17
+name VLAN17
+vlan 18
+name VLAN18
+vlan 19
+name VLAN19
+!
+interface port-Channel 10
+   no shut
+   switchport mode trunk
+   switchport trunk allowed vlan all
+!
+int ethernet 1-2
+   no shutdown
+   no ip address
+   switchport
+   channel-group 10 mode active
+!
+interface VLAN30
+   vrf VLAN30
+   ip address 172.16.30.78/24
+   no shutdown
+interface VLAN31
+   vrf VLAN31
+   ip address 172.16.31.78/24
+   no shutdown
+interface VLAN32
+   vrf VLAN32
+   ip address 172.16.32.78/24
+   no shutdown
+interface VLAN33
+   vrf VLAN33
+   ip address 172.16.33.78/24
+   no shutdown
+interface VLAN34
+   vrf VLAN34
+   ip address 172.16.34.78/24
+   no shutdown
+interface VLAN15
+   vrf VLAN15
+   ip address 172.16.15.78/24
+   no shutdown
+interface VLAN16
+   vrf VLAN16
+   ip address 172.16.16.78/24
+   no shutdown
+interface VLAN17
+   vrf VLAN17
+   ip address 172.16.17.78/24
+   no shutdown
+interface VLAN18
+   vrf VLAN18
+   ip address 172.16.18.78/24
+   no shutdown
+interface VLAN19
+   vrf VLAN19
+   ip address 172.16.19.78/24
+   no shutdown
+!
+int loopback 0
+   ip address 192.168.255.53/32
+!
 interface Management1
    vrf MGMT
    ip address 192.168.0.78/24
 !
 ip routing
+ip routing vrf VLAN30
+ip routing vrf VLAN31
+ip routing vrf VLAN32
+ip routing vrf VLAN33
+ip routing vrf VLAN34
+ip routing vrf VLAN15
+ip routing vrf VLAN16
+ip routing vrf VLAN17
+ip routing vrf VLAN18
+ip routing vrf VLAN19
 !
+ip route vrf VLAN30 0.0.0.0/0 172.16.30.254
+ip route vrf VLAN31 0.0.0.0/0 172.16.31.254
+ip route vrf VLAN32 0.0.0.0/0 172.16.32.254
+ip route vrf VLAN33 0.0.0.0/0 172.16.33.254
+ip route vrf VLAN34 0.0.0.0/0 172.16.34.254
+ip route vrf VLAN15 0.0.0.0/0 172.16.15.254
+ip route vrf VLAN16 0.0.0.0/0 172.16.16.254
+ip route vrf VLAN17 0.0.0.0/0 172.16.17.254
+ip route vrf VLAN18 0.0.0.0/0 172.16.18.254
+ip route vrf VLAN19 0.0.0.0/0 172.16.19.254
