@@ -1,3 +1,5 @@
+service routing protocols model multi-agent
+!
 hostname core2-ISP1
 !
 interface Management1
