@@ -216,6 +216,9 @@ def main():
             importConfiglets(cvp_clnt, configlet_location)
             pS("OK", "Import of configlets complete.")
             return(True)
+        elif atd_yaml['cvp_mode'] == 'bare':
+            pS("INFO", "CVP will be bare and no configuration.")
+            return(True)
     if cvp_clnt:
         # ==========================================
         # Check to see how many nodes have connected
