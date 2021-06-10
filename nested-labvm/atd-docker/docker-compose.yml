@@ -41,7 +41,7 @@ services:
       - cvp_dir:/home/arista/CVP_DATA:rw
   gitconfigletsync:
     container_name: atd-gitconfigletsync
-    image: us.gcr.io/beta-atds/atddocker_gitconfigletsync:2.0.2
+    image: us.gcr.io/beta-atds/atddocker_gitconfigletsync:2.0.3
     user: $ArID:$ArGD
     restart: always
     environment:
