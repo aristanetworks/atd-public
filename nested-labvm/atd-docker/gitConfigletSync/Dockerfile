@@ -10,7 +10,8 @@ RUN curl -SsL https://github.com/boxboat/fixuid/releases/download/v0.5/fixuid-0.
 
 RUN pip install rcvpapi \
     cvprac \
-    Pyyaml
+    Pyyaml \
+    ruamel.yaml
 
 RUN mkdir -p /home/arista/CVP_DATA
 
