@@ -37,7 +37,7 @@ services:
       - /var/run/libvirt/libvirt-sock:/var/run/libvirt/libvirt-sock:ro
   cvpupdater:
     container_name: atd-cvpupdater
-    image: us.gcr.io/beta-atds/atddocker_cvpupdater:2.0.3
+    image: us.gcr.io/beta-atds/atddocker_cvpupdater:2.0.4
     user: $ArID:$ArGD
     restart: always
     environment:
