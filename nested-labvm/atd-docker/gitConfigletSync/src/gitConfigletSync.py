@@ -4,6 +4,7 @@ import os
 import time
 import shutil
 import yaml
+from ruamel.yaml import YAML
 from rcvpapi.rcvpapi import *
 from datetime import datetime
 import urllib3
@@ -63,6 +64,14 @@ def main():
       
    # Temp path for where repo will be cloned to (include trailing /)
    gitTempPath = '/opt/atd/'
+   # Check if Configlets should get updated
+   # ==========================================
+   # Add Check for CVP Mode
+   # ==========================================
+   if 'cvp_mode' in accessinfo:
+      if accessinfo['cvp_mode'] == 'bare':
+         pS("INFO", "CVP is in bare configuration mode, no configlets to be imported.")
+         return(True)
 
    # Relative path within the repo to the configlet directory
    configletPath = 'topologies/' + topology + '/configlets/'
