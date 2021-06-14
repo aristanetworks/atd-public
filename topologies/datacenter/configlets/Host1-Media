@@ -13,4 +13,3 @@ interface Ethernet4
 !
 ip route 10.127.0.0/16 172.16.15.1
 ip route 172.16.0.0/16 172.16.15.1
-!
