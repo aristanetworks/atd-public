@@ -43,4 +43,3 @@ router bgp 65000
    neighbor 172.16.200.14 maximum-routes 12000 
    neighbor 172.16.200.14 send-community extended
    network 172.16.0.1/32
-!

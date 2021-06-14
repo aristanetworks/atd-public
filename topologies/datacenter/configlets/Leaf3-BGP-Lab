@@ -1,4 +1,3 @@
-!
 no spanning-tree vlan-id 4094
 !
 vlan 4094
@@ -72,4 +71,3 @@ router bgp 65002
    neighbor 172.16.34.2 next-hop-self
    network 172.16.0.5/32
    network 172.16.116.0/24
-!
