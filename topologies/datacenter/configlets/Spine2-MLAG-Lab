@@ -1,4 +1,3 @@
-!
 no spanning-tree vlan-id 4094
 !
 vlan 4094
@@ -64,4 +63,3 @@ mlag configuration
    local-interface Vlan4094
    peer-address 172.16.11.1
    peer-link Port-Channel10
-!

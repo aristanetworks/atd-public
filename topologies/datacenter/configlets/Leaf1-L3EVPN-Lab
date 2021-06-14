@@ -1,5 +1,3 @@
-service routing protocols model multi-agent
-!
 vlan 2001
 !
 vrf instance vrf1
@@ -53,7 +51,6 @@ interface Vxlan1
    vxlan udp-port 4789
    vxlan vrf vrf1 vni 1001
 !
-ip routing
 ip routing vrf vrf1
 !
 router bgp 65101
@@ -87,4 +84,3 @@ router bgp 65101
       route-target export 1:1001
       redistribute connected
       redistribute static
-!
