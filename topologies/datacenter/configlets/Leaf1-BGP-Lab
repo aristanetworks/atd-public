@@ -73,4 +73,3 @@ router bgp 65001
    neighbor 172.16.12.2 next-hop-self
    network 172.16.0.3/32
    network 172.16.115.0/24
-!

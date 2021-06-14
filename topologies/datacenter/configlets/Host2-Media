@@ -21,4 +21,3 @@ ip routing
 router multicast
    ipv4
       software-forwarding sfe
-!

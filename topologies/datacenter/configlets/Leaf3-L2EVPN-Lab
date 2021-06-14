@@ -1,7 +1,3 @@
-service routing protocols model multi-agent
-!
-vlan 12
-!
 interface Vlan12
    ip address virtual 172.16.112.1/24
 !
@@ -45,8 +41,6 @@ interface Vxlan1
    vxlan udp-port 4789
    vxlan vlan 12 vni 1200
 !
-ip routing
-!
 router bgp 65103
    router-id 172.16.0.5
    maximum-paths 2 ecmp 2
@@ -77,5 +71,3 @@ router bgp 65103
    !
    address-family ipv4
       no neighbor SPINE-EVPN-TRANSIT activate
-   !
-
