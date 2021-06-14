@@ -1,5 +1,3 @@
-service routing protocols model multi-agent
-!
 interface Ethernet1
    shutdown
 !
@@ -24,8 +22,6 @@ interface Ethernet6
 !
 interface Loopback0
    ip address 172.16.0.2/32
-!
-ip routing
 !
 ip prefix-list rt-conn
    seq 10 permit 172.16.0.2/32
@@ -62,4 +58,3 @@ router bgp 65001
    !
    address-family ipv4
       no neighbor VTEP-EVPN-TRANSIT activate
-!

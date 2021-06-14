@@ -1,4 +1,3 @@
-!
 no spanning-tree vlan-id 4094
 !
 vlan 4094
@@ -63,4 +62,3 @@ router bgp 65002
    network 172.16.0.5/32
    network 172.16.0.56/32
    network 172.16.112.0/24
-!
