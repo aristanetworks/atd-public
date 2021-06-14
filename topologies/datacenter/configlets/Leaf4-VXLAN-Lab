@@ -81,4 +81,3 @@ router bgp 65002
    network 172.16.0.6/32
    network 172.16.0.56/32
    network 172.16.112.0/24
-!
