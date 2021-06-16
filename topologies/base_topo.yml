@@ -25,11 +25,10 @@ topologies:
               - 4.25.1F
               - 4.25.2F
               - 4.26.0F
-          2021.1.0:
+          2021.1.1:
             branch: nested/2021.1
-            image: base-atd-datacenter-ceos-c2021-1-0-20210524
+            image: base-atd-datacenter-ceos-c2021-1-1-20210616
             eos:
-              - 4.25.1F
               - 4.25.2F
               - 4.26.0F
       veos:
@@ -46,11 +45,11 @@ topologies:
             image: base-atd-datacenter-e4-26-0f-c2020-3-1-20210524
             eos:
               - 4.26.0F
-          2021.1.0:
+          2021.1.1:
             branch: nested/2021.1
-            image: base-atd-datacenter-e4-26-0f-c2021-1-0-20210524
+            image: base-atd-datacenter-e4-26-1f-c2021-1-1-20210616
             eos:
-              - 4.26.0F
+              - 4.26.1F
     prod:
       ceos:
         cpu: 24
