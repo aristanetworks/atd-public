@@ -1,0 +1,139 @@
+hostname host1-DC1
+!
+spanning-tree mode none
+!
+vrf instance VLAN10
+vrf instance VLAN11
+vrf instance VLAN12
+vrf instance VLAN13
+vrf instance VLAN14
+vrf instance VLAN15
+vrf instance VLAN16
+vrf instance VLAN17
+vrf instance VLAN18
+vrf instance VLAN19
+vrf instance OOB
+!
+vlan 10
+   name VLAN10
+vlan 11
+   name VLAN11
+vlan 12
+   name VLAN12
+vlan 13
+   name VLAN13
+vlan 14
+   name VLAN14
+vlan 15
+   name VLAN15
+vlan 16
+   name VLAN16
+vlan 17
+   name VLAN17
+vlan 18
+   name VLAN18
+vlan 19
+   name VLAN19
+!
+interface port-Channel 10
+   no shut
+   switchport mode trunk
+!
+interface Ethernet15
+   vrf OOB
+   no shutdown
+   no switchport
+   ip address 192.168.1.51/24
+!
+int ethernet 1-4
+   no shutdown
+   no ip address
+   switchport
+   channel-group 10 mode active
+!
+int loopback 0
+   ip address 192.168.255.51/32
+!
+interface lo1
+   vrf VLAN11
+   ip address 172.16.220.51/24
+!
+interface VLAN10
+   vrf VLAN10
+   ip address 172.16.10.51/24
+   no shutdown
+interface VLAN11
+   vrf VLAN11
+   ip address 172.16.11.51/24
+   no shutdown
+interface VLAN12
+   vrf VLAN12
+   ip address 172.16.12.51/24
+   no shutdown
+interface VLAN13
+   vrf VLAN13
+   ip address 172.16.13.51/24
+   no shutdown
+interface VLAN14
+   vrf VLAN14
+   ip address 172.16.14.51/24
+   no shutdown
+interface VLAN15
+   vrf VLAN15
+   ip address 172.16.15.51/24
+   no shutdown
+interface VLAN16
+   vrf VLAN16
+   ip address 172.16.16.51/24
+   no shutdown
+interface VLAN17
+   vrf VLAN17
+   ip address 172.16.17.51/24
+   no shutdown
+interface VLAN18
+   vrf VLAN18
+   ip address 172.16.18.51/24
+   no shutdown
+interface VLAN19
+   vrf VLAN19
+   ip address 172.16.19.51/24
+   no shutdown
+interface Management1
+   vrf MGMT
+   ip address 192.168.0.51/24
+!
+ip routing
+ip routing vrf OOB
+ip routing vrf VLAN10
+ip routing vrf VLAN11
+ip routing vrf VLAN12
+ip routing vrf VLAN13
+ip routing vrf VLAN14
+ip routing vrf VLAN15
+ip routing vrf VLAN16
+ip routing vrf VLAN17
+ip routing vrf VLAN18
+ip routing vrf VLAN19
+ip route vrf VLAN10 0.0.0.0/0 172.16.10.254
+#ip route vrf VLAN11 0.0.0.0/0 172.16.11.254 - removed for BGP
+ip route vrf VLAN12 0.0.0.0/0 172.16.12.254
+ip route vrf VLAN13 0.0.0.0/0 172.16.13.254
+ip route vrf VLAN14 0.0.0.0/0 172.16.14.254
+ip route vrf VLAN15 0.0.0.0/0 172.16.15.254
+ip route vrf VLAN16 0.0.0.0/0 172.16.16.254
+ip route vrf VLAN17 0.0.0.0/0 172.16.17.254
+ip route vrf VLAN18 0.0.0.0/0 172.16.18.254
+ip route vrf VLAN19 0.0.0.0/0 172.16.19.254
+ip route vrf OOB 0.0.0.0/0 192.168.1.254
+!
+router bgp 65151
+   vrf VLAN11
+      neighbor 172.16.11.21 remote-as 65012
+      neighbor 172.16.11.21 maximum-routes 12000
+      neighbor 172.16.11.22 remote-as 65012
+      neighbor 172.16.11.22 maximum-routes 12000
+      redistribute connected
+      !
+      address-family ipv4
+         neighbor 172.16.11.21 activate
+         neighbor 172.16.11.22 activate
