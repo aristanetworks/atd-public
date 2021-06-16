@@ -1,0 +1,15 @@
+hostname host1-DC3
+!
+spanning-tree mode none
+!
+interface Management1
+   ip address 192.168.0.82/24
+!
+service routing protocols model multi-agent
+!
+dns domain arista.lab
+!
+ip route 0.0.0.0/0 192.168.0.1
+!
+ip routing
+!
