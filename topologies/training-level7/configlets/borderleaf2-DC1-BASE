@@ -1,0 +1,10 @@
+hostname borderleaf2-DC1
+!
+interface Management1
+   vrf MGMT
+   ip address 192.168.0.26/24
+!
+service routing protocols model multi-agent
+!
+ip routing
+!
