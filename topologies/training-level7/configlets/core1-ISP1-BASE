@@ -1,0 +1,10 @@
+service routing protocols model multi-agent
+!
+hostname core1-ISP1
+!
+interface Management1
+   vrf MGMT
+   ip address 192.168.0.71/24
+!
+ip routing
+!
