@@ -30,7 +30,7 @@ topologies:
             image: base-atd-datacenter-ceos-c2021-1-1-20210616
             eos:
               - 4.25.2F
-              - 4.26.0F
+              - 4.26.1F
       veos:
         cpu: 30
         ram: 64
