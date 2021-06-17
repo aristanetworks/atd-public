@@ -75,7 +75,7 @@ cvp_info:
     Internet:
       parent: "Provider Network"
       nodes:
-      - internet
+      - internet-SW1-ISP3
     OOB:
       parent: Tenant
       nodes:
@@ -152,8 +152,8 @@ cvp_info:
       - core1-ISP2-BASE
       core2-isp2:
       - core2-ISP2-BASE
-      internet:
-      - internet-BASE
+      internet-SW1-ISP3:
+      - internet-SW1-ISP3-BASE
       DCI:
       - DCI-BASE
       CVX:
