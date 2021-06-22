@@ -115,13 +115,26 @@ topologies:
         cpu: 24
         ram: 54
         cvp:
-          2021.1.1:
-            branch: nested/2021.1
-            image: base-atd-routing-ceos-c2021-1-1-20210617
+          2020.3.1:
+            branch: nested/2020.3
+            image: base-atd-routing-ceos-c2020-3-1-20210622
             eos:
               - 4.26.1F
-              - 20210614-TRUNK
-    # prod:
+          2021.1.1:
+            branch: nested/2021.1
+            image: base-atd-routing-ceos-c2021-1-1-20210622
+            eos:
+              - 4.26.1F
+    prod:
+      ceos:
+        cpu: 24
+        ram: 54
+        cvp:
+          2020.3.1:
+            branch: nested/2020.3
+            image: base-atd-routing-ceos-c2020-3-1-20210622
+            eos:
+              - 4.26.1F
     #   veos:
     #     cpu: 44
     #     ram: 90
