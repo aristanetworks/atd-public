@@ -121,21 +121,21 @@ topologies:
             eos:
               - 4.26.1F
               - 20210614-TRUNK
-    prod:
-      veos:
-        cpu: 44
-        ram: 90
-        cvp:
-          2020.1.1:
-            branch: v2020.1-20210423a
-            image: base-atd-routing-e4-24-1f-c2020-1-1-20210125
-            eos:
-              - 4.24.1F
-          2020.3.1:
-            branch: v2020.3-20210428a
-            image: base-atd-routing-e4-26-0f-c2020-3-1-20210421
-            eos:
-              - 4.26.0F
+    # prod:
+    #   veos:
+    #     cpu: 44
+    #     ram: 90
+    #     cvp:
+    #       2020.1.1:
+    #         branch: v2020.1-20210423a
+    #         image: base-atd-routing-e4-24-1f-c2020-1-1-20210125
+    #         eos:
+    #           - 4.24.1F
+    #       2020.3.1:
+    #         branch: v2020.3-20210428a
+    #         image: base-atd-routing-e4-26-0f-c2020-3-1-20210421
+    #         eos:
+    #           - 4.26.0F
     desc: 'Twenty nodes. Focused on advanced routing, L2VPN and L3VPN topics'
     name: 'Advanced Routing'
     title: 'Advanced Routing Lab'
