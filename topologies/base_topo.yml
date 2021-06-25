@@ -63,12 +63,18 @@ topologies:
               - 4.24.2.1F
               - 4.25.1F
           2020.3.1:
-            branch: v2020.3-20210428a
-            image: base-atd-datacenter-ceos-c2020-3-1-20210415
+            branch: v2020.3-20210625a
+            image: base-atd-datacenter-ceos-c2020-3-1-20210524
             eos:
               - 4.25.1F
               - 4.25.2F
               - 4.26.0F
+          2021.1.1:
+            branch: v2021.1-20210625a
+            image: base-atd-datacenter-ceos-c2021-1-1-20210616
+            eos:
+              - 4.25.2F
+              - 4.26.1F
       veos:
         cpu: 30
         ram: 64
@@ -79,10 +85,15 @@ topologies:
             eos:
               - 4.25.1F
           2020.3.1:
-            branch: v2020.3-20210428a
-            image: base-atd-datacenter-e4-26-0f-c2020-3-1-20210421
+            branch: v2020.3-20210625a
+            image: base-atd-datacenter-e4-26-0f-c2020-3-1-20210524
             eos:
               - 4.26.0F
+          2021.1.1:
+            branch: v2021.1-20210625a
+            image: base-atd-datacenter-e4-26-1f-c2021-1-1-20210616
+            eos:
+              - 4.26.1F
     desc: 'Two Spines, Four Leafs. Focused on EOS fundamentals within the Data Center.'
     name: 'Datacenter'
     title: 'Datacenter Lab'
@@ -131,8 +142,13 @@ topologies:
         ram: 54
         cvp:
           2020.3.1:
-            branch: nested/2020.3
+            branch: v2020.3-20210625a
             image: base-atd-routing-ceos-c2020-3-1-20210622
+            eos:
+              - 4.26.1F
+          2021.1.1:
+            branch: v2021.1-20210625a
+            image: base-atd-routing-ceos-c2021-1-1-20210622
             eos:
               - 4.26.1F
     #   veos:
