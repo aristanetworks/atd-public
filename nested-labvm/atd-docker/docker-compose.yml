@@ -29,7 +29,7 @@ services:
     environment:
       - PYTHONUNBUFFERED=1
     volumes:
-      - /etc/atd:/etc/atd:ro
+      - /etc/atd:/etc/atd:rw
       - /opt/atd/topologies:/opt/atd/topologies:ro
       - /home/arista/arista-dir:/home/arista:rw
       - /home/arista/.ssh:/home/arista/.ssh:rw
@@ -171,7 +171,7 @@ services:
     networks:
       - atd_nginx
     volumes:
-      - /etc/atd:/etc/atd:ro
+      - /etc/atd:/etc/atd:rw
       - /home/arista/arista-dir/apps/coder/coder.yaml:/home/coder/.config/code-server/config.yaml:rw
       - /home/arista/.ssh:/home/coder/.ssh:rw
       - /home/arista/GUI_Desktop/persist:/home/coder/project/persist:rw
