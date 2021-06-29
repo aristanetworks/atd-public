@@ -47,7 +47,7 @@ class TopologyHandler(tornado.web.RequestHandler):
                     pS(f"CVP VERSION = {_cvp_status}")
                 else:
                     self.write({
-                        'status': 'DOWN',
+                        'status': 'Starting',
                         'version': ""
                     })
                     pS("CVP IS DOWN")
