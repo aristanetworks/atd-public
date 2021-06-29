@@ -127,6 +127,7 @@ class topoRequestHandler(BaseHandler):
 class topoDataHandler(tornado.websocket.WebSocketHandler):
     def open(self):
         self.cvp_status = ''
+        self.cvp_tasks = ''
         pS("New backend websocket connection")
     
     def on_message(self,message):
@@ -137,6 +138,10 @@ class topoDataHandler(tornado.websocket.WebSocketHandler):
             if recv['type'] == 'hello':
                 # Get initial topology status
                 self.cvp_status = getAPI("cvp_status")
+                if self.cvp_status['status'] == 'UP':
+                    self.cvp_tasks = getAPI("cvp_tasks")
+                else:
+                    self.cvp_tasks = ''
                 self.sendData('status')
                 self.schedule_update()
         except:
@@ -151,6 +156,10 @@ class topoDataHandler(tornado.websocket.WebSocketHandler):
     def keepalive(self):
         try:
             self.cvp_status = getAPI("cvp_status")
+            if self.cvp_status['status'] == 'UP':
+                self.cvp_tasks = getAPI("cvp_tasks")
+            else:
+                self.cvp_tasks = ''
             self.sendData('status')
         except:
             pS("ERROR sending update")
@@ -169,7 +178,8 @@ class topoDataHandler(tornado.websocket.WebSocketHandler):
     
     def sendData(self, mtype):
         instance_data = {
-            'cvp': self.cvp_status
+            'cvp': self.cvp_status,
+            'tasks': self.cvp_tasks
         }
         self.write_message(json.dumps({
             'type': mtype,

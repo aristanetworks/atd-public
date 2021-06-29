@@ -51,6 +51,17 @@ function createWS(SOCK_URL) {
             console.log(reg_data);
             if ('cvp' in reg_data) {
                 _cvp_info = "<h3>CVP " + reg_data['cvp']['version'] + " is currently " + reg_data['cvp']['status'] + "</h3>";
+                if ('tasks' in reg_data) {
+                    if (reg_data['tasks']) {
+                        if (reg_data['tasks']['status'] == 'Active') {
+                            _cvp_info += "Currently " + reg_data['tasks']['total'] + " Active tasks.";
+                            console.log(reg_data['tasks']['tasks']);
+                        }
+                        else {
+                            _cvp_info += "No pending tasks in CVP.";
+                        }
+                    }
+                }
                 document.getElementById("cvp_info").innerHTML = _cvp_info
             }
             ws.send(JSON.stringify({

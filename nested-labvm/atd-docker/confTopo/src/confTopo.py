@@ -52,11 +52,37 @@ class TopologyHandler(tornado.web.RequestHandler):
                     })
                     pS("CVP IS DOWN")
             # Get a list of Tasks in CVP
-            elif _action == 'tasks':
-                pS("GET CVP TASKS")
-            # Get the status of Tasks from CVP
-            elif _action == 'cvp_task_status':
-                pS("GET CVP TASK STATUS")
+            elif _action == 'cvp_tasks':
+                _cvp_tasks = {}
+                try:
+                    cvp_clnt = cvp_client.CvpClient()
+                    cvp_clnt.connect(CVP_NODES, TOPO_USER, TOPO_PWD)
+                    result = cvp_clnt.api.get_tasks_by_status("active")
+                    cvp_clnt.logout()
+                    _total_tasks = len(result)
+                    if _total_tasks > 0:
+                        for _task in result:
+                            if _task['currentTaskName'] in _cvp_tasks:
+                                _cvp_tasks[_task['currentTaskName']] += 1
+                            else:
+                                _cvp_tasks[_task['currentTaskName']] = 1
+                        self.write({
+                            'status': "Active",
+                            'total': _total_tasks,
+                            'tasks': _cvp_tasks
+                        })
+                    else:
+                        self.write({
+                            'status': 'Complete',
+                            'total': 0,
+                            'tasks': _cvp_tasks
+                        })
+                except:
+                    self.write({
+                        'status': 'Error getting tasks',
+                        'total': 0,
+                        'tasks': _cvp_tasks
+                    })
 
 
 # =================================================
