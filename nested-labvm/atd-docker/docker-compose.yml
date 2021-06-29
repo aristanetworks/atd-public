@@ -10,6 +10,19 @@ services:
       - /etc/atd:/etc/atd:ro
     networks:
       - atd_nginx
+  conftopo:
+    container_name: atd-conftopo
+    image: atddocker_conftopo:0.5
+    restart: always
+    networks:
+      - atd_nginx
+      - atd_backend
+    environment:
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - /etc/atd:/etc/atd:rw
+      - /opt/atd/topologies:/opt/atd/topologies:ro
+      - /home/arista/arista-dir:/home/arista:rw
   login:
     container_name: atd-login
     image: us.gcr.io/beta-atds/atddocker_login:2.0
@@ -18,6 +31,7 @@ services:
     hostname: devbox
     networks:
       - atd_nginx
+      - atd_backend
     environment:
       - PYTHONUNBUFFERED=1
     volumes:
@@ -83,6 +97,7 @@ services:
       - /home/arista/arista-dir/apps/uilanding:/opt/modules:ro
     networks:
       - atd_nginx
+      - atd_backend
   labguides:
     container_name: atd-labguides
     image: us.gcr.io/beta-atds/atddocker_labguides:2.0.1
@@ -181,6 +196,7 @@ services:
       - atd_nginx
 networks:
   atd_nginx:
+  atd_backend:
 volumes:
   atd_labguides:
   atd_http:

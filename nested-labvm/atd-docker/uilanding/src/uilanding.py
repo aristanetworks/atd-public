@@ -2,16 +2,20 @@
 
 import tornado.ioloop
 import tornado.web
+import tornado.websocket
 import requests
 import secrets
 import hashlib, uuid
 from base64 import b64decode, b64encode
 import json
-from datetime import datetime
+from datetime import datetime, timedelta
 from ruamel.yaml import YAML
 from time import sleep
 
+import traceback
+
 PORT = 80
+TOPO_API = 'atd-conftopo'
 BASE_PATH = '/opt/topo/html/'
 ATD_ACCESS_PATH = '/etc/atd/ACCESS_INFO.yaml'
 
@@ -95,6 +99,7 @@ class topoRequestHandler(BaseHandler):
                 self.redirect('/login')
             return()
         else:
+            _topo_cvp = False
             if 'disabled_links' in host_yaml:
                 disable_links = host_yaml['disabled_links']
             else:
@@ -106,18 +111,88 @@ class topoRequestHandler(BaseHandler):
                     labguides = host_yaml['labguides']
             else:
                 labguides = '/labguides/index.html'
+            if 'cvp' in host_yaml:
+                if host_yaml['cvp'] != "none":
+                    _topo_cvp = True
             self.render(
                 BASE_PATH + 'index.html',
                 NODES = MOD_YAML['topology']['nodes'],
                 ARISTA_PWD=host_yaml['login_info']['jump_host']['pw'],
                 topo_title = TITLE,
                 disable_links = disable_links,
-                labguides = labguides
+                labguides = labguides,
+                topo_cvp = _topo_cvp
             )
     
+class topoDataHandler(tornado.websocket.WebSocketHandler):
+    def open(self):
+        self.cvp_status = ''
+        pS("New backend websocket connection")
+    
+    def on_message(self,message):
+        pS("Message Received")
+        try:
+            recv = json.loads(message)
+            cdata = recv['data']
+            if recv['type'] == 'hello':
+                # Get initial topology status
+                self.cvp_status = getAPI("cvp_status")
+                self.sendData('status')
+                self.schedule_update()
+        except:
+            pS("WS ERROR")
+
+    def schedule_update(self):
+        try:
+            self.timeout = tornado.ioloop.IOLoop.instance().add_timeout(timedelta(seconds=60),self.keepalive)
+        except:
+            pS("Error with timeout call")
+        
+    def keepalive(self):
+        try:
+            self.cvp_status = getAPI("cvp_status")
+            self.sendData('status')
+        except:
+            pS("ERROR sending update")
+        finally:
+            self.schedule_update()
+
+    def on_close(self):
+        try:
+            tornado.ioloop.IOLoop.instance().remove_timeout(self.timeout)
+            pS('connection closed')
+        except:
+            pS('connection already closed')
+ 
+    def check_origin(self, origin):
+        return(True)
+    
+    def sendData(self, mtype):
+        instance_data = {
+            'cvp': self.cvp_status
+        }
+        self.write_message(json.dumps({
+            'type': mtype,
+            'data': instance_data
+        }))
+
+
 # ===============================
 # Utility Functions
 # ===============================
+
+def getAPI(action):
+    try:
+        _action = encodeID(action)
+        response = requests.get(f"http://{TOPO_API}:50010/td-api/conftopo?action={_action}")
+        return(json.loads(response.text))
+    except Exception as e:
+        pS("Error calling backend API.")
+        traceback.print_exc()
+        print("Message: {err}".format(
+            err = str(e),
+        ))
+
 
 def encodeID(tmp_data):
     tmp_str = json.dumps(tmp_data).encode()
@@ -155,6 +230,7 @@ if __name__ == "__main__":
         (r'/images/(.*)', tornado.web.StaticFileHandler, {'path': BASE_PATH +  "images/"}),
         (r'/topo/(.*)', tornado.web.StaticFileHandler, {'path': ArBASE_PATH}),
         (r'/', topoRequestHandler),
+        (r'/td-ws', topoDataHandler),
         (r'/login', LoginHandler),
     ], **settings)
     app.listen(PORT)
