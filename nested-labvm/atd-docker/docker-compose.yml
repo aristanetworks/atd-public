@@ -16,7 +16,6 @@ services:
     restart: always
     networks:
       - atd_nginx
-      - atd_backend
     environment:
       - PYTHONUNBUFFERED=1
     volumes:
@@ -31,7 +30,6 @@ services:
     hostname: devbox
     networks:
       - atd_nginx
-      - atd_backend
     environment:
       - PYTHONUNBUFFERED=1
     volumes:
@@ -97,7 +95,6 @@ services:
       - /home/arista/arista-dir/apps/uilanding:/opt/modules:ro
     networks:
       - atd_nginx
-      - atd_backend
   labguides:
     container_name: atd-labguides
     image: us.gcr.io/beta-atds/atddocker_labguides:2.0.1
@@ -196,7 +193,6 @@ services:
       - atd_nginx
 networks:
   atd_nginx:
-  atd_backend:
 volumes:
   atd_labguides:
   atd_http:

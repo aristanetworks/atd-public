@@ -54,8 +54,13 @@ function createWS(SOCK_URL) {
                 if ('tasks' in reg_data) {
                     if (reg_data['tasks']) {
                         if (reg_data['tasks']['status'] == 'Active') {
-                            _cvp_info += "Currently " + reg_data['tasks']['total'] + " Active tasks.";
-                            console.log(reg_data['tasks']['tasks']);
+                            // Loop through all the tasks
+                            if (reg_data['tasks']['tasks']) {
+                                _cvp_info += "Currently ";
+                                for (_status in reg_data['tasks']['tasks']){
+                                    _cvp_info += reg_data['tasks']['tasks'][_status] + " " + _status + " tasks.";
+                                }
+                            }
                         }
                         else {
                             _cvp_info += "No pending tasks in CVP.";

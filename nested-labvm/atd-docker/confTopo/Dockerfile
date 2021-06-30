@@ -3,7 +3,7 @@ FROM python:3.9
 
 RUN pip install --upgrade pip
 
-RUN pip install tornado requests ruamel.yaml cvprac rcvpapi
+RUN pip install tornado requests ruamel.yaml cvprac rcvpapi pyaml
 
 RUN mkdir -p /opt/topo/html
 

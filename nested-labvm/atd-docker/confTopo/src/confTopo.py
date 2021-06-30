@@ -54,6 +54,7 @@ class TopologyHandler(tornado.web.RequestHandler):
             # Get a list of Tasks in CVP
             elif _action == 'cvp_tasks':
                 _cvp_tasks = {}
+                _active_tasks = 0
                 try:
                     cvp_clnt = cvp_client.CvpClient()
                     cvp_clnt.connect(CVP_NODES, TOPO_USER, TOPO_PWD)
@@ -62,13 +63,16 @@ class TopologyHandler(tornado.web.RequestHandler):
                     _total_tasks = len(result)
                     if _total_tasks > 0:
                         for _task in result:
-                            if _task['currentTaskName'] in _cvp_tasks:
-                                _cvp_tasks[_task['currentTaskName']] += 1
-                            else:
-                                _cvp_tasks[_task['currentTaskName']] = 1
+                            if 'cancelled' not in _task['workOrderUserDefinedStatus'].lower():
+                                _active_tasks += 1
+                                if _task['workOrderUserDefinedStatus'] in _cvp_tasks:
+                                    _cvp_tasks[_task['workOrderUserDefinedStatus']] += 1
+                                else:
+                                    _cvp_tasks[_task['workOrderUserDefinedStatus']] = 1
+                    if _active_tasks:
                         self.write({
                             'status': "Active",
-                            'total': _total_tasks,
+                            'total': _active_tasks,
                             'tasks': _cvp_tasks
                         })
                     else:
@@ -77,7 +81,8 @@ class TopologyHandler(tornado.web.RequestHandler):
                             'total': 0,
                             'tasks': _cvp_tasks
                         })
-                except:
+                except Exception as e:
+                    print(str(e))
                     self.write({
                         'status': 'Error getting tasks',
                         'total': 0,

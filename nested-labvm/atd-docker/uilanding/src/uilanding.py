@@ -149,7 +149,7 @@ class topoDataHandler(tornado.websocket.WebSocketHandler):
 
     def schedule_update(self):
         try:
-            self.timeout = tornado.ioloop.IOLoop.instance().add_timeout(timedelta(seconds=60),self.keepalive)
+            self.timeout = tornado.ioloop.IOLoop.instance().add_timeout(timedelta(seconds=30),self.keepalive)
         except:
             pS("Error with timeout call")
         
