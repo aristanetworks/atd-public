@@ -11,6 +11,7 @@
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <script src="js/atd-ws.js"></script>
 
     <!-- Custom styles for this template -->
     <link href="css/simple-sidebar.css" rel="stylesheet">
@@ -79,6 +80,10 @@
                     {% end %}
                 </map>
                 <br /><br />
+                {% if topo_cvp %}
+                    <span id="cvp_info"></span>
+                    <br /><br />
+                {% end %}
                 <h2>Usernames and Passwords</h2>
                 Use the following usernames and passwords to access the ATD:
                 <br>

@@ -10,6 +10,18 @@ services:
       - /etc/atd:/etc/atd:ro
     networks:
       - atd_nginx
+  conftopo:
+    container_name: atd-conftopo
+    image: us.gcr.io/beta-atds/atddocker_conftopo:0.1
+    restart: always
+    networks:
+      - atd_nginx
+    environment:
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - /etc/atd:/etc/atd:rw
+      - /opt/atd/topologies:/opt/atd/topologies:ro
+      - /home/arista/arista-dir:/home/arista:rw
   login:
     container_name: atd-login
     image: us.gcr.io/beta-atds/atddocker_login:2.0
@@ -73,7 +85,7 @@ services:
       - /opt/ceos:/opt/ceos:rw
   uilanding:
     container_name: atd-uilanding
-    image: us.gcr.io/beta-atds/atddocker_uilanding:2.0
+    image: us.gcr.io/beta-atds/atddocker_uilanding:2.0.1
     restart: always
     environment:
       - PYTHONUNBUFFERED=1
