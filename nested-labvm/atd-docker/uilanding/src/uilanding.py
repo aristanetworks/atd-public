@@ -1,18 +1,22 @@
 #!/usr/bin/env python3
 
+from datetime import datetime, timedelta
+from ruamel.yaml import YAML
+from time import sleep
+from base64 import b64decode, b64encode
 import tornado.ioloop
 import tornado.web
 import tornado.websocket
 import requests
 import secrets
 import hashlib, uuid
-from base64 import b64decode, b64encode
 import json
-from datetime import datetime, timedelta
-from ruamel.yaml import YAML
-from time import sleep
-
+import urllib3
 import traceback
+
+# Disable any TLS Warnings when getting instance Uptime
+urllib3.disable_warnings()
+
 
 PORT = 80
 TOPO_API = 'atd-conftopo'
@@ -39,7 +43,13 @@ accounts = {
     hashlib.sha512((host_yaml['login_info']['jump_host']['user'] + salt).encode('utf-8')).hexdigest(): hashlib.sha512((host_yaml['login_info']['jump_host']['pw'] + salt).encode('utf-8')).hexdigest()
 }
 
+# Get the topo project and update function
+PROJECT = host_yaml['project']
+FUNC_STATE = 'https://us-central1-{0}.cloudfunctions.net/atd-state'.format(PROJECT)
+NAME = host_yaml['name']
+ZONE = host_yaml['zone']
 TOPO = host_yaml['topology']
+
 # Add a check for the title parameter for legacy deployment catches
 if 'title' in host_yaml:
     TITLE = host_yaml['title']
@@ -128,6 +138,7 @@ class topoDataHandler(tornado.websocket.WebSocketHandler):
     def open(self):
         self.cvp_status = ''
         self.cvp_tasks = ''
+        self.uptime = {}
         pS("New backend websocket connection")
     
     def on_message(self,message):
@@ -136,6 +147,8 @@ class topoDataHandler(tornado.websocket.WebSocketHandler):
             recv = json.loads(message)
             cdata = recv['data']
             if recv['type'] == 'hello':
+                # Grab current uptime of topology
+                self.uptime = getUptime('192.168.0.1')
                 # Get initial topology status
                 self.cvp_status = getAPI("cvp_status")
                 if self.cvp_status['status'] == 'UP':
@@ -155,6 +168,7 @@ class topoDataHandler(tornado.websocket.WebSocketHandler):
         
     def keepalive(self):
         try:
+            self.uptime = getUptime('192.168.0.1')
             self.cvp_status = getAPI("cvp_status")
             if self.cvp_status['status'] == 'UP':
                 self.cvp_tasks = getAPI("cvp_tasks")
@@ -179,7 +193,8 @@ class topoDataHandler(tornado.websocket.WebSocketHandler):
     def sendData(self, mtype):
         instance_data = {
             'cvp': self.cvp_status,
-            'tasks': self.cvp_tasks
+            'tasks': self.cvp_tasks,
+            'uptime': self.uptime
         }
         self.write_message(json.dumps({
             'type': mtype,
@@ -220,6 +235,45 @@ def genCookieSecret():
     """
     return(secrets.token_hex(16))
 
+def getUptime(instanceIP):
+    """
+    Function to get response from instances /uptime.
+    instanceIP = IP/URL for instance (str)
+    """
+    try:
+        response = requests.get(f"https://{instanceIP}/uptime", verify=False, timeout=0.5)
+        instance_data = json.loads(response.text)
+        if instance_data['status'] == 'init':
+            instance_data['runtime'] = int(TOPO_DATA['labels']['runtime'])
+        else:
+            instance_data['runtime'] = 8
+        return(instance_data)
+    except:
+        return({
+            'boottime': 0,
+            'uptime': 0,
+            'runtime': 8,
+            'status': 'init'
+        })
+
+def getEventStatus(instanceName, instanceZone):
+    """
+    Function to get the currnet status of an instance.
+    """
+    try:
+        response = requests.get(FUNC_STATE + "?function=state&instance={0}&zone={1}".format(instanceName, instanceZone))
+        return(response.json())
+    except ValueError:
+        pS("Value Error retrieving status for {0}".format(instanceName))
+        return(False)
+    except requests.exceptions.ConnectionError:
+        pS("Connection Error retrieving status for {0}".format(instanceName))
+        return(False)
+    except:
+        pS("Error retrieving status for {0}".format(instanceName))
+        return(False)
+
+
 def pS(mtype):
     """
     Function to send output from service file to Syslog
@@ -246,6 +300,7 @@ if __name__ == "__main__":
     app.listen(PORT)
     print('*** Websocket Server Started on {} ***'.format(PORT))
     try:
+        TOPO_DATA = getEventStatus(NAME, ZONE)
         tornado.ioloop.IOLoop.instance().start()
     except KeyboardInterrupt:
         tornado.ioloop.IOLoop.instance().stop()
