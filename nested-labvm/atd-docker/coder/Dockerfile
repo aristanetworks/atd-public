@@ -5,7 +5,7 @@ RUN sudo apt update && \
 
 RUN sudo pip3 install --upgrade pip
 
-RUN sudo pip3 install pyeapi jsonrpclib shyaml libvirt-python
+RUN sudo pip3 install pyeapi jsonrpclib-pelix shyaml
 
 RUN wget --quiet https://raw.githubusercontent.com/aristanetworks/ansible-avd/devel/ansible_collections/arista/avd/requirements.txt
 

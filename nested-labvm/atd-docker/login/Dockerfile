@@ -9,7 +9,7 @@ RUN curl -SsL https://github.com/boxboat/fixuid/releases/download/v0.5/fixuid-0.
     printf "user: arista\ngroup: arista\n" > /etc/fixuid/config.yml
 
 RUN apt update && \
-    apt install -y openssh-server vim sudo screen libvirt-clients libvirt-devel
+    apt install -y openssh-server vim sudo screen libvirt-clients libvirt-dev
 
 RUN pip install ruamel.yaml rcvpapi cvprac pyaml paramiko scp urllib3 libvirt-python jsonrpclib
 
