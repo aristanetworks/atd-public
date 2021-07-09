@@ -1,4 +1,4 @@
-FROM python:3.8
+FROM python:3.9
 
 RUN adduser --disabled-password --shell /usr/local/bin/login.py --home /home/arista --gecos "" arista
 
@@ -9,9 +9,9 @@ RUN curl -SsL https://github.com/boxboat/fixuid/releases/download/v0.5/fixuid-0.
     printf "user: arista\ngroup: arista\n" > /etc/fixuid/config.yml
 
 RUN apt update && \
-    apt install -y openssh-server vim sudo screen libvirt-clients
+    apt install -y openssh-server vim sudo screen libvirt-clients libvirt-dev
 
-RUN pip install ruamel.yaml rcvpapi cvprac pyaml paramiko scp urllib3
+RUN pip install ruamel.yaml rcvpapi cvprac pyaml paramiko scp urllib3 libvirt-python jsonrpclib
 
 RUN mkdir /var/run/sshd
 
@@ -31,7 +31,11 @@ RUN mkdir .ssh
 
 COPY src/login.py /usr/local/bin
 
+COPY src/resetVMs.py /usr/local/bin
+
 RUN chmod +x /usr/local/bin/login.py
+
+RUN chmod +x /usr/local/bin/resetVMs.py
 
 RUN mkdir /usr/local/bin/ConfigureTopology
 
