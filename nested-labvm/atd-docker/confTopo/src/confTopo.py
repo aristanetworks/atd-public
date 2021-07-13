@@ -16,7 +16,7 @@ ACCESS = '/etc/atd/ACCESS_INFO.yaml'
 REPO_PATH = '/opt/atd/'
 APP_PORT = 50010
 SLEEP_DELAY = 30
-CVP_NODES = ['192.168.0.5']
+CVP_NODES = []
 TOPO_USER = ''
 TOPO_PWD = ''
 
@@ -119,6 +119,7 @@ def pS(mtype):
 def main():
     global TOPO_USER
     global TOPO_PWD
+    global CVP_NODES
     while True:
         if exists(ACCESS):
             break
@@ -132,6 +133,9 @@ def main():
         topology = accessinfo['topology']
     except:
         topology = 'none'
+    if accessinfo['cvp']:
+        for _node in accessinfo['nodes']['cvp']:
+            CVP_NODES.append(_node['ip'])
     TOPO_USER = accessinfo['login_info']['jump_host']['user']
     TOPO_PWD = accessinfo['login_info']['jump_host']['pw']
 

@@ -1,16 +1,22 @@
 #!/usr/bin/env python
 
+from cvprac import cvp_client
+from datetime import datetime
+
+
 from rcvpapi.rcvpapi import *
 import syslog, time
 from ruamel.yaml import YAML
 import paramiko
 from scp import SCPClient
-import os
+from os.path import exists
 import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
 DEBUG = False
+
+TOPO_MENU = '/home/arista/menus/{lab}.yaml'
 
 # Cmds to copy bare startup to running
 cp_run_start = """enable
@@ -31,27 +37,111 @@ zerotouch cancel
 # Create class to handle configuring the topology
 class ConfigureTopology():
 
-    def __init__(self,selected_menu,selected_lab,public_module_flag=False):
-        self.selected_menu = selected_menu
-        self.selected_lab = selected_lab
+    def __init__(self, access_info, cvp_nodes, username, password, public_module_flag=False):
+        self.access_info = access_info
+        self.username = username
+        self.password = password
         self.public_module_flag = public_module_flag
-        self.deploy_lab()
+        self.cvp_nodes = cvp_nodes
+        self.inventory = {}
+        self.cvp_clnt = ''
+        self._lab_module = ''
+        self._lab = ''
+        self._lab_list = {}
+        self._lab_cfgs = {}
+        # self.deploy_lab()
+        if self.cvp_nodes:
+            self.connect_to_cvp()
+            pS("Connected to CVP")
+        else:
+            pS("No CVP in this topo")
 
-    def connect_to_cvp(self,access_info):
-        # Adding new connection to CVP via rcvpapi
-        cvp_clnt = ''
-        cvpUsername = access_info['login_info']['jump_host']['user']
-        cvpPassword = access_info['login_info']['jump_host']['pw']
-        while not cvp_clnt:
+    @property
+    def lab_list(self):
+        return(self._lab_list)
+
+    @lab_list.setter
+    def lab_list(self, lab_list):
+        self._lab_list = lab_list
+    
+    @property
+    def lab_cfgs(self):
+        return(self._lab_cfgs)
+    
+    @lab_cfgs.setter
+    def lab_cfgs(self, lab_cfgs):
+        self._lab_cfgs = lab_cfgs
+
+    @property
+    def lab(self):
+        return(self._lab)
+    
+    @lab.setter
+    def lab(self, topo_lab):
+        _topo_path = TOPO_MENU.format(
+            lab = topo_lab
+        )
+        if exists(_topo_path):
+            with open(_topo_path, 'r') as topo_menu:
+                _lab_info = YAML().load(topo_menu)
+            self.lab_cfgs = _lab_info['labconfiglets']
+            self.lab_list = _lab_info['lab_list']
+            return(True)
+        else:
+            pS("Lab not part of topology")
+            return(False)
+    
+    @property
+    def lab_module(self):
+        return(self._lab_module)
+    
+    @lab_module.setter
+    def lab_module(self, module):
+        if module in self.lab_list:
+            pS(f"Updating lab to {module}")
+            self._lab_module = module
+            pS("Getting current configlets for nodes")
+            self.get_device_cfgs()
+
+        else:
+            pS(f"{module} is not a valid option")
+
+    def connect_to_cvp(self):
+        # Adding new connection to CVP via cvprac
+        while not self.cvp_clnt:
             try:
-                cvp_clnt = CVPCON(access_info['nodes']['cvp'][0]['ip'], cvpUsername, cvpPassword)
-                self.send_to_syslog("OK","Connected to CVP at {0}".format(access_info['nodes']['cvp'][0]['ip']))
-                return cvp_clnt
+                self.cvp_clnt = cvp_client.CvpClient()
+                self.cvp_clnt.connect(self.cvp_nodes, self.username, self.password)
+                return(True)
             except:
-                self.send_to_syslog("ERROR", "CVP is currently unavailable....Retrying in 30 seconds.")
+                pS("CVP is currently unavailable....Retrying in 30 seconds.")
                 time.sleep(30)
 
-    def remove_configlets(self,device,lab_configlets):
+    def get_cvp_inventory(self):
+        try:
+            for _node in self.cvp_clnt.api.get_inventory():
+                self.inventory[_node['hostname']] = {
+                    'cvp': _node,
+                    'cfgs': self.cvp_clnt.api.get_configlets_by_netelement_id(_node['systemMacAddress'])['configletList']
+                }
+            return(True)
+        except:
+            return(False)
+
+    def get_device_info(self):
+        eos_devices = []
+        for dev in self.client.inventory:
+            tmp_eos = self.client.inventory[dev]
+            tmp_eos_sw = CVPSWITCH(dev, tmp_eos['ipAddress'])
+            tmp_eos_sw.updateDevice(self.client)
+            eos_devices.append(tmp_eos_sw)
+        return(eos_devices)
+    
+    def get_device_cfgs(self):
+        for _node in self.inventory:
+            self.inventory[_node]['cfgs'] = self.cvp_clnt.api.get_configlets_by_netelement_id(self.inventory[_node]['cvp']['systemMacAddress'])['configletList']
+
+    def remove_configlets(self, device, lab_configlets):
         """
         Removes all configlets except the ones defined as 'base'
         Define base configlets that are to be untouched
@@ -78,17 +168,7 @@ class ConfigureTopology():
         else:
             pass
 
-    def get_device_info(self):
-        eos_devices = []
-        for dev in self.client.inventory:
-            tmp_eos = self.client.inventory[dev]
-            tmp_eos_sw = CVPSWITCH(dev, tmp_eos['ipAddress'])
-            tmp_eos_sw.updateDevice(self.client)
-            eos_devices.append(tmp_eos_sw)
-        return(eos_devices)
-
-
-    def update_topology(self,configlets):
+    def update_topology(self, configlets):
         # Get all the devices in CVP
         devices = self.get_device_info()
         # Loop through all devices
@@ -112,7 +192,7 @@ class ConfigureTopology():
         # Perform a single Save Topology by default
         self.client.saveTopology()
 
-    def send_to_syslog(self,mstat,mtype):
+    def send_to_syslog(self, mstat, mtype):
         """
         Function to send output from service file to Syslog
         Parameters:
@@ -125,7 +205,7 @@ class ConfigureTopology():
             print("[{0}] {1}".format(mstat,mmes.expandtabs(7 - len(mstat))))
 
 
-    def push_bare_config(self,veos_host, veos_ip, veos_config):
+    def push_bare_config(self, veos_host, veos_ip, veos_config):
         """
         Pushes a bare config to the EOS device.
         """
@@ -280,3 +360,15 @@ class ConfigureTopology():
                 self.send_to_syslog("OK", 'Lab Setup Completed.')
             else:
                 self.send_to_syslog("OK", 'Lab Setup Completed.')
+
+# =========================================================
+# Utility Functions
+# =========================================================
+
+def pS(mtype):
+    """
+    Function to send output from service file to Syslog
+    """
+    cur_dt = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    mmes = "\t" + mtype
+    print("[{0}] {1}".format(cur_dt, mmes.expandtabs(7 - len(cur_dt))))

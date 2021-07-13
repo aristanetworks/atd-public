@@ -34,8 +34,7 @@ services:
       - PYTHONUNBUFFERED=1
     volumes:
       - /etc/atd:/etc/atd:rw
-      - /opt/atd/topologies:/opt/atd/topologies:ro
-      - /home/arista/arista-dir:/home/arista:rw
+      - /opt/atd/topologies:/opt/atd/topologies:ro/cod
       - /home/arista/.ssh:/home/arista/.ssh:rw
       - /opt/sftp/uploads:/opt/sftp:ro
       - /var/run/libvirt/libvirt-sock:/var/run/libvirt/libvirt-sock:ro
