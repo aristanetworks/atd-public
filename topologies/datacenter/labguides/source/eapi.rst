@@ -32,8 +32,11 @@ The script is the same as in the presentation you just saw:
     #!/usr/bin/env python3
 
     from jsonrpclib import Server
+    import ssl
 
-    switch = Server ("http://arista:{REPLACE_PWD}@192.168.0.12/command-api")
+    ssl._create_default_https_context = ssl._create_unverified_context
+
+    switch = Server ("https://arista:{REPLACE_PWD}@192.168.0.12/command-api")
 
     response = switch.runCmds( 1, ["show version"] )
 
@@ -50,14 +53,15 @@ submodule ``Server`` from the module ``jsonrpclib``. A Python module extends th
 capability of Python by adding additional functionality. There are
 Python modules for pretty much everything!
 
-**switch = Server ( "http://arista:{REPLACE_PWD}@192.168.0.12/command-api")**
+**import ssl**- this imports the Python ``ssl`` module.
+
+**ssl._create_default_https_context = ssl._create_unverified_context** - This command is used to ignore
+self-signed certificates within this lab.
+
+**switch = Server ( "https://arista:{REPLACE_PWD}@192.168.0.12/command-api")**
 this instantiates a variable - ``switch`` - and uses the ``Server`` submodule
 imported previously to create a connection to the switch. Note that it
 uses standard username/password formatting to make the connection.
-
-.. note:: You don’t have to use unencrypted HTTP in production, we also
-          work with HTTPS (SSL). For this lab we use HTTP because we don’t want
-          to deal with certificates.
 
 **response = switch.runCmds( 1, ["show version"] )** - instantiates a
 variable called ``response`` - that uses the previously
@@ -149,8 +153,11 @@ doing something with it:
     #!/usr/bin/env python3
 
     from jsonrpclib import Server
+    import ssl
 
-    switch = Server ("http://arista:{REPLACE_PWD}@192.168.0.12/command-api")
+    ssl._create_default_https_context = ssl._create_unverified_context
+
+    switch = Server ("https://arista:{REPLACE_PWD}@192.168.0.12/command-api")
 
     response = switch.runCmds( 1, ["show version"] )
 
@@ -171,4 +178,4 @@ by your imagination.
 Bonus
 -----
 
-Print the response of ``show version`` using `PrettyPrint <https://docs.python.org/2/library/pprint.html>`__\ .
+Print the response of ``show version`` using `PrettyPrint <https://docs.python.org/3/library/pprint.html>`__\ .
