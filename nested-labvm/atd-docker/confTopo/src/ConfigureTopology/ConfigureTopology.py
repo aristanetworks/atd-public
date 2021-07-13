@@ -2,10 +2,11 @@
 
 from cvprac import cvp_client
 from datetime import datetime
-
+import uuid
+import time
 
 from rcvpapi.rcvpapi import *
-import syslog, time
+import syslog
 from ruamel.yaml import YAML
 import paramiko
 from scp import SCPClient
@@ -17,6 +18,8 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 DEBUG = False
 
 TOPO_MENU = '/home/arista/menus/{lab}.yaml'
+BASE_CFGS = ['ATD-INFRA']
+SLEEP_DELAY = 15
 
 # Cmds to copy bare startup to running
 cp_run_start = """enable
@@ -49,9 +52,13 @@ class ConfigureTopology():
         self._lab = ''
         self._lab_list = {}
         self._lab_cfgs = {}
+        self._cc_ids = ''
+        self._cc_status = {}
+        self._task_ids = []
         # self.deploy_lab()
         if self.cvp_nodes:
             self.connect_to_cvp()
+            self.get_cvp_inventory()
             pS("Connected to CVP")
         else:
             pS("No CVP in this topo")
@@ -86,11 +93,39 @@ class ConfigureTopology():
                 _lab_info = YAML().load(topo_menu)
             self.lab_cfgs = _lab_info['labconfiglets']
             self.lab_list = _lab_info['lab_list']
+            self._lab = topo_lab
             return(True)
         else:
             pS("Lab not part of topology")
             return(False)
     
+    @property
+    def task_ids(self):
+        return(self._task_ids)
+
+    @task_ids.setter
+    def task_ids(self, task_ids):
+        self._task_ids = task_ids
+
+    @property
+    def cc_ids(self):
+        return(self._cc_ids)
+
+    @cc_ids.setter
+    def cc_ids(self, cc_ids):
+        self._cc_ids = cc_ids
+    
+    @property
+    def cc_status(self):
+        return(self._cc_status)
+
+    @cc_status.setter
+    def cc_status(self, cc):
+        self._cc_status = {
+            'id': cc['id'],
+            'status': cc['status']
+        }
+
     @property
     def lab_module(self):
         return(self._lab_module)
@@ -98,10 +133,51 @@ class ConfigureTopology():
     @lab_module.setter
     def lab_module(self, module):
         if module in self.lab_list:
-            pS(f"Updating lab to {module}")
+            pS(f"Updating {self.lab} lab to {module}")
             self._lab_module = module
-            pS("Getting current configlets for nodes")
-            self.get_device_cfgs()
+            if self.cvp_clnt:
+                pS("Getting current configlets for nodes via CVP")
+                self.get_device_cfgs()
+                # Iterate through all nodes and update configlets
+                for _node in self.inventory:
+                    self.update_device_cfgs(_node)
+                # Grab all generated tasks available for CC
+                _tmp_task_ids = []
+                for _task in self.cvp_clnt.api.change_control_available_tasks():
+                    _tmp_task_ids.append(_task['workOrderId'])
+                self.task_ids = _tmp_task_ids
+                pS(f"Tasks to be added a CC {self.task_ids}")
+                # Create a CC for the above tasks
+                if self.task_ids:
+                    _tmp_uuid = str(uuid.uuid4())
+                    response = self.cvp_clnt.api.create_change_control_v3(
+                        f"confTopo_{self.lab}_{self.lab_module}_{_tmp_uuid}",
+                        f"confTopo_{self.lab}_{self.lab_module}_{_tmp_uuid}",
+                        self.task_ids
+                    )
+                    if len(response) > 0:
+                        self.cc_ids = response[0]['id']
+                if self.cc_ids:
+                    # Approve and execute CC
+                    pS(f"Approving CC {self.cc_ids}")
+                    self.cvp_clnt.api.approve_change_control(self.cc_ids)
+                    pS(f"Executing CC {self.cc_ids}")
+                    self.cvp_clnt.api.execute_change_controls([self.cc_ids])
+                    # Loop through to check status of CC
+                    while not self.cc_ids:
+                        _status = self.cvp_clnt.api.get_change_control_status(self.cc_ids)[0]
+                        self.cc_status = {
+                            'id': self.cc_ids,
+                            'status': _status['status']
+                        }
+                        if _status['status'] == 'Running':
+                            time.sleep(SLEEP_DELAY)
+                        else:
+                            self.cc_ids = ''
+                    pS("Completed CC")
+
+            else:
+                pS("Non CVP Topology")
 
         else:
             pS(f"{module} is not a valid option")
@@ -140,6 +216,31 @@ class ConfigureTopology():
     def get_device_cfgs(self):
         for _node in self.inventory:
             self.inventory[_node]['cfgs'] = self.cvp_clnt.api.get_configlets_by_netelement_id(self.inventory[_node]['cvp']['systemMacAddress'])['configletList']
+
+    def update_device_cfgs(self, node):
+        """
+        Function to remove old configlets and apply new configlets to device
+        """
+        _cfgs_remove = []
+        _cfgs_remain = []
+        for _cfg in self.inventory[node]['cfgs']:
+            if _cfg['name'] not in (BASE_CFGS + self.lab_cfgs[self.lab_module][node]):
+                pS(f"Configlet {_cfg['name']} not part of lab configlets on {node} - Removing from device")
+                _cfgs_remove.append({
+                    'name': _cfg['name'],
+                    'key': _cfg['key']
+                })
+        for _cfg_name in BASE_CFGS + self.lab_cfgs[self.lab_module][node]:
+            _cfg_info = self.cvp_clnt.api.get_configlet_by_name(_cfg_name)
+            pS(f"Configlet {_cfg_name} will be applied to {node}")
+            _cfgs_remain.append({
+                'name': _cfg_info['name'],
+                'key': _cfg_info['key']
+            })
+        self.cvp_clnt.api.remove_configlets_from_device("confTopo", self.inventory[node]['cvp'], _cfgs_remove)
+        self.cvp_clnt.api.apply_configlets_to_device("confTopo", self.inventory[node]['cvp'], _cfgs_remain)
+
+        
 
     def remove_configlets(self, device, lab_configlets):
         """
