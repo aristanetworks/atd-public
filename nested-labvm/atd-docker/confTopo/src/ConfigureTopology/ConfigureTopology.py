@@ -160,7 +160,7 @@ class ConfigureTopology():
                 if self.cc_ids:
                     # Approve and execute CC
                     pS(f"Approving CC {self.cc_ids}")
-                    self.cvp_clnt.api.approve_change_control(self.cc_ids)
+                    self.cvp_clnt.api.approve_change_control(self.cc_ids, timestamp=datetime.utcnow().isoformat() + 'Z')
                     pS(f"Executing CC {self.cc_ids}")
                     self.cvp_clnt.api.execute_change_controls([self.cc_ids])
                     # Loop through to check status of CC
