@@ -8,8 +8,8 @@ import time
 from rcvpapi.rcvpapi import *
 import syslog
 from ruamel.yaml import YAML
-import paramiko
-from scp import SCPClient
+# import paramiko
+# from scp import SCPClient
 from os.path import exists
 import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
@@ -132,9 +132,12 @@ class ConfigureTopology():
     
     @lab_module.setter
     def lab_module(self, module):
+        self._lab_module = module
+
+    def update_lab(self, module):
         if module in self.lab_list:
             pS(f"Updating {self.lab} lab to {module}")
-            self._lab_module = module
+            self.lab_module = module
             if self.cvp_clnt:
                 pS("Getting current configlets for nodes via CVP")
                 self.get_device_cfgs()
@@ -164,13 +167,14 @@ class ConfigureTopology():
                     pS(f"Executing CC {self.cc_ids}")
                     self.cvp_clnt.api.execute_change_controls([self.cc_ids])
                     # Loop through to check status of CC
-                    while not self.cc_ids:
+                    while self.cc_ids:
                         _status = self.cvp_clnt.api.get_change_control_status(self.cc_ids)[0]
+                        pS(f"Status: {_status['status']['state']} CC-ID: {self.cc_ids}")
                         self.cc_status = {
                             'id': self.cc_ids,
                             'status': _status['status']
                         }
-                        if _status['status'] == 'Running':
+                        if _status['status']['state'] == 'Running':
                             time.sleep(SLEEP_DELAY)
                         else:
                             self.cc_ids = ''
