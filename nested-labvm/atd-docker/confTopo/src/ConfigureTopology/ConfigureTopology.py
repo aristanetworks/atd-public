@@ -168,13 +168,22 @@ class ConfigureTopology():
                     self.cvp_clnt.api.execute_change_controls([self.cc_ids])
                     # Loop through to check status of CC
                     while self.cc_ids:
-                        _status = self.cvp_clnt.api.get_change_control_status(self.cc_ids)[0]
-                        pS(f"Status: {_status['status']['state']} CC-ID: {self.cc_ids}")
-                        self.cc_status = {
-                            'id': self.cc_ids,
-                            'status': _status['status']
-                        }
+                        try:
+                            _status = self.cvp_clnt.api.get_change_control_status(self.cc_ids)[0]
+                            pS(f"Status: {_status['status']['state']} CC-ID: {self.cc_ids}")
+                            self.cc_status = {
+                                'id': self.cc_ids,
+                                'status': _status['status']
+                            }
+                        except:
+                            _status = {
+                                'status': {
+                                    'state': 'Error'
+                                }
+                            }
                         if _status['status']['state'] == 'Running':
+                            time.sleep(SLEEP_DELAY)
+                        elif _status['status']['state'] == 'Error':
                             time.sleep(SLEEP_DELAY)
                         else:
                             self.cc_ids = ''
