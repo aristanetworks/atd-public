@@ -3,8 +3,8 @@ topologies:
   datacenter:
     dev:
       ceos:
-        cpu: 32
-        ram: 48
+        cpu: 24
+        ram: 36
         cvp:
           2020.1.1:
             branch: nested/2020.1
@@ -52,7 +52,7 @@ topologies:
               - 4.26.1F
     prod:
       ceos:
-        cpu: 4
+        cpu: 24
         ram: 36
         cvp:
           2020.1.1:
@@ -123,8 +123,8 @@ topologies:
             eos:
               - 4.26.0F
       ceos:
-        cpu: 32
-        ram: 64
+        cpu: 24
+        ram: 54
         cvp:
           2020.3.1:
             branch: nested/2020.3
