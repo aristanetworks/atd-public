@@ -298,12 +298,12 @@ topologies:
   training-level5:
     dev:
       ceos:
-        cpu: 24
-        ram: 64
+        cpu: 36
+        ram: 72
         cvp:
           2020.2.3:
             branch: nested/2020.2
-            image: base-training-l5-ceos-c2020-2-3-20210505
+            image: base-training-l5-ceos-c2020-2-3-20210714
             eos:
               - 4.25.1F
     # prod:
