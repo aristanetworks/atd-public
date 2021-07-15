@@ -155,6 +155,7 @@ services:
     volumes:
       - jenkins_home:/var/jenkins_home
       - /home/arista/arista-dir/apps/coder/labfiles:/opt/labfiles:rw
+      - ./jenkins/src/groovy/users.groovy.override:/usr/share/jenkins/ref/init.groovy.d/users.groovy.override:rw
   coder:
     container_name: atd-coder
     image: us.gcr.io/beta-atds/atddocker_coder:2.0.2
