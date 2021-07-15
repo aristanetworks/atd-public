@@ -2,6 +2,8 @@
 
 from cvprac import cvp_client
 from datetime import datetime
+from os.path import exists
+from os import system
 import uuid
 import time
 
@@ -10,7 +12,6 @@ import syslog
 from ruamel.yaml import YAML
 # import paramiko
 # from scp import SCPClient
-from os.path import exists
 import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
@@ -40,11 +41,10 @@ zerotouch cancel
 # Create class to handle configuring the topology
 class ConfigureTopology():
 
-    def __init__(self, access_info, cvp_nodes, username, password, public_module_flag=False):
+    def __init__(self, access_info, cvp_nodes, username, password):
         self.access_info = access_info
         self.username = username
         self.password = password
-        self.public_module_flag = public_module_flag
         self.cvp_nodes = cvp_nodes
         self.inventory = {}
         self.cvp_clnt = ''
@@ -55,6 +55,7 @@ class ConfigureTopology():
         self._cc_ids = ''
         self._cc_status = {}
         self._task_ids = []
+        self._additional_cmds = []
         # self.deploy_lab()
         if self.cvp_nodes:
             self.connect_to_cvp()
@@ -100,6 +101,14 @@ class ConfigureTopology():
             return(False)
     
     @property
+    def additional_cmds(self):
+        return(self._additional_cmds)
+    
+    @additional_cmds.setter
+    def additional_cmds(self, cmds):
+        self._additional_cmds = cmds
+
+    @property
     def task_ids(self):
         return(self._task_ids)
 
@@ -133,11 +142,14 @@ class ConfigureTopology():
     @lab_module.setter
     def lab_module(self, module):
         self._lab_module = module
+    
+    # TODO Add Funtion to check for tasks and CCs
 
     def update_lab(self, module):
         if module in self.lab_list:
             pS(f"Updating {self.lab} lab to {module}")
             self.lab_module = module
+            # Check if CVP is present
             if self.cvp_clnt:
                 pS("Getting current configlets for nodes via CVP")
                 self.get_device_cfgs()
@@ -191,9 +203,30 @@ class ConfigureTopology():
 
             else:
                 pS("Non CVP Topology")
-
+                # TODO Add in logic to configure a topology if CVP is not present
+            # Grab additional Commands for lab module
+            self.get_additional_cmds()
+            if self.additional_cmds:
+                pS(f"Running additional setup commands for {self.lab} - {self.lab_module} module.")
+                for _cmd in self.additional_cmds:
+                    system(_cmd)
         else:
             pS(f"{module} is not a valid option")
+
+    def get_additional_cmds(self):
+        """
+        Function to get additional commands for lab_module
+        """
+        # Reset the additional commands
+        self.additional_cmds = []
+        if 'additional_commands' in self.lab_list[self.lab_module]:
+            pS(f"Additional commands found for {self.lab} - {self.lab_module} module.")
+            self.additional_cmds = self.lab_list[self.lab_module]['additional_commands']
+            return(True)
+        else:
+            pS(f"Additional commands not present for {self.lab} - {self.lab_module} module.")
+            return(False)
+    
 
     def connect_to_cvp(self):
         # Adding new connection to CVP via cvprac
