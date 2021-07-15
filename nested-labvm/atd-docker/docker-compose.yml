@@ -163,17 +163,7 @@ services:
     volumes:
       - jenkins_home:/var/jenkins_home
       - /home/arista/arista-dir/apps/coder/labfiles:/opt/labfiles:rw
-  robot:
-    container_name: atd-robot
-    image: mpergament/aristarobot:latest
-    restart: always
-    networks:
-      - atd_nginx
-    volumes:
-      - /home/atdadmin/robot:/home/robot
-      - /etc/atd/ACCESS_INFO.yaml:/etc/atd/ACCESS_INFO.yaml
-      - /home/arista/arista-dir:/home/arista:rw
-      - /opt/atd/topologies:/opt/atd/topologies
+      - ./jenkins/src/groovy/users.groovy.override:/usr/share/jenkins/ref/init.groovy.d/users.groovy.override:rw
   coder:
     container_name: atd-coder
     image: us.gcr.io/beta-atds/atddocker_coder:2.0.2
