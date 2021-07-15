@@ -326,12 +326,12 @@ topologies:
   training-level7:
     dev:
       ceos:
-        cpu: 24
-        ram: 66
+        cpu: 40
+        ram: 70
         cvp:
           2020.2.3:
             branch: nested/2020.2
-            image: base-training-l7-ceos-c2020-2-3-20210617
+            image: base-training-l7-ceos-c2020-2-3-20210715
             eos:
               - 4.25.1F
     # prod:
