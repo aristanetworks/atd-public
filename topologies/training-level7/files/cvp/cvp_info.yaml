@@ -51,14 +51,21 @@ cvp_info:
     DC3:
       parent: Tenant
       nodes:
-    SW-DC3:
+    Spine-DC3:
       parent: DC3
       nodes:
-      - SW1-DC3
+      - spine1-DC3
+      - spine2-DC3
+    Leaf-DC3:
+      parent: DC3
+      nodes:
+      - leaf1-DC3
+      - leaf2-DC3
     Host-DC3:
       parent: DC3
       nodes:
       - host1-DC3
+      - host2-DC3
     Provider Network:
       parent: Tenant
       nodes:
