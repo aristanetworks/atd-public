@@ -52,11 +52,10 @@ class ConfigureTopology():
         self._lab = ''
         self._lab_list = {}
         self._lab_cfgs = {}
-        self._cc_ids = ''
-        self._cc_status = {}
+        self._cc_ids = []
+        self.cc_status = {}
         self._task_ids = []
         self._additional_cmds = []
-        # self.deploy_lab()
         if self.cvp_nodes:
             self.connect_to_cvp()
             self.get_cvp_inventory()
@@ -123,17 +122,6 @@ class ConfigureTopology():
     @cc_ids.setter
     def cc_ids(self, cc_ids):
         self._cc_ids = cc_ids
-    
-    @property
-    def cc_status(self):
-        return(self._cc_status)
-
-    @cc_status.setter
-    def cc_status(self, cc):
-        self._cc_status = {
-            'id': cc['id'],
-            'status': cc['status']
-        }
 
     @property
     def lab_module(self):
@@ -145,10 +133,17 @@ class ConfigureTopology():
     
     # TODO Add Funtion to check for tasks and CCs
 
-    def update_lab(self, module):
+    def update_lab(self, module, grouped=True):
+        """
+        Main function to update the node configs for a lab.
+        Parameters:
+        module: lab module option (str) [Required]
+        grouped: if tasks should be grouped in a single CC or multiple (bool) [Optional]
+        """
         if module in self.lab_list:
             pS(f"Updating {self.lab} lab to {module}")
             self.lab_module = module
+            self.cc_status = {}
             # Check if CVP is present
             if self.cvp_clnt:
                 pS("Getting current configlets for nodes via CVP")
@@ -164,41 +159,61 @@ class ConfigureTopology():
                 pS(f"Tasks to be added a CC {self.task_ids}")
                 # Create a CC for the above tasks
                 if self.task_ids:
-                    _tmp_uuid = str(uuid.uuid4())
-                    response = self.cvp_clnt.api.create_change_control_v3(
-                        f"confTopo_{self.lab}_{self.lab_module}_{_tmp_uuid}",
-                        f"confTopo_{self.lab}_{self.lab_module}_{_tmp_uuid}",
-                        self.task_ids
-                    )
-                    if len(response) > 0:
-                        self.cc_ids = response[0]['id']
+                    # Check if all tasks should be grouped in a single CC
+                    if grouped:
+                        pS("Grouping all tasks into a single CC")
+                        _tmp_uuid = str(uuid.uuid4())
+                        response = self.cvp_clnt.api.create_change_control_v3(
+                            f"confTopo_{self.lab}_{self.lab_module}_{_tmp_uuid}",
+                            f"confTopo_{self.lab}_{self.lab_module}_{_tmp_uuid}",
+                            self.task_ids
+                        )
+                        if len(response) > 0:
+                            self.cc_ids.append(response[0]['id'])
+                    else:
+                        pS("Creating a CC for each individual task")
+                        # Create a CC for each individual task
+                        # Iterate through each task ID to create a CC
+                        for _task in self.task_ids:
+                            _tmp_uuid = str(uuid.uuid4())
+                            response = self.cvp_clnt.api.create_change_control_v3(
+                                f"confTopo_{self.lab}_{self.lab_module}_{_tmp_uuid}",
+                                f"confTopo_{self.lab}_{self.lab_module}_{_tmp_uuid}",
+                                [_task]
+                            )
+                            if len(response) > 0:
+                                self.cc_ids.append(response[0]['id'])
+                # Check to see if any CC IDs have been created
                 if self.cc_ids:
-                    # Approve and execute CC
-                    pS(f"Approving CC {self.cc_ids}")
-                    self.cvp_clnt.api.approve_change_control(self.cc_ids, timestamp=datetime.utcnow().isoformat() + 'Z')
-                    pS(f"Executing CC {self.cc_ids}")
-                    self.cvp_clnt.api.execute_change_controls([self.cc_ids])
+                    # Iterate through all CC IDs to approve and execute
+                    for _cc_id in self.cc_ids:
+                        # Approve and execute CC
+                        pS(f"Approving CC {_cc_id}")
+                        self.cvp_clnt.api.approve_change_control(_cc_id, timestamp=datetime.utcnow().isoformat() + 'Z')
+                        pS(f"Executing CC {_cc_id}")
+                        self.cvp_clnt.api.execute_change_controls([_cc_id])
                     # Loop through to check status of CC
                     while self.cc_ids:
-                        try:
-                            _status = self.cvp_clnt.api.get_change_control_status(self.cc_ids)[0]
-                            pS(f"Status: {_status['status']['state']} CC-ID: {self.cc_ids}")
-                            self.cc_status = {
-                                'id': self.cc_ids,
-                                'status': _status['status']
-                            }
-                        except:
-                            _status = {
-                                'status': {
-                                    'state': 'Error'
+                        # Iterate through each CC ID
+                        for _cc_id in self.cc_ids:
+                            try:
+                                _status = self.cvp_clnt.api.get_change_control_status(_cc_id)[0]
+                                pS(f"Status: {_status['status']['state']} CC-ID: {_cc_id}")
+                                self.cc_status[_cc_id] = {
+                                    'id': _cc_id,
+                                    'status': _status['status']['state']
                                 }
-                            }
-                        if _status['status']['state'] == 'Running':
-                            time.sleep(SLEEP_DELAY)
-                        elif _status['status']['state'] == 'Error':
-                            time.sleep(SLEEP_DELAY)
-                        else:
-                            self.cc_ids = ''
+                            except:
+                                self.cc_status[_cc_id] = {
+                                    'id': _cc_id,
+                                    'status': 'Error'
+                                }
+                            # Check if the CC has completed
+                            if self.cc_status[_cc_id]['status'] == 'Completed':
+                                pS(f"{_cc_id} has completed.")
+                                _cc_index = self.cc_ids.index(_cc_id)
+                                self.cc_ids.pop(_cc_index)
+                        time.sleep(SLEEP_DELAY)
                     pS("Completed CC")
 
             else:
