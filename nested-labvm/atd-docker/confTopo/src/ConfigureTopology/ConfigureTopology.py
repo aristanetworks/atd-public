@@ -20,7 +20,7 @@ DEBUG = False
 
 TOPO_MENU = '/home/arista/menus/{lab}.yaml'
 BASE_CFGS = ['ATD-INFRA']
-SLEEP_DELAY = 15
+SLEEP_DELAY = 5
 
 # Cmds to copy bare startup to running
 cp_run_start = """enable
@@ -150,17 +150,35 @@ class ConfigureTopology():
                 self.get_device_cfgs()
                 # Iterate through all nodes and update configlets
                 for _node in self.inventory:
-                    self.update_device_cfgs(_node)
-                # Grab all generated tasks available for CC
-                _tmp_task_ids = []
-                for _task in self.cvp_clnt.api.change_control_available_tasks():
-                    _tmp_task_ids.append(_task['workOrderId'])
-                self.task_ids = _tmp_task_ids
-                pS(f"Tasks to be added a CC {self.task_ids}")
-                # Create a CC for the above tasks
-                if self.task_ids:
-                    # Check if all tasks should be grouped in a single CC
-                    if grouped:
+                    _node_response = self.update_device_cfgs(_node)
+                    # If tasks should be executed individually, start CC approval and execution
+                    if not grouped:
+                        _task_id = _node_response['data']['taskIds']
+                        pS(f"Creating a CC for Task {_task_id[0]}")
+                        _tmp_uuid = str(uuid.uuid4())
+                        response = self.cvp_clnt.api.create_change_control_v3(
+                            f"confTopo_{self.lab}_{self.lab_module}_{_tmp_uuid}",
+                            f"confTopo_{self.lab}_{self.lab_module}_{_tmp_uuid}",
+                            _task_id
+                        )
+                        if len(response) > 0:
+                            _cc_id = response[0]['id']
+                            self.cc_ids.append(_cc_id)
+                            # Approve and execute CC
+                            pS(f"Approving CC {_cc_id}")
+                            self.cvp_clnt.api.approve_change_control(_cc_id, timestamp=datetime.utcnow().isoformat() + 'Z')
+                            pS(f"Executing CC {_cc_id}")
+                            self.cvp_clnt.api.execute_change_controls([_cc_id])
+                # Get all task IDs to groupe all Tasks in a single CC
+                if grouped:
+                    # Grab all generated tasks available for CC
+                    _tmp_task_ids = []
+                    for _task in self.cvp_clnt.api.change_control_available_tasks():
+                        _tmp_task_ids.append(_task['workOrderId'])
+                    self.task_ids = _tmp_task_ids
+                    pS(f"Tasks to be added a CC {self.task_ids}")
+                    # Create a CC for the above tasks
+                    if self.task_ids:
                         pS("Grouping all tasks into a single CC")
                         _tmp_uuid = str(uuid.uuid4())
                         response = self.cvp_clnt.api.create_change_control_v3(
@@ -170,51 +188,38 @@ class ConfigureTopology():
                         )
                         if len(response) > 0:
                             self.cc_ids.append(response[0]['id'])
-                    else:
-                        pS("Creating a CC for each individual task")
-                        # Create a CC for each individual task
-                        # Iterate through each task ID to create a CC
-                        for _task in self.task_ids:
-                            _tmp_uuid = str(uuid.uuid4())
-                            response = self.cvp_clnt.api.create_change_control_v3(
-                                f"confTopo_{self.lab}_{self.lab_module}_{_tmp_uuid}",
-                                f"confTopo_{self.lab}_{self.lab_module}_{_tmp_uuid}",
-                                [_task]
-                            )
-                            if len(response) > 0:
-                                self.cc_ids.append(response[0]['id'])
-                # Check to see if any CC IDs have been created
-                if self.cc_ids:
-                    # Iterate through all CC IDs to approve and execute
-                    for _cc_id in self.cc_ids:
-                        # Approve and execute CC
-                        pS(f"Approving CC {_cc_id}")
-                        self.cvp_clnt.api.approve_change_control(_cc_id, timestamp=datetime.utcnow().isoformat() + 'Z')
-                        pS(f"Executing CC {_cc_id}")
-                        self.cvp_clnt.api.execute_change_controls([_cc_id])
-                    # Loop through to check status of CC
-                    while self.cc_ids:
-                        # Iterate through each CC ID
+                    # Check to see if any CC IDs have been created
+                    if self.cc_ids:
+                        # Iterate through all CC IDs to approve and execute
                         for _cc_id in self.cc_ids:
-                            try:
-                                _status = self.cvp_clnt.api.get_change_control_status(_cc_id)[0]
-                                pS(f"Status: {_status['status']['state']} CC-ID: {_cc_id}")
-                                self.cc_status[_cc_id] = {
-                                    'id': _cc_id,
-                                    'status': _status['status']['state']
-                                }
-                            except:
-                                self.cc_status[_cc_id] = {
-                                    'id': _cc_id,
-                                    'status': 'Error'
-                                }
-                            # Check if the CC has completed
-                            if self.cc_status[_cc_id]['status'] == 'Completed':
-                                pS(f"{_cc_id} has completed.")
-                                _cc_index = self.cc_ids.index(_cc_id)
-                                self.cc_ids.pop(_cc_index)
-                        time.sleep(SLEEP_DELAY)
-                    pS("Completed CC")
+                            # Approve and execute CC
+                            pS(f"Approving CC {_cc_id}")
+                            self.cvp_clnt.api.approve_change_control(_cc_id, timestamp=datetime.utcnow().isoformat() + 'Z')
+                            pS(f"Executing CC {_cc_id}")
+                            self.cvp_clnt.api.execute_change_controls([_cc_id])
+                # Loop through to check status of CC
+                while self.cc_ids:
+                    # Iterate through each CC ID
+                    for _cc_id in self.cc_ids:
+                        try:
+                            _status = self.cvp_clnt.api.get_change_control_status(_cc_id)[0]
+                            pS(f"Status: {_status['status']['state']} CC-ID: {_cc_id}")
+                            self.cc_status[_cc_id] = {
+                                'id': _cc_id,
+                                'status': _status['status']['state']
+                            }
+                        except:
+                            self.cc_status[_cc_id] = {
+                                'id': _cc_id,
+                                'status': 'Error'
+                            }
+                        # Check if the CC has completed
+                        if self.cc_status[_cc_id]['status'] == 'Completed':
+                            pS(f"{_cc_id} has completed.")
+                            _cc_index = self.cc_ids.index(_cc_id)
+                            self.cc_ids.pop(_cc_index)
+                    time.sleep(SLEEP_DELAY)
+                pS("Completed CC")
 
             else:
                 pS("Non CVP Topology")
@@ -299,8 +304,8 @@ class ConfigureTopology():
                 'key': _cfg_info['key']
             })
         self.cvp_clnt.api.remove_configlets_from_device("confTopo", self.inventory[node]['cvp'], _cfgs_remove)
-        self.cvp_clnt.api.apply_configlets_to_device("confTopo", self.inventory[node]['cvp'], _cfgs_remain)
-
+        response = self.cvp_clnt.api.apply_configlets_to_device("confTopo", self.inventory[node]['cvp'], _cfgs_remain)
+        return(response)
         
 
     def remove_configlets(self, device, lab_configlets):
