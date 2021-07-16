@@ -14,11 +14,17 @@ topologies:
           #     - 4.24.2.1F
           #     - 4.25.1F
           2021.2.0.a8:
+            resources:
+              cpu: 32
+              ram: 48
             branch: nested-release
             image: base-atd-datacenter-ceos-c2021-2-0-a8-20210714
             eos:
               - 4.26.1F
           2020.3.1:
+            resources:
+              cpu: 32
+              ram: 48
             branch: nested/2020.3
             image: base-atd-datacenter-ceos-c2020-3-1-20210715
             eos:
@@ -26,6 +32,9 @@ topologies:
               - 4.25.2F
               - 4.26.0F
           2021.1.1:
+            resources:
+              cpu: 32
+              ram: 48
             branch: nested/2021.1
             image: base-atd-datacenter-ceos-c2021-1-1-20210715
             eos:
@@ -41,11 +50,17 @@ topologies:
           #   eos:
           #     - 4.25.1F
           2020.3.1:
+            resources:
+              cpu: 30
+              ram: 64
             branch: nested/2020.3
             image: base-atd-datacenter-e4-26-0f-c2020-3-1-20210524
             eos:
               - 4.26.0F
           2021.1.1:
+            resources:
+              cpu: 30
+              ram: 64
             branch: nested/2021.1
             image: base-atd-datacenter-e4-26-1f-c2021-1-1-20210616
             eos:
@@ -113,11 +128,17 @@ topologies:
           #   eos:
           #     - 4.24.1F
           2020.3.1:
+            resources:
+              cpu: 44
+              ram: 90
             branch: nested/2020.3
             image: base-atd-routing-e4-26-0f-c2020-3-1-20210421
             eos:
               - 4.26.0F
           2021.1.0:
+            resources:
+              cpu: 44
+              ram: 90
             branch: nested/2021.1
             image: base-atd-routing-e4-26-0f-c2021-1-0-20210427
             eos:
@@ -127,16 +148,25 @@ topologies:
         ram: 64
         cvp:
           2020.3.1:
+            resources:
+              cpu: 32
+              ram: 64
             branch: nested/2020.3
             image: base-atd-routing-ceos-c2020-3-1-20210715
             eos:
               - 4.26.1F
           2021.1.1:
+            resources:
+              cpu: 32
+              ram: 64
             branch: nested/2021.1
             image: base-atd-routing-ceos-c2021-1-1-20210715
             eos:
               - 4.26.1F
           2021.2.0.a8:
+            resources:
+              cpu: 32
+              ram: 64
             branch: nested-release
             image: base-atd-routing-ceos-c2021-2-0-a8-20210714
             eos:
@@ -184,6 +214,9 @@ topologies:
         ram: 64
         cvp:
           2020.2.3:
+            resources:
+              cpu: 32
+              ram: 64
             branch: nested/2020.2
             image: base-training-l1-e4-24-2-2f-c2020-2-3-20210125
             eos:
@@ -212,6 +245,9 @@ topologies:
         ram: 64
         cvp:
           2020.2.3:
+            resources:
+              cpu: 32
+              ram: 64
             branch: nested/2020.2
             image: base-training-l2-e4-24-2-2f-c2020-2-3-20210419
             eos:
@@ -240,11 +276,17 @@ topologies:
         ram: 72
         cvp:
           2020.2.3:
+            resources:
+              cpu: 36
+              ram: 72
             branch: nested/2020.2
             image: base-training-l3-e4-24-2-2f-c2020-2-3-20210524
             eos:
               - 4.24.2.2F
           2020.2.3.e426:
+            resources:
+              cpu: 36
+              ram: 72
             branch: nested/2020.2
             image: base-training-l3-e4-26-0f-c2020-2-3-20210514
             eos:
@@ -273,6 +315,9 @@ topologies:
         ram: 64
         cvp:
           2020.2.3:
+            resources:
+              cpu: 24
+              ram: 64
             branch: nested/2020.2
             image: base-training-l4-ceos-c2020-2-3-20210515u
             eos:
@@ -302,6 +347,9 @@ topologies:
         ram: 72
         cvp:
           2020.2.3:
+            resources:
+              cpu: 36
+              ram: 72
             branch: nested/2020.2
             image: base-training-l5-ceos-c2020-2-3-20210714
             eos:
@@ -330,6 +378,9 @@ topologies:
         ram: 70
         cvp:
           2020.2.3:
+            resources:
+              cpu: 40
+              ram: 70
             branch: nested/2020.2
             image: base-training-l7-ceos-c2020-2-3-20210715
             eos:
