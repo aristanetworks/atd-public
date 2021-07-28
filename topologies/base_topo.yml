@@ -13,12 +13,12 @@ topologies:
           #     - 4.24.1.1F
           #     - 4.24.2.1F
           #     - 4.25.1F
-          2021.2.0.a8:
+          2021.2.0.e6:
             resources:
               cpu: 32
               ram: 48
             branch: nested-release
-            image: base-atd-datacenter-ceos-c2021-2-0-a8-20210714
+            image: base-atd-datacenter-ceos-c2021-2-0-e6-20210728
             eos:
               - 4.26.1F
           2020.3.1:
