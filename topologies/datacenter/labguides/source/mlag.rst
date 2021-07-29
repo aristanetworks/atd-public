@@ -125,6 +125,7 @@ MLAG
             show mlag
             show mlag detail
             show mlag interfaces
+            show port-channel
 
    2. Verify switching operation
 
