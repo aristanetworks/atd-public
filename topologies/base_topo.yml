@@ -184,12 +184,12 @@ topologies:
             image: base-atd-routing-ceos-c2021-1-1-20210715
             eos:
               - 4.26.1F
-          2021.2.0.a8:
+          2021.2.0.e6:
             resources:
               cpu: 32
               ram: 64
             branch: nested-release
-            image: base-atd-routing-ceos-c2021-2-0-a8-20210714
+            image: base-atd-routing-ceos-c2021-2-0-e6-20210802
             eos:
               - 4.26.1F
     prod:
