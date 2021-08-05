@@ -52,7 +52,7 @@ been defined for AAA and VLANs.
 
     .. code-block:: text
 
-       alias routeage bash echo show ip route | cliribd
+       alias snz show interface counter | nz
             
 
 6. Name the Configlet 'Alias'.
