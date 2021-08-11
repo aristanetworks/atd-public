@@ -318,7 +318,7 @@ topologies:
               cpu: 36
               ram: 72
             branch: nested/2020.2
-            image: base-training-l3-e4-26-0f-c2020-2-3-20210514
+            image: base-training-l3-e4-26-0f-c2020-2-3-20210811u
             eos:
               - 4.26.0F
     prod:
@@ -338,7 +338,7 @@ topologies:
             resources:
               cpu: 36
               ram: 72
-            branch: nested/2020.2
+            branch: v2020.2-20210811a
             image: base-training-l3-e4-26-0f-c2020-2-3-20210811u
             eos:
               - 4.26.0F
@@ -404,7 +404,7 @@ topologies:
             resources:
               cpu: 36
               ram: 72
-            branch: nested/2020.2
+            branch: v2020.2-20210811a
             image: base-training-l5-ceos-c2020-2-3-20210714
             eos:
               - 4.25.1F
