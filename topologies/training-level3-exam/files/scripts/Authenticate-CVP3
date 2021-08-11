@@ -1,0 +1,95 @@
+import requests
+import json
+
+# Set Script Variables
+
+CVP_HOST = "192.168.0.5"
+CVP_USER = "arista"
+CVP_PASS = "arista"
+
+# Fix for requests certification issue
+
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
+requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+
+# Create an HTTP session to the CVP server
+
+url = "https://%s"%CVP_HOST
+headers = { 'Content-Type': 'application/json' }
+loginURL = "/web/login/authenticate.do"
+authenticateData = json.dumps({'userId' : CVP_USER, 'password' : CVP_PASS})
+response = requests.post(url+loginURL,data=authenticateData,headers=headers,verify=False)
+assert response.ok
+cookies = response.cookies
+output = response.json()
+
+# Print user details
+
+print "User Name:%s\n "%output['username']
+print "First Name: %s\n "%output['user']['firstName']
+print "Last Name: %s\n "%output['user']['lastName']
+print "User Permissions: %s\n "%output['permissionList']
+print "Cookie Jar: %s\n "%cookies
+
+#Create an HTTP GET request to the CVP server
+
+getConfigletURL = "/cvpservice/configlet/getConfiglets.do?"
+getConfigletParams = {'startIndex':'0','endIndex':'0','type':'Configlet'}
+response = requests.get(url+getConfigletURL,cookies=cookies, params=getConfigletParams,verify=False)
+assert response.ok
+outputConfiglets = response.json()
+
+# Print Configlet details
+
+for configlet in outputConfiglets['data']:
+    print "ConfigletName: %s"%configlet['name']
+    print "ConfigletKey: %s"%configlet['key']
+    print "\n"
+# Create an HTTP GET request to the CVP server
+
+getConfigletHistoryURL = "/cvpservice/configlet/getConfigletHistory.do?"
+getConfigletParams = {'configletId':'configlet_32_438214998013','startIndex':'0','endIndex':'0'}
+response = requests.get(url+getConfigletHistoryURL,cookies=cookies, params=getConfigletParams,verify=False)
+assert response.ok
+outputConfigletHistory = response.json()
+
+# Print Configlet details
+
+for entry in outputConfigletHistory['configletHistory']:
+     print "ConfigletKey: %s"%entry['key']
+     print "ConfigletOldConfig: %s"%entry['oldConfig']
+     print "ConfigletNewConfig: %s"%entry['newConfig']
+     print "\n"
+
+
+# Create an HTTP GET request to the CVP server
+
+getConfigletDetailURL = "/cvpservice/configlet/getConfigletByName.do?"
+getConfigletParams = {'name':'VLANs'}
+response = requests.get(url+getConfigletDetailURL,cookies=cookies, params=getConfigletParams,verify=False)
+assert response.ok
+outputConfigletDetail = response.json()
+
+# Print Configlet details
+
+print "ConfigletKey: %s"%outputConfigletDetail['key']
+print "ConfigletName: %s"%outputConfigletDetail['name']
+print "ConfigletConfig: %s"%outputConfigletDetail['config']
+print "ConfigletNote: %s"%outputConfigletDetail['note']
+print "\n"
+
+
+# Create an HTTP POST request to the CVP server
+
+headers = { 'Content-Type': 'application/json' }
+postConfigletChangeURL = "/cvpservice/configlet/updateConfiglet.do"
+changeData = json.dumps({"config": "! some configuration here", "key": "configlet_32_438214998013", "name": "VLANs"})
+response = requests.post(url+postConfigletChangeURL, cookies=cookies, data=changeData,headers=headers,verify=False)
+assert response.ok
+outputConfigletChange = response.json()
+
+# Print Configlet details
+
+print "ConfigletChange: %s"%outputConfigletChange['data']
+print "\n"
+
