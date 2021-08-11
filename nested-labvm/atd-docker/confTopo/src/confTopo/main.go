@@ -9,6 +9,7 @@ import (
 	"os"
 	"time"
 
+	"github.com/aristanetworks/go-cvprac/v3/client"
 	"github.com/gorilla/mux"
 	"github.com/gorilla/websocket"
 	"gopkg.in/yaml.v3"
@@ -39,6 +40,11 @@ type Access_yaml struct {
 	Labguides      string       `yaml:"labguides"`
 }
 
+type Cvp_struct struct {
+	Status  string `json:"status"`
+	Version string `json:"version"`
+}
+
 var upgrader = websocket.Upgrader{
 	ReadBufferSize:  1024,
 	WriteBufferSize: 1024,
@@ -46,8 +52,7 @@ var upgrader = websocket.Upgrader{
 
 var ACCESS string = "/etc/atd/ACCESS_INFO.yaml"
 var SLEEP_DELAY = (60 * time.Second)
-var CVP_NODES [1]string
-var CVP_IP string = "192.168.0.5"
+var CVP_NODES = []string{"192.168.0.5"}
 var TOPO_USER string = ""
 var TOPO_PWD string = ""
 var TEST string = "string"
@@ -133,6 +138,7 @@ func ReadWS(ws *websocket.Conn, r *http.Request) {
 
 func TopoRequestHandler(w http.ResponseWriter, r *http.Request) {
 	params := r.URL.Query()
+	var res Cvp_struct
 	_, ok := params["action"]
 	if ok {
 		encoded_action := params["action"][0]
@@ -143,6 +149,28 @@ func TopoRequestHandler(w http.ResponseWriter, r *http.Request) {
 		log.Printf("GET: %s", decoded_action)
 		if decoded_action == "cvp_status" {
 			log.Println("Get CVP Status")
+			// Start the connection to CVP
+			cvpClient, _ := client.NewCvpClient(
+				client.Protocol("https"),
+				client.Port(443),
+				client.Hosts(CVP_NODES...),
+				client.Debug(false))
+			if err := cvpClient.Connect(TOPO_USER, TOPO_PWD); err != nil {
+				log.Printf("ERROR: %s\n", err)
+				res.Status = "Starting"
+				res.Version = ""
+			} else {
+				data, err := cvpClient.API.GetCvpInfo()
+				if err != nil {
+					log.Printf("ERROR: %s\n", err)
+					res.Status = "Starting"
+					res.Version = ""
+				}
+				log.Printf("CVP VERSION = %s", data.Version)
+				res.Status = "UP"
+				res.Version = data.Version
+			}
+			json.NewEncoder(w).Encode(res)
 		}
 	} else {
 		log.Println("No action parameter provided")
