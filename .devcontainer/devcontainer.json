@@ -9,7 +9,10 @@
 			  "args": ["-l"]
 			}
 		},
-		"terminal.integrated.defaultProfile.linux": "zsh (login)"
+		"terminal.integrated.defaultProfile.linux": "zsh (login)",
+		"go.toolsManagement.checkForUpdates": "local",
+		"go.gopath": "/home/atddev/go",
+		"go.useLanguageServer": true
 	},
 	"extensions": [
 		"redhat.vscode-yaml",

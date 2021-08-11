@@ -65,4 +65,8 @@ RUN SNIPPET="export PROMPT_COMMAND='history -a' && export HISTFILE=$CONTAINERWS/
     
 ENV PATH=$PATH:/usr/local/go/bin
 
-RUN go get -v golang.org/x/tools/gopls github.com/gorilla/mux
+# ENV GOPATH=/home/${USERNAME}/go
+
+RUN go get -v golang.org/x/tools/gopls
+RUN go get -v golang.org/x/tools/cmd/goimports
+RUN go get -v golang.org/x/tools/cmd/goimports
