@@ -360,7 +360,7 @@ topologies:
               cpu: 36
               ram: 72
             branch: nested/2020.2
-            image: base-training-l3-e4-26-0f-c2020-2-3-20210811u
+            image: base-training-l3-exam-e4-26-0f-c2020-2-3-20210811
             eos:
               - 4.26.0F
     # prod:
@@ -373,7 +373,7 @@ topologies:
     #           cpu: 36
     #           ram: 72
     #         branch: v2020.2-20210811a
-    #         image: base-training-l3-e4-26-0f-c2020-2-3-20210811u
+    #         image: base-training-l3-exam-e4-26-0f-c2020-2-3-20210811
     #         eos:
     #           - 4.26.0F
     desc: 'Level 3 Training Exam Lab. For use by the Arista Training Team.'
