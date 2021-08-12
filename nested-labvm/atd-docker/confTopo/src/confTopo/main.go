@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/aristanetworks/go-cvprac/v3/client"
@@ -41,8 +42,10 @@ type Access_yaml struct {
 }
 
 type Cvp_struct struct {
-	Status  string `json:"status"`
-	Version string `json:"version"`
+	Status  string      `json:"status"`
+	Version string      `json:"version"`
+	Total   int         `json:"total"`
+	Tasks   interface{} `json:"tasks"`
 }
 
 var upgrader = websocket.Upgrader{
@@ -161,6 +164,8 @@ func TopoRequestHandler(w http.ResponseWriter, r *http.Request) {
 				res.Version = ""
 			} else {
 				data, err := cvpClient.API.GetCvpInfo()
+				// Logout of CVP Session
+				cvpClient.API.Logout()
 				if err != nil {
 					log.Printf("ERROR: %s\n", err)
 					res.Status = "Starting"
@@ -171,6 +176,54 @@ func TopoRequestHandler(w http.ResponseWriter, r *http.Request) {
 				res.Version = data.Version
 			}
 			json.NewEncoder(w).Encode(res)
+		} else if decoded_action == "cvp_tasks" {
+			_cvp_tasks := make(map[string]int)
+			_active_tasks := 0
+			cvpClient, _ := client.NewCvpClient(
+				client.Protocol("https"),
+				client.Port(443),
+				client.Hosts(CVP_NODES...),
+				client.Debug(false))
+			if err := cvpClient.Connect(TOPO_USER, TOPO_PWD); err != nil {
+				log.Printf("ERROR: %s\n", err)
+				res.Status = "Starting"
+				res.Version = ""
+			} else {
+				// Get tasks from CVP
+				data, err := cvpClient.API.GetTaskByStatus("active")
+				// Logout of CVP Session
+				cvpClient.API.Logout()
+				if err != nil {
+					// Error getting tasks from CVP
+					log.Printf("ERROR: %s\n", err)
+					res.Status = "Error getting tasks"
+					res.Total = _active_tasks
+					res.Tasks = _cvp_tasks
+				} else {
+					if len(data) > 0 {
+						for i := 0; i < len(data); i++ {
+							if !strings.Contains(data[i].WorkOrderUserDefinedStatus, "cancelled") {
+								_active_tasks++
+								if _, found := _cvp_tasks[data[i].WorkOrderUserDefinedStatus]; found {
+									_cvp_tasks[data[i].WorkOrderUserDefinedStatus]++
+								} else {
+									_cvp_tasks[data[i].WorkOrderUserDefinedStatus] = 1
+								}
+							}
+						}
+					}
+					if _active_tasks > 0 {
+						res.Status = "Active"
+						res.Total = _active_tasks
+						res.Tasks = _cvp_tasks
+					} else {
+						res.Status = "Complete"
+						res.Total = _active_tasks
+						res.Tasks = _cvp_tasks
+					}
+				}
+				json.NewEncoder(w).Encode(res)
+			}
 		}
 	} else {
 		log.Println("No action parameter provided")
@@ -213,9 +266,9 @@ func main() {
 
 	r := mux.NewRouter()
 	// Routes consist of a path and a handler function.
-	r.HandleFunc("/td-go/conftopo", TopoRequestHandler)
-	r.HandleFunc("/td-go/ws-conftopo", TopoDataHandler)
-	log.Printf("*** Websocket Server Started on 50021 ***")
+	r.HandleFunc("/td-api/conftopo", TopoRequestHandler)
+	r.HandleFunc("/td-api/ws-conftopo", TopoDataHandler)
+	log.Printf("*** Websocket Server Started on 50010 ***")
 	// Bind to a port and pass our router in
-	log.Fatal(http.ListenAndServe(":50021", r))
+	log.Fatal(http.ListenAndServe(":50010", r))
 }

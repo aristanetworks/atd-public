@@ -1,21 +1,32 @@
-FROM python:3.9
+FROM golang:1.16.6 as builder
+
+ENV GO111MODULE=on
+
+WORKDIR /app
+
+COPY src/confTopo/go.mod ./
+
+COPY src/confTopo/go.sum ./
+
+RUN go mod download
+
+COPY src/confTopo/main.go ./
+
+RUN go build -o /confTopo
+
+CMD ["/confTopo"]
+
+FROM debian:buster
+
+ARG APP_HOME=/opt/confTopo
 
 
-RUN pip install --upgrade pip
+WORKDIR ${APP_HOME}
 
-RUN pip install tornado requests ruamel.yaml cvprac rcvpapi pyaml
+COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
 
-RUN mkdir -p /opt/topo/html
-
-WORKDIR /root
-
-COPY ./src/ConfigureTopology/* /usr/local/bin/ConfigureTopology/
-
-COPY ./src/confTopo.py /usr/local/bin/confTopo
-
-RUN chmod +x /usr/local/bin/confTopo
+COPY --from=builder /confTopo ${APP_HOME}/confTopo
 
 EXPOSE 50010
 
-CMD ["confTopo"]
-
+ENTRYPOINT ["./confTopo"]
