@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/base64"
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -48,17 +49,44 @@ type Cvp_struct struct {
 	Tasks   interface{} `json:"tasks"`
 }
 
+type Received_msg struct {
+	Type string        `json:"type"`
+	Data Received_data `json:"data"`
+}
+
+type Received_data struct {
+	Lab    string `json:"lab"`
+	Module string `json:"module"`
+}
+
+type Client_data struct {
+	Status string `json:"status"`
+}
+type Client_pkg struct {
+	Type      string      `json:"type"`
+	Timestamp string      `json:"time"`
+	Data      Client_data `json:"data"`
+}
+
 var upgrader = websocket.Upgrader{
 	ReadBufferSize:  1024,
 	WriteBufferSize: 1024,
 }
 
+var APP_PORT int = 50010
 var ACCESS string = "/etc/atd/ACCESS_INFO.yaml"
 var SLEEP_DELAY = (60 * time.Second)
 var CVP_NODES = []string{"192.168.0.5"}
 var TOPO_USER string = ""
 var TOPO_PWD string = ""
 var TEST string = "string"
+
+// Create the CVP Client
+var CVP_client, _ = client.NewCvpClient(
+	client.Protocol("https"),
+	client.Port(443),
+	client.Hosts(CVP_NODES...),
+	client.Debug(false))
 
 // ====================================================
 // Utility Functions
@@ -111,6 +139,30 @@ func fileExists(filename string) bool {
 	return !info.IsDir()
 }
 
+func cvpCheckAndConnect(cvp_client *client.CvpClient) bool {
+	if cvp_client.SessID == "" {
+		log.Println("CVP is not active, re-trying to connect.")
+		if err := cvp_client.Connect(TOPO_USER, TOPO_PWD); err != nil {
+			log.Printf("CVP is not running or is starting up: %s\n", err)
+			return false
+		} else {
+			log.Println("CVP is up and running")
+			return true
+		}
+	} else {
+		// Verify that the CVP SessionID is active
+		_, err := cvp_client.API.GetCvpInfo()
+		if err != nil {
+			log.Println("CVP Session is no longer active")
+			cvp_client.SessID = ""
+			return false
+		} else {
+			log.Println("CVP is active.")
+			return true
+		}
+	}
+}
+
 // =============================================================
 // Websocket and Web Handler GO Routines
 // =============================================================
@@ -121,7 +173,9 @@ func ReadWS(ws *websocket.Conn, r *http.Request) {
 	done := make(chan struct{})
 	log.Printf("New websocket connection")
 	for {
-		_, msg, err := ws.ReadMessage()
+		client_package := Client_pkg{}
+		received_msg := Received_msg{}
+		msgType, msg, err := ws.ReadMessage()
 		if err != nil {
 			if websocket.IsUnexpectedCloseError(err, websocket.CloseGoingAway, websocket.CloseAbnormalClosure) {
 				log.Printf("Error: %s\n", err)
@@ -129,10 +183,29 @@ func ReadWS(ws *websocket.Conn, r *http.Request) {
 			close(done)
 			break
 		}
-		log.Printf("Error decoding websocket msg: %s\n", err)
-		log.Printf("Message: %s\n", msg)
+		if err := json.Unmarshal([]byte(msg), &received_msg); err != nil {
+			log.Printf("Error decoding websocket msg: %s\n", err)
+			return
+		}
+		received_data := received_msg.Data
+		switch mtype := received_msg.Type; mtype {
+		case "hello":
+			log.Println("WS: Hello")
+			log.Printf("%v\n", received_data)
+			client_package.Data.Status = "Hello Back!"
+		case "update_lab":
+			log.Println("WS: Update Lab")
+			log.Printf("%v\n", received_data)
+			client_package.Data.Status = "starting..."
+		}
+		client_package.Type = "status"
+		client_package.Timestamp = time.Now().String()
+		str_instance_data, _ := json.Marshal(client_package)
+		if err := ws.WriteMessage(msgType, str_instance_data); err != nil {
+			log.Println("Error sending websocket response message")
+		}
 	}
-	log.Printf("Closing WS connection to\n")
+	log.Println("Closing WS connection")
 }
 
 // =============================================================
@@ -151,21 +224,8 @@ func TopoRequestHandler(w http.ResponseWriter, r *http.Request) {
 		}
 		log.Printf("GET: %s", decoded_action)
 		if decoded_action == "cvp_status" {
-			log.Println("Get CVP Status")
-			// Start the connection to CVP
-			cvpClient, _ := client.NewCvpClient(
-				client.Protocol("https"),
-				client.Port(443),
-				client.Hosts(CVP_NODES...),
-				client.Debug(false))
-			if err := cvpClient.Connect(TOPO_USER, TOPO_PWD); err != nil {
-				log.Printf("ERROR: %s\n", err)
-				res.Status = "Starting"
-				res.Version = ""
-			} else {
-				data, err := cvpClient.API.GetCvpInfo()
-				// Logout of CVP Session
-				cvpClient.API.Logout()
+			if cvpCheckAndConnect(CVP_client) {
+				data, err := CVP_client.API.GetCvpInfo()
 				if err != nil {
 					log.Printf("ERROR: %s\n", err)
 					res.Status = "Starting"
@@ -174,25 +234,17 @@ func TopoRequestHandler(w http.ResponseWriter, r *http.Request) {
 				log.Printf("CVP VERSION = %s", data.Version)
 				res.Status = "UP"
 				res.Version = data.Version
+			} else {
+				res.Status = "Starting"
+				res.Version = ""
 			}
 			json.NewEncoder(w).Encode(res)
 		} else if decoded_action == "cvp_tasks" {
 			_cvp_tasks := make(map[string]int)
 			_active_tasks := 0
-			cvpClient, _ := client.NewCvpClient(
-				client.Protocol("https"),
-				client.Port(443),
-				client.Hosts(CVP_NODES...),
-				client.Debug(false))
-			if err := cvpClient.Connect(TOPO_USER, TOPO_PWD); err != nil {
-				log.Printf("ERROR: %s\n", err)
-				res.Status = "Starting"
-				res.Version = ""
-			} else {
+			if cvpCheckAndConnect(CVP_client) {
 				// Get tasks from CVP
-				data, err := cvpClient.API.GetTaskByStatus("active")
-				// Logout of CVP Session
-				cvpClient.API.Logout()
+				data, err := CVP_client.API.GetTaskByStatus("active")
 				if err != nil {
 					// Error getting tasks from CVP
 					log.Printf("ERROR: %s\n", err)
@@ -222,8 +274,11 @@ func TopoRequestHandler(w http.ResponseWriter, r *http.Request) {
 						res.Tasks = _cvp_tasks
 					}
 				}
-				json.NewEncoder(w).Encode(res)
+			} else {
+				res.Status = "Error getting tasks"
+				res.Version = ""
 			}
+			json.NewEncoder(w).Encode(res)
 		}
 	} else {
 		log.Println("No action parameter provided")
@@ -268,7 +323,7 @@ func main() {
 	// Routes consist of a path and a handler function.
 	r.HandleFunc("/td-api/conftopo", TopoRequestHandler)
 	r.HandleFunc("/td-api/ws-conftopo", TopoDataHandler)
-	log.Printf("*** Websocket Server Started on 50010 ***")
+	log.Printf("*** Websocket Server Started on %d ***\n", APP_PORT)
 	// Bind to a port and pass our router in
-	log.Fatal(http.ListenAndServe(":50010", r))
+	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", APP_PORT), r))
 }
