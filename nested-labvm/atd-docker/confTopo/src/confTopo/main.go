@@ -79,7 +79,6 @@ var SLEEP_DELAY = (60 * time.Second)
 var CVP_NODES = []string{"192.168.0.5"}
 var TOPO_USER string = ""
 var TOPO_PWD string = ""
-var TEST string = "string"
 
 // Create the CVP Client
 var CVP_client, _ = client.NewCvpClient(
@@ -307,6 +306,7 @@ func main() {
 			break
 		} else {
 			log.Printf("ERROR: ACCESS_INFO file is not available...Waiting for %s\n", SLEEP_DELAY)
+			time.Sleep(SLEEP_DELAY)
 		}
 	}
 	// Try to open ACCESS_INFO yaml file
