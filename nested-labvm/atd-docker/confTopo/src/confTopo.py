@@ -2,6 +2,9 @@
 
 import tornado.ioloop
 import tornado.web
+import tornado.websocket
+from tornado import gen, concurrent
+# import threading
 import time
 import yaml
 from base64 import b64decode, b64encode
@@ -9,14 +12,16 @@ import json
 from cvprac import cvp_client
 from datetime import datetime
 from os.path import exists
+from ConfigureTopology.ConfigureTopology import ConfigureTopology
 import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+executor = concurrent.futures.ThreadPoolExecutor(8)
 
 ACCESS = '/etc/atd/ACCESS_INFO.yaml'
 REPO_PATH = '/opt/atd/'
 APP_PORT = 50010
 SLEEP_DELAY = 30
-CVP_NODES = ['192.168.0.5']
+CVP_NODES = []
 TOPO_USER = ''
 TOPO_PWD = ''
 
@@ -88,11 +93,124 @@ class TopologyHandler(tornado.web.RequestHandler):
                         'total': 0,
                         'tasks': _cvp_tasks
                     })
+            elif _action == 'update_lab':
+                if 'module' in self.request.arguments and 'lab' in self.request.arguments:
+                    with open(ACCESS,'r') as acfile:
+                        accessinfo = yaml.safe_load(acfile)
+                    _module = decodeID(self.get_argument('module'))
+                    _lab = decodeID(self.get_argument('lab'))
+                    pS(f"Update {_lab} lab for {_module}")
+                    cvp = ConfigureTopology(accessinfo, CVP_NODES, TOPO_USER, TOPO_PWD)
+                    cvp.lab = _lab
+                    if _module in cvp.lab_list:
+                        cvp.update_lab(_module, grouped=False)
 
+class topoDataHandler(tornado.websocket.WebSocketHandler):
+    # executor = ThreadPoolExecutor(max_workers=4)
+
+    def open(self):
+        with open(ACCESS,'r') as acfile:
+            self.accessinfo = yaml.safe_load(acfile)
+        pS("New backend websocket connection")
+    
+    def on_message(self,message):
+        pS("Message Received")
+        try:
+            recv = json.loads(message)
+            cdata = recv['data']
+            if recv['type'] == 'hello':
+                pS("Hello")
+            elif recv['type'] == 'update_lab':
+                pS("Lab Update")
+                if 'module' in cdata and 'lab' in cdata:
+                    _module = cdata['module']
+                    _lab = cdata['lab']
+                    pS(f"Update {_lab} lab for {_module}")
+                    cvp = ConfigureTopology(self.accessinfo, CVP_NODES, TOPO_USER, TOPO_PWD)
+                    cvp.lab = _lab
+                    if _module in cvp.lab_list:
+                        self.write_message(json.dumps({
+                            'type': 'lab_status',
+                            'data': {
+                                'status': "starting"
+                            }
+                        }))
+                        # tornado.ioloop.IOLoop.current().spawn_callback(self.update_lab, cvp, _module, False)
+                        # _cvp_lab_update = yield update_lab(cvp, _module, False)
+                        # cvp.update_lab(_module, grouped=False)
+                        # update_lab(cvp, _module, False)
+                        executor.submit(cvp.update_lab, _module, grouped=False)
+                        _previous_status = ''
+                        pS("Starting CVP Status Check Loop")
+                        while cvp.status != "Lab Update complete":
+                            if _previous_status != cvp.status:
+                                _previous_status = cvp.status
+                                self.write_message(json.dumps({
+                                    'type': 'lab_status',
+                                    'data': {
+                                        'status': cvp.status
+                                    }
+                                }))
+                        self.write_message(json.dumps({
+                            'type': 'lab_status',
+                            'data': {
+                                'status': "complete"
+                            }
+                        }))
+        except Exception as e:
+            pS("WS ERROR")
+            pS(str(e))
+
+
+    def schedule_update(self):
+        try:
+            self.timeout = tornado.ioloop.IOLoop.instance().add_timeout(timedelta(seconds=30),self.keepalive)
+        except:
+            pS("Error with timeout call")
+        
+    def keepalive(self):
+        try:
+            self.uptime = getUptime('192.168.0.1')
+            self.cvp_status = getAPI("cvp_status")
+            if self.cvp_status['status'] == 'UP':
+                self.cvp_tasks = getAPI("cvp_tasks")
+            else:
+                self.cvp_tasks = ''
+            self.sendData('status')
+        except:
+            pS("ERROR sending update")
+        finally:
+            self.schedule_update()
+
+    def on_close(self):
+        try:
+            tornado.ioloop.IOLoop.instance().remove_timeout(self.timeout)
+            pS('connection closed')
+        except:
+            pS('connection already closed')
+ 
+    def check_origin(self, origin):
+        return(True)
+    
+    def sendData(self, mtype):
+        instance_data = {
+            'cvp': self.cvp_status,
+            'tasks': self.cvp_tasks,
+            'uptime': self.uptime
+        }
+        self.write_message(json.dumps({
+            'type': mtype,
+            'data': instance_data
+        }))
 
 # =================================================
 # Utility Functions
 # =================================================
+# def update_lab(cvp, _module, _grouped):
+#     t = threading.Thread(target=cvp.update_lab, args=(_module,), kwargs={"grouped":_grouped})
+#     t.start()
+#     # cvp.update_lab(_module, grouped=_grouped)
+#     return(True)
 
 def encodeID(tmp_data):
     tmp_str = json.dumps(tmp_data).encode()
@@ -119,6 +237,7 @@ def pS(mtype):
 def main():
     global TOPO_USER
     global TOPO_PWD
+    global CVP_NODES
     while True:
         if exists(ACCESS):
             break
@@ -132,6 +251,9 @@ def main():
         topology = accessinfo['topology']
     except:
         topology = 'none'
+    if accessinfo['cvp']:
+        for _node in accessinfo['nodes']['cvp']:
+            CVP_NODES.append(_node['ip'])
     TOPO_USER = accessinfo['login_info']['jump_host']['user']
     TOPO_PWD = accessinfo['login_info']['jump_host']['pw']
 
@@ -140,7 +262,8 @@ def main():
 if __name__ == "__main__":
     main()
     app = tornado.web.Application([
-        (r'/td-api/conftopo', TopologyHandler)
+        (r'/td-api/conftopo', TopologyHandler),
+        (r'/td-api/ws-conftopo', topoDataHandler)
     ])
     app.listen(APP_PORT)
     pS('*** Server Started on {} ***'.format(APP_PORT))
