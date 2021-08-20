@@ -1,0 +1,23 @@
+interface Ethernet1
+   no switchport
+   ip address 10.127.23.2/24
+interface Ethernet2
+   no switchport
+   ip address 10.127.12.2/24
+interface Ethernet3
+   shutdown
+interface Ethernet4
+   shutdown
+interface Ethernet5
+   shutdown
+interface Ethernet6
+   shutdown
+interface Loopback0
+   ip address 10.127.255.2/32
+router bgp 1
+   router-id 10.127.255.2
+   neighbor 10.127.12.1 remote-as 1
+   neighbor 10.127.12.1 next-hop-self
+   neighbor 10.127.12.1 maximum-routes 12000 
+   neighbor 10.127.23.3 remote-as 2
+   neighbor 10.127.23.3 maximum-routes 12000 

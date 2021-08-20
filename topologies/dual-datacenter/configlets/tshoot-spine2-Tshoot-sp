@@ -1,0 +1,52 @@
+!
+service routing protocols model multi-agent
+!
+spanning-tree mode mstp
+!
+interface Ethernet1
+   description << p2p Core-1 >>
+   no switchport
+   ip address 10.127.23.3/24
+!
+interface Ethernet2
+shut
+!
+interface Ethernet3
+shut
+!
+interface Ethernet4
+shut
+!
+interface Ethernet5
+   description << p2p PE-2 >>
+   no switchport
+   ip address 10.127.34.3/24
+!
+interface Ethernet6
+   shutdown
+interface Loopback0
+   description BGP router-Id
+   ip address 10.127.255.3/32
+!
+ip routing
+!
+!
+mpls ip
+!
+mpls ldp
+   router-id 10.127.255.3
+   transport-address interface Loopback0
+   password 7 070E33455D1D18544541
+   neighbor 10.127.255.4 targeted
+   neighbor 10.127.255.2 targeted
+   no shutdown
+!
+router ospf 100
+   router-id 10.127.255.3
+   passive-interface Loopback0
+   network 10.127.23.0/24 area 0.0.0.0
+   network 10.127.34.0/24 area 0.0.0.0
+   network 10.127.255.0/24 area 0.0.0.0
+   max-lsa 12000
+!
+end
