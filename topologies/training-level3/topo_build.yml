@@ -1,5 +1,5 @@
 host_cpu: 4
-cvp_cpu: 16
+cvp_cpu: 24
 cvp_nodes: 1
 veos_cpu: 2
 nodes:
