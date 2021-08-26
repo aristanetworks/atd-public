@@ -204,7 +204,7 @@ topologies:
               cpu: 32
               ram: 64
             branch: nested/2020.3
-            image: base-atd-routing-ceos-c2020-3-1-20210715
+            image: base-atd-routing-ceos-c2020-3-1-20210826u
             eos:
               - 4.26.1F
           2021.1.1:
@@ -212,7 +212,7 @@ topologies:
               cpu: 32
               ram: 64
             branch: nested/2021.1
-            image: base-atd-routing-ceos-c2021-1-1-20210715
+            image: base-atd-routing-ceos-c2021-1-1-20210826u
             eos:
               - 4.26.1F
           2021.2.0.rc2:
@@ -233,7 +233,7 @@ topologies:
               cpu: 32
               ram: 64
             branch: v2020.3-20210720a
-            image: base-atd-routing-ceos-c2020-3-1-20210715
+            image: base-atd-routing-ceos-c2020-3-1-20210826u
             eos:
               - 4.26.1F
           2021.1.1:
@@ -241,7 +241,7 @@ topologies:
               cpu: 32
               ram: 64
             branch: v2021.1-20210720a
-            image: base-atd-routing-ceos-c2021-1-1-20210715
+            image: base-atd-routing-ceos-c2021-1-1-20210826u
             eos:
               - 4.26.1F
     #   veos:
