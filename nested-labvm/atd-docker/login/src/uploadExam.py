@@ -63,10 +63,10 @@ def checkEmail(email):
 
 def ftpUpload(filename):
     try:
-        with FTP('rpmainserver.ddns.net', 'ftpuser', 'ftparista') as ftp, open(str(filename), 'rb') as file:
+        with FTP('ftp.sdn-pros.com', 'ftpupload', 'ftpuser') as ftp, open(str(filename), 'rb') as file:
             ftp.cwd('/files/')
             if filename in ftp.nlst():
-                print("It looks like you have already uploaded your exam files. If you think this is an error please contract Arista training - training@arista.com")
+                print("It looks like you have already uploaded your exam files. If you think this is an error please contact SDN Pros - exams@sdn-pros.com")
             else:
                 ftp.storbinary('STOR ' + str(filename), file)
     except:
