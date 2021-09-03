@@ -234,10 +234,11 @@ def main(uargs):
         vname = ET.SubElement(root, 'name')
         vname.text = 'cvp{0}'.format(_cvp + 1)
         # Add CPU Configuration
-        vcpu = ET.SubElement(root, 'vcpu', attrib={
-            'placement': 'static',
-            'cpuset': CVP_NODES_CPUS[_cvp]
-        })
+        vcpu = ET.SubElement(root, 'vcpu')
+        # vcpu = ET.SubElement(root, 'vcpu', attrib={
+        #     'placement': 'static',
+        #     'cpuset': CVP_NODES_CPUS[_cvp]
+        # })
         vcpu.text = str(cvp_cpu_count)
         # Get to the device section and add interfaces
         xdev = root.find('./devices')
@@ -318,10 +319,11 @@ def main(uargs):
             vname = ET.SubElement(root, 'name')
             vname.text = vdev
             # Add CPU configuration
-            vcpu = ET.SubElement(root, 'vcpu', attrib={
-                'placement': 'static',
-                'cpuset': VEOS_CPUS
-            })
+            vcpu = ET.SubElement(root, 'vcpu')
+            # vcpu = ET.SubElement(root, 'vcpu', attrib={
+            #     'placement': 'static',
+            #     'cpuset': VEOS_CPUS
+            # })
             vcpu.text = str(veos_cpu_count)
             # Add/Create disk location for xml
             tmp_disk = ET.SubElement(xdev, 'disk', attrib={
