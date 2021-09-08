@@ -11,6 +11,8 @@ import tarfile
 from ftplib import FTP
 import json
 from base64 import b64decode, b64encode
+import requests
+
 
 try:
     _create_unverified_https_context = ssl._create_unverified_context
@@ -19,9 +21,13 @@ except AttributeError:
 else:
     ssl._create_default_https_context = _create_unverified_https_context
 
+requests.packages.urllib3.disable_warnings()
 
 labACCESS = '/etc/atd/ACCESS_INFO.yaml'
 regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
+cvpHost = "192.168.0.5"
+cvpUser = "arista"
+url = "https://{host}".format(host=cvpHost)
 
 def encodeID(tmp_data):
     tmp_str = json.dumps(tmp_data).encode()
@@ -40,7 +46,6 @@ def readAtdTopo(labTopology):
     #get a list of all IP addresses in the topology
     with open("/opt/atd/topologies/"+ labTopology +"/topo_build.yml") as f:
         topology = yaml.load(f,Loader=yaml.FullLoader)
-    #   print(topology)
         mylist= topology['nodes']
         test=[]
         for item in mylist:
@@ -54,7 +59,6 @@ def readAtdTopo(labTopology):
 
 def checkEmail(email):
     if(re.fullmatch(regex, email)):
-#        print("Valid Email")
         return 1
     else:
         print("Invalid Email")
@@ -71,6 +75,46 @@ def ftpUpload(filename):
                 ftp.storbinary('STOR ' + str(filename), file)
     except:
         raise
+
+
+def cvpAuth(labPassword):
+    headers = { 'Content-Type': 'application/json' }
+    loginURL = "/web/login/authenticate.do"
+    authenticateData = json.dumps({'userId' : cvpUser, 'password' : labPassword})
+    response = requests.post(url+loginURL,data=authenticateData,headers=headers,verify=False)
+    assert response.ok
+    cookies = response.cookies
+    return cookies
+
+
+def getConfiglets(cookies,localFolder):
+    getConfigletURL = "/cvpservice/configlet/getConfiglets.do?"
+    getConfigletParams = {'startIndex':'0','endIndex':'0'}
+    response = requests.get(url+getConfigletURL,cookies=cookies, params=getConfigletParams,verify=False)
+    outputConfiglets = response.json()
+    localFilename = "allConfiglets"
+    completePath = os.path.join(localFolder, localFilename)
+    with open(completePath, 'w') as f:
+        f.write(str(json.dump(outputConfiglets, f, indent=4)))
+    return outputConfiglets
+
+def getConfigletApplied(configletName,cookies):
+    getConfigletURL = "/cvpservice/configlet/getAppliedDevices.do?"
+    getConfigletParams = {'startIndex':'0','endIndex':'0','configletName':configletName}
+    response = requests.get(url+getConfigletURL,cookies=cookies, params=getConfigletParams,verify=False)
+    assert response.ok
+    outputConfiglets = response.json()
+    return outputConfiglets
+
+def grabCVPInfo(labPassword,folder):
+    cookies = cvpAuth(labPassword)
+    outputConfiglets = getConfiglets(cookies,folder)
+    for item in outputConfiglets['data']:
+        appliedConfiglets = getConfigletApplied(item['name'],cookies)
+        if appliedConfiglets['total'] != 0:
+            completePath = os.path.join(folder, item['name'])
+            with open(completePath +".configlet", 'w') as f:
+                f.write(str(json.dump(appliedConfiglets, f, indent=4)))
 
 def getUserInfo():
     accept = "n"
@@ -108,12 +152,11 @@ def main():
     restarted = 0
     fullName, email, candidateID = getUserInfo()
     folder = str(fullName)
-#    print(folder)
     if not os.path.exists(folder):
         try:
             os.makedirs(folder)
         except OSError as exc: # Guard against race condition
-                raise
+            raise
     for name, ip in zip(allHostsName,allHostsIP):
         switch = jsonrpclib.Server("https://arista:{password}@{ipaddress}/command-api".format(password = labPassword, ipaddress = ip))
         try:
@@ -128,6 +171,7 @@ def main():
                 f.write(runConfig)
             print("Switch {switch} config saved".format(switch = name))
     tarFile = folder + "-" + candidateID
+    grabCVPInfo(labPassword,folder)
     createUserFile(fullName,email,candidateID,folder,labName,labTopology)
     print("This file will be created and uploaded " + tarFile)
     with tarfile.open(tarFile, "w:gz") as tar:
@@ -135,4 +179,8 @@ def main():
     ftpUpload(tarFile)
 
 
+
 main()
+
+
+# TODO - Include persist folder to TAR file.
