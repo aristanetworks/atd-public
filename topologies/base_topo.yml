@@ -99,6 +99,14 @@ topologies:
             image: base-atd-datacenter-e4-26-1f-c2021-1-1-20210825
             eos:
               - 4.26.1F
+          2021.2.0:
+            resources:
+              cpu: 38
+              ram: 64
+            branch: nested/2021.2
+            image: base-atd-datacenter-e4-26-2f-c2021-2-0-20210913
+            eos:
+              - 4.26.2F
     prod:
       ceos:
         cpu: 24
