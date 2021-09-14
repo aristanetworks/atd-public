@@ -10,11 +10,11 @@ alias snz show interface counter | nz
 alias spd show port-channel %1 detail all
 alias sqnz show interface counter queue | nz
 alias srnz show interface counter rate | nz
-alias intdesc 
+alias intdesc
    !! Usage: intdesc interface-name description
-   10 config 
-   20 int %1 
-   30 desc %2 
+   10 config
+   20 int %1
+   30 desc %2
    40 exit
 !
 dns domain arista.lab
@@ -45,6 +45,8 @@ hostname cvx
 !
 interface Management0
    ip address 192.168.0.4/24
+!
+service routing protocols model multi-agent
 !
 dns domain arista.lab
 !
