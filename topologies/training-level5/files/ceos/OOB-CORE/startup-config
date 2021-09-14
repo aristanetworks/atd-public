@@ -44,7 +44,7 @@ management api http-commands
 hostname OOB-CORE
 !
 interface Management0
-   ip address 192.168.0.61/2
+   ip address 192.168.0.61/24
 !
 service routing protocols model multi-agent
 !
