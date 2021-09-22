@@ -2,27 +2,66 @@ cvp_info:
   containers:
     Tenant:
       nodes:
-    Leaf:
+    S1:
       parent: Tenant
       nodes:
-      - leaf1
-      - leaf2
-      - leaf3
-      - leaf4
-    Spine:
+    S1-Leaf:
+      parent: S1
+      nodes:
+      - s1-leaf1
+      - s1-leaf2
+      - s1-leaf3
+      - s1-leaf4
+    S1-Spine:
+      parent: S1
+      nodes:
+      - s1-spine1
+      - s1-spine2
+    S1-Hosts:
+      parent: S1
+      nodes:
+      - s1-host1
+      - s1-host2
+    S1-Brdr:
+      parent: S1
+      nodes:
+      - s1-brdr1a
+      - s1-brdr1b
+    S1-Core:
+      parent: S1
+      nodes:
+      - s1-core1a
+      - s1-core1b
+    S2:
       parent: Tenant
       nodes:
-      - spine1
-      - spine2
-    CVX:
-      parent: Tenant
+    S2-Leaf:
+      parent: S2
       nodes:
-      - cvx01
-    Hosts:
-      parent: Tenant
+      - s2-leaf1
+      - s2-leaf2
+      - s2-leaf3
+      - s2-leaf4
+    S2-Spine:
+      parent: S2
       nodes:
-      - host1
-      - host2
+      - s2-spine1
+      - s2-spine2
+    S2-Hosts:
+      parent: S2
+      nodes:
+      - s2-host1
+      - s2-host2
+    S2-Brdr:
+      parent: S2
+      nodes:
+      - s2-brdr1a
+      - s2-brdr1b
+    S2-Core:
+      parent: S2
+      nodes:
+      - s2-core1a
+      - s2-core1b
   snapshots:
     - name: Validate_Routing
       commands:
@@ -37,25 +76,56 @@ cvp_info:
       Tenant:
         - ATD-INFRA
     netelements:
-      spine1:
-        - BaseIPv4_Spine1
-      spine2:
-        - BaseIPv4_Spine2
-      leaf1:
-        - BaseIPv4_Leaf1
-      leaf2:
-        - BaseIPv4_Leaf2
-      leaf3:
-        - BaseIPv4_Leaf3
-      leaf4:
-        - BaseIPv4_Leaf4
-      host1:
-        - BaseIPv4_Host1
-        - Host1-ATD
-      host2:
-        - BaseIPv4_Host2
-        - Host2-ATD
-      cvx01:
-        - BaseIPv4_Cvx01
-        - cvx01-Controller
+      s1-spine1:
+        - BaseIPv4_S1-Spine1
+      s1-spine2:
+        - BaseIPv4_S1-Spine2
+      s1-leaf1:
+        - BaseIPv4_S1-Leaf1
+      s1-leaf2:
+        - BaseIPv4_S1-Leaf2
+      s1-leaf3:
+        - BaseIPv4_S1-Leaf3
+      s1-leaf4:
+        - BaseIPv4_S1-Leaf4
+      s1-host1:
+        - BaseIPv4_S1-Host1
+        - S1-Host1-ATD
+      s1-host2:
+        - BaseIPv4_S1-Host2
+        - S1-Host2-ATD
+      s1-brdr1a:
+        - BaseIPv4_S1-Brdr1a
+      s1-brdr1b:
+        - BaseIPv4_S1-Brdr1b
+      s1-core1a:
+        - BaseIPv4_S1-Core1a
+      s1-core1b:
+        - BaseIPv4_S1-Core1b
+      s2-spine1:
+        - BaseIPv4_S2-Spine1
+      s2-spine2:
+        - BaseIPv4_S2-Spine2
+      s2-leaf1:
+        - BaseIPv4_S2-Leaf1
+      s2-leaf2:
+        - BaseIPv4_S2-Leaf2
+      s2-leaf3:
+        - BaseIPv4_S2-Leaf3
+      s2-leaf4:
+        - BaseIPv4_S2-Leaf4
+      s2-host1:
+        - BaseIPv4_S2-Host1
+        - S2-Host1-ATD
+      s2-host2:
+        - BaseIPv4_S2-Host2
+        - S2-Host2-ATD
+      s2-brdr1a:
+        - BaseIPv4_S2-Brdr1a
+      s2-brdr1b:
+        - BaseIPv4_S2-Brdr1b
+      s2-core1a:
+        - BaseIPv4_S2-Core1a
+      s2-core1b:
+        - BaseIPv4_S2-Core1b
         
