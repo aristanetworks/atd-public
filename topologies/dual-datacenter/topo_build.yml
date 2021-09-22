@@ -26,6 +26,12 @@ nodes:
       - neighborDevice: s1-spine2
         neighborPort: Ethernet6
         port: Ethernet6
+      - neighborDevice: s1-brdr1a
+        neighborPort: Ethernet2
+        port: Ethernet7
+      - neighborDevice: s1-brdr1b
+        neighborPort: Ethernet2
+        port: Ethernet8
   s1-spine2:
     mac: 00:1c:73:c0:c6:11
     ipaddress: 192.168.0.11
@@ -48,6 +54,12 @@ nodes:
       - neighborDevice: s1-spine1
         neighborPort: Ethernet6
         port: Ethernet6
+      - neighborDevice: s1-brdr1a
+        neighborPort: Ethernet3
+        port: Ethernet7
+      - neighborDevice: s1-brdr1b
+        neighborPort: Ethernet3
+        port: Ethernet8
   s1-leaf1:
     mac: 00:1c:73:c0:c6:12
     ipaddress: 192.168.0.12
@@ -64,9 +76,6 @@ nodes:
       - neighborDevice: s1-host1
         neighborPort: Ethernet1
         port: Ethernet4
-      - neighborDevice: s1-host1
-        neighborPort: Ethernet3
-        port: Ethernet5
       - neighborDevice: s1-leaf2
         neighborPort: Ethernet6
         port: Ethernet6
@@ -86,9 +95,6 @@ nodes:
       - neighborDevice: s1-host1
         neighborPort: Ethernet2
         port: Ethernet4
-      - neighborDevice: s1-host1
-        neighborPort: Ethernet4
-        port: Ethernet5
       - neighborDevice: s1-leaf1
         neighborPort: Ethernet6
         port: Ethernet6
@@ -105,15 +111,9 @@ nodes:
       - neighborDevice: s1-spine2
         neighborPort: Ethernet4
         port: Ethernet3
-      - neighborDevice: s1-leaf4
-        neighborPort: Ethernet6
-        port: Ethernet1
       - neighborDevice: s1-host2
         neighborPort: Ethernet1
         port: Ethernet4
-      - neighborDevice: s1-host2
-        neighborPort: Ethernet3
-        port: Ethernet5
       - neighborDevice: s1-leaf4
         neighborPort: Ethernet6
         port: Ethernet6
@@ -133,9 +133,6 @@ nodes:
       - neighborDevice: s1-host2
         neighborPort: Ethernet2
         port: Ethernet4
-      - neighborDevice: s1-host2
-        neighborPort: Ethernet4
-        port: Ethernet5
       - neighborDevice: s1-leaf3
         neighborPort: Ethernet6
         port: Ethernet6
@@ -146,7 +143,17 @@ nodes:
       - neighborDevice: s1-leaf1
         neighborPort: Ethernet4
         port: Ethernet1
-      - neighborDevice: s1-leaf1
+      - neighborDevice: s1-leaf2
+        neighborPort: Ethernet4
+        port: Ethernet2
+  s1-host2:
+    mac: 00:1c:73:c0:c6:17
+    ipaddress: 192.168.0.17
+    neighbors:
+      - neighborDevice: s1-leaf3
+        neighborPort: Ethernet4
+        port: Ethernet1
+      - neighborDevice: s1-leaf4
         neighborPort: Ethernet4
         port: Ethernet2
   s1-brdr1a:
@@ -157,10 +164,10 @@ nodes:
         neighborPort: Ethernet1
         port: Ethernet1
       - neighborDevice: s1-spine1
-        neighborPort: Ethernet6
+        neighborPort: Ethernet7
         port: Ethernet2
       - neighborDevice: s1-spine2
-        neighborPort: Ethernet6
+        neighborPort: Ethernet7
         port: Ethernet3
       - neighborDevice: s1-core1a
         neighborPort: Ethernet2
@@ -179,10 +186,10 @@ nodes:
         neighborPort: Ethernet1
         port: Ethernet1
       - neighborDevice: s1-spine1
-        neighborPort: Ethernet7
+        neighborPort: Ethernet8
         port: Ethernet2
       - neighborDevice: s1-spine2
-        neighborPort: Ethernet7
+        neighborPort: Ethernet8
         port: Ethernet3
       - neighborDevice: s1-core1a
         neighborPort: Ethernet3
@@ -253,6 +260,12 @@ nodes:
       - neighborDevice: s2-spine2
         neighborPort: Ethernet6
         port: Ethernet6
+      - neighborDevice: s2-brdr1a
+        neighborPort: Ethernet2
+        port: Ethernet7
+      - neighborDevice: s2-brdr1b
+        neighborPort: Ethernet2
+        port: Ethernet8
   s2-spine2:
     mac: 00:1c:73:c0:c6:21
     ipaddress: 192.168.0.21
@@ -275,6 +288,12 @@ nodes:
       - neighborDevice: s2-spine1
         neighborPort: Ethernet6
         port: Ethernet6
+      - neighborDevice: s2-brdr1a
+        neighborPort: Ethernet3
+        port: Ethernet7
+      - neighborDevice: s2-brdr1b
+        neighborPort: Ethernet3
+        port: Ethernet8
   s2-leaf1:
     mac: 00:1c:73:c0:c6:22
     ipaddress: 192.168.0.22
@@ -288,12 +307,9 @@ nodes:
       - neighborDevice: s2-spine2
         neighborPort: Ethernet2
         port: Ethernet3
-      - neighborDevice: s2-leaf2
+      - neighborDevice: s2-host1
         neighborPort: Ethernet1
         port: Ethernet4
-      - neighborDevice: s2-host1
-        neighborPort: Ethernet3
-        port: Ethernet5
       - neighborDevice: s2-leaf2
         neighborPort: Ethernet6
         port: Ethernet6
@@ -313,9 +329,6 @@ nodes:
       - neighborDevice: s2-host1
         neighborPort: Ethernet2
         port: Ethernet4
-      - neighborDevice: s2-host1
-        neighborPort: Ethernet4
-        port: Ethernet5
       - neighborDevice: s2-leaf1
         neighborPort: Ethernet6
         port: Ethernet6
@@ -335,9 +348,6 @@ nodes:
       - neighborDevice: s2-host2
         neighborPort: Ethernet1
         port: Ethernet4
-      - neighborDevice: s2-host2
-        neighborPort: Ethernet3
-        port: Ethernet5
       - neighborDevice: s2-leaf4
         neighborPort: Ethernet6
         port: Ethernet6
@@ -357,12 +367,29 @@ nodes:
       - neighborDevice: s2-host2
         neighborPort: Ethernet2
         port: Ethernet4
-      - neighborDevice: s2-host2
-        neighborPort: Ethernet4
-        port: Ethernet5
       - neighborDevice: s2-leaf3
         neighborPort: Ethernet6
         port: Ethernet6
+  s2-host1:
+    mac: 00:1c:73:c0:c6:26
+    ipaddress: 192.168.0.26
+    neighbors:
+      - neighborDevice: s2-leaf1
+        neighborPort: Ethernet4
+        port: Ethernet1
+      - neighborDevice: s2-leaf2
+        neighborPort: Ethernet4
+        port: Ethernet2
+  s2-host2:
+    mac: 00:1c:73:c0:c6:27
+    ipaddress: 192.168.0.27
+    neighbors:
+      - neighborDevice: s2-leaf3
+        neighborPort: Ethernet4
+        port: Ethernet1
+      - neighborDevice: s2-leaf4
+        neighborPort: Ethernet4
+        port: Ethernet2
   s2-brdr1a:
     mac: 00:1c:73:c0:c2:00
     ipaddress: 192.168.0.200
@@ -371,15 +398,18 @@ nodes:
         neighborPort: Ethernet1
         port: Ethernet1
       - neighborDevice: s2-spine1
-        neighborPort: Ethernet6
+        neighborPort: Ethernet7
         port: Ethernet2
+      - neighborDevice: s2-spine2
+        neighborPort: Ethernet7
+        port: Ethernet3
       - neighborDevice: s2-core1a
         neighborPort: Ethernet2
         port: Ethernet4
       - neighborDevice: s2-core1b
         neighborPort: Ethernet2
         port: Ethernet5
-      - neighborDevice: s2-spine2
+      - neighborDevice: s2-brdr1b
         neighborPort: Ethernet6
         port: Ethernet6
   s2-brdr1b:
@@ -390,10 +420,10 @@ nodes:
         neighborPort: Ethernet1
         port: Ethernet1
       - neighborDevice: s2-spine1
-        neighborPort: Ethernet7
+        neighborPort: Ethernet8
         port: Ethernet2
       - neighborDevice: s2-spine2
-        neighborPort: Ethernet7
+        neighborPort: Ethernet8
         port: Ethernet3
       - neighborDevice: s2-core1a
         neighborPort: Ethernet3
