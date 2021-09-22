@@ -60,7 +60,17 @@ def parseNames(devName):
     devDC = False
     devCORE = False
     tmp_devName = ""
-    if '-dc' in devName.lower() and 'dci' != devName.lower():
+    if 's1-' or 's2-' in devName.lower():
+        _tmp = devName.split('-')
+        tmp_devName = _tmp[1]
+        if 's1' or 's2' in _tmp[0].lower():
+            devDC = _tmp[0]
+        for char in tmp_devName:
+            if char.isalpha():
+                alpha += char
+            elif char.isdigit():
+                numer += char
+    elif '-dc' in devName.lower() and 'dci' != devName.lower():
         _tmp = devName.split('-')
         tmp_devName = _tmp[0]
         if 'dc' in _tmp[1].lower():

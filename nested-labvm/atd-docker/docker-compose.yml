@@ -75,7 +75,7 @@ services:
       - /home/atdadmin/KVM_scripts:/home/atdadmin/kvm:rw
   ceosbuilder:
     container_name: atd-ceosbuilder
-    image: us.gcr.io/beta-atds/atddocker_ceosbuilder:2.0
+    image: us.gcr.io/beta-atds/atddocker_ceosbuilder:2.0.1
     restart: on-failure
     environment:
       - PYTHONUNBUFFERED=1
