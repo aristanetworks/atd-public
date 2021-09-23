@@ -1,0 +1,12 @@
+interface Port-Channel1
+   no switchport
+   ip address 172.16.112.202/24
+!
+interface Ethernet1
+   channel-group 1 mode active
+!
+interface Ethernet2
+   channel-group 1 mode active
+!
+!
+ip route 172.16.112.0/24 172.16.134.1
