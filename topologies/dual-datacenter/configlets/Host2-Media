@@ -1,0 +1,23 @@
+interface Ethernet1
+   shutdown
+!
+interface Ethernet2
+   no switchport
+   ip address 172.16.46.6/24
+!
+!
+interface Ethernet3
+   shutdown
+!
+interface Ethernet4
+   shutdown
+!
+ip route 10.127.0.0/16 172.16.46.4
+ip route 172.16.0.0/16 172.16.46.4
+!
+ip routing
+!
+!
+router multicast
+   ipv4
+      software-forwarding sfe

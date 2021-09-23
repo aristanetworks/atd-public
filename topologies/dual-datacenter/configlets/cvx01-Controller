@@ -1,0 +1,5 @@
+cvx
+   no shutdown
+   !
+   service vxlan
+      no shutdown

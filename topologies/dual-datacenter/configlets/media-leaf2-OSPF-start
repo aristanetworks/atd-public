@@ -1,0 +1,22 @@
+interface Ethernet1
+   shutdown
+interface Ethernet2
+   shutdown
+interface Ethernet3
+   shutdown
+   no switchport
+interface Ethernet4
+   shutdown
+   no switchport
+interface Ethernet5
+   shutdown
+interface Ethernet6
+   shutdown
+!
+banner motd
+******************************
+*** Note Leaf Switch 2  is ***
+*** not used for this lab. ***
+*** Please return to menu  ***
+******************************
+EOF

@@ -1,5 +1,36 @@
 ---
 topologies:
+  dual-datacenter:
+    dev:
+      ceos:
+        cpu: 32
+        ram: 48
+        cvp:
+          2021.2.0.e8:
+            resources:
+              cpu: 32
+              ram: 48
+            branch: nested-release
+            image: base-atd-datacenter-ceos-c2021-2-0-e8-20210812
+            eos:
+              - 4.26.2F
+    # prod:
+    #   veos:
+    #     cpu: 32
+    #     ram: 64
+    #     cvp:
+    #       2020.2.3:
+    #         branch: nested/2020.2
+    #         image: base-training-l3-e4-24-2-2f-c2020-2-3-20210111
+    #         eos:
+    #           - 4.24.2.2F
+    desc: 'Dual Data Center ATD Topology'
+    name: 'Dual Data Center'
+    title: 'Dual Data Center Lab'
+    disk_size: 300
+    access: admin
+    disable_links: []
+    labguides: self
   datacenter:
     dev:
       ceos:
