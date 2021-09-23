@@ -32,7 +32,7 @@ services:
       - /home/arista/arista-dir:/home/arista:rw
   login:
     container_name: atd-login
-    image: us.gcr.io/beta-atds/atddocker_login:2.0.6
+    image: us.gcr.io/beta-atds/atddocker_login:2.0.7
     user: $ArID:$ArGD
     restart: always
     hostname: devbox
