@@ -192,7 +192,7 @@ def grabSwitchDetails(allHostsName,allHostsIP,folder,labPassword):
             vlanSum = switch.runCmds(1,["enable", "show vlan"],"text")
             vlanSumOutput = (vlanSum[1]["output"])
             if "host1" in name:
-                pingSum = switch.runCmds(1,["enable", "ping 172.16.200.10"],"text")
+                pingSum = switch.runCmds(1,["enable", "ping 172.16.200.20"],"text")
                 pingSumOutput = (pingSum[1]["output"])
                 pingDone = 1
         except Exception as e:
