@@ -60,7 +60,7 @@ def parseNames(devName):
     devDC = False
     devCORE = False
     tmp_devName = ""
-    if 's1-' or 's2-' in devName.lower():
+    if ('s1-' or 's2-') in devName.lower():
         _tmp = devName.split('-')
         tmp_devName = _tmp[1]
         if 's1' or 's2' in _tmp[0].lower():
