@@ -1,6 +1,0 @@
-hostname s1-core1b
-!
-interface Management1
-   ip address 192.168.0.103/24
-!
-ip routing
