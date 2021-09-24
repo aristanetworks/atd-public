@@ -1,6 +1,0 @@
-hostname s2-core1b
-!
-interface Management1
-   ip address 192.168.0.203/24
-!
-ip routing

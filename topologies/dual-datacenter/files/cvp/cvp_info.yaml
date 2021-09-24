@@ -25,13 +25,13 @@ cvp_info:
     S1-Brdr:
       parent: S1
       nodes:
-      - s1-brdr1a
-      - s1-brdr1b
+      - s1-brdr1
+      - s1-brdr2
     S1-Core:
       parent: S1
       nodes:
-      - s1-core1a
-      - s1-core1b
+      - s1-core1
+      - s1-core2
     S2:
       parent: Tenant
       nodes:
@@ -55,13 +55,13 @@ cvp_info:
     S2-Brdr:
       parent: S2
       nodes:
-      - s2-brdr1a
-      - s2-brdr1b
+      - s2-brdr1
+      - s2-brdr2
     S2-Core:
       parent: S2
       nodes:
-      - s2-core1a
-      - s2-core1b
+      - s2-core1
+      - s2-core2
   snapshots:
     - name: Validate_Routing
       commands:
@@ -94,14 +94,14 @@ cvp_info:
       s1-host2:
         - BaseIPv4_S1-Host2
         - S1-Host2-ATD
-      s1-brdr1a:
-        - BaseIPv4_S1-Brdr1a
-      s1-brdr1b:
-        - BaseIPv4_S1-Brdr1b
-      s1-core1a:
-        - BaseIPv4_S1-Core1a
-      s1-core1b:
-        - BaseIPv4_S1-Core1b
+      s1-brdr1:
+        - BaseIPv4_S1-Brdr1
+      s1-brdr2:
+        - BaseIPv4_S1-Brdr2
+      s1-core1:
+        - BaseIPv4_S1-Core1
+      s1-core2:
+        - BaseIPv4_S1-Core2
       s2-spine1:
         - BaseIPv4_S2-Spine1
       s2-spine2:
@@ -120,12 +120,12 @@ cvp_info:
       s2-host2:
         - BaseIPv4_S2-Host2
         - S2-Host2-ATD
-      s2-brdr1a:
-        - BaseIPv4_S2-Brdr1a
-      s2-brdr1b:
-        - BaseIPv4_S2-Brdr1b
-      s2-core1a:
-        - BaseIPv4_S2-Core1a
-      s2-core1b:
-        - BaseIPv4_S2-Core1b
+      s2-brdr1:
+        - BaseIPv4_S2-Brdr1
+      s2-brdr2:
+        - BaseIPv4_S2-Brdr2
+      s2-core1:
+        - BaseIPv4_S2-Core1
+      s2-core2:
+        - BaseIPv4_S2-Core2
         
