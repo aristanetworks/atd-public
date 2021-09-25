@@ -4,16 +4,16 @@ topologies:
     dev:
       ceos:
         cpu: 32
-        ram: 48
+        ram: 54
         cvp:
-          2021.2.0.e8:
+          2021.2.0:
             resources:
               cpu: 32
-              ram: 48
-            branch: nested-release
-            image: base-atd-datacenter-ceos-c2021-2-0-e8-20210812
+              ram: 54
+            branch: nested/2021.2
+            image: base-atd-dual-datacenter-ceos-c2021-2-0-20210924
             eos:
-              - 4.26.2F
+              - 4.26.2.1F
     # prod:
     #   veos:
     #     cpu: 32
