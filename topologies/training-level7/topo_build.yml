@@ -939,7 +939,7 @@ nodes:
           port: Ethernet11
 
 # Internet Device
-  - internet-SW1-ISP3:
+  - internet:
       ip_addr: 192.168.0.75
       sys_mac: 00:1c:73:15:c6:01
       neighbors:
