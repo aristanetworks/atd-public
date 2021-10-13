@@ -18,60 +18,116 @@ lab_list:
     description: "CVP lab (cvp)"
 labconfiglets:
   reset:
-    spine1:
-      - "BaseIPv4_Spine1"
-    spine2:
-      - "BaseIPv4_Spine2"
-    leaf1:
-      - "BaseIPv4_Leaf1"
-    leaf2:
-      - "BaseIPv4_Leaf2"
-    leaf3:
-      - "BaseIPv4_Leaf3"
-    leaf4:
-      - "BaseIPv4_Leaf4"
-    cvx01:
-      - "BaseIPv4_Cvx01"
-      - "cvx01-Controller"
-    host1:
-      - "BaseIPv4_Host1"
-      - "Host1-ATD"
-    host2:
-      - "BaseIPv4_Host2"
-      - "Host2-ATD"
+    s1-spine1:
+      - "BaseIPv4_S1-Spine1"
+    s1-spine2:
+      - "BaseIPv4_S1-Spine2"
+    s1-leaf1:
+      - "BaseIPv4_S1-Leaf1"
+    s1-leaf2:
+      - "BaseIPv4_S1-Leaf2"
+    s1-leaf3:
+      - "BaseIPv4_S1-Leaf3"
+    s1-leaf4:
+      - "BaseIPv4_S1-Leaf4"
+    s1-brdr1:
+      - "BaseIPv4_S1-Brdr1"
+    s1-brdr2:
+      - "BaseIPv4_S1-Brdr2"
+    s1-core1:
+      - "BaseIPv4_S1-Core1"
+    s1-core2:
+      - "BaseIPv4_S1-Core2"
+    s1-host1:
+      - "BaseIPv4_S1-Host1"
+    s1-host2:
+      - "BaseIPv4_S1-Host2"
+    s2-spine1:
+      - "BaseIPv4_S2-Spine1"
+    s2-spine2:
+      - "BaseIPv4_S2-Spine2"
+    s2-leaf1:
+      - "BaseIPv4_S2-Leaf1"
+    s2-leaf2:
+      - "BaseIPv4_S2-Leaf2"
+    s2-leaf3:
+      - "BaseIPv4_S2-Leaf3"
+    s2-leaf4:
+      - "BaseIPv4_S2-Leaf4"
+    s2-brdr1:
+      - "BaseIPv4_S2-Brdr1"
+    s2-brdr2:
+      - "BaseIPv4_S2-Brdr2"
+    s2-core1:
+      - "BaseIPv4_S2-Core1"
+    s2-core2:
+      - "BaseIPv4_S2-Core2"
+    s2-host1:
+      - "BaseIPv4_S2-Host1"
+    s2-host2:
+      - "BaseIPv4_S2-Host2"
   mlag:
-    spine1:
-      - "BaseIPv4_Spine1"
-      - "Spine1-MLAG-Lab"
+    s1-spine1:
+      - "BaseIPv4_S1-Spine1"
+      - "MLAG_S1-Spine1"
       - "VLANs"
-    spine2:
-      - "BaseIPv4_Spine2"
-      - "Spine2-MLAG-Lab"
+    s1-spine2:
+      - "BaseIPv4_S1-Spine2"
+      - "MLAG_S1-Spine2"
       - "VLANs"
-    leaf1:
-      - "BaseIPv4_Leaf1"
-      - "Leaf1-MLAG-Lab"
+    s1-leaf1:
+      - "BaseIPv4_S1-Leaf1"
+      - "MLAG_S1-Leaf1"
       - "VLANs"
-    leaf2:
-      - "BaseIPv4_Leaf2"
-      - "Leaf2-MLAG-Lab"
+    s1-leaf2:
+      - "BaseIPv4_S1-Leaf2"
+      - "MLAG_S1-Leaf2"
       - "VLANs"
-    leaf3:
-      - "BaseIPv4_Leaf3"
-      - "Leaf3-MLAG-Lab"
+    s1-leaf3:
+      - "BaseIPv4_S1-Leaf3"
+      - "MLAG_S1-Leaf3"
       - "VLANs"
-    leaf4:
-      - "BaseIPv4_Leaf4"
+    s1-leaf4:
+      - "BaseIPv4_S1-Leaf4"
       - "VLANs"
-    cvx01:
-      - "BaseIPv4_Cvx01"
-      - "cvx01-Controller"
-    host1:
-      - "BaseIPv4_Host1"
-      - "Host1-ATD"
-    host2:
-      - "BaseIPv4_Host2"
-      - "Host2-ATD"
+    s1-brdr1:
+      - "BaseIPv4_S1-Brdr1"
+    s1-brdr2:
+      - "BaseIPv4_S1-Brdr2"
+    s1-core1:
+      - "BaseIPv4_S1-Core1"
+    s1-core2:
+      - "BaseIPv4_S1-Core2"
+    s1-host1:
+      - "BaseIPv4_S1-Host1"
+      - "MLAG_S1-Host1"
+    s1-host2:
+      - "BaseIPv4_S1-Host2"
+      - "MLAG_S1-Host1"
+    s2-spine1:
+      - "BaseIPv4_S2-Spine1"
+    s2-spine2:
+      - "BaseIPv4_S2-Spine2"
+    s2-leaf1:
+      - "BaseIPv4_S2-Leaf1"
+    s2-leaf2:
+      - "BaseIPv4_S2-Leaf2"
+    s2-leaf3:
+      - "BaseIPv4_S2-Leaf3"
+    s2-leaf4:
+      - "BaseIPv4_S2-Leaf4"
+    s2-brdr1:
+      - "BaseIPv4_S2-Brdr1"
+    s2-brdr2:
+      - "BaseIPv4_S2-Brdr2"
+    s2-core1:
+      - "BaseIPv4_S2-Core1"
+    s2-core2:
+      - "BaseIPv4_S2-Core2"
+    s2-host1:
+      - "BaseIPv4_S2-Host1"
+    s2-host2:
+      - "BaseIPv4_S2-Host2"
   bgp:
     spine1:
       - "BaseIPv4_Spine1"

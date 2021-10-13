@@ -21,29 +21,22 @@ interface Port-Channel12
 !
 interface Ethernet1
    description MLAG PEER LINK - LEAF2
-   switchport mode trunk
    channel-group 10 mode active
 !
 interface Ethernet2
    description SPINE1
-   switchport mode trunk
    channel-group 12 mode active
 !
 interface Ethernet3
    description SPINE2
-   switchport mode trunk
    channel-group 12 mode active
 !
 interface Ethernet4
    description HOST1
    channel-group 4 mode active
-!  
-interface Ethernet5
-   shutdown
 !
 interface Ethernet6
    description MLAG PEER LINK - LEAF2
-   switchport mode trunk
    channel-group 10 mode active
 !
 interface Vlan4094
