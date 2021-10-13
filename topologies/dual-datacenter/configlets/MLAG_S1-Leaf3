@@ -34,9 +34,6 @@ interface Ethernet3
 interface Ethernet4
    description HOST2
    channel-group 4 mode active
-!  
-interface Ethernet5
-   shutdown
 !
 interface Ethernet6
    description MLAG PEER LINK - LEAF4

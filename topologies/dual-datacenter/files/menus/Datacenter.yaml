@@ -89,8 +89,6 @@ labconfiglets:
       - "VLANs"
     s1-leaf4:
       - "BaseIPv4_S1-Leaf4"
-      - "MLAG_S1-Leaf4"
-      - "VLANs"
     s1-brdr1:
       - "BaseIPv4_S1-Brdr1"
     s1-brdr2:
