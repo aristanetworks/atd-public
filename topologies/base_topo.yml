@@ -11,9 +11,9 @@ topologies:
               cpu: 32
               ram: 54
             branch: nested/2021.2
-            image: base-atd-dual-datacenter-ceos-c2021-2-0-20210924
+            image: base-atd-dual-datacenter-ceos-c2021-2-0-20211014
             eos:
-              - 4.26.2.1F
+              - 4.27.0F
     # prod:
     #   veos:
     #     cpu: 32
@@ -37,37 +37,30 @@ topologies:
         cpu: 32
         ram: 48
         cvp:
-          # 2020.1.1:
-          #   branch: nested/2020.1
-          #   image: base-atd-datacenter-ceos-c2020-1-1-20210415
-          #   eos:
-          #     - 4.24.1.1F
-          #     - 4.24.2.1F
-          #     - 4.25.1F
           2021.2.0:
             resources:
               cpu: 32
               ram: 48
             branch: nested/2021.2
-            image: base-atd-datacenter-ceos-c2021-2-0-20210913
+            image: base-atd-datacenter-ceos-c2021-2-0-20211014
             eos:
-              - 4.26.2F
-          2020.3.1:
-            resources:
-              cpu: 32
-              ram: 48
-            branch: nested/2020.3
-            image: base-atd-datacenter-ceos-c2020-3-1-20210825u
-            eos:
-              - 4.25.1F
-              - 4.25.2F
-              - 4.26.0F
+              - 4.27.0F
+          # 2020.3.1:
+          #   resources:
+          #     cpu: 32
+          #     ram: 48
+          #   branch: nested/2020.3
+          #   image: base-atd-datacenter-ceos-c2020-3-1-20210825u
+          #   eos:
+          #     - 4.25.1F
+          #     - 4.25.2F
+          #     - 4.26.0F
           2021.1.1:
             resources:
               cpu: 32
               ram: 48
             branch: nested/2021.1
-            image: base-atd-datacenter-ceos-c2021-1-1-20210825u
+            image: base-atd-datacenter-ceos-c2021-1-1-20211014
             eos:
               - 4.25.2F
               - 4.26.1F
@@ -75,28 +68,20 @@ topologies:
         cpu: 30
         ram: 64
         cvp:
-          # 2020.1.1:
+          # 2020.3.1:
           #   resources:
-          #     cpu: 30
+          #     cpu: 38
           #     ram: 64
-          #   branch: nested/2020.1
-          #   image: base-atd-datacenter-e4-25-1f-c2020-1-1-20210315u
+          #   branch: nested/2020.3
+          #   image: base-atd-datacenter-e4-26-0f-c2020-3-1-20210825u
           #   eos:
-          #     - 4.25.1F
-          2020.3.1:
-            resources:
-              cpu: 38
-              ram: 64
-            branch: nested/2020.3
-            image: base-atd-datacenter-e4-26-0f-c2020-3-1-20210825u
-            eos:
-              - 4.26.0F
+          #     - 4.26.0F
           2021.1.1:
             resources:
               cpu: 38
               ram: 64
             branch: nested/2021.1
-            image: base-atd-datacenter-e4-26-1f-c2021-1-1-20210825
+            image: base-atd-datacenter-e4-26-1f-c2021-1-1-20211014
             eos:
               - 4.26.1F
           # 2021.2.0:
@@ -104,24 +89,14 @@ topologies:
           #     cpu: 38
           #     ram: 64
           #   branch: nested/2021.2
-          #   image: base-atd-datacenter-e4-26-2f-c2021-2-0-20210913
+          #   image: base-atd-datacenter-e4-26-2f-c2021-2-0-20211014
           #   eos:
-          #     - 4.26.2F
+          #     - 4.27.0F
     prod:
       ceos:
         cpu: 24
         ram: 36
         cvp:
-          # 2020.1.1:
-          #   resources:
-          #     cpu: 24
-          #     ram: 36
-          #   branch: v2020.1-20210625a
-          #   image: base-atd-datacenter-ceos-c2020-1-1-20210415
-          #   eos:
-          #     - 4.24.1.1F
-          #     - 4.24.2.1F
-          #     - 4.25.1F
           2020.3.1:
             resources:
               cpu: 32
@@ -145,14 +120,6 @@ topologies:
         cpu: 30
         ram: 64
         cvp:
-          # 2020.1.1:
-          #   resources:
-          #     cpu: 30
-          #     ram: 64
-          #   branch: v2020.1-20210625a
-          #   image: base-atd-datacenter-e4-25-1f-c2020-1-1-20210315u
-          #   eos:
-          #     - 4.25.1F
           2020.3.1:
             resources:
               cpu: 38
@@ -207,20 +174,20 @@ topologies:
         cpu: 32
         ram: 64
         cvp:
-          2020.3.1:
-            resources:
-              cpu: 32
-              ram: 64
-            branch: nested/2020.3
-            image: base-atd-routing-ceos-c2020-3-1-20210826u
-            eos:
-              - 4.26.1F
+          # 2020.3.1:
+          #   resources:
+          #     cpu: 32
+          #     ram: 64
+          #   branch: nested/2020.3
+          #   image: base-atd-routing-ceos-c2020-3-1-20210826u
+          #   eos:
+          #     - 4.26.1F
           2021.1.1:
             resources:
               cpu: 32
               ram: 64
             branch: nested/2021.1
-            image: base-atd-routing-ceos-c2021-1-1-20210826u
+            image: base-atd-routing-ceos-c2021-1-1-20211014
             eos:
               - 4.26.1F
           2021.2.0:
@@ -228,9 +195,9 @@ topologies:
               cpu: 32
               ram: 64
             branch: nested/2021.2
-            image: base-atd-routing-ceos-c2021-2-0-20210913
+            image: base-atd-routing-ceos-c2021-2-0-20211014
             eos:
-              - 4.26.2F
+              - 4.27.0F
     prod:
       ceos:
         cpu: 24
