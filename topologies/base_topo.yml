@@ -145,15 +145,18 @@ topologies:
     labguides: self
   routing:
     dev:
-      # veos:
-      #   cpu: 44
-      #   ram: 90
-      #   cvp:
-      #     2020.1.1:
-      #       branch: nested/2020.1
-      #       image: base-atd-routing-e4-24-1f-c2020-1-1-20210125
-      #       eos:
-      #         - 4.24.1F
+      veos:
+        cpu: 44
+        ram: 90
+        cvp:
+          2021.2.0:
+            resources:
+              cpu: 44
+              ram: 90
+            branch: nested/2021.2
+            image: base-atd-routing-e4-27-0f-c2021-2-0-20211018
+            eos:
+              - 4.27.0F
       #     2020.3.1:
       #       resources:
       #         cpu: 44
