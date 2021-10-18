@@ -251,7 +251,7 @@ topologies:
               cpu: 32
               ram: 64
             branch: nested/2020.2
-            image: base-training-l1-e4-24-2-2f-c2020-2-3-20210125
+            image: base-training-l1-e4-24-2-2f-c2020-2-3-20211015
             eos:
               - 4.24.2.2F
     prod:
@@ -285,7 +285,7 @@ topologies:
               cpu: 32
               ram: 64
             branch: nested/2020.2
-            image: base-training-l2-e4-24-2-2f-c2020-2-3-20210419
+            image: base-training-l2-e4-24-2-2f-c2020-2-3-20211015
             eos:
               - 4.24.2.2F
     # prod:
@@ -316,7 +316,7 @@ topologies:
               cpu: 36
               ram: 72
             branch: nested/2020.2
-            image: base-training-l3-e4-24-2f-c2020-2-3-20210726u
+            image: base-training-l3-e4-24-2f-c2020-2-3-20211015
             eos:
               - 4.24.2.2F
           2020.2.3.e426:
@@ -324,7 +324,7 @@ topologies:
               cpu: 36
               ram: 72
             branch: nested/2020.2
-            image: base-training-l3-e4-26-0f-c2020-2-3-20210811u
+            image: base-training-l3-e4-26-0f-c2020-2-3-20211015
             eos:
               - 4.26.0F
     prod:
@@ -366,7 +366,7 @@ topologies:
               cpu: 36
               ram: 72
             branch: nested/2020.2
-            image: base-training-l3-exam-e4-26-0f-c2020-2-3-20210811
+            image: base-training-l3-exam-e4-26-0f-c2020-2-3-20211015
             eos:
               - 4.26.0F
     prod:
@@ -400,7 +400,7 @@ topologies:
               cpu: 24
               ram: 64
             branch: nested/2020.2
-            image: base-training-l4-ceos-c2020-2-3-20210515u
+            image: base-training-l4-ceos-c2020-2-3-20211015
             eos:
               - 4.25.1F
               - 4.26.0F
@@ -432,7 +432,7 @@ topologies:
               cpu: 48
               ram: 72
             branch: nested/2020.2
-            image: base-training-l5-ceos-c2020-2-3-20210915
+            image: base-training-l5-ceos-c2020-2-3-20211015
             eos:
               - 4.25.1F
           2021.2.0:
@@ -440,7 +440,7 @@ topologies:
               cpu: 48
               ram: 72
             branch: nested/2021.2
-            image: base-training-l5-ceos-c2021-2-0-20210915
+            image: base-training-l5-ceos-c2021-2-0-20211015
             eos:
               - 4.26.2F
     prod:
@@ -474,7 +474,7 @@ topologies:
               cpu: 40
               ram: 70
             branch: nested/2020.2
-            image: base-training-l7-ceos-c2020-2-3-20210715
+            image: base-training-l7-ceos-c2020-2-3-20211015
             eos:
               - 4.25.1F
     # prod:
