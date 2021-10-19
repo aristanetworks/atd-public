@@ -447,7 +447,7 @@ topologies:
             eos:
               - 4.26.2F
     prod:
-      veos:
+      ceos:
         cpu: 36
         ram: 72
         cvp:
