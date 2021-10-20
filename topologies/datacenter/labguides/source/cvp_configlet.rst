@@ -69,14 +69,14 @@ been defined for AAA and VLANs.
 
 12. On the 'Network Provisioning' page, Click the 'Save' button to save the changes to the topology.
 
+13. The screen will refresh and a 'T' for task will appear at the right column of each device, representing that tasks have been generated that need to run to push the configuration change.
+
 |
 
 .. image:: images/cvp_configlet/cvp_configlet_3.gif
    :align: center
 
 |
-
-13. The screen will refresh and a 'T' for task will appear above each device, representing that tasks have been generated that need to run to push the configuration change.
 
 14. Click 'Tasks' in the left navigation column.
 
@@ -95,4 +95,8 @@ been defined for AAA and VLANs.
 
 |
 
-**LAB COMPLETE**
+.. note:: We can see the unchanged configuration by clicking on the down arrows next to the designed configuration.
+
+|
+   
+   **LAB COMPLETE**
