@@ -113,31 +113,17 @@ TASK 2: View Telemetry
 
 3. By clicking on the 'compare against 30m ago' link, you can navigate back to the Comparison view of the routing table to see all the routes added in green as part of the Change Control pushed earlier.
 
-4. To view Telemetry information for multiple devices in a common dashboard, select the 'Dashboards' tab.
+4. To view Telemetry information for multiple devices in a common dashboard, select the 'Metrics' tab.
 
-5. To build a dashboard, click + New Dashboard in the top right of the CVP UI. 
+5. To build a dashboard, select 'Explorer' in the left column to bring up a list of available telemetry metrics to add.
 
-6. Under the 'Metrics' heading, click on the Table icon, then click in the new table where it says Click to Configure.
+6. Under the 'Metrics' dropdown, select 'IPv4 Total Route Count' and select 'leaf1', 'leaf2', 'leaf3' and 'leaf4' to add them to the dashboard view.
 
-7. Under Metric Source, choose IPv4 Total Route Count under Routing.
+7. This will bring up a live rolling view of the selected metric.  In the timeline at the bottom, select 'Show Last: 1h' to view metric data for the last hour.  You will see a graphical representation of the increase in routes for each device.
 
-8. Under the Devices section, type in leaf1, leaf2, leaf3, leaf4. For each, select the object with label device: leaf1, leaf2, leaf3, leaf4 respectively.
+8. Select the 'Add View' button to save this metric view and add another if desired.  Using the same process, add a view for 'IPv4 BGP Learned Routes' and 'IP Interfaces' to see other results of the Change Control.  Then hit the 'Save Dashboard' button in the bottom left.
 
-9. Once you have selected all the devices they will appear in a preview of the table. Click in the portion of the window that is grayed out to leave this dialog. You will see the devices in the table of the custom dashboard.
-
-10. Next, click the Horizon Graph icon, to add another view to the dashboard.
- 
-11. Then, click where it says Click to configure, and add the same devices to this horizon graph view, and add to the dashboard.
-
-12. Now, make sure View Type is Single Metric for Multiple Sources, and Metric Source is Devices. Then, in Metric Data Type, type "ipv4" and choose IPv4 Total Route Count.
-
-13. Then, Click again in the grayed out part of the window. You should now have a table and a horizon graph for IPv4 Total Route Count.
-
-14. Click the pencil icon where it shows "Untitled Dashboard" and give the custom dashboard an appropriate name.
-
-15. Last, click Save in the lower right to save the custom dashboard.
-
-16. You can now use the CVP time slider to view the this custom Dashboard at different points in time and see it change.
+9. Name the dashboard 'Leaf Routing Metrics' and hit 'Save'.  The dashboard is now saved and can be pulled up by other users of CVP at any time to view the consolidated metrics selected.
 
 |
 
