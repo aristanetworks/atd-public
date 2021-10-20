@@ -459,6 +459,18 @@ topologies:
             image: base-training-l5-ceos-c2020-2-3-20210915
             eos:
               - 4.25.1F
+      veos:
+        cpu: 36
+        ram: 72
+        cvp:
+          2020.2.3:
+            resources:
+              cpu: 48
+              ram: 72
+            branch: v2020.2-20210923a
+            image: base-training-l5-ceos-c2020-2-3-20210915
+            eos:
+              - 4.25.1F
     desc: 'Level 5 Training Lab. For use by the Arista Training Team.'
     name: 'Training - Level 5'
     title: 'Training Level 5 Lab'
