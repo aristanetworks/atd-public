@@ -121,7 +121,7 @@ TASK 2: View Telemetry
 
 7. Under Metric Source, choose IPv4 Total Route Count under Routing.
 
-8. Under the Devices section, type in leaf1, leaf2, leaf3, leaf4. For each, select the object with label device: leaf1, leaf2, leaf3, leaf4 respectively.
+8. All devices will be selected by default. Optionally, type `leaf` in the Devices section, and filter by tags, example: Container: Leaf.
 
 9. Once you have selected all the devices they will appear in a preview of the table. Click in the portion of the window that is grayed out to leave this dialog. You will see the devices in the table of the custom dashboard.
 
@@ -129,7 +129,7 @@ TASK 2: View Telemetry
  
 11. Then, click where it says Click to configure, and add the same devices to this horizon graph view, and add to the dashboard.
 
-12. Now, make sure View Type is Single Metric for Multiple Sources, and Metric Source is Devices. Then, in Metric Data Type, type "ipv4" and choose IPv4 Total Route Count.
+12. Now, make sure View Type is Single Metric for Multiple Sources, and Metric Source is Devices. Then, in Metric Data Type, type "route" and choose IPv4 Total Route Count.
 
 13. Then, Click again in the grayed out part of the window. You should now have a table and a horizon graph for IPv4 Total Route Count.
 
