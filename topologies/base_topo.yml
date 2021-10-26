@@ -266,8 +266,8 @@ topologies:
             resources:
               cpu: 32
               ram: 64
-            branch: v2020.2-20210422a
-            image: base-training-l1-e4-24-2-2f-c2020-2-3-20210125
+            branch: v2020.2-20211026a
+            image: base-training-l1-e4-24-2-2f-c2020-2-3-20211015
             eos:
               - 4.24.2.2F
     desc: 'Level 1 Training Lab. For use by the Arista Training Team.'
@@ -339,16 +339,16 @@ topologies:
             resources:
               cpu: 36
               ram: 72
-            branch: v2020.2-20210923a
-            image: base-training-l3-e4-24-2f-c2020-2-3-20210726u
+            branch: v2020.2-20211026a
+            image: base-training-l3-e4-24-2f-c2020-2-3-20211015
             eos:
               - 4.24.2.2F
           2020.2.3.e426:
             resources:
               cpu: 36
               ram: 72
-            branch: v2020.2-20210811a
-            image: base-training-l3-e4-26-0f-c2020-2-3-20210811u
+            branch: v2020.2-20211026a
+            image: base-training-l3-e4-26-0f-c2020-2-3-20211015
             eos:
               - 4.26.0F
     desc: 'Level 3 Training Lab. For use by the Arista Training Team.'
@@ -381,8 +381,8 @@ topologies:
             resources:
               cpu: 36
               ram: 72
-            branch: v2020.2-20210923a
-            image: base-training-l3-exam-e4-26-0f-c2020-2-3-20210811
+            branch: v2020.2-20211026a
+            image: base-training-l3-exam-e4-26-0f-c2020-2-3-20211015
             eos:
               - 4.26.0F
     desc: 'Level 3 Training Exam Lab. For use by the Arista Training Team.'
@@ -455,8 +455,8 @@ topologies:
             resources:
               cpu: 48
               ram: 72
-            branch: v2020.2-20210923a
-            image: base-training-l5-ceos-c2020-2-3-20210915
+            branch: v2020.2-20211026a
+            image: base-training-l5-ceos-c2020-2-3-20211015
             eos:
               - 4.25.1F
       veos:
@@ -467,8 +467,8 @@ topologies:
             resources:
               cpu: 48
               ram: 72
-            branch: v2020.2-20210923a
-            image: base-training-l5-ceos-c2020-2-3-20210915
+            branch: v2020.2-20211026a
+            image: base-training-l5-ceos-c2020-2-3-20211015
             eos:
               - 4.25.1F
     desc: 'Level 5 Training Lab. For use by the Arista Training Team.'
@@ -489,19 +489,22 @@ topologies:
               cpu: 40
               ram: 70
             branch: nested/2020.2
-            image: base-training-l7-ceos-c2020-2-3-20211015
+            image: base-training-l7-ceos-c2020-2-3-20211026
             eos:
               - 4.25.1F
-    # prod:
-    #   veos:
-    #     cpu: 32
-    #     ram: 64
-    #     cvp:
-    #       2020.2.3:
-    #         branch: nested/2020.2
-    #         image: base-training-l3-e4-24-2-2f-c2020-2-3-20210111
-    #         eos:
-    #           - 4.24.2.2F
+    prod:
+      ceos:
+        cpu: 40
+        ram: 70
+        cvp:
+          2020.2.3:
+            resources:
+              cpu: 40
+              ram: 70
+            branch: v2020.2-20211026a
+            image: base-training-l7-ceos-c2020-2-3-20211026
+            eos:
+              - 4.24.2.2F
     desc: 'Level 7 Training Lab. For use by the Arista Training Team.'
     name: 'Training - Level 7'
     title: 'Training Level 7 Lab'
