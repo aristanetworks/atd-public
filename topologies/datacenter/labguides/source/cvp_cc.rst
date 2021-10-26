@@ -14,10 +14,11 @@ TASK 1: Apply a Configlet Builder to create a group of Tasks
 ************************************************************
 
 1. Log into the LabAccess jumpserver:
-    1. If starting from this lab module, type ``cvp`` at the prompt. The script will configure all devices in the lab so you can complete this lab.
 
+   .. note:: If starting from this lab module, type ``cvp`` at the prompt. The script will configure all devices in the lab so you can complete this lab.
 
-Now we want to add several Loopbacks to each device using a Configlet Builder at the ‘Leaf’ level.
+   Now we want to add several Loopbacks to each device using a Configlet Builder at the ‘Leaf’ level.
+
 |
 
 .. image:: images/cvp_cc/cvp_cc_1.gif
@@ -27,13 +28,13 @@ Now we want to add several Loopbacks to each device using a Configlet Builder at
 
 2. Navigate to the 'Network Provisioning' page under the 'Provisioning' tab.
 
-3.  Right click on the 'Leaf' container and select 'Manage' -> 'Configlet'
+3. Right click on the 'Leaf' container and select 'Manage' -> 'Configlet'
 
 4. Select the ‘Add_Loopbacks’ from the list of configlets.
 
 5. Select 'Generate' to build a configlet for each device. View the generated configuration by expanding the Proposed Configuration on the right by selecting the '+' 
 
-6. Select 'Update' to return to 'Network Provisioning' and select 'Save' at the bottom of the screen. Tasks will be generated and a notifcation will show next to the 'Tasks' option in the Navigation column. Now that we have Tasks created we can use Change Control feature.
+6. Select 'Update' to return to 'Network Provisioning' and select 'Save' at the bottom of the screen. Tasks will be generated and a notification will show next to the 'Tasks' option in the Navigation column. Now that we have Tasks created we can use Change Control feature.
 
 |
 
@@ -46,39 +47,39 @@ Now we want to add several Loopbacks to each device using a Configlet Builder at
 
 8. Create a new Change Control by clicking the '+ Create Change Control' in the top right.
 
-9. This screen will show pending tasks that will be associated with a Change Control(CC). Select all pending Tasks and click '+ Create Change Control with 4 Tasks'.
+9. This screen will show pending tasks that will be associated with a Change Control(CC). Select all pending Tasks.
 
-10. First, we need to give the Change Control a name. Click the pencil on the top right to edit the CC name. Name it 'Add_Loopbacks_CC' and hit Enter.
+10. First, we need to give the Change Control a name. Click the pencil on the top right to edit the CC name. Name it 'Add_Loopbacks_CC' and hit Enter. Click '+ Create Change Control with 4 Tasks'
 
-11. Next we will need to change the root stage to 'Serial' execution. 
+11. Next we will create 3 new child stages. Click the '+' on the right side of the screen three times in order to create 3 new stages.
 
-12. Then we will create 3 new child stages. Click the '+' on the right side of the screen three times in order to create 3 new stages.
+12. Rename the top and bottom stages to 'Before Snapshot' and 'After Snapshot' respectively by clicking the Pencil icon. Name the middle stage 'Configuration Changes'.
 
-13. Rename the top and bottom stages to 'Before Snapshot' and 'After Snapshot' respectively by clicking the Pencil icon. Name the middle stage 'Configuration Changes'.
+13. Next we can select a Snapshot template that we want to run before and after the change. Select the 'Before Snapshot' stage and click 'Add Actions' under the right side menu.
 
-14. Next we can select a Snapshot template that we want to run before and after the change. Select the 'Before Snapshot' stage and click 'Add Actions' under the right side menu.
+14. Under 'Select action', select 'Snapshot -> Validate_Routing'  and 'leaf1', 'leaf2', 'leaf3', and 'leaf4' under 'Select devices to run on', then click 'Add to change control'.
 
-15. Under 'Select action', select 'Snapshot -> Validate_Routing'  and 'leaf1', 'leaf2', 'leaf3', and 'leaf4' under 'Select devices to run on', then click 'Add to change control'.
-
-16. Now click and drag each of the four leaf switch tasks to the 'Configuration Changes' task.
+15. Now click and drag each of the four leaf switch tasks to the 'Configuration Changes' task.
    
-17. Repeat step 15, but select 'After Snapshot'. We should now have 2 stages that will take a before and after snapshot of the devices being changed.
+16. Repeat step 15, but select 'After Snapshot'. We should now have 2 stages that will take a before and after snapshot of the devices being changed.
 
 A few notes about Change Control:
     a. Each Task can be assigned to different stages if wanted. Health checks can be performed in stages before the next stage executes.
     b. The order of Task execution can be specified if there are dependencies. This is done by clicking the tasks and selecting the option in the drop-down menu.
+    c. Each stage can be executed in ‘Series’ or ‘Parallel’ by selecting the action in the drop-down menu.
+    d. Check the 'Execute Immediatelly' option for a faster change execution.
 
 |
 
-18. For this lab, we now want to execute the CC. First a review and approval will need to take place. Select 'Review and Approve'.  Here we can view all of the changes for the tasks, snapshots to be taken, and any other information relative to the change control in order to approve it.
+17.  For this lab, we now want to execute the CC. First a review and approval will need to take place. Select 'Review and Approve'.  Here we can view all of the changes for the tasks, snapshots to be taken, and any other information relative to the change control in order to approve it.
 
-19. Once changes have been reviewed, we can click 'Approve' in the bottom right.
+18.  Once changes have been reviewed, we can click 'Approve' in the bottom right.
 
-20. Once the change has been approved, we should now have a button that says 'Execute Change Control' in the top right corner. Click this to execute the changes.
+19.  Once the change has been approved, we should now have a button that says 'Execute Change Control' in the top right corner. Click this to execute the changes.
 
-21. We will now be prompted with with a confirmation. Click 'Execute' to confirm the CC execution.
+20.  We will now be prompted with with a confirmation. Click 'Execute' to confirm the CC execution.
 
-22. While the CC executes, we can see the progress of each task as it is executed.
+21.  While the CC executes, we can see the progress of each task as it is executed.
 
 |
 
@@ -87,13 +88,13 @@ A few notes about Change Control:
 
 |
 
-23. Once the Change Control is successfully completed, we can view and compare the snapshots under 'Devices' -> 'Comparison'
+22. Once the Change Control is successfully completed, we can view and compare the snapshots under 'Devices' -> 'Comparison'
 
-24. To compare the before and after from our CC, select the 'Two times' option to compare two points in time for the same device. Select 'leaf1' from the dropdown menu and click the Quick link for '30 minutes ago'.   Then hit 'Compare'.
+23. To compare the before and after from our CC, select the 'Two times' option to compare two points in time for the same device. Select 'leaf1' from the dropdown menu and click the Quick link for '30 minutes ago'.   Then hit 'Compare'.
 
-25. CVP will bring up a variety of views that allows you to compare the state of the device from 30 minutes ago to the current time.  Select 'Snapshots' from the left Navigation column.
+24. CVP will bring up a variety of views that allows you to compare the state of the device from 30 minutes ago to the current time.  Select 'Snapshots' from the left Navigation column.
 
-26. In the 'Comparing Data...' heading, select the first time to bring up a list of optional times to compare the Snapshot from.  The top option represents the 'Before Change' Snapshot taken when the Change Control was executed.  Select that to see a comparison of the command outputs from before and after the change.
+25. In the 'Comparing Data...' heading, select the first time to bring up a list of optional times to compare the Snapshot from.  The top option represents the 'Before Change' Snapshot taken when the Change Control was executed.  Select that to see a comparison of the command outputs from before and after the change.
 
 |
 
@@ -112,17 +113,31 @@ TASK 2: View Telemetry
 
 3. By clicking on the 'compare against 30m ago' link, you can navigate back to the Comparison view of the routing table to see all the routes added in green as part of the Change Control pushed earlier.
 
-4. To view Telemetry information for multiple devices in a common dashboard, select the 'Metrics' tab.
+4. To view Telemetry information for multiple devices in a common dashboard, select the 'Dashboards' tab.
 
-5. To build a dashboard, select 'Explorer' in the left column to bring up a list of available telemetry metrics to add.
+5. To build a dashboard, click + New Dashboard in the top right of the CVP UI. 
 
-6. Under the 'Metrics' dropdown, select 'IPv4 Total Route Count' and select 'leaf1', 'leaf2', 'leaf3' and 'leaf4' to add them to the dashboard view.
+6. Under the 'Metrics' heading, click on the Table icon, then click in the new table where it says Click to Configure.
 
-7. This will bring up a live rolling view of the selected metric.  In the timeline at the bottom, select 'Show Last: 1h' to view metric data for the last hour.  You will see a graphical representation of the increase in routes for each device.
+7. Under Metric Source, choose IPv4 Total Route Count under Routing.
 
-8. Select the 'Add View' button to save this metric view and add another if desired.  Using the same process, add a view for 'IPv4 BGP Learned Routes' and 'IP Interfaces' to see other results of the Change Control.  Then hit the 'Save Dashboard' button in the bottom left.
+8. All devices will be selected by default. Optionally, type `leaf` in the Devices section, and filter by tags, example: Container: Leaf.
 
-9. Name the dashboard 'Leaf Routing Metrics' and hit 'Save'.  The dashboard is now saved and can be pulled up by other users of CVP at any time to view the consolidated metrics selected.
+9. Once you have selected all the devices they will appear in a preview of the table. Click in the portion of the window that is grayed out to leave this dialog. You will see the devices in the table of the custom dashboard.
+
+10. Next, click the Horizon Graph icon, to add another view to the dashboard.
+ 
+11. Then, click where it says Click to configure, and add the same devices to this horizon graph view, and add to the dashboard.
+
+12. Now, make sure View Type is Single Metric for Multiple Sources, and Metric Source is Devices. Then, in Metric Data Type, type "route" and choose IPv4 Total Route Count.
+
+13. Then, Click again in the grayed out part of the window. You should now have a table and a horizon graph for IPv4 Total Route Count.
+
+14. Click the pencil icon where it shows "Untitled Dashboard" and give the custom dashboard an appropriate name.
+
+15. Last, click Save in the lower right to save the custom dashboard.
+
+16. You can now use the CVP time slider to view the this custom Dashboard at different points in time and see it change.
 
 |
 
