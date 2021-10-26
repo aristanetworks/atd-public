@@ -155,6 +155,10 @@ cvp_info:
       - leaf1-DC3-BASE
       leaf2-DC3:
       - leaf2-DC3-BASE
+      host1-DC3:
+      - host1-DC3-BASE
+      host2-DC3:
+      - host2-DC3-BASE
       core1-isp1:
       - core1-ISP1-BASE
       core2-isp1:
