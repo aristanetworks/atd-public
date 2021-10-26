@@ -227,7 +227,7 @@ nodes:
           neighborPort: Ethernet6
           port: Ethernet6
         - neighborDevice: internet
-          neighborPort: Ethernet5
+          neighborPort: Ethernet6
           port: Ethernet1
 
 # Leafs DC1
