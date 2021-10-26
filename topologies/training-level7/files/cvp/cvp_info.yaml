@@ -147,10 +147,18 @@ cvp_info:
       - host1-DC2-BASE
       host2-DC2:
       - host2-DC2-BASE
+      spine1-DC3:
+      - spine1-DC3-BASE
+      spine2-DC3:
+      - spine2-DC3-BASE
+      leaf1-DC3:
+      - leaf1-DC3-BASE
+      leaf2-DC3:
+      - leaf2-DC3-BASE
       host1-DC3:
       - host1-DC3-BASE
-      SW1-DC3:
-      - SW1-DC3-BASE
+      host2-DC3:
+      - host2-DC3-BASE
       core1-isp1:
       - core1-ISP1-BASE
       core2-isp1:
