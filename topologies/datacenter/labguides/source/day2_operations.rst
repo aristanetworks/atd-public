@@ -158,6 +158,8 @@ In the **IDE**, and create the file below:
 
 
     ansible_connection: ansible.netcommon.httpapi
+    ansible_httpapi_use_ssl: True  
+    ansible_httpapi_validate_certs: False
     ansible_network_os: arista.eos.eos
     ansible_user: arista
     ansible_password: {REPLACE_PWD}

@@ -125,7 +125,7 @@ A terminal window will open. Run your script by entering:
 
 .. code-block:: bash
 
-    python3 show_version.py
+    python3 labfiles/show_version.py
 
 If this doesn’t work, make sure you replaced ``show_version.py`` with
 the filename of the script you saved above!
