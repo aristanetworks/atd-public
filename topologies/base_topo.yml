@@ -120,7 +120,7 @@ topologies:
             resources:
               cpu: 32
               ram: 48
-            branch: v2021.2-20211026a
+            branch: v2021.2-20211206a
             image: base-atd-datacenter-ceos-c2021-2-0-20211014
             eos:
               - 4.27.0F
@@ -148,7 +148,7 @@ topologies:
             resources:
               cpu: 38
               ram: 64
-            branch: v2021.2-20211026a
+            branch: v2021.2-20211206a
             image: base-atd-datacenter-e4-27-0f-c2021-2-0-20211014
             eos:
               - 4.27.0F
