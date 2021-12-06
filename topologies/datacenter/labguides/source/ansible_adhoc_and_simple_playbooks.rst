@@ -1,7 +1,7 @@
 Ad Hoc and Simple Playbooks
 ===========================
 
-For the final lab, we will be playing with Ansible - both ad-hoc
+For this lab, we will be playing with Ansible - both ad-hoc
 (one-off) and playbooks.
 
 .. note:: While Ansible is one of the easiest automation platforms out
@@ -202,8 +202,22 @@ Run it one more time. Notice how it just says ok=1 - this is because the
 configuration is already there and nothing needs to be changed.
 Idempotency at its finest - neat right?
 
+Change the playbook to use a group instead of a single host.
+1. Change ``hosts: 192.168.0.14`` in ``lab4-advanced-playbook.yml`` to ``hosts: veos``
+2. Add ``192.168.0.12`` and ``192.168.0.13`` to ``labfiles/lab4/lab4-advanced-hosts`` under the ``[veos]`` group. 
+
+Now, rerun the playbook
+
+.. code-block:: html
+
+    ansible-playbook -i labfiles/lab4/lab4-advanced-hosts labfiles/lab4/lab4-advanced-playbook.yml
+
+.. note:: Notice that the changes occur on the newly added hosts ``192.168.0.12`` and ``192.168.0.13``. Again, Ansible is Idempotent, only the devices lacking vlan 500 will be changed upon sebsequent runs.
+
 Bonus
 -----
+
+
 
 Create a new playbook (or alter the one you have) that creates a new
 VLAN and then adds it to ``interface Ethernet2`` as ``switchport access vlan``.
