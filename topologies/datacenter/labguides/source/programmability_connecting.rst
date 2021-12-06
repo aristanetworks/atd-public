@@ -1,5 +1,6 @@
 Connecting to your lab machine
 ==============================
+.. note:: Please skip to step 2, if you have not run any previous labs or this is the first lab you are running.
 
 1. Before we begin, let's reset the environment to clear out previous lab changes.
 If the environment was brought up fresh and you are starting from this point, you can skip step #1.
