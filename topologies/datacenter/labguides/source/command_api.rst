@@ -21,6 +21,8 @@ HTTPS: ``https://192.168.0.12``
 When prompted, enter in the username ``arista`` and ``{REPLACE_PWD}`` as the password.
 Accept the self-signed SSL certificate, please do so.
 
+.. note:: Username and password prompt may not occur until you click in the command dialog box
+
 You will be greeted with the following window:
 
 .. image:: images/command_api/nested_firefox_2.png
