@@ -1,0 +1,61 @@
+cvp_info:
+  containers:
+    Tenant:
+      nodes:
+    Leaf:
+      parent: Tenant
+      nodes:
+      - leaf1
+      - leaf2
+      - leaf3
+      - leaf4
+    Borderleaf:
+      parent: Tenant
+      nodes:
+      - border-leaf1
+      - border-leaf2
+    Spine:
+      parent: Tenant
+      nodes:
+      - spine1
+      - spine2
+      - spine3
+    Hosts:
+      parent: Tenant
+      nodes:
+      - host1
+      - host2
+    Firewall:
+      parent: Tenant
+      nodes:
+      - firewall
+  snapshots:
+  configlets:
+    containers:
+      Tenant:
+        - ATD-INFRA
+    netelements:
+      spine1:
+        - spine1-base
+      spine2:
+        - spine2-base
+      spine3:
+        - spine3-base
+      leaf1:
+        - leaf1-base
+      leaf2:
+        - leaf2-base
+      border-leaf1:
+        - borderleaf1-base
+      border-leaf2:
+        - borderleaf2-base
+      leaf3:
+        - leaf3-base
+      leaf4:
+        - leaf4-base
+      host1:
+        - host1-base
+      host2:
+        - host2-base
+      firewall:
+        - firewall-base
