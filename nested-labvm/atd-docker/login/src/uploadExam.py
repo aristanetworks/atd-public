@@ -195,6 +195,8 @@ def grabSwitchDetails(allHostsName,allHostsIP,folder,labPassword):
                 pingSum = switch.runCmds(1,["enable", "ping 172.16.200.20"],"text")
                 pingSumOutput = (pingSum[1]["output"])
                 pingDone = 1
+                pingSum300 = switch.runCmds(1,["enable", "ping 172.16.30.20"],"text")
+                pingSum300Output = (pingSum300[1]["output"])
         except Exception as e:
             print(str(e))
             print("Check eAPI is enabled on {switch}".format(switch = name))
@@ -242,6 +244,10 @@ def grabSwitchDetails(allHostsName,allHostsIP,folder,labPassword):
                 completePath = os.path.join(folder, filename)
                 with open(completePath, 'w') as f:
                     f.write(pingSumOutput)
+                filename = str(name) + "-PINGsummary300" + ".txt"
+                completePath = os.path.join(folder, filename)
+                with open(completePath, 'w') as f:
+                    f.write(pingSum300Output)
                 pingDone = 0
             print("Switch {switch} config and output saved".format(switch = name))
 
@@ -268,7 +274,7 @@ def main():
         tar.add(os.getcwd() + "/" + folder, arcname=os.path.basename(tarFile))
         tar.add("apps/coder/",arcname=os.path.basename(tarFile))
     ftpUpload(tarFile)
-
+    print("Upload complete")
 
 
 main()
