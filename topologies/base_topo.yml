@@ -276,9 +276,9 @@ topologies:
               cpu: 32
               ram: 64
             branch: nested/2020.2
-            image: base-training-l1-e4-24-2-2f-c2020-2-3-20211015
+            image: base-training-l1-e4-26-0f-c2020-2-3-20211214
             eos:
-              - 4.24.2.2F
+              - 4.26.0F
     prod:
       veos:
         cpu: 32
@@ -310,9 +310,9 @@ topologies:
               cpu: 32
               ram: 64
             branch: nested/2020.2
-            image: base-training-l2-e4-24-2-2f-c2020-2-3-20211015
+            image: base-training-l2-e4-26-0f-c2020-2-3-20211214
             eos:
-              - 4.24.2.2F
+              - 4.26.0F
     # prod:
     #   veos:
     #     cpu: 32
