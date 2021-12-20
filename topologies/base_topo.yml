@@ -346,8 +346,8 @@ topologies:
               - 4.24.2.2F
           2020.2.3.e426:
             resources:
-              cpu: 36
-              ram: 72
+              cpu: 50
+              ram: 75
             branch: nested/2020.2
             image: base-training-l3-e4-26-0f-c2020-2-3-20211015
             eos:
