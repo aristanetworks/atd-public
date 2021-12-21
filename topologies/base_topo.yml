@@ -64,6 +64,14 @@ topologies:
             eos:
               - 4.25.2F
               - 4.26.1F
+          2021.3.0.e5:
+            resources:
+              cpu: 32
+              ram: 48
+            branch: nested-release
+            image: base-atd-datacenter-ceos-c2021-3-0-e5-20211221
+            eos:
+              - 4.27.0F
       veos:
         cpu: 30
         ram: 64
@@ -215,6 +223,14 @@ topologies:
               ram: 64
             branch: nested/2021.2
             image: base-atd-routing-ceos-c2021-2-0-20211014
+            eos:
+              - 4.27.0F
+          2021.3.0.e5:
+            resources:
+              cpu: 32
+              ram: 64
+            branch: nested-release
+            image: base-atd-routing-ceos-c2021-3-0-e5-20211221
             eos:
               - 4.27.0F
     prod:
