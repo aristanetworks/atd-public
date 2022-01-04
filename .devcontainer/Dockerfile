@@ -42,7 +42,7 @@ RUN apt update && sudo apt install -y google-cloud-sdk
 
 # Install Python Packages
 RUN pip install --upgrade pip
-RUN pip install dotbot docutils rstcheck sphinx sphinx-bootstrap-theme sphinx-autobuild rcvpapi ruamel.yaml Pyyaml lxml jsonrpclib ansible cvprac pyeapi pylint tornado apscheduler pymongo 
+RUN pip install dotbot docutils rstcheck sphinx sphinx-bootstrap-theme sphinxcontrib-images sphinx-copybutton sphinx-autobuild rcvpapi ruamel.yaml Pyyaml lxml jsonrpclib ansible cvprac pyeapi pylint tornado apscheduler pymongo 
 
 RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-key C99B11DEB97541F0
 
@@ -51,3 +51,8 @@ RUN apt-add-repository https://cli.github.com/packages
 RUN apt update && apt install -y gh
 
 USER $USERNAME
+
+# Persist session history
+
+RUN SNIPPET="export PROMPT_COMMAND='history -a' && export HISTFILE=$CONTAINERWS/.history" \
+    && echo $SNIPPET >> "/home/$USERNAME/.zshrc"
