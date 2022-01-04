@@ -5,6 +5,8 @@ RUN pip install --upgrade pip
 RUN pip install tornado requests ruamel.yaml \
     sphinx \
     sphinx-bootstrap-theme \
+    sphinxcontrib-images \
+    sphinx-copybutton \
     shyaml
 
 RUN apt update
