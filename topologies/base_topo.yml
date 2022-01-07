@@ -295,6 +295,14 @@ topologies:
             image: base-training-l1-e4-26-0f-c2020-2-3-20211220
             eos:
               - 4.26.0F
+          2021.3.0.e6:
+            resources:
+              cpu: 32
+              ram: 64
+            branch: nested-release
+            image: base-training-l1-e4-27-0f-c2021-3-0-e6-20220107
+            eos:
+              - 4.27.0F
     prod:
       veos:
         cpu: 32
@@ -329,6 +337,14 @@ topologies:
             image: base-training-l2-e4-26-0f-c2020-2-3-20211220
             eos:
               - 4.26.0F
+          2021.3.0.e6:
+            resources:
+              cpu: 32
+              ram: 64
+            branch: nested-release
+            image: base-training-l2-e4-27-0f-c2021-3-0-e6-20220107
+            eos:
+              - 4.27.0F
     # prod:
     #   veos:
     #     cpu: 32
@@ -368,6 +384,14 @@ topologies:
             image: base-training-l3-e4-26-0f-c2020-2-3-20211220
             eos:
               - 4.26.0F
+          2021.3.0.e6:
+            resources:
+              cpu: 36
+              ram: 72
+            branch: nested-release
+            image: base-training-l3-e4-27-0f-c2021-3-0-e6-20220107
+            eos:
+              - 4.27.0F
     prod:
       veos:
         cpu: 36
@@ -410,6 +434,14 @@ topologies:
             image: base-training-l3-exam-e4-26-0f-c2020-2-3-20211220
             eos:
               - 4.26.0F
+          2021.3.0.e6:
+            resources:
+              cpu: 36
+              ram: 72
+            branch: nested-release
+            image: base-training-l3-exam-e4-27-0f-c2021-3-0-e6-20220107
+            eos:
+              - 4.27.0F
     prod:
       veos:
         cpu: 36
@@ -444,6 +476,14 @@ topologies:
             image: base-training-l3-2-e4-26-0f-c2020-2-3-2021220
             eos:
               - 4.26.0F
+          2021.3.0.e6:
+            resources:
+              cpu: 40
+              ram: 80
+            branch: nested-release
+            image: base-training-l3-2-e4-27-0f-c2021-3-0-e6-20220107
+            eos:
+              - 4.27.0F
     # prod:
     #   veos:
     #     cpu: 36
@@ -518,6 +558,15 @@ topologies:
             branch: nested/2021.2
             image: base-training-l5-ceos-c2021-2-0-20211015
             eos:
+              - 4.26.2F
+          2021.3.0.e6:
+            resources:
+              cpu: 48
+              ram: 72
+            branch: nested-release
+            image: base-training-l5-ceos-c2021-3-0-e6-20220107
+            eos:
+              - 4.27.0F
               - 4.26.2F
     prod:
       ceos:
