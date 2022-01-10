@@ -49,3 +49,12 @@ management api http-commands
    vrf MGMT
      no shutdown
 !
+service routing protocols model multi-agent
+!
+hostname internet-SW1-ISP3
+!
+interface Management0
+   vrf MGMT
+   ip address 192.168.0.75/24
+!
+ip routing
