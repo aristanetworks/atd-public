@@ -21,7 +21,7 @@ alias intdesc
 !
 dns domain arista.lab
 !
-ntp server vrf MGMT 192.168.0.1 iburst source Management1
+ntp server vrf MGMT 192.168.0.1 iburst source Management0
 !
 radius-server host 192.168.0.1 vrf MGMT key 7 0207165218120E
 !
@@ -38,7 +38,7 @@ username arista privilege 15 role network-admin secret 5 $1$4VjIjfd1$XkUVulbNDES
 !
 username arista ssh-key ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC+ERvV4GaPq3FzxY8T+5hMF/1T+l8wiPsVCtOrZU4Hy6NCNlAiDBdA/RUtX5/aOu5JvHyPTVHqWJ0qi9BqU3rxCNl/l2/5UZbm9RPzdZ1QCwoYwPB9/j/tYJV8lZdr6t0yGBfxgzD3oW/zF7a+ZtASaMAu7lkgoqPK2pVIGa+Y9ZCsA0Xq756XpLCw+d3pHKHvIkgWLCo9FoeIv8f/bu5u/ztzRE+Nvl+o5add6MxnjsXz3s7BnW2FX6JNjyp0Z+OXjupQc2gcfFvpd/dA2lCNuuaCHkRgyPwIZtWPmNqMRXPp37mlPwV43qDJRVPQkvh0xPxwS35BbzUxWdT+ZLZv
 !
-ip radius source-interface Management1
+ip radius source-interface Management0
 !
 ip routing vrf MGMT
 !
@@ -141,7 +141,7 @@ interface VLAN19
 int loopback 0
    ip address 192.168.255.53/32
 !
-interface Management1
+interface Management0
    vrf MGMT
    ip address 192.168.0.78/24
 !
