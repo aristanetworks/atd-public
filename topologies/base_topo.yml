@@ -519,6 +519,15 @@ topologies:
             eos:
               - 4.25.1F
               - 4.26.0F
+          2021.3.0.e6:
+            resources:
+              cpu: 24
+              ram: 64
+            branch: nested-release
+            image: base-training-l4-ceos-c2021-3-0-e6-20220110
+            eos:
+              - 4.27.0F
+              - 4.26.2F
     # prod:
     #   veos:
     #     cpu: 32
@@ -604,6 +613,15 @@ topologies:
             eos:
               - 4.25.1F
               - 4.26.0F
+          2021.3.0.e6:
+            resources:
+              cpu: 40
+              ram: 70
+            branch: nested-release
+            image: base-training-l7-ceos-c2021-3-0-e6-20220110
+            eos:
+              - 4.27.0F
+              - 4.26.2F
     prod:
       ceos:
         cpu: 40
