@@ -86,10 +86,6 @@ cvp_info:
       parent: Tenant
       nodes:
       - DCI
-    CVX:
-      parent: Tenant
-      nodes:
-      - CVX
   snapshots:
   configlets:
     containers:
@@ -156,8 +152,6 @@ cvp_info:
       - internet-BASE
       DCI:
       - DCI-BASE
-      CVX:
-      - CVX-BASE
       OOB-CORE:
       - OOB-CORE-BASE
       OOB-DC1:
