@@ -99,7 +99,7 @@ topologies:
             branch: nested/2021.2
             image: base-atd-datacenter-e4-27-0f-c2021-2-0-20211014
             eos:
-              - 4.27.0F
+              - 4.26.2F
     prod:
       ceos:
         cpu: 24
@@ -159,7 +159,7 @@ topologies:
             branch: v2021.2-20211206a
             image: base-atd-datacenter-e4-27-0f-c2021-2-0-20211014
             eos:
-              - 4.27.0F
+              - 4.26.2F
     desc: 'Two Spines, Four Leafs. Focused on EOS fundamentals within the Data Center.'
     name: 'Datacenter'
     title: 'Datacenter Lab'
