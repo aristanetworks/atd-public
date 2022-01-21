@@ -89,7 +89,7 @@ nodes:
         - neighborDevice: P5
           neighborPort: Ethernet2
           port: Ethernet6
- - P3:
+  - P3:
       ip_addr: 192.168.43
       sys_mac: 00:1c:73:b1:c7:03
       neighbors:
@@ -99,7 +99,7 @@ nodes:
         - neighborDevice: PE2
           neighborPort: Ethernet4
           port: Ethernet2
- - P4:
+  - P4:
       ip_addr: 192.168.44
       sys_mac: 00:1c:73:b1:c7:04
       neighbors:
@@ -109,7 +109,7 @@ nodes:
         - neighborDevice: PE2
           neighborPort: Ethernet5
           port: Ethernet2
- - P5:
+  - P5:
       ip_addr: 192.168.45
       sys_mac: 00:1c:73:b1:c7:05
       neighbors:
@@ -119,7 +119,7 @@ nodes:
         - neighborDevice: P6
           neighborPort: Ethernet1
           port: Ethernet2
- - P6:
+  - P6:
       ip_addr: 192.168.46
       sys_mac: 00:1c:73:b1:c7:06
       neighbors:
