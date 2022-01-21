@@ -5,7 +5,7 @@ DavidAnson.vscode-markdownlint
 donjayamanne.python-extension-pack
 eamodio.gitlens
 felipe-mendes.slack-theme
-haaaad.ansible
+redhat.ansible
 jack89ita.copy-filename
 jdinhlife.gruvbox
 jebbs.markdown-extended
