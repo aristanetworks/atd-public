@@ -2,161 +2,65 @@ cvp_info:
   containers:
     Tenant:
       nodes:
-    DC1:
+    Edge:
       parent: Tenant
       nodes:
-    Leaf-DC1:
-      parent: DC1
-      nodes:
-      - borderleaf1-DC1
-      - borderleaf2-DC1
-      - leaf1-DC1
-      - leaf2-DC1
-      - leaf3-DC1
-      - leaf4-DC1
-    Spine-DC1:
-      parent: DC1
-      nodes:
-      - spine1-DC1
-      - spine2-DC1
-      - spine3-DC1
-    Host-DC1:
-      parent: DC1
-      nodes:
-      - host1-DC1
-      - host2-DC1
-    DC2:
+        A:
+          parent: Edge
+          nodes:
+          - CE-A1
+          - CE-A2
+        B:
+          parent: Edge
+          nodes:
+          - CE-B1
+          - CE-B2
+        C:
+          parent: Edge
+          nodes:
+          - CE-C1
+          - CE-C2
+    Provider:
       parent: Tenant
       nodes:
-    Leaf-DC2:
-      parent: DC2
-      nodes:
-      - borderleaf1-DC2
-      - borderleaf2-DC2
-      - leaf1-DC2
-      - leaf2-DC2
-      - leaf3-DC2
-      - leaf4-DC2
-    Spine-DC2:
-      parent: DC2
-      nodes:
-      - spine1-DC2
-      - spine2-DC2
-      - spine3-DC2
-    Host-DC2:
-      parent: DC2
-      nodes:
-      - host1-DC2
-      - host2-DC2
-    DC3:
-      parent: Tenant
-      nodes:
-    SW-DC3:
-      parent: DC3
-      nodes:
-      - SW1-DC3
-    Host-DC3:
-      parent: DC3
-      nodes:
-      - host1-DC3
-    Provider Network:
-      parent: Tenant
-      nodes:
-    ISP1:
-      parent: "Provider Network"
-      nodes:
-      - core1-isp1
-      - core2-isp1
-    ISP2:
-      parent: "Provider Network"
-      nodes:
-      - core1-isp2
-      - core2-isp2
-    Internet:
-      parent: "Provider Network"
-      nodes:
-      - internet
-    OOB:
-      parent: Tenant
-      nodes:
-      - OOB-DC1
-      - OOB-DC2
-      - OOB-CORE
-    DCI:
-      parent: Tenant
-      nodes:
-      - DCI
-  snapshots:
+        PE:
+        parent: Provider
+        nodes:
+        - PE1
+        - PE2
+        P:
+        parent: Provider
+        nodes:
+        - P3
+        - P4
+        - P5
+        - P6
   configlets:
     containers:
       Tenant:
       - ATD-INFRA
     netelements:
-      borderleaf1-DC1:
-      - borderleaf1-DC1-BASE
-      borderleaf2-DC1:
-      - borderleaf2-DC1-BASE
-      leaf1-DC1:
-      - leaf1-DC1-BASE
-      leaf2-DC1:
-      - leaf2-DC1-BASE
-      leaf3-DC1:
-      - leaf3-DC1-BASE
-      leaf4-DC1:
-      - leaf4-DC1-BASE
-      spine1-DC1:
-      - spine1-DC1-BASE
-      spine2-DC1:
-      - spine2-DC1-BASE
-      spine3-DC1:
-      - spine3-DC1-BASE
-      host1-DC1:
-      - host1-DC1-BASE
-      host2-DC1:
-      - host2-DC1-BASE
-      borderleaf1-DC2:
-      - borderleaf1-DC2-BASE
-      borderleaf2-DC2:
-      - borderleaf2-DC2-BASE
-      leaf1-DC2:
-      - leaf1-DC2-BASE
-      leaf2-DC2:
-      - leaf2-DC2-BASE
-      leaf3-DC2:
-      - leaf3-DC2-BASE
-      leaf4-DC2:
-      - leaf4-DC2-BASE
-      spine1-DC2:
-      - spine1-DC2-BASE
-      spine2-DC2:
-      - spine2-DC2-BASE
-      spine3-DC2:
-      - spine3-DC2-BASE
-      host1-DC2:
-      - host1-DC2-BASE
-      host2-DC2:
-      - host2-DC2-BASE
-      host1-DC3:
-      - host1-DC3-BASE
-      SW1-DC3:
-      - SW1-DC3-BASE
-      core1-isp1:
-      - core1-ISP1-BASE
-      core2-isp1:
-      - core2-ISP1-BASE
-      core1-isp2:
-      - core1-ISP2-BASE
-      core2-isp2:
-      - core2-ISP2-BASE
-      internet:
-      - internet-BASE
-      DCI:
-      - DCI-BASE
-      OOB-CORE:
-      - OOB-CORE-BASE
-      OOB-DC1:
-      - OOB-DC1-BASE
-      OOB-DC2:
-      - OOB-DC2-BASE
-
-        
+      CE-A1:
+      - ce-a1-BASE
+      CE-B1:
+      - ce-b1-BASE
+      CE-C1:
+      - ce-c1-BASE
+      CE-A2:
+      - ce-a2-BASE
+      CE-B2:
+      - ce-b2-BASE
+      CE-C2:
+      - ce-c2-BASE
+      PE1:
+      - pe1-BASE
+      PE2:
+      - pe2-BASE
+      P3:
+      - p3-BASE
+      P4:
+      - p4-BASE
+      P5:
+      - p5-BASE
+      P6:
+      - p6-BASE
