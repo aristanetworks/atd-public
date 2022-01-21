@@ -5,36 +5,36 @@ cvp_info:
     Edge:
       parent: Tenant
       nodes:
-        A:
-          parent: Edge
-          nodes:
-          - CE-A1
-          - CE-A2
-        B:
-          parent: Edge
-          nodes:
-          - CE-B1
-          - CE-B2
-        C:
-          parent: Edge
-          nodes:
-          - CE-C1
-          - CE-C2
+    A:
+      parent: Edge
+      nodes:
+      - CE-A1
+      - CE-A2
+    B:
+      parent: Edge
+      nodes:
+      - CE-B1
+      - CE-B2
+    C:
+      parent: Edge
+      nodes:
+      - CE-C1
+      - CE-C2
     Provider:
       parent: Tenant
       nodes:
-        PE:
-        parent: Provider
-        nodes:
-        - PE1
-        - PE2
-        P:
-        parent: Provider
-        nodes:
-        - P3
-        - P4
-        - P5
-        - P6
+    PE:
+      parent: Provider
+      nodes:
+      - PE1
+      - PE2
+    P:
+      parent: Provider
+      nodes:
+      - P3
+      - P4
+      - P5
+      - P6
   configlets:
     containers:
       Tenant:

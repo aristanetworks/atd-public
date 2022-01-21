@@ -5,49 +5,49 @@ veos_cpu: 2
 nodes:
   - CE-A1:
       ip_addr: 192.168.0.21
-      sys_mac: 00:1c:73:b1:c6:01
+      sys_mac: 00:1c:73:c1:c6:01
       neighbors:
         - neighborDevice: PE1
           neighborPort: Ethernet1
           port: Ethernet1
   - CE-B1:
       ip_addr: 192.168.0.22
-      sys_mac: 00:1c:73:b1:c6:02
+      sys_mac: 00:1c:73:c2:c6:01
       neighbors:
         - neighborDevice: PE1
           neighborPort: Ethernet2
           port: Ethernet1
   - CE-C1:
-      ip_addr: 192.168.0.22
-      sys_mac: 00:1c:73:b1:c6:03
+      ip_addr: 192.168.0.23
+      sys_mac: 00:1c:73:c3:c6:01
       neighbors:
         - neighborDevice: PE1
           neighborPort: Ethernet3
           port: Ethernet1
   - CE-A2:
-      ip_addr: 192.168.0.21
-      sys_mac: 00:1c:73:b1:c6:04
+      ip_addr: 192.168.0.31
+      sys_mac: 00:1c:73:d1:c6:01
       neighbors:
         - neighborDevice: PE2
           neighborPort: Ethernet1
           port: Ethernet1
   - CE-B2:
-      ip_addr: 192.168.0.22
-      sys_mac: 00:1c:73:b1:c6:05
+      ip_addr: 192.168.0.32
+      sys_mac: 00:1c:73:d2:c6:01
       neighbors:
         - neighborDevice: PE2
           neighborPort: Ethernet2
           port: Ethernet1
   - CE-C2:
-      ip_addr: 192.168.0.22
-      sys_mac: 00:1c:73:b1:c6:06
+      ip_addr: 192.168.0.33
+      sys_mac: 00:1c:73:d3:c6:01
       neighbors:
         - neighborDevice: PE2
           neighborPort: Ethernet3
           port: Ethernet1
   - PE1:
-      ip_addr: 192.168.41
-      sys_mac: 00:1c:73:b1:c7:01
+      ip_addr: 192.168.0.41
+      sys_mac: 00:1c:73:e1:c6:01
       neighbors:
         - neighborDevice: CE-A1
           neighborPort: Ethernet1
@@ -68,8 +68,8 @@ nodes:
           neighborPort: Ethernet1
           port: Ethernet6
   - PE2:
-      ip_addr: 192.168.42
-      sys_mac: 00:1c:73:b1:c7:02
+      ip_addr: 192.168.0.42
+      sys_mac: 00:1c:73:e2:c6:01
       neighbors:
         - neighborDevice: CE-A2
           neighborPort: Ethernet1
@@ -90,8 +90,8 @@ nodes:
           neighborPort: Ethernet2
           port: Ethernet6
   - P3:
-      ip_addr: 192.168.43
-      sys_mac: 00:1c:73:b1:c7:03
+      ip_addr: 192.168.0.43
+      sys_mac: 00:1c:73:e3:c6:01
       neighbors:
         - neighborDevice: PE1
           neighborPort: Ethernet4
@@ -100,8 +100,8 @@ nodes:
           neighborPort: Ethernet4
           port: Ethernet2
   - P4:
-      ip_addr: 192.168.44
-      sys_mac: 00:1c:73:b1:c7:04
+      ip_addr: 192.168.0.44
+      sys_mac: 00:1c:73:e4:c6:01
       neighbors:
         - neighborDevice: PE1
           neighborPort: Ethernet5
@@ -110,8 +110,8 @@ nodes:
           neighborPort: Ethernet5
           port: Ethernet2
   - P5:
-      ip_addr: 192.168.45
-      sys_mac: 00:1c:73:b1:c7:05
+      ip_addr: 192.168.0.45
+      sys_mac: 00:1c:73:e5:c6:01
       neighbors:
         - neighborDevice: PE1
           neighborPort: Ethernet6
@@ -120,8 +120,8 @@ nodes:
           neighborPort: Ethernet1
           port: Ethernet2
   - P6:
-      ip_addr: 192.168.46
-      sys_mac: 00:1c:73:b1:c7:06
+      ip_addr: 192.168.0.46
+      sys_mac: 00:1c:73:e6:c6:01
       neighbors:
         - neighborDevice: P5
           neighborPort: Ethernet2
