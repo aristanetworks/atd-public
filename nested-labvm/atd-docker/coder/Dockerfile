@@ -1,4 +1,4 @@
-FROM codercom/code-server:3.10.2
+FROM codercom/code-server:4.0.1
 
 RUN sudo apt update && \
     sudo apt install -y python3 git openssh-server vim nano less rsync man-db jq python3-pip wget zsh sshpass libvirt-clients
