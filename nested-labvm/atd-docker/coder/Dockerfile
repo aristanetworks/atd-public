@@ -7,9 +7,15 @@ RUN sudo pip3 install --upgrade pip
 
 RUN sudo pip3 install pyeapi jsonrpclib-pelix shyaml
 
+# Install arista.avd ansible galaxy collection with upgrade flag if already exists
+RUN ansible-galaxy collection install arista.avd --upgrade
+
 RUN wget --quiet https://raw.githubusercontent.com/aristanetworks/ansible-avd/devel/ansible_collections/arista/avd/requirements.txt
 
 RUN sudo pip3 install -r requirements.txt
+
+#Install arista.avd ansible galaxy collection devel branch - Required until PR #1410 is in latest release branch
+RUN ansible-galaxy collection install git+https://github.com/aristanetworks/ansible-avd.git#/ansible_collections/arista/avd/,devel
 
 RUN wget --quiet https://raw.githubusercontent.com/aristanetworks/ansible-avd/devel/ansible_collections/arista/avd/requirements-dev.txt
 
