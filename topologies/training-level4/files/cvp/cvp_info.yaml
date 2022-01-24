@@ -35,6 +35,7 @@ cvp_info:
       - P4
       - P5
       - P6
+  snapshots:
   configlets:
     containers:
       Tenant:
