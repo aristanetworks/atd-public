@@ -498,7 +498,7 @@ topologies:
     #         eos:
     #           - 4.26.0F
     desc: 'Level 3 Training Exam 2 Lab. For use by the Arista Training Team.'
-    name: 'Training - Level 3 Exam'
+    name: 'Training - Level 3 Exam 2'
     title: 'Training Level 3 Exam Lab'
     disk_size: 300
     access: admin
