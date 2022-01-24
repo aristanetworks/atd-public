@@ -1,5 +1,5 @@
 p5-BASE:
-hostname CE-A1
+hostname P5
 !
 interface Management1
    vrf MGMT

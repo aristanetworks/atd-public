@@ -1,9 +1,9 @@
-ce-b2-BASE:
-hostname CE-A1
+ce-b1-BASE:
+hostname B1
 !
 interface Management1
    vrf MGMT
-   ip address 192.168.0.32/24
+   ip address 192.168.0.22/24
 !
 service routing protocols model multi-agent
 !
