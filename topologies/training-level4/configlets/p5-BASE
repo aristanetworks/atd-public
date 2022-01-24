@@ -1,4 +1,3 @@
-p5-BASE:
 hostname P5
 !
 interface Management1

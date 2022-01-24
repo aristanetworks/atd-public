@@ -1,4 +1,3 @@
-ce-c1-BASE:
 hostname C1
 !
 interface Management1

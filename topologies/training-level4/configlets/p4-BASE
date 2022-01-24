@@ -1,4 +1,3 @@
-p4-BASE:
 hostname P4
 !
 interface Management1

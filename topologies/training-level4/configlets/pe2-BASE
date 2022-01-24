@@ -1,4 +1,3 @@
-pe2-BASE:
 hostname PE2
 !
 interface Management1
