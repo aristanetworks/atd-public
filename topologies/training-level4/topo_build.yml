@@ -129,3 +129,4 @@ nodes:
         - neighborDevice: PE2
           neighborPort: Ethernet6
           port: Ethernet2
+additional_ssh_nodes:
