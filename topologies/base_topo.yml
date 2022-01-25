@@ -506,6 +506,19 @@ topologies:
     labguides: self
   training-level4:
     dev:
+      ceos:
+        cpu: 24
+        ram: 64
+        cvp:
+          2020.2.3:
+            resources:
+              cpu: 96
+              ram: 96
+            branch: nested/2020.2
+            image: base-training-l4-ceos-c2020-2-3-20220111
+            eos:
+              - 4.25.1F
+              - 4.26.0F
       veos:
         cpu: 60
         ram: 90
