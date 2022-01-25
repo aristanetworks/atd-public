@@ -86,7 +86,7 @@ nodes:
         - neighborDevice: P4
           neighborPort: Ethernet2
           port: Ethernet5
-        - neighborDevice: P5
+        - neighborDevice: P6
           neighborPort: Ethernet2
           port: Ethernet6
   - P3:
