@@ -528,7 +528,7 @@ topologies:
               cpu: 60
               ram: 90
             branch: nested-release
-            image: base-training-l4-e4-27-1f-c2021-3-0-e6-20220124
+            image: base-training-l4-e4-27-1f-c2021-3-0-e6-20220131
             eos:
               - 4.27.1F
     # prod:
