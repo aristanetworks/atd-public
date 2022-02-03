@@ -1,0 +1,45 @@
+interface Ethernet1
+   shutdown
+!
+interface Ethernet2
+   description L3 Downlink - s1-leaf1
+   no switchport
+   ip address 10.111.1.0/31
+!
+interface Ethernet3
+   description L3 Downlink - s1-leaf2
+   no switchport
+   ip address 10.111.1.2/31
+!
+interface Ethernet4
+   description L3 Downlink - s1-leaf3
+   no switchport
+   ip address 10.111.1.4/31
+!
+interface Ethernet5
+   description L3 Downlink - s1-leaf4
+   no switchport
+   ip address 10.111.1.6/31
+!
+interface Ethernet6
+   shutdown
+!
+interface Loopback0
+   description Management and Router-id
+   ip address 10.111.0.1/32
+!
+ip route 10.111.1.0/24 Null0
+!
+router bgp 65100
+   router-id 10.111.0.1
+   maximum-paths 4
+   neighbor 10.111.1.1 remote-as 65101
+   neighbor 10.111.1.1 send-community standard extended
+   neighbor 10.111.1.3 remote-as 65101
+   neighbor 10.111.1.3 send-community standard extended
+   neighbor 10.111.1.5 remote-as 65102
+   neighbor 10.111.1.5 send-community standard extended
+   neighbor 10.111.1.7 remote-as 65102
+   neighbor 10.111.1.7 send-community standard extended
+   network 10.111.0.1/32
+   network 10.111.1.0/24
