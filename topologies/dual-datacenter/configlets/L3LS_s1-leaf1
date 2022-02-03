@@ -1,76 +1,73 @@
 no spanning-tree vlan-id 4094
 !
-vlan 12
+vlan 112
 !
 vlan 4094
    trunk group MLAGPEER
 !
-interface Port-Channel5
-   description MLAG Downlink - s1-host1
-   switchport access vlan 12
-   mlag 5
-!
-interface Port-Channel10
+interface Port-Channel1
    description MLAG Peer-link - s1-leaf2
    switchport mode trunk
    switchport trunk group MLAGPEER
 !
+interface Port-Channel5
+   description MLAG Downlink - s1-host1
+   switchport access vlan 112
+   mlag 5
+!
 interface Ethernet1
    description MLAG Peer-link - s1-leaf2
    switchport mode trunk
-   channel-group 10 mode active
+   channel-group 1 mode active
 !
 interface Ethernet2
    description L3 Uplink - s1-spine1
    no switchport
-   ip address 172.16.201.1/31
+   ip address 10.111.1.1/31
 !
 interface Ethernet3
    description L3 Uplink - s1-spine2
    no switchport
-   ip address 172.16.202.1/31
+   ip address 10.111.2.1/31
 !
 interface Ethernet4
-   shutdown
-!  
-interface Ethernet5
    description MLAG Downlink - s1-host1
    channel-group 5 mode active
 !
 interface Ethernet6
    description MLAG Peer-link - s1-leaf2
    switchport mode trunk
-   channel-group 10 mode active
+   channel-group 1 mode active
 !
 interface Loopback0
    description Management and Router-id
-   ip address 172.16.1.1/32
+   ip address 10.111.254.1/32
 !
-interface Vlan12
+interface Vlan112
    description Host Network
-   ip address 172.16.112.2/24
-   ip virtual-router address 172.16.112.1
+   ip address 10.111.112.2/24
+   ip virtual-router address 10.111.112.1
 !
 interface Vlan4094
    description MLAG Peer Network
-   ip address 172.16.12.1/30
+   ip address 10.255.255.1/30
 !
 ip virtual-router mac-address 00:1C:73:00:00:12
 !
 mlag configuration
    domain-id MLAG
    local-interface Vlan4094
-   peer-address 172.16.12.2
-   peer-link Port-Channel10
+   peer-address 10.255.255.2
+   peer-link Port-Channel1
 !
-router bgp 65001
-   router-id 172.16.1.1
+router bgp 65101
+   router-id 10.111.254.1
    maximum-paths 4
-   neighbor 172.16.12.2 remote-as 65001
-   neighbor 172.16.12.2 next-hop-self
-   neighbor 172.16.201.0 remote-as 65000
-   neighbor 172.16.201.0 send-community standard extended
-   neighbor 172.16.202.0 remote-as 65000
-   neighbor 172.16.202.0 send-community standard extended
-   network 172.16.1.1/32
-   network 172.16.112.0/24
+   neighbor 10.255.255.2 remote-as 65101
+   neighbor 10.255.255.2 next-hop-self
+   neighbor 10.111.1.0 remote-as 65100
+   neighbor 10.111.1.0 send-community standard extended
+   neighbor 10.111.2.0 remote-as 65100
+   neighbor 10.111.2.0 send-community standard extended
+   network 10.111.254.1/32
+   network 10.111.112.0/24

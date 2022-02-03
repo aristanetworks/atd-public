@@ -5,10 +5,10 @@ vlan 4094
 !
 interface Port-Channel5
    description MLAG Downlink - s1-host2
-   switchport access vlan 34
+   switchport access vlan 134
    mlag 5
 !
-interface Port-Channel10
+interface Port-Channel1
    description MLAG Peer-link - s1-leaf3
    switchport mode trunk
    switchport trunk group MLAGPEER
@@ -16,26 +16,23 @@ interface Port-Channel10
 interface Ethernet1
    description MLAG Peer-link - s1-leaf3
    switchport mode trunk
-   channel-group 10 mode active
+   channel-group 1 mode active
 !
 interface Ethernet4
-   shutdown
-!  
-interface Ethernet5
    description MLAG Downlink - s1-host2
    channel-group 5 mode active
 !
 interface Ethernet6
    description MLAG Peer-link - s1-leaf3
    switchport mode trunk
-   channel-group 10 mode active
+   channel-group 1 mode active
 !
 interface Vlan4094
    description MLAG Peer Network
-   ip address 172.16.34.2/30
+   ip address 10.255.255.2/30
 !
 mlag configuration
    domain-id MLAG
    local-interface Vlan4094
-   peer-address 172.16.34.1
-   peer-link Port-Channel10
+   peer-address 10.255.255.1
+   peer-link Port-Channel1
