@@ -56,10 +56,10 @@ mlag configuration
    peer-address 10.255.255.1
    peer-link Port-Channel1
 !
-router bgp 65101
+router bgp 65102
    router-id 10.111.254.4
    maximum-paths 4
-   neighbor 10.255.255.1 remote-as 65101
+   neighbor 10.255.255.1 remote-as 65102
    neighbor 10.255.255.1 next-hop-self
    neighbor 10.111.1.6 remote-as 65100
    neighbor 10.111.1.6 send-community standard extended
