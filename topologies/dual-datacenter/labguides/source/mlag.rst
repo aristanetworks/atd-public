@@ -1,6 +1,9 @@
 MLAG
 ====
 
+..
+  NOTE TO THE EDITOR OF THIS LAB GUIDE FOR DUAL DC!!!! I REMOVED THE VLANs CONFIGLET SO YOU NEED TO ADD A STEP TO CREATE VLANS 12 AND 34
+
 .. image:: images/mlag/nested_mlag_topo_1.png
    :align: center
 

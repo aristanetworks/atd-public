@@ -1,7 +1,7 @@
 interface Port-Channel1
    description MLAG Uplink - s1-leaf3 and s1-leaf4
    no switchport
-   ip address 172.16.112.202/24
+   ip address 172.16.134.202/24
 !
 interface Ethernet1
    description MLAG Uplink - s1-leaf3

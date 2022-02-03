@@ -1,0 +1,45 @@
+interface Ethernet1
+   shutdown
+!
+interface Ethernet2
+   description L3 Downlink - s1-leaf1
+   no switchport
+   ip address 172.16.201.0/31
+!
+interface Ethernet3
+   description L3 Downlink - s1-leaf2
+   no switchport
+   ip address 172.16.201.2/31
+!
+interface Ethernet4
+   description L3 Downlink - s1-leaf3
+   no switchport
+   ip address 172.16.201.4/31
+!
+interface Ethernet5
+   description L3 Downlink - s1-leaf4
+   no switchport
+   ip address 172.16.201.6/31
+!
+interface Ethernet6
+   shutdown
+!
+interface Loopback0
+   description Management and Router-id
+   ip address 172.16.0.1/32
+!
+ip route 172.16.201.0/24 Null0
+!
+router bgp 65000
+   router-id 172.16.0.1
+   maximum-paths 4
+   neighbor 172.16.201.1 remote-as 65001
+   neighbor 172.16.201.1 send-community standard extended
+   neighbor 172.16.201.3 remote-as 65001
+   neighbor 172.16.201.3 send-community standard extended
+   neighbor 172.16.201.5 remote-as 65002
+   neighbor 172.16.201.5 send-community standard extended
+   neighbor 172.16.201.7 remote-as 65002
+   neighbor 172.16.201.7 send-community standard extended
+   network 172.16.0.1/32
+   network 172.16.201.0/24

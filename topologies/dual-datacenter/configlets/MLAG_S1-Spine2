@@ -1,53 +1,55 @@
 no spanning-tree vlan-id 4094
 !
+vlan 12
+!
+vlan 34
+!
 vlan 4094
    trunk group MLAGPEER
 !
 interface Port-Channel10
-   description MLAG PEER LINK - SPINE1
+   description MLAG Peer-link - s1-spine1
    switchport mode trunk
    switchport trunk group MLAGPEER
 !
 interface Port-Channel12
-   description MLAG - LEAF1 & 2
+   description MLAG Downlink - s1-leaf1 and s1-leaf2
    switchport mode trunk
    mlag 12
 !
 interface Port-Channel34
-   description MLAG - LEAF3 & 4
+   description MLAG Downlink - s1-leaf3 and s1-leaf4
    switchport mode trunk
    mlag 34
 !
 interface Ethernet1
-   description MLAG PEER LINK - SPINE1
+   description MLAG Peer-link - s1-spine1
    channel-group 10 mode active
 !
 interface Ethernet2
-   description LEAF1
+   description MLAG Downlink - s1-leaf1
    channel-group 12 mode active
 !
 interface Ethernet3
-   description LEAF2
+   description MLAG Downlink - s1-leaf2
    channel-group 12 mode active
 !
 interface Ethernet4
-   description LEAF3
+   description MLAG Downlink - s1-leaf3
    channel-group 34 mode active
 !
 interface Ethernet5
-   description LEAF4
+   description MLAG Downlink - s1-leaf4
    channel-group 34 mode active
 !
 interface Ethernet6
-   description MLAG PEER LINK - SPINE1
+   description MLAG Peer-link - s1-spine1
    channel-group 10 mode active
 !
 interface Ethernet7
-   description NOT USED IN MLAG LAB
    shutdown
 !
 interface Ethernet8
-   description NOT USED IN MLAG LAB
    shutdown
 !
 interface Vlan12
@@ -57,11 +59,11 @@ interface Vlan12
 ip virtual-router mac-address 00:1c:73:00:00:12
 !
 interface Vlan4094
-   description MLAG PEER LINK
+   description MLAG Peer Network
    ip address 172.16.11.2/30
 !
 mlag configuration
-   domain-id MLAG01
+   domain-id MLAG
    local-interface Vlan4094
    peer-address 172.16.11.1
    peer-link Port-Channel10
