@@ -8,8 +8,6 @@ interface Ethernet3
 interface Ethernet4
    shutdown
    no switchport
-interface Ethernet5
-   shutdown
 interface Ethernet6
    shutdown
 !

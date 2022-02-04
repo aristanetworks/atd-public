@@ -10,7 +10,5 @@ interface Ethernet3
    switchport mode trunk
 interface Ethernet4
    switchport access vlan 100
-interface Ethernet5
-   shutdown
 interface Ethernet6
    shutdown

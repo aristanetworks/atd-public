@@ -11,8 +11,6 @@ interface Ethernet3
    ip pim sparse-mode
 interface Ethernet4
    switchport access vlan 46
-interface Ethernet5
-   shutdown
 interface Ethernet6
    shutdown
 interface Loopback0

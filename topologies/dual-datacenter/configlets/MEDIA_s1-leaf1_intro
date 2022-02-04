@@ -8,8 +8,6 @@ interface Ethernet3
 interface Ethernet4
    no switchport
    ip address 172.16.15.1/24
-interface Ethernet5
-   shutdown
 interface Ethernet6
    shutdown
 ip route 172.16.46.0/24 10.127.12.2
