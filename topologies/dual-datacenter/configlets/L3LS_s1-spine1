@@ -30,16 +30,14 @@ interface Loopback0
 !
 ip route 10.111.1.0/24 Null0
 !
+peer-filter LEAF-ASN
+   10 match as-range 65101-65105 result accept
+!
 router bgp 65100
    router-id 10.111.0.1
-   maximum-paths 4
-   neighbor 10.111.1.1 remote-as 65101
-   neighbor 10.111.1.1 send-community standard extended
-   neighbor 10.111.1.3 remote-as 65101
-   neighbor 10.111.1.3 send-community standard extended
-   neighbor 10.111.1.5 remote-as 65102
-   neighbor 10.111.1.5 send-community standard extended
-   neighbor 10.111.1.7 remote-as 65102
-   neighbor 10.111.1.7 send-community standard extended
+   maximum-paths 2
+   bgp listen range 10.111.1.0/24 peer-group LEAVES peer-filter LEAF-ASN
+   neighbor LEAVES peer group
+   neighbor LEAVES send-community standard extended
    network 10.111.0.1/32
    network 10.111.1.0/24

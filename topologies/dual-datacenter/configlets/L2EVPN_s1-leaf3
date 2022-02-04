@@ -1,73 +1,101 @@
-interface Vlan12
-   ip address virtual 172.16.112.1/24
+no spanning-tree vlan-id 4094
 !
-interface Port-Channel4
-   description HOST2
-   switchport access vlan 12
+vlan 112
+!
+vlan 4094
+   trunk group MLAGPEER
+!
+interface Port-Channel1
+   description MLAG Peer-link - s1-leaf4
+   switchport mode trunk
+   switchport trunk group MLAGPEER
+!
+interface Port-Channel5
+   description MLAG Downlink - s1-host2
+   switchport access vlan 112
+   mlag 5
 !
 interface Ethernet1
-   shutdown
+   description MLAG Peer-link - s1-leaf4
+   switchport mode trunk
+   channel-group 1 mode active
 !
 interface Ethernet2
-   description SPINE1
+   description L3 Uplink - s1-spine1
    no switchport
-   ip address 172.16.200.10/30
+   ip address 10.111.1.5/31
 !
 interface Ethernet3
-   description SPINE2
+   description L3 Uplink - s1-spine2
    no switchport
-   ip address 172.16.200.26/30
+   ip address 10.111.2.5/31
 !
 interface Ethernet4
-   description HOST2
-   channel-group 4 mode active
-   lacp timer fast
-!
-interface Ethernet5
-   shutdown
+   description MLAG Downlink - s1-host2
+   channel-group 5 mode active
 !
 interface Ethernet6
-   shutdown
+   description MLAG Peer-link - s1-leaf4
+   switchport mode trunk
+   channel-group 1 mode active
 !
 interface Loopback0
-   ip address 172.16.0.5/32
+   description Management and Router-id
+   ip address 10.111.254.3/32
 !
 interface Loopback1
-   ip address 3.3.3.3/32
-   ip address 99.99.99.99/32 secondary
+   description VTEP
+   ip address 10.111.253.3/32
+!
+interface Vlan112
+   description Host Network
+   ip address virtual 10.111.112.1/24
+!
+interface Vlan4094
+   description MLAG Peer Network
+   ip address 10.255.255.1/30
 !
 interface Vxlan1
    vxlan source-interface Loopback1
    vxlan udp-port 4789
-   vxlan vlan 12 vni 1200
+   vxlan vlan 112 vni 112
 !
-router bgp 65103
-   router-id 172.16.0.5
-   maximum-paths 2 ecmp 2
+ip virtual-router mac-address 00:1C:73:00:00:01
+!
+mlag configuration
+   domain-id MLAG
+   local-interface Vlan4094
+   peer-address 10.255.255.2
+   peer-link Port-Channel1
+!
+router bgp 65102
+   router-id 10.111.254.3
+   maximum-paths 2
+   no bgp default ipv4-unicast
    neighbor SPINE peer group
-   neighbor SPINE bfd
-   neighbor SPINE remote-as 65001
-   neighbor SPINE maximum-routes 12000 
-   neighbor SPINE-EVPN-TRANSIT peer group
-   neighbor SPINE-EVPN-TRANSIT update-source Loopback0
-   neighbor SPINE-EVPN-TRANSIT ebgp-multihop
-   neighbor SPINE-EVPN-TRANSIT send-community
-   neighbor SPINE-EVPN-TRANSIT remote-as 65001
-   neighbor SPINE-EVPN-TRANSIT maximum-routes 0 
-   neighbor 172.16.0.1 peer group SPINE-EVPN-TRANSIT
-   neighbor 172.16.0.2 peer group SPINE-EVPN-TRANSIT
-   neighbor 172.16.200.9 peer group SPINE
-   neighbor 172.16.200.25 peer group SPINE
-   redistribute connected
+   neighbor SPINE remote-as 65100
+   neighbor SPINE send-community standard extended
+   neighbor SPINE-EVPN peer group
+   neighbor SPINE-EVPN update-source Loopback0
+   neighbor SPINE-EVPN ebgp-multihop 3
+   neighbor SPINE-EVPN send-community standard extended
+   neighbor 10.111.0.1 peer group SPINE-EVPN
+   neighbor 10.111.0.2 peer group SPINE-EVPN
+   neighbor 10.111.1.4 peer group SPINE
+   neighbor 10.111.2.4 peer group SPINE
+   neighbor 10.255.255.2 remote-as 65102
+   neighbor 10.255.255.2 next-hop-self
+   network 10.111.254.3/32
+   network 10.111.253.3/32
+   network 10.111.112.0/24
    !
-   vlan 12
-      rd 3.3.3.3:12
-      route-target both 1:12
+   vlan 112
+      rd auto
+      route-target both 112:112
       redistribute learned
    !
    address-family evpn
-      bgp next-hop-unchanged
-      neighbor SPINE-EVPN-TRANSIT activate
+      neighbor SPINE-EVPN activate
    !
    address-family ipv4
-      no neighbor SPINE-EVPN-TRANSIT activate
+      neighbor SPINE activate

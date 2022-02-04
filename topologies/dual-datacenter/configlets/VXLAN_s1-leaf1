@@ -77,13 +77,14 @@ mlag configuration
 !
 router bgp 65101
    router-id 10.111.254.1
-   maximum-paths 4
+   maximum-paths 2
+   neighbor SPINE peer group
+   neighbor SPINE remote-as 65100
+   neighbor SPINE send-community standard extended
+   neighbor 10.111.1.0 peer group SPINE
+   neighbor 10.111.2.0 peer group SPINE
    neighbor 10.255.255.2 remote-as 65101
    neighbor 10.255.255.2 next-hop-self
-   neighbor 10.111.1.0 remote-as 65100
-   neighbor 10.111.1.0 send-community standard extended
-   neighbor 10.111.2.0 remote-as 65100
-   neighbor 10.111.2.0 send-community standard extended
    network 10.111.254.1/32
    network 10.111.253.1/32
    network 10.111.112.0/24
