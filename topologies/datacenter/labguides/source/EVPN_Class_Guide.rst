@@ -7,14 +7,18 @@ EVPN Lab Guide
 Topology Quick View:
 -------------------------
 
-.. image:: images/evpn_class_guide/evpn_class_quick_topo.png
+.. thumbnail:: images/evpn_class_guide/evpn_class_quick_topo.png
    :align: center
+
+   Click image to enlarge
 
 Topology Detailed View:
 -----------------------------
 
-.. image:: images/evpn_class_guide/evpn_class_detailed_topo.png
+.. thumbnail:: images/evpn_class_guide/evpn_class_detailed_topo.png
    :align: center
+
+   Click image to enlarge
 
 Lab 1: IP Underlay Control-Plane Buildout
 ===============================================

@@ -3,6 +3,8 @@ MLAG
 
 .. thumbnail:: images/mlag/nested_mlag_topo_1.png
    :align: center
+   
+          Click image to enlarge
 
 .. note:: Did you know the “mlag” script is composed of Python code that
           uses the CloudVision Portal REST API to automate the provisioning of
