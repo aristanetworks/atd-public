@@ -1,22 +1,5 @@
-interface Ethernet1
+interface Ethernet1-6
    shutdown
-interface Ethernet2
-   shutdown
-interface Ethernet3
-   shutdown
-interface Ethernet4
-   shutdown
-interface Ethernet5
-   shutdown
-interface Ethernet6
-   shutdown
-interface Ethernet7
-   shutdown
-interface Ethernet8
-   shutdown
-interface Ethernet9
-   shutdown
-interface Ethernet10
 !
 banner motd
 ******************************
