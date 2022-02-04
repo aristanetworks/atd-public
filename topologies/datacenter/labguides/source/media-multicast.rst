@@ -1,8 +1,10 @@
 Advanced Networking for Media Engineers
 =======================================
 
-.. image:: images/media_multicast/media_multicast.png
+.. thumbnail:: images/media_multicast/media_multicast.png
    :align: center
+
+   Click image to enlarge
 
 .. note:: To simplify the training using our multicast topology, this exercise will disable Leaf2 and Leaf3.  This lab is a continuation of the concepts from the previous Broadcast Engineer Labs
 
