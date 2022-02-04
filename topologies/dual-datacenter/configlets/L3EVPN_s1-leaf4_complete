@@ -60,8 +60,9 @@ interface Vlan4094
 !
 interface Vxlan1
    vxlan source-interface Loopback1
+   vxlan virtual-router encapsulation mac-address mlag-system-id
    vxlan udp-port 4789
-   vxlan vlan 112 vni 112
+   vxlan vlan 134 vni 134
    vxlan vrf TENANT vni 5001
 !
 ip virtual-router mac-address 00:1C:73:00:00:01
