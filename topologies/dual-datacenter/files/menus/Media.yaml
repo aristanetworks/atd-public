@@ -28,22 +28,22 @@ labconfiglets:
   media-reset:
     s1-spine1:
       - "BASE_s1-spine1"
-      - "MEDIA_s1-spine1-IP-Intro-start"
+      - "MEDIA_s1-spine1_intro"
     s1-spine2:
       - "BASE_s1-spine2"
-      - "MEDIA_s1-spine2-IP-Intro-start"
+      - "MEDIA_s1-spine2_intro"
     s1-leaf1:
       - "BASE_s1-leaf1"
-      - "MEDIA_s1-leaf1-IP-Intro-start"
+      - "MEDIA_s1-leaf1_intro"
     s1-leaf2:
       - "BASE_s1-leaf2"
-      - "MEDIA_s1-leaf2-IP-Intro-start"
+      - "MEDIA_s1-leaf2_intro"
     s1-leaf3:
       - "BASE_s1-leaf3"
-      - "MEDIA_s1-leaf3-IP-Intro-start"
+      - "MEDIA_s1-leaf3_intro"
     s1-leaf4:
       - "BASE_s1-leaf4"
-      - "MEDIA_s1-leaf4-IP-Intro-start"
+      - "MEDIA_s1-leaf4_intro"
     s1-brdr1:
       - "BASE_s1-brdr1"
     s1-brdr2:
@@ -85,22 +85,22 @@ labconfiglets:
   media-intro:
     s1-spine1:
       - "BASE_s1-spine1"
-      - "MEDIA_s1-spine1-IP-Intro-start"
+      - "MEDIA_s1-spine1_intro"
     s1-spine2:
       - "BASE_s1-spine2"
-      - "MEDIA_s1-spine2-IP-Intro-start"
+      - "MEDIA_s1-spine2_intro"
     s1-leaf1:
       - "BASE_s1-leaf1"
-      - "MEDIA_s1-leaf1-IP-Intro-start"
+      - "MEDIA_s1-leaf1_intro"
     s1-leaf2:
       - "BASE_s1-leaf2"
-      - "MEDIA_s1-leaf2-IP-Intro-start"
+      - "MEDIA_s1-leaf2_intro"
     s1-leaf3:
       - "BASE_s1-leaf3"
-      - "MEDIA_s1-leaf3-IP-Intro-start"
+      - "MEDIA_s1-leaf3_intro"
     s1-leaf4:
       - "BASE_s1-leaf4"
-      - "MEDIA_s1-leaf4-IP-Intro-start"
+      - "MEDIA_s1-leaf4_intro"
     s1-brdr1:
       - "BASE_s1-brdr1"
     s1-brdr2:
@@ -142,22 +142,22 @@ labconfiglets:
   media-vlan:
     s1-spine1:
       - "BASE_s1-spine1"
-      - "MEDIA_s1-spine1-VLAN-STP-start"
+      - "MEDIA_s1-spine1_STP"
     s1-spine2:
       - "BASE_s1-spine2"
-      - "MEDIA_s1-spine2-VLAN-STP-start"
+      - "MEDIA_s1-spine2_STP"
     s1-leaf1:
       - "BASE_s1-leaf1"
-      - "MEDIA_s1-leaf1-VLAN-STP-start"
+      - "MEDIA_s1-leaf1_STP"
     s1-leaf2:
       - "BASE_s1-leaf2"
-      - "MEDIA_s1-leaf2-VLAN-STP-start"
+      - "MEDIA_s1-leaf2_STP"
     s1-leaf3:
       - "BASE_s1-leaf3"
-      - "MEDIA_s1-leaf3-VLAN-STP-start"
+      - "MEDIA_s1-leaf3_STP"
     s1-leaf4:
       - "BASE_s1-leaf4"
-      - "MEDIA_s1-leaf4-VLAN-STP-start"
+      - "MEDIA_s1-leaf4_STP"
     s1-brdr1:
       - "BASE_s1-brdr1"
     s1-brdr2:
@@ -199,22 +199,22 @@ labconfiglets:
   media-ospf:
     s1-spine1:
       - "BASE_s1-spine1"
-      - "MEDIA_s1-spine1-OSPF-start"
+      - "MEDIA_s1-spine1_OSPF"
     s1-spine2:
       - "BASE_s1-spine2"
-      - "MEDIA_s1-spine2-OSPF-start"
+      - "MEDIA_s1-spine2_OSPF"
     s1-leaf1:
       - "BASE_s1-leaf1"
-      - "MEDIA_s1-leaf1-OSPF-start"
+      - "MEDIA_s1-leaf1_OSPF"
     s1-leaf2:
       - "BASE_s1-leaf2"
-      - "MEDIA_s1-leaf2-OSPF-start"
+      - "MEDIA_s1-leaf2_OSPF"
     s1-leaf3:
       - "BASE_s1-leaf3"
-      - "MEDIA_s1-leaf3-OSPF-start"
+      - "MEDIA_s1-leaf3_OSPF"
     s1-leaf4:
       - "BASE_s1-leaf4"
-      - "MEDIA_s1-leaf4-OSPF-start"
+      - "MEDIA_s1-leaf4_OSPF"
     s1-brdr1:
       - "BASE_s1-brdr1"
     s1-brdr2:
@@ -256,22 +256,22 @@ labconfiglets:
   media-bgp:
     s1-spine1:
       - "BASE_s1-spine1"
-      - "MEDIA_s1-spine1-BGP-start"
+      - "MEDIA_s1-spine1_BGP"
     s1-spine2:
       - "BASE_s1-spine2"
-      - "MEDIA_s1-spine2-BGP-start"
+      - "MEDIA_s1-spine2_BGP"
     s1-leaf1:
       - "BASE_s1-leaf1"
-      - "MEDIA_s1-leaf1-BGP-start"
+      - "MEDIA_s1-leaf1_BGP"
     s1-leaf2:
       - "BASE_s1-leaf2"
-      - "MEDIA_s1-leaf2-BGP-start"
+      - "MEDIA_s1-leaf2_BGP"
     s1-leaf3:
       - "BASE_s1-leaf3"
-      - "MEDIA_s1-leaf3-BGP-start"
+      - "MEDIA_s1-leaf3_BGP"
     s1-leaf4:
       - "BASE_s1-leaf4"
-      - "MEDIA_s1-leaf4-BGP-start"
+      - "MEDIA_s1-leaf4_BGP"
     s1-brdr1:
       - "BASE_s1-brdr1"
     s1-brdr2:
@@ -313,22 +313,22 @@ labconfiglets:
   media-mcast:
     s1-spine1:
       - "BASE_s1-spine1"
-      - "MEDIA_s1-spine1-Multicast-Lab"
+      - "MEDIA_s1-spine1_multicast"
     s1-spine2:
       - "BASE_s1-spine2"
-      - "MEDIA_s1-spine2-Multicast-Lab"
+      - "MEDIA_s1-spine2_multicast"
     s1-leaf1:
       - "BASE_s1-leaf1"
-      - "MEDIA_s1-leaf1-Multicast-Lab"
+      - "MEDIA_s1-leaf1_multicast"
     s1-leaf2:
       - "BASE_s1-leaf2"
-      - "MEDIA_s1-leaf2-Multicast-Lab"
+      - "MEDIA_s1-leaf2_multicast"
     s1-leaf3:
       - "BASE_s1-leaf3"
-      - "MEDIA_s1-leaf3-Multicast-Lab"
+      - "MEDIA_s1-leaf3_multicast"
     s1-leaf4:
       - "BASE_s1-leaf4"
-      - "MEDIA_s1-leaf4-Multicast-Lab"
+      - "MEDIA_s1-leaf4_multicast"
     s1-brdr1:
       - "BASE_s1-brdr1"
     s1-brdr2:
