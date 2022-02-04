@@ -1,8 +1,10 @@
 Layer 3 Leaf-Spine
 ==================
 
-.. image:: images/l3ls/nested_l3ls_topo_1.png
+.. thumbnail:: images/l3ls/nested_l3ls_topo_1.png
    :align: center
+
+          Click image to enlarge
 
 .. note:: Did you know the “bgp” script is composed of Python code that
           uses the CloudVision Portal REST API to automate the provisioning of

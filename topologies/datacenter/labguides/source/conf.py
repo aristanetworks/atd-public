@@ -56,6 +56,9 @@ author = u'Arista ATD atd-help@arista.com'
 # Show Source
 html_show_sourcelink = False
 
+# Add extensions
+extensions = ['sphinx_copybutton', 'sphinxcontrib.images']
+
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
 # built documents.

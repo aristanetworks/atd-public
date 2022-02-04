@@ -1,8 +1,10 @@
 L3 EVPN
 =======
 
-.. image:: images/l3evpn/nested_l3evpn_topo_1.png
+.. thumbnail:: images/l3evpn/nested_l3evpn_topo_1.png
    :align: center
+
+          Click image to enlarge
 
 .. note:: This lab exercise will not enable MLAG.
 
