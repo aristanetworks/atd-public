@@ -1,8 +1,10 @@
 VxLAN
 =====
 
-.. image:: images/vxlan/nested_vxlan_topo_1.png
+.. thumbnail:: images/vxlan/nested_vxlan_topo_1.png
    :align: center
+
+          Click image to enlarge            
 
 .. note:: Did you know the ``vxlan`` script is composed of Python code that
           uses the CloudVision Portal REST API to automate the provisioning of
