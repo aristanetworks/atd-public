@@ -22,11 +22,6 @@ interface Ethernet4
    !! CONNECTIVITY NOT REQUIRED
    shutdown
 !
-interface Ethernet5
-   !! NOT USED FOR LAB
-   !! CONNECTIVITY NOT REQUIRED
-   shutdown
-!
 interface Ethernet6
    shutdown
 interface Loopback0

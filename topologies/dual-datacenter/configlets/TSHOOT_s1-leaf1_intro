@@ -16,11 +16,6 @@ interface Ethernet3
    shutdown
 !
 interface Ethernet4
-   !! NOT USED FOR LAB
-   !! CONNECTIVITY NOT REQUIRED
-   shutdown
-!
-interface Ethernet5
    description HOST1
    switchport trunk allowed vlan 12
    switchport mode trunk

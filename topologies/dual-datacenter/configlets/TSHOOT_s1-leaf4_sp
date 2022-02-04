@@ -27,8 +27,6 @@ interface Ethernet4
    description << p2p host2 >>
    switchport access vlan 200
 !
-interface Ethernet5
-shut
 interface Ethernet6
    shutdown
 !
