@@ -1,6 +1,9 @@
 Layer 3 Leaf-Spine
 ==================
 
+..
+  NOTE TO THE EDITOR OF THIS LAB GUIDE FOR DUAL DC!!!! I REMOVED THE VLANs CONFIGLET SO YOU NEED TO ADD A STEP TO CREATE VLAN 34
+
 .. image:: images/l3ls/nested_l3ls_topo_1.png
    :align: center
 

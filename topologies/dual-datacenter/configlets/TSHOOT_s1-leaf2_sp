@@ -1,0 +1,23 @@
+
+!
+!
+no aaa root
+!
+!
+interface Ethernet1
+shut
+!
+interface Ethernet2
+shut
+!
+interface Ethernet3
+shut
+!
+interface Ethernet4
+shut
+!
+interface Ethernet6
+   shutdown
+!
+!
+end

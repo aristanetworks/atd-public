@@ -1,0 +1,19 @@
+interface Ethernet1
+   shutdown
+interface Ethernet2
+   no switchport
+   ip address 10.127.12.1/24
+interface Ethernet3
+   shutdown
+interface Ethernet4
+   no switchport
+   ip address 172.16.15.1/24
+interface Ethernet6
+   shutdown
+interface Loopback0
+   ip address 10.127.255.1/32
+router bgp 1
+   router-id 10.127.255.1
+   neighbor 10.127.12.2 remote-as 1
+   neighbor 10.127.12.2 maximum-routes 12000 
+   redistribute connected

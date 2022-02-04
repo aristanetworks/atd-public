@@ -26,164 +26,344 @@ lab_list:
     description: "Media - Reset All Devices to Broadcaster Base (media-reset)"
 labconfiglets:
   media-reset:
-    spine1:
-      - "BaseIPv4_Spine1"
-      - "media-spine1-IP-Intro-start"
-    spine2:
-      - "BaseIPv4_Spine2"
-      - "media-spine2-IP-Intro-start"
-    leaf1:
-      - "BaseIPv4_Leaf1"
-      - "media-leaf1-IP-Intro-start"
-    leaf2:
-      - "BaseIPv4_Leaf2"
-      - "media-leaf2-IP-Intro-start"
-    leaf3:
-      - "BaseIPv4_Leaf3"
-      - "media-leaf3-IP-Intro-start"
-    leaf4:
-      - "BaseIPv4_Leaf4"
-      - "media-leaf4-IP-Intro-start"
-    host1:
-      - "BaseIPv4_Host1"
-      - "Host1-Media"
-    host2:
-      - "BaseIPv4_Host2"
-      - "Host2-Media"
-    cvx01:
-      - "BaseIPv4_Cvx01"
+    s1-spine1:
+      - "BASE_s1-spine1"
+      - "MEDIA_s1-spine1_intro"
+    s1-spine2:
+      - "BASE_s1-spine2"
+      - "MEDIA_s1-spine2_intro"
+    s1-leaf1:
+      - "BASE_s1-leaf1"
+      - "MEDIA_s1-leaf1_intro"
+    s1-leaf2:
+      - "BASE_s1-leaf2"
+      - "MEDIA_s1-leaf2_intro"
+    s1-leaf3:
+      - "BASE_s1-leaf3"
+      - "MEDIA_s1-leaf3_intro"
+    s1-leaf4:
+      - "BASE_s1-leaf4"
+      - "MEDIA_s1-leaf4_intro"
+    s1-brdr1:
+      - "BASE_s1-brdr1"
+    s1-brdr2:
+      - "BASE_s1-brdr2"
+    s1-core1:
+      - "BASE_s1-core1"
+    s1-core2:
+      - "BASE_s1-core2"
+    s1-host1:
+      - "BASE_s1-host1"
+      - "MEDIA_s1-host1"
+    s1-host2:
+      - "BASE_s1-host2"
+      - "MEDIA_s1-host2"
+    s2-spine1:
+      - "BASE_s2-spine1"
+    s2-spine2:
+      - "BASE_s2-spine2"
+    s2-leaf1:
+      - "BASE_s2-leaf1"
+    s2-leaf2:
+      - "BASE_s2-leaf2"
+    s2-leaf3:
+      - "BASE_s2-leaf3"
+    s2-leaf4:
+      - "BASE_s2-leaf4"
+    s2-brdr1:
+      - "BASE_s2-brdr1"
+    s2-brdr2:
+      - "BASE_s2-brdr2"
+    s2-core1:
+      - "BASE_s2-core1"
+    s2-core2:
+      - "BASE_s2-core2"
+    s2-host1:
+      - "BASE_s2-host1"
+    s2-host2:
+      - "BASE_s2-host2"
   media-intro:
-    spine1:
-      - "BaseIPv4_Spine1"
-      - "media-spine1-IP-Intro-start"
-    spine2:
-      - "BaseIPv4_Spine2"
-      - "media-spine2-IP-Intro-start"
-    leaf1:
-      - "BaseIPv4_Leaf1"
-      - "media-leaf1-IP-Intro-start"
-    leaf2:
-      - "BaseIPv4_Leaf2"
-      - "media-leaf2-IP-Intro-start"
-    leaf3:
-      - "BaseIPv4_Leaf3"
-      - "media-leaf3-IP-Intro-start"
-    leaf4:
-      - "BaseIPv4_Leaf4"
-      - "media-leaf4-IP-Intro-start"
-    host1:
-      - "BaseIPv4_Host1"
-      - "Host1-Media"
-    host2:
-      - "BaseIPv4_Host2"
-      - "Host2-Media"
-    cvx01:
-      - "BaseIPv4_Cvx01"      
+    s1-spine1:
+      - "BASE_s1-spine1"
+      - "MEDIA_s1-spine1_intro"
+    s1-spine2:
+      - "BASE_s1-spine2"
+      - "MEDIA_s1-spine2_intro"
+    s1-leaf1:
+      - "BASE_s1-leaf1"
+      - "MEDIA_s1-leaf1_intro"
+    s1-leaf2:
+      - "BASE_s1-leaf2"
+      - "MEDIA_s1-leaf2_intro"
+    s1-leaf3:
+      - "BASE_s1-leaf3"
+      - "MEDIA_s1-leaf3_intro"
+    s1-leaf4:
+      - "BASE_s1-leaf4"
+      - "MEDIA_s1-leaf4_intro"
+    s1-brdr1:
+      - "BASE_s1-brdr1"
+    s1-brdr2:
+      - "BASE_s1-brdr2"
+    s1-core1:
+      - "BASE_s1-core1"
+    s1-core2:
+      - "BASE_s1-core2"
+    s1-host1:
+      - "BASE_s1-host1"
+      - "MEDIA_s1-host1"
+    s1-host2:
+      - "BASE_s1-host2"
+      - "MEDIA_s1-host2"
+    s2-spine1:
+      - "BASE_s2-spine1"
+    s2-spine2:
+      - "BASE_s2-spine2"
+    s2-leaf1:
+      - "BASE_s2-leaf1"
+    s2-leaf2:
+      - "BASE_s2-leaf2"
+    s2-leaf3:
+      - "BASE_s2-leaf3"
+    s2-leaf4:
+      - "BASE_s2-leaf4"
+    s2-brdr1:
+      - "BASE_s2-brdr1"
+    s2-brdr2:
+      - "BASE_s2-brdr2"
+    s2-core1:
+      - "BASE_s2-core1"
+    s2-core2:
+      - "BASE_s2-core2"
+    s2-host1:
+      - "BASE_s2-host1"
+    s2-host2:
+      - "BASE_s2-host2"
   media-vlan:
-    spine1:
-      - "BaseIPv4_Spine1"
-      - "media-spine1-VLAN-STP-start"
-    spine2:
-      - "BaseIPv4_Spine2"
-      - "media-spine2-VLAN-STP-start"
-    leaf1:
-      - "BaseIPv4_Leaf1"
-      - "media-leaf1-VLAN-STP-start"
-    leaf2:
-      - "BaseIPv4_Leaf2"
-      - "media-leaf2-VLAN-STP-start"
-    leaf3:
-      - "BaseIPv4_Leaf3"
-      - "media-leaf3-VLAN-STP-start"
-    leaf4:
-      - "BaseIPv4_Leaf4"
-      - "media-leaf4-VLAN-STP-start"
-    host1:
-      - "BaseIPv4_Host1"
-      - "Host1-Media"
-    host2:
-      - "BaseIPv4_Host2"
-      - "Host2-Media"
-    cvx01:
-    - "BaseIPv4_Cvx01"  
+    s1-spine1:
+      - "BASE_s1-spine1"
+      - "MEDIA_s1-spine1_STP"
+    s1-spine2:
+      - "BASE_s1-spine2"
+      - "MEDIA_s1-spine2_STP"
+    s1-leaf1:
+      - "BASE_s1-leaf1"
+      - "MEDIA_s1-leaf1_STP"
+    s1-leaf2:
+      - "BASE_s1-leaf2"
+      - "MEDIA_s1-leaf2_STP"
+    s1-leaf3:
+      - "BASE_s1-leaf3"
+      - "MEDIA_s1-leaf3_STP"
+    s1-leaf4:
+      - "BASE_s1-leaf4"
+      - "MEDIA_s1-leaf4_STP"
+    s1-brdr1:
+      - "BASE_s1-brdr1"
+    s1-brdr2:
+      - "BASE_s1-brdr2"
+    s1-core1:
+      - "BASE_s1-core1"
+    s1-core2:
+      - "BASE_s1-core2"
+    s1-host1:
+      - "BASE_s1-host1"
+      - "MEDIA_s1-host1"
+    s1-host2:
+      - "BASE_s1-host2"
+      - "MEDIA_s1-host2"
+    s2-spine1:
+      - "BASE_s2-spine1"
+    s2-spine2:
+      - "BASE_s2-spine2"
+    s2-leaf1:
+      - "BASE_s2-leaf1"
+    s2-leaf2:
+      - "BASE_s2-leaf2"
+    s2-leaf3:
+      - "BASE_s2-leaf3"
+    s2-leaf4:
+      - "BASE_s2-leaf4"
+    s2-brdr1:
+      - "BASE_s2-brdr1"
+    s2-brdr2:
+      - "BASE_s2-brdr2"
+    s2-core1:
+      - "BASE_s2-core1"
+    s2-core2:
+      - "BASE_s2-core2"
+    s2-host1:
+      - "BASE_s2-host1"
+    s2-host2:
+      - "BASE_s2-host2"
   media-ospf:
-    spine1:
-      - "BaseIPv4_Spine1"
-      - "media-spine1-OSPF-start"
-    spine2:
-      - "BaseIPv4_Spine2"
-      - "media-spine2-OSPF-start"
-    leaf1:
-      - "BaseIPv4_Leaf1"
-      - "media-leaf1-OSPF-start"
-    leaf2:
-      - "BaseIPv4_Leaf2"
-      - "media-leaf2-OSPF-start"
-    leaf3:
-      - "BaseIPv4_Leaf3"
-      - "media-leaf3-OSPF-start"
-    leaf4:
-      - "BaseIPv4_Leaf4"
-      - "media-leaf4-OSPF-start"
-    host1:
-      - "BaseIPv4_Host1"
-      - "Host1-Media"
-    host2:
-      - "BaseIPv4_Host2"
-      - "Host2-Media"
-    cvx01:
-      - "BaseIPv4_Cvx01"  
+    s1-spine1:
+      - "BASE_s1-spine1"
+      - "MEDIA_s1-spine1_OSPF"
+    s1-spine2:
+      - "BASE_s1-spine2"
+      - "MEDIA_s1-spine2_OSPF"
+    s1-leaf1:
+      - "BASE_s1-leaf1"
+      - "MEDIA_s1-leaf1_OSPF"
+    s1-leaf2:
+      - "BASE_s1-leaf2"
+      - "MEDIA_s1-leaf2_OSPF"
+    s1-leaf3:
+      - "BASE_s1-leaf3"
+      - "MEDIA_s1-leaf3_OSPF"
+    s1-leaf4:
+      - "BASE_s1-leaf4"
+      - "MEDIA_s1-leaf4_OSPF"
+    s1-brdr1:
+      - "BASE_s1-brdr1"
+    s1-brdr2:
+      - "BASE_s1-brdr2"
+    s1-core1:
+      - "BASE_s1-core1"
+    s1-core2:
+      - "BASE_s1-core2"
+    s1-host1:
+      - "BASE_s1-host1"
+      - "MEDIA_s1-host1"
+    s1-host2:
+      - "BASE_s1-host2"
+      - "MEDIA_s1-host2"
+    s2-spine1:
+      - "BASE_s2-spine1"
+    s2-spine2:
+      - "BASE_s2-spine2"
+    s2-leaf1:
+      - "BASE_s2-leaf1"
+    s2-leaf2:
+      - "BASE_s2-leaf2"
+    s2-leaf3:
+      - "BASE_s2-leaf3"
+    s2-leaf4:
+      - "BASE_s2-leaf4"
+    s2-brdr1:
+      - "BASE_s2-brdr1"
+    s2-brdr2:
+      - "BASE_s2-brdr2"
+    s2-core1:
+      - "BASE_s2-core1"
+    s2-core2:
+      - "BASE_s2-core2"
+    s2-host1:
+      - "BASE_s2-host1"
+    s2-host2:
+      - "BASE_s2-host2"
   media-bgp:
-    spine1:
-      - "BaseIPv4_Spine1"
-      - "media-spine1-BGP-start"
-    spine2:
-      - "BaseIPv4_Spine2"
-      - "media-spine2-BGP-start"
-    leaf1:
-      - "BaseIPv4_Leaf1"
-      - "media-leaf1-BGP-start"
-    leaf2:
-      - "BaseIPv4_Leaf2"
-      - "media-leaf2-BGP-start"
-    leaf3:
-      - "BaseIPv4_Leaf3"
-      - "media-leaf3-BGP-start"
-    leaf4:
-      - "BaseIPv4_Leaf4"
-      - "media-leaf4-BGP-start"
-    host1:
-      - "BaseIPv4_Host1"
-      - "Host1-Media"
-    host2:
-      - "BaseIPv4_Host2"
-      - "Host2-Media"
-    cvx01:
-      - "BaseIPv4_Cvx01"  
+    s1-spine1:
+      - "BASE_s1-spine1"
+      - "MEDIA_s1-spine1_BGP"
+    s1-spine2:
+      - "BASE_s1-spine2"
+      - "MEDIA_s1-spine2_BGP"
+    s1-leaf1:
+      - "BASE_s1-leaf1"
+      - "MEDIA_s1-leaf1_BGP"
+    s1-leaf2:
+      - "BASE_s1-leaf2"
+      - "MEDIA_s1-leaf2_BGP"
+    s1-leaf3:
+      - "BASE_s1-leaf3"
+      - "MEDIA_s1-leaf3_BGP"
+    s1-leaf4:
+      - "BASE_s1-leaf4"
+      - "MEDIA_s1-leaf4_BGP"
+    s1-brdr1:
+      - "BASE_s1-brdr1"
+    s1-brdr2:
+      - "BASE_s1-brdr2"
+    s1-core1:
+      - "BASE_s1-core1"
+    s1-core2:
+      - "BASE_s1-core2"
+    s1-host1:
+      - "BASE_s1-host1"
+      - "MEDIA_s1-host1"
+    s1-host2:
+      - "BASE_s1-host2"
+      - "MEDIA_s1-host2"
+    s2-spine1:
+      - "BASE_s2-spine1"
+    s2-spine2:
+      - "BASE_s2-spine2"
+    s2-leaf1:
+      - "BASE_s2-leaf1"
+    s2-leaf2:
+      - "BASE_s2-leaf2"
+    s2-leaf3:
+      - "BASE_s2-leaf3"
+    s2-leaf4:
+      - "BASE_s2-leaf4"
+    s2-brdr1:
+      - "BASE_s2-brdr1"
+    s2-brdr2:
+      - "BASE_s2-brdr2"
+    s2-core1:
+      - "BASE_s2-core1"
+    s2-core2:
+      - "BASE_s2-core2"
+    s2-host1:
+      - "BASE_s2-host1"
+    s2-host2:
+      - "BASE_s2-host2"
   media-mcast:
-    spine1:
-      - "BaseIPv4_Spine1"
-      - "media-spine1-Multicast-lab"
-    spine2:
-      - "BaseIPv4_Spine2"
-      - "media-spine2-Multicast-lab"
-    leaf1:
-      - "BaseIPv4_Leaf1"
-      - "media-leaf1-Multicast-lab"
-    leaf2:
-      - "BaseIPv4_Leaf2"
-      - "media-leaf2-Multicast-lab"
-    leaf3:
-      - "BaseIPv4_Leaf3"
-      - "media-leaf3-Multicast-lab"
-    leaf4:
-      - "BaseIPv4_Leaf4"
-      - "media-leaf4-Multicast-lab"
-    host1:
-      - "BaseIPv4_Host1"
-      - "Host1-Media"
-    host2:
-      - "BaseIPv4_Host2"
-      - "Host2-Media"
-    cvx01:
-      - "BaseIPv4_Cvx01"  
+    s1-spine1:
+      - "BASE_s1-spine1"
+      - "MEDIA_s1-spine1_multicast"
+    s1-spine2:
+      - "BASE_s1-spine2"
+      - "MEDIA_s1-spine2_multicast"
+    s1-leaf1:
+      - "BASE_s1-leaf1"
+      - "MEDIA_s1-leaf1_multicast"
+    s1-leaf2:
+      - "BASE_s1-leaf2"
+      - "MEDIA_s1-leaf2_multicast"
+    s1-leaf3:
+      - "BASE_s1-leaf3"
+      - "MEDIA_s1-leaf3_multicast"
+    s1-leaf4:
+      - "BASE_s1-leaf4"
+      - "MEDIA_s1-leaf4_multicast"
+    s1-brdr1:
+      - "BASE_s1-brdr1"
+    s1-brdr2:
+      - "BASE_s1-brdr2"
+    s1-core1:
+      - "BASE_s1-core1"
+    s1-core2:
+      - "BASE_s1-core2"
+    s1-host1:
+      - "BASE_s1-host1"
+      - "MEDIA_s1-host1"
+    s1-host2:
+      - "BASE_s1-host2"
+      - "MEDIA_s1-host2"
+    s2-spine1:
+      - "BASE_s2-spine1"
+    s2-spine2:
+      - "BASE_s2-spine2"
+    s2-leaf1:
+      - "BASE_s2-leaf1"
+    s2-leaf2:
+      - "BASE_s2-leaf2"
+    s2-leaf3:
+      - "BASE_s2-leaf3"
+    s2-leaf4:
+      - "BASE_s2-leaf4"
+    s2-brdr1:
+      - "BASE_s2-brdr1"
+    s2-brdr2:
+      - "BASE_s2-brdr2"
+    s2-core1:
+      - "BASE_s2-core1"
+    s2-core2:
+      - "BASE_s2-core2"
+    s2-host1:
+      - "BASE_s2-host1"
+    s2-host2:
+      - "BASE_s2-host2"

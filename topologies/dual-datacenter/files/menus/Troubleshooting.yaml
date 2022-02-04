@@ -2,83 +2,120 @@
 lab_list:
   tshoot-intro:
     description: "Troubleshooting Lab 1 (tshoot-intro)"
-#  tshoot-sp:
-#      description: "Troubleshooting Lab 2 (tshoot-sp)"
-#  tshoot-automation:
-#      description: "Troubleshooting Lab 3 (tshoot-automation)"
+  tshoot-sp:
+    description: "Troubleshooting Lab 2 (tshoot-sp)"
 labconfiglets:
   tshoot-intro:
-    spine1:
-      - "BaseIPv4_Spine1"
-      - "tshoot-spine1-Tshoot-intro"
-    spine2:
-      - "BaseIPv4_Spine2"
-      - "tshoot-default"
-    leaf1:
-      - "BaseIPv4_Leaf1"
-      - "tshoot-leaf1-Tshoot-intro"
-    leaf2:
-      - "BaseIPv4_Leaf2"
-      - "tshoot-leaf2-Tshoot-intro"
-    leaf3:
-      - "BaseIPv4_Leaf3"
-      - "tshoot-default"
-    leaf4:
-      - "BaseIPv4_Leaf4"
-      - "tshoot-default"
-    host1:
-      - "BaseIPv4_Host1"
-      - "tshoot-host1-Tshoot-intro"
-    host2:
-      - "BaseIPv4_Host2"
-      - "tshoot-default"
-    cvx01:
-      - "BaseIPv4_Cvx01"
+    s1-spine1:
+      - "BASE_s1-spine1"
+      - "TSHOOT_s1-spine1_intro"
+    s1-spine2:
+      - "BASE_s1-spine2"
+      - "TSHOOT_default"
+    s1-leaf1:
+      - "BASE_s1-leaf1"
+      - "TSHOOT_s1-leaf1_intro"
+    s1-leaf2:
+      - "BASE_s1-leaf2"
+      - "TSHOOT_s1-leaf2_intro"
+    s1-leaf3:
+      - "BASE_s1-leaf3"
+      - "TSHOOT_default"
+    s1-leaf4:
+      - "BASE_s1-leaf4"
+      - "TSHOOT_default"
+    s1-brdr1:
+      - "BASE_s1-brdr1"
+    s1-brdr2:
+      - "BASE_s1-brdr2"
+    s1-core1:
+      - "BASE_s1-core1"
+    s1-core2:
+      - "BASE_s1-core2"
+    s1-host1:
+      - "BASE_s1-host1"
+      - "TSHOOT_s1-host1_intro"
+    s1-host2:
+      - "BASE_s1-host2"
+      - "TSHOOT_s1-host2_intro"
+    s2-spine1:
+      - "BASE_s2-spine1"
+    s2-spine2:
+      - "BASE_s2-spine2"
+    s2-leaf1:
+      - "BASE_s2-leaf1"
+    s2-leaf2:
+      - "BASE_s2-leaf2"
+    s2-leaf3:
+      - "BASE_s2-leaf3"
+    s2-leaf4:
+      - "BASE_s2-leaf4"
+    s2-brdr1:
+      - "BASE_s2-brdr1"
+    s2-brdr2:
+      - "BASE_s2-brdr2"
+    s2-core1:
+      - "BASE_s2-core1"
+    s2-core2:
+      - "BASE_s2-core2"
+    s2-host1:
+      - "BASE_s2-host1"
+    s2-host2:
+      - "BASE_s2-host2"
   tshoot-sp:
-    spine1:
-      - "BaseIPv4_Spine1"
-      - "tshoot-spine1-Tshoot-sp"
-    spine2:
-      - "BaseIPv4_Spine2"
-      - "tshoot-spine2-Tshoot-sp"
-    leaf1:
-      - "BaseIPv4_Leaf1"
-      - "tshoot-leaf1-Tshoot-sp"
-    leaf2:
-      - "BaseIPv4_Leaf2"
-      - "tshoot-default"
-    leaf3:
-      - "BaseIPv4_Leaf3"
-      - "tshoot-default"
-    leaf4:
-      - "BaseIPv4_Leaf4"
-      - "tshoot-leaf4-Tshoot-sp"
-    host1:
-      - "BaseIPv4_Host1"
-      - "tshoot-host1-Tshoot-sp"
-    host2:
-      - "BaseIPv4_Host2"
-      - "tshoot-host2-Tshoot-sp"
-    cvx01:
-      - "BaseIPv4_Cvx01"
-#  tshoot-automation:
-#    spine1:
-#      - "BaseIPv4_Spine1"
-#      - "tshoot-spine1-Tshoot-automation"
-#    spine2:
-#      - "BaseIPv4_Spine2"
-#      - "tshoot-spine2-Tshoot-automation"
-#    leaf1:
-#      - "BaseIPv4_Leaf1"
-#      - "tshoot-leaf1-Tshoot-automation"
-#    leaf2:
-#      - "BaseIPv4_Leaf2"
-#      - "tshoot-leaf2-Tshoot-automation"
-#    leaf3:
-#      - "BaseIPv4_Leaf3"
-#     - "tshoot-leaf3-Tshoot-automation"
-#    leaf4:
-#      - "BaseIPv4_Leaf4"
-#      - "tshoot-leaf4-Tshoot-automation"
-#    cvx01:
-#      - "BaseIPv4_Cvx01"
+    s1-spine1:
+      - "BASE_s1-spine1"
+      - "TSHOOT_s1-spine1_sp"
+    s1-spine2:
+      - "BASE_s1-spine2"
+      - "TSHOOT_s1-spine2_sp"
+    s1-leaf1:
+      - "BASE_s1-leaf1"
+      - "TSHOOT_s1-leaf1_sp"
+    s1-leaf2:
+      - "BASE_s1-leaf2"
+      - "TSHOOT_default"
+    s1-leaf3:
+      - "BASE_s1-leaf3"
+      - "TSHOOT_default"
+    s1-leaf4:
+      - "BASE_s1-leaf4"
+      - "TSHOOT_s1-leaf4_sp"
+    s1-brdr1:
+      - "BASE_s1-brdr1"
+    s1-brdr2:
+      - "BASE_s1-brdr2"
+    s1-core1:
+      - "BASE_s1-core1"
+    s1-core2:
+      - "BASE_s1-core2"
+    s1-host1:
+      - "BASE_s1-host1"
+      - "TSHOOT_s1-host1_sp"
+    s1-host2:
+      - "BASE_s1-host2"
+      - "TSHOOT_s1-host2_sp"
+    s2-spine1:
+      - "BASE_s2-spine1"
+    s2-spine2:
+      - "BASE_s2-spine2"
+    s2-leaf1:
+      - "BASE_s2-leaf1"
+    s2-leaf2:
+      - "BASE_s2-leaf2"
+    s2-leaf3:
+      - "BASE_s2-leaf3"
+    s2-leaf4:
+      - "BASE_s2-leaf4"
+    s2-brdr1:
+      - "BASE_s2-brdr1"
+    s2-brdr2:
+      - "BASE_s2-brdr2"
+    s2-core1:
+      - "BASE_s2-core1"
+    s2-core2:
+      - "BASE_s2-core2"
+    s2-host1:
+      - "BASE_s2-host1"
+    s2-host2:
+      - "BASE_s2-host2"
