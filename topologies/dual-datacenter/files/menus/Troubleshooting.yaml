@@ -37,7 +37,7 @@ labconfiglets:
       - "TSHOOT_s1-host1_intro"
     s1-host2:
       - "BASE_s1-host2"
-      - "TSHOOT_default"
+      - "TSHOOT_s1-host2_intro"
     s2-spine1:
       - "BASE_s2-spine1"
     s2-spine2:

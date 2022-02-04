@@ -1,0 +1,10 @@
+interface Ethernet1-2
+   shutdown
+!
+banner motd
+******************************
+*** Note this switch is    ***
+*** not used for this lab. ***
+*** Please return to menu  ***
+******************************
+EOF
