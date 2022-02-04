@@ -5,9 +5,9 @@ lab_list:
       - "bash /home/arista/Broadcaster/pushhostDefaultConfig.sh"
     description: "Reset All Devices to Base ATD (reset)"
   l2ls:
-    description: "Layer 2 leaf-spine Lab (l2ls) - Site 1 Only"
+    description: "Layer 2 Leaf-Spine Lab (l2ls) - Site 1 Only"
   l3ls:
-    description: "Layer 3 leaf-spine Lab (l3ls) - Site 1 Only"
+    description: "Layer 3 Leaf-Spine Lab (l3ls) - Site 1 Only"
   vxlan:
     description: "VXLAN Static Flood List Lab (vxlan) - Site 1 Only"
   l2evpn:
@@ -154,7 +154,7 @@ labconfiglets:
       - "L3LS_s1-host1"
     s1-host2:
       - "BASE_s1-host2"
-      - "L3LS_s1-host1"
+      - "L3LS_s1-host2"
     s2-spine1:
       - "BASE_s2-spine1"
     s2-spine2:
@@ -211,7 +211,7 @@ labconfiglets:
       - "VXLAN_s1-host1"
     s1-host2:
       - "BASE_s1-host2"
-      - "VXLAN_s1-host1"
+      - "VXLAN_s1-host2"
     s2-spine1:
       - "BASE_s2-spine1"
     s2-spine2:
@@ -268,7 +268,7 @@ labconfiglets:
       - "L2EVPN_s1-host1"
     s1-host2:
       - "BASE_s1-host2"
-      - "L2EVPN_s1-host1"
+      - "L2EVPN_s1-host2"
     s2-spine1:
       - "BASE_s2-spine1"
     s2-spine2:
@@ -325,7 +325,7 @@ labconfiglets:
       - "L3EVPN_s1-host1"
     s1-host2:
       - "BASE_s1-host2"
-      - "L3EVPN_s1-host1"
+      - "L3EVPN_s1-host2"
     s2-spine1:
       - "BASE_s2-spine1"
     s2-spine2:
@@ -382,7 +382,7 @@ labconfiglets:
       - "L3LS_s1-host1"
     s1-host2:
       - "BASE_s1-host2"
-      - "L3LS_s1-host1"
+      - "L3LS_s1-host2"
     s2-spine1:
       - "BASE_s2-spine1"
     s2-spine2:

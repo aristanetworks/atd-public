@@ -64,7 +64,7 @@ interface Vlan4094
 interface Vxlan1
    vxlan source-interface Loopback1
    vxlan udp-port 4789
-   vxlan vlan 12 vni 12
+   vxlan vlan 112 vni 112
    vxlan flood vtep 10.111.253.1
 !
 ip virtual-router mac-address 00:1C:73:00:00:01
@@ -77,13 +77,14 @@ mlag configuration
 !
 router bgp 65102
    router-id 10.111.254.4
-   maximum-paths 4
+   maximum-paths 2
+   neighbor SPINE peer group
+   neighbor SPINE remote-as 65100
+   neighbor SPINE send-community standard extended
+   neighbor 10.111.1.6 peer group SPINE
+   neighbor 10.111.2.6 peer group SPINE
    neighbor 10.255.255.1 remote-as 65102
    neighbor 10.255.255.1 next-hop-self
-   neighbor 10.111.1.6 remote-as 65100
-   neighbor 10.111.1.6 send-community standard extended
-   neighbor 10.111.2.6 remote-as 65100
-   neighbor 10.111.2.6 send-community standard extended
    network 10.111.254.4/32
    network 10.111.253.3/32
    network 10.111.112.0/24

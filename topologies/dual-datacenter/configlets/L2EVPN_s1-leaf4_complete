@@ -76,6 +76,7 @@ router bgp 65102
    neighbor SPINE remote-as 65100
    neighbor SPINE send-community standard extended
    neighbor SPINE-EVPN peer group
+   neighbor SPINE-EVPN remote-as 65100
    neighbor SPINE-EVPN update-source Loopback0
    neighbor SPINE-EVPN ebgp-multihop 3
    neighbor SPINE-EVPN send-community standard extended
@@ -85,9 +86,6 @@ router bgp 65102
    neighbor 10.111.2.6 peer group SPINE
    neighbor 10.255.255.2 remote-as 65102
    neighbor 10.255.255.2 next-hop-self
-   network 10.111.254.4/32
-   network 10.111.253.3/32
-   network 10.111.112.0/24
    !
    vlan 112
       rd auto
@@ -99,3 +97,6 @@ router bgp 65102
    !
    address-family ipv4
       neighbor SPINE activate
+      network 10.111.254.4/32
+      network 10.111.253.3/32
+      network 10.111.112.0/24

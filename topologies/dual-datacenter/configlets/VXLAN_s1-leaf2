@@ -64,7 +64,7 @@ interface Vlan4094
 interface Vxlan1
    vxlan source-interface Loopback1
    vxlan udp-port 4789
-   vxlan vlan 12 vni 12
+   vxlan vlan 112 vni 112
    vxlan flood vtep 10.111.253.3
 !
 ip virtual-router mac-address 00:1C:73:00:00:01

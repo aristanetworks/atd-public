@@ -83,6 +83,7 @@ router bgp 65101
    neighbor SPINE remote-as 65100
    neighbor SPINE send-community standard extended
    neighbor SPINE-EVPN peer group
+   neighbor SPINE-EVPN remote-as 65100
    neighbor SPINE-EVPN update-source Loopback0
    neighbor SPINE-EVPN ebgp-multihop 3
    neighbor SPINE-EVPN send-community standard extended
@@ -92,8 +93,6 @@ router bgp 65101
    neighbor 10.111.2.0 peer group SPINE
    neighbor 10.255.255.2 remote-as 65101
    neighbor 10.255.255.2 next-hop-self
-   network 10.111.254.1/32
-   network 10.111.253.1/32
    !
    vlan 112
       rd auto
@@ -105,6 +104,8 @@ router bgp 65101
    !
    address-family ipv4
       neighbor SPINE activate
+      network 10.111.254.1/32
+      network 10.111.253.1/32
    !
    vrf TENANT
       route-target import evpn 5001:5001
