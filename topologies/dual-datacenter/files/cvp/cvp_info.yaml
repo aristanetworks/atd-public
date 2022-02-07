@@ -77,55 +77,51 @@ cvp_info:
         - ATD-INFRA
     netelements:
       s1-spine1:
-        - BaseIPv4_S1-Spine1
+        - BASE_s1-spine1
       s1-spine2:
-        - BaseIPv4_S1-Spine2
+        - BASE_s1-spine2
       s1-leaf1:
-        - BaseIPv4_S1-Leaf1
+        - BASE_s1-leaf1
       s1-leaf2:
-        - BaseIPv4_S1-Leaf2
+        - BASE_s1-leaf2
       s1-leaf3:
-        - BaseIPv4_S1-Leaf3
+        - BASE_s1-leaf3
       s1-leaf4:
-        - BaseIPv4_S1-Leaf4
+        - BASE_s1-leaf4
       s1-host1:
-        - BaseIPv4_S1-Host1
-        - S1-Host1-ATD
+        - BASE_s1-host1
       s1-host2:
-        - BaseIPv4_S1-Host2
-        - S1-Host2-ATD
+        - BASE_s1-host2
       s1-brdr1:
-        - BaseIPv4_S1-Brdr1
+        - BASE_s1-brdr1
       s1-brdr2:
-        - BaseIPv4_S1-Brdr2
+        - BASE_s1-brdr2
       s1-core1:
-        - BaseIPv4_S1-Core1
+        - BASE_s1-core1
       s1-core2:
-        - BaseIPv4_S1-Core2
+        - BASE_s1-core2
       s2-spine1:
-        - BaseIPv4_S2-Spine1
+        - BASE_s2-spine1
       s2-spine2:
-        - BaseIPv4_S2-Spine2
+        - BASE_s2-spine2
       s2-leaf1:
-        - BaseIPv4_S2-Leaf1
+        - BASE_s2-leaf1
       s2-leaf2:
-        - BaseIPv4_S2-Leaf2
+        - BASE_s2-leaf2
       s2-leaf3:
-        - BaseIPv4_S2-Leaf3
+        - BASE_s2-leaf3
       s2-leaf4:
-        - BaseIPv4_S2-Leaf4
+        - BASE_s2-leaf4
       s2-host1:
-        - BaseIPv4_S2-Host1
-        - S2-Host1-ATD
+        - BASE_s2-host1
       s2-host2:
-        - BaseIPv4_S2-Host2
-        - S2-Host2-ATD
+        - BASE_s2-host2
       s2-brdr1:
-        - BaseIPv4_S2-Brdr1
+        - BASE_s2-brdr1
       s2-brdr2:
-        - BaseIPv4_S2-Brdr2
+        - BASE_s2-brdr2
       s2-core1:
-        - BaseIPv4_S2-Core1
+        - BASE_s2-core1
       s2-core2:
-        - BaseIPv4_S2-Core2
+        - BASE_s2-core2
         
