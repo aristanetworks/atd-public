@@ -11,6 +11,19 @@ topologies:
               cpu: 32
               ram: 54
             branch: nested/2021.2
+            orderable: true
+            image: base-atd-dual-datacenter-ceos-c2021-2-0-20211014
+            eos:
+              - 4.27.0F
+      veos:
+        cpu: 32
+        ram: 54
+        cvp:
+          2021.2.0:
+            resources:
+              cpu: 32
+              ram: 54
+            branch: nested/2021.2
             orderable: false
             image: base-atd-dual-datacenter-ceos-c2021-2-0-20211014
             eos:
