@@ -62,7 +62,7 @@ topologies:
               cpu: 32
               ram: 48
             branch: nested/2021.3
-            orderable: true
+            orderable: false
             image: base-atd-datacenter-ceos-c2021-3-0-e5-20211221
             eos:
               - 4.27.0F
