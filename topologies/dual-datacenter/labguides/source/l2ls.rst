@@ -2,8 +2,10 @@ Layer 2 Leaf-Spine
 ==================
 
 
-.. image:: images/l2ls/nested_l2ls_topo.png
+.. thumbnail:: images/l2ls/nested_l2ls_topo.png
    :align: center
+   
+      Click image to enlarge
 
 1. Log into the **LabAccess** jumpserver to prepare the lab environment:
 
