@@ -3,15 +3,15 @@ no spanning-tree vlan-id 4094
 vlan 4094
    trunk group MLAGPEER
 !
-interface Port-Channel5
-   description MLAG Downlink - s1-host2
-   switchport access vlan 134
-   mlag 5
-!
 interface Port-Channel1
    description MLAG Peer-link - s1-leaf3
    switchport mode trunk
    switchport trunk group MLAGPEER
+!
+interface Port-Channel5
+   description MLAG Downlink - s1-host2
+   switchport access vlan 134
+   mlag 5
 !
 interface Ethernet1
    description MLAG Peer-link - s1-leaf3
