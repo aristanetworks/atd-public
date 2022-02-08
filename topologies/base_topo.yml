@@ -62,10 +62,20 @@ topologies:
               cpu: 32
               ram: 48
             branch: nested/2021.2
-            orderable: true
+            orderable: false
             image: base-atd-datacenter-ceos-c2021-2-0-20211014
             eos:
               - 4.27.0F
+          2021.2.2:
+            resources:
+              cpu: 32
+              ram: 48
+            branch: nested/2021.2
+            orderable: true
+            image: base-atd-datacenter-ceos-c2021-2-2-20220208
+            eos:
+              - 4.27.1.1F
+              - 4.26.2F
           2021.3.0:
             resources:
               cpu: 32
@@ -102,10 +112,19 @@ topologies:
               cpu: 38
               ram: 64
             branch: nested/2021.2
-            orderable: true
+            orderable: false
             image: base-atd-datacenter-e4-27-0f-c2021-2-0-20211014
             eos:
               - 4.26.2F
+          2021.2.2:
+            resources:
+              cpu: 38
+              ram: 64
+            branch: nested/2021.2
+            orderable: true
+            image: base-atd-datacenter-e4-27-1-1f-c2021-2-2-20220208
+            eos:
+              - 4.27.1.F
           2021.3.0:
             resources:
               cpu: 38
@@ -183,6 +202,15 @@ topologies:
             image: base-atd-routing-e4-27-0f-c2021-2-0-20211018
             eos:
               - 4.27.0F
+          2021.2.2:
+            resources:
+              cpu: 44
+              ram: 90
+            branch: nested/2021.2
+            orderable: true
+            image: base-atd-routing-e4-27-1-1f-c2021-2-2-20220208
+            eos:
+              - 4.27.1.1F
           2021.3.0:
             resources:
               cpu: 44
@@ -210,10 +238,20 @@ topologies:
               cpu: 32
               ram: 64
             branch: nested/2021.2
-            orderable: true
+            orderable: false
             image: base-atd-routing-ceos-c2021-2-0-20211014
             eos:
               - 4.27.0F
+          2021.2.2:
+            resources:
+              cpu: 32
+              ram: 64
+            branch: nested/2021.2
+            orderable: true
+            image: base-atd-routing-ceos-c2021-2-2-20220208
+            eos:
+              - 4.27.1.1F
+              - 4.26.2F
           2021.3.0:
             resources:
               cpu: 32
