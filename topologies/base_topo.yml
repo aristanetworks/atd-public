@@ -17,13 +17,14 @@ topologies:
               - 4.27.0F
           2021.3.0:
             resources:
-              cpu: 32
+              cpu: 36
               ram: 54
             branch: nested/2021.3
             orderable: true
             image: base-atd-dual-datacenter-ceos-c2021-3-0-20220207
             eos:
               - 4.27.1.1F
+              - 4.27.2F
     # prod:
     #   veos:
     #     cpu: 32
@@ -78,13 +79,14 @@ topologies:
               - 4.26.2F
           2021.3.0:
             resources:
-              cpu: 32
+              cpu: 36
               ram: 48
             branch: nested/2021.3
             orderable: true
             image: base-atd-datacenter-ceos-c2021-3-0-20220207
             eos:
               - 4.27.1.1F
+              - 4.27.2F
           2021.3.0.e5:
             resources:
               cpu: 32
@@ -127,7 +129,7 @@ topologies:
               - 4.27.1.F
           2021.3.0:
             resources:
-              cpu: 38
+              cpu: 40
               ram: 64
             branch: nested/2021.3
             orderable: true
@@ -213,7 +215,7 @@ topologies:
               - 4.27.1.1F
           2021.3.0:
             resources:
-              cpu: 44
+              cpu: 50
               ram: 90
             branch: nested/2021.3
             orderable: true
@@ -254,13 +256,14 @@ topologies:
               - 4.26.2F
           2021.3.0:
             resources:
-              cpu: 32
+              cpu: 36
               ram: 64
             branch: nested/2021.3
             orderable: true
             image: base-atd-routing-ceos-c2021-3-0-20220207
             eos:
               - 4.27.1.1F
+              - 4.27.2F
           2021.3.0.e5:
             resources:
               cpu: 32
