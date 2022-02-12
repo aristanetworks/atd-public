@@ -2,7 +2,7 @@ Layer 3 Leaf-Spine
 ==================
 
 ..
-  NOTE TO THE EDITOR OF THIS LAB GUIDE FOR DUAL DC!!!! I REMOVED THE VLANs CONFIGLET SO YOU NEED TO ADD A STEP TO CREATE VLAN 34
+   NOTE TO THE EDITOR OF THIS LAB GUIDE FOR DUAL DC!!!! I REMOVED THE VLANs CONFIGLET SO YOU NEED TO ADD A STEP TO CREATE VLAN 34
 
 .. image:: images/l3ls/nested_l3ls_topo_1.png
    :align: center
@@ -10,200 +10,226 @@ Layer 3 Leaf-Spine
 .. note:: Did you know the “bgp” script is composed of Python code that
           uses the CloudVision Portal REST API to automate the provisioning of
           CVP Configlets. The configlets that are configured via the REST API
-          are ``Spine1-BGP-Lab``, ``Spine2-BGP-Lab``, ``Leaf1-BGP-Lab``,
-          ``Leaf2-BGP-Lab``, ``Leaf3-BGP-Lab``, ``Leaf4-BGP-Lab``.
+          are ``L3LS_s1-spine1``, ``L3LS_s1-spine2``, ``L3LS_s1-leaf1``,
+          ``L3LS_s1-leaf2``, ``L3LS_s1-leaf3``, ``L3LS_s1-leaf4``.
 
 .. note:: The manually-entered commands below that are part of this lab are
-          equivalent to ``Leaf4-BGP-Lab-Full``.
+          equivalent to ``L3LS_s1-leaf4_complete``.
 
 
 1. Log into the **LabAccess** jumpserver:
 
-   1. Type ``bgp`` at the prompt. The script will configure the datacenter with the exception of **Leaf4**.
+   a. Type ``bgp`` at the prompt. The script will configure the datacenter with the exception of **s1-leaf4**.
+   
+   |
+#. Configure SVI and VARP Virtual IP on the **s1-leaf4** switch using the following criteria
 
-2. Configure SVI and VARP Virtual IP on the **Leaf4** switch using the following criteria
+   a. Create the vARP MAC Address in Global Configuration mode
+   
+      .. note::
 
-   1. Create the vARP MAC Address in Global Configuration mode
+         Arista EOS utilizes the Industry-Standard CLI. When entering configuration commands, be 
+         sure to first type ``configure`` to enter configuration mode.
 
-        .. code-block:: text
+      .. code-block:: text
 
-            configure
-            ip virtual-router mac-address 00:1c:73:00:00:34
+         ip virtual-router mac-address 00:1c:73:00:00:34
 
-   2. Create the SVI and the Virtual Router Address
+   #. Create the VLAN, SVI and the Virtual Router Address
 
-        .. code-block:: text
+      .. code-block:: text
 
-            configure
-            interface vlan 34
-              ip address 172.16.116.3/24
-              ip virtual-router address 172.16.116.1
+         vlan 134
+            name Host_Network_134
+         !
+         interface vlan 134
+            ip address 10.111.134.3/24
+            ip virtual-router address 10.111.134.1
 
-   3. Validate the configuration issue the following commands
+   #. Validate the configuration issue the following commands
 
-        .. code-block:: text
+      .. code-block:: text
 
-            show ip interface brief
-            show ip virtual-router
+         show ip interface brief
+         show ip virtual-router
 
-3. Configure BGP on the **Leaf4** switch using the following criteria
+#. Configure BGP on the **s1-leaf4** switch using the following criteria
 
-   1. Based on the diagram, configure L3 interfaces to **Spine1/Spine2** and interface Loopback0
+   a. Based on the diagram, configure L3 interfaces to **s1-spine1/s1-spine2** and interface Loopback0
 
-        .. code-block:: text
+      .. code-block:: text
 
-            configure
-            interface ethernet2
-              description SPINE1
-              no switchport
-              ip address 172.16.200.14/30
+         interface Ethernet2
+            description L3 Uplink - s1-spine1
+            no switchport
+            ip address 10.111.1.7/31
+         !
+         interface Ethernet3
+            description L3 Uplink - s1-spine2
+            no switchport
+            ip address 10.111.2.7/31
+         !
+         interface Loopback0
+            description Management and Router-id
+            ip address 10.111.254.4/32
 
-            interface ethernet3
-              description SPINE2
-              no switchport
-              ip address 172.16.200.30/30
+   #. Validate the configuration issue the following commands
 
-            interface loopback0
-              ip address 172.16.0.6/32
+      .. code-block:: text
 
-   2. Validate the configuration issue the following commands
+         show ip interface brief
 
-        .. code-block:: text
+   #. Based on the diagram, turn on BGP and configure the neighbor
+      relationships on **s1-leaf4**. eBGP to **s1-spine1/s1-spine2** and iBGP to **s1-leaf3**.
+      
+      .. note:: 
+         We are using a peer group to configure the neighbor attributes for the spines. This allows
+         us to apply all bgp attributes within a group to each neighbor that is a member in a scalable method.
 
-            show ip interface brief
+      .. code-block:: text
 
-   3. Based on the diagram, turn on BGP and configure the neighbor
-      relationships on **Leaf4**. eBGP to **Spine1/Spine2** and iBGP to **Leaf3**.
+         router bgp 65102
+            router-id 10.111.254.4
+            neighbor SPINE peer group
+            neighbor SPINE remote-as 65100
+            neighbor SPINE send-community standard extended
+            neighbor 10.111.1.6 peer group SPINE
+            neighbor 10.111.2.6 peer group SPINE
+            neighbor 10.255.255.1 remote-as 65102
+            neighbor 10.255.255.1 next-hop-self
 
-        .. code-block:: text
+      .. note::
+         
+         Since ``neighbor 10.255.255.1 remote-as 65102`` specifies an iBGP
+         peering relationship (because the ASN is the same as this switch
+         ``65102``), the receiving switch may not have a route to networks more
+         than 1 hop away, hence the switches should each advertise that they are
+         the next hop via the ``neighbor 10.255.255.1 next-hop-self`` statement. While
+         this scenario is only 2 iBGP peers, in a network fabric with several iBGP
+         peers, a switch inside an AS (and not on an edge) may not have a route
+         to a switch in any external AS.
 
-            configure
-            router bgp 65002
-              router-id 172.16.0.6
-              neighbor 172.16.200.13 remote-as 65000
-              neighbor 172.16.200.29 remote-as 65000
-              neighbor 172.16.34.1 remote-as 65002
-              neighbor 172.16.34.1 next-hop-self
+   #. Validate the configuration and neighbor establishment
 
-      .. note:: Since ``neighbor 172.16.34.1 remote-as 65002`` specifies an iBGP
-       peering relationship (because the ASN is the same as this switch
-       ``65002``) the receiving switch may not have a route to networks more
-       than 1 hop away, hence the switches should each advertise that they are
-       the next hop via the ``neighbor 172.16.34.1 next-hop-self`` statement. While this scenario is
-       only 2 iBGP peers, in a network fabric with several iBGP peers, a
-       switch inside an AS (and not on an edge) may not have a route to a
-       switch in any external AS.
+      .. code-block:: text
 
-   4. Validate the configuration and neighbor establishment
+         show active
+         show ip bgp summary
 
-        .. code-block:: text
+#. Configure networks on **s1-leaf4** to advertise to **s1-spine1/s1-spine2**
 
-            show active
-            show ip bgp summary
+   a. Add the following networks to BGP announcements on **s1-leaf4**:
 
-4. Configure networks on **Leaf4** to advertise to **Spine1/Spine2**
+      .. code-block:: text
 
-   1. Add the following networks to BGP announcements on **Leaf4**:
+         router bgp 65102
+            network 10.111.134.0/24
+            network 10.111.254.4/32
 
-        .. code-block:: text
+   #. Verify all of the **Spines** and **Leafs** see these new network announcements
 
-            configure
-            router bgp 65002
-              network 172.16.0.6/32
-              network 172.16.116.0/24
+      .. code-block:: text
 
-   2. Verify all of the **Spines** and **Leafs** see these new network announcements
+         show ip route
+         show ip bgp
+         show ip route bgp
 
-        .. code-block:: text
+   #. Add in multiple paths by enabling ECMP, on **s1-leaf4**, jump into BGP configuration mode and add:
 
-            show ip route
-            show ip bgp
-            show ip route bgp
+      .. code-block:: text
 
-   3. Add in multiple paths by enabling ECMP, on **Leaf4**, jump into BGP configuration mode and add:
+         router bgp 65102
+            maximum-paths 2
 
-        .. code-block:: text
+   #. Check the BGP and IP route tables on each of the **Spines** and **Leafs**
 
-            configure
-            router bgp 65002
-              maximum-paths 4 ecmp 4
+      .. code-block:: text
 
-   4. Check the BGP and IP route tables on each of the **Spines** and **Leafs**
-
-        .. code-block:: text
-
-            show ip bgp
-            show ip route
-            show ip route bgp
+         show ip bgp
+         show ip route
+         show ip route bgp
 
       .. note:: ECMP is now working - notice the new status code in the `show ip bgp` output
 
-5. Validate connectivity from **Host1** to **Host2**. From **Host1** execute:
+#. Validate connectivity from **s1-host1** to **s1-host2**. From **s1-host1** execute:
 
-        .. code-block:: text
+   .. code-block:: text
 
-            ping 172.16.116.100
-            traceroute 172.16.116.100
+      ping 10.111.134.202
+      traceroute 10.111.134.202
 
-   1. Verify Leaf4's IP address is in the traceroute path, either interface 172.16.200.14 via spine1 or  interface 172.16.200.30 via spine2.
-      If traffic is hashing via leaf3's 172.16.200.10 or 172.16.200.26 interfaces perform the optional ``shutdown`` steps below on **Leaf3**
+   a. Verify **s1-leaf4**'s IP address is in the traceroute path, either interface 10.111.1.7 via **s1-spine1** or interface 10.111.2.7 via **s1-spine2**.
+      If traffic is hashing via **s1-leaf3**'s 10.111.1.5 or 10.111.2.5 interfaces perform the optional ``shutdown`` steps below on **s1-leaf3**
 
-        .. code-block:: text
+      .. code-block:: text
 
-            configure
-            router bgp 65002
-              neighbor 172.16.200.9 shutdown
-              neighbor 172.16.200.25 shutdown
+         router bgp 65102
+            neighbor 10.111.1.4 shutdown
+            neighbor 10.111.2.4 shutdown
 
-   2. Rerun traceroute/verification from **Host1** to **Host2** then revert the ``shutdown`` changes on **Leaf3**
+   #. Rerun traceroute/verification from **s1-host1** to **s1-host2** then revert the ``shutdown`` changes on **s1-leaf3**
 
-        .. code-block:: text
+      .. code-block:: text
 
-            configure
-            router bgp 65002
-              no neighbor 172.16.200.9 shutdown
-              no neighbor 172.16.200.25 shutdown
+         router bgp 65102
+            no neighbor 10.111.1.4 shutdown
+            no neighbor 10.111.2.4 shutdown
 
-6. Other BGP features to play with if you have time:
+#. Other BGP features to play with if you have time:
 
-   1. Route Redistribution: For fun do a ``watch 1 diff show ip route | begin
-      Gateway`` on **Leaf1** & **Leaf2** and let those run while you execute the
-      command ``redistribute connected`` below on **Leaf3**. You will see new routes being
-      injected into the route tables of **Leaf1** & **Leaf2**.
+   a. Route Redistribution: For fun do a ``watch 1 diff show ip route | begin
+      Gateway`` on **s1-leaf1** & **s1-leaf2** and let those run while you execute the
+      command ``redistribute connected`` below on **s1-leaf3**. You will see new routes being
+      injected into the route tables of **s1-leaf1** & **s1-leaf2**.
 
-        .. code-block:: text
+      .. code-block:: text
 
-            configure
-            router bgp 65002
-              redistribute connected
+         router bgp 65102
+            redistribute connected
 
-   2. Route Maps:
+   #. Route Maps and Prefix-Lists:
 
-        .. code-block:: text
+      .. code-block:: text
+         
+         <Example>
 
-            configure
-              route-map <name> etc
+         ip prefix-list BOGON-Prefixes seq 10 permit 10.0.0.0/8
+         ip prefix-list BOGON-Prefixes seq 20 permit 172.16.0.0/12
+         ip prefix-list BOGON-Prefixes seq 30 permit 192.168.0.0/16
+         !
+         route-map BOGONS permit 10
+         match ip address prefix-list BOGON-Prefixes
+         !
+         route-map BOGONS deny 20
+         !
+         route-map InboundSP1 deny 10
+         sub-route-map BOGONS
+         !
+         route-map InboundSP1 permit 20
+         set local-preference 200
+         !
+         router bgp 65000
+            neighbor UpstreamSP1 route-map InboundSP1 in
 
-   3. BFD: BFD is a low-overhead, protocol-independent mechanism which adjacent
+   #. BFD: BFD is a low-overhead, protocol-independent mechanism which adjacent
       systems can use instead for faster detection of faults in the path between
       them. BFD is a simple mechanism which detects the liveness of a connection
       between adjacent systems, allowing it to quickly detect failure of any
       element in the connection.
 
-        .. code-block:: text
+      .. code-block:: text
 
-            configure
-            router bgp 65002
-              neighbor <neighbor_ip> bfd
+         router bgp 65102
+            neighbor <neighbor_ip> bfd
 
-7. Troubleshooting BGP:
+#. Troubleshooting BGP:
 
-    .. code-block:: text
+   .. code-block:: text
 
-        show ip bgp summary
-        show ip bgp
-        show ip bgp neighbor x.x.x.x
-        show run section bgp
-        show log
+      show ip bgp summary
+      show ip bgp
+      show ip bgp neighbor <neighbor_ip>
+      show run section bgp
+      show log
 
 **LAB COMPLETE!**
