@@ -9,21 +9,21 @@ Layer 3 Leaf-Spine
 
       Click image to enlarge
 
-.. note:: Did you know the “bgp” script is composed of Python code that
-          uses the CloudVision Portal REST API to automate the provisioning of
-          CVP Configlets. The configlets that are configured via the REST API
-          are ``L3LS_s1-spine1``, ``L3LS_s1-spine2``, ``L3LS_s1-leaf1``,
-          ``L3LS_s1-leaf2``, ``L3LS_s1-leaf3``, ``L3LS_s1-leaf4``.
-
 .. note:: The manually-entered commands below that are part of this lab are
           equivalent to ``L3LS_s1-leaf4_complete``.
 
 
 1. Log into the **LabAccess** jumpserver:
 
-   a. Type ``bgp`` at the prompt. The script will configure the datacenter with the exception of **s1-leaf4**.
-   
-   |
+   a. Type ``l3ls`` at the prompt. The script will configure the datacenter with the exception of **s1-leaf4**.
+
+      .. note::
+         Did you know the “l3ls” script is composed of Python code that
+         uses the CloudVision Portal REST API to automate the provisioning of
+         CVP Configlets. The configlets that are configured via the REST API
+         are ``L3LS_s1-spine1``, ``L3LS_s1-spine2``, ``L3LS_s1-leaf1``,
+         ``L3LS_s1-leaf2``, ``L3LS_s1-leaf3``, ``L3LS_s1-leaf4``.
+
 #. Configure SVI and VARP Virtual IP on the **s1-leaf4** switch using the following criteria
 
    a. Create the vARP MAC Address in Global Configuration mode
@@ -48,7 +48,7 @@ Layer 3 Leaf-Spine
             ip address 10.111.134.3/24
             ip virtual-router address 10.111.134.1
 
-   #. Validate the configuration issue the following commands
+   #. Validate the configuration with the following:
 
       .. code-block:: text
 
@@ -75,7 +75,7 @@ Layer 3 Leaf-Spine
             description Management and Router-id
             ip address 10.111.254.4/32
 
-   #. Validate the configuration issue the following commands
+   #. Validate the configuration with the following:
 
       .. code-block:: text
 
