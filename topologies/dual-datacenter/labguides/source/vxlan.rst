@@ -17,7 +17,7 @@ VxLAN
 
 1. Log into the LabAccess jumpserver:
 
-   1. Type ``vxlan`` at the prompt. The script will configure the datacenter with the exception of **s1-leaf3**.
+   1. Type ``vxlan`` at the prompt. The script will configure the datacenter with the exception of **s1-leaf4**.
 
 2. On **s1-leaf4**, configure Port-channels connecting to **s1-host2**
 
