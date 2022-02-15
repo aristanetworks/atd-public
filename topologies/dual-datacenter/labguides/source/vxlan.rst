@@ -67,7 +67,7 @@ VxLAN
                                                                         local/remote
           mlag       desc             state       local       remote          status
        ---------- ---------- ----------------- ----------- ------------ ------------
-             5       foo        active-full         Po5          Po5           up/up
+             5       MLAG - HOST2        active-full         Po5          Po5           up/up
         
        s1-leaf4(config)#show port-channel dense
 
