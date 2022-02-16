@@ -13,11 +13,13 @@ L2 EVPN
 
    Type ``l2evpn`` at the prompt. The script will configure the datacenter with the exception of **s1-leaf4**
 
-#. On **s1-leaf4**, configure ArBGP. **(Already configured and enabled on the switch)**
+#. On **s1-leaf4**, check if ArBGP is configured.
 
-   .. code-block:: html
+   .. code-block:: text
+      :emphasize-lines: 1,2
 
-      service routing protocols model multi-agent
+       s1-leaf4#sh run section service
+       service routing protocols model multi-agent
 
    .. note:: By default, EOS is using GateD routing process. Activating ArBGP is requiring a reboot.
 
@@ -77,7 +79,7 @@ L2 EVPN
    c. Check the ip routing table:
 
       .. code-block:: text
-         :emphasize-lines: 1
+         :emphasize-lines: 1,25,26,28,29,30,31
 
           s1-leaf4(config-router-bgp)#sh ip route
 
@@ -192,7 +194,7 @@ L2 EVPN
 
       .. code-block:: html
 
-         router bgp 65103
+         router bgp 65102
             vlan 112
                rd auto
                route-target both 112:112
@@ -315,54 +317,70 @@ L2 EVPN
         --- 10.111.112.202 ping statistics ---
         5 packets transmitted, 5 received, 0% packet loss, time 61ms
           
-   #. On **s1-leaf1** 
+   #. On **s1-leaf1**, check the MAC address-table :
 
       .. code-block:: text
         :emphasize-lines: 1,8
  
-       s1-leaf1#show mac address-table dynamic 
-       Mac Address Table
-       ------------------------------------------------------------------
- 
-       Vlan    Mac Address       Type        Ports      Moves   Last Move
-       ----    -----------       ----        -----      -----   ---------
-       112    001c.73c0.c616    DYNAMIC     Po5        1       0:00:41 ago
-       112    001c.73c0.c617    DYNAMIC     Vx1        1       0:00:41 ago
-       Total Mac Addresses for this criterion: 2
-             Multicast Mac Address Table
-       ------------------------------------------------------------------
- 
-       Vlan    Mac Address       Type        Ports
-       ----    -----------       ----        -----
-       Total Mac Addresses for this criterion: 0
+        s1-leaf1#show mac address-table dynamic 
+        Mac Address Table
+        ------------------------------------------------------------------
+  
+        Vlan    Mac Address       Type        Ports      Moves   Last Move
+        ----    -----------       ----        -----      -----   ---------
+        112    001c.73c0.c616    DYNAMIC     Po5        1       0:00:41 ago
+        112    001c.73c0.c617    DYNAMIC     Vx1        1       0:00:41 ago
+        Total Mac Addresses for this criterion: 2
+              Multicast Mac Address Table
+        ------------------------------------------------------------------
+  
+        Vlan    Mac Address       Type        Ports
+        ----    -----------       ----        -----
+        Total Mac Addresses for this criterion: 0
 
       .. note:: s1-host2 MAC is seen thru the interface Vxlan 1      
        
+   #. On **s1-leaf1**, check the EVPN control-plane for RT-2 : 
+
       .. code-block:: text
         :emphasize-lines: 1,15,16,17
 
-       s1-leaf1#show bgp evpn route-type mac-ip 
-       BGP routing table information for VRF default
-       Router identifier 10.111.254.1, local AS number 65101
-       Route status codes: s - suppressed, * - valid, > - active, E - ECMP head, e - ECMP
-                           S - Stale, c - Contributing to ECMP, b - backup
-                           % - Pending BGP convergence
-       Origin codes: i - IGP, e - EGP, ? - incomplete
-       AS Path Attributes: Or-ID - Originator ID, C-LST - Cluster List, LL Nexthop - Link Local Nexthop 
+        s1-leaf1#show bgp evpn route-type mac-ip 
+        BGP routing table information for VRF default
+        Router identifier 10.111.254.1, local AS number 65101
+        Route status codes: s - suppressed, * - valid, > - active, E - ECMP head, e - ECMP
+                            S - Stale, c - Contributing to ECMP, b - backup
+                            % - Pending BGP convergence
+        Origin codes: i - IGP, e - EGP, ? - incomplete
+        AS Path Attributes: Or-ID - Originator ID, C-LST - Cluster List, LL Nexthop - Link Local Nexthop 
 
-                 Network                Next Hop              Metric  LocPref Weight  Path
-       * >     RD: 10.111.254.1:112 mac-ip 001c.73c0.c616
-                                       -                     -       -       0       i
-       * >     RD: 10.111.254.1:112 mac-ip 001c.73c0.c616 10.111.112.201
-                                       -                     -       -       0       i
-       * >Ec   RD: 10.111.254.3:112 mac-ip 001c.73c0.c617
-                                       10.111.253.3          -       100     0       65100 65102 i
-       *  ec   RD: 10.111.254.3:112 mac-ip 001c.73c0.c617
-                                       10.111.253.3          -       100     0       65100 65102 i
-       * >Ec   RD: 10.111.254.4:112 mac-ip 001c.73c0.c617
-                                       10.111.253.3          -       100     0       65100 65102 i
-       *  ec   RD: 10.111.254.4:112 mac-ip 001c.73c0.c617
-                                       10.111.253.3          -       100     0       65100 65102 i
+                  Network                Next Hop              Metric  LocPref Weight  Path
+        * >     RD: 10.111.254.1:112 mac-ip 001c.73c0.c616
+                                        -                     -       -       0       i
+        * >     RD: 10.111.254.1:112 mac-ip 001c.73c0.c616 10.111.112.201
+                                        -                     -       -       0       i
+        * >Ec   RD: 10.111.254.3:112 mac-ip 001c.73c0.c617
+                                        10.111.253.3          -       100     0       65100 65102 i
+        *  ec   RD: 10.111.254.3:112 mac-ip 001c.73c0.c617
+                                        10.111.253.3          -       100     0       65100 65102 i
+        * >Ec   RD: 10.111.254.4:112 mac-ip 001c.73c0.c617
+                                        10.111.253.3          -       100     0       65100 65102 i
+        *  ec   RD: 10.111.254.4:112 mac-ip 001c.73c0.c617
+                                        10.111.253.3          -       100     0       65100 65102 i
+
+   #. On **s1-leaf1**, check the VXLAN data-plane for MAC address : 
+
+      .. code-block:: text
+        :emphasize-lines: 1,7
+
+        s1-leaf1#sh vxlan address-table evpn 
+          Vxlan Mac Address Table
+        ----------------------------------------------------------------------
+
+        VLAN  Mac Address     Type      Prt  VTEP             Moves   Last Move
+        ----  -----------     ----      ---  ----             -----   ---------
+        112  001c.73c0.c617  EVPN      Vx1  10.111.253.3     1       0:00:57 ago
+        Total Remote Mac Addresses for this criterion: 1
 
       .. note::
         - EVPN-VXLAN is respecting the MAC source learning mechanism 
