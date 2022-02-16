@@ -90,7 +90,7 @@ router bgp 65102
    neighbor 10.111.0.2 peer group SPINE-EVPN
    neighbor 10.111.1.4 peer group SPINE
    neighbor 10.111.2.4 peer group SPINE
-   neighbor 10.255.255.2 peer group 65102
+   neighbor 10.255.255.2 peer group MLAG
    !
    vlan 112
       rd auto

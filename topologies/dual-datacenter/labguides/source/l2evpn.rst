@@ -19,6 +19,8 @@ L2 EVPN
 
       service routing protocols model multi-agent
 
+   .. note:: By default, EOS is using GateD routing process. Activating ArBGP is requiring a reboot.
+
 #. On **s1-leaf4**, check the following operational states before configuring EVPN constructs:
 
    a. Verify EOS MLAG operational details.
@@ -55,7 +57,7 @@ L2 EVPN
             mlag       desc                                 state       local       remote          status
           ---------- ------------------------------ ----------------- ----------- ------------ ------------
                 5       MLAG Downlink - s1-host2       active-full         Po5          Po5           up/up
-         
+          
    b. Verify BGP operational details for Underlay:
    
       .. code-block:: text
@@ -132,6 +134,10 @@ L2 EVPN
            !
            address-family evpn
               neighbor SPINE-EVPN activate
+
+      .. note:: 
+        - BGP EVPN session will use interface Loopback0
+        - Extended community have to be activated in order to manage BGP EVPN NLRI 
 
    #. Check the EVPN control plane: 
 
@@ -246,7 +252,7 @@ L2 EVPN
    a. On **s1-leaf1** (and/or **s1-leaf2**) verify the IMET table
 
       .. code-block:: text
-        :emphasize-lines: 1
+        :emphasize-lines: 1,11,12
 
          s1-leaf1#sh bgp evpn route-type imet 
          BGP routing table information for VRF default
@@ -268,8 +274,11 @@ L2 EVPN
                                          10.111.253.3          -       100     0       65100 65102 i
          * >     RD: 10.111.254.1:112 imet 10.111.253.1
                                          -                     -       -       0       i
+      
+      .. note:: s1-leaf4 has signaled its membership to VNI 112 via EVPN RT-3 route (RD: 10.111.254.3:112)        
+      
       .. code-block:: text
-        :emphasize-lines: 1
+        :emphasize-lines: 1,13,14
 
         s1-leaf1#sh interfaces vxlan 1
         Vxlan1 is up, line protocol is up (connected)
@@ -287,6 +296,10 @@ L2 EVPN
           112 10.111.253.3   
           MLAG Shared Router MAC is 0000.0000.0000
 
+      .. note:: 
+        - EVPN RT-3 route has been used for building the appropriate flood list 
+        - s1-leaf4 knows where to send the BUM traffic for VNI 112 (HER).
+
    #. Log into **s1-host1** and ping **s2-host2**
 
       .. code-block:: text
@@ -302,50 +315,59 @@ L2 EVPN
         --- 10.111.112.202 ping statistics ---
         5 packets transmitted, 5 received, 0% packet loss, time 61ms
           
-   #. On **s1-leaf1** and **s1-leaf4**
+   #. On **s1-leaf1** 
 
-        .. code-block:: text
+      .. code-block:: text
+        :emphasize-lines: 1,8
+ 
+       s1-leaf1#show mac address-table dynamic 
+       Mac Address Table
+       ------------------------------------------------------------------
+ 
+       Vlan    Mac Address       Type        Ports      Moves   Last Move
+       ----    -----------       ----        -----      -----   ---------
+       112    001c.73c0.c616    DYNAMIC     Po5        1       0:00:41 ago
+       112    001c.73c0.c617    DYNAMIC     Vx1        1       0:00:41 ago
+       Total Mac Addresses for this criterion: 2
+             Multicast Mac Address Table
+       ------------------------------------------------------------------
+ 
+       Vlan    Mac Address       Type        Ports
+       ----    -----------       ----        -----
+       Total Mac Addresses for this criterion: 0
 
-          s1-leaf1#show mac address-table dynamic 
-          Mac Address Table
-          ------------------------------------------------------------------
+      .. note:: s1-host2 MAC is seen thru the interface Vxlan 1      
+       
+      .. code-block:: text
+        :emphasize-lines: 1,15,16,17
 
-          Vlan    Mac Address       Type        Ports      Moves   Last Move
-          ----    -----------       ----        -----      -----   ---------
-          112    001c.73c0.c616    DYNAMIC     Po5        1       0:00:41 ago
-          112    001c.73c0.c617    DYNAMIC     Vx1        1       0:00:41 ago
-          Total Mac Addresses for this criterion: 2
+       s1-leaf1#show bgp evpn route-type mac-ip 
+       BGP routing table information for VRF default
+       Router identifier 10.111.254.1, local AS number 65101
+       Route status codes: s - suppressed, * - valid, > - active, E - ECMP head, e - ECMP
+                           S - Stale, c - Contributing to ECMP, b - backup
+                           % - Pending BGP convergence
+       Origin codes: i - IGP, e - EGP, ? - incomplete
+       AS Path Attributes: Or-ID - Originator ID, C-LST - Cluster List, LL Nexthop - Link Local Nexthop 
 
-                    Multicast Mac Address Table
-          ------------------------------------------------------------------
+                 Network                Next Hop              Metric  LocPref Weight  Path
+       * >     RD: 10.111.254.1:112 mac-ip 001c.73c0.c616
+                                       -                     -       -       0       i
+       * >     RD: 10.111.254.1:112 mac-ip 001c.73c0.c616 10.111.112.201
+                                       -                     -       -       0       i
+       * >Ec   RD: 10.111.254.3:112 mac-ip 001c.73c0.c617
+                                       10.111.253.3          -       100     0       65100 65102 i
+       *  ec   RD: 10.111.254.3:112 mac-ip 001c.73c0.c617
+                                       10.111.253.3          -       100     0       65100 65102 i
+       * >Ec   RD: 10.111.254.4:112 mac-ip 001c.73c0.c617
+                                       10.111.253.3          -       100     0       65100 65102 i
+       *  ec   RD: 10.111.254.4:112 mac-ip 001c.73c0.c617
+                                       10.111.253.3          -       100     0       65100 65102 i
 
-          Vlan    Mac Address       Type        Ports
-          ----    -----------       ----        -----
-          Total Mac Addresses for this criterion: 0
-         
-        .. code-block:: text
-
-          s1-leaf1#show bgp evpn route-type mac-ip 
-          BGP routing table information for VRF default
-          Router identifier 10.111.254.1, local AS number 65101
-          Route status codes: s - suppressed, * - valid, > - active, E - ECMP head, e - ECMP
-                              S - Stale, c - Contributing to ECMP, b - backup
-                              % - Pending BGP convergence
-          Origin codes: i - IGP, e - EGP, ? - incomplete
-          AS Path Attributes: Or-ID - Originator ID, C-LST - Cluster List, LL Nexthop - Link Local Nexthop
-
-                    Network                Next Hop              Metric  LocPref Weight  Path
-          * >     RD: 10.111.254.1:112 mac-ip 001c.73c0.c616
-                                          -                     -       -       0       i
-          * >     RD: 10.111.254.1:112 mac-ip 001c.73c0.c616 10.111.112.201
-                                          -                     -       -       0       i
-          * >Ec   RD: 10.111.254.3:112 mac-ip 001c.73c0.c617
-                                          10.111.253.3          -       100     0       65100 65102 i
-          *  ec   RD: 10.111.254.3:112 mac-ip 001c.73c0.c617
-                                          10.111.253.3          -       100     0       65100 65102 i
-          * >Ec   RD: 10.111.254.4:112 mac-ip 001c.73c0.c617
-                                          10.111.253.3          -       100     0       65100 65102 i
-          *  ec   RD: 10.111.254.4:112 mac-ip 001c.73c0.c617
-                                          10.111.253.3          -       100     0       65100 65102 i
+      .. note::
+        - EVPN-VXLAN is respecting the MAC source learning mechanism 
+        - the ping request has been flood across the network
+        - s1-leaf4 (and s1-leaf3) has sent a RT-2 message when it learnt s1-host2 MAC from the ping sent by s1-host2  
+        - s1-leaf1 has 4 paths to reach 001c.73c0.c617 : 2 to each remote VTEP 
 
 **LAB COMPLETE!**
