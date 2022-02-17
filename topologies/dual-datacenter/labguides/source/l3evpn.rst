@@ -1,16 +1,16 @@
 L3 EVPN
 =======
 
-.. image:: images/l3evpn/nested_l3evpn_topo_1.png
+.. image:: images/l3evpn/nested_l3evpn_topo_dual_dc.png
    :align: center
 
-.. note:: This lab exercise will not enable MLAG.
+.. note:: This lab exercise is focused on the EVPN-VXLAN configuration. IP addresses, MLAG and BGP Underlay are already configured.
 
 1. Log into the  **LabAccess**  jumpserver:
 
-   1. Type ``l3evpn`` at the prompt. The script will configure the datacenter with the exception of **leaf3**
+   #. Type ``l3evpn`` at the prompt. The script will configure the datacenter with the exception of **s1-leaf4**
 
-2. On **leaf3**, configure EOS to Mutli-Agent and add loopback0
+#. On **leaf3**, configure EOS to Mutli-Agent and add loopback0
 
    1. **leaf3** enable the Multi-Agent **(Already configured and enabled on the switch)**
 
