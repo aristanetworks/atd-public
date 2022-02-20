@@ -185,7 +185,7 @@ L3 EVPN
 
 #. Configure L3EVPN service on **s1-leaf4**
 
-   a. Configure the VRF
+   a. Configure and activate the ipv4 routing for the vrf **TENANT**
 
       .. code-block:: text
 
@@ -193,15 +193,8 @@ L3 EVPN
          !
          ip routing vrf TENANT
          !
-         router bgp 65102
-            rd auto
-            vrf TENANT
-               route-target import evpn 5001:5001
-               route-target export evpn 5001:5001
-               redistribute connected
-         !
 
-   #. Configure vrf interfaces (start in global configuration mode not BGP)
+   #. Configure vrf interfaces (*start in global configuration mode not BGP*)
 
       .. code-block:: text
 
@@ -212,28 +205,48 @@ L3 EVPN
             vrf TENANT
             ip address virtual 10.111.134.1/24
          !
-         interface vxlan 1
-            vxlan vlan 134 vni 134
-         !
 
       .. note:: 
-        - `ip address virtual` is generally used to conserve IP addresses in VXLAN deployments and can be used to provide an Anycast gateway.
+        - `ip address virtual` is generally used to conserve IP addresses in VXLAN deployments and to provide an Anycast gateway.
         - An alternative is to use `ip virtual router` to avoid the provisioning of a VXLAN for `vlan 134` - Please consult the Aristat documentation for further details.
 
-   #. Map VRF to VNI
+   #. Configure EVPN control plane : MAC-IP and IP-VRF
+
+      .. code-block:: text
+
+          router bgp 65102
+             rd auto
+             !
+             vlan 134
+                rd auto
+                route-target both 134:134
+                redistribute learned
+             !
+             vrf TENANT
+                route-target import evpn 5001:5001
+                route-target export evpn 5001:5001
+                redistribute connected
+          !
+
+      .. note:: 
+        - MAC-IP : same configuration as for L2VPN service
+        - VRF-IP : this is the L3 service - `redistribute connected` is used here for redistributing `10.111.134.0/24` into the EVPN domain
+
+   #. Configure VXLAN data plane : Map VRF and VLAN to VNI
 
       .. code-block:: text
 
          interface Vxlan1
             vxlan source-interface Loopback1
             vxlan virtual-router encapsulation mac-address mlag-system-id
+            vxlan vlan 134 vni 134
             vxlan vrf TENANT vni 5001
          !
 
       .. note::
           - this is S-IRB setup : a specific "L3" VNI is associated to "TENANT" vrf.
-          - all "routed" flows between leafs will be encapsulated with VNI 5001
-          - `vxlan virtual-router encapsulation mac-address mlag-system-id` is for faster convergence and avoid unnecessary peer-link crossing 
+          - all "routed" flows between leaves will be encapsulated with VNI 5001
+          - `vxlan virtual-router encapsulation mac-address mlag-system-id` is for faster convergence and for avoiding unnecessary peer-link crossing 
 
    #. Check the interface Vxlan config
 
