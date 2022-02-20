@@ -153,8 +153,8 @@ L3 EVPN
          Router identifier 10.111.254.4, local AS number 65102
          Neighbor Status Codes: m - Under maintenance
          Neighbor   V AS           MsgRcvd   MsgSent  InQ OutQ  Up/Down State   PfxRcd PfxAcc
-         10.111.0.1 4 65100              6         5    0    0 00:00:03 Estab   2      2
-         10.111.0.2 4 65100              6         4    0    0 00:00:03 Estab   2      2
+         10.111.0.1 4 65100              8         4    0    0 00:00:03 Estab   4      4
+         10.111.0.2 4 65100              8         6    0    0 00:00:03 Estab   4      4
 
       .. note:: Two EVPN sessions are now established toward the spines.
 
@@ -237,7 +237,6 @@ L3 EVPN
       .. code-block:: text
 
          interface Vxlan1
-            vxlan source-interface Loopback1
             vxlan virtual-router encapsulation mac-address mlag-system-id
             vxlan vlan 134 vni 134
             vxlan vrf TENANT vni 5001
