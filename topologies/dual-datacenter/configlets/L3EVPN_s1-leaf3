@@ -80,6 +80,10 @@ router bgp 65102
    rd auto
    maximum-paths 2
    no bgp default ipv4-unicast
+   neighbor MLAG peer group
+   neighbor MLAG remote-as 65102
+   neighbor MLAG next-hop-self
+   neighbor MLAG send-community extended
    neighbor SPINE peer group
    neighbor SPINE remote-as 65100
    neighbor SPINE send-community standard extended
@@ -92,8 +96,7 @@ router bgp 65102
    neighbor 10.111.0.2 peer group SPINE-EVPN
    neighbor 10.111.1.4 peer group SPINE
    neighbor 10.111.2.4 peer group SPINE
-   neighbor 10.255.255.2 remote-as 65102
-   neighbor 10.255.255.2 next-hop-self
+   neighbor 10.255.255.2 peer group MLAG
    !
    vlan 134
       rd auto
@@ -104,6 +107,7 @@ router bgp 65102
       neighbor SPINE-EVPN activate
    !
    address-family ipv4
+      neighbor MLAG activate
       neighbor SPINE activate
       network 10.111.254.3/32
       network 10.111.253.3/32
