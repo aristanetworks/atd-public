@@ -45,6 +45,10 @@ interface Loopback0
    description Management and Router-id
    ip address 10.111.254.4/32
 !
+interface Loopback1
+   description VTEP
+   ip address 10.111.253.3/32
+!
 interface Vlan4094
    description MLAG Peer Network
    ip address 10.255.255.2/30
@@ -60,11 +64,21 @@ mlag configuration
 router bgp 65102
    router-id 10.111.254.4
    maximum-paths 2
+   no bgp default ipv4-unicast
+   neighbor MLAG peer group
+   neighbor MLAG remote-as 65102
+   neighbor MLAG next-hop-self
+   neighbor MLAG send-community extended
    neighbor SPINE peer group
    neighbor SPINE remote-as 65100
    neighbor SPINE send-community standard extended
    neighbor 10.111.1.6 peer group SPINE
    neighbor 10.111.2.6 peer group SPINE
-   neighbor 10.255.255.2 remote-as 65102
-   neighbor 10.255.255.2 next-hop-self
-   network 10.111.254.4/32
+   neighbor 10.255.255.1 peer group MLAG
+   !
+   address-family ipv4
+      neighbor MLAG activate
+      neighbor SPINE activate
+      network 10.111.112.0/24
+      network 10.111.253.3/32
+      network 10.111.254.4/32
