@@ -1,5 +1,4 @@
-p6-BASE:
-hostname CE-A1
+hostname P6
 !
 interface Management1
    vrf MGMT

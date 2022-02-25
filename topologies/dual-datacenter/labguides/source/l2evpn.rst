@@ -2,166 +2,390 @@
 L2 EVPN
 =======
 
-.. image:: images/l2evpn/nested_l2evpn_topo_1.png
+.. thumbnail:: images/l2evpn/nested_l2evpn_topo_dual_dc.png
    :align: center
 
-.. note:: This lab exercise will not enable MLAG.
+      Click image to enlarge
+
+.. note:: This lab exercise is focused on the EVPN-VXLAN configuration. IP addresses, MLAG and BGP Underlay are already configured.
 
 1. Log into the  **LabAccess**  jumpserver:
 
-   1. Type ``l2evpn`` at the prompt. The script will configure the datacenter with the exception of **leaf3**
+   Type ``l2evpn`` at the prompt. The script will configure the datacenter with the exception of **s1-leaf4**
 
-2. On **leaf3**, configure ArBGP. **(Already configured and enabled on the switch)**
+#. On **s1-leaf4**, check if ArBGP is configured.
 
-    .. code-block:: html
+   .. code-block:: text
+      :emphasize-lines: 1,2
 
-        configure
-        service routing protocols model multi-agent
+       s1-leaf4#sh run section service
+       service routing protocols model multi-agent
 
-3. Configure interfaces on **leaf3**.
+   .. note:: By default, EOS is using GateD routing process. Activating ArBGP is requiring a reboot.
 
-    .. code-block:: html
+#. On **s1-leaf4**, check the following operational states before configuring EVPN constructs:
 
-        configure
-        interface Port-Channel4
-          description HOST2
-          switchport mode access
-          switchport access vlan 12
-        !
-        interface Ethernet1
-          shutdown
-        !
-        interface Ethernet2
-          description SPINE1
-          no switchport
-          ip address 172.16.200.10/30
-        !
-        interface Ethernet3
-          description SPINE2
-          no switchport
-          ip address 172.16.200.26/30
-        !
-        interface Ethernet4
-          description HOST2
-          channel-group 4 mode active
-          lacp timer fast
-        !
-        interface Ethernet5
-          shutdown
-        !
-        interface Ethernet6
-          shutdown
-        !
-        interface Loopback0
-          ip address 172.16.0.5/32
-        !
-        interface Loopback1
-          ip address 3.3.3.3/32
-        !
+   a. Verify EOS MLAG operational details.
 
-4. Add Underlay BGP configurations on **Leaf3**
+      .. code-block:: text
+         :emphasize-lines: 1
+      
+          s1-leaf4#show mlag
+          MLAG Configuration:              
+          domain-id                          :                MLAG
+          local-interface                    :            Vlan4094
+          peer-address                       :        10.255.255.1
+          peer-link                          :       Port-Channel1
+          peer-config                        :        inconsistent
 
-    .. code-block:: html
+          MLAG Status:                     
+          state                              :              Active
+          negotiation status                 :           Connected
+          peer-link status                   :                  Up
+          local-int status                   :                  Up
+          system-id                          :   02:1c:73:c0:c6:14
+          dual-primary detection             :            Disabled
+          dual-primary interface errdisabled :               False
+                                                              
+          MLAG Ports:                      
+          Disabled                           :                   0
+          Configured                         :                   0
+          Inactive                           :                   0
+          Active-partial                     :                   0
+          Active-full                        :                   1
 
-        configure
-        router bgp 65103
-          router-id 172.16.0.5
-          maximum-paths 2 ecmp 2
-          neighbor SPINE peer group
-          neighbor SPINE bfd
-          neighbor SPINE remote-as 65001
-          neighbor SPINE maximum-routes 12000
-          neighbor 172.16.200.9 peer group SPINE
-          neighbor 172.16.200.25 peer group SPINE
-          redistribute connected
-        !
+          s1-leaf4#show mlag interfaces 
+                                                                                      local/remote
+            mlag       desc                                 state       local       remote          status
+          ---------- ------------------------------ ----------------- ----------- ------------ ------------
+                5       MLAG Downlink - s1-host2       active-full         Po5          Po5           up/up
+          
+   b. Verify BGP operational details for Underlay:
+   
+      .. code-block:: text
+         :emphasize-lines: 1
 
-5. Verify Underlay
+          s1-leaf4(config-router-bgp)#sh ip bgp summary
+          BGP summary information for VRF default
+          Router identifier 10.111.254.4, local AS number 65102
+         Neighbor Status Codes: m - Under maintenance
+         Neighbor     V AS           MsgRcvd   MsgSent  InQ OutQ  Up/Down State   PfxRcd PfxAcc
+         10.111.1.6   4 65100              9        12    0    0 00:00:07 Estab   6      6
+         10.111.2.6   4 65100              9        12    0    0 00:00:07 Estab   5      5
+         10.255.255.1 4 65102              8        10    0    0 00:00:07 Estab   10     10  
+    
+      .. note:: You might see 3 underlay sessions.
 
-   1. On each leaf and spine
+   c. Check the ip routing table:
 
-    .. code-block:: html
+      .. code-block:: text
+         :emphasize-lines: 1,25,26,28,29,30,31
 
-        show ip bgp summary
-        show ip route bgp
+          s1-leaf4(config-router-bgp)#sh ip route
 
-6. On **leaf3**, build BGP Overlay
+          VRF: default
+          Codes: C - connected, S - static, K - kernel, 
+                O - OSPF, IA - OSPF inter area, E1 - OSPF external type 1,
+                E2 - OSPF external type 2, N1 - OSPF NSSA external type 1,
+                N2 - OSPF NSSA external type2, B - Other BGP Routes,
+                B I - iBGP, B E - eBGP, R - RIP, I L1 - IS-IS level 1,
+                I L2 - IS-IS level 2, O3 - OSPFv3, A B - BGP Aggregate,
+                A O - OSPF Summary, NG - Nexthop Group Static Route,
+                V - VXLAN Control Service, M - Martian,
+                DH - DHCP client installed default route,
+                DP - Dynamic Policy Route, L - VRF Leaked,
+                G  - gRIBI, RC - Route Cache Route
 
-    .. code-block:: html
+          Gateway of last resort is not set
 
-        configure
-        router bgp 65103
-          neighbor SPINE-EVPN-TRANSIT peer group
-          neighbor SPINE-EVPN-TRANSIT update-source Loopback0
-          neighbor SPINE-EVPN-TRANSIT ebgp-multihop
-          neighbor SPINE-EVPN-TRANSIT send-community
-          neighbor SPINE-EVPN-TRANSIT remote-as 65001
-          neighbor SPINE-EVPN-TRANSIT maximum-routes 0
-          neighbor 172.16.0.1 peer group SPINE-EVPN-TRANSIT
-          neighbor 172.16.0.2 peer group SPINE-EVPN-TRANSIT
-        !
-        address-family evpn
-          neighbor SPINE-EVPN-TRANSIT activate
-        !
-        address-family ipv4
-          no neighbor SPINE-EVPN-TRANSIT activate
-        !
+          B E      10.111.0.1/32 [200/0] via 10.111.1.6, Ethernet2
+          B E      10.111.0.2/32 [200/0] via 10.111.2.6, Ethernet3
+          C        10.111.1.6/31 is directly connected, Ethernet2
+          B E      10.111.1.0/24 [200/0] via 10.111.1.6, Ethernet2
+          C        10.111.2.6/31 is directly connected, Ethernet3
+          B E      10.111.2.0/24 [200/0] via 10.111.2.6, Ethernet3
+          B I      10.111.112.0/24 [200/0] via 10.255.255.1, Vlan4094
+          B E      10.111.253.1/32 [200/0] via 10.111.1.6, Ethernet2
+                                           via 10.111.2.6, Ethernet3
+          B I      10.111.253.3/32 [200/0] via 10.255.255.1, Vlan4094
+          B E      10.111.254.1/32 [200/0] via 10.111.1.6, Ethernet2
+                                           via 10.111.2.6, Ethernet3
+          B E      10.111.254.2/32 [200/0] via 10.111.1.6, Ethernet2
+                                           via 10.111.2.6, Ethernet3
+          B I      10.111.254.3/32 [200/0] via 10.255.255.1, Vlan4094
+          C        10.111.254.4/32 is directly connected, Loopback0
+          C        10.255.255.0/30 is directly connected, Vlan4094
+          C        192.168.0.0/24 is directly connected, Management0
 
-7. Verify overlay
+      .. note:: You can notice that s1-leaf4 has 2 paths for reaching s1-leaf1 or s1-leaf2 loopacks.
 
-   1. On **leaf1** and **leaf3**
+#. On **s1-leaf4**, build the control-plane and the data-plane:
+   
+   a. Configure the EVPN control plane: 
 
-        .. code-block:: html
+      .. code-block:: html
 
-            show bgp evpn summary
+        router bgp 65102
+           neighbor SPINE-EVPN peer group
+           neighbor SPINE-EVPN remote-as 65100
+           neighbor SPINE-EVPN update-source Loopback0
+           neighbor SPINE-EVPN ebgp-multihop 3
+           neighbor SPINE-EVPN send-community standard extended
+           neighbor 10.111.0.1 peer group SPINE-EVPN
+           neighbor 10.111.0.2 peer group SPINE-EVPN
+           !
+           address-family evpn
+              neighbor SPINE-EVPN activate
 
-8. Configure L2EVPN
+      .. note:: 
+        - BGP EVPN session will use interface Loopback0
+        - Extended community have to be activated in order to manage BGP EVPN NLRI 
 
-   1. On **leaf3**: add VLAN 12, and interface vxlan1
+   #. Check the EVPN control plane: 
 
-        .. code-block:: html
+      .. code-block:: text
+         :emphasize-lines: 1
 
-            configure
-            vlan 12
-            !
-            interface Vxlan1
-              vxlan source-interface Loopback1
-              vxlan udp-port 4789
-              vxlan vlan 12 vni 1200
-            !
+         s1-leaf4(config-router-bgp)#sh bgp evpn summary 
+         BGP summary information for VRF default
+         Router identifier 10.111.254.4, local AS number 65102
+         Neighbor Status Codes: m - Under maintenance
+         Neighbor   V AS           MsgRcvd   MsgSent  InQ OutQ  Up/Down State   PfxRcd PfxAcc
+         10.111.0.1 4 65100              6         5    0    0 00:00:03 Estab   2      2
+         10.111.0.2 4 65100              6         4    0    0 00:00:03 Estab   2      2
 
-   2. On **leaf3**: add mac vrf
+      .. note:: Two EVPN sessions are now established toward the spines.
 
-        .. code-block:: html
+   #. Configure the interface Vxlan with the appropriate Loopback1: 
 
-            configure
-            router bgp 65103
-              vlan 12
-                rd 3.3.3.3:12
-                route-target both 1:12
-                redistribute learned
-            !
+      .. code-block:: html
 
-9. Verify VXLAN and L2EVPN
+         interface Vxlan1
+            vxlan source-interface Loopback1
 
-   1. On **leaf1** and **leaf3** verify the IMET table
+   #. Check the Vxlan dataplane:
+   
+      .. code-block:: text
+         :emphasize-lines: 1,2
 
-        .. code-block:: text
+         s1-leaf4(config-if-Vx1)#sh int vxlan 1
+         Vxlan1 is down, line protocol is down (notconnect)
+         Hardware is Vxlan
+         Source interface is Loopback1 and is active with 10.111.253.3
+         Replication/Flood Mode is not initialized yet
+         Remote MAC learning via Datapath
+         VNI mapping to VLANs
+         Static VLAN to VNI mapping is not configured
+         Static VRF to VNI mapping is not configured
+         MLAG Shared Router MAC is 0000.0000.0000
+      
+      .. note:: Interface Vxlan1 is still inactive until L2 or L3 services will be added.
 
-            show interface vxlan1
-            show bgp evpn route-type imet
+#. Configure L2EVPN service on **s1-leaf4**
 
-   2. Log into **host1** and ping **host2**
+   a. Add the VLAN 112 with the VNI 112 association
+   
+      .. code-block:: html
 
-        .. code-block:: text
+         interface Vxlan1
+            vxlan vlan 112 vni 112
 
-            ping 172.16.112.202
-        
-   3. On **leaf1** and **leaf3**
+   #. Add the mac vrf EVPN configuration for VLAN 112 
 
-        .. code-block:: text
+      .. code-block:: html
 
-            show bgp evpn route-type mac-ip
-            show mac address-table dynamic
+         router bgp 65102
+            vlan 112
+               rd auto
+               route-target both 112:112
+               redistribute learned
+   
+   #. Check the interface Vxlan config
+
+      .. code-block:: text
+         :emphasize-lines: 1
+
+         s1-leaf4(config-macvrf-12)#sh vxlan config-sanity detail 
+         Category                            Result  Detail                                            
+         ---------------------------------- -------- --------------------------------------------------
+         Local VTEP Configuration Check        OK                                                      
+           Loopback IP Address                 OK                                                      
+           VLAN-VNI Map                        OK                                                      
+           Routing                             OK                                                      
+           VNI VRF ACL                         OK                                                      
+           Decap VRF-VNI Map                   OK                                                      
+           VRF-VNI Dynamic VLAN                OK                                                      
+         Remote VTEP Configuration Check       OK                                                      
+           Remote VTEP                         OK                                                      
+         Platform Dependent Check              OK                                                      
+           VXLAN Bridging                      OK                                                      
+           VXLAN Routing                       OK    VXLAN Routing not enabled                         
+         CVX Configuration Check               OK                                                      
+           CVX Server                          OK    Not in controller client mode                     
+         MLAG Configuration Check              OK    Run 'show mlag config-sanity' to verify MLAG config
+           Peer VTEP IP                        OK                                                      
+           MLAG VTEP IP                        OK                                                      
+           Peer VLAN-VNI                       OK                                                      
+           Virtual VTEP IP                     OK
+
+   #. Check the VXLAN dataplane
+
+      .. code-block:: text
+        :emphasize-lines: 1,2
+
+           s1-leaf4(config-router-bgp)#sh int vxlan 1
+           Vxlan1 is up, line protocol is up (connected)
+             Hardware is Vxlan
+            Source interface is Loopback1 and is active with 10.111.253.3
+            Replication/Flood Mode is headend with Flood List Source: EVPN
+             Remote MAC learning via EVPN
+            VNI mapping to VLANs
+            Static VLAN to VNI mapping is 
+              [112, 112]       
+             Note: All Dynamic VLANs used by VCS are internal VLANs.
+                   Use 'show vxlan vni' for details.
+             Static VRF to VNI mapping is not configured
+             Headend replication flood vtep list is:
+             112 10.111.253.1   
+            MLAG Shared Router MAC is 0000.0000.0000 
+
+#. Verify VXLAN and L2EVPN
+
+   a. On **s1-leaf1** (and/or **s1-leaf2**) verify the IMET table
+
+      .. code-block:: text
+        :emphasize-lines: 1,11,12
+
+         s1-leaf1#sh bgp evpn route-type imet 
+         BGP routing table information for VRF default
+         Router identifier 10.111.254.1, local AS number 65101
+         Route status codes: s - suppressed, * - valid, > - active, E - ECMP head, e - ECMP
+                             S - Stale, c - Contributing to ECMP, b - backup
+                             % - Pending BGP convergence
+         Origin codes: i - IGP, e - EGP, ? - incomplete
+         AS Path Attributes: Or-ID - Originator ID, C-LST - Cluster List, LL Nexthop - Link Local Nexthop
+
+                   Network                Next Hop              Metric  LocPref Weight  Path
+         * >Ec   RD: 10.111.254.3:112 imet 10.111.253.3
+                                         10.111.253.3          -       100     0       65100 65102 i
+         *  ec   RD: 10.111.254.3:112 imet 10.111.253.3
+                                         10.111.253.3          -       100     0       65100 65102 i
+         * >Ec   RD: 10.111.254.4:112 imet 10.111.253.3
+                                         10.111.253.3          -       100     0       65100 65102 i
+         *  ec   RD: 10.111.254.4:112 imet 10.111.253.3
+                                         10.111.253.3          -       100     0       65100 65102 i
+         * >     RD: 10.111.254.1:112 imet 10.111.253.1
+                                         -                     -       -       0       i
+      
+      .. note:: s1-leaf4 has signaled its membership to VNI 112 via EVPN RT-3 route (RD: 10.111.254.3:112)        
+      
+      .. code-block:: text
+        :emphasize-lines: 1,13,14
+
+        s1-leaf1#sh interfaces vxlan 1
+        Vxlan1 is up, line protocol is up (connected)
+          Hardware is Vxlan
+          Source interface is Loopback1 and is active with 10.111.253.1
+          Replication/Flood Mode is headend with Flood List Source: EVPN
+          Remote MAC learning via EVPN
+          VNI mapping to VLANs
+          Static VLAN to VNI mapping is 
+            [112, 112]       
+          Note: All Dynamic VLANs used by VCS are internal VLANs.
+                Use 'show vxlan vni' for details.
+          Static VRF to VNI mapping is not configured
+          Headend replication flood vtep list is:
+          112 10.111.253.3   
+          MLAG Shared Router MAC is 0000.0000.0000
+
+      .. note:: 
+        - EVPN RT-3 route has been used for building the appropriate flood list 
+        - s1-leaf4 knows where to send the BUM traffic for VNI 112 (HER).
+
+   #. Log into **s1-host1** and ping **s2-host2**
+
+      .. code-block:: text
+        :emphasize-lines: 1
+
+        s1-host1#ping 10.111.112.202
+        PING 10.111.112.202 (10.111.112.202) 72(100) bytes of data.
+        80 bytes from 10.111.112.202: icmp_seq=1 ttl=64 time=16.8 ms
+        80 bytes from 10.111.112.202: icmp_seq=2 ttl=64 time=14.7 ms
+        80 bytes from 10.111.112.202: icmp_seq=3 ttl=64 time=16.8 ms
+        80 bytes from 10.111.112.202: icmp_seq=4 ttl=64 time=16.7 ms
+        80 bytes from 10.111.112.202: icmp_seq=5 ttl=64 time=15.2 ms
+        --- 10.111.112.202 ping statistics ---
+        5 packets transmitted, 5 received, 0% packet loss, time 61ms
+          
+   #. On **s1-leaf1**, check the MAC address-table :
+
+      .. code-block:: text
+        :emphasize-lines: 1,8
+ 
+        s1-leaf1#show mac address-table dynamic 
+        Mac Address Table
+        ------------------------------------------------------------------
+  
+        Vlan    Mac Address       Type        Ports      Moves   Last Move
+        ----    -----------       ----        -----      -----   ---------
+        112    001c.73c0.c616    DYNAMIC     Po5        1       0:00:41 ago
+        112    001c.73c0.c617    DYNAMIC     Vx1        1       0:00:41 ago
+        Total Mac Addresses for this criterion: 2
+              Multicast Mac Address Table
+        ------------------------------------------------------------------
+  
+        Vlan    Mac Address       Type        Ports
+        ----    -----------       ----        -----
+        Total Mac Addresses for this criterion: 0
+
+      .. note:: s1-host2 MAC is seen thru the interface Vxlan 1      
+       
+   #. On **s1-leaf1**, check the EVPN control-plane for RT-2 : 
+
+      .. code-block:: text
+        :emphasize-lines: 1,15,16,17
+
+        s1-leaf1#show bgp evpn route-type mac-ip 
+        BGP routing table information for VRF default
+        Router identifier 10.111.254.1, local AS number 65101
+        Route status codes: s - suppressed, * - valid, > - active, E - ECMP head, e - ECMP
+                            S - Stale, c - Contributing to ECMP, b - backup
+                            % - Pending BGP convergence
+        Origin codes: i - IGP, e - EGP, ? - incomplete
+        AS Path Attributes: Or-ID - Originator ID, C-LST - Cluster List, LL Nexthop - Link Local Nexthop 
+
+                  Network                Next Hop              Metric  LocPref Weight  Path
+        * >     RD: 10.111.254.1:112 mac-ip 001c.73c0.c616
+                                        -                     -       -       0       i
+        * >     RD: 10.111.254.1:112 mac-ip 001c.73c0.c616 10.111.112.201
+                                        -                     -       -       0       i
+        * >Ec   RD: 10.111.254.3:112 mac-ip 001c.73c0.c617
+                                        10.111.253.3          -       100     0       65100 65102 i
+        *  ec   RD: 10.111.254.3:112 mac-ip 001c.73c0.c617
+                                        10.111.253.3          -       100     0       65100 65102 i
+        * >Ec   RD: 10.111.254.4:112 mac-ip 001c.73c0.c617
+                                        10.111.253.3          -       100     0       65100 65102 i
+        *  ec   RD: 10.111.254.4:112 mac-ip 001c.73c0.c617
+                                        10.111.253.3          -       100     0       65100 65102 i
+
+   #. On **s1-leaf1**, check the VXLAN data-plane for MAC address : 
+
+      .. code-block:: text
+        :emphasize-lines: 1,7
+
+        s1-leaf1#sh vxlan address-table evpn 
+          Vxlan Mac Address Table
+        ----------------------------------------------------------------------
+
+        VLAN  Mac Address     Type      Prt  VTEP             Moves   Last Move
+        ----  -----------     ----      ---  ----             -----   ---------
+        112  001c.73c0.c617  EVPN      Vx1  10.111.253.3     1       0:00:57 ago
+        Total Remote Mac Addresses for this criterion: 1
+
+      .. note::
+        - EVPN-VXLAN is respecting the MAC source learning mechanism 
+        - the ping request has been flood across the network
+        - s1-leaf4 (and s1-leaf3) has sent a RT-2 message when it learnt s1-host2 MAC from the ping sent by s1-host2  
+        - s1-leaf1 has 4 paths to reach 001c.73c0.c617 : 2 to each remote VTEP 
 
 **LAB COMPLETE!**

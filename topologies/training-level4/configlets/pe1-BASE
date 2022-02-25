@@ -1,5 +1,4 @@
-pe1-BASE:
-hostname CE-A1
+hostname PE1
 !
 interface Management1
    vrf MGMT

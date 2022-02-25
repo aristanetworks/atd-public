@@ -21,8 +21,10 @@ TASK 1: Apply a Configlet Builder to create a group of Tasks
 
 |
 
-.. image:: images/cvp_cc/cvp_cc_1.gif
+.. thumbnail:: images/cvp_cc/cvp_cc_1.gif
    :align: center
+
+         Click image to enlarge
 
 |
 
@@ -38,8 +40,10 @@ TASK 1: Apply a Configlet Builder to create a group of Tasks
 
 |
 
-.. image:: images/cvp_cc/cvp_cc_2.gif
+.. thumbnail:: images/cvp_cc/cvp_cc_2.gif
    :align: center
+
+         Click image to enlarge
 
 |
 
@@ -83,8 +87,10 @@ A few notes about Change Control:
 
 |
 
-.. image:: images/cvp_cc/cvp_cc_3.gif
+.. thumbnail:: images/cvp_cc/cvp_cc_3.gif
    :align: center
+
+Click image to enlarge
 
 |
 
@@ -102,8 +108,10 @@ TASK 2: View Telemetry
 **********************
 
 
-.. image:: images/cvp_cc/cvp_cc_4.gif
+.. thumbnail:: images/cvp_cc/cvp_cc_4.gif
    :align: center
+
+Click image to enlarge
 
 |
 
@@ -145,8 +153,10 @@ TASK 3: Rollback
 ****************
 
 
-.. image:: images/cvp_cc/cvp_cc_5.gif
+.. thumbnail:: images/cvp_cc/cvp_cc_5.gif
    :align: center
+
+Click image to enlarge
 
 |
 

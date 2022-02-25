@@ -6,12 +6,11 @@ Welcome to the Arista ATD documentation!
    :caption: EOS Configuration
 
    connecting.rst
-   mlag.rst
+   l2ls.rst
    l3ls.rst
    vxlan.rst
    l2evpn.rst
    l3evpn.rst
-   cvx.rst   
 
 .. toctree::
    :maxdepth: 1
@@ -48,15 +47,3 @@ Welcome to the Arista ATD documentation!
    :caption: Troubleshooting Training
 
    tshoot-intro.rst
-
-.. toctree::
-   :maxdepth: 1
-   :caption: EVPN Class Guide
-
-   EVPN_Class_Guide.rst
-
-.. toctree::
-   :maxdepth: 1
-   :caption: EVPN Class Guide Answer Key
-
-   EVPN_Class_Guide_Answer_Key.rst

@@ -1,8 +1,10 @@
 CVX
 ====
 
-.. image:: images/cvx/nested_cvx_topo_1.png
+.. thumbnail:: images/cvx/nested_cvx_topo_1.png
    :align: center
+
+          Click image to enlarge
 
 .. note:: Did you know the CVX stands for CloudVision eXchange? CVX is simply a virtual instance of Arista's EOS known as vEOS. CVX can be run in Standalone mode (Single VM) or Multi-node (up to 3 VMs) cluster.
 

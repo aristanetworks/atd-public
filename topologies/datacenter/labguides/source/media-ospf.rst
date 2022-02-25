@@ -1,8 +1,10 @@
 Media OSPF Lab
 ==============
 
-.. image:: images/media_ospf/media_ospf.png
+.. thumbnail:: images/media_ospf/media_ospf.png
    :align: center
+
+    Click image to enlarge
 
 .. note:: Did you know the OSPF algorithm is considered a link-state protocol, based on the Dijkstra Shortest Path Algorithm? It is a common protocol used in a number of widely deployed environments in various industries.
 

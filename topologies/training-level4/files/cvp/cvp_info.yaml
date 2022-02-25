@@ -2,24 +2,24 @@ cvp_info:
   containers:
     Tenant:
       nodes:
-    Edge:
+    Customer Edge:
       parent: Tenant
       nodes:
     A:
-      parent: Edge
+      parent: Customer Edge
       nodes:
-      - CE-A1
-      - CE-A2
+      - A1
+      - A2
     B:
-      parent: Edge
+      parent: Customer Edge
       nodes:
-      - CE-B1
-      - CE-B2
+      - B1
+      - B2
     C:
-      parent: Edge
+      parent: Customer Edge
       nodes:
-      - CE-C1
-      - CE-C2
+      - C1
+      - C2
     Provider:
       parent: Tenant
       nodes:
@@ -35,23 +35,24 @@ cvp_info:
       - P4
       - P5
       - P6
+  snapshots:
   configlets:
     containers:
       Tenant:
       - ATD-INFRA
     netelements:
-      CE-A1:
-      - ce-a1-BASE
-      CE-B1:
-      - ce-b1-BASE
-      CE-C1:
-      - ce-c1-BASE
-      CE-A2:
-      - ce-a2-BASE
-      CE-B2:
-      - ce-b2-BASE
-      CE-C2:
-      - ce-c2-BASE
+      A1:
+      - a1-BASE
+      B1:
+      - b1-BASE
+      C1:
+      - c1-BASE
+      A2:
+      - a2-BASE
+      B2:
+      - b2-BASE
+      C2:
+      - c2-BASE
       PE1:
       - pe1-BASE
       PE2:
