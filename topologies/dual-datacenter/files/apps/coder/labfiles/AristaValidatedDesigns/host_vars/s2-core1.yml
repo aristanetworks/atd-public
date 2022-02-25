@@ -1,0 +1,170 @@
+---
+custom_structured_configuration_host_vlan_interfaces:
+  Vlan711:
+    description: iBGP_FOR_VRF_BLUE
+    ip_address: 10.2.17.2/30
+    vrf: BLUE
+    shutdown: false
+  Vlan712:
+    description: iBGP_FOR_VRF_GREEN
+    ip_address: 10.2.18.2/30
+    vrf: GREEN
+    shutdown: false
+  Vlan713:
+    description: iBGP_FOR_VRF_RED
+    ip_address: 10.2.19.2/30
+    vrf: RED
+    shutdown: false
+  Vlan801:
+    description: BGP_FOR_VRF_BLUE
+    ip_address: 10.3.1.1/29
+    vrf: BLUE
+    shutdown: false
+  Vlan802:
+    description: BGP_FOR_VRF_GREEN
+    ip_address: 10.3.2.1/29
+    vrf: GREEN
+    shutdown: false
+  Vlan803:
+    description: BGP_FOR_VRF_RED
+    ip_address: 10.3.3.1/29
+    vrf: RED
+    shutdown: false
+  Vlan4093:
+    description: MLAG_PEER_L3_PEERING
+    ip_address: 10.2.10.0/31
+    mtu: 9000
+    shutdown: false
+
+router_bgp:
+  as: 65221
+  router_id: 10.2.8.1
+  bgp_defaults: "{{ atd_bgp_defaults }}"
+  peer_groups:
+    MLAG-IPv4-UNDERLAY-PEER:
+      type: ipv4
+      remote_as: 65221
+      next_hop_self: true
+      route_map_in: RM-MLAG-PEER-IN
+      send_community: all
+      maximum_routes: 12000
+  neighbors:
+    10.2.10.1:
+      peer_group: MLAG-IPv4-UNDERLAY-PEER
+      description: s2-core2
+  address_family_ipv4:
+    peer_groups:
+      MLAG-IPv4-UNDERLAY-PEER:
+        activate: true
+  vrfs:
+    BLUE:
+      rd: "10.2.8.1:502"
+      router_id: 10.2.8.1
+      neighbors:
+        10.2.17.1:
+          remote_as: 65221
+          description: iBGP_VRF_BLUE_s2-core2
+        10.3.1.2:
+          remote_as: 65121
+          description: BGP_VRF_BLUE_s1-core1
+        10.3.1.5:
+          remote_as: 65213
+          description: BGP_VRF_BLUE_s2-brdr1
+        10.3.1.6:
+          remote_as: 65213
+          description: BGP_VRF_BLUE_s2-brdr2
+      next_hop_self: true
+      redistribute_routes:
+        - connected
+        - static
+      address_families:
+        ipv4:
+          neighbors:
+            10.2.17.1:
+              activate: true
+            10.3.1.2:
+              activate: true
+            10.3.1.5:
+              activate: true
+            10.3.1.6:
+              activate: true
+    GREEN:
+      rd: "10.2.8.1:503"
+      router_id: 10.1.8.1
+      neighbors:
+        10.2.18.1:
+          remote_as: 65221
+          description: iBGP_VRF_GREEN_s2-core2
+        10.3.2.2:
+          remote_as: 65121
+          description: BGP_VRF_GREEN_s1-core1
+        10.3.2.5:
+          remote_as: 65213
+          description: BGP_VRF_GREEN_s2-brdr1
+        10.3.2.6:
+          remote_as: 65213
+          description: BGP_VRF_GREEN_s2-brdr2
+      next_hop_self: true
+      redistribute_routes:
+        - connected
+        - static
+      address_families:
+        ipv4:
+          neighbors:
+            10.2.18.1:
+              activate: true
+            10.3.2.2:
+              activate: true
+            10.3.2.5:
+              activate: true
+            10.3.2.6:
+              activate: true
+    RED:
+      rd: "10.2.8.1:501"
+      router_id: 10.2.8.1
+      neighbors:
+        10.2.19.1:
+          remote_as: 65221
+          description: iBGP_VRF_RED_s2-core2
+        10.3.3.2:
+          remote_as: 65121
+          description: BGP_VRF_RED_s1-core1
+        10.3.3.5:
+          remote_as: 65213
+          description: BGP_VRF_RED_s2-brdr1
+        10.3.3.6:
+          remote_as: 65213
+          description: BGP_VRF_RED_s2-brdr2
+      next_hop_self: true
+      redistribute_routes:
+        - connected
+        - static
+      address_families:
+        ipv4:
+          neighbors:
+            10.2.19.1:
+              activate: true
+            10.3.3.2:
+              activate: true
+            10.3.3.5:
+              activate: true
+            10.3.3.6:
+              activate: true
+custom_structured_configuration_host_ethernet_interfaces:
+  Ethernet2:
+    description: "s2-brdr1_Ethernet4"
+    shutdown: false
+    channel_group:
+      id: 2
+      mode: "active"
+  Ethernet3:
+    description: "s2-brdr2_Ethernet4"
+    shutdown: false
+    channel_group:
+      id: 2
+      mode: "active"
+  Ethernet4:
+    type: switched
+    mode: trunk
+    description: P2P_LINK_TO_s1-core1_Ethernet4
+    shutdown: false

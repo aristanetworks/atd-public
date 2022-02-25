@@ -1,0 +1,34 @@
+daemon TerminAttr
+  exec /usr/bin/TerminAttr -disableaaa -cvaddr=192.168.0.5:9910 -taillogs -cvauth=key,atd-lab -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent
+  no shutdown
+!
+transceiver qsfp default-mode 4x10G
+!
+service routing protocols model multi-agent
+!
+dns domain atd.lab
+!
+ntp server 192.168.0.1 iburst source Management0
+!
+radius-server host 192.168.0.1 key 7 0207165218120E
+!
+aaa group server radius atds
+   server 192.168.0.1
+!
+spanning-tree mode mstp
+!
+aaa authentication login default group atds local
+aaa authorization exec default group atds local
+aaa authorization commands all default local
+!
+no aaa root
+!
+username admin privilege 15 role network-admin secret 5 $1$5O85YVVn$HrXcfOivJEnISTMb6xrJc.
+username arista privilege 15 role network-admin secret sha512 {{ sha512_password }}
+username arista ssh-key ssh-rsa {{ AAA[2].split(" ")[4] }} {{ AAA[2].split(" ")[5] }}
+!
+ip radius source-interface Management0
+!
+management api http-commands
+   no shutdown
+!

@@ -1,0 +1,24 @@
+---
+
+- name: Backup ATD Fabric
+  hosts: ATD_FABRIC
+  #Enable vars_prompt to ask for user:pass
+  #vars_prompt:
+
+      # - name: ansible_user
+      #   prompt: What is your username?
+      #   private: no
+
+      # - name: ansible_password
+      #   prompt: What is your password?
+  tasks:
+    - name: show running config
+      eos_command:
+        commands: "show running-config"
+      register: backup
+      check_mode: no
+
+    - name: backup running config
+      copy:
+        content: "{{ backup.stdout[0] }}"
+        dest: "./config_backup/{{ inventory_hostname }}_running-config.conf"

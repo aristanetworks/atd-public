@@ -1,0 +1,7 @@
+custom_structured_configuration_port_channel_interfaces:
+  Port-Channel4:
+    description: "S2-CORE-PO4"
+    shutdown: false
+    type: switched
+    mode: trunk
+    mlag: 4

@@ -1,7 +1,13 @@
-## Arista Validated Designs
-This directory will contain the necessary data/files needed to run the Ansible Collection For Arista Validated Designs with the Arista Test Drive dual-datacenter topology.
+# ATD-AVD-Dual-DC
+Arista Dual DC w/Ansible
+Beta stage, not for production use.
 
-This is currently under development, not for production use.
+To Setup ATD Topology run the following commands
+ - cd labfiles/AristaValidatedDesigns
+ - make atd-setup
+ - make provision
+ - Deploy pending tasks from cvp
+ - Experiment with AVD ...
 
 Topology
-![ATD - Dual DataCenter Topology](../../../../../atd-topo.png "ATD Dual DataCenter")
+![ATD - Dual DataCenter Topology](images/atd-topo.png "ATD Dual DataCenter")
