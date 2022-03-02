@@ -1,5 +1,5 @@
 - include_vars:
-    file: "{{lookup('env','PWD')}}/intended/structured_configs/cvp/ATD_CVP.yml"
+    file: ~/project/labfiles/AristaValidatedDesigns/intended/structured_configs/cvp/ATD_CVP.yml
 
 - name: "Gather CVP facts {{inventory_hostname}}"
   arista.cvp.cv_facts_v3:
