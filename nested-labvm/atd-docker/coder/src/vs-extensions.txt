@@ -2,13 +2,9 @@ christian-kohler.path-intellisense
 codezombiech.gitignore
 coenraads.bracket-pair-colorizer-2
 DavidAnson.vscode-markdownlint
-donjayamanne.python-extension-pack
 eamodio.gitlens
-felipe-mendes.slack-theme
 redhat.ansible
-jack89ita.copy-filename
 jdinhlife.gruvbox
-jebbs.markdown-extended
 magicstack.MagicPython
 mhutchie.git-graph
 ms-python.python
@@ -17,7 +13,6 @@ njpwerner.autodocstring
 PKief.material-icon-theme
 redhat.vscode-yaml
 samuelcolvin.jinjahtml
-timonwong.ansible-autocomplete
 tuxtina.json2yaml
 wholroyd.jinja
 yzhang.markdown-all-in-one

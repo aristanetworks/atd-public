@@ -7,6 +7,14 @@ RUN sudo pip3 install --upgrade pip
 
 RUN sudo pip3 install pyeapi jsonrpclib-pelix shyaml
 
+RUN wget --quiet https://raw.githubusercontent.com/aristanetworks/ansible-avd/devel/ansible_collections/arista/avd/requirements.txt
+
+RUN sudo pip3 install -r requirements.txt
+
+RUN wget --quiet https://raw.githubusercontent.com/aristanetworks/ansible-avd/devel/ansible_collections/arista/avd/requirements-dev.txt
+
+RUN sudo pip3 install -r requirements-dev.txt
+
 # Install arista.avd, community.general and ansible.posix ansible-galaxy collections with upgrade flag if already exists
 RUN ansible-galaxy collection install arista.avd --upgrade
 
@@ -14,18 +22,10 @@ RUN ansible-galaxy collection install community.general --upgrade
 
 RUN ansible-galaxy collection install ansible.posix --upgrade
 
-RUN wget --quiet https://raw.githubusercontent.com/aristanetworks/ansible-avd/devel/ansible_collections/arista/avd/requirements.txt
-
-RUN sudo pip3 install -r requirements.txt
-
 #Install arista.avd and arista.cvp ansible galaxy collection devel branch - Required until PR #1410 is in latest release branch
 RUN ansible-galaxy collection install git+https://github.com/aristanetworks/ansible-avd.git#/ansible_collections/arista/avd/,devel
 
 RUN ansible-galaxy collection install git+https://github.com/aristanetworks/ansible-cvp.git#/ansible_collections/arista/cvp/,devel
-
-RUN wget --quiet https://raw.githubusercontent.com/aristanetworks/ansible-avd/devel/ansible_collections/arista/avd/requirements-dev.txt
-
-RUN sudo pip3 install -r requirements-dev.txt
 
 # Install Code extensions
 COPY src/vs-extensions.txt /home/coder/
