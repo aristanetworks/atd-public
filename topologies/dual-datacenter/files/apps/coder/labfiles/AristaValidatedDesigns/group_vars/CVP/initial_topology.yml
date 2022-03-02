@@ -1,0 +1,135 @@
+---
+
+CVP_DEVICES_INIT:
+  - fqdn: s1-leaf1
+    parentContainerName: STAGING
+    configlets:
+      - BASE_s1-leaf1
+  - fqdn: s1-leaf2
+    parentContainerName: STAGING
+    configlets:
+      - BASE_s1-leaf2
+  - fqdn: s1-leaf3
+    parentContainerName: STAGING
+    configlets:
+      - BASE_s1-leaf3
+  - fqdn: s1-leaf4
+    parentContainerName: STAGING
+    configlets:
+      - BASE_s1-leaf4
+  - fqdn: s1-brdr1
+    parentContainerName: STAGING
+    configlets:
+      - BASE_s1-brdr1
+  - fqdn: s1-brdr2
+    parentContainerName: STAGING
+    configlets:
+      - BASE_s1-brdr2
+  - fqdn: s1-core1
+    parentContainerName: STAGING
+    configlets:
+      - BASE_s1-core1
+  - fqdn: s1-core2
+    parentContainerName: STAGING
+    configlets:
+      - BASE_s1-core2
+  - fqdn: s1-spine1
+    parentContainerName: STAGING
+    configlets:
+      - BASE_s1-spine1
+  - fqdn: s1-spine2
+    parentContainerName: STAGING
+    configlets:
+       - BASE_s1-spine2
+  - fqdn: s1-host1
+    parentContainerName: STAGING
+    configlets:
+       - BASE_s1-host1
+  - fqdn: s1-host2
+    parentContainerName: STAGING
+    configlets:
+       - BASE_s1-host2
+  - fqdn: s2-leaf1
+    parentContainerName: STAGING
+    configlets:
+      - BASE_s2-leaf1
+  - fqdn: s2-leaf2
+    parentContainerName: STAGING
+    configlets:
+      - BASE_s2-leaf2
+  - fqdn: s2-leaf3
+    parentContainerName: STAGING
+    configlets:
+      - BASE_s2-leaf3
+  - fqdn: s2-leaf4
+    parentContainerName: STAGING
+    configlets:
+      - BASE_s2-leaf4
+  - fqdn: s2-brdr1
+    parentContainerName: STAGING
+    configlets:
+      - BASE_s2-brdr1
+  - fqdn: s2-brdr2
+    parentContainerName: STAGING
+    configlets:
+      - BASE_s2-brdr2
+  - fqdn: s2-core1
+    parentContainerName: STAGING
+    configlets:
+      - BASE_s2-core1
+  - fqdn: s2-core2
+    parentContainerName: STAGING
+    configlets:
+      - BASE_s2-core2
+  - fqdn: s2-spine1
+    parentContainerName: STAGING
+    configlets:
+      - BASE_s2-spine1
+  - fqdn: s2-spine2
+    parentContainerName: STAGING
+    configlets:
+      - BASE_s2-spine2
+  - fqdn: s2-host1
+    parentContainerName: STAGING
+    configlets:
+      - BASE_s2-host1
+  - fqdn: s2-host2
+    parentContainerName: STAGING
+    configlets:
+      - BASE_s2-host2
+
+CVP_CONTAINERS_INIT:
+  STAGING:
+    parentContainerName: Tenant
+    configlets:
+      - ATD-BASE
+
+CVP_ATD_CONTAINER:
+  Tenant:
+    parentContainerName: Tenant
+
+CVP_CONTAINERS_DELETE:
+  S1-Leaf:
+    parentContainerName: S1
+  S1-Brdr:
+    parentContainerName: S1
+  S1-Core:
+    parentContainerName: S1
+  S1-Spine:
+    parentContainerName: S1
+  S1-Hosts:
+    parentContainerName: S1
+  S1:
+    parentContainerName: Tenant
+  S2-Leaf:
+    parentContainerName: S2
+  S2-Brdr:
+    parentContainerName: S2
+  S2-Core:
+    parentContainerName: S2
+  S2-Spine:
+    parentContainerName: S2
+  S2-Hosts:
+    parentContainerName: S2
+  S2:
+    parentContainerName: Tenant

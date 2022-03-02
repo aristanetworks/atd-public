@@ -1,0 +1,8 @@
+ansible_connection: httpapi # update to httpapi once eAPI enabled on all switches.
+ansible_network_os: eos
+ansible_user: arista
+ansible_become: yes
+ansible_become_method: enable
+ansible_httpapi_use_ssl: true
+ansible_httpapi_validate_certs: false
+

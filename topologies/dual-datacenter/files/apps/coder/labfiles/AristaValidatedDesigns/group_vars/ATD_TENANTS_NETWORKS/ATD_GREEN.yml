@@ -1,0 +1,73 @@
+####################################################
+## ATD Tenant Specific Information - VRFs / VLANs ##
+####################################################
+
+# Tenant GREEN Specific Information - VRFs / VLANs
+
+ATD_GREEN:
+  enable_mlag_ibgp_peering_vrfs: false
+  mac_vrf_vni_base: 10000
+  vrfs:
+    GREEN:
+      vrf_vni: 502
+      vtep_diagnostic:
+        loopback: 102
+        loopback_ip_pools:
+          - pod: SITE1_POD
+            ipv4_pool: 10.0.10.128/27
+          - pod: SITE2_POD
+            ipv4_pool: 10.0.10.160/27
+
+      svis:
+        202:
+          name: GREEN_VLAN_202
+          tags: [ SITE1_DC, SITE2_DC ]
+          enabled: true
+          ip_address_virtual: 10.100.2.1/24
+        802:
+          name: BGP_FOR_VRF_GREEN_CORE1
+          tags: [SITE1_BRDR, SITE2_BRDR]
+          enabled: true
+          nodes:
+            s1-brdr1:
+              ip_address: 10.3.2.3/29
+            s1-brdr2:
+              ip_address: 10.3.2.4/29
+            s2-brdr1:
+              ip_address: 10.3.2.5/29
+            s2-brdr2:
+              ip_address: 10.3.2.6/29
+        812:
+          name: BGP_FOR_VRF_GREEN_CORE2
+          tags: [SITE1_BRDR, SITE2_BRDR]
+          enabled: true
+          nodes:
+            s1-brdr1:
+              ip_address: 10.4.2.3/29
+            s1-brdr2:
+              ip_address: 10.4.2.4/29
+            s2-brdr1:
+              ip_address: 10.4.2.5/29
+            s2-brdr2:
+              ip_address: 10.4.2.6/29
+      bgp_peers:
+        10.3.2.2:
+          remote_as: 65121
+          peer_group: S1-CORE1-PEERS
+          description: S1-CORE1-PEERS
+          nodes: [ s1-brdr1, s1-brdr2 ]
+        10.3.2.1:
+          remote_as: 65221
+          peer_group: S2-CORE1-PEERS
+          description: S2-CORE1-PEERS
+          nodes: [ s2-brdr1, s2-brdr2 ]
+        10.4.2.2:
+          remote_as: 65121
+          peer_group: S1-CORE2-PEERS
+          description: S1-CORE2-PEERS
+          nodes: [ s1-brdr1, s1-brdr2 ]
+        10.4.2.1:
+          remote_as: 65221
+          peer_group: S2-CORE2-PEERS
+          description: S2-CORE2-PEERS
+          nodes: [ s2-brdr1, s2-brdr2 ]

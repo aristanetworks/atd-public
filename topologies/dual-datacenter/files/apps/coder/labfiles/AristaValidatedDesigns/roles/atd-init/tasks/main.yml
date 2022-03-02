@@ -1,0 +1,44 @@
+# ---
+
+- name: 'Create configlets on CVP {{inventory_hostname}}.'
+  arista.cvp.cv_configlet_v3:
+    configlets:
+      ATD-BASE: "{{ lookup('file','~/project/labfiles/AristaValidatedDesigns/group_vars/CVP/ATD-BASE.txt') }}"
+    configlets_notes: "Configlet managed by Ansible"
+
+- name: "Building initial Containers topology"
+  arista.cvp.cv_container_v3:
+    topology: '{{CVP_CONTAINERS_INIT}}'
+
+- name: "Moving devices to Staging container"
+  arista.cvp.cv_device_v3:
+    devices: "{{CVP_DEVICES_INIT}}"
+    state: present
+    apply_mode: strict
+  register: CVP_DEVICES_RESULTS
+
+- name: "Execute pending tasks on {{inventory_hostname}}"
+  arista.cvp.cv_task_v3:
+    tasks: "{{ CVP_DEVICES_RESULTS.taskIds }}"
+  when:
+    - CVP_DEVICES_RESULTS.taskIds | length > 0
+
+- name: "Refresh Containers topology on {{inventory_hostname}}"
+  arista.cvp.cv_container_v3:
+    topology: '{{CVP_CONTAINERS_DELETE}}'
+    state: absent
+
+- name: "Removing ATD-INFRA from Tenant container"
+  arista.cvp.cv_container_v3:
+    topology: '{{CVP_ATD_CONTAINER}}'
+    apply_mode: strict
+  register: CVP_DEVICES_RESULTS
+
+- name: "Execute pending tasks on {{inventory_hostname}}"
+  arista.cvp.cv_task_v3:
+    tasks: "{{ CVP_DEVICES_RESULTS.taskIds }}"
+
+- name: "Initial ATD Setup Complete"
+  debug:
+    msg: "Setup is complete execute 'make fabric-provision' next"
+

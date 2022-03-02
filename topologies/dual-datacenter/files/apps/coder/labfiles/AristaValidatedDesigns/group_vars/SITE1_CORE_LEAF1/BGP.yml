@@ -1,0 +1,9 @@
+---
+custom_structured_configuration_host_route_maps:
+ RM-MLAG-PEER-IN:
+   sequence_numbers:
+     10:
+       type: permit
+       set:
+         - origin incomplete
+       description: "Make routes learned over MLAG Peer-link less preferred on spines to ensure optimal routing"

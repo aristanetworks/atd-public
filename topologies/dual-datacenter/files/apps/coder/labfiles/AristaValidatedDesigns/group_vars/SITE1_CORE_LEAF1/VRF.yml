@@ -1,0 +1,8 @@
+---
+custom_structured_configuration_host_vrfs:
+  BLUE:
+    ip_routing: true
+  GREEN:
+    ip_routing: true
+  RED:
+    ip_routing: true
