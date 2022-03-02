@@ -5,6 +5,12 @@ body {
   font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 
+img {
+  vertical-align: middle;
+  border-style: none;
+  width: 100%;
+}
+
 #content {
   width: 100%;
 }

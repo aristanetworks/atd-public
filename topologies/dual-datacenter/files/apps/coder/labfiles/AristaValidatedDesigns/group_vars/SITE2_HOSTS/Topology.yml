@@ -1,0 +1,29 @@
+---
+# L2 HOST CONFIG
+
+type: l2leaf
+
+pod_name: SITE2_POD
+
+l2leaf:
+  defaults:
+    platform: ceos
+    mlag: false
+    spanning_tree_mode: mstp
+    uplink_interfaces: "{{ CEOS_HOST_UPLINK_Interfaces }}"
+  node_groups:
+    SITE2_HOSTS:
+      filter:
+        tenants: [all]
+        tags: [all]
+      nodes:
+        s2-host1:
+          id: 1
+          mgmt_ip: 192.168.0.26/24
+          uplink_switches: [ 's2-leaf1', 's2-leaf2' ]
+          uplink_switch_interfaces: "{{ CEOS_UPLINK_SWITCH_Interfaces }}"
+        s2-host2:
+          id: 2
+          mgmt_ip: 192.168.0.27/24
+          uplink_switches: [ 's2-leaf3', 's2-leaf4' ]
+          uplink_switch_interfaces: "{{ CEOS_UPLINK_SWITCH_Interfaces }}"

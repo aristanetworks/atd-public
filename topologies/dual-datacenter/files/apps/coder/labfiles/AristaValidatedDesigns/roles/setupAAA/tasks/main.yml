@@ -1,0 +1,29 @@
+- name: "Gather CVP facts {{inventory_hostname}}"
+  arista.cvp.cv_facts:
+    facts:
+      configlets
+  register: CVP_FACTS
+
+- name: Create AAA template
+  template:
+    src: "{{lookup('env','PWD')}}/roles/templates/AAA.j2"
+    dest: "{{lookup('env','PWD')}}/group_vars/ATD_FABRIC/AAA.yml"
+  vars:
+     AAA: '{{CVP_FACTS.ansible_facts.configlets | selectattr("name", "==", "ATD-INFRA") | map(attribute="config") | join(" ") | regex_findall("username .*") }}'
+
+- name: Create ATD-BASE configlet
+  template:
+    src: "{{lookup('env','PWD')}}/roles/templates/BASE_INFRA.j2"
+    dest: "{{lookup('env','PWD')}}/group_vars/CVP/ATD-BASE.txt"
+  vars:
+     AAA: '{{CVP_FACTS.ansible_facts.configlets | selectattr("name", "==", "ATD-INFRA") | map(attribute="config") | join(" ") | regex_findall("username .*") }}'
+
+- name: Add CVP credentials
+  template:
+    src: "{{lookup('env','PWD')}}/roles/templates/CVP_CRED.j2"
+    dest: "{{lookup('env','PWD')}}/group_vars/CVP/CVP_CRED.yml"
+
+- name: Add EOS credentials
+  template:
+    src: "{{lookup('env','PWD')}}/roles/templates/CVP_CRED.j2"
+    dest: "{{lookup('env','PWD')}}/group_vars/EOS/EOS_CRED.yml"

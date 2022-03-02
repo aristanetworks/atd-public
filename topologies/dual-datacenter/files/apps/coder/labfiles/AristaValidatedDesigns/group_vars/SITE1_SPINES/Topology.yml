@@ -1,0 +1,19 @@
+---
+# ----------------------  Site 1 Spine Layer ---------------------- #
+
+type: spine
+
+spine:
+  defaults:
+    platform: ceos
+    bgp_as: 65101
+    #evpn_role: none
+    loopback_ipv4_pool: 10.0.0.0/24
+    bgp_defaults: "{{ atd_bgp_defaults }}"
+  nodes:
+    s1-spine1:
+      id: 1
+      mgmt_ip:  192.168.0.10/24
+    s1-spine2:
+      id: 2
+      mgmt_ip:  192.168.0.11/24

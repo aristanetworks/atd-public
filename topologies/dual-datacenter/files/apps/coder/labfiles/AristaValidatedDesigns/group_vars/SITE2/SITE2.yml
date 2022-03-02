@@ -1,0 +1,8 @@
+---
+
+# ---------------------- Site 2 Common Settings ---------------------- #
+
+dc_name: SITE2
+
+# OOB Management network default gateway.
+mgmt_gateway: 192.168.0.1
