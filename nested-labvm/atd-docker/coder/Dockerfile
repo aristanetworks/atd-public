@@ -15,6 +15,18 @@ RUN wget --quiet https://raw.githubusercontent.com/aristanetworks/ansible-avd/de
 
 RUN sudo pip3 install -r requirements-dev.txt
 
+# Install arista.avd, community.general and ansible.posix ansible-galaxy collections with upgrade flag if already exists
+RUN ansible-galaxy collection install arista.avd --upgrade
+
+RUN ansible-galaxy collection install community.general --upgrade
+
+RUN ansible-galaxy collection install ansible.posix --upgrade
+
+#Install arista.avd and arista.cvp ansible galaxy collection devel branch - Required until PR #1410 is in latest release branch
+RUN ansible-galaxy collection install git+https://github.com/aristanetworks/ansible-avd.git#/ansible_collections/arista/avd/,devel
+
+RUN ansible-galaxy collection install git+https://github.com/aristanetworks/ansible-cvp.git#/ansible_collections/arista/cvp/,devel
+
 # Install Code extensions
 COPY src/vs-extensions.txt /home/coder/
 
