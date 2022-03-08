@@ -67,10 +67,15 @@ TASK 1: Apply a Configlet Builder to create a group of Tasks
    
 16. Repeat step 15, but select 'After Snapshot'. We should now have 2 stages that will take a before and after snapshot of the devices being changed.
 
-A few notes about Change Control:
+ .. note:: 
+    A few notes about Change Control:
+
     a. Each Task can be assigned to different stages if wanted. Health checks can be performed in stages before the next stage executes.
+    
     b. The order of Task execution can be specified if there are dependencies. This is done by clicking the tasks and selecting the option in the drop-down menu.
+    
     c. Each stage can be executed in ‘Series’ or ‘Parallel’ by selecting the action in the drop-down menu.
+    
     d. Check the 'Execute Immediatelly' option for a faster change execution.
 
 |
