@@ -17,7 +17,7 @@ topologies:
               - 4.27.0F
           2021.3.0:
             resources:
-              cpu: 36
+              cpu: 40
               ram: 54
             branch: nested/2021.3
             orderable: true
