@@ -48,25 +48,6 @@ topologies:
         cpu: 32
         ram: 48
         cvp:
-          2021.1.1:
-            resources:
-              cpu: 32
-              ram: 48
-            branch: nested/2021.1
-            orderable: true
-            image: base-atd-datacenter-ceos-c2021-1-1-20211014
-            eos:
-              - 4.25.2F
-              - 4.26.1F
-          2021.2.0:
-            resources:
-              cpu: 32
-              ram: 48
-            branch: nested/2021.2
-            orderable: false
-            image: base-atd-datacenter-ceos-c2021-2-0-20211014
-            eos:
-              - 4.27.0F
           2021.2.2:
             resources:
               cpu: 32
@@ -87,37 +68,19 @@ topologies:
             eos:
               - 4.27.1.1F
               - 4.27.2F
-          2021.3.0.e5:
-            resources:
-              cpu: 32
-              ram: 48
-            branch: nested/2021.3
-            orderable: false
-            image: base-atd-datacenter-ceos-c2021-3-0-e5-20211221
-            eos:
-              - 4.27.0F
       veos:
         cpu: 30
         ram: 64
         cvp:
-          2021.1.1:
+          2021.1.0:
             resources:
               cpu: 38
               ram: 64
             branch: nested/2021.1
-            orderable: true
+            orderable: false
             image: base-atd-datacenter-e4-26-1f-c2021-1-1-20211014
             eos:
               - 4.26.1F
-          2021.2.0:
-            resources:
-              cpu: 38
-              ram: 64
-            branch: nested/2021.2
-            orderable: false
-            image: base-atd-datacenter-e4-27-0f-c2021-2-0-20211014
-            eos:
-              - 4.26.2F
           2021.2.2:
             resources:
               cpu: 38
@@ -126,7 +89,7 @@ topologies:
             orderable: true
             image: base-atd-datacenter-e4-27-1-1f-c2021-2-2-20220208
             eos:
-              - 4.27.1.F
+              - 4.27.1.1F
           2021.3.0:
             resources:
               cpu: 40
@@ -146,7 +109,7 @@ topologies:
               cpu: 32
               ram: 48
             branch: v2021.1-20211026a
-            orderable: true
+            orderable: false
             image: base-atd-datacenter-ceos-c2021-1-1-20211014
             eos:
               - 4.25.2F
@@ -156,10 +119,30 @@ topologies:
               cpu: 32
               ram: 48
             branch: v2021.2-20211206a
-            orderable: true
+            orderable: false
             image: base-atd-datacenter-ceos-c2021-2-0-20211014
             eos:
               - 4.27.0F
+          2021.2.2:
+            resources:
+              cpu: 32
+              ram: 48
+            branch: v2021.2-20220318a
+            orderable: true
+            image: base-atd-datacenter-ceos-c2021-2-2-20220208
+            eos:
+              - 4.27.1.1F
+              - 4.26.2F
+          2021.3.0:
+            resources:
+              cpu: 36
+              ram: 48
+            branch: v2021.3-20220318a
+            orderable: true
+            image: base-atd-datacenter-ceos-c2021-3-0-20220209
+            eos:
+              - 4.27.1.1F
+              - 4.27.2F
       veos:
         cpu: 30
         ram: 64
@@ -169,7 +152,7 @@ topologies:
               cpu: 38
               ram: 64
             branch: v2021.1-20211026a
-            orderable: true
+            orderable: false
             image: base-atd-datacenter-e4-26-1f-c2021-1-1-20211014
             eos:
               - 4.26.1F
@@ -178,10 +161,28 @@ topologies:
               cpu: 38
               ram: 64
             branch: v2021.2-20211206a
-            orderable: true
+            orderable: false
             image: base-atd-datacenter-e4-27-0f-c2021-2-0-20211014
             eos:
               - 4.26.2F
+          2021.2.2:
+            resources:
+              cpu: 38
+              ram: 64
+            branch: v2021.2-20220318a
+            orderable: true
+            image: base-atd-datacenter-e4-27-1-1f-c2021-2-2-20220208
+            eos:
+              - 4.27.1.1F
+          2021.3.0:
+            resources:
+              cpu: 40
+              ram: 64
+            branch: v2021.3-20220318a
+            orderable: true
+            image: base-atd-datacenter-e4-27-2f-c2021-3-0-20220209
+            eos:
+              - 4.27.2F
     desc: 'Two Spines, Four Leafs. Focused on EOS fundamentals within the Data Center.'
     name: 'Datacenter'
     title: 'Datacenter Lab'
@@ -195,15 +196,6 @@ topologies:
         cpu: 44
         ram: 90
         cvp:
-          2021.2.0:
-            resources:
-              cpu: 44
-              ram: 90
-            branch: nested/2021.2
-            orderable: false
-            image: base-atd-routing-e4-27-0f-c2021-2-0-20211018
-            eos:
-              - 4.27.0F
           2021.2.2:
             resources:
               cpu: 44
@@ -226,24 +218,6 @@ topologies:
         cpu: 32
         ram: 64
         cvp:
-          2021.1.1:
-            resources:
-              cpu: 32
-              ram: 64
-            branch: nested/2021.1
-            orderable: true
-            image: base-atd-routing-ceos-c2021-1-1-20211014
-            eos:
-              - 4.26.1F
-          2021.2.0:
-            resources:
-              cpu: 32
-              ram: 64
-            branch: nested/2021.2
-            orderable: false
-            image: base-atd-routing-ceos-c2021-2-0-20211014
-            eos:
-              - 4.27.0F
           2021.2.2:
             resources:
               cpu: 32
@@ -264,15 +238,6 @@ topologies:
             eos:
               - 4.27.1.1F
               - 4.27.2F
-          2021.3.0.e5:
-            resources:
-              cpu: 32
-              ram: 64
-            branch: nested/2021.3
-            orderable: false
-            image: base-atd-routing-ceos-c2021-3-0-e5-20211221
-            eos:
-              - 4.27.0F
     prod:
       ceos:
         cpu: 24
@@ -283,7 +248,7 @@ topologies:
               cpu: 32
               ram: 64
             branch: v2021.1-20211026a
-            orderable: true
+            orderable: false
             image: base-atd-routing-ceos-c2021-1-1-20211014
             eos:
               - 4.26.1F
@@ -292,10 +257,30 @@ topologies:
               cpu: 32
               ram: 64
             branch: v2021.2-20211026a
-            orderable: true
+            orderable: false
             image: base-atd-routing-ceos-c2021-2-0-20211014
             eos:
               - 4.27.0F
+          2021.2.2:
+            resources:
+              cpu: 32
+              ram: 64
+            branch: v2021.2-20220318a
+            orderable: true
+            image: base-atd-routing-ceos-c2021-2-2-20220208
+            eos:
+              - 4.27.1.1F
+              - 4.26.2F
+          2021.3.0:
+            resources:
+              cpu: 36
+              ram: 64
+            branch: v2021.3-20220318a
+            orderable: true
+            image: base-atd-routing-ceos-c2021-3-0-20220209
+            eos:
+              - 4.27.1.1F
+              - 4.27.2F
       veos:
         cpu: 44
         ram: 90
@@ -305,10 +290,28 @@ topologies:
               cpu: 44
               ram: 90
             branch: v2021.2-20211026a
-            orderable: true
+            orderable: false
             image: base-atd-routing-e4-27-0f-c2021-2-0-20211018
             eos:
               - 4.27.0F
+          2021.2.2:
+            resources:
+              cpu: 44
+              ram: 90
+            branch: v2021.2-20220318a
+            orderable: true
+            image: base-atd-routing-e4-27-1-1f-c2021-2-2-20220208
+            eos:
+              - 4.27.1.1F
+          2021.3.0:
+            resources:
+              cpu: 50
+              ram: 90
+            branch: v2021.3-20220318a
+            orderable: true
+            image: base-atd-routing-e4-27-2f-c2021-3-0-20220209
+            eos:
+              - 4.27.2F
     desc: 'Twenty nodes. Focused on advanced routing, L2VPN and L3VPN topics'
     name: 'Advanced Routing'
     title: 'Advanced Routing Lab'
@@ -324,8 +327,8 @@ topologies:
         cvp:
           2020.2.3:
             resources:
-              cpu: 96
-              ram: 96
+              cpu: 32
+              ram: 64
             branch: nested/2020.2
             orderable: true
             image: base-training-l1-e4-26-0f-c2020-2-3-20220111
@@ -340,15 +343,6 @@ topologies:
             image: base-training-l1-e4-27-2f-c2021-3-0-20220215
             eos:
               - 4.27.2F
-          2021.3.0.e6:
-            resources:
-              cpu: 32
-              ram: 64
-            branch: nested/2021.3
-            orderable: false
-            image: base-training-l1-e4-27-0f-c2021-3-0-e6-20220107
-            eos:
-              - 4.27.0F
     prod:
       veos:
         cpu: 32
@@ -363,6 +357,15 @@ topologies:
             image: base-training-l1-e4-26-0f-c2020-2-3-20211220
             eos:
               - 4.26.0F
+          2021.3.0:
+            resources:
+              cpu: 32
+              ram: 64
+            branch: v2021.3-20220318a
+            orderable: true
+            image: base-training-l1-e4-27-2f-c2021-3-0-20220215
+            eos:
+              - 4.27.2F
     desc: 'Level 1 Training Lab. For use by the Arista Training Team.'
     name: 'Training - Level 1'
     title: 'Training Level 1 Lab'
@@ -378,8 +381,8 @@ topologies:
         cvp:
           2020.2.3:
             resources:
-              cpu: 96
-              ram: 96
+              cpu: 32
+              ram: 64
             branch: nested/2020.2
             orderable: true
             image: base-training-l2-e4-26-0f-c2020-2-3-20220111
@@ -394,25 +397,20 @@ topologies:
             image: base-training-l2-e4-27-2f-c2021-3-0-20220215
             eos:
               - 4.27.2F
-          2021.3.0.e6:
+    prod:
+      veos:
+        cpu: 32
+        ram: 64
+        cvp:
+          2021.3.0:
             resources:
               cpu: 32
               ram: 64
-            branch: nested/2021.3
-            orderable: false
-            image: base-training-l2-e4-27-0f-c2021-3-0-e6-20220107
+            branch: v2021.3-20220318a
+            orderable: true
+            image: base-training-l2-e4-27-2f-c2021-3-0-20220215
             eos:
-              - 4.27.0F
-    # prod:
-    #   veos:
-    #     cpu: 32
-    #     ram: 64
-    #     cvp:
-    #       2020.2.3:
-    #         branch: nested/2020.2
-    #         image: base-training-l2-e4-24-2-2f-c2020-2-3-20210108
-    #         eos:
-    #           - 4.24.2.2F
+              - 4.27.2F
     desc: 'Level 2 Training Lab. For use by the Arista Training Team.'
     name: 'Training - Level 2'
     title: 'Training Level 2 Lab'
@@ -428,8 +426,8 @@ topologies:
         cvp:
           2020.2.3:
             resources:
-              cpu: 96
-              ram: 96
+              cpu: 36
+              ram: 72
             branch: nested/2020.2
             orderable: true
             image: base-training-l3-e4-26-0f-c2020-2-3-20220111
@@ -437,8 +435,8 @@ topologies:
               - 4.26.0F
           2020.2.3.e426:
             resources:
-              cpu: 96
-              ram: 96
+              cpu: 36
+              ram: 72
             branch: nested/2020.2
             orderable: true
             image: base-training-l3-e4-26-0f-c2020-2-3-20220111
@@ -453,15 +451,6 @@ topologies:
             image: base-training-l3-e4-27-2f-c2021-3-0-20220215
             eos:
               - 4.27.2F
-          2021.3.0.e6:
-            resources:
-              cpu: 36
-              ram: 72
-            branch: nested/2021.3
-            orderable: false
-            image: base-training-l3-e4-27-0f-c2021-3-0-e6-20220107
-            eos:
-              - 4.27.0F
     prod:
       veos:
         cpu: 36
@@ -485,6 +474,15 @@ topologies:
             image: base-training-l3-e4-26-0f-c2020-2-3-20211220
             eos:
               - 4.26.0F
+          2021.3.0:
+            resources:
+              cpu: 36
+              ram: 72
+            branch: v2021.3-20220318a
+            orderable: true
+            image: base-training-l3-e4-27-2f-c2021-3-0-20220215
+            eos:
+              - 4.27.2F
     desc: 'Level 3 Training Lab. For use by the Arista Training Team.'
     name: 'Training - Level 3'
     title: 'Training Level 3 Lab'
@@ -500,8 +498,8 @@ topologies:
         cvp:
           2020.2.3:
             resources:
-              cpu: 96
-              ram: 96
+              cpu: 36
+              ram: 72
             branch: nested/2020.2
             orderable: true
             image: base-training-l3-exam-e4-26-0f-c2020-2-3-20220111
@@ -516,15 +514,6 @@ topologies:
             image: base-training-l3-exam-e4-27-2f-c2021-3-0-20220215
             eos:
               - 4.27.2F
-          2021.3.0.e6:
-            resources:
-              cpu: 36
-              ram: 72
-            branch: nested/2021.3
-            orderable: false
-            image: base-training-l3-exam-e4-27-0f-c2021-3-0-e6-20220107
-            eos:
-              - 4.27.0F
     prod:
       veos:
         cpu: 36
@@ -554,8 +543,8 @@ topologies:
         cvp:
           2020.2.3:
             resources:
-              cpu: 96
-              ram: 96
+              cpu: 40
+              ram: 80
             branch: nested/2020.2
             orderable: true
             image: base-training-l3-2-e4-26-0f-c2020-2-3-20220111
@@ -570,15 +559,6 @@ topologies:
             image: base-training-l3-2-e4-27-2f-c2021-3-0-20220215
             eos:
               - 4.27.2F
-          2021.3.0.e6:
-            resources:
-              cpu: 40
-              ram: 80
-            branch: nested/2021.3
-            orderable: false
-            image: base-training-l3-2-e4-27-0f-c2021-3-0-e6-20220107
-            eos:
-              - 4.27.0F
     # prod:
     #   veos:
     #     cpu: 36
@@ -607,8 +587,8 @@ topologies:
         cvp:
           2020.2.3:
             resources:
-              cpu: 96
-              ram: 96
+              cpu: 32
+              ram: 64
             branch: nested/2020.2
             orderable: true
             image: base-training-l4-ceos-c2020-2-3-20220111
@@ -637,16 +617,20 @@ topologies:
             image: base-training-l4-e4-27-1f-c2021-3-0-e6-20220131
             eos:
               - 4.27.1F
-    # prod:
-    #   veos:
-    #     cpu: 32
-    #     ram: 64
-    #     cvp:
-    #       2020.2.3:
-    #         branch: nested/2020.2
-    #         image: base-training-l3-e4-24-2-2f-c2020-2-3-20210111
-    #         eos:
-    #           - 4.24.2.2F
+    prod:
+      veos:
+        cpu: 32
+        ram: 64
+        cvp:
+          2021.3.0:
+            resources:
+              cpu: 60
+              ram: 90
+            branch: v2021.3-20220318a
+            orderable: true
+            image: base-training-l4-e4-27-2f-c2021-3-0-20220215
+            eos:
+              - 4.27.2F
     desc: 'Level 4 Training Lab. For use by the Arista Training Team.'
     name: 'Training - Level 4'
     title: 'Training Level 4 Lab'
@@ -662,23 +646,14 @@ topologies:
         cvp:
           2020.2.3:
             resources:
-              cpu: 96
-              ram: 96
+              cpu: 48
+              ram: 72
             branch: nested/2020.2
             orderable: true
             image: base-training-l5-ceos-c2020-2-3-20220111
             eos:
               - 4.25.1F
               - 4.26.0F
-          2021.2.0:
-            resources:
-              cpu: 48
-              ram: 72
-            branch: nested/2021.2
-            orderable: true
-            image: base-training-l5-ceos-c2021-2-0-20211015
-            eos:
-              - 4.26.2F
           2021.3.0:
             resources:
               cpu: 48
@@ -688,16 +663,6 @@ topologies:
             image: base-training-l5-ceos-c2021-3-0-20220215
             eos:
               - 4.27.2F
-          2021.3.0.e6:
-            resources:
-              cpu: 48
-              ram: 72
-            branch: nested/2021.3
-            orderable: false
-            image: base-training-l5-ceos-c2021-3-0-e6-20220107
-            eos:
-              - 4.27.0F
-              - 4.26.2F
     prod:
       ceos:
         cpu: 36
@@ -713,6 +678,15 @@ topologies:
             eos:
               - 4.25.1F
               - 4.26.0F
+          2021.3.0:
+            resources:
+              cpu: 48
+              ram: 72
+            branch: v2021.3-20220318a
+            orderable: true
+            image: base-training-l5-ceos-c2021-3-0-20220215
+            eos:
+              - 4.27.2F
     desc: 'Level 5 Training Lab. For use by the Arista Training Team.'
     name: 'Training - Level 5'
     title: 'Training Level 5 Lab'
@@ -728,8 +702,8 @@ topologies:
         cvp:
           2020.2.3:
             resources:
-              cpu: 96
-              ram: 96
+              cpu: 40
+              ram: 70
             branch: nested/2020.2
             orderable: true
             image: base-training-l7-ceos-c2020-2-3-20220111
@@ -745,16 +719,6 @@ topologies:
             image: base-training-l7-ceos-c2021-3-0-20220215
             eos:
               - 4.27.2F
-          2021.3.0.e6:
-            resources:
-              cpu: 40
-              ram: 70
-            branch: nested/2021.3
-            orderable: false
-            image: base-training-l7-ceos-c2021-3-0-e6-20220110
-            eos:
-              - 4.27.0F
-              - 4.26.2F
     prod:
       ceos:
         cpu: 40
@@ -770,6 +734,15 @@ topologies:
             eos:
               - 4.25.1F
               - 4.26.0F
+          2021.3.0:
+            resources:
+              cpu: 40
+              ram: 70
+            branch: v2021.3-20220318a
+            orderable: true
+            image: base-training-l7-ceos-c2021-3-0-20220215
+            eos:
+              - 4.27.2F
     desc: 'Level 7 Training Lab. For use by the Arista Training Team.'
     name: 'Training - Level 7'
     title: 'Training Level 7 Lab'
