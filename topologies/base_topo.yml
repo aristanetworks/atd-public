@@ -53,7 +53,7 @@ topologies:
               cpu: 32
               ram: 48
             branch: nested/2021.1
-            orderable: true
+            orderable: false
             image: base-atd-datacenter-ceos-c2021-1-1-20211014
             eos:
               - 4.25.2F
@@ -105,7 +105,7 @@ topologies:
               cpu: 38
               ram: 64
             branch: nested/2021.1
-            orderable: true
+            orderable: false
             image: base-atd-datacenter-e4-26-1f-c2021-1-1-20211014
             eos:
               - 4.26.1F
@@ -126,7 +126,7 @@ topologies:
             orderable: true
             image: base-atd-datacenter-e4-27-1-1f-c2021-2-2-20220208
             eos:
-              - 4.27.1.F
+              - 4.27.1.1F
           2021.3.0:
             resources:
               cpu: 40
@@ -146,7 +146,7 @@ topologies:
               cpu: 32
               ram: 48
             branch: v2021.1-20211026a
-            orderable: true
+            orderable: false
             image: base-atd-datacenter-ceos-c2021-1-1-20211014
             eos:
               - 4.25.2F
@@ -156,10 +156,30 @@ topologies:
               cpu: 32
               ram: 48
             branch: v2021.2-20211206a
-            orderable: true
+            orderable: false
             image: base-atd-datacenter-ceos-c2021-2-0-20211014
             eos:
               - 4.27.0F
+          2021.2.2:
+            resources:
+              cpu: 32
+              ram: 48
+            branch: v2021.2-20220318a
+            orderable: true
+            image: base-atd-datacenter-ceos-c2021-2-2-20220208
+            eos:
+              - 4.27.1.1F
+              - 4.26.2F
+          2021.3.0:
+            resources:
+              cpu: 36
+              ram: 48
+            branch: v2021.3-20220318a
+            orderable: true
+            image: base-atd-datacenter-ceos-c2021-3-0-20220209
+            eos:
+              - 4.27.1.1F
+              - 4.27.2F
       veos:
         cpu: 30
         ram: 64
@@ -169,7 +189,7 @@ topologies:
               cpu: 38
               ram: 64
             branch: v2021.1-20211026a
-            orderable: true
+            orderable: false
             image: base-atd-datacenter-e4-26-1f-c2021-1-1-20211014
             eos:
               - 4.26.1F
@@ -178,10 +198,28 @@ topologies:
               cpu: 38
               ram: 64
             branch: v2021.2-20211206a
-            orderable: true
+            orderable: false
             image: base-atd-datacenter-e4-27-0f-c2021-2-0-20211014
             eos:
               - 4.26.2F
+          2021.2.2:
+            resources:
+              cpu: 38
+              ram: 64
+            branch: v2021.2-20220318a
+            orderable: true
+            image: base-atd-datacenter-e4-27-1-1f-c2021-2-2-20220208
+            eos:
+              - 4.27.1.1F
+          2021.3.0:
+            resources:
+              cpu: 40
+              ram: 64
+            branch: v2021.3-20220318a
+            orderable: true
+            image: base-atd-datacenter-e4-27-2f-c2021-3-0-20220209
+            eos:
+              - 4.27.2F
     desc: 'Two Spines, Four Leafs. Focused on EOS fundamentals within the Data Center.'
     name: 'Datacenter'
     title: 'Datacenter Lab'
@@ -231,7 +269,7 @@ topologies:
               cpu: 32
               ram: 64
             branch: nested/2021.1
-            orderable: true
+            orderable: false
             image: base-atd-routing-ceos-c2021-1-1-20211014
             eos:
               - 4.26.1F
@@ -283,7 +321,7 @@ topologies:
               cpu: 32
               ram: 64
             branch: v2021.1-20211026a
-            orderable: true
+            orderable: false
             image: base-atd-routing-ceos-c2021-1-1-20211014
             eos:
               - 4.26.1F
@@ -292,10 +330,30 @@ topologies:
               cpu: 32
               ram: 64
             branch: v2021.2-20211026a
-            orderable: true
+            orderable: false
             image: base-atd-routing-ceos-c2021-2-0-20211014
             eos:
               - 4.27.0F
+          2021.2.2:
+            resources:
+              cpu: 32
+              ram: 64
+            branch: v2021.2-20220318a
+            orderable: true
+            image: base-atd-routing-ceos-c2021-2-2-20220208
+            eos:
+              - 4.27.1.1F
+              - 4.26.2F
+          2021.3.0:
+            resources:
+              cpu: 36
+              ram: 64
+            branch: v2021.3-20220318a
+            orderable: true
+            image: base-atd-routing-ceos-c2021-3-0-20220209
+            eos:
+              - 4.27.1.1F
+              - 4.27.2F
       veos:
         cpu: 44
         ram: 90
@@ -305,10 +363,28 @@ topologies:
               cpu: 44
               ram: 90
             branch: v2021.2-20211026a
-            orderable: true
+            orderable: false
             image: base-atd-routing-e4-27-0f-c2021-2-0-20211018
             eos:
               - 4.27.0F
+          2021.2.2:
+            resources:
+              cpu: 44
+              ram: 90
+            branch: v2021.2-20220318a
+            orderable: true
+            image: base-atd-routing-e4-27-1-1f-c2021-2-2-20220208
+            eos:
+              - 4.27.1.1F
+          2021.3.0:
+            resources:
+              cpu: 50
+              ram: 90
+            branch: v2021.3-20220318a
+            orderable: true
+            image: base-atd-routing-e4-27-2f-c2021-3-0-20220209
+            eos:
+              - 4.27.2F
     desc: 'Twenty nodes. Focused on advanced routing, L2VPN and L3VPN topics'
     name: 'Advanced Routing'
     title: 'Advanced Routing Lab'
