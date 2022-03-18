@@ -238,6 +238,7 @@ Open a **terminal** window and type:
 First we will need to prep our "remote" git repository. Type the following command:
 
 .. code-block:: bash
+
     git init --bare /home/coder/project/labfiles/lab6/repo
 
 Now enter the following:

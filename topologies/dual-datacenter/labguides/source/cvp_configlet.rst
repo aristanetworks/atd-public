@@ -59,9 +59,9 @@ been defined for AAA and VLANs.
 
 |
 
-10. To apply the Configlet, navigate to 'Network Provisioning' and right click on the 'Tenant' container and select 'Manage -> Configlet'.
+10. To apply the Configlet, navigate to 'Network Provisioning' expand the 'S1' container, right click on the 'Leaf' container and select 'Manage -> Configlet'.
 
-11. Select the 'Alias' Configlet and click 'Update'. This activity is to simply add a new configlet to the existing configlets applied on the 'Tenant' container. **Do not Remove** existing configlets from the Proposed Configuration section.
+11. Select the 'Alias' Configlet and click 'Update'. This activity is to simply add a new configlet to the existing configlets applied on the 'Leaf' container. **Do not Remove** existing configlets from the Proposed Configuration section.
 
 
     *\**Expert Tip - Use search bar to find Configlets faster*
