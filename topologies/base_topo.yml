@@ -21,7 +21,7 @@ topologies:
               ram: 54
             branch: nested/2021.3
             orderable: true
-            image: base-atd-dual-datacenter-ceos-c2021-3-0-20220209
+            image: base-atd-dual-datacenter-ceos-c2021-3-0-20220324u
             eos:
               - 4.27.1.1F
               - 4.27.2F
@@ -64,7 +64,7 @@ topologies:
               ram: 48
             branch: nested/2021.3
             orderable: true
-            image: base-atd-datacenter-ceos-c2021-3-0-20220209
+            image: base-atd-datacenter-ceos-c2021-3-0-20220324u
             eos:
               - 4.27.1.1F
               - 4.27.2F
@@ -96,7 +96,7 @@ topologies:
               ram: 64
             branch: nested/2021.3
             orderable: true
-            image: base-atd-datacenter-e4-27-2f-c2021-3-0-20220209
+            image: base-atd-datacenter-e4-27-2f-c2021-3-0-20220324u
             eos:
               - 4.27.2F
     prod:
@@ -139,7 +139,7 @@ topologies:
               ram: 48
             branch: v2021.3-20220318a
             orderable: true
-            image: base-atd-datacenter-ceos-c2021-3-0-20220209
+            image: base-atd-datacenter-ceos-c2021-3-0-20220324u
             eos:
               - 4.27.1.1F
               - 4.27.2F
@@ -180,7 +180,7 @@ topologies:
               ram: 64
             branch: v2021.3-20220318a
             orderable: true
-            image: base-atd-datacenter-e4-27-2f-c2021-3-0-20220209
+            image: base-atd-datacenter-e4-27-2f-c2021-3-0-20220324u
             eos:
               - 4.27.2F
     desc: 'Two Spines, Four Leafs. Focused on EOS fundamentals within the Data Center.'
@@ -211,7 +211,7 @@ topologies:
               ram: 90
             branch: nested/2021.3
             orderable: true
-            image: base-atd-routing-e4-27-2f-c2021-3-0-20220209
+            image: base-atd-routing-e4-27-2f-c2021-3-0-20220324u
             eos:
               - 4.27.2F
       ceos:
@@ -234,7 +234,7 @@ topologies:
               ram: 64
             branch: nested/2021.3
             orderable: true
-            image: base-atd-routing-ceos-c2021-3-0-20220209
+            image: base-atd-routing-ceos-c2021-3-0-20220324u
             eos:
               - 4.27.1.1F
               - 4.27.2F
@@ -277,7 +277,7 @@ topologies:
               ram: 64
             branch: v2021.3-20220318a
             orderable: true
-            image: base-atd-routing-ceos-c2021-3-0-20220209
+            image: base-atd-routing-ceos-c2021-3-0-20220324u
             eos:
               - 4.27.1.1F
               - 4.27.2F
@@ -309,7 +309,7 @@ topologies:
               ram: 90
             branch: v2021.3-20220318a
             orderable: true
-            image: base-atd-routing-e4-27-2f-c2021-3-0-20220209
+            image: base-atd-routing-e4-27-2f-c2021-3-0-20220324u
             eos:
               - 4.27.2F
     desc: 'Twenty nodes. Focused on advanced routing, L2VPN and L3VPN topics'
