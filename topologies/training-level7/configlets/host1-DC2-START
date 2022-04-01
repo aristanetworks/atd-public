@@ -1,0 +1,135 @@
+vrf instance OOB
+ip routing vrf OOB
+interface Ethernet15
+   vrf OOB
+   no shutdown 
+   no switchport 
+   ip address 192.168.2.53/24
+ip route vrf OOB 0.0.0.0/0 192.168.2.254
+
+int ethernet 1 - 4
+   no shutdown
+   no ip address
+   switchport
+   channel-group 10 mode active
+int loopback 0
+   ip address 192.168.255.53/32
+
+interface port-Channel 10
+   no shut
+   switchport mode trunk 
+
+vlan 20
+name VLAN20
+
+vlan 21
+name VLAN21
+
+vlan 22
+name VLAN22
+
+vlan 23
+name VLAN23
+
+vlan 24
+name VLAN24
+
+vlan 15
+name VLAN15
+
+vlan 16
+name VLAN16
+
+vlan 17
+name VLAN17
+
+vlan 18
+name VLAN18
+
+vlan 19
+name VLAN19
+
+
+vrf instance VLAN20
+vrf instance VLAN21
+vrf instance VLAN22
+vrf instance VLAN23
+vrf instance VLAN24
+vrf instance VLAN15
+vrf instance VLAN16
+vrf instance VLAN17
+vrf instance VLAN18
+vrf instance VLAN19
+
+
+ip routing vrf VLAN20
+ip routing vrf VLAN21
+ip routing vrf VLAN22
+ip routing vrf VLAN23
+ip routing vrf VLAN24
+ip routing vrf VLAN15
+ip routing vrf VLAN16
+ip routing vrf VLAN17
+ip routing vrf VLAN18
+ip routing vrf VLAN19
+
+interface VLAN20
+vrf VLAN20
+ip address 172.16.20.53/24
+no shutdown
+
+interface VLAN21
+vrf VLAN21
+ip address 172.16.21.53/24
+no shutdown
+
+interface VLAN22
+vrf VLAN22
+ip address 172.16.22.53/24
+no shutdown
+
+interface VLAN23
+vrf VLAN23
+ip address 172.16.23.53/24
+no shutdown
+
+interface VLAN24
+vrf VLAN24
+ip address 172.16.24.53/24
+no shutdown
+
+interface VLAN15
+vrf VLAN15
+ip address 172.16.15.53/24
+no shutdown
+
+interface VLAN16
+vrf VLAN16
+ip address 172.16.16.53/24
+no shutdown
+
+interface VLAN17
+vrf VLAN17
+ip address 172.16.17.53/24
+no shutdown
+
+interface VLAN18
+vrf VLAN18
+ip address 172.16.18.53/24
+no shutdown
+
+interface VLAN19
+vrf VLAN19
+ip address 172.16.19.53/24
+no shutdown
+
+ip route vrf VLAN20 0.0.0.0/0 172.16.20.254
+ip route vrf VLAN21 0.0.0.0/0 172.16.21.254
+ip route vrf VLAN22 0.0.0.0/0 172.16.22.254
+ip route vrf VLAN23 0.0.0.0/0 172.16.23.254
+ip route vrf VLAN24 0.0.0.0/0 172.16.24.254
+ip route vrf VLAN15 0.0.0.0/0 172.16.15.254
+ip route vrf VLAN16 0.0.0.0/0 172.16.16.254
+ip route vrf VLAN17 0.0.0.0/0 172.16.17.254
+ip route vrf VLAN18 0.0.0.0/0 172.16.18.254
+ip route vrf VLAN19 0.0.0.0/0 172.16.19.254

@@ -119,30 +119,73 @@ cvp_info:
       - spine3-DC1-BASE
       host1-DC1:
       - host1-DC1-BASE
+      - host1-DC1-START
       host2-DC1:
       - host2-DC1-BASE
+      - host2-DC1-START
       borderleaf1-DC2:
       - borderleaf1-DC2-BASE
+      - borderleaf1-DC2-START
       borderleaf2-DC2:
       - borderleaf2-DC2-BASE
+      - borderleaf2-DC2-START
       leaf1-DC2:
       - leaf1-DC2-BASE
+      - leaf1-DC2-START
       leaf2-DC2:
       - leaf2-DC2-BASE
+      - leaf2-DC2-START
       leaf3-DC2:
       - leaf3-DC2-BASE
+      - leaf3-DC2-START
       leaf4-DC2:
       - leaf4-DC2-BASE
+      - leaf4-DC2-START
       spine1-DC2:
       - spine1-DC2-BASE
+      - Spine1-DC2-START
       spine2-DC2:
       - spine2-DC2-BASE
+      - Spine2-DC2-START
       spine3-DC2:
       - spine3-DC2-BASE
+      - Spine3-DC2-START
       host1-DC2:
       - host1-DC2-BASE
+      - host1-DC2-START
       host2-DC2:
       - host2-DC2-BASE
+      - host2-DC2-START
+      host1-DC3:
+      - host1-DC3-BASE
+      - host1-DC3-START
+      host2-DC3:
+      - host2-DC3-BASE
+      - host2-DC3-START
+      core1-isp1:
+      - core1-ISP1-BASE
+      - core1-ISP1-START
+      core2-isp1:
+      - core2-ISP1-BASE
+      - core2-ISP1-START
+      core1-isp2:
+      - core1-ISP2-BASE
+      - core1-ISP2-START
+      core2-isp2:
+      - core2-ISP2-BASE
+      - core2-ISP2-START
+      internet:
+      - internet-SW1-ISP3-BASE
+      - INTERNET-sw1-isp3-START
+      DCI:
+      - DCI-BASE
+      - DCI-START
+      OOB-CORE:
+      - OOB-CORE-BASE
+      OOB-DC1:
+      - OOB-DC1-BASE
+      OOB-DC2:
+      - OOB-DC2-BASE
       spine1-DC3:
       - spine1-DC3-BASE
       spine2-DC3:
@@ -151,26 +194,4 @@ cvp_info:
       - leaf1-DC3-BASE
       leaf2-DC3:
       - leaf2-DC3-BASE
-      host1-DC3:
-      - host1-DC3-BASE
-      host2-DC3:
-      - host2-DC3-BASE
-      core1-isp1:
-      - core1-ISP1-BASE
-      core2-isp1:
-      - core2-ISP1-BASE
-      core1-isp2:
-      - core1-ISP2-BASE
-      core2-isp2:
-      - core2-ISP2-BASE
-      internet:
-      - internet-SW1-ISP3-BASE
-      DCI:
-      - DCI-BASE
-      OOB-CORE:
-      - OOB-CORE-BASE
-      OOB-DC1:
-      - OOB-DC1-BASE
-      OOB-DC2:
-      - OOB-DC2-BASE
 

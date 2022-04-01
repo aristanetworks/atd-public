@@ -1,0 +1,64 @@
+interface Ethernet1
+   no shutdown
+   no switchport
+   ip address 10.200.0.3/31
+interface Ethernet2
+   no shutdown
+   no switchport
+   ip address 10.200.0.4/31
+interface Ethernet10
+   no shutdown
+   no switchport
+interface Ethernet10.100
+   no shutdown
+   encapsulation dot1q vlan 100
+   ip address 10.101.0.14/30
+interface Ethernet10.200
+   no shutdown
+   encapsulation dot1q vlan 200
+   ip address 10.101.0.18/30
+interface Ethernet10.300
+   no shutdown
+   encapsulation dot1q vlan 300
+   ip address 10.101.0.22/30
+int loopback 0
+   ip address 192.168.255.72/32
+
+service routing protocols model multi-agent
+ !
+ router isis ISP
+ net 49.0001.0000.0000.0072.00
+ is-type level-2
+ advertise passive-only
+ !
+ address-family ipv4 unicast
+ !
+ interface Loopback0
+ isis enable ISP
+ isis passive
+ !
+ interface Ethernet1
+ isis enable ISP
+ isis network point-to-point
+ !
+ interface Ethernet2
+ isis enable ISP
+ isis network point-to-point
+
+router bgp 1
+ neighbor 192.168.255.71 remote-as 1
+ neighbor 192.168.255.71 update-source Loopback0
+ neighbor 192.168.255.71 send-community standard extended
+ neighbor 192.168.255.75 remote-as 3
+ neighbor 192.168.255.75 update-source Loopback0
+ neighbor 192.168.255.75 send-community standard extended
+ neighbor 192.168.255.75 ebgp-multihop 3
+
+ !
+ address-family ipv4
+ no neighbor 192.168.255.71 activate
+ no neighbor 192.168.255.75 activate
+ !
+ address-family evpn
+ neighbor 192.168.255.71 activate
+ neighbor 192.168.255.75 activate
