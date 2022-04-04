@@ -1,6 +1,6 @@
 service routing protocols model multi-agent
 !
-hostname internet-SW1-ISP3
+hostname internet
 !
 interface Management1
    vrf MGMT
