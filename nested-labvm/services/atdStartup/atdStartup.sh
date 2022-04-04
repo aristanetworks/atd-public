@@ -23,6 +23,14 @@ find /opt/atd/nested-labvm/atd-docker/*  -type f -print0 | xargs -0 sed -i "s/{A
 find /opt/atd/topologies/$TOPO/files/*  -type f -print0 | xargs -0 sed -i "s/{ARISTA_REPLACE}/$APWD/g" 
 
 
+# Perform check to see if docker auth file exists
+if ! [ -f "/home/atdadmin/.docker/config.json" ]
+then
+    echo "Docker auth file not found, creating..."
+    gcloud auth configure-docker gcr.io,us.gcr.io --quiet
+    su atdadmin -c "gcloud auth configure-docker gcr.io,us.gcr.io --quiet"
+fi
+
 # Update the base configlets for ceos/veos mgmt numbering
 
 if [ $EOS_TYPE == 'ceos' ]
