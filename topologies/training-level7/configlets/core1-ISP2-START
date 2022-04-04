@@ -1,0 +1,77 @@
+interface Ethernet1
+   no switchport
+   ip address 10.200.0.8/31
+   isis enable ISP
+   isis network point-to-point
+!
+interface Ethernet2
+   no switchport
+   ip address 10.200.0.6/31
+   isis enable ISP
+   isis network point-to-point
+!
+interface Ethernet10
+   no switchport
+!
+interface Ethernet10.100
+   encapsulation dot1q vlan 100
+   ip address 10.102.0.2/30
+!
+interface Ethernet10.200
+   encapsulation dot1q vlan 200
+   ip address 10.102.0.6/30
+!
+interface Ethernet10.300
+   encapsulation dot1q vlan 300
+   ip address 10.102.0.10/30
+!
+interface Ethernet11
+!
+interface Loopback0
+   ip address 192.168.255.73/32
+   isis enable ISP
+   isis passive
+!
+interface Management0
+   vrf MGMT
+   ip address 192.168.0.73/24
+!
+ip routing
+ip routing vrf MGMT
+!
+ip route vrf MGMT 0.0.0.0/0 192.168.0.1
+!
+ip radius source-interface Management0
+!
+router bgp 2
+   neighbor 10.102.0.1 remote-as 65220
+   neighbor 10.102.0.1 ebgp-multihop 3
+   neighbor 10.102.0.1 maximum-routes 12000
+   neighbor 192.168.255.74 remote-as 2
+   neighbor 192.168.255.74 update-source Loopback0
+   neighbor 192.168.255.74 send-community standard extended
+   neighbor 192.168.255.74 maximum-routes 12000
+   neighbor 192.168.255.75 remote-as 3
+   neighbor 192.168.255.75 update-source Loopback0
+   neighbor 192.168.255.75 ebgp-multihop 3
+   neighbor 192.168.255.75 send-community standard extended
+   neighbor 192.168.255.75 maximum-routes 12000
+   !
+   address-family ipv4
+      neighbor 10.102.0.1 activate
+      neighbor 192.168.255.74 activate
+      neighbor 192.168.255.75 activate
+!
+router isis ISP
+   net 49.0002.0000.0000.0073.00
+   is-type level-2
+   advertise passive-only
+   !
+   address-family ipv4 unicast
+!
+management api http-commands
+   no shutdown
+   !
+   vrf MGMT
+      no shutdown
+!

@@ -1,0 +1,22 @@
+interface Ethernet1
+   no shutdown
+   no switchport
+   ip address 10.200.0.1/31
+interface Ethernet2
+   no shutdown
+   no switchport
+   ip address 10.200.0.5/31
+interface Ethernet3
+   no shutdown
+   no switchport
+   ip address 10.200.0.7/31
+interface Ethernet4
+   no shutdown
+   no switchport
+   ip address 10.200.0.11/31
+interface Ethernet5
+   no shutdown
+   no switchport
+   ip address 10.103.0.2/30
+int loopback 0
+   ip address 192.168.255.75/32
