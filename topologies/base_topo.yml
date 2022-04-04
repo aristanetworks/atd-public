@@ -330,7 +330,7 @@ topologies:
               cpu: 32
               ram: 64
             branch: nested/2020.2
-            orderable: true
+            orderable: false
             image: base-training-l1-e4-26-0f-c2020-2-3-20220111
             eos:
               - 4.26.0F
@@ -384,7 +384,7 @@ topologies:
               cpu: 32
               ram: 64
             branch: nested/2020.2
-            orderable: true
+            orderable: false
             image: base-training-l2-e4-26-0f-c2020-2-3-20220111
             eos:
               - 4.26.0F
@@ -429,7 +429,7 @@ topologies:
               cpu: 36
               ram: 72
             branch: nested/2020.2
-            orderable: true
+            orderable: false
             image: base-training-l3-e4-26-0f-c2020-2-3-20220111
             eos:
               - 4.26.0F
@@ -438,7 +438,7 @@ topologies:
               cpu: 36
               ram: 72
             branch: nested/2020.2
-            orderable: true
+            orderable: false
             image: base-training-l3-e4-26-0f-c2020-2-3-20220111
             eos:
               - 4.26.0F
@@ -501,7 +501,7 @@ topologies:
               cpu: 36
               ram: 72
             branch: nested/2020.2
-            orderable: true
+            orderable: false
             image: base-training-l3-exam-e4-26-0f-c2020-2-3-20220111
             eos:
               - 4.26.0F
@@ -546,7 +546,7 @@ topologies:
               cpu: 40
               ram: 80
             branch: nested/2020.2
-            orderable: true
+            orderable: false
             image: base-training-l3-2-e4-26-0f-c2020-2-3-20220111
             eos:
               - 4.26.0F
@@ -590,7 +590,7 @@ topologies:
               cpu: 32
               ram: 64
             branch: nested/2020.2
-            orderable: true
+            orderable: false
             image: base-training-l4-ceos-c2020-2-3-20220111
             eos:
               - 4.25.1F
@@ -649,7 +649,7 @@ topologies:
               cpu: 48
               ram: 72
             branch: nested/2020.2
-            orderable: true
+            orderable: false
             image: base-training-l5-ceos-c2020-2-3-20220111
             eos:
               - 4.25.1F
@@ -705,7 +705,7 @@ topologies:
               cpu: 40
               ram: 70
             branch: nested/2020.2
-            orderable: true
+            orderable: false
             image: base-training-l7-ceos-c2020-2-3-20220111
             eos:
               - 4.25.1F
