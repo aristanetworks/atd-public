@@ -125,7 +125,7 @@ ip address 172.16.19.51/24
 no shutdown
 
 ip route vrf VLAN10 0.0.0.0/0 172.16.10.254
-#ip route vrf VLAN11 0.0.0.0/0 172.16.11.254 - removed for BGP
+!ip route vrf VLAN11 0.0.0.0/0 172.16.11.254 - removed for BGP
 ip route vrf VLAN12 0.0.0.0/0 172.16.12.254
 ip route vrf VLAN13 0.0.0.0/0 172.16.13.254
 ip route vrf VLAN14 0.0.0.0/0 172.16.14.254
