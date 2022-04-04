@@ -175,8 +175,8 @@ cvp_info:
       - core2-ISP2-BASE
       - core2-ISP2-START
       internet:
-      - internet-SW1-ISP3-BASE
-      - INTERNET-sw1-isp3-START
+      - internet-BASE
+      - internet-START
       DCI:
       - DCI-BASE
       - DCI-START
