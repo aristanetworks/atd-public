@@ -68,16 +68,6 @@ topologies:
             eos:
               - 4.27.1.1F
               - 4.27.2F
-          2021.3.0-rob:
-            resources:
-              cpu: 36
-              ram: 48
-            branch: rob-registry-test
-            orderable: true
-            image: base-atd-datacenter-ceos-c2021-3-0-20220324u
-            eos:
-              - 4.27.1.1F
-              - 4.27.2F
       veos:
         cpu: 30
         ram: 64
