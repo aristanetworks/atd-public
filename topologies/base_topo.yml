@@ -127,7 +127,7 @@ topologies:
             resources:
               cpu: 32
               ram: 48
-            branch: v2021.2-20220318a
+            branch: v2021.2-20220404a
             orderable: true
             image: base-atd-datacenter-ceos-c2021-2-2-20220208
             eos:
@@ -137,7 +137,7 @@ topologies:
             resources:
               cpu: 36
               ram: 48
-            branch: v2021.3-20220318a
+            branch: v2021.3-20220404a
             orderable: true
             image: base-atd-datacenter-ceos-c2021-3-0-20220324u
             eos:
@@ -169,7 +169,7 @@ topologies:
             resources:
               cpu: 38
               ram: 64
-            branch: v2021.2-20220318a
+            branch: v2021.2-20220404a
             orderable: true
             image: base-atd-datacenter-e4-27-1-1f-c2021-2-2-20220208
             eos:
@@ -178,7 +178,7 @@ topologies:
             resources:
               cpu: 40
               ram: 64
-            branch: v2021.3-20220318a
+            branch: v2021.3-20220404a
             orderable: true
             image: base-atd-datacenter-e4-27-2f-c2021-3-0-20220324u
             eos:
@@ -265,7 +265,7 @@ topologies:
             resources:
               cpu: 32
               ram: 64
-            branch: v2021.2-20220318a
+            branch: v2021.2-20220404a
             orderable: true
             image: base-atd-routing-ceos-c2021-2-2-20220208
             eos:
@@ -275,7 +275,7 @@ topologies:
             resources:
               cpu: 36
               ram: 64
-            branch: v2021.3-20220318a
+            branch: v2021.3-20220404a
             orderable: true
             image: base-atd-routing-ceos-c2021-3-0-20220324u
             eos:
@@ -298,7 +298,7 @@ topologies:
             resources:
               cpu: 44
               ram: 90
-            branch: v2021.2-20220318a
+            branch: v2021.2-20220404a
             orderable: true
             image: base-atd-routing-e4-27-1-1f-c2021-2-2-20220208
             eos:
@@ -307,7 +307,7 @@ topologies:
             resources:
               cpu: 50
               ram: 90
-            branch: v2021.3-20220318a
+            branch: v2021.3-20220404a
             orderable: true
             image: base-atd-routing-e4-27-2f-c2021-3-0-20220324u
             eos:
@@ -352,7 +352,7 @@ topologies:
             resources:
               cpu: 32
               ram: 64
-            branch: v2020.2-20211026a
+            branch: v2020.2-20220404a
             orderable: true
             image: base-training-l1-e4-26-0f-c2020-2-3-20211220
             eos:
@@ -361,7 +361,7 @@ topologies:
             resources:
               cpu: 32
               ram: 64
-            branch: v2021.3-20220318a
+            branch: v2021.3-20220404a
             orderable: true
             image: base-training-l1-e4-27-2f-c2021-3-0-20220215
             eos:
@@ -406,7 +406,7 @@ topologies:
             resources:
               cpu: 32
               ram: 64
-            branch: v2021.3-20220318a
+            branch: v2021.3-20220404a
             orderable: true
             image: base-training-l2-e4-27-2f-c2021-3-0-20220215
             eos:
@@ -460,7 +460,7 @@ topologies:
             resources:
               cpu: 36
               ram: 72
-            branch: v2020.2-20211026a
+            branch: v2020.2-20220404a
             orderable: true
             image: base-training-l3-e4-24-2f-c2020-2-3-20211220
             eos:
@@ -469,7 +469,7 @@ topologies:
             resources:
               cpu: 36
               ram: 72
-            branch: v2020.2-20211026a
+            branch: v2020.2-20220404a
             orderable: true
             image: base-training-l3-e4-26-0f-c2020-2-3-20211220
             eos:
@@ -478,7 +478,7 @@ topologies:
             resources:
               cpu: 36
               ram: 72
-            branch: v2021.3-20220318a
+            branch: v2021.3-20220404a
             orderable: true
             image: base-training-l3-e4-27-2f-c2021-3-0-20220215
             eos:
@@ -523,7 +523,7 @@ topologies:
             resources:
               cpu: 36
               ram: 72
-            branch: v2020.2-20211026a
+            branch: v2020.2-20220404a
             orderable: true
             image: base-training-l3-exam-e4-26-0f-c2020-2-3-20211220
             eos:
@@ -626,7 +626,7 @@ topologies:
             resources:
               cpu: 60
               ram: 90
-            branch: v2021.3-20220318a
+            branch: v2021.3-20220404a
             orderable: true
             image: base-training-l4-e4-27-2f-c2021-3-0-20220215
             eos:
@@ -672,7 +672,7 @@ topologies:
             resources:
               cpu: 48
               ram: 72
-            branch: v2020.2-20211026a
+            branch: v2020.2-20220404a
             orderable: true
             image: base-training-l5-ceos-c2020-2-3-20211220
             eos:
@@ -682,7 +682,7 @@ topologies:
             resources:
               cpu: 48
               ram: 72
-            branch: v2021.3-20220318a
+            branch: v2021.3-20220404a
             orderable: true
             image: base-training-l5-ceos-c2021-3-0-20220215
             eos:
@@ -728,7 +728,7 @@ topologies:
             resources:
               cpu: 40
               ram: 70
-            branch: v2020.2-20211026a
+            branch: v2020.2-20220404a
             orderable: true
             image: base-training-l7-ceos-c2020-2-3-20211220
             eos:
@@ -738,7 +738,7 @@ topologies:
             resources:
               cpu: 40
               ram: 70
-            branch: v2021.3-20220318a
+            branch: v2021.3-20220404a
             orderable: true
             image: base-training-l7-ceos-c2021-3-0-20220215
             eos:
