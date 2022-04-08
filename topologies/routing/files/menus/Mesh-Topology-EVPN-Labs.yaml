@@ -23,7 +23,7 @@ lab_list:
   complete: 
     description: "Complete All EVPN Lab Sections for Mesh Topology (complete)"
   bare:
-    description: "Prepare Topology to Start with Blank Interface COnfigs(bare)"
+    description: "Prepare Topology to Start with Blank Interface Configs (bare)"
 labconfiglets:
   reset:
     eos1:
