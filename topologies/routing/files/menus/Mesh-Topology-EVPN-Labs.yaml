@@ -22,6 +22,8 @@ lab_list:
     description: "Prepare Topology to Start at the Centralized Services Lab (centsvc)"
   complete: 
     description: "Complete All EVPN Lab Sections for Mesh Topology (complete)"
+  bare:
+    description: "Prepare Topology to Start with Blank Interface Configs (bare)"
 labconfiglets:
   reset:
     eos1:
@@ -793,3 +795,46 @@ labconfiglets:
     eos20:
       - "BaseIPv4_EOS20"
       - "SharedServices_EOS20"
+
+  bare:
+    eos1:
+      - "BaseIPv4_EOS1_BARE"
+    eos2:
+      - "BaseIPv4_EOS2_BARE"
+    eos3:
+      - "BaseIPv4_EOS3_BARE"
+    eos4:
+      - "BaseIPv4_EOS4_BARE"
+    eos5:
+      - "BaseIPv4_EOS5_BARE"
+    eos6:
+      - "BaseIPv4_EOS6_BARE"
+    eos7:
+      - "BaseIPv4_EOS7_BARE"
+    eos8:
+      - "BaseIPv4_EOS8_BARE"
+    eos9:
+      - "BaseIPv4_EOS9_BARE"
+    eos10:
+      - "BaseIPv4_EOS10_BARE"
+    eos11:
+      - "BaseIPv4_EOS11_BARE"
+    eos12:
+      - "BaseIPv4_EOS12_BARE"
+    eos13:
+      - "BaseIPv4_EOS13_BARE"
+    eos14:
+      - "BaseIPv4_EOS14_BARE"
+    eos15:
+      - "BaseIPv4_EOS15_BARE"
+    eos16:
+      - "BaseIPv4_EOS16_BARE"
+    eos17:
+      - "BaseIPv4_EOS17_BARE"
+    eos18:
+      - "BaseIPv4_EOS18_BARE"
+    eos19:
+      - "BaseIPv4_EOS19_BARE"
+    eos20:
+      - "BaseIPv4_EOS20_BARE"
+  

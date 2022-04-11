@@ -1,0 +1,4 @@
+hostname eos11
+!
+interface Management1
+   ip address 192.168.0.20/24
