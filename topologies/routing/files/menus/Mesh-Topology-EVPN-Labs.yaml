@@ -795,7 +795,6 @@ labconfiglets:
     eos20:
       - "BaseIPv4_EOS20"
       - "SharedServices_EOS20"
-
   bare:
     eos1:
       - "BaseIPv4_EOS1_BARE"
