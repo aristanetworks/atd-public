@@ -53,7 +53,7 @@ services:
       - cvp_dir:/home/arista/CVP_DATA:rw
   gitconfigletsync:
     container_name: atd-gitconfigletsync
-    image: us.gcr.io/beta-atds/atddocker_gitconfigletsync:2.0.4
+    image: us.gcr.io/beta-atds/atddocker_gitconfigletsync:2.0.5
     user: $ArID:$ArGD
     restart: always
     environment:
@@ -158,7 +158,7 @@ services:
       - ./jenkins/src/groovy/users.groovy.override:/usr/share/jenkins/ref/init.groovy.d/users.groovy.override:rw
   coder:
     container_name: atd-coder
-    image: us.gcr.io/beta-atds/atddocker_coder:2.1.0
+    image: us.gcr.io/beta-atds/atddocker_coder:2.1.1
     restart: always
     user: $ArID:$ArGD
     command: /home/coder/project

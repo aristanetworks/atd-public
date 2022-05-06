@@ -133,7 +133,7 @@ def main():
             res = cvp_clnt.impConfiglet("static",configletName,configletConfig)
             pS("OK", "{0} Configlet: {1}".format(res[0],configletName))
    # Perform a check to see if there any pending tasks to be executed due to configlet update
-   sleep(10)
+   sleep(20)
    pS("INFO", "Checking for any pending tasks")
    cvp_clnt.getAllTasks("pending")
    if cvp_clnt.tasks['pending']:

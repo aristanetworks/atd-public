@@ -27,9 +27,9 @@ def get_bgpasn():
 
 def create_routes(hostname):
     number = hostname[-1:]
-    if hostname.startswith("leaf"):
+    if 'leaf' in hostname:
         switch_type = "10"
-    elif hostname.startswith("spine"):
+    elif 'spine' in hostname:
         switch_type = "20"
     for x in range(100, 200):
         print "interface Loopback%d" % (x)
@@ -43,7 +43,7 @@ def add_bgp_conf(asn):
     
 def main():
     hostname = get_hostname()
-    if hostname.startswith("leaf" or "spine"):
+    if 'leaf' or 'spine' in hostname:
         create_routes(hostname)
         asn = get_bgpasn()
         add_bgp_conf(asn)
