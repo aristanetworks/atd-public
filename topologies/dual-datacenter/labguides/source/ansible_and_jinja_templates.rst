@@ -107,16 +107,16 @@ indicate we’re going to use a Jinja template? Fancy!
 Run it
 ~~~~~~
 
-Assuming that you’ve saved the files to the project directory, let’s run it with
+Assuming that you’ve saved the files to the labfiles directory, let’s run it with
 the following command:
 
 .. code-block:: html
 
-    ansible-playbook -i labhosts ntp.yml
+    ansible-playbook -i labfiles/labhosts labfiles/ntp.yml
 
 If all goes to plan, you will see  ok=1 **changed=1**. If you were to run it
 again, it will show ok=1 **changed=0**. Idempotency strikes again! Feel free
-to check **Leaf1** to make sure the changes are there.
+to check **s1-Leaf1** to make sure the changes are there.
 
 .. image:: images/ansible_adhoc/nested_adhoc_2.png
    :align: center
@@ -156,17 +156,15 @@ Clear as mud? Maybe this variables file will help tie it together:
 
     interfaces:
      - name: Ethernet1
-       description: leaf2.atd.lab
+       description: s1-leaf2.atd.lab
      - name: Ethernet2
-       description: spine1.atd.lab
+       description: s1-spine1.atd.lab
      - name: Ethernet3
-       description: spine2.atd.lab
+       description: s1-spine2.atd.lab
      - name: Ethernet4
-       description: host1
-     - name: Ethernet5
-       description: host2
+       description: s1-host1
      - name: Ethernet6
-       description: leaf2.atd.lab
+       description: s1-leaf2.atd.lab
 
 Once you run the template above, it’ll generate the following
 configuration:
@@ -174,17 +172,15 @@ configuration:
 .. code-block:: html
 
     interface Ethernet1
-     description leaf2.atd.lab
+     description s1-leaf2.atd.lab
     interface Ethernet2
-     description spine1.atd.lab
+     description s1-spine1.atd.lab
     interface Ethernet3
-     description spine2.atd.lab
+     description s1-spine2.atd.lab
     interface Ethernet4
-     description host1
-    interface Ethernet5
-     description host2
+     description s1-host1.atd.lab
     interface Ethernet6
-     description leaf2.atd.lab
+     description s1-leaf2.atd.lab
 
 Write it
 ~~~~~~~~
@@ -204,7 +200,7 @@ creating a Jinja template in the **IDE** on in your project directory named **in
        description {{ intf.description }}
     {% endfor %}
 
-Now let’s create the playbook on your desktop named ``interfaces.yml``:
+Now let’s create the playbook named ``interfaces.yml``:
 
 .. code-block:: yaml
 
@@ -223,17 +219,15 @@ Now let’s create the playbook on your desktop named ``interfaces.yml``:
           validate_certs: no
         interfaces:
           - name: Ethernet1
-            description: leaf2.atd.lab
+            description: s1-leaf2.atd.lab
           - name: Ethernet2
-            description: spine1.atd.lab
+            description: s1-spine1.atd.lab
           - name: Ethernet3
-            description: spine2.atd.lab
+            description: s1-spine2.atd.lab
           - name: Ethernet4
-            description: host1
-          - name: Ethernet5
-            description: host2
+            description: s1-host1.atd.lab
           - name: Ethernet6
-            description: leaf2.atd.lab
+            description: s1-leaf2.atd.lab
       tasks:
         - eos_config:
             src: interfaces.j2
@@ -247,7 +241,7 @@ lab.
 
 .. code-block:: bash
 
-    ansible-playbook -i labhosts interfaces.yml
+    ansible-playbook -i labfiles/labhosts labfiles/interfaces.yml
 
 You should see  ok=1 **changed=1**. If you were to run it again, it will
 show ok=1 changed=0.
