@@ -1,5 +1,7 @@
 Note: Ongoing WIP, document should be treated as early release and incomplete. 
 
+To successfully run this lab in ATD, once the environment is up, do not initalize any of the preset labs. SSH into Host1 and Host2 and remove the existing port channels, and reconfigure as shown in the topology. Also Create vlans and SVIs as shown. When this ATD is final, this stwp will not be needed as there will be lab option for it. 
+
 CloudVision Studios  -  L3LS/EVPN
 =================================
 Cloudvision Studios allows us to easily and quickly deploy complicated network topologies in a matter of minutes. 
@@ -189,4 +191,3 @@ Let’s take a look at our topology. The hosts are already pre configured for PO
 .. image:: images/cvp_studios_l3ls_evpn/18-topoforPO.PNG
    :align: center
 
-   
