@@ -191,3 +191,68 @@ Let’s take a look at our topology. The hosts are already pre configured for PO
 .. image:: images/cvp_studios_l3ls_evpn/18-topoforPO.PNG
    :align: center
 
+The hosts are also configured in vlan 60 and 70 with respective SVIs for testing. 
+Let’s navigate to our Interface Studio and start our configuration. 
+
+Let’s start by adding a profile, let’s call it “MLAG-PO”.  Let’s make it a trunk port, set native VLAN of “1”, allow vlans 60 and 70, and give the PO a number of 1, and check “yes” for mlag. 
+
+.. image:: images/cvp_studios_l3ls_evpn/19-intstudio1.gif
+   :align: center
+
+   Now, let’s put our leafs in the search query and then apply our profile to ports E4 and E5 on each leaf pair.
+
+   .. image:: images/cvp_studios_l3ls_evpn/20-intstudio1.gif
+   :align: center
+
+   Let’s review our workspace so we can kick off a build! Hit “Start Build” and you should get a successful build. Once your build is successful, we are going to  “Submit Workspace”.
+
+Note:
+As discussed previously, we are going to commit this workspace as a final build to studios. Once we submit, this workspace will close out and it cannot be modified. But, because our inputs are committed to Studios (the repository) we can open up a new workspace and make/add/remove new changes. 
+
+
+Hit “Submit Workspace” to close out and create our Change Control. 
+ 
+ .. image:: images/cvp_studios_l3ls_evpn/21-CC1.gif
+   :align: center
+
+After the Workspace has been submitted and the Change Control created, you’ll see a “View Change Control” option. Hit that to be taken to Change Control. Now we are going to “Review and Approve” and apply our changes to the network. We are going to run these changes in parallel, and execute them immediately. Click “Review and Approve”. All tasks should complete successfully, and we can move onto the verification part of the lab.
+
+ .. image:: images/cvp_studios_l3ls_evpn/22-CC1.gif
+   :align: center
+
+Let’s log into our Spines and run “sh bgp summary” and verify our underlay and overlay BGP adjacencies are “Established” Repeat for Leafs. 
+
+SPINES - BGP Summary
+=================================
+ .. image:: images/cvp_studios_l3ls_evpn/23-Verification1.PNG
+   :align: center
+
+LEAFS - BGP Summary
+=================================
+
+ .. image:: images/cvp_studios_l3ls_evpn/23-Verification2.PNG
+   :align: center
+
+Now, let’s verify MLAG on our Leafs. On Leafs 1-4 run the “show mlag” command and verify all Leafs show as “Active” and “Up-Up.”
+
+.. image:: images/cvp_studios_l3ls_evpn/24-Verification2.PNG
+   :align: center
+
+Now, on Leafs 1 and 3 let's verify our Port-Channel status. 
+Run the command “sh port-channel dense”
+
+Note: MLAG has an enhancement where the port-channel command will show the status of the port channel across both switches in the pair. See the highlighted section below. (P) shows the status and configuration of the MLAG PortChannel of the local switch as well as the peer. 
+
+.. image:: images/cvp_studios_l3ls_evpn/25-Verification2.PNG
+   :align: center
+
+Now that we’ve confirmed all our base connectivity, let’s test our fabric and look at some outputs. 
+
+
+Let’s start with Host1, and ensure we can ping our gateway at 10.60.60.1. This should be successful. Next, let's ensure we can ping our local SVI at 10.60.60.160. This should also be successful. Let’s ping across the fabric now in the same vlan, from .160 to .161. This should be successful as well. 
+
+Do a “show int vlan 60” on Host1 and on Host2 and make note of their mac. ON host 1, do “show mac address-table vlan 60” and notice Host1’s mac comes across PO1 and Host2’s comes across Vx1.
+
+Next, let’s ping inter-vlan from .160 to .171, which should be successful. On leaf1, review the EVPN routing table using “show bgp evpn “
+
+
