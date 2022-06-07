@@ -1,6 +1,6 @@
 Note: Ongoing WIP, document should be treated as early release and incomplete. 
 
-To successfully run this lab in the Datacenter ATD, once the environment is up, do not initalize any of the preset labs. SSH into Host1 and Host2 and remove the existing port channels, and reconfigure as shown in the topology. Also Create vlans and SVIs as shown. When this ATD is final, this stwp will not be needed as there will be lab option for it. 
+**To successfully run this lab in the Datacenter ATD, once the environment is up, do not initalize any of the preset labs. SSH into Host1 and Host2 and remove the existing port channels, and reconfigure as shown in the topology. Also Create vlans and SVIs as shown. When this ATD is final, this step will not be needed as there will be a lab option for it.**
 
 CloudVision Studios  -  L3LS/EVPN
 =================================
@@ -87,8 +87,7 @@ Note: there are user tags and tags the system creates as we move through our stu
 We should try to only use our user created tags in our studio assignments via the query builder.
 
 
- Tags are formed in a label:value format. As a best practice, there are labels you should avoid using such as “DC” and “container”,
- as these are used by studios during creation. 
+ Tags are formed in a label:value format. As a best practice, there are labels you should avoid using such as “DC” and “container”, as these are used by studios during creation. 
  For this lab, we will be using “DC1:ALL” for all assets in DC1, and adding “LEAFS:DC1” for our leafs. 
 
 Note: you can use almost any naming convention that makes sense for your use case. Examples are for this lab.
