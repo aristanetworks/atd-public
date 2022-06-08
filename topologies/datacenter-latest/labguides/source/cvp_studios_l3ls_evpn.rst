@@ -50,23 +50,29 @@ All underlay addressing will be performed by CVPS.
 Let’s open CVP, and get started!
 --------------------------------
 
-**1. The first step we need to do is create a workspace and perform the inventory studio.**
+**1. Workspace Creation**
+--------------------------------------------------------------------------------------------
 
-- Let’s navigate to **Provisioning>Studios>Create Workspace**. Name it anything you want.
+The first step we need to do is create a workspace and perform the inventory studio.
 
- NOTE: 
- |br| This is where we will tell studios which devices to include, and the studio will know how the physical topology is built.
- |br| This allows the other studios to auto detect links to assign properly for a functional network. 
+
 
 
 .. image:: images/cvp_studios_l3ls_evpn/4WorkspaceIntro.gif
    :align: center
 
-**2. Now that our workspace is created, let’s edit our Inventory studio.** 
+**2. Inventory studio.** 
+--------------------------------------------------------------------------
 
-- Enter the studio and click the “add updates” tab.
+- Let’s navigate to **Provisioning>Studios>Create Workspace**. Name it anything you want.
+
+ NOTE: 
+ |br| This is where we will tell studios which devices to include, and the studio will know how the physical topology is built.
+ |br| This allows the other studios to auto detect links to assign properly for a functional network.
+ |br| All of our devices should be there. Ignore anything that isn’t the ``Spines`` or ``Leaf1-4``.  
   
- NOTE:|br| All of our devices should be there. Ignore anything that isn’t the ``Spines`` or ``Leaf1-4``. 
+
+- Enter the studio and click the *“add updates”* tab.
   
 
 |br| Now, notice that there are devices in the *“onboarded devices”* section. 
@@ -76,16 +82,14 @@ Let’s open CVP, and get started!
    :align: center
 
 **3. Workspace review**
+-----------------------
     
-- Click on *“review workspace”* on the upper right. This will save our changes for this studio to the staging area for use.
+- Click on *“Review Workspace”* on the upper right. This will take us to the *"Workspace Summary"* page to save our inputs for this studio to the staging area for later use. 
+  |br| Once we hit review, it will run through the checks and tell us if we are good to proceed. You can see in the workspace summary what studios have been modified.
+  |br| **In the current CVPS build the build process will only kick off automatically the first time. As we modify other studios, we will manually start this process by clicking "Start Build".** 
  
  NOTE: 
- |br| You can absolutely make a separate workspace for every studio if you wish. 
- |br| For this lab we are going to do all this work in the same workspace, because I want to demonstrate how this process builds on itself in our staging area. 
- |br| Once we hit review, it will run through the checks and tell us if we are good to proceed. 
- You can see in the workspace summary what studios have been modified. 
-
- *In the current CVPS build the build process will only kick off automatically the first time. As we modify other studios, we will manually start this process.*
+ |br| You can absolutely make a separate workspace for every studio if you wish, however for this lab we are going to do all this work in the same workspace, because I want to demonstrate how this process builds on itself in our staging area. 
 
 
  .. image:: images/cvp_studios_l3ls_evpn/6InventoryBuild.PNG
@@ -94,12 +98,12 @@ Let’s open CVP, and get started!
  
 
 **4. Device Tagging**
+---------------------
 
 - Go to the Provisioning tab and click *"Tags"* on the lower left 
 
-
 Tagging is used to easily group devices and assign them to a studio. 
-|br| Tagging can be done from within a workspace even though it's technically not a studio. 
+Tagging can be done from within a workspace even though it's technically not a studio. 
 
  
    
@@ -109,52 +113,68 @@ Tagging is used to easily group devices and assign them to a studio.
    :align: center
 
 
-: 
+There are user tags and tags the system creates using the *"auto tagger"* as we move through our studio configurations. Tags are formed in a **label:value format.** 
+|br| For this lab, we will be using ``“DC1:ALL”`` for all assets in ``DC1``, and adding ``“LEAFS:DC1”`` for our leafs. Let's go ahead and tag our devices now. 
 
-   NOTE: |br| There are user tags and tags the system creates as we move through our studio configurations. 
-   |br| We should try to only use our user created tags in our studio assignments via the query builder. 
-   |br| Tags are formed in a **label:value format.** As a best practice, there are labels you should avoid using such as *“DC”* and *“container”*, as these are used by studios during creation. 
-   |br| For this lab, we will be using ``“DC1:ALL”`` for all assets in ``DC1``, and adding ``“LEAFS:DC1”`` for our leafs. 
+   NOTE:
+   |br| We should try to only use our user created tags in our studio assignments via the query builder for this lab. 
+   |br|  As a best practice, there are labels you should avoid using such as *“DC”* and *“container”*, as these are used by studios during creation. 
    |br| You can use almost any naming convention that makes sense for your use case. Examples are for this lab.
-
 
 
 
 .. image:: images/cvp_studios_l3ls_evpn/8tagsprocess.gif
    :align: center
 
-See that the workspace now shows we have two tag changes. 
-|br| Now, let's trigger the *“start build”* and start to build our topology. We are going to focus on **L3LS/EVPN**, so we need to start with **L3LS** first, then do **EVPN**.
-|br| Navigate to the “L3 Leaf-Spine Fabric” studio. First, we need to set our tag query to assign our devices. 
+Click on **"Review Workspace"** in the upper right and observe that the workspace now shows we have two tag changes. 
+
+|br| Now, let's trigger the *“start build”* and allow the build process to complete. 
+|br| Let's move on with the lab, we are going to focus on **L3LS** first, then do **EVPN** after.
+
+
+**5. L3LS Studio**
+------------------
+
+- Navigate to the “L3 Leaf-Spine Fabric” studio. 
+
+First, we need to set our tag query to assign our devices.|br| Let’s include all devices with the ``DC1:ALL`` tag pair. You’ll see the number of devices it finds and their IDs. 
+|br| Next, let’s create our datacenter, for this lab, we’ll just use ``“1”``. 
+
+**Important Tip: Anytime you see “create” in a field the autotagger is automatically creating a tag for the devices included in the studio. We’ll come back to this later.**   
+
+   
+
 
    NOTE:
-   The tag query at this time is an implicit “AND” operation. For example, if you had a DC1:ALL and DC2:ALL tag, if you just used both tags, it would not present a result.
-   |br| In this instance you would need to add the “OR” operator in between them. Also, the tagging must be precise. Do not include any devices that will not be assigned to the studio in question. 
+   The tag query at this time is an implicit *“AND”* operation. For example, if you had ``DC1:ALL`` and ``DC2:ALL`` tags, if you just used both tags, it would not present a result.
+   |br| In this instance you would need to add the *“OR”* operator in between them. Also, the tagging must be precise. Do not include any devices that will not be assigned to the studio in question. 
 
-Let’s tag ``DC1:ALL``. You’ll see the number of devices it finds and their IDs. Next, let’s create our datacenter, for this lab, we’ll just use ``“1”``. 
-
-   Note: anytime you see “create” in a field it is automatically creating a tag for the studio to use. We’ll come back to this later.  
+ 
 
 .. image:: images/cvp_studios_l3ls_evpn/9L3LSPT1.gif
    :align: center
 
-Once complete, click the arrow on the Datacenter to continue. Now, we need to assign the individual devices from our query, assign the fabric device roles, and create our pod. 
+Once complete, click the arrow on the Datacenter to continue. 
+|br| Now, we need to assign the individual devices from our query, assign the fabric device roles, and create our pod. 
 
-Note: a “pod” is not a rack construct in Studios. In this nomenclature, a pod is a leaf/spine collection. E.G. if you had more than one leaf/spine in the same datacenter they would get their own pod configuration. 
+   
+The Fabric Device section is critical. Here we will set our roles and ID numbers. Every Spine and Leaf needs a unique number. 
+|br| E.G. if you have 6 spines between 2 pods there will be six entries, 1 through 6. The Fabric devices will auto fill important sections later in the EVPN Studio. 
+|br| Let’s do this now. 
 
-The Fabric Device section is critical. Here we will set our roles and ID numbers. Every Spine and Leaf needs a unique number. E.G. if you have 6 spines between 2 pods there will be six entries, 1 through 6. The Fabric devices will auto fill important sections later in the Studio. 
-
-Let’s do this now. 
+   Note: a “pod” is not a rack construct in Studios. In this nomenclature, a pod is a leaf/spine collection. E.G. if you had more than one leaf/spine in the same datacenter they would get their own pod configuration. 
 
 .. image:: images/cvp_studios_l3ls_evpn/10L3LSPT2.gif
    :align: center
 
-Once complete, let's “Add Pod”, give it a name of “1” then make use of the arrow in the pod field to move on. 
+Once complete, let's *“Add Pod”*, give it a name of *“1”* then make use of the arrow in the pod field to move on. 
 
-Once again, you’ll find we have to manually assign our devices.  Add the spines first, and you’ll see them automatically get added! Now add the leafs. Once done, we need to make our leaf domains. A leaf domain can be a pair of switches or a standalone. So in this lab, we need to make two. Leaf 1 and 2 will be in 1, and Leaf 3 and 4 will be in 2. 
-Let’s do this now. 
+Once again, you’ll find we have to manually assign our devices.  
+|br| Add the spines first, and you’ll see them automatically get added! Now add the leafs. Once done, we need to make our leaf domains. 
+|br| A leaf domain can be a pair of switches or a standalone. So in this lab, we need to make two. Leaf 1 and 2 will be in 1, and Leaf 3 and 4 will be in 2. 
+|br| Let’s do this now. 
 
-Note: Leaf Domains must be an integer or the build process will fail.
+   Note: Leaf Domains must be an integer or the build process will fail.
 
 .. image:: images/cvp_studios_l3ls_evpn/11L3LSPT3.gif
    :align: center
