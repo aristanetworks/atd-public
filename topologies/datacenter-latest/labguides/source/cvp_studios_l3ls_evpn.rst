@@ -1,7 +1,3 @@
-   .. code-block::text   
-   
-   blah blah
-
 .. # define a hard line break for HTML
 .. |br| raw:: html
 
@@ -54,61 +50,63 @@ All underlay addressing will be performed by CVPS.
 Let’s open CVP, and get started!
 --------------------------------
 
-1. The first step we need to do is create a workspace and perform the inventory studio.
+**1. The first step we need to do is create a workspace and perform the inventory studio.**
 
-.. code-block::text
+- Let’s navigate to **Provisioning>Studios>Create Workspace**. Name it anything you want.
 
-Note: 
-|br| This is where we will tell studios which devices to include, and the studio will know how the physical topology is built. |br| 
-This allows the other studios to auto detect links to assign properly for a functional network. 
-|br| Let’s navigate to Provisioning>Studios>Create Workspace. Name it anything you want.
+ NOTE: 
+ |br| This is where we will tell studios which devices to include, and the studio will know how the physical topology is built.
+ |br| This allows the other studios to auto detect links to assign properly for a functional network. 
+
 
 .. image:: images/cvp_studios_l3ls_evpn/4WorkspaceIntro.gif
    :align: center
 
-Now that our workspace is created, let’s edit our Inventory studio. 
-Enter the studio and click the “add updates” tab. 
-|br| All of our devices should be there. 
-Ignore anything that isn’t the ``Spines`` or ``Leaf1-4``. 
-Click on *“add updates.”* 
-|br| Now, notice that there are devices in the “onboarded devices” section. 
-You can enter the device and see how Studios has detected the topology connections.
+**2. Now that our workspace is created, let’s edit our Inventory studio.** 
+
+- Enter the studio and click the “add updates” tab.
+  
+ NOTE:|br| All of our devices should be there. Ignore anything that isn’t the ``Spines`` or ``Leaf1-4``. 
+ Click on *“add updates.”* |br| Now, notice that there are devices in the *“onboarded devices”* section. 
+ |br| You can enter the device and see how Studios has detected the topology connections.
 
 .. image:: images/cvp_studios_l3ls_evpn/5Inventory.gif
    :align: center
 
-Next, let’s click on “review workspace” on the upper right. 
-This will save our changes for this studio to the staging area for use. 
+**3. Workspace review**
+    
+ - Click on “review workspace” on the upper right. This will save our changes for this studio to the staging area for use.
+ 
+ NOTE: 
+ |br| You can absolutely make a separate workspace for every studio if you wish. 
+ |br| For this lab we are going to do all this work in the same workspace, because I want to demonstrate how this process builds on itself in our staging area. 
+ |br| Once we hit review, it will run through the checks and tell us if we are good to proceed. 
+ You can see in the workspace summary what studios have been modified. 
 
-Note: You can absolutely make a separate workspace for every studio if you wish. 
-For this lab we are going to do all this work in the same workspace, because 
-I want to demonstrate how this process builds on itself in our staging area. 
+ *In the current CVPS build the build process will only kick off automatically the first time. As we modify other studios, we will manually start this process.*
 
-Once we hit review, it will run through the checks and tell us if we are good to proceed. 
-You can see in the workspace summary what studios have been modified. 
 
  .. image:: images/cvp_studios_l3ls_evpn/6InventoryBuild.PNG
    :align: center
 
-Note: In the current CVPS build the build process will only kick off automatically the first time. 
-As we modify other studios, we will manually start this process. 
+ 
 
-Now, we move on to the second part of the lab, device tagging. 
+**4. Workspace Tagging** 
+|br| Now, we move on to the next  part of the lab, device tagging. 
 Tagging is used to easily group devices and assign them to a studio. 
-Tagging can be done from within a workspace even though it's technically not a studio. 
+|br| Tagging can be done from within a workspace even though it's technically not a studio. 
 You will find tags under Provisioning, on the bottom left.  
 
  .. image:: images/cvp_studios_l3ls_evpn/7tagslocation.PNG
    :align: center
 
-Note: there are user tags and tags the system creates as we move through our studio configurations. 
-We should try to only use our user created tags in our studio assignments via the query builder.
+Note: 
 
-
- Tags are formed in a label:value format. As a best practice, there are labels you should avoid using such as “DC” and “container”, as these are used by studios during creation. 
- For this lab, we will be using “DC1:ALL” for all assets in DC1, and adding “LEAFS:DC1” for our leafs. 
-
-Note: you can use almost any naming convention that makes sense for your use case. Examples are for this lab.
+  - There are user tags and tags the system creates as we move through our studio configurations. 
+  - We should try to only use our user created tags in our studio assignments via the query builder.
+  - Tags are formed in a **label:value format.** As a best practice, there are labels you should avoid using such as “DC” and “container”, as these are used by studios during creation. 
+  -  For this lab, we will be using ``“DC1:ALL”`` for all assets in ``DC1``, and adding ``“LEAFS:DC1”`` for our leafs. 
+  -  You can use almost any naming convention that makes sense for your use case. Examples are for this lab.
 
 .. image:: images/cvp_studios_l3ls_evpn/8tagsprocess.gif
    :align: center
