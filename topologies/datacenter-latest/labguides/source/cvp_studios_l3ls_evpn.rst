@@ -159,7 +159,7 @@ Once the query is complete and you verify all devices are included, let's create
 
 |br| Now, we need to assign the individual devices from our query, assign the **fabric device roles**, and create our pod. 
 
-   The Fabric Device section is critical. Here we will set our **roles** and **ID** numbers. Every Spine and Leaf requires a unique number. 
+The Fabric Device section is critical. Here we will set our **roles** and **ID** numbers. Every Spine and Leaf requires a unique number. 
 
 |br| Let’s do this now. 
 
