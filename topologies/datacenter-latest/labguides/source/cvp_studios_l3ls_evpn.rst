@@ -1,13 +1,4 @@
-.. note::
-
-         Did you know the “l2ls” script is composed of Python code that
-         uses the CloudVision REST API to automate the provisioning of
-         CVP Configlets? The configlets that are configured via the REST API
-         are ``L2LS_s1-spine1``, ``L2LS_s1-spine2``, ``L2LS_s1-leaf1``,
-         ``L2LS_s1-leaf2``, ``L2LS_s1-leaf3``.
-
-
-Note: Ongoing WIP, document should be treated as early release and incomplete.
+.. note:: Ongoing WIP, document should be treated as early release and incomplete.
 
 **To successfully run this lab in the Datacenter ATD, once the environment is up, do not initalize any of the preset labs. SSH into Host1 and Host2 and remove the existing port channels, and reconfigure as shown in the topology. Also Create vlans and SVIs as shown. When this ATD is final, this step will not be needed as there will be a lab option for it.**
 
