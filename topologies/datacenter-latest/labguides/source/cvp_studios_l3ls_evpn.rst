@@ -1,9 +1,19 @@
-Note: Ongoing WIP, document should be treated as early release and incomplete. 
+.. note::
+
+         Did you know the “l2ls” script is composed of Python code that
+         uses the CloudVision REST API to automate the provisioning of
+         CVP Configlets? The configlets that are configured via the REST API
+         are ``L2LS_s1-spine1``, ``L2LS_s1-spine2``, ``L2LS_s1-leaf1``,
+         ``L2LS_s1-leaf2``, ``L2LS_s1-leaf3``.
+
+
+Note: Ongoing WIP, document should be treated as early release and incomplete.
 
 **To successfully run this lab in the Datacenter ATD, once the environment is up, do not initalize any of the preset labs. SSH into Host1 and Host2 and remove the existing port channels, and reconfigure as shown in the topology. Also Create vlans and SVIs as shown. When this ATD is final, this step will not be needed as there will be a lab option for it.**
 
-CloudVision Studios  -  L3LS/EVPN
-=================================
+==============================================
+CloudVision Studios  -  L3LS/EVPN Introduction
+==============================================
 Cloudvision Studios allows us to easily and quickly deploy complicated network topologies in a matter of minutes. 
 Before we get started, let's get familiarized with the basic data structure of CVP Studios. 
 CVPS works much like the GIT framework. 
@@ -13,13 +23,17 @@ pull requests that will submit our changes to a top level authority to either ap
 
 .. image:: images/cvp_studios_l3ls_evpn/1GIT.png
    :align: center
+   
+   
 
 CVPS follows that schema very closely. 
 
 .. image:: images/cvp_studios_l3ls_evpn/2CVPSASGIT.png
    :align: center
 
-In CVPS, we have our Workspace (staging area) , our Studios (Local Repositories) and our Workspace Submit (commit) just like in git. 
+
+
+In CVPS, we have our **Workspace** (staging area) , our **Studios** (Local Repositories) and our **Workspace Submit** (commit) just like in git. 
 In CVPS we modify our Studios, then check/validate the configuration for submission. 
 The Workspace Submit closes out the workspace,and no further change can be made to that particular workspace. 
 The changes are then merged into the base state of the modified studios to be used in a new workspace for Day2 changes. 
@@ -37,10 +51,11 @@ All underlay addressing will be performed by CVPS.
 
 .. image:: images/cvp_studios_l3ls_evpn/3TOPO.PNG
    :align: center
+ 
+Let’s open CVP, and get started!
+--------------------------------
 
-Let’s open CVP, and get started! 
-
-The first step we need to do is create a workspace and perform the inventory studio. 
+The first step we need to do is create a workspace and perform the inventory studio.
 This is where we will tell studios which devices to include, and the studio will know how the physical topology is built. 
 This allows the other studios to auto detect links to assign properly for a functional network. 
 Let’s navigate to Provisioning>Studios>Create Workspace. Name it anything you want.
