@@ -67,15 +67,17 @@ Let’s open CVP, and get started!
 - Enter the studio and click the “add updates” tab.
   
  NOTE:|br| All of our devices should be there. Ignore anything that isn’t the ``Spines`` or ``Leaf1-4``. 
- Click on *“add updates.”* |br| Now, notice that there are devices in the *“onboarded devices”* section. 
- |br| You can enter the device and see how Studios has detected the topology connections.
+  
+
+|br| Now, notice that there are devices in the *“onboarded devices”* section. 
+|br| You can enter the device and see how Studios has detected the topology connections.
 
 .. image:: images/cvp_studios_l3ls_evpn/5Inventory.gif
    :align: center
 
 **3. Workspace review**
     
- - Click on “review workspace” on the upper right. This will save our changes for this studio to the staging area for use.
+- Click on *“review workspace”* on the upper right. This will save our changes for this studio to the staging area for use.
  
  NOTE: 
  |br| You can absolutely make a separate workspace for every studio if you wish. 
@@ -91,35 +93,47 @@ Let’s open CVP, and get started!
 
  
 
-**4. Workspace Tagging** 
-|br| Now, we move on to the next  part of the lab, device tagging. 
+**4. Device Tagging**
+
+- Go to the Provisioning tab and click *"Tags"* on the lower left 
+
+
 Tagging is used to easily group devices and assign them to a studio. 
 |br| Tagging can be done from within a workspace even though it's technically not a studio. 
-You will find tags under Provisioning, on the bottom left.  
+
+ 
+   
+   
 
  .. image:: images/cvp_studios_l3ls_evpn/7tagslocation.PNG
    :align: center
 
-Note: 
 
-  - There are user tags and tags the system creates as we move through our studio configurations. 
-  - We should try to only use our user created tags in our studio assignments via the query builder.
-  - Tags are formed in a **label:value format.** As a best practice, there are labels you should avoid using such as “DC” and “container”, as these are used by studios during creation. 
-  -  For this lab, we will be using ``“DC1:ALL”`` for all assets in ``DC1``, and adding ``“LEAFS:DC1”`` for our leafs. 
-  -  You can use almost any naming convention that makes sense for your use case. Examples are for this lab.
+: 
+
+   NOTE: |br| There are user tags and tags the system creates as we move through our studio configurations. 
+   |br| We should try to only use our user created tags in our studio assignments via the query builder. 
+   |br| Tags are formed in a **label:value format.** As a best practice, there are labels you should avoid using such as *“DC”* and *“container”*, as these are used by studios during creation. 
+   |br| For this lab, we will be using ``“DC1:ALL”`` for all assets in ``DC1``, and adding ``“LEAFS:DC1”`` for our leafs. 
+   |br| You can use almost any naming convention that makes sense for your use case. Examples are for this lab.
+
+
+
 
 .. image:: images/cvp_studios_l3ls_evpn/8tagsprocess.gif
    :align: center
 
-Note that the workspace now shows we have two tag changes. Now, let's trigger the “start build” and start to build our topology. We are going to focus on L3LS/EVPN, so we need to start with L3LS first, then do EVPN. 
+See that the workspace now shows we have two tag changes. 
+|br| Now, let's trigger the *“start build”* and start to build our topology. We are going to focus on **L3LS/EVPN**, so we need to start with **L3LS** first, then do **EVPN**.
+|br| Navigate to the “L3 Leaf-Spine Fabric” studio. First, we need to set our tag query to assign our devices. 
 
-Navigate to the “L3 Leaf-Spine Fabric” studio. First, we need to set our tag query to assign our devices. 
+   NOTE:
+   The tag query at this time is an implicit “AND” operation. For example, if you had a DC1:ALL and DC2:ALL tag, if you just used both tags, it would not present a result.
+   |br| In this instance you would need to add the “OR” operator in between them. Also, the tagging must be precise. Do not include any devices that will not be assigned to the studio in question. 
 
-Note: The tag query at this time is an implicit “AND” operation. For example, if you had a DC1:ALL and DC2:ALL tag, if you just used both tags, it would not present a result. In this instance you would need to add the “OR” operator in between them. Also, the tagging must be precise. Do not include any devices that will not be assigned to the studio in question. 
+Let’s tag ``DC1:ALL``. You’ll see the number of devices it finds and their IDs. Next, let’s create our datacenter, for this lab, we’ll just use ``“1”``. 
 
-Let’s tag DC1:ALL. You’ll see the number of devices it finds and their IDs. Next, let’s create our datacenter, for this lab, we’ll just use “1”. 
-
-Note: anytime you see “create” in a field it is automatically creating a tag for the studio to use. We’ll come back to this later.  
+   Note: anytime you see “create” in a field it is automatically creating a tag for the studio to use. We’ll come back to this later.  
 
 .. image:: images/cvp_studios_l3ls_evpn/9L3LSPT1.gif
    :align: center
