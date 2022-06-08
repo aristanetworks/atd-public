@@ -1,23 +1,31 @@
-.. note:: Ongoing WIP, document should be treated as early release and incomplete.
+   .. code-block::text   
+   
+   blah blah
+
+.. # define a hard line break for HTML
+.. |br| raw:: html
+
+   <br />
+
+*NOTE: Ongoing WIP, document should be treated as early release and incomplete.*
 
 **To successfully run this lab in the Datacenter ATD, once the environment is up, do not initalize any of the preset labs. SSH into Host1 and Host2 and remove the existing port channels, and reconfigure as shown in the topology. Also Create vlans and SVIs as shown. When this ATD is final, this step will not be needed as there will be a lab option for it.**
 
 ==============================================
 CloudVision Studios  -  L3LS/EVPN Introduction
 ==============================================
-Cloudvision Studios allows us to easily and quickly deploy complicated network topologies in a matter of minutes. 
-Before we get started, let's get familiarized with the basic data structure of CVP Studios. 
+|br| Cloudvision Studios allows us to easily and quickly deploy complicated network topologies in a matter of minutes. 
+|br| Before we get started, let's get familiarized with the basic data structure of CVP Studios. 
 CVPS works much like the GIT framework. 
-In GIT we have a staging area, a commit to finalize our changes to, and 
+|br| In GIT we have a staging area, a commit to finalize our changes to, and 
 pull requests that will submit our changes to a top level authority to either approve or deny our changes. 
 
 
 .. image:: images/cvp_studios_l3ls_evpn/1GIT.png
    :align: center
    
-   
+CVPS follows that schema very closely.
 
-CVPS follows that schema very closely. 
 
 .. image:: images/cvp_studios_l3ls_evpn/2CVPSASGIT.png
    :align: center
@@ -46,20 +54,24 @@ All underlay addressing will be performed by CVPS.
 Let’s open CVP, and get started!
 --------------------------------
 
-The first step we need to do is create a workspace and perform the inventory studio.
-This is where we will tell studios which devices to include, and the studio will know how the physical topology is built. 
+1. The first step we need to do is create a workspace and perform the inventory studio.
+
+.. code-block::text
+
+Note: 
+|br| This is where we will tell studios which devices to include, and the studio will know how the physical topology is built. |br| 
 This allows the other studios to auto detect links to assign properly for a functional network. 
-Let’s navigate to Provisioning>Studios>Create Workspace. Name it anything you want.
+|br| Let’s navigate to Provisioning>Studios>Create Workspace. Name it anything you want.
 
 .. image:: images/cvp_studios_l3ls_evpn/4WorkspaceIntro.gif
    :align: center
 
 Now that our workspace is created, let’s edit our Inventory studio. 
 Enter the studio and click the “add updates” tab. 
-All of our devices should be there. 
-Ignore anything that isn’t the Spines or Leaf1-4. 
-Click on “add updates.” 
-Now, notice that there are devices in the “onboarded devices” section. 
+|br| All of our devices should be there. 
+Ignore anything that isn’t the ``Spines`` or ``Leaf1-4``. 
+Click on *“add updates.”* 
+|br| Now, notice that there are devices in the “onboarded devices” section. 
 You can enter the device and see how Studios has detected the topology connections.
 
 .. image:: images/cvp_studios_l3ls_evpn/5Inventory.gif
