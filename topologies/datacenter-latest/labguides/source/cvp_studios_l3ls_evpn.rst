@@ -53,8 +53,9 @@ Let’s open CVP, and get started!
 **1. Workspace Creation**
 --------------------------------------------------------------------------------------------
 
-The first step we need to do is create a workspace and perform the inventory studio.
+- Navigate to **Provisioning>Studios>Create Workspace**. Name it anything you want.
 
+Once created, let's go to the **"Inventory Studio"**
 
 
 
@@ -64,7 +65,8 @@ The first step we need to do is create a workspace and perform the inventory stu
 **2. Inventory studio.** 
 --------------------------------------------------------------------------
 
-- Let’s navigate to **Provisioning>Studios>Create Workspace**. Name it anything you want.
+- Navigate to **Provisioning>Studios>Inventory and Topology**.
+
 
  NOTE: 
  |br| This is where we will tell studios which devices to include, and the studio will know how the physical topology is built.
