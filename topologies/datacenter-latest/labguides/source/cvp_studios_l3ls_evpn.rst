@@ -138,7 +138,7 @@ Click on **"Review Workspace"** in the upper right and observe that the workspac
 **5. L3LS Studio**
 ------------------
 
-- Navigate to the “L3 Leaf-Spine Fabric” studio. 
+- Navigate to the **'Provisioning>Studios>L3 Leaf-Spine Fabric”** studio. 
 
 First, we need to set our tag query to assign our devices.
 |br| Let’s include all devices with the ``DC1:ALL`` tag pair. You’ll see the number of devices it finds and their IDs. 
@@ -209,7 +209,7 @@ Success! Now that we have these changes saved to our workspace, let’s work on 
 **6. EVPN Studio**
 ------------------
 
-- Navigate to the “EVPN Services” studio. 
+- Navigate to the **'Provisioning>Studios>EVPN Services”** studio. 
 
 Once again, we need to add our device query. But seeing as how this is EVPN, our focus is on the leafs. 
 |br| Let’s use  ``Leafs:DC1`` as our query, then create our tenant, which we’ll call **“A”**. 
@@ -266,7 +266,7 @@ Success! We now have a working L3LS/EVPN topology, but not for the hosts yet. We
 **7. Interface Studio**
 -----------------------
 
-- Navigate to the “Interface” studio. 
+- Navigate to the **'Provisioning>Studios>Interface Configuration”** studio. 
 
 Let’s take a look at our topology. The hosts are already pre configured for PO1 on ports ``E1-4`` in LACP. Our yet to be configured Leafs are connected to the hosts on ``E4`` and ``E5``. 
 
