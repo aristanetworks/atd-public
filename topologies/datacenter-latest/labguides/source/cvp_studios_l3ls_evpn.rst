@@ -113,7 +113,8 @@ Tagging can be done from within a workspace even though it's technically not a s
    :align: center
 
 
-There are user tags and tags the system creates using the *"auto tagger"* as we move through our studio configurations. Tags are formed in a **label:value format.** 
+There are user tags and tags the system creates using the *"auto tagger"* as we move through our studio configurations. 
+|br| Tags are formed in a **label:value format.** 
 |br| For this lab, we will be using ``“DC1:ALL”`` for all assets in ``DC1``, and adding ``“LEAFS:DC1”`` for our leafs. Let's go ahead and tag our devices now. 
 
    NOTE:
@@ -137,32 +138,37 @@ Click on **"Review Workspace"** in the upper right and observe that the workspac
 
 - Navigate to the “L3 Leaf-Spine Fabric” studio. 
 
-First, we need to set our tag query to assign our devices.|br| Let’s include all devices with the ``DC1:ALL`` tag pair. You’ll see the number of devices it finds and their IDs. 
-|br| Next, let’s create our datacenter, for this lab, we’ll just use ``“1”``. 
-
-**Important Tip: Anytime you see “create” in a field the autotagger is automatically creating a tag for the devices included in the studio. We’ll come back to this later.**   
-
-   
+First, we need to set our tag query to assign our devices.
+|br| Let’s include all devices with the ``DC1:ALL`` tag pair. You’ll see the number of devices it finds and their IDs. 
 
 
-   NOTE:
-   The tag query at this time is an implicit *“AND”* operation. For example, if you had ``DC1:ALL`` and ``DC2:ALL`` tags, if you just used both tags, it would not present a result.
-   |br| In this instance you would need to add the *“OR”* operator in between them. Also, the tagging must be precise. Do not include any devices that will not be assigned to the studio in question. 
+
+Once the query is complete and you verify all devices are included, let's create our Datacenter.
+|br| In the "Data Centers" section, let's use a value of **"1"**  *(this can be a name or an integer, but for the lab let's use the aforementioned value)*
+|br| Once complete, click the arrow to proceed into the configuration. 
+
+**Important Tip:** 
+|br| **Anytime you see “create” in a field the autotagger is automatically creating a tag for the devices included in the studio. We’ll come back to this later.** 
 
  
 
 .. image:: images/cvp_studios_l3ls_evpn/9L3LSPT1.gif
    :align: center
 
-Once complete, click the arrow on the Datacenter to continue. 
-|br| Now, we need to assign the individual devices from our query, assign the fabric device roles, and create our pod. 
 
-   
-The Fabric Device section is critical. Here we will set our roles and ID numbers. Every Spine and Leaf needs a unique number. 
-|br| E.G. if you have 6 spines between 2 pods there will be six entries, 1 through 6. The Fabric devices will auto fill important sections later in the EVPN Studio. 
+
+|br| Now, we need to assign the individual devices from our query, assign the **fabric device roles**, and create our pod. 
+
+   The Fabric Device section is critical. Here we will set our **roles** and **ID** numbers. Every Spine and Leaf requires a unique number. 
+
 |br| Let’s do this now. 
 
-   Note: a “pod” is not a rack construct in Studios. In this nomenclature, a pod is a leaf/spine collection. E.G. if you had more than one leaf/spine in the same datacenter they would get their own pod configuration. 
+
+   Note: The devices in the Fabric Device will auto fill important sections later in the EVPN Studio. 
+
+
+
+  
 
 .. image:: images/cvp_studios_l3ls_evpn/10L3LSPT2.gif
    :align: center
@@ -170,8 +176,9 @@ The Fabric Device section is critical. Here we will set our roles and ID numbers
 Once complete, let's *“Add Pod”*, give it a name of *“1”* then make use of the arrow in the pod field to move on. 
 
 Once again, you’ll find we have to manually assign our devices.  
-|br| Add the spines first, and you’ll see them automatically get added! Now add the leafs. Once done, we need to make our leaf domains. 
-|br| A leaf domain can be a pair of switches or a standalone. So in this lab, we need to make two. Leaf 1 and 2 will be in 1, and Leaf 3 and 4 will be in 2. 
+|br| Add the spines first, and you’ll see them automatically get added! Now add the leafs. Once done, we need to make our **leaf domains.** 
+|br| A leaf domain can be a pair of switches or a standalone. So in this lab, we need to make two. 
+|br| ``Leaf1`` and ``Leaf2`` will be in ``Leaf Domain 1``, and ``Leaf3`` and ``Leaf4`` will be in ``Leaf Domain 2``. 
 |br| Let’s do this now. 
 
    Note: Leaf Domains must be an integer or the build process will fail.
@@ -179,50 +186,67 @@ Once again, you’ll find we have to manually assign our devices.
 .. image:: images/cvp_studios_l3ls_evpn/11L3LSPT3.gif
    :align: center
 
-And that’s it! Our next step is to review the workspace. But before we do that, let's have a good look  at the lower section. These are all the variables that the topology will be built on. For this lab we’ll leave it all at defaults. Feel free in production to change to meet your needs and if you are building two or more data centers or pods in studios you’re going to want to make sure these variables are unique per site/pod for proper ebgp on your border leafs/unique VTEPs between EVPN domains if that's your goal.
+And that’s it! 
 
-Also noteworthy are those blue knobs below. They set BGP dynamic listeners on the Spines,configure the VXLAN Overlay and get the topology ready for EVPN. If all you wanted was strictly L3LS as a foundation you could turn off VXLAN/EVPN if you so chose.      
+|br| Our next step is to review the workspace. But before we do that, let's have a good look  at the lower section. 
+|br| These are all the variables that the topology will be built on. For this lab we’ll leave it all at defaults. 
+|br| Also noteworthy are those blue knobs below. They set BGP dynamic listeners on the Spines,configure the VXLAN Overlay and get the topology ready for EVPN. 
+|br| If all you wanted was strictly L3LS as a foundation you could turn off VXLAN/EVPN if you so chose.      
 
 .. image:: images/cvp_studios_l3ls_evpn/12L3LSPT4.PNG
    :align: center
 
 Let's start our build! Now remember, we need to manually kick the build off, and if everything went according to plan, we will get three green checks. 
 
-Note: Notice the tag changes have increased, and L3 Leaf-Spine Fabric is in the list of modified studios.  
+   Note: Notice the tag changes have increased, and L3 Leaf-Spine Fabric is in the list of modified studios.  
 
 .. image:: images/cvp_studios_l3ls_evpn/13L3LSPT5.gif
    :align: center
 
 Success! Now that we have these changes saved to our workspace, let’s work on EVPN, which will pull data from this configuration. 
 
-Let’s go to the EVPN Services section and get started! Once again, we need to add our device query. But seeing as how this is EVPN, our focus is on the leafs. Let’s use our Leafs:DC1 query, then create our tenant, we’ll call “A”. 
+**6. EVPN Studio**
+------------------
+
+- Navigate to the “EVPN Services” studio. 
+
+Once again, we need to add our device query. But seeing as how this is EVPN, our focus is on the leafs. 
+|br| Let’s use  ``Leafs:DC1`` as our query, then create our tenant, which we’ll call ``“A”``. 
 
 .. image:: images/cvp_studios_l3ls_evpn/14EVPNPT1.gif
    :align: center
 
-Then, let’s enter our tenant and set up our VRF, let’s also call this one “A”, and enter the configuration. The only required entry here is the VNI. Your VNI can be whatever you want, just ensure it does not conflict with the VNI the VLANS will get auto assigned with (though you can override the VNI on the VLAN page) As best practice we will set our VNI as 50000.
+Then, let’s enter our tenant and set up our VRF, let’s also call this one **“A”**, and enter the configuration. 
+|br| The only required entry here is the **VNI**. Your **VNI** can be whatever you want, just ensure it does not conflict with the VNI the VLANS will get auto assigned with (though you can override the VNI on the VLAN page) 
+|br| As best practice we will set our **VNI** as **50000**.
 
 
 .. image:: images/cvp_studios_l3ls_evpn/15EVPNPT2.gif
    :align: center
 
 
-Next step is to create the vlans in the VRF, and assign them to the devices that will carry them. We can also use VLAN Aware Bundles if all devices support it (if you are cross vendor, you might not be able to use bundles) and we will configure for this lab. Let’s add vlan 60 and 70, then configure them. Let’s start with vlan 60.
+Our next step is to create the vlans in the VRF, and assign them to the devices that will carry them. 
+|br| We can also use VLAN Aware Bundles if all devices support it *(if you are cross vendor, you might not be able to use bundles)* and we will configure for this lab in a moment. 
+|br| Let’s add ``vlan60`` and ``vlan70``, then configure them. Let’s start with ``vlan60``.
+|br| Enter 60 in the VLAN ID field and enter the configuration. Let's make a name. Let’s call it “PROD” and then set our SVI of **10.60.60.1/24** 
 
-Enter 60 in the VLAN ID field and enter the configuration. Let's make a name. Let’s call it “PROD” and then set our SVI of 10.60.60.1/24 
+   Note: The CIDR is required. 
 
-Note: The CIDR is required. 
+|br| Now, let's choose our VRF to ``“A”``, and assign our device assignments. Use ``Leafs:DC1`` as our tag.  Mark all to “Yes”. 
+|br| Repeat with creation of ``vlan70`` with a SVI of **10.70.70.1/24** and description of “PROD2.”
 
-Now, let's choose our VRF to “A”, and assign our device assignments. Use Leafs:DC1 as our tag.  Mark all to “Yes”. 
-
-Repeat with creation of VLAN 70 with a SVI of 10.70.70.1/24 and description of “PROD2.”
+   Note: 
+   |br| Notice how when you add the leafs to the vlan the router_bgp.router_id and router_bgp.as variables auto-filled. 
+   |br| The studio is pulling this information directly from our information stored from our L3LS studio! 
 
 .. image:: images/cvp_studios_l3ls_evpn/16EVPNPT3.gif
    :align: center
 
-Note: Notice how when you add the leafs to the vlan the router_bgp.router_id and router_bgp.as variables auto-filled. The studio is pulling this information directly from our information stored from our L3LS studio! 
 
-As the final step of this studio, let's quickly create our vlan aware bundle. As our value, let's call it “BUNDLE” then enter the configuration. Use 60,70 as our vlan range for this example.  
+   
+
+
+As the final step of this studio, let's quickly create our vlan aware bundle. As our value, let's call it **"BUNDLE”** then enter the configuration. Use 60,70 as our vlan range for this example.  
 
 .. image:: images/cvp_studios_l3ls_evpn/16.1EVPNPT3.png
    :align: center
@@ -232,10 +256,15 @@ We’re done with the EVPN studio! Let’s spin the wheel of build and see how w
 .. image:: images/cvp_studios_l3ls_evpn/17EVPNPT4.gif
    :align: center
 
-Success! We now have a working L3LS/EVPN topology, but not for the hosts yet. We need to configure the port-channels on the leafs to the hosts below them. For that, let’s use the Interface Configuration studio and then we’ll test connectivity across the fabric. 
+Success! We now have a working L3LS/EVPN topology, but not for the hosts yet. We need to configure the port-channels on the leafs to the hosts below them. For that, let’s use the **Interface Configuration Studio** and then we’ll test connectivity across the fabric. 
 
 
-Let’s take a look at our topology. The hosts are already pre configured for PO1 on ports E1-4 in LACP. Our yet to be configured Leafs are connected to the hosts on E4 and 5. 
+**7. Interface Studio**
+-----------------------
+
+- Navigate to the “Interface” studio. 
+
+Let’s take a look at our topology. The hosts are already pre configured for PO1 on ports ``E1-4`` in LACP. Our yet to be configured Leafs are connected to the hosts on ``E4`` and ``E5``. 
 
 .. image:: images/cvp_studios_l3ls_evpn/18-topoforPO.PNG
    :align: center
@@ -243,12 +272,14 @@ Let’s take a look at our topology. The hosts are already pre configured for PO
 The hosts are also configured in vlan 60 and 70 with respective SVIs for testing. 
 Let’s navigate to our Interface Studio and start our configuration. 
 
-Let’s start by adding a profile, let’s call it “MLAG-PO”.  Let’s make it a trunk port, set native VLAN of “1”, allow vlans 60 and 70, and give the PO a number of 1, and check “yes” for mlag. 
+Let’s start by adding a profile, let’s call it ``“MLAG-PO”``.  Let’s make it a **trunk port**, set native VLAN of **“1”**, allow ``vlan60`` and ``vlan70``, and give the PO a number of **"1"**, and check **“yes”** for mlag. 
 
 .. image:: images/cvp_studios_l3ls_evpn/19-intstudio1.gif
    :align: center
 
-   Now, let’s put our leafs in the search query and then apply our profile to ports E4 and E5 on each leaf pair.
+
+Now, let’s put our leafs in the search query with the ``"leafs:DC1"`` query and then apply our profile to ports ``E4`` and ``E5`` on each leaf pair.
+
 
    .. image:: images/cvp_studios_l3ls_evpn/20-intstudio1.gif
    :align: center
