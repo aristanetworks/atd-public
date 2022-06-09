@@ -137,7 +137,7 @@ topologies:
             resources:
               cpu: 36
               ram: 48
-            branch: v2021.3-20220404a
+            branch: v2021.3-20220609a
             orderable: true
             image: base-atd-datacenter-ceos-c2021-3-0-20220324u
             eos:
@@ -178,7 +178,7 @@ topologies:
             resources:
               cpu: 40
               ram: 64
-            branch: v2021.3-20220404a
+            branch: v2021.3-20220609a
             orderable: true
             image: base-atd-datacenter-e4-27-2f-c2021-3-0-20220324u
             eos:
