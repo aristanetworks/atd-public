@@ -62,9 +62,7 @@ interface Loopback1
    ip address 2.2.2.34/32
 !
 interface Management1
-   ip address 192.168.0.16/24
-   no lldp transmit
-   no lldp receive
+   ip address 192.168.0.14/24
 !
 interface Vlan10
    vrf A
