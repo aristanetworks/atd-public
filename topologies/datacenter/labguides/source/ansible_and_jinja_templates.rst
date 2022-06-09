@@ -163,8 +163,6 @@ Clear as mud? Maybe this variables file will help tie it together:
        description: spine2.atd.lab
      - name: Ethernet4
        description: host1
-     - name: Ethernet5
-       description: host2
      - name: Ethernet6
        description: leaf2.atd.lab
 
@@ -181,8 +179,6 @@ configuration:
      description spine2.atd.lab
     interface Ethernet4
      description host1
-    interface Ethernet5
-     description host2
     interface Ethernet6
      description leaf2.atd.lab
 
@@ -230,8 +226,6 @@ Now let’s create the playbook on your desktop named ``interfaces.yml``:
             description: spine2.atd.lab
           - name: Ethernet4
             description: host1
-          - name: Ethernet5
-            description: host2
           - name: Ethernet6
             description: leaf2.atd.lab
       tasks:
