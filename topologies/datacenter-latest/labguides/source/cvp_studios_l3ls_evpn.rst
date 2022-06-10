@@ -140,7 +140,7 @@ Once the query is complete and you verify all devices are included, let's create
 |br| Let’s do this now. 
 
 
-   Note: The devices in the Fabric Device will auto fill important sections later in the EVPN Studio. 
+   Note: The devices in the Fabric Device section will auto fill important sections later in the EVPN Studio. 
 
 
 
@@ -166,7 +166,8 @@ And that’s it!
 
 |br| Our next step is to review the workspace. But before we do that, let's have a good look  at the lower section. 
 |br| These are all the variables that the topology will be built on. For this lab we’ll leave it all at defaults. 
-|br| Also noteworthy are those blue knobs below. They set BGP dynamic listeners on the Spines,configure the VXLAN Overlay and get the topology ready for EVPN. 
+|br| Also noteworthy are those blue knobs below. 
+|br| They set BGP dynamic listeners on the Spines,configure the VXLAN Overlay and get the topology ready for EVPN. 
 |br| If all you wanted was strictly L3LS as a foundation you could turn off VXLAN/EVPN if you so chose.      
 
 .. image:: images/cvp_studios_l3ls_evpn/12L3LSPT4.PNG
