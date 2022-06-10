@@ -167,6 +167,7 @@ And that’s it!
 |br| Our next step is to review the workspace. But before we do that, let's have a good look  at the lower section. 
 |br| These are all the variables that the topology will be built on. For this lab we’ll leave it all at defaults. 
 |br| Also noteworthy are those blue knobs below. 
+
 |br| They set BGP dynamic listeners on the Spines,configure the VXLAN Overlay and get the topology ready for EVPN. 
 |br| If all you wanted was strictly L3LS as a foundation you could turn off VXLAN/EVPN if you so chose.      
 
