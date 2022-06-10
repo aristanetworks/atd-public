@@ -323,9 +323,9 @@ Now that we’ve confirmed all our base connectivity, let’s test our fabric an
 Let’s start with ``Host1``, and ensure we can ping our gateway at **10.60.60.1**. This should be successful. 
 |br| Next, let's ensure we can ping our local SVI at **10.60.60.160**. This should also be successful. Let’s ping across the fabric now in the same vlan, from **.160 to .161.** This should be successful as well. 
 
-Do a **“show int vlan 60”** on ``Host1`` and on ``Host2`` and make note of their **mac**. ON ``Host1``, do ``“show mac address-table vlan 60”`` and notice ``Host1’s`` mac comes across PO1 and ``Host2’s`` comes across Vx1.
+Do a **“show int vlan 60”** on ``Host1`` and on ``Host2`` and make note of their **mac**. On ``Host1``, do ``“show mac address-table vlan 60”`` and notice ``Host1’s`` mac comes across PO1 and ``Host2’s`` comes across Vx1.
 
-Next, let’s ping inter-vlan from .160 to .171, which should be successful. On ``leaf1``, review the EVPN routing table using **“show bgp evpn“**
+Next, let’s ping inter-vlan from **.160** to **.171**, which should be successful. On ``leaf1``, review the EVPN routing table using **“show bgp evpn“**
 
 
 LAB COMPLETE!
