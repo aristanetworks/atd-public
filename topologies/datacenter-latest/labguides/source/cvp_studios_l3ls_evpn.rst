@@ -225,7 +225,8 @@ Our next step is to create the vlans in the VRF, and assign them to the devices 
    
 
 
-As the final step of this studio, let's quickly create our vlan aware bundle. As our value, let's call it **"BUNDLE”** then enter the configuration. 
+As the final step of this studio, let's quickly create our vlan aware bundle. 
+|br| As our value, let's call it **"BUNDLE”** then enter the configuration. 
 |br| Use 60,70 as our vlan range for this example.  
 
 .. image:: images/cvp_studios_l3ls_evpn/16.1EVPNPT3.png
