@@ -3,6 +3,9 @@
 
    <br />
 
+This lab is built for Cloud Vision version 2021.3.0
+---------------------------------------------------
+
 *NOTE: Ongoing WIP, document should be treated as early release and incomplete.*
 
 **To successfully run this lab in the Datacenter ATD, once the environment is up, do not initalize any of the preset labs.** 
