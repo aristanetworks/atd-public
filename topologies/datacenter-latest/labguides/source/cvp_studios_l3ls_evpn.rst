@@ -3,8 +3,6 @@
 
    <br />
 
-This lab is built for Cloud Vision version 2021.3.0
----------------------------------------------------
 
 *NOTE: Ongoing WIP, document should be treated as early release and incomplete.*
 
