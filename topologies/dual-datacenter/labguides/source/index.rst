@@ -11,6 +11,7 @@ Welcome to the Arista ATD documentation!
    vxlan.rst
    l2evpn.rst
    l3evpn.rst
+   gnmi.rst
 
 .. toctree::
    :maxdepth: 1
