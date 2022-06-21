@@ -68,6 +68,16 @@ topologies:
             eos:
               - 4.27.1.1F
               - 4.27.2F
+          2022.1.0:
+            resources:
+              cpu: 36
+              ram: 48
+            branch: nested/2022.1
+            orderable: true
+            image: base-atd-datacenter-ceos-c2021-3-0-20220324u
+            eos:
+              - 4.28.1F
+              - 4.27.2F
       veos:
         cpu: 30
         ram: 64
