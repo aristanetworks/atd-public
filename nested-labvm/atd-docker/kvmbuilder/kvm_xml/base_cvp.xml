@@ -1,6 +1,4 @@
 <domain id="@random_id@" type="kvm">
-  <memory unit="MiB">22528</memory>
-  <currentMemory unit="MiB">22528</currentMemory>
   <os>
     <type arch="x86_64" machine="pc">hvm</type>
     <boot dev="hd" />
