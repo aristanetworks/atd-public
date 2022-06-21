@@ -71,7 +71,7 @@ topologies:
           2022.1.0:
             resources:
               cpu: 36
-              ram: 48
+              ram: 58
             branch: nested/2022.1
             orderable: true
             image: base-atd-datacenter-ceos-c2021-3-0-20220324u
