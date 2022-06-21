@@ -11,7 +11,6 @@ Welcome to the Arista ATD documentation!
    vxlan.rst
    l2evpn.rst
    l3evpn.rst
-   gnmi.rst
 
 .. toctree::
    :maxdepth: 1
@@ -28,6 +27,7 @@ Welcome to the Arista ATD documentation!
    command_api.rst
    eapi.rst
    pyeapi.rst
+   gnmi.rst
    ansible_adhoc_and_simple_playbooks.rst
    ansible_and_jinja_templates.rst
    day2_operations.rst

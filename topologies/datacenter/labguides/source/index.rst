@@ -29,6 +29,7 @@ Welcome to the Arista ATD documentation!
    command_api.rst
    eapi.rst
    pyeapi.rst
+   gnmi.rst
    ansible_adhoc_and_simple_playbooks.rst
    ansible_and_jinja_templates.rst
    day2_operations.rst
