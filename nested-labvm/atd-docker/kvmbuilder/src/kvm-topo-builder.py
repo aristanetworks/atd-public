@@ -200,7 +200,7 @@ def main(uargs):
     cvp_node_count = FILE_BUILD['cvp_nodes']
     veos_cpu_count = FILE_BUILD['veos_cpu']
     if 'cvp_ram' in FILE_BUILD:
-        cvp_ram_count = FILE_BUILD['cvp_cpu'] * 1024
+        cvp_ram_count = FILE_BUILD['cvp_ram'] * 1024
     else:
         cvp_ram_count = 22 * 1024
     if cvp_node_count == 1:
