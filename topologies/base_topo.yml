@@ -25,6 +25,16 @@ topologies:
             eos:
               - 4.27.1.1F
               - 4.27.2F
+          2022.1.0:
+            resources:
+              cpu: 40
+              ram: 64
+            branch: nested/2022.1
+            orderable: false
+            image: base-atd-dual-datacenter-ceos-c2021-3-0-20220324u
+            eos:
+              - 4.28.1F
+              - 4.27.2F
     # prod:
     #   veos:
     #     cpu: 32
@@ -74,7 +84,7 @@ topologies:
               ram: 58
             branch: nested/2022.1
             orderable: true
-            image: base-atd-datacenter-ceos-c2021-3-0-20220324u
+            image: base-atd-datacenter-ceos-c2022-1-0-20220621
             eos:
               - 4.28.1F
               - 4.27.2F
@@ -109,6 +119,15 @@ topologies:
             image: base-atd-datacenter-e4-27-2f-c2021-3-0-20220324u
             eos:
               - 4.27.2F
+          2022.1.0:
+            resources:
+              cpu: 40
+              ram: 74
+            branch: nested/2022.1
+            orderable: false
+            image: base-atd-datacenter-e4-27-2f-c2021-3-0-20220324u
+            eos:
+              - 4.28.1F
     prod:
       ceos:
         cpu: 24
@@ -224,6 +243,15 @@ topologies:
             image: base-atd-routing-e4-27-2f-c2021-3-0-20220324u
             eos:
               - 4.27.2F
+          2022.1.0:
+            resources:
+              cpu: 50
+              ram: 90
+            branch: nested/2022.1
+            orderable: false
+            image: base-atd-routing-e4-27-2f-c2021-3-0-20220324u
+            eos:
+              - 4.28.1F
       ceos:
         cpu: 32
         ram: 64
@@ -247,6 +275,16 @@ topologies:
             image: base-atd-routing-ceos-c2021-3-0-20220324u
             eos:
               - 4.27.1.1F
+              - 4.27.2F
+          2022.1.0:
+            resources:
+              cpu: 40
+              ram: 64
+            branch: nested/2022.1
+            orderable: false
+            image: base-atd-routing-ceos-c2021-3-0-20220324u
+            eos:
+              - 4.28.1F
               - 4.27.2F
     prod:
       ceos:
