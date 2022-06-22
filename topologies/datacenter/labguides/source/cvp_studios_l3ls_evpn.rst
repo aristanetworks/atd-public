@@ -5,28 +5,23 @@
 
 .. raw:: html
 
- <style>.red{color:#aa0060; font-weight:bold; font-size:16px}</style>
+    <style> .red {color:#aa0060; font-weight:bold; font-size:16px} </style>
 .. role:: red
 
 
 
 *NOTE: Ongoing WIP, document should be treated as early release and incomplete.*
 
-|br|:red:`If you are running the lab from ATD-DEV, disregard the disclaimer below.`
-|br|:red:`Option 8 on the ATD-DEV console will format the hosts.`
-|br|:red:`If running from standard ATD, please ensure you follow the below section.`
+|br|:red:`If you are running the lab from ATD-DEV, disregard the disclaimer below. Option 8 on the console will format the hosts.`
+|br|:red:`If running from standard ATD, plesae ensure you follow the below section.`
 
 
-**To successfully run this lab in the Datacenter ATD, once the environment is up,** 
-|br| **do not initalize any of the preset labs, instead follow the steps below:** 
 
+**To successfully run this lab in the Datacenter ATD, once the environment is up, do not initalize any of the preset labs.** 
+|br| **SSH into Host1 and Host2 and remove the existing port channels, and reconfigure as trunks with interfaces ``E1-E4`` in PO1 for each Host.** 
+|br| **Create ``vlan60`` and ``vlan70`` with the SVIs as shown. Set a default route to 10.60.60.1** 
 
-|br| **1. SSH into Host1 and Host2 and remove the existing port channels.**
-|br| **2. Reconfigure as trunks with interfaces E1-E4 in PO1 for each Host.** 
-|br| **3. Create vlan60 and vlan70 with the SVIs as shown.**
-|br| **4. Set a default route to 10.60.60.1** 
-
-
+**When this ATD is final, these steps will not be needed as there will be a lab option for it.**
 
 ===========================================
 CloudVision Studios  -  L3LS/EVPN LAB GUIDE
@@ -113,10 +108,12 @@ Tagging can be done from within a workspace even though it's technically not a s
 
 There are user tags and tags the system creates using the *"auto tagger"* as we move through our studio configurations. 
 |br| Tags are formed in a **label:value format.** 
-|br| For this lab, we will be using ``“DC:DC1”`` for all assets in ``DC1``, Let's go ahead and tag our devices now. 
+|br| For this lab, we will be using ``“DC1:ALL”`` for all assets in ``DC1``, and adding ``“LEAFS:DC1”`` for our leafs. Let's go ahead and tag our devices now. 
 
    NOTE:
-    |br| You can use almost any naming convention that makes sense for your use case. Examples are for this lab.
+   |br| We should try to only use our user created tags in our studio assignments via the query builder for this lab. 
+   |br|  As a best practice, there are labels you should avoid using such as *“DC”* and *“container”*, as these are used by studios during creation. 
+   |br| You can use almost any naming convention that makes sense for your use case. Examples are for this lab.
 
 
 
@@ -135,7 +132,7 @@ Click on **"Review Workspace"** in the upper right and observe that the workspac
 - Navigate to the **Provisioning>Studios>L3 Leaf-Spine Fabric** studio. 
 
 First, we need to set our tag query to assign our devices.
-|br| Let’s include all devices with the ``DC:DC1`` tag pair. You’ll see the number of devices it finds and their IDs. 
+|br| Let’s include all devices with the ``DC1:ALL`` tag pair. You’ll see the number of devices it finds and their IDs. 
 
 
 
@@ -208,7 +205,7 @@ Success! Now that we have these changes saved to our workspace, let’s work on 
 - Navigate to the **Provisioning>Studios>EVPN Services** studio. 
 
 Once again, we need to add our device query. But seeing as how this is EVPN, our focus is on the leafs. 
-|br| Let’s use  ``Role:Leaf AND DC:DC1`` as our query, then create our tenant, which we’ll call **“A”**. 
+|br| Let’s use  ``Leafs:DC1`` as our query, then create our tenant, which we’ll call **“A”**. 
 
 .. image:: images/cvp_studios_l3ls_evpn/14EVPNPT1.gif
    :align: center
@@ -230,7 +227,7 @@ Our next step is to create the vlans in the VRF, and assign them to the devices 
 
    Note: The CIDR is required. 
 
-|br| Now, let's choose our VRF to ``“A”``, and assign our device assignments. Use ``Role:Leaf AND DC:DC1`` as our search. Enter the vlan area and  mark all to “Yes”. 
+|br| Now, let's choose our VRF to ``“A”``, and assign our device assignments. Use ``Leafs:DC1`` as our tag.  Mark all to “Yes”. 
 |br| Repeat with creation of ``vlan70`` with a SVI of **10.70.70.1/24** and description of “PROD2.”
 
    Note: 
@@ -273,14 +270,13 @@ Let’s take a look at our topology. The hosts are already pre configured for PO
 The hosts are also configured in vlan 60 and 70 with respective SVIs for testing. 
 Let’s navigate to our Interface Studio and start our configuration. 
 
-Let’s start by adding our search query ``Role:Leaf AND DC:DC1``.
-|br| Then make a  profile, let’s call it **“MLAG-PO”**.  Let’s make it a **trunk port**, set native VLAN of **“1”**, allow ``vlan60`` and ``vlan70``, and give the PO a number of **"1"**, and check **“yes”** for mlag. 
+Let’s start by adding a profile, let’s call it **“MLAG-PO”**.  Let’s make it a **trunk port**, set native VLAN of **“1”**, allow ``vlan60`` and ``vlan70``, and give the PO a number of **"1"**, and check **“yes”** for mlag. 
 
 .. image:: images/cvp_studios_l3ls_evpn/19-intstudio1.gif
    :align: center
 
 
-Now, let’s apply our profile to ports ``E4`` and ``E5`` on each leaf pair.
+Now, let’s put our leafs in the search query with the ``"leafs:DC1"`` query and then apply our profile to ports ``E4`` and ``E5`` on each leaf pair.
 
 
    .. image:: images/cvp_studios_l3ls_evpn/20-intstudio1.gif
