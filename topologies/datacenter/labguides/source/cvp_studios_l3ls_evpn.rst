@@ -12,18 +12,19 @@
 
 *NOTE: Ongoing WIP, document should be treated as early release and incomplete.*
 
-|br|:red:`If you are running the lab from ATD-DEV, disregard the disclaimer below. Option 8 on the console will format the hosts.`
-|br|:red:`If running from standard ATD, plesae ensure you follow the below section.`
+|br|:red:`If you are running the lab from ATD-DEV, disregard the disclaimer below.`
+|br|:red:`Option 8 on the ATD-DEV console will format the hosts.`
+|br|:red:`If running from standard ATD, please ensure you follow the below section.`
 
 
-**To successfully run this lab in the Datacenter ATD, once the environment is up, do not initalize any of the preset labs.** 
+**To successfully run this lab in the Datacenter ATD, once the environment is up,** 
+|br| **do not initalize any of the preset labs, instead follow the steps below:** 
 
-|br| **Follow the steps below**
 
-|br| **SSH into Host1 and Host2 and remove the existing port channels**
-|br| **Reconfigure as trunks with interfaces ``E1-E4`` in PO1 for each Host.** 
-|br| **Create ``vlan60`` and ``vlan70`` with the SVIs as shown.**
-|br| **Set a default route to 10.60.60.1** 
+|br| **1. SSH into Host1 and Host2 and remove the existing port channels.**
+|br| **2. Reconfigure as trunks with interfaces E1-E4 in PO1 for each Host.** 
+|br| **3. Create vlan60 and vlan70 with the SVIs as shown.**
+|br| **4. Set a default route to 10.60.60.1** 
 
 
 
