@@ -17,6 +17,7 @@
 
 
 **To successfully run this lab in the Datacenter ATD, once the environment is up, do not initalize any of the preset labs.** 
+
 |br| **Follow the steps below**
 
 |br| **SSH into Host1 and Host2 and remove the existing port channels**
