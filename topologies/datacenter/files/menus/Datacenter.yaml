@@ -16,6 +16,9 @@ lab_list:
     description: "EVPN Type 5 Lab (l3evpn) excludes leaf3 instead of leaf4"
   cvp:
     description: "CVP lab (cvp)"
+  cvpstudl3lsevpn:
+    description: "CVP lab for Studios L3LS/EVPN (cvpstudl3lsevpn)"
+
 labconfiglets:
   reset:
     spine1:
@@ -223,3 +226,25 @@ labconfiglets:
     host2:
       - "BaseIPv4_Host2"
       - "Host2-ATD"
+  cvpstudl3lsevpn:
+    spine1:
+      - "BaseIPv4_Spine1"
+    spine2:
+      - "BaseIPv4_Spine2"
+    leaf1:
+      - "BaseIPv4_Leaf1"
+    leaf2:
+      - "BaseIPv4_Leaf2"
+    leaf3:
+      - "BaseIPv4_Leaf3"
+    leaf4:
+      - "BaseIPv4_Leaf4"
+    cvx01:
+      - "BaseIPv4_Cvx01"
+      - "cvx01-Controller"
+    host1:
+      - "BaseIPv4_Host1"
+      - "Host1_STUDIO_L3LS_EVPN"
+    host2:
+      - "BaseIPv4_Host2"
+      - "Host2_STUDIO_L3LS_EVPN"
