@@ -5,7 +5,7 @@
 
 .. raw:: html
 
-    <style> .red {color:#aa0060; font-weight:bold; font-size:16px} </style>
+ <style> .red {color:#aa0060; font-weight:bold; font-size:16px} </style>
 .. role:: red
 
 
@@ -16,12 +16,15 @@
 |br|:red:`If running from standard ATD, plesae ensure you follow the below section.`
 
 
-
 **To successfully run this lab in the Datacenter ATD, once the environment is up, do not initalize any of the preset labs.** 
-|br| **SSH into Host1 and Host2 and remove the existing port channels, and reconfigure as trunks with interfaces ``E1-E4`` in PO1 for each Host.** 
-|br| **Create ``vlan60`` and ``vlan70`` with the SVIs as shown. Set a default route to 10.60.60.1** 
+|br| **Follow the steps below**
 
-**When this ATD is final, these steps will not be needed as there will be a lab option for it.**
+|br| **SSH into Host1 and Host2 and remove the existing port channels**
+|br| **Reconfigure as trunks with interfaces ``E1-E4`` in PO1 for each Host.** 
+|br| **Create ``vlan60`` and ``vlan70`` with the SVIs as shown.**
+|br| **Set a default route to 10.60.60.1** 
+
+
 
 ===========================================
 CloudVision Studios  -  L3LS/EVPN LAB GUIDE
