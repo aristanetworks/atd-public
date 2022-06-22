@@ -17,7 +17,7 @@ CloudVision Studios  -  L3LS/EVPN LAB GUIDE
 ===========================================
 *CVP Version 2021.3.0*
 
-Our topology consists of two spines, four leafs, aqnd two "hosts" for reachability testing. 
+Our topology consists of two spines, four leafs, and two "hosts" for reachability testing. 
 Our hosts will be pre-configured as L2 LACP trunk port-channels up to their respective leafs. 
 VLAN 60 and 70 will be pre-configured with SVIs on each host for post change reachability testing. 
 All underlay addressing will be performed by CVPS.
