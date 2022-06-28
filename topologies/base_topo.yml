@@ -128,6 +128,15 @@ topologies:
             image: base-atd-datacenter-e4-28-1f-c2022-1-0-20220621
             eos:
               - 4.28.1F
+          2022.1.0-bare:
+            resources:
+              cpu: 40
+              ram: 74
+            branch: nested/2022.1
+            orderable: true
+            image: base-atd-datacenter-e4-28-1f-c2022-1-0-bare-20220628
+            eos:
+              - 4.28.1F
     prod:
       ceos:
         cpu: 24
