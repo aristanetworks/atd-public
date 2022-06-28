@@ -492,7 +492,7 @@ topologies:
               - 4.26.0F
           2021.3.0:
             resources:
-              cpu: 36
+              cpu: 70
               ram: 72
             branch: nested/2021.3
             orderable: true
@@ -524,7 +524,7 @@ topologies:
               - 4.26.0F
           2021.3.0:
             resources:
-              cpu: 36
+              cpu: 70
               ram: 72
             branch: v2021.3-20220404a
             orderable: true
@@ -555,7 +555,7 @@ topologies:
               - 4.26.0F
           2021.3.0:
             resources:
-              cpu: 36
+              cpu: 70
               ram: 72
             branch: nested/2021.3
             orderable: true
@@ -569,7 +569,7 @@ topologies:
         cvp:
           2020.2.3:
             resources:
-              cpu: 36
+              cpu: 70
               ram: 72
             branch: v2020.2-20220404a
             orderable: true
@@ -704,7 +704,7 @@ topologies:
               - 4.26.0F
           2021.3.0:
             resources:
-              cpu: 48
+              cpu: 70
               ram: 72
             branch: nested/2021.3
             orderable: true
@@ -728,7 +728,7 @@ topologies:
               - 4.26.0F
           2021.3.0:
             resources:
-              cpu: 48
+              cpu: 70
               ram: 72
             branch: v2021.3-20220404a
             orderable: true
