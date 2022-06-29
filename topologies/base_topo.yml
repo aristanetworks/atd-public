@@ -397,7 +397,7 @@ topologies:
               ram: 64
             branch: nested/2021.3
             orderable: true
-            image: base-training-l1-e4-27-2f-c2021-3-0-20220215
+            image: base-training-l1-e4-27-2f-c2021-3-0-20220629
             eos:
               - 4.27.2F
     prod:
@@ -451,7 +451,7 @@ topologies:
               ram: 64
             branch: nested/2021.3
             orderable: true
-            image: base-training-l2-e4-27-2f-c2021-3-0-20220215
+            image: base-training-l2-e4-27-2f-c2021-3-0-20220629
             eos:
               - 4.27.2F
     prod:
@@ -501,11 +501,11 @@ topologies:
               - 4.26.0F
           2021.3.0:
             resources:
-              cpu: 70
-              ram: 72
+              cpu: 40
+              ram: 80
             branch: nested/2021.3
             orderable: true
-            image: base-training-l3-e4-27-2f-c2021-3-0-20220215
+            image: base-training-l3-e4-27-2f-c2021-3-0-20220629
             eos:
               - 4.27.2F
     prod:
@@ -564,11 +564,11 @@ topologies:
               - 4.26.0F
           2021.3.0:
             resources:
-              cpu: 70
-              ram: 72
+              cpu: 40
+              ram: 80
             branch: nested/2021.3
             orderable: true
-            image: base-training-l3-exam-e4-27-2f-c2021-3-0-20220215
+            image: base-training-l3-exam-e4-27-2f-c2021-3-0-20220629
             eos:
               - 4.27.2F
     prod:
@@ -613,7 +613,7 @@ topologies:
               ram: 80
             branch: nested/2021.3
             orderable: true
-            image: base-training-l3-2-e4-27-2f-c2021-3-0-20220215
+            image: base-training-l3-2-e4-27-2f-c2021-3-0-20220629
             eos:
               - 4.27.2F
     # prod:
@@ -662,7 +662,7 @@ topologies:
               ram: 90
             branch: nested/2021.3
             orderable: true
-            image: base-training-l4-e4-27-2f-c2021-3-0-20220215
+            image: base-training-l4-e4-27-2f-c2021-3-0-20220629
             eos:
               - 4.27.2F
           2021.3.0.e6:
@@ -713,11 +713,11 @@ topologies:
               - 4.26.0F
           2021.3.0:
             resources:
-              cpu: 70
+              cpu: 48
               ram: 72
             branch: nested/2021.3
             orderable: true
-            image: base-training-l5-ceos-c2021-3-0-20220215
+            image: base-training-l5-ceos-c2021-3-0-20220629
             eos:
               - 4.27.2F
     prod:
@@ -773,7 +773,7 @@ topologies:
               ram: 70
             branch: nested/2021.3
             orderable: true
-            image: base-training-l7-ceos-c2021-3-0-20220404
+            image: base-training-l7-ceos-c2021-3-0-20220629
             eos:
               - 4.27.2F
     prod:
