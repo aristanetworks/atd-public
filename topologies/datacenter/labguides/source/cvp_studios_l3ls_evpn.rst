@@ -113,12 +113,10 @@ Tagging can be done from within a workspace even though it's technically not a s
 
 There are user tags and tags the system creates using the *"auto tagger"* as we move through our studio configurations. 
 |br| Tags are formed in a **label:value format.** 
-|br| For this lab, we will be using ``“DC1:ALL”`` for all assets in ``DC1``, and adding ``“LEAFS:DC1”`` for our leafs. Let's go ahead and tag our devices now. 
+|br| For this lab, we will be using ``“DC:DC1”`` for all assets in ``DC1``, Let's go ahead and tag our devices now. 
 
    NOTE:
-   |br| We should try to only use our user created tags in our studio assignments via the query builder for this lab. 
-   |br|  As a best practice, there are labels you should avoid using such as *“DC”* and *“container”*, as these are used by studios during creation. 
-   |br| You can use almost any naming convention that makes sense for your use case. Examples are for this lab.
+    |br| You can use almost any naming convention that makes sense for your use case. Examples are for this lab.
 
 
 
@@ -137,7 +135,7 @@ Click on **"Review Workspace"** in the upper right and observe that the workspac
 - Navigate to the **Provisioning>Studios>L3 Leaf-Spine Fabric** studio. 
 
 First, we need to set our tag query to assign our devices.
-|br| Let’s include all devices with the ``DC1:ALL`` tag pair. You’ll see the number of devices it finds and their IDs. 
+|br| Let’s include all devices with the ``DC:DC1`` tag pair. You’ll see the number of devices it finds and their IDs. 
 
 
 
@@ -210,7 +208,7 @@ Success! Now that we have these changes saved to our workspace, let’s work on 
 - Navigate to the **Provisioning>Studios>EVPN Services** studio. 
 
 Once again, we need to add our device query. But seeing as how this is EVPN, our focus is on the leafs. 
-|br| Let’s use  ``Leafs:DC1`` as our query, then create our tenant, which we’ll call **“A”**. 
+|br| Let’s use  ``Role:Leaf AND DC:DC1`` as our query, then create our tenant, which we’ll call **“A”**. 
 
 .. image:: images/cvp_studios_l3ls_evpn/14EVPNPT1.gif
    :align: center
@@ -232,7 +230,7 @@ Our next step is to create the vlans in the VRF, and assign them to the devices 
 
    Note: The CIDR is required. 
 
-|br| Now, let's choose our VRF to ``“A”``, and assign our device assignments. Use ``Leafs:DC1`` as our tag.  Mark all to “Yes”. 
+|br| Now, let's choose our VRF to ``“A”``, and assign our device assignments. Use ``Role:Leaf AND DC:DC1`` as our search. Enter the vlan area and  mark all to “Yes”. 
 |br| Repeat with creation of ``vlan70`` with a SVI of **10.70.70.1/24** and description of “PROD2.”
 
    Note: 
