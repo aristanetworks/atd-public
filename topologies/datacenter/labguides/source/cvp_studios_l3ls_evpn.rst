@@ -273,13 +273,14 @@ Let’s take a look at our topology. The hosts are already pre configured for PO
 The hosts are also configured in vlan 60 and 70 with respective SVIs for testing. 
 Let’s navigate to our Interface Studio and start our configuration. 
 
-Let’s start by adding a profile, let’s call it **“MLAG-PO”**.  Let’s make it a **trunk port**, set native VLAN of **“1”**, allow ``vlan60`` and ``vlan70``, and give the PO a number of **"1"**, and check **“yes”** for mlag. 
+Let’s start by adding our search query ``Role:Leaf AND DC:DC1``.
+|br| Then make a  profile, let’s call it **“MLAG-PO”**.  Let’s make it a **trunk port**, set native VLAN of **“1”**, allow ``vlan60`` and ``vlan70``, and give the PO a number of **"1"**, and check **“yes”** for mlag. 
 
 .. image:: images/cvp_studios_l3ls_evpn/19-intstudio1.gif
    :align: center
 
 
-Now, let’s put our leafs in the search query with the ``"leafs:DC1"`` query and then apply our profile to ports ``E4`` and ``E5`` on each leaf pair.
+Now, let’s apply our profile to ports ``E4`` and ``E5`` on each leaf pair.
 
 
    .. image:: images/cvp_studios_l3ls_evpn/20-intstudio1.gif
