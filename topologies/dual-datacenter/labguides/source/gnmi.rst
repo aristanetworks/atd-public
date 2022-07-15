@@ -13,6 +13,8 @@ Lab changes for gNMIC that need to be made prior to this lab.
 
 **Per switch the following needs to be added.**
 
+|
+
 .. code-block:: bash
 
     management api gnmi 
