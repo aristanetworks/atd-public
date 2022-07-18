@@ -13,6 +13,8 @@ Lab changes for gNMIC that need to be made prior to this lab.
 
 **Per switch the following needs to be added.**
 
+.. Note:: You can save some time by adding these lines to the existing intrastructure configlet, since the Terminattr change below is within this configlet. Feel free to create a new gNMI configlet if you prefer.
+
 .. code-block:: bash
 
     management api gnmi 
@@ -42,7 +44,10 @@ Lab changes for gNMIC that need to be made prior to this lab.
     Notice the -cnmi flag at the end.  This is the flag that tells Terminattr to tunnel its openconfig traffic to CVP. For example, it will stream all of its Openconfig traffic gNMI through Terminattr so it is accessible via CVP as well. 
 |
 Installation of gNMIC
-	To install gNMIC we will first need to go to the Programmability IDE and open a new terminal.  We do this once we are within the IDE by pressing the crt+shft+ buttons.  Once in the terminal we simply need to install the binary by the following one liner command. 
+	To install gNMIC we will first need to go to the Programmability IDE and open a new terminal.  We do this once we are within the IDE by clicking the 3 line menu in the upper left > Terminal > New Terminal. 
+
+.. thumbnail:: images/gnmi/gnmi-terminal.png
+    :width: 75%
 
 .. code-block:: bash
    
@@ -87,8 +92,9 @@ Get
 A get request within gNMI is a good way to get a one way communication of a specific gNMI path.  For example, if we want to get Ethernet's current status we would issue the following.
 
 .. code-block:: bash
-   
-    gnmic -a 192.168.0.12:6030 -u arista -p password --insecure get  --path  \ 'interfaces/interface[name=Ethernet1]/state/oper-status'
+    
+    gnmic -a 192.168.0.12:6030 -u arista -p password --insecure get --path \
+   "/interfaces/interface[name=Ethernet1]/state/oper-status"
 
 **Response**
 
@@ -128,7 +134,8 @@ The most powerful portion of gNMI and Openconfig is the ability to subscribe to 
 
 **Truncated output of stream.**
 
-   
+.. code-block:: bash
+
     {
     "source": "192.168.0.12:6030",
   "subscription-name": "default-1653401885",
@@ -202,6 +209,17 @@ Subscribe to the routing tables.
 
 Press crtl+c to stop the stream. 
 
+|
+
+If you'd like to see the administrative status of an interface change in real time, you can use the GET command we used above, but replace "get" with "subscribe". The command should look like this:
+
+.. code-block:: bash
+    
+    gnmic -a 192.168.0.12:6030 -u arista -p password --insecure subscribe --path \
+   "/interfaces/interface[name=Ethernet1]/state/oper-status"
+
+
+Once you've run this command, open an SSH session to leaf1 and shutdown Ethernet1. The change is reflected instantly in gNMI.
 
 Connecting to CVP For device telemetry.
 ---------------------------------------
@@ -211,7 +229,7 @@ Connecting to CVP For device telemetry.
 The same gNMI service that we use for EOS we are able to move to CVP.  In the use case of CVP we use the Path Target field to distinguish between different EOS devices.  For example, every outgoing request of gNMI stream we have to embed the serial or deviceID of the EOS device to stream data from it.  This offers the tremendous advantage of talking simply only to CVP for all of the devices we want to stream device telemetry for versus going to every device individually.
 
 Get a token
-	Since CVP does not use a username/password for the gNMI service a service account and token are required.  On the **settings gear** in the upper right hand corner click on that.  Then on the left click under **Service Accounts.**	
+	Since CVP does not use a username/password for the gNMI service a service account and token are required.  On the **Settings gear** in the upper right hand corner click on that.  Then on the left click under **Service Accounts.**	
 
 .. thumbnail:: images/gnmi/gnmi-serviceaccount1.png
 
@@ -228,7 +246,7 @@ Click **Add**. Now create a token for test. Click **test**.
 
 .. thumbnail:: images/gnmi/gnmi-serviceaccount3.png
 |
-Click **+ Add Token to Service Account**.  Select a date in the future for valid Until.
+Under the **Generate Service Account Token** section, give your token a description, Select a date in the future for valid Until.
 Click **Generate**.  
 
 Copy the token to somewhere like your text editor. For example, my token is as follows.
@@ -240,7 +258,7 @@ Click **okay**.
 
 **Subscribe to s1-leaf1’s interface counters.**
 
-First create an environmental variable for the token.  For example, the token in which is above TOKEN=”abcdef” where Token is the actual token from CVP.
+First we need to create an environmental variable for the token. Let's go back to Programmability IDE and run the following, pasting your own token value on the **export TOKEN** line
 
 .. code-block:: bash
    
