@@ -1,6 +1,10 @@
 CloudVision Initial Configuraion
 ================================
 
+.. Note:: 
+
+    This must be deployed as a veos topology with the CVP version set to **CVP-2022.1.0-bare**
+
 1. Log into the Arista Test Drive Portal by using SSH  
 
     .. code-block:: text
@@ -18,7 +22,7 @@ or by clicking on "Console Access" on the main ATD screen. Log in with the arist
 
 |
 
-3. On the next screen, select **98. Shell (shell/bash)**
+3. Again, select **98. Shell (shell/bash)**. This will take you to the bash prompt for our jump host 
 
 |
 
@@ -26,8 +30,50 @@ or by clicking on "Console Access" on the main ATD screen. Log in with the arist
 
 |
 
-.. thumbnail:: images/aa-initial_configuration/initial-config-2.png
-    :width: 75%
+.. code-block::
+
+    *****************************************
+    *****Jump Host for Arista Test Drive*****
+    *****************************************
+
+
+    ==========Device SSH Menu==========
+
+    Screen Instructions:
+
+    * Select specific screen - Ctrl + a <number>
+    * Select previous screen - Ctrl + a p
+    * Select next screen - Ctrl + a n
+    * Exit all screens (return to menu) - Ctrl + a \
+
+    Please select from the following options:
+    1. host1 (host1)
+    2. host2 (host2)
+    3. leaf1 (leaf1)
+    4. leaf2 (leaf2)
+    5. leaf3 (leaf3)
+    6. leaf4 (leaf4)
+    7. spine1 (spine1)
+    8. spine2 (spine2)
+    9. cvx01 (cvx01)
+
+    Other Options: 
+    96. Screen (screen) - Opens a screen session to each of the hosts
+    97. Back to Previous Menu (back)
+    98. Shell (shell/bash)
+    99. Back to Main Menu (main/exit) - CTRL + c
+
+    What would you like to do? 98
+    arista@devbox:~$ sudo virsh console cvp1
+    setlocale: No such file or directory
+    Connected to domain 'cvp1'
+    Escape character is ^] (Ctrl + ])
+
+    CentOS Linux 7 (Core)
+    Kernel 5.12.12-1.el7.elrepo.x86_64 on an x86_64
+
+    localhost login: cvpadmin
+
 
 You should now see the **localhost login:** prompt. 
 
@@ -48,13 +94,56 @@ You should now see the **localhost login:** prompt.
         [q]uit [p]rint [s]inglenode [m]ultinode [r]eplace [u]pgrade
         >
 
-.. Note::
-    
-    Arista recommends a multinode setup (3 node) for on-prem deployments. For this lab, however, we will be deploying a singlenode installation to preserve cloud resources. A multinode install is exactly the same as the singlenode setup, you would just repeat the same steps for the secondary and tertiary nodes.
+|
 
 6. At the prompt, select **s** to choose singlenode
 
+
 7. You will now fill in the network settings for your CVP installation. Please enter the following into the fields. You can then select **v** to verify your install prior to applying the changes. 
+
+|
+
+.. Note::
+
+    **CloudVision Deployment Model:** - This is to select whether you would like a default deployment or if you would only like to install wifi-analytics. For this lab, we will select **d** for default 
+
+    **DNS Server Addresses (IPv4 Only):** - comma-separated list of DNS servers. **192.168.0.1** will be acting as our DNS Server, NTP Server, and Default Gateway in our lab. 192.168.0.1 is the IP of our lab jump host that we used to access the CVP VM.
+
+    **DNS Domain Search List:** comma-separated list of DNS domains on your network. We will set this to **atd.lab**
+
+    **Number of NTP Servers:** - Allows you to specify how many NTP servers you have in your environment. We set this to **1** for this lab
+
+    **NTP Server Address:** - comma separated list of NTP servers. enter **192.168.0.1** for this lab
+
+    **Is Auth enabled for NTP Server #1:** - allows you to optionally set authentication parameters for NTP servers in your environment. We do not use authentication, so we will keep the default **n** value
+
+    **Cluster Interface Name:** - Allows you to specify a cluster interface name, This is typically left as the default value
+
+    **Device Interface Name:** - Allows you to specify a device interface name, This is typecally also left as the default value
+
+    **Telemetry Ingest Key:** - This must be the same value for each node in a 3-node cluster. For our sinngle node install, we will just use **atd-lab**
+
+    **CloudVision WiFi Enabled:** - This should be enabled if you are deploying Access Points in your environment. For our lab scenario, we will select the default value **N**
+
+    **Enter a private IP range for the internal cluster network (overlay):** This is the private IP range used for the kubernetes cluster network. This value must be unique; must be /20 or larger; shouldn't be link-local, reserved or multicast. Default value is 10.42.0.0/16. We will accept this default for our lab.
+
+    |
+
+    **Hostname (FQDN):** - This will be the URL you enter to access CloudVision once the deployment is complete. We will set this to **cvp.atd.lab** for this lab
+
+    **IP Address of eth0:** - This will be the IP address of this node. We set this to **192.168.0.5** in this lab
+
+    **Netmask of eth0:** - Our example will be a /24, so we set this to **255.255.255.0**
+
+    **NAT IP Address of eth0:** - This would be set if you are using NAT to access CVP. For the purposes of this lab, we will leave this blank
+
+    **Default Gateway:** - Set this to **192.168.0.1** (our lab jump host)
+
+    **Number of Static Routes:** - Leave blank 
+
+    **TACACS Server IP Address:** - Leave blank
+
+
 
 .. code-block:: text
     :emphasize-lines: 12-16
@@ -109,6 +198,7 @@ You should now see the **localhost login:** prompt.
     [ 4489.294334] warning: `/bin/ping' has both setuid-root and effective capabilities. Therefore not raising all capabilities.
     Valid config.
 
+
 All of these settings are saved in the /cvpi/cvp-config.yaml file
 
 |
@@ -139,6 +229,9 @@ All of these settings are saved in the /cvpi/cvp-config.yaml file
 13. Log into CVP one more time and you'll be greeted by the Devices screen, along with green check marks indicating that all of our devices are streaming to CVP. Success!
 
 
+.. Note::
+    
+    Arista recommends a multinode setup (3 node) for on-prem deployments. For this lab, however, we deployed a singlenode installation to preserve cloud resources. A multinode install is exactly the same as the singlenode setup, you would just repeat the same steps for the secondary and tertiary nodes.
 
 
 
