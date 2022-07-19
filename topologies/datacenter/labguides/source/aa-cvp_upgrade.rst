@@ -1,6 +1,7 @@
 CloudVision Portal Upgrade
 ==========================
-
+* <Add in screen capture gif of the process described>
+ 
 * Log into the Arista Test Drive Portal Web interface  
 
     (link to connecting)
@@ -26,6 +27,7 @@ CloudVision Portal Upgrade
    #. Download the CVP upgrade file from arista.com
    #. Transfer the upgrade file to the CVP server
    #. Start the CVP upgrade Process 
+   #. Check CVP server version number to verify upgrade is complete
 
 #. Check CVP server current version number
 
@@ -36,32 +38,36 @@ CloudVision Portal Upgrade
 
 #. Clone example scripts repo, and examine the script help option
 
-   .. code-block:: shell
+    * Clone the repo
 
-       ➜  project 
-       ➜  project cd labfiles 
-       ➜  labfiles git clone https://github.com/Hugh-Adams/Example_Scripts.git
-       Cloning into 'Example_Scripts'...
-       remote: Enumerating objects: 464, done.
-       remote: Counting objects: 100% (464/464), done.
-       remote: Compressing objects: 100% (357/357), done.
-       remote: Total 464 (delta 190), reused 368 (delta 102), pack-reused 0
-       Receiving objects: 100% (464/464), 1.34 MiB | 10.62 MiB/s, done.
-       Resolving deltas: 100% (190/190), done.
+      .. code-block:: shell
 
-       ➜  labfiles cd Example_Scripts/Tools 
-       ➜  Tools git:(main) ls
-       BGP_AS_Calc  CV_202x_backup_scp  Get_UpgradeFile_CVP  Postman_CVP_APIs  README.md  snmp_localised_users
+        ➜  project 
+        ➜  project cd labfiles 
+        ➜  labfiles git clone https://github.com/Hugh-Adams/Example_Scripts.git
+        Cloning into 'Example_Scripts'...
+        remote: Enumerating objects: 464, done.
+        remote: Counting objects: 100% (464/464), done.
+        remote: Compressing objects: 100% (357/357), done.
+        remote: Total 464 (delta 190), reused 368 (delta 102), pack-reused 0
+        Receiving objects: 100% (464/464), 1.34 MiB | 10.62 MiB/s, done.
+        Resolving deltas: 100% (190/190), done.
 
-       ➜  Tools git:(main) ls
-       BGP_AS_Calc  CV_202x_backup_scp  Get_UpgradeFile_CVP  Postman_CVP_APIs  README.md  snmp_localised_users
+    * Navigate to the directory where the script resides 
 
-       ➜  Tools git:(main) cd Get_UpgradeFile_CVP 
+      .. code-block:: shell
+
+        ➜  labfiles cd Example_Scripts/Tools/Get_UpgradeFile_CVP  
+        
 
         ➜  Get_UpgradeFile_CVP git:(main) ls
         CVPgetUpgrade.py  CVPgetUpgradeV2.py  CVPgetUpgradeV2.py.zip
 
  
+    * Invoke the CVPgetUpgradeV2.py script with the --help flag
+
+      .. code-block:: shell
+
         ➜  Get_UpgradeFile_CVP git:(main) python3 CVPgetUpgradeV2.py --help
         usage: CVPgetUpgradeV2.py [-h] --upgrade UPGRADE --token TOKEN [--proxyType PROXYTYPE] [--proxyAddr PROXYADDR] [--test] [--nofile]
 
@@ -78,22 +84,17 @@ CloudVision Portal Upgrade
 
 #. Download the CVP Upgrade file using api access token (destination: /tmp/upgrade)
 
-   .. code-block:: shell
+    .. code-block:: shell
 
-    ➜  Get_UpgradeFile_CVP git:(main) python3 CVPgetUpgradeV2.py --token <removed> --upgrade cvp-upgrade-2022.1.0.tgz
-    <Response [200]>
-
-    ➜  Get_UpgradeFile_CVP git:(main) ls /tmp/upgrade 
-    cvp-upgrade-2022.1.0.tgz
-
-    ➜  Get_UpgradeFile_CVP git:(main) python3 CVPgetUpgradeV2.py --token <removed> --upgrade cvp-upgrade-2022.1.0.tgz
-    <Response [200]>
+        ➜  Get_UpgradeFile_CVP git:(main) python3 CVPgetUpgradeV2.py --token <removed> --upgrade cvp-upgrade-2022.1.0.tgz
+        <Response [200]>
 
 
-    ➜  Get_UpgradeFile_CVP git:(main) ls /tmp/upgrade 
-    cvp-upgrade-2022.1.0.tgz
+        ➜  Get_UpgradeFile_CVP git:(main) ls /tmp/upgrade 
+        cvp-upgrade-2022.1.0.tgz
 
 #. Transfer the upgrade file to the CVP server
+
     * Make /tmp/upgrade directory on CVP server
    
       .. code-block:: shell
@@ -112,24 +113,33 @@ CloudVision Portal Upgrade
 
 #. Start the CVP upgrade Process 
 
-  .. code-block:: shell
-  ➜  Get_UpgradeFile_CVP git:(main) ssh root@192.168.0.5
-  root@192.168.0.5's password: 
-  Last login: Tue Jul 19 16:19:47 2022 from gateway
+    * ssh to cvp the server, navigate to /tmp/upgrade    
 
-  [root@cvp ~]# cd /tmp/upgrade
+      .. code-block:: shell
 
-  [root@cvp upgrade]# su cvpadmin
+        ➜  Get_UpgradeFile_CVP git:(main) ssh root@192.168.0.5
+        root@192.168.0.5's password: 
+        Last login: Tue Jul 19 16:19:47 2022 from gateway
 
-  CVP Installation Menu
-─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-  [q]uit [p]rint [s]inglenode [m]ultinode [r]eplace [u]pgrade
-  >u
-  Bootstrapping upgrade  
-  
-  ...
+        [root@cvp ~]# cd /tmp/upgrade
 
+        [root@cvp upgrade]# su cvpadmin
 
+        CVP Installation Menu
 
+        [q]uit [p]rint [s]inglenode [m]ultinode [r]eplace [u]pgrade
+        >u
+        Bootstrapping upgrade  
+
+        ... ommitted output ...
+
+#. Check CVP server version number to verify upgrade is complete
+
+   .. code-block:: shell
+
+       [root@cvp ~]# cat /etc/cvpi/env | grep VERSION
+       CVP_VERSION=2022.1.0
+
+LAB COMPLETE
 
    
