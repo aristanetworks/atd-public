@@ -46,7 +46,7 @@ Lab changes for gNMIC that need to be made prior to this lab.
 Installation of gNMIC
 	To install gNMIC we will first need to go to the Programmability IDE and open a new terminal.  We do this once we are within the IDE by clicking the 3 line menu in the upper left > Terminal > New Terminal. 
 
-.. thumbnail:: images/gnmi/gnmi-terminal.png
+.. thumbnail:: images/gnmi/gNMI-terminal.png
     :width: 75%
 
 .. code-block:: bash
