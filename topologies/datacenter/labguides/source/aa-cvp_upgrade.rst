@@ -1,5 +1,9 @@
 CloudVision Portal Upgrade
 ==========================
+.. note::
+   This lab requires valid credentials on arista.com to download CVP software upgrades.
+   Without an entitled account you will not be able to complete this lab.
+
 * <Add in screen capture gif of the process described>
  
 * Log into the Arista Test Drive Portal Web interface  
