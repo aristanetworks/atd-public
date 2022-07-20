@@ -24,8 +24,8 @@ While this is handy, the real power of Ansible comes from using
 orchestrated playbooks.
 
 Before you run your first Ansible ad-hoc command, we’ll need to create a
-hosts file. Open the Atom editor, and create a new file and save it to
-your desktop with the filename ``hosts``.
+hosts file. Open VS Code by clicking on **Programmability IDE**, and create a new file and save it to
+the **labfiles** directory with the filename ``hosts``.
 
 .. code-block:: ini
 
@@ -41,7 +41,7 @@ and enter:
 
 .. code-block:: bash
 
-    ansible veos -i hosts -m raw -a "show version" -u arista -k
+    ansible veos -i labfiles/hosts -m raw -a "show version" -u arista -k
 
 
 Enter the password **{REPLACE_PWD}** when prompted.
@@ -63,7 +63,7 @@ This probably looks complicated at first, but let’s step through it:
 |                                   | host (unless you specify in       |
 |                                   | playbook to do otherwise).        |
 +-----------------------------------+-----------------------------------+
-| ``-i hosts``                      | Reads from the hosts file you     |
+| ``-i labfiles/hosts``             | Reads from the hosts file you     |
 |                                   | created. There are locations that |
 |                                   | Ansible will look for this file   |
 |                                   | by default, but for this lab      |

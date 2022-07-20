@@ -199,6 +199,10 @@ def main(uargs):
     cvp_cpu_count = FILE_BUILD['cvp_cpu']
     cvp_node_count = FILE_BUILD['cvp_nodes']
     veos_cpu_count = FILE_BUILD['veos_cpu']
+    if 'cvp_ram' in FILE_BUILD:
+        cvp_ram_count = FILE_BUILD['cvp_ram'] * 1024
+    else:
+        cvp_ram_count = 22 * 1024
     if cvp_node_count == 1:
         CVP_CPU_START = int(host_cpu_count / 2)
         CVP_CPUS = getCPUs(CVP_CPU_START, cvp_cpu_count)
@@ -240,6 +244,15 @@ def main(uargs):
         #     'cpuset': CVP_NODES_CPUS[_cvp]
         # })
         vcpu.text = str(cvp_cpu_count)
+        # Add RAM Configuration for CVP
+        vmem = ET.SubElement(root, 'memory', attrib={
+            'unit': 'MiB'
+        })
+        vmem.text = str(cvp_ram_count)
+        vcurmem = ET.SubElement(root, 'currentMemory', attrib={
+            'unit': 'MiB'
+        })
+        vcurmem.text = str(cvp_ram_count)
         # Get to the device section and add interfaces
         xdev = root.find('./devices')
         # Add/Create disk location for xml
