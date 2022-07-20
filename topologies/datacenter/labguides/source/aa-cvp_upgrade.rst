@@ -48,6 +48,17 @@ CloudVision Portal Upgrade
         [root@cvp ~]# cat /etc/cvpi/env | grep VERSION
         CVP_VERSION=2021.2.2
 
+    * Exit SSH session to the CVP server 
+
+      .. code-block:: shell
+
+        [root@cvp ~]# exit
+        logout
+        Connection to 192.168.0.5 closed.
+        ➜  project 
+    .. note::
+       You should now be back to the terminal session on the ATD jumphost in the vs-code window. Notice the prompt changes from the previous step as you exit the SSH session.
+
 #. Clone example scripts repo, and examine the script help option
 
     * Clone the repo
