@@ -1,5 +1,8 @@
 no spanning-tree vlan-id 4094
 !
+vlan 112
+   name Host_Network_112
+!
 vlan 134
    name Host_Network_134
 !
@@ -7,17 +10,10 @@ vlan 4094
    name MLAG_VLAN
    trunk group MLAGPEER
 !
-vrf instance TENANT
-!
 interface Port-Channel1
    description MLAG Peer-link - s1-leaf3
    switchport mode trunk
    switchport trunk group MLAGPEER
-!
-interface Port-Channel5
-   description MLAG Downlink - s1-host2
-   switchport access vlan 134
-   mlag 5
 !
 interface Ethernet1
    description MLAG Peer-link - s1-leaf3
@@ -35,8 +31,6 @@ interface Ethernet3
    ip address 10.111.2.7/31
 !
 interface Ethernet4
-   description MLAG Downlink - s1-host2
-   channel-group 5 mode active
 !
 interface Ethernet6
    description MLAG Peer-link - s1-leaf3
@@ -47,29 +41,9 @@ interface Loopback0
    description Management and Router-id
    ip address 10.111.254.4/32
 !
-interface Loopback1
-   description VTEP
-   ip address 10.111.253.3/32
-!
-interface Vlan134
-   description Host Network
-   vrf TENANT
-   ip address virtual 10.111.134.1/24
-!
 interface Vlan4094
    description MLAG Peer Network
    ip address 10.255.255.2/30
-!
-interface Vxlan1
-   vxlan source-interface Loopback1
-   vxlan virtual-router encapsulation mac-address mlag-system-id
-   vxlan udp-port 4789
-   vxlan vlan 134 vni 134
-   vxlan vrf TENANT vni 5001
-!
-ip virtual-router mac-address 00:1C:73:00:00:01
-!
-ip routing vrf TENANT
 !
 mlag configuration
    domain-id MLAG
@@ -86,7 +60,6 @@ route-map LOOPBACKS permit 100
 !
 router bgp 65102
    router-id 10.111.254.4
-   rd auto
    maximum-paths 2
    no bgp default ipv4-unicast
    neighbor MLAG peer group
@@ -96,31 +69,11 @@ router bgp 65102
    neighbor SPINE peer group
    neighbor SPINE remote-as 65100
    neighbor SPINE send-community standard extended
-   neighbor SPINE-EVPN peer group
-   neighbor SPINE-EVPN remote-as 65100
-   neighbor SPINE-EVPN update-source Loopback0
-   neighbor SPINE-EVPN ebgp-multihop 3
-   neighbor SPINE-EVPN send-community standard extended
-   neighbor 10.111.0.1 peer group SPINE-EVPN
-   neighbor 10.111.0.2 peer group SPINE-EVPN
    neighbor 10.111.1.6 peer group SPINE
    neighbor 10.111.2.6 peer group SPINE
    neighbor 10.255.255.1 peer group MLAG
-   !
-   vlan 134
-      rd auto
-      route-target both 134:134
-      redistribute learned
-   !
-   address-family evpn
-      neighbor SPINE-EVPN activate
    !
    address-family ipv4
       neighbor MLAG activate
       neighbor SPINE activate
       redistribute connected route-map LOOPBACKS
-   !
-   vrf TENANT
-      route-target import evpn 5001:5001
-      route-target export evpn 5001:5001
-      redistribute connected

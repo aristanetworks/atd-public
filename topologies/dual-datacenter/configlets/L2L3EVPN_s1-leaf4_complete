@@ -1,5 +1,8 @@
 no spanning-tree vlan-id 4094
 !
+vlan 112
+   name Host_Network_112
+!
 vlan 134
    name Host_Network_134
 !
@@ -16,7 +19,8 @@ interface Port-Channel1
 !
 interface Port-Channel5
    description MLAG Downlink - s1-host2
-   switchport access vlan 134
+   switchport trunk allowed vlan 112,134
+   switchport mode trunk
    mlag 5
 !
 interface Ethernet1
@@ -51,6 +55,11 @@ interface Loopback1
    description VTEP
    ip address 10.111.253.3/32
 !
+interface Vlan112
+   description Host Network
+   vrf TENANT
+   ip address virtual 10.111.112.1/24
+!
 interface Vlan134
    description Host Network
    vrf TENANT
@@ -64,6 +73,7 @@ interface Vxlan1
    vxlan source-interface Loopback1
    vxlan virtual-router encapsulation mac-address mlag-system-id
    vxlan udp-port 4789
+   vxlan vlan 112 vni 112
    vxlan vlan 134 vni 134
    vxlan vrf TENANT vni 5001
 !
@@ -106,6 +116,11 @@ router bgp 65102
    neighbor 10.111.1.6 peer group SPINE
    neighbor 10.111.2.6 peer group SPINE
    neighbor 10.255.255.1 peer group MLAG
+   !
+   vlan 112
+      rd auto
+      route-target both 112:112
+      redistribute learned
    !
    vlan 134
       rd auto

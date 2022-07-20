@@ -12,11 +12,6 @@ interface Port-Channel1
    switchport mode trunk
    switchport trunk group MLAGPEER
 !
-interface Port-Channel5
-   description MLAG Downlink - s1-host2
-   switchport access vlan 112
-   mlag 5
-!
 interface Ethernet1
    description MLAG Peer-link - s1-leaf3
    switchport mode trunk
@@ -33,8 +28,6 @@ interface Ethernet3
    ip address 10.111.2.7/31
 !
 interface Ethernet4
-   description MLAG Downlink - s1-host2
-   channel-group 5 mode active
 !
 interface Ethernet6
    description MLAG Peer-link - s1-leaf3
@@ -44,10 +37,6 @@ interface Ethernet6
 interface Loopback0
    description Management and Router-id
    ip address 10.111.254.4/32
-!
-interface Loopback1
-   description VTEP
-   ip address 10.111.253.3/32
 !
 interface Vlan4094
    description MLAG Peer Network
@@ -68,8 +57,8 @@ route-map LOOPBACKS permit 100
 !
 router bgp 65102
    router-id 10.111.254.4
-   no bgp default ipv4-unicast
    maximum-paths 2
+   no bgp default ipv4-unicast
    neighbor MLAG peer group
    neighbor MLAG remote-as 65102
    neighbor MLAG next-hop-self
@@ -84,5 +73,4 @@ router bgp 65102
    address-family ipv4
       neighbor MLAG activate
       neighbor SPINE activate
-      network 10.111.112.0/24
       redistribute connected route-map LOOPBACKS

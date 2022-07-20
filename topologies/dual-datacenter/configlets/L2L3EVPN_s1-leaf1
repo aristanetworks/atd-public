@@ -1,5 +1,8 @@
 no spanning-tree vlan-id 4094
 !
+vlan 112
+   name Host_Network_112
+!
 vlan 134
    name Host_Network_134
 !
@@ -10,60 +13,67 @@ vlan 4094
 vrf instance TENANT
 !
 interface Port-Channel1
-   description MLAG Peer-link - s1-leaf3
+   description MLAG Peer-link - s1-leaf2
    switchport mode trunk
    switchport trunk group MLAGPEER
 !
 interface Port-Channel5
-   description MLAG Downlink - s1-host2
-   switchport access vlan 134
+   description MLAG Downlink - s1-host1
+   switchport trunk allowed vlan 112,134
+   switchport mode trunk
    mlag 5
 !
 interface Ethernet1
-   description MLAG Peer-link - s1-leaf3
+   description MLAG Peer-link - s1-leaf2
    switchport mode trunk
    channel-group 1 mode active
 !
 interface Ethernet2
    description L3 Uplink - s1-spine1
    no switchport
-   ip address 10.111.1.7/31
+   ip address 10.111.1.1/31
 !
 interface Ethernet3
    description L3 Uplink - s1-spine2
    no switchport
-   ip address 10.111.2.7/31
+   ip address 10.111.2.1/31
 !
 interface Ethernet4
-   description MLAG Downlink - s1-host2
+   description MLAG Downlink - s1-host1
    channel-group 5 mode active
 !
 interface Ethernet6
-   description MLAG Peer-link - s1-leaf3
+   description MLAG Peer-link - s1-leaf2
    switchport mode trunk
    channel-group 1 mode active
 !
 interface Loopback0
    description Management and Router-id
-   ip address 10.111.254.4/32
+   ip address 10.111.254.1/32
 !
 interface Loopback1
    description VTEP
-   ip address 10.111.253.3/32
+   ip address 10.111.253.1/32
+!
+interface Vlan112
+   description Host Network 112
+   vrf TENANT
+   ip address virtual 10.111.112.1/24
 !
 interface Vlan134
-   description Host Network
+   description Host Network 134
    vrf TENANT
    ip address virtual 10.111.134.1/24
 !
 interface Vlan4094
    description MLAG Peer Network
-   ip address 10.255.255.2/30
+   ip address 10.255.255.1/30
 !
 interface Vxlan1
    vxlan source-interface Loopback1
    vxlan virtual-router encapsulation mac-address mlag-system-id
    vxlan udp-port 4789
+   vxlan vlan 112 vni 112
    vxlan vlan 134 vni 134
    vxlan vrf TENANT vni 5001
 !
@@ -74,7 +84,7 @@ ip routing vrf TENANT
 mlag configuration
    domain-id MLAG
    local-interface Vlan4094
-   peer-address 10.255.255.1
+   peer-address 10.255.255.2
    peer-link Port-Channel1
 !
 ip prefix-list LOOPBACKS
@@ -84,13 +94,13 @@ ip prefix-list LOOPBACKS
 route-map LOOPBACKS permit 100
    match ip address prefix-list LOOPBACKS
 !
-router bgp 65102
-   router-id 10.111.254.4
+router bgp 65101
+   router-id 10.111.254.1
    rd auto
    maximum-paths 2
    no bgp default ipv4-unicast
    neighbor MLAG peer group
-   neighbor MLAG remote-as 65102
+   neighbor MLAG remote-as 65101
    neighbor MLAG next-hop-self
    neighbor MLAG send-community standard extended
    neighbor SPINE peer group
@@ -103,9 +113,14 @@ router bgp 65102
    neighbor SPINE-EVPN send-community standard extended
    neighbor 10.111.0.1 peer group SPINE-EVPN
    neighbor 10.111.0.2 peer group SPINE-EVPN
-   neighbor 10.111.1.6 peer group SPINE
-   neighbor 10.111.2.6 peer group SPINE
-   neighbor 10.255.255.1 peer group MLAG
+   neighbor 10.111.1.0 peer group SPINE
+   neighbor 10.111.2.0 peer group SPINE
+   neighbor 10.255.255.2 peer group MLAG
+   !
+   vlan 112
+      rd auto
+      route-target both 112:112
+      redistribute learned
    !
    vlan 134
       rd auto
