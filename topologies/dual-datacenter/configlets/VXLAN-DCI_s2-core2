@@ -1,0 +1,54 @@
+interface Port-Channel1
+   description MLAG Peer-link - s2-core1
+   no switcport
+   ip address 10.222.99.127/31
+!
+interface Ethernet1
+   description L3 Peer-link - s2-core1
+   channel-group 1 mode active
+!
+interface Ethernet2
+   description L3 Downlink - s2-brdr1
+   no switchport
+   ip address 10.222.99.128/31
+!
+interface Ethernet3
+   description L3 Downlink - s2-brdr2
+   no switchport
+   ip address 10.222.99.130/31
+!
+interface Ethernet4
+   description L3 DCI Link - s1-core2
+   no switchport
+   ip address 10.111.222.3/31
+!
+interface Ethernet6
+   description L3 Peer-link - s2-core1
+   channel-group 1 mode active
+!
+interface Loopback0
+   description Management and Router-id
+   ip address 10.222.0.255/32
+!
+ip route 10.222.99.128/25 Null0
+!
+router bgp 65002
+   router-id 10.222.0.255
+   maximum-paths 2
+   neighbor BORDER peer group
+   neighbor BORDER remote-as 65203
+   neighbor BORDER send-community standard extended
+   neighbor DCI peer group
+   neighbor DCI remote-as 65001
+   neighbor DCI send-community standard extended
+   neighbor PEER peer group
+   neighbor PEER remote-as 65002
+   neighbor PEER next-hop-self
+   neighbor PEER send-community standard extended
+   neighbor 10.222.99.126 peer group PEER
+   neighbor 10.222.99.129 peer group BORDER
+   neighbor 10.222.99.131 peer group BORDER
+   neighbor 10.111.222.2 peer group DCI
+   network 10.222.0.255/32
+   network 10.222.99.128/25
+   network 10.111.222.2/31

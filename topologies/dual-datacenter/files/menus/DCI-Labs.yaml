@@ -4,8 +4,8 @@ lab_list:
     additional_commands: 
       - "bash /home/arista/Broadcaster/pushhostDefaultConfig.sh"
     description: "Reset All Devices to Base ATD (reset)"
-  l2ls-dci:
-    description: "Layer 2 Leaf-Spine with Static VXLAN DCI Lab (l2ls-dci)"
+  vxlan-dci:
+    description: "Layer 2 Leaf-Spine with Static VXLAN DCI Lab (vxlan-dci)"
   evpn-single:
     description: "EVPN VXLAN Leaf-Spine DCI Lab with Site EVPN Domain (evpn-single)"
   evpn-gw-vx-mlag:
@@ -64,6 +64,79 @@ labconfiglets:
       - "BASE_s2-host1"
     s2-host2:
       - "BASE_s2-host2"
+  vxlan-dci:
+    s1-spine1:
+      - "BASE_s1-spine1"
+      - "VXLAN-DCI_s1-spine1"
+    s1-spine2:
+      - "BASE_s1-spine2"
+      - "VXLAN-DCI_s1-spine2"
+    s1-leaf1:
+      - "BASE_s1-leaf1"
+      - "VXLAN-DCI_s1-leaf1"
+    s1-leaf2:
+      - "BASE_s1-leaf2"
+      - "VXLAN-DCI_s1-leaf2"
+    s1-leaf3:
+      - "BASE_s1-leaf3"
+      - "VXLAN-DCI_s1-leaf3"
+    s1-leaf4:
+      - "BASE_s1-leaf4"
+      - "VXLAN-DCI_s1-leaf4"
+    s1-brdr1:
+      - "BASE_s1-brdr1"
+      - "VXLAN-DCI_s1-brdr1"
+    s1-brdr2:
+      - "BASE_s1-brdr2"
+      - "VXLAN-DCI_s1-brdr2"
+    s1-core1:
+      - "BASE_s1-core1"
+      - "VXLAN-DCI_s1-core1"
+    s1-core2:
+      - "BASE_s1-core2"
+      - "VXLAN-DCI_s1-core2"
+    s1-host1:
+      - "BASE_s1-host1"
+      - "VXLAN-DCI_s1-host1"
+    s1-host2:
+      - "BASE_s1-host2"
+      - "VXLAN-DCI_s1-host2"
+    s2-spine1:
+      - "BASE_s2-spine1"
+      - "VXLAN-DCI_s2-spine1"
+    s2-spine2:
+      - "BASE_s2-spine2"
+      - "VXLAN-DCI_s2-spine2"
+    s2-leaf1:
+      - "BASE_s2-leaf1"
+      - "VXLAN-DCI_s2-leaf1"
+    s2-leaf2:
+      - "BASE_s2-leaf2"
+      - "VXLAN-DCI_s2-leaf2"
+    s2-leaf3:
+      - "BASE_s2-leaf3"
+      - "VXLAN-DCI_s2-leaf3"
+    s2-leaf4:
+      - "BASE_s2-leaf4"
+      - "VXLAN-DCI_s2-leaf4"
+    s2-brdr1:
+      - "BASE_s2-brdr1"
+      - "VXLAN-DCI_s2-brdr1"
+    s2-brdr2:
+      - "BASE_s2-brdr2"
+      - "VXLAN-DCI_s2-brdr2"
+    s2-core1:
+      - "BASE_s2-core1"
+      - "VXLAN-DCI_s2-core1"
+    s2-core2:
+      - "BASE_s2-core2"
+      - "VXLAN-DCI_s2-core2"
+    s2-host1:
+      - "BASE_s2-host1"
+      - "VXLAN-DCI_s2-host1"
+    s2-host2:
+      - "BASE_s2-host2"
+      - "VXLAN-DCI_s2-host2"
   evpn-single:
     s1-spine1:
       - "BASE_s1-spine1"

@@ -25,6 +25,11 @@ interface Port-Channel34
    switchport mode trunk
    mlag 34
 !
+interface Port-Channel56
+   description MLAG Downlink - s1-brdr1 and s1-brdr2
+   switchport mode trunk
+   mlag 56
+!
 interface Ethernet1
    description MLAG Peer-link - s1-spine1
    channel-group 1 mode active
@@ -50,10 +55,12 @@ interface Ethernet6
    channel-group 1 mode active
 !
 interface Ethernet7
-   shutdown
+   description MLAG Downlink - s1-brdr1
+   channel-group 56 mode active
 !
 interface Ethernet8
-   shutdown
+   description MLAG Downlink - s1-brdr2
+   channel-group 56 mode active
 !
 interface Vlan112
    ip address 10.111.112.3/24

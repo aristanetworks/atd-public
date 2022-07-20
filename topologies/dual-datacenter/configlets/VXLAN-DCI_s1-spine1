@@ -11,7 +11,7 @@ vlan 4094
    trunk group MLAGPEER
 !
 interface Port-Channel1
-   description MLAG Peer-link - s1-spine1
+   description MLAG Peer-link - s1-spine2
    switchport mode trunk
    switchport trunk group MLAGPEER
 !
@@ -25,8 +25,13 @@ interface Port-Channel34
    switchport mode trunk
    mlag 34
 !
+interface Port-Channel56
+   description MLAG Downlink - s1-brdr1 and s1-brdr2
+   switchport mode trunk
+   mlag 56
+!
 interface Ethernet1
-   description MLAG Peer-link - s1-spine1
+   description MLAG Peer-link - s1-spine2
    channel-group 1 mode active
 !
 interface Ethernet2
@@ -46,31 +51,33 @@ interface Ethernet5
    channel-group 34 mode active
 !
 interface Ethernet6
-   description MLAG Peer-link - s1-spine1
+   description MLAG Peer-link - s1-spine2
    channel-group 1 mode active
 !
 interface Ethernet7
-   shutdown
+   description MLAG Downlink - s1-brdr1
+   channel-group 56 mode active
 !
 interface Ethernet8
-   shutdown
+   description MLAG Downlink - s1-brdr2
+   channel-group 56 mode active
 !
 interface Vlan112
-   ip address 10.111.112.3/24
+   ip address 10.111.112.2/24
    ip virtual-router address 10.111.112.1
 !
 interface Vlan134
-   ip address 10.111.134.3/24
+   ip address 10.111.134.2/24
    ip virtual-router address 10.111.134.1
 !
 ip virtual-router mac-address 00:1C:73:00:00:12
 !
 interface Vlan4094
    description MLAG Peer Network
-   ip address 10.255.255.2/30
+   ip address 10.255.255.1/30
 !
 mlag configuration
    domain-id MLAG
    local-interface Vlan4094
-   peer-address 10.255.255.1
+   peer-address 10.255.255.2
    peer-link Port-Channel1

@@ -188,7 +188,7 @@ Layer 2 Leaf-Spine
 
          interface Vlan4094
             description MLAG Peer Network
-            ip address 10.255.255.254/30
+            ip address 10.255.255.2/30
 
    #. Verify layer 3 connectivity between the peer switches on the MLAG VLAN.
 
@@ -220,7 +220,7 @@ Layer 2 Leaf-Spine
          mlag configuration
             domain-id MLAG
             local-interface Vlan4094
-            peer-address 10.255.255.253
+            peer-address 10.255.255.1
             peer-link Port-Channel1
 
    #. Verify the MLAG relationship between **s1-leaf3** and **s1-leaf4**.

@@ -17,7 +17,7 @@ interface Port-Channel1
 !
 interface Port-Channel4
    description MLAG Downlink - s1-host2
-   switchport access vlan 112
+   switchport access vlan 134
    mlag 4
 !
 interface Port-Channel34
