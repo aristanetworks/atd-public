@@ -30,8 +30,18 @@ topologies:
               cpu: 40
               ram: 64
             branch: nested/2022.1
-            orderable: true
+            orderable: false
             image: base-atd-dual-datacenter-ceos-c2022-1-0-20220621
+            eos:
+              - 4.28.1F
+              - 4.27.2F
+          2022.1.1:
+            resources:
+              cpu: 40
+              ram: 64
+            branch: nested/2022.1
+            orderable: true
+            image: base-atd-dual-datacenter-ceos-c2022-1-1-20220720
             eos:
               - 4.28.1F
               - 4.27.2F
@@ -83,8 +93,18 @@ topologies:
               cpu: 36
               ram: 58
             branch: nested/2022.1
-            orderable: true
+            orderable: false
             image: base-atd-datacenter-ceos-c2022-1-0-20220621
+            eos:
+              - 4.28.1F
+              - 4.27.2F
+          2022.1.1:
+            resources:
+              cpu: 36
+              ram: 58
+            branch: nested/2022.1
+            orderable: true
+            image: base-atd-datacenter-ceos-c2022-1-1-20220720
             eos:
               - 4.28.1F
               - 4.27.2F
@@ -124,8 +144,17 @@ topologies:
               cpu: 40
               ram: 74
             branch: nested/2022.1
-            orderable: true
+            orderable: false
             image: base-atd-datacenter-e4-28-1f-c2022-1-0-20220621
+            eos:
+              - 4.28.1F
+          2022.1.1:
+            resources:
+              cpu: 40
+              ram: 74
+            branch: nested/2022.1
+            orderable: true
+            image: base-atd-datacenter-e4-28-1f-c2022-1-1-20220720
             eos:
               - 4.28.1F
           2022.1.0-bare:
@@ -133,8 +162,17 @@ topologies:
               cpu: 40
               ram: 74
             branch: nested/2022.1
-            orderable: true
+            orderable: false
             image: base-atd-datacenter-e4-28-1f-c2022-1-0-bare-20220628
+            eos:
+              - 4.28.1F
+          2022.1.1-bare:
+            resources:
+              cpu: 40
+              ram: 74
+            branch: nested/2022.1
+            orderable: true
+            image: base-atd-datacenter-e4-28-1f-c2022-1-1-bare-20220720
             eos:
               - 4.28.1F
     prod:
@@ -257,8 +295,17 @@ topologies:
               cpu: 50
               ram: 90
             branch: nested/2022.1
-            orderable: true
+            orderable: false
             image: base-atd-routing-e4-28-1f-c2022-1-0-20220621
+            eos:
+              - 4.28.1F
+          2022.1.1:
+            resources:
+              cpu: 50
+              ram: 90
+            branch: nested/2022.1
+            orderable: true
+            image: base-atd-routing-e4-28-1f-c2022-1-1-20220720
             eos:
               - 4.28.1F
       ceos:
@@ -290,8 +337,18 @@ topologies:
               cpu: 40
               ram: 64
             branch: nested/2022.1
-            orderable: true
+            orderable: false
             image: base-atd-routing-ceos-c2022-1-0-20220621
+            eos:
+              - 4.28.1F
+              - 4.27.2F
+          2022.1.1:
+            resources:
+              cpu: 40
+              ram: 64
+            branch: nested/2022.1
+            orderable: true
+            image: base-atd-routing-ceos-c2022-1-1-20220720
             eos:
               - 4.28.1F
               - 4.27.2F
