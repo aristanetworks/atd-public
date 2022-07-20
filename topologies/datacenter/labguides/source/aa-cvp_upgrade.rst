@@ -45,7 +45,7 @@ CloudVision Portal Upgrade
         [root@cvp ~]# 
 
     
-    * grep VERSION from the cvp env file 
+    * grep VERSION from the cvp env file - version 2021.2.2 in this example 
 
       .. code-block:: shell
 
@@ -109,7 +109,7 @@ CloudVision Portal Upgrade
          --test
          --nofile
 
-#. Download the CVP Upgrade file using api access token (destination: /tmp/upgrade)
+#. Download the CVP Upgrade file using api access token (version: 2022.1.0 & destination: /tmp/upgrade)
 
     .. code-block:: shell
 
