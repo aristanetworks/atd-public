@@ -65,16 +65,22 @@ labconfiglets:
   l2evpn:
     s1-spine1:
       - "BASE_s1-spine1"
+      - "L2EVPN_s1-spine1"
     s1-spine2:
       - "BASE_s1-spine2"
+      - "L2EVPN_s1-spine2"
     s1-leaf1:
       - "BASE_s1-leaf1"
+      - "L2EVPN_s1-leaf1"
     s1-leaf2:
       - "BASE_s1-leaf2"
+      - "L2EVPN_s1-leaf2"
     s1-leaf3:
       - "BASE_s1-leaf3"
+      - "L2EVPN_s1-leaf3"
     s1-leaf4:
       - "BASE_s1-leaf4"
+      - "L2EVPN_s1-leaf4"
     s1-brdr1:
       - "BASE_s1-brdr1"
     s1-brdr2:
@@ -85,8 +91,10 @@ labconfiglets:
       - "BASE_s1-core2"
     s1-host1:
       - "BASE_s1-host1"
+      - "L2EVPN_s1-host1"
     s1-host2:
       - "BASE_s1-host2"
+      - "L2EVPN_s1-host2"
     s2-spine1:
       - "BASE_s2-spine1"
     s2-spine2:
@@ -114,16 +122,22 @@ labconfiglets:
   l3evpn:
     s1-spine1:
       - "BASE_s1-spine1"
+      - "L3EVPN_s1-spine1"
     s1-spine2:
       - "BASE_s1-spine2"
+      - "L3EVPN_s1-spine2"
     s1-leaf1:
       - "BASE_s1-leaf1"
+      - "L3EVPN_s1-leaf1"
     s1-leaf2:
       - "BASE_s1-leaf2"
+      - "L3EVPN_s1-leaf2"
     s1-leaf3:
       - "BASE_s1-leaf3"
+      - "L3EVPN_s1-leaf3"
     s1-leaf4:
       - "BASE_s1-leaf4"
+      - "L3EVPN_s1-leaf4"
     s1-brdr1:
       - "BASE_s1-brdr1"
     s1-brdr2:
@@ -134,8 +148,10 @@ labconfiglets:
       - "BASE_s1-core2"
     s1-host1:
       - "BASE_s1-host1"
+      - "L3EVPN_s1-host1"
     s1-host2:
       - "BASE_s1-host2"
+      - "L3EVPN_s1-host2"
     s2-spine1:
       - "BASE_s2-spine1"
     s2-spine2:
