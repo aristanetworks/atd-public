@@ -6,7 +6,7 @@ CloudVision Portal Upgrade
 
     (link to connecting)
 
-* Log in to the Programmability IDE
+* Log in to the Programmability IDE 
 
    <screenshot of the link>
 
@@ -31,7 +31,7 @@ CloudVision Portal Upgrade
 
 #. Check CVP server current version number
    
-    * SSH to the CVP server 
+    * SSH to the CVP server as root using password ``cvproot`` 
 
       .. code-block:: shell
 
