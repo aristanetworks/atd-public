@@ -136,7 +136,7 @@ CloudVision Portal Upgrade
 
 #. Start the CVP upgrade Process 
 
-    * ssh to cvp the server, navigate to /tmp/upgrade    
+    * SSH to cvp the server, navigate to /tmp/upgrade    
 
       .. code-block:: shell
 
