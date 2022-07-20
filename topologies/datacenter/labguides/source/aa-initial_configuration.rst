@@ -98,6 +98,7 @@ You should now see the **localhost login:** prompt.
 
 6. At the prompt, select **s** to choose singlenode
 
+|
 
 7. You will now fill in the network settings for your CVP installation. Please enter the following into the fields. You can then select **v** to verify your install prior to applying the changes. 
 
@@ -146,7 +147,7 @@ You should now see the **localhost login:** prompt.
 
 
 .. code-block:: text
-    :emphasize-lines: 12-16
+    :emphasize-lines: 12-23, 27-33
     
     CVP Installation Menu
 
