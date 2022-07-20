@@ -22,7 +22,7 @@ CloudVision Portal Upgrade
 
 * Next we will perform the following steps in the Terminal
 
-   #. Check CVP server version number
+   #. Check CVP server current version number
    #. Clone example scripts repo
    #. Download the CVP upgrade file from arista.com
    #. Transfer the upgrade file to the CVP server
@@ -30,11 +30,23 @@ CloudVision Portal Upgrade
    #. Check CVP server version number to verify upgrade is complete
 
 #. Check CVP server current version number
+   
+    * SSH to the CVP server 
 
-   .. code-block:: shell
+      .. code-block:: shell
 
-       [root@cvp ~]# cat /etc/cvpi/env | grep VERSION
-       CVP_VERSION=2021.2.2
+        ➜  project ssh root@192.168.0.5
+        root@192.168.0.5's password: 
+        Last login: Wed Jul 20 16:01:23 2022 from gateway
+        [root@cvp ~]# 
+
+    
+    * grep VERSION from the cvp env file 
+
+      .. code-block:: shell
+
+        [root@cvp ~]# cat /etc/cvpi/env | grep VERSION
+        CVP_VERSION=2021.2.2
 
 #. Clone example scripts repo, and examine the script help option
 
@@ -123,6 +135,10 @@ CloudVision Portal Upgrade
 
         [root@cvp ~]# cd /tmp/upgrade
 
+    * Change user to cvpadmin, choose upgrade (u)
+
+      .. code-block:: shell
+
         [root@cvp upgrade]# su cvpadmin
 
         CVP Installation Menu
@@ -133,7 +149,7 @@ CloudVision Portal Upgrade
 
         ... ommitted output ...
 
-#. Check CVP server version number to verify upgrade is complete
+#. Check CVP server version number to verify upgrade is successful and complete
 
    .. code-block:: shell
 
