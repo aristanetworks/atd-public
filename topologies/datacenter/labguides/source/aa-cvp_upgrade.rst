@@ -60,6 +60,7 @@ CloudVision Portal Upgrade
         logout
         Connection to 192.168.0.5 closed.
         ➜  project 
+    
     .. note::
        You should now be back to the terminal session on the ATD jumphost in the vs-code window. Notice the prompt changes from the previous step as you exit the SSH session.
 
