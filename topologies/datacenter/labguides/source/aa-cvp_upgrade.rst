@@ -1,8 +1,17 @@
+.. # define a hard line break for HTML
+.. |br| raw:: html
+
+   <br />
+
 CloudVision Portal Upgrade
 ==========================
+|br|
+
 .. note::
    This lab requires valid credentials on arista.com to download CVP software upgrades.
    Without an entitled account you will not be able to complete this lab.
+
+|br|
 
 * Retrieve your api access token from arista.com
    
@@ -70,7 +79,7 @@ CloudVision Portal Upgrade
         ➜  project 
     
     .. note::
-       You should now be back to the terminal session on the ATD jumphost in the vs-code window. Notice the prompt changes from the previous step as you exit the SSH session.
+       You should now be back to the terminal session on the ATD jumphost in the vs-code window. Notice the prompt changes back to **➜ project** from the previous step as you exit the SSH session.
 
 #. Clone example scripts repo, and examine the script help option
 
