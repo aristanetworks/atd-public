@@ -35,7 +35,7 @@ CloudVision Portal Upgrade
 
 #. Check CVP server current version number
    
-    * SSH to the CVP server as root using password ``cvproot`` 
+    * SSH to the CVP server at ``192.168.0.5`` as root using password ``cvproot`` 
 
       .. code-block:: shell
 
@@ -45,12 +45,15 @@ CloudVision Portal Upgrade
         [root@cvp ~]# 
 
     
-    * grep VERSION from the cvp env file - version 2021.2.2 in this example 
+    * Check CVP server version with **cvpi** command
 
       .. code-block:: shell
 
-        [root@cvp ~]# cat /etc/cvpi/env | grep VERSION
-        CVP_VERSION=2021.2.2
+        [root@cvp ~]# cvpi version
+
+
+        cvpi version 2021.2.2-base-3-g391d091 go1.13.6
+        [root@cvp ~]# 
 
     * Exit SSH session to the CVP server 
 
@@ -110,16 +113,16 @@ CloudVision Portal Upgrade
          --test
          --nofile
 
-#. Download the CVP Upgrade file using api access token (version: 2022.1.0 & destination: /tmp/upgrade)
+#. Download the CVP Upgrade file using api access token (version: 2022.1.1 & destination: /tmp/upgrade)
 
     .. code-block:: shell
 
-        ➜  Get_UpgradeFile_CVP git:(main) python3 CVPgetUpgradeV2.py --token <removed> --upgrade cvp-upgrade-2022.1.0.tgz
+        ➜  Get_UpgradeFile_CVP git:(main) python3 CVPgetUpgradeV2.py --token <removed> --upgrade cvp-upgrade-2022.1.1.tgz
         <Response [200]>
 
 
         ➜  Get_UpgradeFile_CVP git:(main) ls /tmp/upgrade 
-        cvp-upgrade-2022.1.0.tgz
+        cvp-upgrade-2022.1.1.tgz
 
 #. Transfer the upgrade file to the CVP server
 
@@ -134,9 +137,9 @@ CloudVision Portal Upgrade
 
       .. code-block:: shell
 
-          ➜  Get_UpgradeFile_CVP git:(main) scp /tmp/upgrade/cvp-upgrade-2022.1.0.tgz root@192.168.0.5:/tmp/upgrade/
+          ➜  Get_UpgradeFile_CVP git:(main) scp /tmp/upgrade/cvp-upgrade-2022.1.1.tgz root@192.168.0.5:/tmp/upgrade/
           root@192.168.0.5's password: 
-          cvp-upgrade-2022.1.0.tgz                                                                                                25% 1421MB  79.4MB/s   00:52 ETA
+          cvp-upgrade-2022.1.1.tgz                                                                                                25% 1421MB  79.4MB/s   00:52 ETA
 
 
 #. Start the CVP upgrade Process 
@@ -169,8 +172,11 @@ CloudVision Portal Upgrade
 
    .. code-block:: shell
 
-       [root@cvp ~]# cat /etc/cvpi/env | grep VERSION
-       CVP_VERSION=2022.1.0
+      [root@cvp ~]# cvpi version
+
+
+      cvpi version 2022.1.1-2 go1.17.5
+      [root@cvp ~]# 
 
 LAB COMPLETE
 
