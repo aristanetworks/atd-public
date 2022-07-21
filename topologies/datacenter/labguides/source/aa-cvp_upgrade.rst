@@ -106,7 +106,7 @@ CloudVision Portal Upgrade
         CVPgetUpgrade.py  CVPgetUpgradeV2.py  CVPgetUpgradeV2.py.zip
 
  
-    * Invoke the CVPgetUpgradeV2.py script with the ``--help`` flag. Notice the ``--token`` and ``--upgrade`` argument options.
+    * Invoke the **CVPgetUpgradeV2.py** script with the ``--help`` flag. Notice the ``--token`` and ``--upgrade`` argument options.
 
       .. code-block:: shell
 
