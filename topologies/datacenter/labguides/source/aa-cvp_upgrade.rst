@@ -76,6 +76,10 @@ CloudVision Portal Upgrade
 
 #. Clone example scripts repo, and examine the script help option
 
+    .. note::
+       This repo will provide a handy script to download the CVP upgrade file **locally** to the ATD jump host.
+       This script can also be used outside the ATD lab to download the upgrade file directly to the CVP server.
+
     * Clone the repo
 
       .. code-block:: shell
@@ -102,7 +106,7 @@ CloudVision Portal Upgrade
         CVPgetUpgrade.py  CVPgetUpgradeV2.py  CVPgetUpgradeV2.py.zip
 
  
-    * Invoke the CVPgetUpgradeV2.py script with the --help flag
+    * Invoke the CVPgetUpgradeV2.py script with the ``--help`` flag. Notice the ``--token`` and ``--upgrade`` argument options.
 
       .. code-block:: shell
 
@@ -120,7 +124,7 @@ CloudVision Portal Upgrade
          --test
          --nofile
 
-#. Download the CVP Upgrade file using api access token (version: 2022.1.1 & destination: /tmp/upgrade)
+#. Download the CVP Upgrade file using api access token retrieved earlier
 
     .. code-block:: shell
 
@@ -132,7 +136,10 @@ CloudVision Portal Upgrade
         cvp-upgrade-2022.1.1.tgz
 
     .. note:: 
-       The download will take some time before this command will complete with the ``<Response [200]>`` code. It does not output progress. Please be patient.
+       The download will be written to the ``/tmp/upgrade`` folder. 
+
+
+       The script does not output download progress, and will take some time to complete with the ``<Response [200]>`` code. Please be patient.
 
 #. Transfer the upgrade file to the CVP server
 
