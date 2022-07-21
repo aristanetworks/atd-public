@@ -6,23 +6,30 @@ CloudVision Portal Upgrade
 
 * <Add in screen capture gif of the process described>
  
-* Log into the Arista Test Drive Portal Web interface  
-
-    (link to connecting)
-
-* Log in to the Programmability IDE 
-
-   <screenshot of the link>
-
-* In the vs-code window select the upper left menu icon, then select Terminal, then New Terminal
-
-   <screenshot of getting a new terminal>
-
 * Retrieve your api access token from arista.com
    
    * navigate to https://www.arista.com/en/users/profile
    * record the api access token for your user account
 
+* Log in to the vs-code Programmability IDE 
+
+  .. thumbnail:: images/connecting/connecting_IDE.png
+     :align: center
+     :width: 50%
+
+           Click image to enlarge
+
+  |
+
+* In the vs-code window select the upper left menu icon, then select Terminal, then New Terminal
+
+  .. thumbnail:: images/connecting/connecting_vs-code_terminal.png
+     :align: center
+     :width: 50%
+
+           Click image to enlarge
+
+  |
 
 * Next we will perform the following steps in the Terminal
 
@@ -123,6 +130,9 @@ CloudVision Portal Upgrade
 
         ➜  Get_UpgradeFile_CVP git:(main) ls /tmp/upgrade 
         cvp-upgrade-2022.1.1.tgz
+
+    .. note:: 
+       The download will take some time before this command will complete with the ``<Response [200]>`` code. It does not output progress. Please be patient.
 
 #. Transfer the upgrade file to the CVP server
 
