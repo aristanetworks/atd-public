@@ -1,35 +1,35 @@
 vrf instance 112
 !
-vrf instance 134
+vrf instance 234
 !
 interface Port-Channel1
-   description MLAG Uplink - s1-leaf1 and s1-leaf2
+   description MLAG Uplink - s1-leaf3 and s1-leaf4
    no switchport
 !
 interface Port-Channel1.112
    description Subinterface for VLAN 112
    encapsulation dot1q vlan 112
    vrf 112
-   ip address 10.111.112.201/24
+   ip address 10.111.112.202/24
 !
-interface Port-Channel1.134
-   description Subinterface for VLAN 134
-   encapsulation dot1q vlan 134
-   vrf 134
-   ip address 10.111.134.201/24
+interface Port-Channel1.234
+   description Subinterface for VLAN 234
+   encapsulation dot1q vlan 234
+   vrf 234
+   ip address 10.222.234.202/24
 !
 interface Ethernet1
-   description MLAG Uplink - s1-leaf1
+   description MLAG Uplink - s1-leaf3
    channel-group 1 mode active
    lacp timer fast
 !
 interface Ethernet2
-   description MLAG Uplink - s1-leaf2
+   description MLAG Uplink - s1-leaf4
    channel-group 1 mode active
    lacp timer fast
 !
 ip routing vrf 112
-ip routing vrf 134
+ip routing vrf 234
 !
 ip route vrf 112 0.0.0.0/0 10.111.112.1
-ip route vrf 134 0.0.0.0/0 10.111.134.1
+ip route vrf 234 0.0.0.0/0 10.222.234.1

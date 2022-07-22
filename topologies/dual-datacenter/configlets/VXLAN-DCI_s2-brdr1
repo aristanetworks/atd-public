@@ -93,5 +93,5 @@ router bgp 65103
    neighbor CORE send-community standard extended
    neighbor 10.222.99.0 peer group CORE
    neighbor 10.222.99.128 peer group CORE
-   neighbor 10.255.255.254 peer group MLAG
+   neighbor 10.255.255.2 peer group MLAG
    redistribute connected route-map LOOPBACKS

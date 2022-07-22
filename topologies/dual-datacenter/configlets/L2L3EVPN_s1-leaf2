@@ -56,7 +56,7 @@ interface Loopback1
    ip address 10.111.253.1/32
 !
 interface Vlan112
-   description Host Network
+   description Host Network 112
    vrf TENANT
    ip address virtual 10.111.112.1/24
 !

@@ -1,11 +1,5 @@
 no spanning-tree vlan-id 4094
 !
-vlan 112
-   name Host_Network_112
-!
-vlan 134
-   name Host_Network_134
-!
 vlan 4094
    name MLAG_VLAN
    trunk group MLAGPEER
@@ -13,57 +7,65 @@ vlan 4094
 vrf instance TENANT
 !
 interface Port-Channel1
-   description MLAG Peer-link - s1-leaf3
+   description MLAG Peer-link - s1-brdr2
    switchport mode trunk
    switchport trunk group MLAGPEER
 !
-interface Port-Channel5
-   description MLAG Downlink - s1-host2
-   switchport trunk allowed vlan 112,134
-   switchport mode trunk
-   mlag 5
-!
 interface Ethernet1
-   description MLAG Peer-link - s1-leaf3
-   switchport mode trunk
+   description MLAG Peer-link - s1-brdr2
    channel-group 1 mode active
 !
 interface Ethernet2
    description L3 Uplink - s1-spine1
    no switchport
-   ip address 10.111.1.7/31
+   ip address 10.111.1.11/31
 !
 interface Ethernet3
    description L3 Uplink - s1-spine2
    no switchport
-   ip address 10.111.2.7/31
+   ip address 10.111.2.11/31
 !
 interface Ethernet4
-   description MLAG Downlink - s1-host2
-   channel-group 5 mode active
+   description L3 Uplink - s1-core1
+   no switchport
+!
+interface Ethernet4.111
+   description L3 Uplink - s1-core1 for Default VRF
+   encapsulation dot1q vlan 111
+   ip address 10.111.99.3/31
+!
+interface Ethernet4.123
+   description L3 Uplink - s1-core1 for TENANT VRF
+   encapsulation dot1q vlan 123
+   vrf TENANT
+   ip address 10.123.99.3/31
+!
+interface Ethernet5
+   description L3 Uplink - s1-core2
+   no switchport
+!
+interface Ethernet5.111
+   description L3 Uplink - s1-core2 for Default VRF
+   encapsulation dot1q vlan 111
+   ip address 10.111.99.131/31
+!
+interface Ethernet5.123
+   description L3 Uplink - s1-core2 for TENANT VRF
+   encapsulation dot1q vlan 123
+   vrf TENANT
+   ip address 10.123.99.131/31
 !
 interface Ethernet6
-   description MLAG Peer-link - s1-leaf3
-   switchport mode trunk
+   description MLAG Peer-link - s1-brdr2
    channel-group 1 mode active
 !
 interface Loopback0
    description Management and Router-id
-   ip address 10.111.254.4/32
+   ip address 10.111.254.6/32
 !
 interface Loopback1
    description VTEP
-   ip address 10.111.253.3/32
-!
-interface Vlan112
-   description Host Network 112
-   vrf TENANT
-   ip address virtual 10.111.112.1/24
-!
-interface Vlan134
-   description Host Network 134
-   vrf TENANT
-   ip address virtual 10.111.134.1/24
+   ip address 10.111.253.5/32
 !
 interface Vlan4094
    description MLAG Peer Network
@@ -73,8 +75,6 @@ interface Vxlan1
    vxlan source-interface Loopback1
    vxlan virtual-router encapsulation mac-address mlag-system-id
    vxlan udp-port 4789
-   vxlan vlan 112 vni 112
-   vxlan vlan 134 vni 134
    vxlan vrf TENANT vni 5001
 !
 ip virtual-router mac-address 00:1C:73:00:00:01
@@ -87,20 +87,33 @@ mlag configuration
    peer-address 10.255.255.1
    peer-link Port-Channel1
 !
+ip prefix-list DEAFULT-TENS
+   seq 100 permit 10.0.0.0/8
+!
 ip prefix-list LOOPBACKS
    seq 100 permit 10.111.253.0/24 eq 32
    seq 110 permit 10.111.254.0/24 eq 32
 !
+route-map DEAFULT-TENS permit 100
+   match ip address prefix-list DEAFULT-TENS
+!
 route-map LOOPBACKS permit 100
    match ip address prefix-list LOOPBACKS
 !
-router bgp 65102
-   router-id 10.111.254.4
+router bgp 65103
+   router-id 10.111.254.6
    rd auto
    maximum-paths 2
    no bgp default ipv4-unicast
+   neighbor CORE peer group
+   neighbor CORE remote-as 65001
+   neighbor CORE send-community standard extended
+   neighbor CORE-TENANT peer group
+   neighbor CORE-TENANT remote-as 65001
+   neighbor CORE-TENANT send-community standard extended
+   neighbor CORE-TENANT route-map DEAFULT-TENS in
    neighbor MLAG peer group
-   neighbor MLAG remote-as 65102
+   neighbor MLAG remote-as 65103
    neighbor MLAG next-hop-self
    neighbor MLAG send-community standard extended
    neighbor SPINE peer group
@@ -113,24 +126,20 @@ router bgp 65102
    neighbor SPINE-EVPN send-community standard extended
    neighbor 10.111.0.1 peer group SPINE-EVPN
    neighbor 10.111.0.2 peer group SPINE-EVPN
-   neighbor 10.111.1.6 peer group SPINE
-   neighbor 10.111.2.6 peer group SPINE
+   neighbor 10.111.1.10 peer group SPINE
+   neighbor 10.111.2.10 peer group SPINE
+   neighbor 10.111.99.2 peer group CORE
+   neighbor 10.111.99.130 peer group CORE
    neighbor 10.255.255.1 peer group MLAG
-   !
-   vlan 112
-      rd auto
-      route-target both 112:112
-      redistribute learned
-   !
-   vlan 134
-      rd auto
-      route-target both 134:134
-      redistribute learned
+   redistribute connected route-map LOOPBACKS
    !
    address-family evpn
       neighbor SPINE-EVPN activate
+      route import match-failure action discard
    !
    address-family ipv4
+      neighbor CORE activate
+      neighbor CORE-TENANT activate
       neighbor MLAG activate
       neighbor SPINE activate
       redistribute connected route-map LOOPBACKS
@@ -138,4 +147,6 @@ router bgp 65102
    vrf TENANT
       route-target import evpn 5001:5001
       route-target export evpn 5001:5001
+      neighbor 10.123.99.2 peer group CORE-TENANT
+      neighbor 10.123.99.130 peer group CORE-TENANT
       redistribute connected

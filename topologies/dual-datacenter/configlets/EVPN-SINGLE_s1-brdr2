@@ -1,11 +1,5 @@
 no spanning-tree vlan-id 4094
 !
-vlan 112
-   name Host_Network_112
-!
-vlan 134
-   name Host_Network_134
-!
 vlan 4094
    name MLAG_VLAN
    trunk group MLAGPEER
@@ -15,32 +9,27 @@ interface Port-Channel1
    switchport mode trunk
    switchport trunk group MLAGPEER
 !
-interface Port-Channel56
-   description MLAG Uplink - s1-spine1 and s1-spine2
-   switchport mode trunk
-   mlag 56
-!
 interface Ethernet1
    description MLAG Peer-link - s1-brdr2
    channel-group 1 mode active
 !
 interface Ethernet2
-   description MLAG Uplink - s1-spine1
-   channel-group 56 mode active
+   description L3 Uplink - s1-spine1
+   no switchport
+   ip address 10.111.1.11/31
 !
 interface Ethernet3
-   description MLAG Uplink - s1-spine2
-   channel-group 56 mode active
+   description L3 Uplink - s1-spine2
+   no switchport
+   ip address 10.111.2.11/31
 !
 interface Ethernet4
    description L3 Uplink - s1-core1
    no switchport
-   ip address 10.111.99.3/31
 !
 interface Ethernet5
    description L3 Uplink - s1-core2
    no switchport
-   ip address 10.111.99.131/31
 !
 interface Ethernet6
    description MLAG Peer-link - s1-brdr2
@@ -50,20 +39,11 @@ interface Loopback0
    description Management and Router-id
    ip address 10.111.254.6/32
 !
-interface Loopback1
-   description VTEP
-   ip address 10.111.253.5/32
-!
 interface Vlan4094
    description MLAG Peer Network
    ip address 10.255.255.2/30
 !
-interface Vxlan1
-   vxlan source-interface Loopback1
-   vxlan udp-port 4789
-   vxlan vlan 112 vni 112
-   vxlan vlan 134 vni 134
-   vxlan flood vtep 10.222.253.5
+ip virtual-router mac-address 00:1C:73:00:00:01
 !
 mlag configuration
    domain-id MLAG
@@ -71,12 +51,15 @@ mlag configuration
    peer-address 10.255.255.1
    peer-link Port-Channel1
 !
-mac address-table static 001c.7300.0012 vlan 112 interface Port-Channel56
-mac address-table static 001c.7300.0012 vlan 134 interface Port-Channel56
+ip prefix-list DEAFULT-TENS
+   seq 100 permit 10.0.0.0/8
 !
 ip prefix-list LOOPBACKS
    seq 100 permit 10.111.253.0/24 eq 32
    seq 110 permit 10.111.254.0/24 eq 32
+!
+route-map DEAFULT-TENS permit 100
+   match ip address prefix-list DEAFULT-TENS
 !
 route-map LOOPBACKS permit 100
    match ip address prefix-list LOOPBACKS
@@ -84,14 +67,20 @@ route-map LOOPBACKS permit 100
 router bgp 65103
    router-id 10.111.254.6
    maximum-paths 2
+   no bgp default ipv4-unicast
    neighbor MLAG peer group
    neighbor MLAG remote-as 65103
    neighbor MLAG next-hop-self
    neighbor MLAG send-community standard extended
-   neighbor CORE peer group
-   neighbor CORE remote-as 65001
-   neighbor CORE send-community standard extended
-   neighbor 10.111.99.2 peer group CORE
-   neighbor 10.111.99.130 peer group CORE
+   neighbor SPINE peer group
+   neighbor SPINE remote-as 65100
+   neighbor SPINE send-community standard extended
+   neighbor 10.111.1.10 peer group SPINE
+   neighbor 10.111.2.10 peer group SPINE
    neighbor 10.255.255.1 peer group MLAG
    redistribute connected route-map LOOPBACKS
+   !
+   address-family ipv4
+      neighbor MLAG activate
+      neighbor SPINE activate
+      redistribute connected route-map LOOPBACKS

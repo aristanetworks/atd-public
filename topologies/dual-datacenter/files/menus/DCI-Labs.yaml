@@ -140,52 +140,76 @@ labconfiglets:
   evpn-single:
     s1-spine1:
       - "BASE_s1-spine1"
+      - "EVPN-SINGLE_s1-spine1"
     s1-spine2:
       - "BASE_s1-spine2"
+      - "EVPN-SINGLE_s1-spine2"
     s1-leaf1:
       - "BASE_s1-leaf1"
+      - "EVPN-SINGLE_s1-leaf1"
     s1-leaf2:
       - "BASE_s1-leaf2"
+      - "EVPN-SINGLE_s1-leaf2"
     s1-leaf3:
       - "BASE_s1-leaf3"
+      - "EVPN-SINGLE_s1-leaf3"
     s1-leaf4:
       - "BASE_s1-leaf4"
+      - "EVPN-SINGLE_s1-leaf4"
     s1-brdr1:
       - "BASE_s1-brdr1"
+      - "EVPN-SINGLE_s1-brdr1"
     s1-brdr2:
       - "BASE_s1-brdr2"
+      - "EVPN-SINGLE_s1-brdr2"
     s1-core1:
       - "BASE_s1-core1"
+      - "EVPN-SINGLE_s1-core1"
     s1-core2:
       - "BASE_s1-core2"
+      - "EVPN-SINGLE_s1-core2"
     s1-host1:
       - "BASE_s1-host1"
+      - "EVPN-SINGLE_s1-host1"
     s1-host2:
       - "BASE_s1-host2"
+      - "EVPN-SINGLE_s1-host2"
     s2-spine1:
       - "BASE_s2-spine1"
+      - "EVPN-SINGLE_s2-spine1"
     s2-spine2:
       - "BASE_s2-spine2"
+      - "EVPN-SINGLE_s2-spine2"
     s2-leaf1:
       - "BASE_s2-leaf1"
+      - "EVPN-SINGLE_s2-leaf1"
     s2-leaf2:
       - "BASE_s2-leaf2"
+      - "EVPN-SINGLE_s2-leaf2"
     s2-leaf3:
       - "BASE_s2-leaf3"
+      - "EVPN-SINGLE_s2-leaf3"
     s2-leaf4:
       - "BASE_s2-leaf4"
+      - "EVPN-SINGLE_s2-leaf4"
     s2-brdr1:
       - "BASE_s2-brdr1"
+      - "EVPN-SINGLE_s2-brdr1"
     s2-brdr2:
       - "BASE_s2-brdr2"
+      - "EVPN-SINGLE_s2-brdr2"
     s2-core1:
       - "BASE_s2-core1"
+      - "EVPN-SINGLE_s2-core1"
     s2-core2:
       - "BASE_s2-core2"
+      - "EVPN-SINGLE_s2-core2"
     s2-host1:
       - "BASE_s2-host1"
+      - "EVPN-SINGLE_s2-host1"
     s2-host2:
       - "BASE_s2-host2"
+      - "EVPN-SINGLE_s2-host2"
   evpn-gw-vx-mlag:
     s1-spine1:
       - "BASE_s1-spine1"

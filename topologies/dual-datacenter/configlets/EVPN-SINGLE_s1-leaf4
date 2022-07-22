@@ -129,6 +129,7 @@ router bgp 65102
    !
    address-family evpn
       neighbor SPINE-EVPN activate
+      route import match-failure action discard
    !
    address-family ipv4
       neighbor MLAG activate

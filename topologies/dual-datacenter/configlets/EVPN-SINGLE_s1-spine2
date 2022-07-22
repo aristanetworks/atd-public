@@ -24,6 +24,16 @@ interface Ethernet5
 interface Ethernet6
    shutdown
 !
+interface Ethernet7
+   description L3 Downlink - s1-brdr1
+   no switchport
+   ip address 10.111.2.8/31
+!
+interface Ethernet8
+   description L3 Downlink - s1-brdr2
+   no switchport
+   ip address 10.111.2.10/31
+!
 interface Loopback0
    description Management and Router-id
    ip address 10.111.0.2/32

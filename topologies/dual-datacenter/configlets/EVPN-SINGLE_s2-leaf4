@@ -3,8 +3,8 @@ no spanning-tree vlan-id 4094
 vlan 112
    name Host_Network_112
 !
-vlan 134
-   name Host_Network_134
+vlan 234
+   name Host_Network_234
 !
 vlan 4094
    name MLAG_VLAN
@@ -19,7 +19,7 @@ interface Port-Channel1
 !
 interface Port-Channel5
    description MLAG Downlink - s1-host2
-   switchport trunk allowed vlan 112,134
+   switchport trunk allowed vlan 112,234
    switchport mode trunk
    mlag 5
 !
@@ -31,12 +31,12 @@ interface Ethernet1
 interface Ethernet2
    description L3 Uplink - s1-spine1
    no switchport
-   ip address 10.111.1.7/31
+   ip address 10.222.1.7/31
 !
 interface Ethernet3
    description L3 Uplink - s1-spine2
    no switchport
-   ip address 10.111.2.7/31
+   ip address 10.222.2.7/31
 !
 interface Ethernet4
    description MLAG Downlink - s1-host2
@@ -49,21 +49,21 @@ interface Ethernet6
 !
 interface Loopback0
    description Management and Router-id
-   ip address 10.111.254.4/32
+   ip address 10.222.254.4/32
 !
 interface Loopback1
    description VTEP
-   ip address 10.111.253.3/32
+   ip address 10.222.253.3/32
 !
 interface Vlan112
-   description Host Network 112
+   description Host Network
    vrf TENANT
-   ip address virtual 10.111.112.1/24
+   ip address virtual 10.222.112.1/24
 !
-interface Vlan134
-   description Host Network 134
+interface Vlan234
+   description Host Network
    vrf TENANT
-   ip address virtual 10.111.134.1/24
+   ip address virtual 10.222.234.1/24
 !
 interface Vlan4094
    description MLAG Peer Network
@@ -74,7 +74,7 @@ interface Vxlan1
    vxlan virtual-router encapsulation mac-address mlag-system-id
    vxlan udp-port 4789
    vxlan vlan 112 vni 112
-   vxlan vlan 134 vni 134
+   vxlan vlan 234 vni 234
    vxlan vrf TENANT vni 5001
 !
 ip virtual-router mac-address 00:1C:73:00:00:01
@@ -88,33 +88,33 @@ mlag configuration
    peer-link Port-Channel1
 !
 ip prefix-list LOOPBACKS
-   seq 100 permit 10.111.253.0/24 eq 32
-   seq 110 permit 10.111.254.0/24 eq 32
+   seq 100 permit 10.222.253.0/24 eq 32
+   seq 110 permit 10.222.254.0/24 eq 32
 !
 route-map LOOPBACKS permit 100
    match ip address prefix-list LOOPBACKS
 !
-router bgp 65102
-   router-id 10.111.254.4
+router bgp 65202
+   router-id 10.222.254.4
    rd auto
    maximum-paths 2
    no bgp default ipv4-unicast
    neighbor MLAG peer group
-   neighbor MLAG remote-as 65102
+   neighbor MLAG remote-as 65202
    neighbor MLAG next-hop-self
    neighbor MLAG send-community standard extended
    neighbor SPINE peer group
-   neighbor SPINE remote-as 65100
+   neighbor SPINE remote-as 65200
    neighbor SPINE send-community standard extended
    neighbor SPINE-EVPN peer group
-   neighbor SPINE-EVPN remote-as 65100
+   neighbor SPINE-EVPN remote-as 65200
    neighbor SPINE-EVPN update-source Loopback0
    neighbor SPINE-EVPN ebgp-multihop 3
    neighbor SPINE-EVPN send-community standard extended
-   neighbor 10.111.0.1 peer group SPINE-EVPN
-   neighbor 10.111.0.2 peer group SPINE-EVPN
-   neighbor 10.111.1.6 peer group SPINE
-   neighbor 10.111.2.6 peer group SPINE
+   neighbor 10.222.0.1 peer group SPINE-EVPN
+   neighbor 10.222.0.2 peer group SPINE-EVPN
+   neighbor 10.222.1.6 peer group SPINE
+   neighbor 10.222.2.6 peer group SPINE
    neighbor 10.255.255.1 peer group MLAG
    !
    vlan 112
@@ -122,13 +122,14 @@ router bgp 65102
       route-target both 112:112
       redistribute learned
    !
-   vlan 134
+   vlan 234
       rd auto
-      route-target both 134:134
+      route-target both 234:234
       redistribute learned
    !
    address-family evpn
       neighbor SPINE-EVPN activate
+      route import match-failure action discard
    !
    address-family ipv4
       neighbor MLAG activate

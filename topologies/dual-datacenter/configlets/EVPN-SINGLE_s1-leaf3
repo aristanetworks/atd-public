@@ -13,7 +13,7 @@ vlan 4094
 vrf instance TENANT
 !
 interface Port-Channel1
-   description MLAG Peer-link - s1-leaf3
+   description MLAG Peer-link - s1-leaf4
    switchport mode trunk
    switchport trunk group MLAGPEER
 !
@@ -24,32 +24,32 @@ interface Port-Channel5
    mlag 5
 !
 interface Ethernet1
-   description MLAG Peer-link - s1-leaf3
+   description MLAG Peer-link - s1-leaf4
    switchport mode trunk
    channel-group 1 mode active
 !
 interface Ethernet2
    description L3 Uplink - s1-spine1
    no switchport
-   ip address 10.111.1.7/31
+   ip address 10.111.1.5/31
 !
 interface Ethernet3
    description L3 Uplink - s1-spine2
    no switchport
-   ip address 10.111.2.7/31
+   ip address 10.111.2.5/31
 !
 interface Ethernet4
    description MLAG Downlink - s1-host2
    channel-group 5 mode active
 !
 interface Ethernet6
-   description MLAG Peer-link - s1-leaf3
+   description MLAG Peer-link - s1-leaf4
    switchport mode trunk
    channel-group 1 mode active
 !
 interface Loopback0
    description Management and Router-id
-   ip address 10.111.254.4/32
+   ip address 10.111.254.3/32
 !
 interface Loopback1
    description VTEP
@@ -67,7 +67,7 @@ interface Vlan134
 !
 interface Vlan4094
    description MLAG Peer Network
-   ip address 10.255.255.2/30
+   ip address 10.255.255.1/30
 !
 interface Vxlan1
    vxlan source-interface Loopback1
@@ -84,7 +84,7 @@ ip routing vrf TENANT
 mlag configuration
    domain-id MLAG
    local-interface Vlan4094
-   peer-address 10.255.255.1
+   peer-address 10.255.255.2
    peer-link Port-Channel1
 !
 ip prefix-list LOOPBACKS
@@ -95,7 +95,7 @@ route-map LOOPBACKS permit 100
    match ip address prefix-list LOOPBACKS
 !
 router bgp 65102
-   router-id 10.111.254.4
+   router-id 10.111.254.3
    rd auto
    maximum-paths 2
    no bgp default ipv4-unicast
@@ -113,9 +113,9 @@ router bgp 65102
    neighbor SPINE-EVPN send-community standard extended
    neighbor 10.111.0.1 peer group SPINE-EVPN
    neighbor 10.111.0.2 peer group SPINE-EVPN
-   neighbor 10.111.1.6 peer group SPINE
-   neighbor 10.111.2.6 peer group SPINE
-   neighbor 10.255.255.1 peer group MLAG
+   neighbor 10.111.1.4 peer group SPINE
+   neighbor 10.111.2.4 peer group SPINE
+   neighbor 10.255.255.2 peer group MLAG
    !
    vlan 112
       rd auto
@@ -129,6 +129,7 @@ router bgp 65102
    !
    address-family evpn
       neighbor SPINE-EVPN activate
+      route import match-failure action discard
    !
    address-family ipv4
       neighbor MLAG activate

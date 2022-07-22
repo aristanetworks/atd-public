@@ -24,6 +24,16 @@ interface Ethernet5
 interface Ethernet6
    shutdown
 !
+interface Ethernet7
+   description L3 Downlink - s1-brdr1
+   no switchport
+   ip address 10.111.2.8/31
+!
+interface Ethernet8
+   description L3 Downlink - s1-brdr2
+   no switchport
+   ip address 10.111.2.10/31
+!
 interface Loopback0
    description Management and Router-id
    ip address 10.111.0.2/32
@@ -39,14 +49,22 @@ router bgp 65100
    maximum-paths 2
    bgp listen range 10.111.2.0/24 peer-group LEAVES peer-filter LEAF-ASN
    bgp listen range 10.111.254.0/24 peer-group LEAVES-EVPN peer-filter LEAF-ASN
+   neighbor DC2-SPINES-EVPN peer group
+   neighbor DC2-SPINES-EVPN remote-as 65200
+   neighbor DC2-SPINES-EVPN update-source Loopback0
+   neighbor DC2-SPINES-EVPN ebgp-multihop 6
+   neighbor DC2-SPINES-EVPN send-community standard extended
    neighbor LEAVES peer group
    neighbor LEAVES send-community standard extended
    neighbor LEAVES-EVPN peer group
    neighbor LEAVES-EVPN update-source Loopback0
    neighbor LEAVES-EVPN ebgp-multihop 3
    neighbor LEAVES-EVPN send-community standard extended
+   neighbor 10.222.0.1 peer group DC2-SPINES-EVPN
+   neighbor 10.222.0.2 peer group DC2-SPINES-EVPN
    !
    address-family evpn
+      neighbor DC2-SPINES-EVPN activate
       neighbor LEAVES-EVPN activate
       bgp next-hop-unchanged
    !

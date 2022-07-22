@@ -22,7 +22,7 @@ Layer 2 Leaf-Spine
       .. note::
 
          The manually-entered commands below that are part of this lab are
-         equivalent to ``L2LS_s1-leaf4``.
+         equivalent to ``L2LS_s1-leaf4_complete``.
 
 #. Prior to configuration, verify the current operational status of the environment.
 

@@ -48,6 +48,7 @@ router bgp 65100
    !
    address-family evpn
       neighbor LEAVES-EVPN activate
+      bgp next-hop-unchanged
    !
    address-family ipv4
       neighbor LEAVES activate
