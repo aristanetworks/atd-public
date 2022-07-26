@@ -51,7 +51,7 @@ CloudVision Portal Upgrade
    
     * SSH to the CVP server at ``192.168.0.5`` as root using password ``cvproot`` 
 
-      .. code-block:: shell
+      .. code-block:: none
 
         ➜  project ssh root@192.168.0.5
         root@192.168.0.5's password: 
@@ -61,7 +61,7 @@ CloudVision Portal Upgrade
     
     * Check CVP server version with **cvpi** command
 
-      .. code-block:: shell
+      .. code-block:: none
 
         [root@cvp ~]# cvpi version
 
@@ -71,7 +71,7 @@ CloudVision Portal Upgrade
 
     * Exit SSH session to the CVP server 
 
-      .. code-block:: shell
+      .. code-block:: none
 
         [root@cvp ~]# exit
         logout
@@ -89,7 +89,7 @@ CloudVision Portal Upgrade
 
     * Clone the repo
 
-      .. code-block:: shell
+      .. code-block:: none
 
         ➜  project 
         ➜  project cd labfiles 
@@ -104,7 +104,7 @@ CloudVision Portal Upgrade
 
     * Navigate to the directory where the script resides 
 
-      .. code-block:: shell
+      .. code-block:: none
 
         ➜  labfiles cd Example_Scripts/Tools/Get_UpgradeFile_CVP  
         
@@ -115,7 +115,7 @@ CloudVision Portal Upgrade
  
     * Invoke the **CVPgetUpgradeV2.py** script with the ``--help`` flag. Notice the ``--token`` and ``--upgrade`` argument options.
 
-      .. code-block:: shell
+      .. code-block:: none
 
         ➜  Get_UpgradeFile_CVP git:(main) python3 CVPgetUpgradeV2.py --help
         usage: CVPgetUpgradeV2.py [-h] --upgrade UPGRADE --token TOKEN [--proxyType PROXYTYPE] [--proxyAddr PROXYADDR] [--test] [--nofile]
@@ -133,7 +133,7 @@ CloudVision Portal Upgrade
 
 #. Download the CVP Upgrade file using api access token retrieved earlier
 
-    .. code-block:: shell
+    .. code-block:: none
 
         ➜  Get_UpgradeFile_CVP git:(main) python3 CVPgetUpgradeV2.py --token <removed> --upgrade cvp-upgrade-2022.1.1.tgz
         <Response [200]>
@@ -152,14 +152,14 @@ CloudVision Portal Upgrade
 
     * Make /tmp/upgrade directory on CVP server
    
-      .. code-block:: shell
+      .. code-block:: none
 
           ➜  Get_UpgradeFile_CVP git:(main) ssh root@192.168.0.5 mkdir /tmp/upgrade
           root@192.168.0.5's password:  
 
     * Transfer the CVP upgrade file to the CVP Server
 
-      .. code-block:: shell
+      .. code-block:: none
 
           ➜  Get_UpgradeFile_CVP git:(main) scp /tmp/upgrade/cvp-upgrade-2022.1.1.tgz root@192.168.0.5:/tmp/upgrade/
           root@192.168.0.5's password: 
@@ -170,7 +170,7 @@ CloudVision Portal Upgrade
 
     * SSH to cvp the server, navigate to /tmp/upgrade    
 
-      .. code-block:: shell
+      .. code-block:: none
 
         ➜  Get_UpgradeFile_CVP git:(main) ssh root@192.168.0.5
         root@192.168.0.5's password: 
@@ -180,7 +180,7 @@ CloudVision Portal Upgrade
 
     * Change user to cvpadmin, choose upgrade (u)
 
-      .. code-block:: shell
+      .. code-block:: none
 
         [root@cvp upgrade]# su cvpadmin
 
@@ -194,7 +194,7 @@ CloudVision Portal Upgrade
 
 #. Check CVP server version number to verify upgrade is successful and complete
 
-   .. code-block:: shell
+   .. code-block:: none
 
       [root@cvp ~]# cvpi version
 
