@@ -16,6 +16,7 @@ Connecting
 
 .. image:: images/connecting/nested_connecting_2.png
    :align: center
+   :width: 70%
 
 |
 
