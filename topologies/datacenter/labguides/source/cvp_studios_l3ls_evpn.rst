@@ -388,6 +388,6 @@ Do a **“show int vlan 60”** on ``Host1`` and on ``Host2`` and make note of t
 Next, let’s ping inter-vlan from **.160** to **.171**, which should be successful. On ``leaf1``, review the EVPN routing table using **“show bgp evpn“**
 
 
-LAB COMPLETE!
-=============
+**LAB COMPLETE!**
+--------------------------------
 
