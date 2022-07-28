@@ -1,5 +1,6 @@
-L2 EVPN Services
-================
+
+L2 and L3 EVPN with Symmetric IRB
+=================================
 
 .. thumbnail:: images/l2evpn/nested_l2evpn_topo_dual_dc.png
    :align: center
@@ -12,15 +13,15 @@ L2 EVPN Services
 
 1. Log into the  **LabAccess**  jumpserver:
 
-   a. Type ``97`` to access additional lab, then ``evpn-labs`` at the prompt to access the EVPN VXLAN content. Then type ``l2evpn`` for the Layer 2 EVPN lab. 
+   a. Type ``97`` to access additional lab, then ``evpn-labs`` at the prompt to access the EVPN VXLAN content. Then type ``l2l3evpn`` for the Layer 2 and 3 EVPN lab. 
    The script will configure the datacenter with the exception of **s1-leaf4**.
 
       .. note::
-         Did you know the “l2evpn” script is composed of Python code that
+         Did you know the “l2l3evpn” script is composed of Python code that
          uses the CloudVision Portal REST API to automate the provisioning of
          CVP Configlets. The configlets that are configured via the REST API
-         are ``L2EVPN_s1-spine1``, ``L2EVPN_s1-spine2``, ``L2EVPN_s1-leaf1``,
-         ``L2EVPN_s1-leaf2``, ``L2EVPN_s1-leaf3``, ``L2EVPN_s1-leaf4``.
+         are ``L2L3EVPN_s1-spine1``, ``L2L3EVPN_s1-spine2``, ``L2L3EVPN_s1-leaf1``,
+         ``L2L3EVPN_s1-leaf2``, ``L2L3EVPN_s1-leaf3``, ``L2L3EVPN_s1-leaf4``.
 
 #. On **s1-leaf4**, check if Multi-Agent Routing Protocols are enabled.
 
@@ -118,7 +119,7 @@ L2 EVPN Services
          Router identifier 10.111.254.4, local AS number 65102
          Neighbor Status Codes: m - Under maintenance
          Neighbor     V AS           MsgRcvd   MsgSent  InQ OutQ  Up/Down State   PfxRcd PfxAcc
-         10.111.1.6   4 65100              9        12    0    0 00:00:07 Estab   6      6
+         10.111.1.6   4 65100              9        12    0    0 00:00:07 Estab   5      5
          10.111.2.6   4 65100              9        12    0    0 00:00:07 Estab   5      5
          10.255.255.1 4 65102              8        10    0    0 00:00:07 Estab   10     10  
 
@@ -204,13 +205,13 @@ L2 EVPN Services
       .. code-block:: text
          :emphasize-lines: 1
 
-         s1-leaf4(config-router-bgp)#show bgp evpn summary 
+         s1-leaf4(config-router-bgp-af)#show bgp evpn summary
          BGP summary information for VRF default
          Router identifier 10.111.254.4, local AS number 65102
          Neighbor Status Codes: m - Under maintenance
-         Neighbor   V AS           MsgRcvd   MsgSent  InQ OutQ  Up/Down State   PfxRcd PfxAcc
-         10.111.0.1 4 65100              6         5    0    0 00:00:03 Estab   2      2
-         10.111.0.2 4 65100              6         4    0    0 00:00:03 Estab   2      2
+           Neighbor   V AS           MsgRcvd   MsgSent  InQ OutQ  Up/Down State   PfxRcd PfxAcc
+           10.111.0.1 4 65100             10         4    0    0 00:00:04 Estab   8      8
+           10.111.0.2 4 65100             10         7    0    0 00:00:04 Estab   8      8
 
 #. On **s1-leaf4**, configure the VXLAN data-plane for transport.
 
@@ -232,23 +233,31 @@ L2 EVPN Services
 
       .. note::
 
-         This is the logical interface that will provide VXLAN header encap and decap functions.
+         This is the logical interface that will provide VXLAN header encap and decap functions. In this 
+         lab, since we are leveraging VXLAN routing, we can able the use of a virtual-router MAC address. 
+         This instructs the device to use the shared MLAG System ID as the router MAC when performing VXLAN 
+         routing operations and ensures that whichever switch in the MLAG receives the VXLAN Routed packet 
+         can provide forwarding of that traffic without shunting it over the MLAG peer-link.
 
       .. code-block:: text
 
          interface Vxlan1
             vxlan source-interface Loopback1
+            vxlan virtual-router encapsulation mac-address mlag-system-id
 
-#. Configure a Layer 2 EVPN service on **s1-leaf4**.
+#. Configure Layer 2 EVPN services on **s1-leaf4**.
 
-   a. Add the local Layer 2 VLAN with an ID of 112.
+   a. Add the local Layer 2 VLANs with an IDs of 112 and 134.
 
       .. code-block:: text
 
          vlan 112
             name Host_Network_112
+         !
+         vlan 134
+            name Host_Network_134
 
-   #. Map the local Layer 2 VLAN with a matching VNI.
+   #. Map the local Layer 2 VLANs with a matching VNIs.
 
       .. note::
 
@@ -260,8 +269,9 @@ L2 EVPN Services
 
          interface Vxlan1
             vxlan vlan 112 vni 112
+            vxlan vlan 134 vni 134
 
-   #. Add the mac-vrf EVPN configuration for VLAN 112.
+   #. Add the mac-vrf EVPN configuration for VLAN 112 and 134.
 
       .. note::
 
@@ -284,21 +294,95 @@ L2 EVPN Services
                rd auto
                route-target both 112:112
                redistribute learned
+            !
+            vlan 134
+               rd auto
+               route-target both 134:134
+               redistribute learned
+
+#. Configure a Layer 3 EVPN service on **s1-leaf4**.
+
+   a. Create the VRF, or logical routing instance, for the Tenant Layer 3 Network.
+
+      .. note::
+
+         In EOS, by default, VRFs are created with inter-subnet routing disabled.  Always be sure 
+         to enable IP routing in user-defined VRFs.
+
+      .. code-block:: text
+
+         vrf instance TENANT
+         !
+         ip routing vrf TENANT
+
+   #. Create the SVI for default gateway function for the host network as an Anycast Gateway.
+
+      .. note::
+
+         With VXLAN, we can leverage a shared IP using Anycast Gateway. This allows a single IP 
+         to be shared without any other dedicated IPs per switch.
+
+      .. code-block:: text
+
+         ip virtual-router mac-address 00:1C:73:00:00:01
+         !
+         interface Vlan112
+            description Host Network 112
+            vrf TENANT
+            ip address virtual 10.111.112.1/24
+         !
+         interface Vlan134
+            description Host Network 134
+            vrf TENANT
+            ip address virtual 10.111.134.1/24
+
+   #. Map the local Layer 3 VRF with a matching VNI.
+
+      .. note::
+
+         For the Layer 3 Service, the VRF requires what is referred to as the Layer 3 VNI, which is used for VXLAN 
+         Routing in a Symmetric IRB deployment between VTEPs. Any unique ID number will serve here.
    
+      .. code-block:: text
+
+         interface Vxlan1
+            vxlan vrf TENANT vni 5001
+
+   #. Add the IP VRF EVPN configuration for the TENANT VRF.
+
+      .. note::
+
+         Here we configure a Layer 3 VRF service with EVPN. It also leverage a unique **RD** and  **RT**. 
+         They are used by the leaf switches for the same purpose as the Layer 2 service. The difference is simply 
+         the routes are imported. If they receive a Type 5 EVPN route, they check the **RT** value and see if they have a 
+         matching **RT** configured for the VRF. If so, they import the route into the associated VRF routing table. 
+         If they do not, they ignore the route.
+
+      .. code-block:: text
+
+         router bgp 65102
+            rd auto
+            !
+            vrf TENANT
+               route-target import evpn 5001:5001
+               route-target export evpn 5001:5001
+               redistribute connected
+
    #. Configure the host-facing MLAG port.
 
       .. code-block:: text
 
          interface Port-Channel5
             description MLAG Downlink - s1-host2
-            switchport access vlan 112
+            switchport trunk allowed vlan 112,134
+            switchport mode trunk
             mlag 5
          !
          interface Ethernet4
             description MLAG Downlink - s1-host2
             channel-group 5 mode active
 
-#. With the Layer 2 EVPN Service configured, verify the operational state.
+#. With the Layer 2 and 3 EVPN Service configured, verify the operational state.
 
    a. Check the VXLAN data-plane configuration.
 
@@ -310,46 +394,51 @@ L2 EVPN Services
          as control-plane mode (EVPN in this case), VLAN to VNI mappings and discovered VTEPs.
 
       .. code-block:: text
-         :emphasize-lines: 1,24
+         :emphasize-lines: 1,25
 
-         s1-leaf4#show vxlan config-sanity detail 
-         Category                            Result  Detail                                            
+         s1-leaf4#show vxlan config-sanity detail
+         Category                            Result  Detail
          ---------------------------------- -------- --------------------------------------------------
-         Local VTEP Configuration Check        OK                                                      
-           Loopback IP Address                 OK                                                      
-           VLAN-VNI Map                        OK                                                      
-           Routing                             OK                                                      
-           VNI VRF ACL                         OK                                                      
-           Decap VRF-VNI Map                   OK                                                      
-           VRF-VNI Dynamic VLAN                OK                                                      
-         Remote VTEP Configuration Check       OK                                                      
-           Remote VTEP                         OK                                                      
-         Platform Dependent Check              OK                                                      
-           VXLAN Bridging                      OK                                                      
-           VXLAN Routing                       OK    VXLAN Routing not enabled                         
-         CVX Configuration Check               OK                                                      
-           CVX Server                          OK    Not in controller client mode                     
+         Local VTEP Configuration Check        OK
+           Loopback IP Address                 OK
+           VLAN-VNI Map                        OK
+           Routing                             OK
+           VNI VRF ACL                         OK
+           Decap VRF-VNI Map                   OK
+           VRF-VNI Dynamic VLAN                OK
+         Remote VTEP Configuration Check       OK
+           Remote VTEP                         OK
+         Platform Dependent Check              OK
+           VXLAN Bridging                      OK
+           VXLAN Routing                       OK
+         CVX Configuration Check               OK
+           CVX Server                          OK    Not in controller client mode
          MLAG Configuration Check              OK    Run 'show mlag config-sanity' to verify MLAG config
-           Peer VTEP IP                        OK                                                      
-           MLAG VTEP IP                        OK                                                      
-           Peer VLAN-VNI                       OK                                                      
+           Peer VTEP IP                        OK
+           MLAG VTEP IP                        OK
+           Peer VLAN-VNI                       OK
            Virtual VTEP IP                     OK
-           
+           MLAG Inactive State                 OK
+         
          s1-leaf4#show interfaces Vxlan1
          Vxlan1 is up, line protocol is up (connected)
-         Hardware is Vxlan
-         Source interface is Loopback1 and is active with 10.111.253.3
-         Replication/Flood Mode is headend with Flood List Source: EVPN
-         Remote MAC learning via EVPN
-         VNI mapping to VLANs
-         Static VLAN to VNI mapping is 
-           [112, 112]       
-         Note: All Dynamic VLANs used by VCS are internal VLANs.
-               Use 'show vxlan vni' for details.
-         Static VRF to VNI mapping is not configured
-         Headend replication flood vtep list is:
-         112 10.111.253.1   
-         MLAG Shared Router MAC is 0000.0000.0000 
+           Hardware is Vxlan
+           Source interface is Loopback1 and is active with 10.111.253.3
+           Replication/Flood Mode is headend with Flood List Source: EVPN
+           Remote MAC learning via EVPN
+           VNI mapping to VLANs
+           Static VLAN to VNI mapping is
+             [112, 112]        [134, 134]
+           Dynamic VLAN to VNI mapping for 'evpn' is
+             [4093, 5001]
+           Note: All Dynamic VLANs used by VCS are internal VLANs.
+                 Use 'show vxlan vni' for details.
+           Static VRF to VNI mapping is
+            [TENANT, 5001]
+           Headend replication flood vtep list is:
+            112 10.111.253.1
+            134 10.111.253.1
+           MLAG Shared Router MAC is 021c.73c0.c614
 
    #. On **s1-leaf1** (and/or **s1-leaf2**) verify the IMET table to ensure **s1-leaf4** has been discovered in the overlay.
 
@@ -358,31 +447,135 @@ L2 EVPN Services
          The Inclusive Multicast Ethernet Tag, or **IMET**, route is how a VTEP advertises membership in a given Layer 2 
          service, or VXLAN segment.  This is also known as the EVPN Type 3 Route. Other leaves receive this route, 
          evaluate the **RT** to see if they have a matching configuration and, if so, import the advertising VTEP 
-         into their flood list for BUM traffic.
+         into their flood list for BUM traffic. Note that these are done on a per VLAN basis based on the MAC-VRF 
+         configuration.
 
       .. code-block:: text
-         :emphasize-lines: 1,15,16,17,18,21,33,34
+         :emphasize-lines: 1,18,19,20,21,22,23,24,25,30,46,47
 
-         s1-leaf1#show bgp evpn route-type imet 
+         s1-leaf1#show bgp evpn route-type imet
          BGP routing table information for VRF default
          Router identifier 10.111.254.1, local AS number 65101
-         Route status codes: s - suppressed, * - valid, > - active, E - ECMP head, e - ECMP
-                             S - Stale, c - Contributing to ECMP, b - backup
-                             % - Pending BGP convergence
+         Route status codes: * - valid, > - active, S - Stale, E - ECMP head, e - ECMP
+                             c - Contributing to ECMP, % - Pending BGP convergence
          Origin codes: i - IGP, e - EGP, ? - incomplete
          AS Path Attributes: Or-ID - Originator ID, C-LST - Cluster List, LL Nexthop - Link Local Nexthop
-
+         
                    Network                Next Hop              Metric  LocPref Weight  Path
-         * >Ec   RD: 10.111.254.3:112 imet 10.111.253.3
-                                         10.111.253.3          -       100     0       65100 65102 i
-         *  ec   RD: 10.111.254.3:112 imet 10.111.253.3
-                                         10.111.253.3          -       100     0       65100 65102 i
-         * >Ec   RD: 10.111.254.4:112 imet 10.111.253.3
-                                         10.111.253.3          -       100     0       65100 65102 i
-         *  ec   RD: 10.111.254.4:112 imet 10.111.253.3
-                                         10.111.253.3          -       100     0       65100 65102 i
-         * >     RD: 10.111.254.1:112 imet 10.111.253.1
-                                         -                     -       -       0       i    
+          * >Ec    RD: 10.111.254.3:112 imet 10.111.253.3
+                                          10.111.253.3          -       100     0       65100 65102 i
+          *  ec    RD: 10.111.254.3:112 imet 10.111.253.3
+                                          10.111.253.3          -       100     0       65100 65102 i
+          * >Ec    RD: 10.111.254.3:134 imet 10.111.253.3
+                                          10.111.253.3          -       100     0       65100 65102 i
+          *  ec    RD: 10.111.254.3:134 imet 10.111.253.3
+                                          10.111.253.3          -       100     0       65100 65102 i
+          * >Ec    RD: 10.111.254.4:112 imet 10.111.253.3
+                                          10.111.253.3          -       100     0       65100 65102 i
+          *  ec    RD: 10.111.254.4:112 imet 10.111.253.3
+                                          10.111.253.3          -       100     0       65100 65102 i
+          * >Ec    RD: 10.111.254.4:134 imet 10.111.253.3
+                                          10.111.253.3          -       100     0       65100 65102 i
+          *  ec    RD: 10.111.254.4:134 imet 10.111.253.3
+                                          10.111.253.3          -       100     0       65100 65102 i
+          * >      RD: 10.111.254.1:112 imet 10.111.253.1
+                                          -                     -       -       0       i
+          * >      RD: 10.111.254.1:134 imet 10.111.253.1
+                                          -                     -       -       0       i
+         s1-leaf4#show interfaces Vxlan1
+         Vxlan1 is up, line protocol is up (connected)
+           Hardware is Vxlan
+           Source interface is Loopback1 and is active with 10.111.253.3
+           Replication/Flood Mode is headend with Flood List Source: EVPN
+           Remote MAC learning via EVPN
+           VNI mapping to VLANs
+           Static VLAN to VNI mapping is
+             [112, 112]        [134, 134]
+           Dynamic VLAN to VNI mapping for 'evpn' is
+             [4093, 5001]
+           Note: All Dynamic VLANs used by VCS are internal VLANs.
+                 Use 'show vxlan vni' for details.
+           Static VRF to VNI mapping is
+            [TENANT, 5001]
+           Headend replication flood vtep list is:
+            112 10.111.253.1
+            134 10.111.253.1
+           MLAG Shared Router MAC is 021c.73c0.c614
+
+   #. Log into **s1-host1** and ping **s2-host2** in both VLANs to populate the network's MAC and ARP tables.
+
+      .. note::
+
+         Since we are hosting multiple networks on the simulated Hosts, we have separated the networks by VRFs. These are 
+         not related to the VRFs in the network fabric.
+
+      .. code-block:: text
+         :emphasize-lines: 1
+
+         s1-host1#ping vrf 112 10.111.112.202
+         PING 10.111.112.202 (10.111.112.202) 72(100) bytes of data.
+         80 bytes from 10.111.112.202: icmp_seq=1 ttl=64 time=21.3 ms
+         80 bytes from 10.111.112.202: icmp_seq=2 ttl=64 time=17.6 ms
+         80 bytes from 10.111.112.202: icmp_seq=3 ttl=64 time=22.2 ms
+         80 bytes from 10.111.112.202: icmp_seq=4 ttl=64 time=22.3 ms
+         80 bytes from 10.111.112.202: icmp_seq=5 ttl=64 time=23.8 ms
+         
+         --- 10.111.112.202 ping statistics ---
+         5 packets transmitted, 5 received, 0% packet loss, time 64ms
+         rtt min/avg/max/mdev = 17.698/21.491/23.822/2.059 ms, pipe 3, ipg/ewma 16.095/21.549 ms
+         s1-host1#ping vrf 134 10.111.134.202
+         PING 10.111.134.202 (10.111.134.202) 72(100) bytes of data.
+         80 bytes from 10.111.134.202: icmp_seq=1 ttl=64 time=138 ms
+         80 bytes from 10.111.134.202: icmp_seq=2 ttl=64 time=132 ms
+         80 bytes from 10.111.134.202: icmp_seq=3 ttl=64 time=124 ms
+         80 bytes from 10.111.134.202: icmp_seq=4 ttl=64 time=111 ms
+         80 bytes from 10.111.134.202: icmp_seq=5 ttl=64 time=103 ms
+         
+         --- 10.111.134.202 ping statistics ---
+         5 packets transmitted, 5 received, 0% packet loss, time 46ms
+         rtt min/avg/max/mdev = 103.152/122.104/138.805/13.201 ms, pipe 5, ipg/ewma 11.627/129.467 ms
+          
+   #. On **s1-leaf1**, check the local MAC address-table.
+
+      .. note::
+
+         The MAC addresses in your lab may differ as they are randomly generated during the lab build. We see here that 
+         the MAC of **s1-host2** has been learned via the Vxlan1 interface on **s1-leaf1** in both Host VLANs.
+
+         We also see the remote MAC for the shared MLAG System ID of **s1-leaf3** and **s1-leaf4** associated with VLAN 
+         4093 and the Vxlan1 interface. This is how the local VTEP knows where to send routed traffic when destined to 
+         the remote MLAG pair. We can see this VLAN is dynamically created in the VLAN database and is mapped to our 
+         Layer 3 VNI (5001) in our VXLAN interface output. Be aware that since this VLAN is dynamic, the ID used in your 
+         lab may be different.
+
+      .. code-block:: text
+         :emphasize-lines: 1,8,10,11,20,25,26,36
+  
+         s1-leaf1#show mac address-table dynamic
+                   Mac Address Table
+         ------------------------------------------------------------------
+         
+         Vlan    Mac Address       Type        Ports      Moves   Last Move
+         ----    -----------       ----        -----      -----   ---------
+          112    001c.73c0.c616    DYNAMIC     Po5        1       0:01:44 ago
+          112    001c.73c0.c617    DYNAMIC     Vx1        1       0:01:44 ago
+          134    001c.73c0.c616    DYNAMIC     Po5        1       0:01:32 ago
+          134    001c.73c0.c617    DYNAMIC     Vx1        1       0:01:32 ago
+         4093    021c.73c0.c614    DYNAMIC     Vx1        1       0:54:31 ago
+         Total Mac Addresses for this criterion: 5
+         
+                   Multicast Mac Address Table
+         ------------------------------------------------------------------
+         
+         Vlan    Mac Address       Type        Ports
+         ----    -----------       ----        -----
+         Total Mac Addresses for this criterion: 0
+         s1-leaf1#show vlan 4093
+         VLAN  Name                             Status    Ports
+         ----- -------------------------------- --------- -------------------------------
+         4093* VLAN4093                         active    Cpu, Po1, Vx1
+         
+         * indicates a Dynamic VLAN
          s1-leaf1#show interfaces Vxlan1
          Vxlan1 is up, line protocol is up (connected)
            Hardware is Vxlan
@@ -390,55 +583,18 @@ L2 EVPN Services
            Replication/Flood Mode is headend with Flood List Source: EVPN
            Remote MAC learning via EVPN
            VNI mapping to VLANs
-           Static VLAN to VNI mapping is 
-             [112, 112]       
+           Static VLAN to VNI mapping is
+             [112, 112]        [134, 134]
+           Dynamic VLAN to VNI mapping for 'evpn' is
+             [4093, 5001]
            Note: All Dynamic VLANs used by VCS are internal VLANs.
                  Use 'show vxlan vni' for details.
-           Static VRF to VNI mapping is not configured
+           Static VRF to VNI mapping is
+            [TENANT, 5001]
            Headend replication flood vtep list is:
-           112 10.111.253.3   
-           MLAG Shared Router MAC is 0000.0000.0000
-
-   #. Log into **s1-host1** and ping **s2-host2** to populate the network's MAC tables.
-
-      .. code-block:: text
-         :emphasize-lines: 1
-
-         s1-host1#ping 10.111.112.202
-         PING 10.111.112.202 (10.111.112.202) 72(100) bytes of data.
-         80 bytes from 10.111.112.202: icmp_seq=1 ttl=64 time=16.8 ms
-         80 bytes from 10.111.112.202: icmp_seq=2 ttl=64 time=14.7 ms
-         80 bytes from 10.111.112.202: icmp_seq=3 ttl=64 time=16.8 ms
-         80 bytes from 10.111.112.202: icmp_seq=4 ttl=64 time=16.7 ms
-         80 bytes from 10.111.112.202: icmp_seq=5 ttl=64 time=15.2 ms
-         --- 10.111.112.202 ping statistics ---
-         5 packets transmitted, 5 received, 0% packet loss, time 61ms
-          
-   #. On **s1-leaf1**, check the local MAC address-table.
-
-      .. note::
-
-         The MAC addresses in your lab may differ as they are randomly generated during the lab build. We see here that 
-         the MAC of **s1-host2** has been learned via the Vxlan1 interface on **s1-leaf1**.
-
-      .. code-block:: text
-         :emphasize-lines: 1,8
-  
-         s1-leaf1#show mac address-table dynamic 
-         Mac Address Table
-         ------------------------------------------------------------------
-   
-         Vlan    Mac Address       Type        Ports      Moves   Last Move
-         ----    -----------       ----        -----      -----   ---------
-         112    001c.73c0.c616    DYNAMIC     Po5        1       0:00:41 ago
-         112    001c.73c0.c617    DYNAMIC     Vx1        1       0:00:41 ago
-         Total Mac Addresses for this criterion: 2
-               Multicast Mac Address Table
-         ------------------------------------------------------------------
-   
-         Vlan    Mac Address       Type        Ports
-         ----    -----------       ----        -----
-         Total Mac Addresses for this criterion: 0
+            112 10.111.253.3
+            134 10.111.253.3
+           MLAG Shared Router MAC is 021c.73c0.c612
        
    #. On **s1-leaf1**, check the EVPN control-plane for the associated host MAC.
 

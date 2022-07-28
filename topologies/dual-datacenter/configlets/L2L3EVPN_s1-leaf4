@@ -1,11 +1,5 @@
 no spanning-tree vlan-id 4094
 !
-vlan 112
-   name Host_Network_112
-!
-vlan 134
-   name Host_Network_134
-!
 vlan 4094
    name MLAG_VLAN
    trunk group MLAGPEER

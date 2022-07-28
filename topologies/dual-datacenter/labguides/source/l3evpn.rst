@@ -1,5 +1,5 @@
-L3 EVPN
-=======
+L3 EVPN Services
+================
 
 .. thumbnail:: images/l3evpn/nested_l3evpn_topo_dual_dc.png
    :align: center
@@ -16,7 +16,7 @@ L3 EVPN
    The script will configure the datacenter with the exception of **s1-leaf4**.
 
       .. note::
-         Did you know the “l2evpn” script is composed of Python code that
+         Did you know the “l3evpn” script is composed of Python code that
          uses the CloudVision Portal REST API to automate the provisioning of
          CVP Configlets. The configlets that are configured via the REST API
          are ``L2EVPN_s1-spine1``, ``L2EVPN_s1-spine2``, ``L2EVPN_s1-leaf1``,
@@ -65,7 +65,7 @@ L3 EVPN
 
    .. note::
       
-      By default, EOS is using GateD routing process. Activating (ArBGP) is requiring a reboot. This has been done prior to the lab buildout 
+      By default, EOS is using the GateD routing process. Activating (ArBGP) is requiring a reboot. This has been done prior to the lab buildout 
       so no reboot is required here.
 
 #. On **s1-leaf4**, check the following operational states before configuring EVPN constructs:
@@ -276,13 +276,13 @@ L3 EVPN
       .. code-block:: text
 
          ip virtual-router mac-address 00:1C:73:00:00:01
-
+         !
          interface Vlan134
             description Host Network 134
             vrf TENANT
             ip address virtual 10.111.134.1/24
 
-   #. Map the local Layer 2 VLAN and Layer 3 VRF with a matching VNI.
+   #. Map the local Layer 3 VRF with a matching VNI.
 
       .. note::
 
@@ -467,7 +467,8 @@ L3 EVPN
          the ARP and MAC of **s1-host1** has been learned locally **s1-leaf1**. We also see the remote MAC for the shared 
          MLAG System ID of **s1-leaf3** and **s1-leaf4** associated with VLAN 4092 and the Vxlan1 interface. This is how 
          the local VTEP knows where to send routed traffic when destined to the remote MLAG pair. We can see this VLAN is 
-         dynamically created in the VLAN database and is mapped to our Layer 3 VNI (5001) in our VXLAN interface output.
+         dynamically created in the VLAN database and is mapped to our Layer 3 VNI (5001) in our VXLAN interface output. 
+         Be aware that since this VLAN is dynamic, the ID used in your lab may be different.
          
          Since we are using VXLAN ONLY for Layer 3 VRF services and not extending any local VLANs, **s1-host2**'s MAC 
          and ARP are not learned. It is reached via the IP Prefix route only.
