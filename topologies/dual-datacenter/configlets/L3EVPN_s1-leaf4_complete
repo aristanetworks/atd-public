@@ -52,7 +52,7 @@ interface Loopback1
    ip address 10.111.253.3/32
 !
 interface Vlan134
-   description Host Network
+   description Host Network 134
    vrf TENANT
    ip address virtual 10.111.134.1/24
 !

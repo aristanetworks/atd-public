@@ -26,12 +26,42 @@ L2 EVPN
 #. On **s1-leaf4**, check if Multi-Agent Routing Protocols are enabled.
 
    .. code-block:: text
-      :emphasize-lines: 1,3
+      :emphasize-lines: 1,3,5
 
-       s1-leaf4#show run section service
-       service routing protocols model multi-agent
-       s1-leaf4#show ip route summary
-       PUT OUTPUT HERE
+      s1-leaf4#show run section service
+      service routing protocols model multi-agent
+      s1-leaf4#show ip route summary
+      
+      Operating routing protocol model: multi-agent
+      Configured routing protocol model: multi-agent
+      
+      VRF: default
+         Route Source                                Number Of Routes
+      ------------------------------------- -------------------------
+         connected                                                  4
+         static (persistent)                                        0
+         static (non-persistent)                                    0
+         VXLAN Control Service                                      0
+         static nexthop-group                                       0
+         ospf                                                       0
+           Intra-area: 0 Inter-area: 0 External-1: 0 External-2: 0
+           NSSA External-1: 0 NSSA External-2: 0
+         ospfv3                                                     0
+         bgp                                                        9
+           External: 7 Internal: 2
+         isis                                                       0
+           Level-1: 0 Level-2: 0
+         rip                                                        0
+         internal                                                  11
+         attached                                                   3
+         aggregate                                                  0
+         dynamic policy                                             0
+         gribi                                                      0
+      
+         Total Routes                                              27
+      
+      Number of routes per mask-length:
+         /8: 2         /24: 3        /30: 1        /31: 2        /32: 19
 
 
    .. note::
@@ -236,7 +266,7 @@ L2 EVPN
 
       .. note::
 
-         Here we configured a VLAN-based service with EVPN. It has two components. The first is a 
+         Here we configure a VLAN-based service with EVPN. It has two components. The first is a 
          route-distinguisher, or **RD** to identify the router (or leaf switch) that is originating the EVPN 
          routes. This can be manually defined in the format of **Number** : **Number**, such as 
          **Loopback0** : **VLAN ID** or as we do in this case, let EOS automatically allocate one.
@@ -327,8 +357,9 @@ L2 EVPN
       .. note::
 
          The Inclusive Multicast Ethernet Tag, or **IMET**, route is how a VTEP advertises membership in a given Layer 2 
-         service, or VXLAN segment. Other leaves receive this route, evaluate the **RT** to see if they have a matching 
-         configuration and, if so, import the advertising VTEP into their flood list for BUM traffic.
+         service, or VXLAN segment.  This is also known as the EVPN Type 3 Route. Other leaves receive this route, 
+         evaluate the **RT** to see if they have a matching configuration and, if so, import the advertising VTEP 
+         into their flood list for BUM traffic.
 
       .. code-block:: text
          :emphasize-lines: 1,15,16,17,18,21,33,34
@@ -416,7 +447,7 @@ L2 EVPN
 
          We see the MAC of **s1-host2** multiple times in the control-plane due to our redundant MLAG and 
          ECMP design. Both **s1-leaf3** and **s1-leaf4** are attached to **s1-host2** and therefore will 
-         generate this Type-2 EVPN route for its MAC. They each then send this route up to the redundant 
+         generate this Type 2 EVPN route for its MAC. They each then send this route up to the redundant 
          Spines (or EVPN Route Servers) which provides an ECMP path to the host.
 
       .. code-block:: text
@@ -451,11 +482,12 @@ L2 EVPN
 
          Though both **s1-leaf3** and **s1-leaf4** are advertising the MAC of **s1-host2** recall that 
          they have a shared MLAG VTEP IP for VXLAN reachability. Therefore we only see one possible 
-         destination for this host MAC. The ``show l2rib output BLAH`` command then allows us to see 
-         the ECMP paths to that VTEP via **s1-spine1** and **s1-spine2**.
+         destination for this host MAC. The ``show l2rib output mac <MAC of remote host>`` command then 
+         allows us to see the VTEP info in the hardware.  Finally we can verify the ECMP path to the remote 
+         MLAG VTEP via **s1-spine1** and **s1-spine2** with a simple ``show ip route 10.111.253.3`` command.
 
       .. code-block:: text
-         :emphasize-lines: 1,7,9
+         :emphasize-lines: 1,7,9,12
  
          s1-leaf1#show vxlan address-table evpn 
            Vxlan Mac Address Table
@@ -465,6 +497,25 @@ L2 EVPN
          ----  -----------     ----      ---  ----             -----   ---------
          112  001c.73c0.c617  EVPN      Vx1  10.111.253.3     1       0:00:57 ago
          Total Remote Mac Addresses for this criterion: 1
-         s1-leaf1#show l2rib output COMMAND
+         s1-leaf1#show l2rib output mac 001c.73c0.c617
+         001c.73c0.c617, VLAN 112, seq 1, pref 16, evpnDynamicRemoteMac, source: BGP
+            VTEP 10.111.253.3
+         s1-leaf1#show ip route 10.111.253.3
+         
+         VRF: default
+         Codes: C - connected, S - static, K - kernel,
+                O - OSPF, IA - OSPF inter area, E1 - OSPF external type 1,
+                E2 - OSPF external type 2, N1 - OSPF NSSA external type 1,
+                N2 - OSPF NSSA external type2, B - Other BGP Routes,
+                B I - iBGP, B E - eBGP, R - RIP, I L1 - IS-IS level 1,
+                I L2 - IS-IS level 2, O3 - OSPFv3, A B - BGP Aggregate,
+                A O - OSPF Summary, NG - Nexthop Group Static Route,
+                V - VXLAN Control Service, M - Martian,
+                DH - DHCP client installed default route,
+                DP - Dynamic Policy Route, L - VRF Leaked,
+                G  - gRIBI, RC - Route Cache Route
+         
+          B E      10.111.253.3/32 [200/0] via 10.111.1.0, Ethernet2
+                                           via 10.111.2.0, Ethernet3
 
 **LAB COMPLETE!**

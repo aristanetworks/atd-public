@@ -64,7 +64,6 @@ interface Vxlan1
    vxlan source-interface Loopback1
    vxlan virtual-router encapsulation mac-address mlag-system-id
    vxlan udp-port 4789
-   vxlan vlan 134 vni 134
    vxlan vrf TENANT vni 5001
 !
 ip virtual-router mac-address 00:1C:73:00:00:01
@@ -106,11 +105,6 @@ router bgp 65102
    neighbor 10.111.1.4 peer group SPINE
    neighbor 10.111.2.4 peer group SPINE
    neighbor 10.255.255.2 peer group MLAG
-   !
-   vlan 134
-      rd auto
-      route-target both 134:134
-      redistribute learned
    !
    address-family evpn
       neighbor SPINE-EVPN activate
