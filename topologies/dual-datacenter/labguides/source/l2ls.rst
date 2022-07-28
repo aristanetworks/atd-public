@@ -40,7 +40,7 @@ Layer 2 Leaf-Spine
          MLAG Configuration:
          domain-id                          :                MLAG
          local-interface                    :            Vlan4094
-         peer-address                       :      10.255.255.254
+         peer-address                       :        10.255.255.2
          peer-link                          :       Port-Channel1
          peer-config                        :
          
@@ -195,15 +195,15 @@ Layer 2 Leaf-Spine
       .. code-block:: text
          :emphasize-lines: 1
 
-         s1-leaf4(config-if-Vl4094)#ping 10.255.255.253
-         PING 10.255.255.253 (10.255.255.253) 72(100) bytes of data.
-         80 bytes from 10.255.255.253: icmp_seq=1 ttl=64 time=7.33 ms
-         80 bytes from 10.255.255.253: icmp_seq=2 ttl=64 time=6.82 ms
-         80 bytes from 10.255.255.253: icmp_seq=3 ttl=64 time=5.65 ms
-         80 bytes from 10.255.255.253: icmp_seq=4 ttl=64 time=7.16 ms
-         80 bytes from 10.255.255.253: icmp_seq=5 ttl=64 time=7.53 ms
+         s1-leaf4(config-if-Vl4094)#ping 10.255.255.1
+         PING 10.255.255.253 (10.255.255.1) 72(100) bytes of data.
+         80 bytes from 10.255.255.1: icmp_seq=1 ttl=64 time=7.33 ms
+         80 bytes from 10.255.255.1: icmp_seq=2 ttl=64 time=6.82 ms
+         80 bytes from 10.255.255.1: icmp_seq=3 ttl=64 time=5.65 ms
+         80 bytes from 10.255.255.1: icmp_seq=4 ttl=64 time=7.16 ms
+         80 bytes from 10.255.255.1: icmp_seq=5 ttl=64 time=7.53 ms
          
-         --- 10.255.255.253 ping statistics ---
+         --- 10.255.255.1 ping statistics ---
          5 packets transmitted, 5 received, 0% packet loss, time 29ms
          rtt min/avg/max/mdev = 5.659/6.903/7.530/0.663 ms, ipg/ewma 7.281/7.135 ms
 
@@ -232,7 +232,7 @@ Layer 2 Leaf-Spine
          MLAG Configuration:
          domain-id                          :                MLAG
          local-interface                    :            Vlan4094
-         peer-address                       :      10.255.255.253
+         peer-address                       :        10.255.255.1
          peer-link                          :       Port-Channel1
          peer-config                        :          consistent
          
@@ -405,7 +405,7 @@ Layer 2 Leaf-Spine
          MLAG Configuration:
          domain-id                          :                MLAG
          local-interface                    :            Vlan4094
-         peer-address                       :      10.255.255.253
+         peer-address                       :        10.255.255.1
          peer-link                          :       Port-Channel1
          peer-config                        :          consistent
          
