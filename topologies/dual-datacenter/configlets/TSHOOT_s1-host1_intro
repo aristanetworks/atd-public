@@ -1,7 +1,7 @@
 vlan 22
 !
 interface Ethernet1
-   description LEAF1
+   description S1-LEAF1
    switchport trunk allowed vlan 12
    switchport mode trunk
 !

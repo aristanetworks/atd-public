@@ -6,7 +6,7 @@ interface Ethernet1
    shutdown
 !
 interface Ethernet2
-   description LEAF1
+   description S1-LEAF1
    mtu 9000
    no switchport
    ip address 172.16.200.1/30
