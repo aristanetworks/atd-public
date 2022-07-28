@@ -213,8 +213,8 @@ All of these settings are saved in the /cvpi/cvp-config.yaml file
 
 10. When you see the configuration menu on the screen again, we know that CVP has been configured successfully. Go back to the main ATD screen and click on the **CVP** link.
 
-.. thumbnail:: images/aa-initial_configuration/initial-config-3.png
-    :width: 50%
+.. thumbnail:: images/aa-initial_configuration/initial-config-2.png
+    :width: 75%
 
 |
 
