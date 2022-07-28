@@ -12,12 +12,16 @@ interface Ethernet5
    shutdown
 interface Ethernet6
    shutdown
+interface Ethernet7
+   shutdown
+interface Ethernet8
+   shutdown
 interface Loopback0
    ip address 10.127.255.2/32
 router bgp 1
    router-id 10.127.255.2
    neighbor 10.127.12.1 remote-as 1
    neighbor 10.127.12.1 next-hop-self
-   neighbor 10.127.12.1 maximum-routes 12000 
+   neighbor 10.127.12.1 maximum-routes 12000
    neighbor 10.127.23.3 remote-as 2
-   neighbor 10.127.23.3 maximum-routes 12000 
+   neighbor 10.127.23.3 maximum-routes 12000

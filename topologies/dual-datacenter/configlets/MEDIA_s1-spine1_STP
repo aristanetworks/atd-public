@@ -16,6 +16,10 @@ interface Ethernet5
    switchport mode trunk
 interface Ethernet6
    shutdown
+interface Ethernet7
+   shutdown
+interface Ethernet8
+   shutdown
 interface Vlan100
    ip address 172.16.15.1/24
    ip address 172.16.46.4/24 secondary
