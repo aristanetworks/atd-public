@@ -204,6 +204,7 @@ L3 EVPN
       .. code-block:: text
          :emphasize-lines: 1
 
+         s1-leaf4#show bgp evpn summary
          BGP summary information for VRF default
          Router identifier 10.111.254.4, local AS number 65102
          Neighbor Status Codes: m - Under maintenance
@@ -285,12 +286,8 @@ L3 EVPN
 
       .. note::
 
-         This is how the switch understands which local Layer 2 VLAN maps to which VNI in the overlay. The 
-         example shows matching them one to one, but any scheme or method is valid, such as adding 10000 to 
-         the VLAN ID.
-
-         For the VRF, this is what is referred to as the Layer 3 VNI, which is used for VXLAN Routing in 
-         a Symmetric IRB deployment. Any unique ID number will serve here.
+         For the Layer 3 Service, the VRF requires what is referred to as the Layer 3 VNI, which is used for VXLAN 
+         Routing in a Symmetric IRB deployment between VTEPs. Any unique ID number will serve here.
    
       .. code-block:: text
 
@@ -304,7 +301,7 @@ L3 EVPN
          Here we configure a Layer 3 VRF service with EVPN. It has two components. The first is a 
          route-distinguisher, or **RD** to identify the router (or leaf switch) that is originating the EVPN 
          routes. This can be manually defined in the format of **Number** : **Number**, such as 
-         **Loopback0** : **VLAN ID** or as we do in this case, let EOS automatically allocate one. The Auto RD 
+         **Loopback0** : **VRF ID** or as we do in this case, let EOS automatically allocate one. The Auto RD 
          function is enabled globally for all VRFs under the BGP process.
 
          Second is the route-target, or **RT**. The **RT** is used by the leaf switches
@@ -336,7 +333,7 @@ L3 EVPN
             description MLAG Downlink - s1-host2
             channel-group 5 mode active
 
-#. With the Layer 2 EVPN Service configured, verify the operational state.
+#. With the Layer 3 EVPN Service configured, verify the operational state.
 
    a. Check the VXLAN data-plane configuration.
 
@@ -345,10 +342,10 @@ L3 EVPN
          Here we can see some useful commands for VXLAN verification. ``show vxlan config-sanity detail`` 
          verifies a number of standard things locally and with the MLAG peer to ensure all basic criteria are 
          met.  ``show interfaces Vxlan1`` provides a consolidated series of outputs of operational VXLAN data such 
-         as control-plane mode (EVPN in this case), VLAN to VNI mappings and discovered VTEPs.
+         as control-plane mode (EVPN in this case), VRF to VNI mappings and MLAG Router MAC.
 
       .. code-block:: text
-         :emphasize-lines: 1,24
+         :emphasize-lines: 1,26
 
          s1-leaf4#show vxlan config-sanity detail 
          Category                            Result  Detail
@@ -467,7 +464,7 @@ L3 EVPN
       .. note::
 
          The MAC addresses in your lab may differ as they are randomly generated during the lab build. We see here that 
-         the MAC and ARP of **s1-host1** has been learned locally **s1-leaf1**. We also see the remote MAC for the shared 
+         the ARP and MAC of **s1-host1** has been learned locally **s1-leaf1**. We also see the remote MAC for the shared 
          MLAG System ID of **s1-leaf3** and **s1-leaf4** associated with VLAN 4092 and the Vxlan1 interface. This is how 
          the local VTEP knows where to send routed traffic when destined to the remote MLAG pair. We can see this VLAN is 
          dynamically created in the VLAN database and is mapped to our Layer 3 VNI (5001) in our VXLAN interface output.
