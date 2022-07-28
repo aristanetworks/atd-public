@@ -107,7 +107,7 @@ TASK 2: View Telemetry
 
 |
 
-1. Using Telemetry, we can view the routes that were added as part of this change propagate across the environment. One way to view telemetry information is per device in the 'Devices' tab.  Navigate to the 'Devices' tab and select 'leaf1' to view detailed information.
+1. Using Telemetry, we can view the routes that were added as part of this change propagate across the environment. One way to view telemetry information is per device in the 'Devices' tab.  Navigate to the 'Devices' tab and select 's1-leaf1' to view detailed information.
 
 2. On the left Navigation column, select 'IPv4 Routing Table' to see a live view of the device's routing table.  Using the timeline at the bottom of the screen, you can navigate to any point in time to see what the route table was at that exact moment.  You can also see a running list of changes to the routing table on the right.
 

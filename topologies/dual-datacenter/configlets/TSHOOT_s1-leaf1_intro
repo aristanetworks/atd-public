@@ -1,11 +1,11 @@
 vlan 12,34
 !
 interface Ethernet1
-   description LEAF2
+   description S1-LEAF2
    switchport mode trunk
 !
 interface Ethernet2
-   description SPINE1
+   description S1-SPINE1
    no switchport
    ip address 172.16.200.2/30
    ip ospf network point-to-point
@@ -16,7 +16,7 @@ interface Ethernet3
    shutdown
 !
 interface Ethernet4
-   description HOST1
+   description S1-HOST1
    switchport trunk allowed vlan 12
    switchport mode trunk
 !

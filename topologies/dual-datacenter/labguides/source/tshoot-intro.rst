@@ -18,9 +18,9 @@ Troubleshooting Introduction
 
 2. Questions
 
-   1. Why can’t Leaf1 ping Host1? Are there multiple ways to fix this?
+   1. Why can’t s1-Leaf1 ping s1-Host1? Are there multiple ways to fix this?
 
-   2. Why is Leaf2 the spanning tree root for all VLANs?
+   2. Why is s1-Leaf2 the spanning tree root for all VLANs?
 
    3. Why isn’t 172.16.112.0/24 being advertised into BGP?
 

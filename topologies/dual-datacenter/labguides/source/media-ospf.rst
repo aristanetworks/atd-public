@@ -6,13 +6,15 @@ Media OSPF Lab
 
 .. note:: Did you know the OSPF algorithm is considered a link-state protocol, based on the Dijkstra Shortest Path Algorithm? It is a common protocol used in a number of widely deployed environments in various industries.
 
+.. note:: This lab has been limited to the following devices s1-Leaf 1, s1-Leaf 4, s1-Spine 1, s1-Spine 2, s1-Host 1 and s1-Host 2. Additional devices on this topology are out of scope for this lab.
+
 1. Log into the **LabAccess** jumpserver:
 
    1. Type ``labs`` at the Main Menu prompt. This will bring up additional lab menu selections.
    2. Type ``media`` at this prompt to open the media lab section (If you were previously in the Media Labs Menu, you can type ``back`` to go back).
-   3. Type ``media-ospf`` at the prompt. The script will configure the topology with the exception of **Leaf 4**.
+   3. Type ``media-ospf`` at the prompt. The script will configure the topology with the exception of **s1-Leaf 4**.
 
-   4. On **Spine 2**, verify OSPF operation (it should not be operating correctly) and you will see all the routes currently in the environment.
+   4. On **s1-Spine 2**, verify OSPF operation (it should not be operating correctly) and you will see all the routes currently in the environment.
 
         .. code-block:: text
 
@@ -27,11 +29,11 @@ Media OSPF Lab
 
          .. code-block:: text
 
-            spine2#show ip ospf neighbor
+            s1-spine2#show ip ospf neighbor
             Neighbor ID     VRF      Pri State                  Dead Time   Address         Interface
             10.127.255.2    default  1   FULL/BDR               00:00:35    10.127.23.2     Ethernet1
 
-            spine2#show ip ospf interface
+            s1-spine2#show ip ospf interface
             Loopback0 is up
               Interface Address 10.127.255.3/32, VRF default, Area 0.0.0.0
               Network Type Broadcast, Cost: 10
@@ -60,7 +62,7 @@ Media OSPF Lab
               Neighbor Count is 1
               No authentication
 
-            spine2#show ip ospf database
+            s1-spine2#show ip ospf database
 
                         OSPF Router with ID(10.127.255.3) (Process ID 100) (VRF default)
 
@@ -104,11 +106,11 @@ Media OSPF Lab
              C      192.168.0.0/24 is directly connected, Management1
 
 
-      All the route entries with a preceding "O" was learned by the OSPF protocol on **Spine 2**.
+      All the route entries with a preceding "O" was learned by the OSPF protocol on **s1-Spine 2**.
 
-2. Configure OSPF on the **Leaf 4** switch using the following criteria:
+2. Configure OSPF on the **s1-Leaf 4** switch using the following criteria:
 
-   1. Configure the Ethernet 3, Ethernet 4, Loopback 0 interfaces and the OSPF router process on **Leaf4** to be used for OSPF communication to the adjacent devices (**Spine 2** in this case)
+   1. Configure the Ethernet 3, Ethernet 4, Loopback 0 interfaces and the OSPF router process on **s1-Leaf4** to be used for OSPF communication to the adjacent devices (**s1-Spine 2** in this case)
 
         .. code-block:: text
 
@@ -128,17 +130,17 @@ Media OSPF Lab
 
          .. code-block:: text
 
-            leaf4#configure
-            leaf4(config)#int et 3
-            leaf4(config-if-Et3)#no switchport
-            leaf4(config-if-Et3)#ip address 10.127.34.4/24
-            leaf4(config)#int et 4
-            leaf4(config-if-Et4)#no switchport
-            leaf4(config-if-Et4)#ip address 172.16.46.4/24
-            leaf4(config)#int lo 0
-            leaf4(config-if-Lo0)#ip address 10.127.255.4/32
-            leaf4(config)#router ospf 100
-            leaf4(config-router-ospf)#router-id 10.127.255.4
+            s1-leaf4#configure
+            s1-leaf4(config)#int ethernet 3
+            s1-leaf4(config-if-Et3)#no switchport
+            s1-leaf4(config-if-Et3)#ip address 10.127.34.4/24
+            s1-leaf4(config)#int ethernet 4
+            s1-leaf4(config-if-Et4)#no switchport
+            s1-leaf4(config-if-Et4)#ip address 172.16.46.4/24
+            s1-leaf4(config)#int loopback 0
+            s1-leaf4(config-if-Lo0)#ip address 10.127.255.4/32
+            s1-leaf4(config)#router ospf 100
+            s1-leaf4(config-router-ospf)#router-id 10.127.255.4
 
 
       .. note::
@@ -157,10 +159,10 @@ Media OSPF Lab
 
           .. code-block:: text
 
-            leaf4(config)#configure
-            leaf4(config)#router ospf 100
-            leaf4(config-router-ospf)#network 10.127.0.0/16 area 0.0.0.0
-            leaf4(config-router-ospf)#network 172.16.46.0/24 area 0.0.0.0
+            s1-leaf4(config)#configure
+            s1-leaf4(config)#router ospf 100
+            s1-leaf4(config-router-ospf)#network 10.127.0.0/16 area 0.0.0.0
+            s1-leaf4(config-router-ospf)#network 172.16.46.0/24 area 0.0.0.0
 
 
       .. note::
@@ -179,12 +181,12 @@ Media OSPF Lab
 
          .. code-block:: text
 
-            leaf4(config)#router ospf 100
-            leaf4(config-router-ospf)#passive-interface loopback 0
-            leaf4(config-router-ospf)#passive-interface ethernet4
+            s1-leaf4(config)#router ospf 100
+            s1-leaf4(config-router-ospf)#passive-interface loopback 0
+            s1-leaf4(config-router-ospf)#passive-interface ethernet4
 
 
-   4. Confirm the OSPF neighbor relationship has been established and the routing table on **Leaf 4** has been populated with the appropriate entries.
+   4. Confirm the OSPF neighbor relationship has been established and the routing table on **s1-Leaf 4** has been populated with the appropriate entries.
 
         .. code-block:: text
 
@@ -197,11 +199,11 @@ Media OSPF Lab
 
          .. code-block:: text
 
-            leaf4(config-if-Et4)#show ip ospf neighbor
+            s1-leaf4(config-if-Et4)#show ip ospf neighbor
             Neighbor ID     VRF      Pri State                  Dead Time   Address         Interface
             10.127.255.3    default  1   FULL/DR                00:00:31    10.127.34.3     Ethernet3
 
-            leaf4(config-if-Et4)#show ip ospf interface
+            s1-leaf4(config-if-Et4)#show ip ospf interface
             Loopback0 is up
               Interface Address 10.127.255.4/32, VRF default, Area 0.0.0.0
               Network Type Broadcast, Cost: 10
@@ -230,7 +232,7 @@ Media OSPF Lab
               Neighbor Count is 0
               No authentication
 
-            leaf4(config-if-Et4)#sh ip ospf database
+            s1-leaf4(config-if-Et4)#sh ip ospf database
 
                         OSPF Router with ID(10.127.255.4) (Process ID 100) (VRF default)
 
@@ -250,7 +252,7 @@ Media OSPF Lab
             10.127.34.3     10.127.255.3    1181        0x80000001   0x26be
             10.127.12.2     10.127.255.2    861         0x80000004   0xee0f
 
-            leaf4(config-if-Et4)#sh ip route
+            s1-leaf4(config-if-Et4)#sh ip route
 
             VRF: default
             Codes: C - connected, S - static, K - kernel,
@@ -281,7 +283,7 @@ Media OSPF Lab
 
 3. Validate end-to-end connectivity once OSPF neighbor relationship has been established.
 
-   1. Log into **Host 2** and verify connectivity with **Host 1**.
+   1. Log into **s1-Host 2** and verify connectivity with **s1-Host 1**.
 
          .. code-block:: text
 
@@ -291,7 +293,7 @@ Media OSPF Lab
 
          .. code-block:: text
 
-            host2# ping 172.16.15.5
+            s1-host2# ping 172.16.15.5
             PING 172.16.15.5 (172.16.15.5) 72(100) bytes of data.
             80 bytes from 172.16.15.5: icmp_seq=1 ttl=60 time=99.5 ms
             80 bytes from 172.16.15.5: icmp_seq=2 ttl=60 time=102 ms
@@ -304,11 +306,11 @@ Media OSPF Lab
             rtt min/avg/max/mdev = 99.508/137.682/165.494/29.858 ms, pipe 5, ipg/ewma 10.149/120.314 ms
 
 
-      If OSPF settings have been configured correctly and the routing table on **Leaf 4** has converged then **Host 1** should be reachable from **Host 2**.
+      If OSPF settings have been configured correctly and the routing table on **s1-Leaf 4** has converged then **s1-Host 1** should be reachable from **s1-Host 2**.
 
 .. admonition:: **Test your knowledge:**
 
-    When inspecting the routing table on **Leaf 4**, why are all the infrastructure IP address in there? What are the positive and negative results of that?
+    When inspecting the routing table on **s1-Leaf 4**, why are all the infrastructure IP address in there? What are the positive and negative results of that?
 
 
 **LAB COMPLETE!**
