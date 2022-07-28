@@ -17,9 +17,14 @@ interface Ethernet5
    ip pim sparse-mode
 interface Ethernet6
    shutdown
+interface Ethernet7
+   shutdown
+interface Ethernet8
+   shutdown
 interface Loopback0
    ip address 172.16.0.3/32
 ip routing
+ip multicast-routing
 !
 router multicast
    ipv4
