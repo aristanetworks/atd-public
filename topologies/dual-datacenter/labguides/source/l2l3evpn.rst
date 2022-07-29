@@ -596,7 +596,7 @@ L2 and L3 EVPN with Symmetric IRB
             134 10.111.253.3
            MLAG Shared Router MAC is 021c.73c0.c612
        
-   #. On **s1-leaf1**, check the EVPN control-plane for the associated host MAC.
+   #. On **s1-leaf1**, check the EVPN control-plane for the associated host MAC/IP and Prefix.
 
       .. note::
 
@@ -605,31 +605,13 @@ L2 and L3 EVPN with Symmetric IRB
          generate this Type 2 EVPN route for its MAC. They each then send this route up to the redundant 
          Spines (or EVPN Route Servers) which provides an ECMP path to the host.
 
+         Also notice that since we have configured our network for VXLAN Routing functionality we also see 
+         the host MAC-IP route that advertises the ARP binding of **s1-host2**.
+
       .. code-block:: text
-         :emphasize-lines: 1,15,16,17,18,19,20,21,22
+         :emphasize-lines: 1
  
          s1-leaf1#show bgp evpn route-type mac-ip 
-         BGP routing table information for VRF default
-         Router identifier 10.111.254.1, local AS number 65101
-         Route status codes: s - suppressed, * - valid, > - active, E - ECMP head, e - ECMP
-                             S - Stale, c - Contributing to ECMP, b - backup
-                             % - Pending BGP convergence
-         Origin codes: i - IGP, e - EGP, ? - incomplete
-         AS Path Attributes: Or-ID - Originator ID, C-LST - Cluster List, LL Nexthop - Link Local Nexthop 
- 
-                   Network                Next Hop              Metric  LocPref Weight  Path
-         * >     RD: 10.111.254.1:112 mac-ip 001c.73c0.c616
-                                         -                     -       -       0       i
-         * >     RD: 10.111.254.1:112 mac-ip 001c.73c0.c616 10.111.112.201
-                                         -                     -       -       0       i
-         * >Ec   RD: 10.111.254.3:112 mac-ip 001c.73c0.c617
-                                         10.111.253.3          -       100     0       65100 65102 i
-         *  ec   RD: 10.111.254.3:112 mac-ip 001c.73c0.c617
-                                         10.111.253.3          -       100     0       65100 65102 i
-         * >Ec   RD: 10.111.254.4:112 mac-ip 001c.73c0.c617
-                                         10.111.253.3          -       100     0       65100 65102 i
-         *  ec   RD: 10.111.254.4:112 mac-ip 001c.73c0.c617
-                                         10.111.253.3          -       100     0       65100 65102 i
 
    #. On **s1-leaf1**, check the VXLAN data-plane for MAC address.
 
