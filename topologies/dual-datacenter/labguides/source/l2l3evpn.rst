@@ -300,7 +300,7 @@ L2 and L3 EVPN with Symmetric IRB
                route-target both 134:134
                redistribute learned
 
-#. Configure a Layer 3 EVPN service on **s1-leaf4**.
+#. Configure Layer 3 EVPN services on **s1-leaf4**.
 
    a. Create the VRF, or logical routing instance, for the Tenant Layer 3 Network.
 
@@ -529,7 +529,7 @@ L2 and L3 EVPN with Symmetric IRB
          not related to the VRFs in the network fabric.
 
       .. code-block:: text
-         :emphasize-lines: 1
+         :emphasize-lines: 1,12
 
          s1-host1#ping vrf 112 10.111.112.202
          PING 10.111.112.202 (10.111.112.202) 72(100) bytes of data.
@@ -570,7 +570,7 @@ L2 and L3 EVPN with Symmetric IRB
          both Layer 2 (112) and Layer 3 (5001) which we see in further outputs later.
 
       .. code-block:: text
-         :emphasize-lines: 1,11,12,13,14,19,20,21,22,31,33,38,39,43,44,46,51,52,56,57
+         :emphasize-lines: 1,11,12,13,14,23,24,25,26,35,37,42,43,47,48,50,55,56,60,61
  
          s1-leaf1#show bgp evpn route-type mac-ip
          BGP routing table information for VRF default
@@ -634,7 +634,7 @@ L2 and L3 EVPN with Symmetric IRB
                Extended Community: Route-Target-AS:112:112 Route-Target-AS:5001:5001 TunnelEncap:tunnelTypeVxlan EvpnRouterMac:02:1c:73:c0:c6:14
                VNI: 112 L3 VNI: 5001 ESI: 0000:0000:0000:0000:0000
    
-      #. On **s1-leaf1**, verify the BGP table to ensure the Tenant networks on **s1-leaf4** has been learned in the overlay.
+   #. On **s1-leaf1**, verify the BGP table to ensure the Tenant networks on **s1-leaf4** has been learned in the overlay.
 
       .. note::
 
