@@ -647,10 +647,10 @@ L2 and L3 EVPN with Symmetric IRB
          In the detailed output, we can see the specific routes from **s1-leaf4** by filtering based on the **RD** 
          value. We can see information about the **RT**, EVPN Router MAC (shared with **s1-leaf3**) and the L3 VNI. The 
          highlights below focus on the 10.111.112.0/24 network.
-
+         
       .. code-block:: text
          :emphasize-lines: 1,16,17,18,19,31,34.39,40,44,45
-
+         
          s1-leaf1#show bgp evpn route-type ip-prefix ipv4
          BGP routing table information for VRF default
          Router identifier 10.111.254.1, local AS number 65101
@@ -696,7 +696,7 @@ L2 and L3 EVPN with Symmetric IRB
                Origin IGP, metric -, localpref 100, weight 0, valid, external, ECMP, ECMP contributor
                Extended Community: Route-Target-AS:5001:5001 TunnelEncap:tunnelTypeVxlan EvpnRouterMac:02:1c:73:c0:c6:14
                VNI: 5001
-          
+
    #. On **s1-leaf1**, check the local ARP and MAC address-table.
 
       .. note::
