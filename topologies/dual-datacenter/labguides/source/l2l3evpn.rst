@@ -680,6 +680,7 @@ L2 and L3 EVPN with Symmetric IRB
                                           10.111.253.3          -       100     0       65100 65102 i
           *  ec    RD: 10.111.254.4:1 ip-prefix 10.111.134.0/24
                                           10.111.253.3          -       100     0       65100 65102 i
+         
          s1-leaf1#show bgp evpn route-type ip-prefix ipv4 rd 10.111.254.4:1 detail
          BGP routing table information for VRF default
          Router identifier 10.111.254.1, local AS number 65101
