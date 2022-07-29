@@ -388,7 +388,7 @@ L3 EVPN Services
             [TENANT, 5001]
            MLAG Shared Router MAC is 021c.73c0.c614
 
-   #. On **s1-leaf1** (and/or **s1-leaf2**) verify the BGP and Route table to ensure the network on **s1-leaf4** has been learned in the overlay.
+   #. On **s1-leaf1** (and/or **s1-leaf2**) verify the BGP and Route table to ensure the Tenant network on **s1-leaf4** has been learned in the overlay.
 
       .. note::
 
@@ -404,45 +404,45 @@ L3 EVPN Services
       .. code-block:: text
          :emphasize-lines: 1,16,17,18,19,21,39
 
-          s1-leaf1#show bgp evpn route-type ip-prefix ipv4
-          BGP routing table information for VRF default
-          Router identifier 10.111.254.1, local AS number 65101
-          Route status codes: * - valid, > - active, S - Stale, E - ECMP head, e - ECMP
-                              c - Contributing to ECMP, % - Pending BGP convergence
-          Origin codes: i - IGP, e - EGP, ? - incomplete
-          AS Path Attributes: Or-ID - Originator ID, C-LST - Cluster List, LL Nexthop - Link Local Nexthop
-          
-                    Network                Next Hop              Metric  LocPref Weight  Path
-           * >      RD: 10.111.254.1:1 ip-prefix 10.111.112.0/24
-                                           -                     -       -       0       i
-           * >Ec    RD: 10.111.254.3:1 ip-prefix 10.111.134.0/24
-                                           10.111.253.3          -       100     0       65100 65102 i
-           *  ec    RD: 10.111.254.3:1 ip-prefix 10.111.134.0/24
-                                           10.111.253.3          -       100     0       65100 65102 i
-           * >Ec    RD: 10.111.254.4:1 ip-prefix 10.111.134.0/24
-                                           10.111.253.3          -       100     0       65100 65102 i
-           *  ec    RD: 10.111.254.4:1 ip-prefix 10.111.134.0/24
-                                           10.111.253.3          -       100     0       65100 65102 i
+         s1-leaf1#show bgp evpn route-type ip-prefix ipv4
+         BGP routing table information for VRF default
+         Router identifier 10.111.254.1, local AS number 65101
+         Route status codes: * - valid, > - active, S - Stale, E - ECMP head, e - ECMP
+                             c - Contributing to ECMP, % - Pending BGP convergence
+         Origin codes: i - IGP, e - EGP, ? - incomplete
+         AS Path Attributes: Or-ID - Originator ID, C-LST - Cluster List, LL Nexthop - Link Local Nexthop
+       
+                   Network                Next Hop              Metric  LocPref Weight  Path
+          * >      RD: 10.111.254.1:1 ip-prefix 10.111.112.0/24
+                                          -                     -       -       0       i
+          * >Ec    RD: 10.111.254.3:1 ip-prefix 10.111.134.0/24
+                                          10.111.253.3          -       100     0       65100 65102 i
+          *  ec    RD: 10.111.254.3:1 ip-prefix 10.111.134.0/24
+                                          10.111.253.3          -       100     0       65100 65102 i
+          * >Ec    RD: 10.111.254.4:1 ip-prefix 10.111.134.0/24
+                                          10.111.253.3          -       100     0       65100 65102 i
+          *  ec    RD: 10.111.254.4:1 ip-prefix 10.111.134.0/24
+                                          10.111.253.3          -       100     0       65100 65102 i
 
-          s1-leaf1#show ip route vrf TENANT
-          
-          VRF: TENANT
-          Codes: C - connected, S - static, K - kernel,
-                 O - OSPF, IA - OSPF inter area, E1 - OSPF external type 1,
-                 E2 - OSPF external type 2, N1 - OSPF NSSA external type 1,
-                 N2 - OSPF NSSA external type2, B - Other BGP Routes,
-                 B I - iBGP, B E - eBGP, R - RIP, I L1 - IS-IS level 1,
-                 I L2 - IS-IS level 2, O3 - OSPFv3, A B - BGP Aggregate,
-                 A O - OSPF Summary, NG - Nexthop Group Static Route,
-                 V - VXLAN Control Service, M - Martian,
-                 DH - DHCP client installed default route,
-                 DP - Dynamic Policy Route, L - VRF Leaked,
-                 G  - gRIBI, RC - Route Cache Route
-          
-          Gateway of last resort is not set
-          
-           C        10.111.112.0/24 is directly connected, Vlan112
-           B E      10.111.134.0/24 [200/0] via VTEP 10.111.253.3 VNI 5001 router-mac 02:1c:73:c0:c6:14 local-interface Vxlan1
+         s1-leaf1#show ip route vrf TENANT
+         
+         VRF: TENANT
+         Codes: C - connected, S - static, K - kernel,
+                O - OSPF, IA - OSPF inter area, E1 - OSPF external type 1,
+                E2 - OSPF external type 2, N1 - OSPF NSSA external type 1,
+                N2 - OSPF NSSA external type2, B - Other BGP Routes,
+                B I - iBGP, B E - eBGP, R - RIP, I L1 - IS-IS level 1,
+                I L2 - IS-IS level 2, O3 - OSPFv3, A B - BGP Aggregate,
+                A O - OSPF Summary, NG - Nexthop Group Static Route,
+                V - VXLAN Control Service, M - Martian,
+                DH - DHCP client installed default route,
+                DP - Dynamic Policy Route, L - VRF Leaked,
+                G  - gRIBI, RC - Route Cache Route
+         
+         Gateway of last resort is not set
+         
+          C        10.111.112.0/24 is directly connected, Vlan112
+          B E      10.111.134.0/24 [200/0] via VTEP 10.111.253.3 VNI 5001 router-mac 02:1c:73:c0:c6:14 local-interface Vxlan1
 
    #. Log into **s1-host1** and ping **s2-host2** to verify connectivity.
 
