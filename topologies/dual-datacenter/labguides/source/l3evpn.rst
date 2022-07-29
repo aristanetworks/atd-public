@@ -123,7 +123,7 @@ L3 EVPN Services
          10.111.2.6   4 65100              9        12    0    0 00:00:07 Estab   5      5
          10.255.255.1 4 65102              8        10    0    0 00:00:07 Estab   10     10  
 
-   #. Check the ip routing table:
+   #. Check the IP routing table:
 
       .. note::
          

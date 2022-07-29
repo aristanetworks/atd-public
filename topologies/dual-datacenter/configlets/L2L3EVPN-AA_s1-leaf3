@@ -74,7 +74,7 @@ ip prefix-list LOOPBACKS
 route-map LOOPBACKS permit 100
    match ip address prefix-list LOOPBACKS
 !
-router bgp 65102
+router bgp 65103
    router-id 10.111.254.3
    rd auto
    maximum-paths 2

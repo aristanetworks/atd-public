@@ -9,7 +9,7 @@ L2 and L3 EVPN - Symmetric IRB with All-Active Multihoming
 
 .. note:: 
    
-   This lab exercise is focused on the VXLAN EVPN configuration. IP addresses, MLAG and BGP Underlay are already configured.
+   This lab exercise is focused on the VXLAN EVPN configuration. IP addresses and BGP Underlay are already configured.
 
 1. Log into the  **LabAccess**  jumpserver:
 
@@ -70,42 +70,8 @@ L2 and L3 EVPN - Symmetric IRB with All-Active Multihoming
       so no reboot is required here.
 
 #. On **s1-leaf4**, check the following operational states before configuring EVPN constructs:
-
-   a. Verify EOS MLAG operational details.
-
-      .. note::
-         
-         The MLAG state between **s1-leaf4** and its peer **s1-leaf3** will be inconsistent. This is expected as 
-         **s1-leaf3** is fully configured and **s1-leaf4** is not as of yet.
-
-      .. code-block:: text
-         :emphasize-lines: 1
-      
-          s1-leaf4#show mlag
-          MLAG Configuration:              
-          domain-id                          :                MLAG
-          local-interface                    :            Vlan4094
-          peer-address                       :        10.255.255.1
-          peer-link                          :       Port-Channel1
-          peer-config                        :        inconsistent
-
-          MLAG Status:                     
-          state                              :              Active
-          negotiation status                 :           Connected
-          peer-link status                   :                  Up
-          local-int status                   :                  Up
-          system-id                          :   02:1c:73:c0:c6:14
-          dual-primary detection             :            Disabled
-          dual-primary interface errdisabled :               False
-                                                              
-          MLAG Ports:                      
-          Disabled                           :                   0
-          Configured                         :                   0
-          Inactive                           :                   0
-          Active-partial                     :                   0
-          Active-full                        :                   0
           
-   #. Verify BGP operational details for Underlay:
+   a. Verify BGP operational details for Underlay:
 
       .. note::
          
@@ -123,7 +89,7 @@ L2 and L3 EVPN - Symmetric IRB with All-Active Multihoming
          10.111.2.6   4 65100              9        12    0    0 00:00:07 Estab   5      5
          10.255.255.1 4 65102              8        10    0    0 00:00:07 Estab   10     10  
 
-   #. Check the ip routing table:
+   #. Check the IP routing table:
 
       .. note::
          
