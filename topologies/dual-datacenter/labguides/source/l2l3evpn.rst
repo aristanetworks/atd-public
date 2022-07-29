@@ -649,55 +649,53 @@ L2 and L3 EVPN with Symmetric IRB
          highlights below focus on the 10.111.112.0/24 network.
 
       .. code-block:: text
-         :emphasize-lines: 1,16,17,18,19,30,33.38,39,43,44
+         :emphasize-lines: 1,16,17,18,19,31,34.39,40,44,45
 
-          s1-leaf1#show bgp evpn route-type ip-prefix ipv4
-          BGP routing table information for VRF default
-          Router identifier 10.111.254.1, local AS number 65101
-          Route status codes: * - valid, > - active, S - Stale, E - ECMP head, e - ECMP
-                              c - Contributing to ECMP, % - Pending BGP convergence
-          Origin codes: i - IGP, e - EGP, ? - incomplete
-          AS Path Attributes: Or-ID - Originator ID, C-LST - Cluster List, LL Nexthop - Link Local Nexthop
-          
-                    Network                Next Hop              Metric  LocPref Weight  Path
-           * >      RD: 10.111.254.1:1 ip-prefix 10.111.112.0/24
-                                           -                     -       -       0       i
-           * >Ec    RD: 10.111.254.3:1 ip-prefix 10.111.112.0/24
-                                           10.111.253.3          -       100     0       65100 65102 i
-           *  ec    RD: 10.111.254.3:1 ip-prefix 10.111.112.0/24
-                                           10.111.253.3          -       100     0       65100 65102 i
-           * >Ec    RD: 10.111.254.4:1 ip-prefix 10.111.112.0/24
-                                           10.111.253.3          -       100     0       65100 65102 i
-           *  ec    RD: 10.111.254.4:1 ip-prefix 10.111.112.0/24
-                                           10.111.253.3          -       100     0       65100 65102 i
-           * >      RD: 10.111.254.1:1 ip-prefix 10.111.134.0/24
-                                           -                     -       -       0       i
-           * >Ec    RD: 10.111.254.3:1 ip-prefix 10.111.134.0/24
-                                           10.111.253.3          -       100     0       65100 65102 i
-           *  ec    RD: 10.111.254.3:1 ip-prefix 10.111.134.0/24
-                                           10.111.253.3          -       100     0       65100 65102 i
-           * >Ec    RD: 10.111.254.4:1 ip-prefix 10.111.134.0/24
-                                           10.111.253.3          -       100     0       65100 65102 i
-           *  ec    RD: 10.111.254.4:1 ip-prefix 10.111.134.0/24
-                                           10.111.253.3          -       100     0       65100 65102 i
-          
-          s1-leaf1#show bgp evpn route-type ip-prefix ipv4 rd 10.111.254.4:1 detail
-          BGP routing table information for VRF default
-          Router identifier 10.111.254.1, local AS number 65101
-          BGP routing table entry for ip-prefix 10.111.112.0/24, Route Distinguisher: 10.111.254.4:1
-           Paths: 2 available
-            65100 65102
-              10.111.253.3 from 10.111.0.1 (10.111.0.1)
-                Origin IGP, metric -, localpref 100, weight 0, valid, external, ECMP head, ECMP, best, ECMP contributor
-                Extended Community: Route-Target-AS:5001:5001 TunnelEncap:tunnelTypeVxlan EvpnRouterMac:02:1c:73:c0:c6:14
-                VNI: 5001
-            65100 65102
-              10.111.253.3 from 10.111.0.2 (10.111.0.2)
-                Origin IGP, metric -, localpref 100, weight 0, valid, external, ECMP, ECMP contributor
-                Extended Community: Route-Target-AS:5001:5001 TunnelEncap:tunnelTypeVxlan EvpnRouterMac:02:1c:73:c0:c6:14
-                VNI: 5001
-          BGP routing table entry for ip-prefix 10.111.134.0/24, Route Distinguisher: 10.111.254.4:1
-          <Output Truncated for Space>
+         s1-leaf1#show bgp evpn route-type ip-prefix ipv4
+         BGP routing table information for VRF default
+         Router identifier 10.111.254.1, local AS number 65101
+         Route status codes: * - valid, > - active, S - Stale, E - ECMP head, e - ECMP
+                             c - Contributing to ECMP, % - Pending BGP convergence
+         Origin codes: i - IGP, e - EGP, ? - incomplete
+         AS Path Attributes: Or-ID - Originator ID, C-LST - Cluster List, LL Nexthop - Link Local Nexthop
+         
+                   Network                Next Hop              Metric  LocPref Weight  Path
+          * >      RD: 10.111.254.1:1 ip-prefix 10.111.112.0/24
+                                          -                     -       -       0       i
+          * >Ec    RD: 10.111.254.3:1 ip-prefix 10.111.112.0/24
+                                          10.111.253.3          -       100     0       65100 65102 i
+          *  ec    RD: 10.111.254.3:1 ip-prefix 10.111.112.0/24
+                                          10.111.253.3          -       100     0       65100 65102 i
+          * >Ec    RD: 10.111.254.4:1 ip-prefix 10.111.112.0/24
+                                          10.111.253.3          -       100     0       65100 65102 i
+          *  ec    RD: 10.111.254.4:1 ip-prefix 10.111.112.0/24
+                                          10.111.253.3          -       100     0       65100 65102 i
+          * >      RD: 10.111.254.1:1 ip-prefix 10.111.134.0/24
+                                          -                     -       -       0       i
+          * >Ec    RD: 10.111.254.3:1 ip-prefix 10.111.134.0/24
+                                          10.111.253.3          -       100     0       65100 65102 i
+          *  ec    RD: 10.111.254.3:1 ip-prefix 10.111.134.0/24
+                                          10.111.253.3          -       100     0       65100 65102 i
+          * >Ec    RD: 10.111.254.4:1 ip-prefix 10.111.134.0/24
+                                          10.111.253.3          -       100     0       65100 65102 i
+          *  ec    RD: 10.111.254.4:1 ip-prefix 10.111.134.0/24
+                                          10.111.253.3          -       100     0       65100 65102 i
+         
+         s1-leaf1#show bgp evpn route-type ip-prefix ipv4 rd 10.111.254.4:1 detail
+         BGP routing table information for VRF default
+         Router identifier 10.111.254.1, local AS number 65101
+         BGP routing table entry for ip-prefix 10.111.112.0/24, Route Distinguisher: 10.111.254.4:1
+          Paths: 2 available
+           65100 65102
+             10.111.253.3 from 10.111.0.1 (10.111.0.1)
+               Origin IGP, metric -, localpref 100, weight 0, valid, external, ECMP head, ECMP, best, ECMP contributor
+               Extended Community: Route-Target-AS:5001:5001 TunnelEncap:tunnelTypeVxlan EvpnRouterMac:02:1c:73:c0:c6:14
+               VNI: 5001
+           65100 65102
+             10.111.253.3 from 10.111.0.2 (10.111.0.2)
+               Origin IGP, metric -, localpref 100, weight 0, valid, external, ECMP, ECMP contributor
+               Extended Community: Route-Target-AS:5001:5001 TunnelEncap:tunnelTypeVxlan EvpnRouterMac:02:1c:73:c0:c6:14
+               VNI: 5001
           
    #. On **s1-leaf1**, check the local ARP and MAC address-table.
 
