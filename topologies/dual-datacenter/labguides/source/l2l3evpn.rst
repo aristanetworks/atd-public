@@ -17,6 +17,7 @@ L2 and L3 EVPN with Symmetric IRB
    The script will configure the datacenter with the exception of **s1-leaf4**.
 
       .. note::
+
          Did you know the “l2l3evpn” script is composed of Python code that
          uses the CloudVision Portal REST API to automate the provisioning of
          CVP Configlets. The configlets that are configured via the REST API
@@ -713,6 +714,7 @@ L2 and L3 EVPN with Symmetric IRB
 
       .. code-block:: text
          :emphasize-lines: 1,4,6,7,14,16,17,26,31,32,42,46
+         
          s1-leaf1#show ip arp vrf TENANT
          Address         Age (sec)  Hardware Addr   Interface
          10.111.112.201    0:17:56  001c.73c0.c616  Vlan112, Port-Channel5
