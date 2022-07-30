@@ -75,7 +75,7 @@ L2 and L3 EVPN - Symmetric IRB with All-Active Multihoming
 
       .. note::
          
-         You should see 3 underlay sessions; one to each spine and one to the MLAG peer for redundancy.
+         You should see underlay sessions; one to each spine. In this design, there is no "peer-link"
    
       .. code-block:: text
          :emphasize-lines: 1
@@ -85,9 +85,8 @@ L2 and L3 EVPN - Symmetric IRB with All-Active Multihoming
          Router identifier 10.111.254.4, local AS number 65102
          Neighbor Status Codes: m - Under maintenance
          Neighbor     V AS           MsgRcvd   MsgSent  InQ OutQ  Up/Down State   PfxRcd PfxAcc
-         10.111.1.6   4 65100              9        12    0    0 00:00:07 Estab   5      5
-         10.111.2.6   4 65100              9        12    0    0 00:00:07 Estab   5      5
-         10.255.255.1 4 65102              8        10    0    0 00:00:07 Estab   10     10  
+         10.111.1.6   4 65100              9        12    0    0 00:00:07 Estab   8      8
+         10.111.2.6   4 65100              9        12    0    0 00:00:07 Estab   8      8
 
    #. Check the IP routing table:
 
@@ -177,6 +176,12 @@ L2 and L3 EVPN - Symmetric IRB with All-Active Multihoming
          :emphasize-lines: 1
 
          s1-leaf4(config-router-bgp-af)#show bgp evpn summary
+         BGP summary information for VRF default
+         Router identifier 10.111.254.4, local AS number 65104
+         Neighbor Status Codes: m - Under maintenance
+           Neighbor   V AS           MsgRcvd   MsgSent  InQ OutQ  Up/Down State   PfxRcd PfxAcc
+           10.111.0.1 4 65100             31        31    0    0 00:00:04 Estab   34     34
+           10.111.0.2 4 65100             31         4    0    0 00:00:04 Estab   34     34
 
 
 #. On **s1-leaf4**, configure the VXLAN data-plane for transport.
