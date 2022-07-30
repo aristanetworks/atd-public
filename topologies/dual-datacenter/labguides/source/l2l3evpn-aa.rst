@@ -351,7 +351,7 @@ L2 and L3 EVPN - Symmetric IRB with All-Active Multihoming
 
 #. With the Layer 2 and 3 EVPN Services configured, verify the operational state.
 
-   a. Check the VXLAN data-plane configuration.
+   a. Check the VXLAN data-plane configuration on **s1-leaf4**.
 
       .. note::
 
@@ -364,11 +364,145 @@ L2 and L3 EVPN - Symmetric IRB with All-Active Multihoming
          :emphasize-lines: 1,25
 
          s1-leaf4#show vxlan config-sanity detail
-
+         Category                            Result  Detail
+         ---------------------------------- -------- --------------------------------------------------
+         Local VTEP Configuration Check        OK
+           Loopback IP Address                 OK
+           VLAN-VNI Map                        OK
+           Routing                             OK
+           VNI VRF ACL                         OK
+           Decap VRF-VNI Map                   OK
+           VRF-VNI Dynamic VLAN                OK
+         Remote VTEP Configuration Check       OK
+           Remote VTEP                         OK
+         Platform Dependent Check              OK
+           VXLAN Bridging                      OK
+           VXLAN Routing                       OK
+         CVX Configuration Check               OK
+           CVX Server                          OK    Not in controller client mode
+         MLAG Configuration Check              OK    Run 'show mlag config-sanity' to verify MLAG config
+           Peer VTEP IP                        OK    MLAG peer is not connected
+           MLAG VTEP IP                        OK
+           Peer VLAN-VNI                       OK
+           Virtual VTEP IP                     OK
+           MLAG Inactive State                 OK
          
          s1-leaf4#show interfaces Vxlan1
+         Vxlan1 is up, line protocol is up (connected)
+           Hardware is Vxlan
+           Source interface is Loopback1 and is active with 10.111.253.4
+           Replication/Flood Mode is headend with Flood List Source: EVPN
+           Remote MAC learning via EVPN
+           VNI mapping to VLANs
+           Static VLAN to VNI mapping is
+             [112, 112]        [134, 134]
+           Dynamic VLAN to VNI mapping for 'evpn' is
+             [4094, 5001]
+           Note: All Dynamic VLANs used by VCS are internal VLANs.
+                 Use 'show vxlan vni' for details.
+           Static VRF to VNI mapping is
+            [TENANT, 5001]
+           Headend replication flood vtep list is:
+            112 10.111.253.1    10.111.253.3    10.111.253.2
+            134 10.111.253.1    10.111.253.3    10.111.253.2
+           Shared Router MAC is 0000.0000.0000
+   
+   #. Determine who the Designated Forwarder is for the EVPN A-A Port-Channel on **s1-leaf4**.
 
-   #. On **s1-leaf1** (and/or **s1-leaf2**) verify the IMET table to ensure **s1-leaf4** has been discovered in the overlay.
+      .. note::
+
+         In an EVPN A-A Ethernet Segment, only one member of the **ES** is elected as the Designated 
+         Forwarder, or **DF**. The **DF** is responsible for forwarding BUM traffic to the connected 
+         downstream device. By default, a modulus operation is run by all members of the **ES** to uniformly 
+         elect the DF based on the received Ethernet Segment, or EVPN Type 4, routes. Highlighted below we can 
+         see the received EVPN Type 4 routes from **s1-leaf3** with the matching **ESI** value. The detailed 
+         output shows the associated **ES RT** value as well.
+
+         By further inspecting the EVPN Instances, or MAC-VRFs, we can determine which member of the **ES** has 
+         been elected as the **DF**.
+
+      .. code-block:: text
+         :emphasize-lines: 1,18,19,20,21,24,27,32,36,42,52,58,59,69,75,76
+
+         s1-leaf4#show bgp evpn route-type ethernet-segment
+         BGP routing table information for VRF default
+         Router identifier 10.111.254.4, local AS number 65104
+         Route status codes: * - valid, > - active, S - Stale, E - ECMP head, e - ECMP
+                             c - Contributing to ECMP, % - Pending BGP convergence
+         Origin codes: i - IGP, e - EGP, ? - incomplete
+         AS Path Attributes: Or-ID - Originator ID, C-LST - Cluster List, LL Nexthop - Link Local Nexthop
+         
+                   Network                Next Hop              Metric  LocPref Weight  Path
+          * >Ec    RD: 10.111.253.1:1 ethernet-segment 0012:0000:0000:0000:0005 10.111.253.1
+                                          10.111.253.1          -       100     0       65100 65101 i
+          *  ec    RD: 10.111.253.1:1 ethernet-segment 0012:0000:0000:0000:0005 10.111.253.1
+                                          10.111.253.1          -       100     0       65100 65101 i
+          * >Ec    RD: 10.111.253.2:1 ethernet-segment 0012:0000:0000:0000:0005 10.111.253.2
+                                          10.111.253.2          -       100     0       65100 65102 i
+          *  ec    RD: 10.111.253.2:1 ethernet-segment 0012:0000:0000:0000:0005 10.111.253.2
+                                          10.111.253.2          -       100     0       65100 65102 i
+          * >Ec    RD: 10.111.253.3:1 ethernet-segment 0034:0000:0000:0000:0005 10.111.253.3
+                                          10.111.253.3          -       100     0       65100 65103 i
+          *  ec    RD: 10.111.253.3:1 ethernet-segment 0034:0000:0000:0000:0005 10.111.253.3
+                                          10.111.253.3          -       100     0       65100 65103 i
+          * >      RD: 10.111.253.4:1 ethernet-segment 0034:0000:0000:0000:0005 10.111.253.4
+                                          -                     -       -       0       i
+         s1-leaf4#show bgp evpn route-type ethernet-segment esi 0034:0000:0000:0000:0005 detail
+         BGP routing table information for VRF default
+         Router identifier 10.111.254.4, local AS number 65104
+         BGP routing table entry for ethernet-segment 0034:0000:0000:0000:0005 10.111.253.3, Route Distinguisher: 10.111.253.3:1
+          Paths: 2 available
+           65100 65103
+             10.111.253.3 from 10.111.0.2 (10.111.0.2)
+               Origin IGP, metric -, localpref 100, weight 0, valid, external, ECMP head, ECMP, best, ECMP contributor
+               Extended Community: TunnelEncap:tunnelTypeVxlan EvpnEsImportRt:00:03:04:00:00:05
+           65100 65103
+             10.111.253.3 from 10.111.0.1 (10.111.0.1)
+               Origin IGP, metric -, localpref 100, weight 0, valid, external, ECMP, ECMP contributor
+               Extended Community: TunnelEncap:tunnelTypeVxlan EvpnEsImportRt:00:03:04:00:00:05
+         BGP routing table entry for ethernet-segment 0034:0000:0000:0000:0005 10.111.253.4, Route Distinguisher: 10.111.253.4:1
+          Paths: 1 available
+           Local
+             - from - (0.0.0.0)
+               Origin IGP, metric -, localpref -, weight 0, valid, local, best
+               Extended Community: TunnelEncap:tunnelTypeVxlan EvpnEsImportRt:00:03:04:00:00:05
+         s1-leaf4#show bgp evpn instance
+         EVPN instance: VLAN 112
+           Route distinguisher: 0:0
+           Route target import: Route-Target-AS:112:112
+           Route target export: Route-Target-AS:112:112
+           Service interface: VLAN-based
+           Local VXLAN IP address: 10.111.253.4
+           VXLAN: enabled
+           MPLS: disabled
+           Local ethernet segment:
+             ESI: 0034:0000:0000:0000:0005
+               Interface: Port-Channel5
+               Mode: all-active
+               State: up
+               ES-Import RT: 00:03:04:00:00:05
+               DF election algorithm: modulus
+               Designated forwarder: 10.111.253.3
+               Non-Designated forwarder: 10.111.253.4
+         EVPN instance: VLAN 134
+           Route distinguisher: 0:0
+           Route target import: Route-Target-AS:134:134
+           Route target export: Route-Target-AS:134:134
+           Service interface: VLAN-based
+           Local VXLAN IP address: 10.111.253.4
+           VXLAN: enabled
+           MPLS: disabled
+           Local ethernet segment:
+             ESI: 0034:0000:0000:0000:0005
+               Interface: Port-Channel5
+               Mode: all-active
+               State: up
+               ES-Import RT: 00:03:04:00:00:05
+               DF election algorithm: modulus
+               Designated forwarder: 10.111.253.3
+               Non-Designated forwarder: 10.111.253.4
+
+   #. On **s1-leaf1**, verify the IMET table to ensure **s1-leaf4** has been discovered in the overlay.
 
       .. note::
 
@@ -381,21 +515,90 @@ L2 and L3 EVPN - Symmetric IRB with All-Active Multihoming
          in our case is the VTEP address to flood BUM traffic to. 
 
       .. code-block:: text
-         :emphasize-lines: 1,18,19,20,21,30,38,39,40,44,45,46,47,63
+         :emphasize-lines: 1,26,27,28,29,38,41,46,47,48,53,54,55,56,72
 
          s1-leaf1#show bgp evpn route-type imet
-
+         BGP routing table information for VRF default
+         Router identifier 10.111.254.1, local AS number 65101
+         Route status codes: * - valid, > - active, S - Stale, E - ECMP head, e - ECMP
+                             c - Contributing to ECMP, % - Pending BGP convergence
+         Origin codes: i - IGP, e - EGP, ? - incomplete
+         AS Path Attributes: Or-ID - Originator ID, C-LST - Cluster List, LL Nexthop - Link Local Nexthop
+         
+                   Network                Next Hop              Metric  LocPref Weight  Path
+          * >Ec    RD: 10.111.254.2:112 imet 10.111.253.2
+                                          10.111.253.2          -       100     0       65100 65102 i
+          *  ec    RD: 10.111.254.2:112 imet 10.111.253.2
+                                          10.111.253.2          -       100     0       65100 65102 i
+          * >Ec    RD: 10.111.254.2:134 imet 10.111.253.2
+                                          10.111.253.2          -       100     0       65100 65102 i
+          *  ec    RD: 10.111.254.2:134 imet 10.111.253.2
+                                          10.111.253.2          -       100     0       65100 65102 i
+          * >Ec    RD: 10.111.254.3:112 imet 10.111.253.3
+                                          10.111.253.3          -       100     0       65100 65103 i
+          *  ec    RD: 10.111.254.3:112 imet 10.111.253.3
+                                          10.111.253.3          -       100     0       65100 65103 i
+          * >Ec    RD: 10.111.254.3:134 imet 10.111.253.3
+                                          10.111.253.3          -       100     0       65100 65103 i
+          *  ec    RD: 10.111.254.3:134 imet 10.111.253.3
+                                          10.111.253.3          -       100     0       65100 65103 i
+          * >Ec    RD: 10.111.254.4:112 imet 10.111.253.4
+                                          10.111.253.4          -       100     0       65100 65104 i
+          *  ec    RD: 10.111.254.4:112 imet 10.111.253.4
+                                          10.111.253.4          -       100     0       65100 65104 i
+          * >Ec    RD: 10.111.254.4:134 imet 10.111.253.4
+                                          10.111.253.4          -       100     0       65100 65104 i
+          *  ec    RD: 10.111.254.4:134 imet 10.111.253.4
+                                          10.111.253.4          -       100     0       65100 65104 i
+          * >      RD: 10.111.254.1:112 imet 10.111.253.1
+                                          -                     -       -       0       i
+          * >      RD: 10.111.254.1:134 imet 10.111.253.1
+                                          -                     -       -       0       i
          s1-leaf1#show bgp evpn route-type imet rd 10.111.254.4:112 detail
-
+         BGP routing table information for VRF default
+         Router identifier 10.111.254.1, local AS number 65101
+         BGP routing table entry for imet 10.111.253.4, Route Distinguisher: 10.111.254.4:112
+          Paths: 2 available
+           65100 65104
+             10.111.253.4 from 10.111.0.2 (10.111.0.2)
+               Origin IGP, metric -, localpref 100, weight 0, valid, external, ECMP head, ECMP, best, ECMP contributor
+               Extended Community: Route-Target-AS:112:112 TunnelEncap:tunnelTypeVxlan
+               VNI: 112
+               PMSI Tunnel: Ingress Replication, MPLS Label: 112, Leaf Information Required: false, Tunnel ID: 10.111.253.4
+           65100 65104
+             10.111.253.4 from 10.111.0.1 (10.111.0.1)
+               Origin IGP, metric -, localpref 100, weight 0, valid, external, ECMP, ECMP contributor
+               Extended Community: Route-Target-AS:112:112 TunnelEncap:tunnelTypeVxlan
+               VNI: 112
+               PMSI Tunnel: Ingress Replication, MPLS Label: 112, Leaf Information Required: false, Tunnel ID: 10.111.253.4
          s1-leaf4#show interfaces Vxlan1
-
+         Vxlan1 is up, line protocol is up (connected)
+           Hardware is Vxlan
+           Source interface is Loopback1 and is active with 10.111.253.1
+           Replication/Flood Mode is headend with Flood List Source: EVPN
+           Remote MAC learning via EVPN
+           VNI mapping to VLANs
+           Static VLAN to VNI mapping is
+             [112, 112]        [134, 134]
+           Dynamic VLAN to VNI mapping for 'evpn' is
+             [4093, 5001]
+           Note: All Dynamic VLANs used by VCS are internal VLANs.
+                 Use 'show vxlan vni' for details.
+           Static VRF to VNI mapping is
+            [TENANT, 5001]
+           Headend replication flood vtep list is:
+            112 10.111.253.3    10.111.253.4    10.111.253.2
+            134 10.111.253.3    10.111.253.4    10.111.253.2
+           Shared Router MAC is 0000.0000.0000
 
    #. Log into **s1-host1** and ping **s2-host2** in both VLANs to populate the network's MAC and ARP tables.
 
       .. note::
 
          Since we are hosting multiple networks on the simulated Hosts, we have separated the networks by VRFs. These are 
-         not related to the VRFs in the network fabric.
+         not related to the VRFs in the network fabric. Note that due to host discovery and control-plan convergence in 
+         our simulated EOS labs, you may receive some duplicate responses in the initial run. This is normal and should 
+         level off upon subsequent ping tests.
 
       .. code-block:: text
          :emphasize-lines: 1,12
@@ -429,23 +632,209 @@ L2 and L3 EVPN - Symmetric IRB with All-Active Multihoming
 
          We see the MAC of **s1-host2** multiple times in the control-plane due to our redundant MLAG and 
          ECMP design. Both **s1-leaf3** and **s1-leaf4** are attached to **s1-host2** in VLANs 112 and 134 
-         and therefore will generate these Type 2 EVPN route for its MAC. They each then send this route up to 
-         the redundant Spines (or EVPN Route Servers) which provides an ECMP path to the host. The highlighting 
-         below is focusing on **s1-leaf4**.
+         and therefore will generate these Type 2 EVPN route for its MAC once the host is discovered. They 
+         each then send this route up to the redundant Spines (or EVPN Route Servers) which provides an ECMP 
+         path to the host. The highlighting below is focusing on **s1-leaf4**. Depending on how traffic hashes 
+         from the host, notice that you might **not** see certain entries generated from **s1-leaf4**.  This is 
+         expected and we will see how aliasing allows the network to understand that the EVPN A-A provides connectivity 
+         to the host from each leaf in the ES, whether or not they've individually advertised the host MAC.
 
          Also notice that since we have configured our network for VXLAN Routing functionality we also see 
          the host MAC-IP route that advertises the ARP binding of **s1-host2**. By looking at the detailed output 
          of the command specifically for the host in VNI (VLAN) 112, we can see details about the **RT** and **VNIs**, 
          both Layer 2 (112) and Layer 3 (5001) which we see in further outputs later.
 
+         Also highlighted is the ESI value in each Type 2 Route. This signals to the VTEPs that the MAC was learned 
+         as part of an EVPN A-A link.
+
       .. code-block:: text
-         :emphasize-lines: 1,11,12,13,14,23,24,25,26,35,37,42,43,47,48,50,55,56,60,61
+         :emphasize-lines: 1,38,39,40,41,50,53,59,64,77,82,83,87,88
  
          s1-leaf1#show bgp evpn route-type mac-ip
-
+         BGP routing table information for VRF default
+         Router identifier 10.111.254.1, local AS number 65101
+         Route status codes: * - valid, > - active, S - Stale, E - ECMP head, e - ECMP
+                             c - Contributing to ECMP, % - Pending BGP convergence
+         Origin codes: i - IGP, e - EGP, ? - incomplete
+         AS Path Attributes: Or-ID - Originator ID, C-LST - Cluster List, LL Nexthop - Link Local Nexthop
+         
+                   Network                Next Hop              Metric  LocPref Weight  Path
+          * >      RD: 10.111.254.1:112 mac-ip 001c.73c0.c616
+                                          -                     -       -       0       i
+          * >      RD: 10.111.254.1:134 mac-ip 001c.73c0.c616
+                                          -                     -       -       0       i
+          * >      RD: 10.111.254.1:112 mac-ip 001c.73c0.c616 10.111.112.201
+                                          -                     -       -       0       i
+          * >Ec    RD: 10.111.254.2:112 mac-ip 001c.73c0.c616 10.111.112.201
+                                          10.111.253.2          -       100     0       65100 65102 i
+          *  ec    RD: 10.111.254.2:112 mac-ip 001c.73c0.c616 10.111.112.201
+                                          10.111.253.2          -       100     0       65100 65102 i
+          * >      RD: 10.111.254.1:134 mac-ip 001c.73c0.c616 10.111.134.201
+                                          -                     -       -       0       i
+          * >Ec    RD: 10.111.254.2:134 mac-ip 001c.73c0.c616 10.111.134.201
+                                          10.111.253.2          -       100     0       65100 65102 i
+          *  ec    RD: 10.111.254.2:134 mac-ip 001c.73c0.c616 10.111.134.201
+                                          10.111.253.2          -       100     0       65100 65102 i
+          * >Ec    RD: 10.111.254.3:112 mac-ip 001c.73c0.c617
+                                          10.111.253.3          -       100     0       65100 65103 i
+          *  ec    RD: 10.111.254.3:112 mac-ip 001c.73c0.c617
+                                          10.111.253.3          -       100     0       65100 65103 i
+          * >Ec    RD: 10.111.254.3:134 mac-ip 001c.73c0.c617
+                                          10.111.253.3          -       100     0       65100 65103 i
+          *  ec    RD: 10.111.254.3:134 mac-ip 001c.73c0.c617
+                                          10.111.253.3          -       100     0       65100 65103 i
+          * >Ec    RD: 10.111.254.3:112 mac-ip 001c.73c0.c617 10.111.112.202
+                                          10.111.253.3          -       100     0       65100 65103 i
+          *  ec    RD: 10.111.254.3:112 mac-ip 001c.73c0.c617 10.111.112.202
+                                          10.111.253.3          -       100     0       65100 65103 i
+          * >Ec    RD: 10.111.254.4:112 mac-ip 001c.73c0.c617 10.111.112.202
+                                          10.111.253.4          -       100     0       65100 65104 i
+          *  ec    RD: 10.111.254.4:112 mac-ip 001c.73c0.c617 10.111.112.202
+                                          10.111.253.4          -       100     0       65100 65104 i
+          * >Ec    RD: 10.111.254.3:134 mac-ip 001c.73c0.c617 10.111.134.202
+                                          10.111.253.3          -       100     0       65100 65103 i
+          *  ec    RD: 10.111.254.3:134 mac-ip 001c.73c0.c617 10.111.134.202
+                                          10.111.253.3          -       100     0       65100 65103 i
+          * >Ec    RD: 10.111.254.4:134 mac-ip 001c.73c0.c617 10.111.134.202
+                                          10.111.253.4          -       100     0       65100 65104 i
+          *  ec    RD: 10.111.254.4:134 mac-ip 001c.73c0.c617 10.111.134.202
+                                          10.111.253.4          -       100     0       65100 65104 i
          s1-leaf1#show bgp evpn route-type mac-ip 001c.73c0.c617 vni 112 detail
+         BGP routing table information for VRF default
+         Router identifier 10.111.254.1, local AS number 65101
+         BGP routing table entry for mac-ip 001c.73c0.c617, Route Distinguisher: 10.111.254.3:112
+          Paths: 2 available
+           65100 65103
+             10.111.253.3 from 10.111.0.2 (10.111.0.2)
+               Origin IGP, metric -, localpref 100, weight 0, valid, external, ECMP head, ECMP, best, ECMP contributor
+               Extended Community: Route-Target-AS:112:112 TunnelEncap:tunnelTypeVxlan
+               VNI: 112 ESI: 0034:0000:0000:0000:0005
+           65100 65103
+             10.111.253.3 from 10.111.0.1 (10.111.0.1)
+               Origin IGP, metric -, localpref 100, weight 0, valid, external, ECMP, ECMP contributor
+               Extended Community: Route-Target-AS:112:112 TunnelEncap:tunnelTypeVxlan
+               VNI: 112 ESI: 0034:0000:0000:0000:0005
+         BGP routing table entry for mac-ip 001c.73c0.c617 10.111.112.202, Route Distinguisher: 10.111.254.3:112
+          Paths: 2 available
+           65100 65103
+             10.111.253.3 from 10.111.0.2 (10.111.0.2)
+               Origin IGP, metric -, localpref 100, weight 0, valid, external, ECMP head, ECMP, best, ECMP contributor
+               Extended Community: Route-Target-AS:112:112 Route-Target-AS:5001:5001 TunnelEncap:tunnelTypeVxlan EvpnRouterMac:00:1c:73:c0:c6:14
+               VNI: 112 L3 VNI: 5001 ESI: 0034:0000:0000:0000:0005
+           65100 65103
+             10.111.253.3 from 10.111.0.1 (10.111.0.1)
+               Origin IGP, metric -, localpref 100, weight 0, valid, external, ECMP, ECMP contributor
+               Extended Community: Route-Target-AS:112:112 Route-Target-AS:5001:5001 TunnelEncap:tunnelTypeVxlan EvpnRouterMac:00:1c:73:c0:c6:14
+               VNI: 112 L3 VNI: 5001 ESI: 0034:0000:0000:0000:0005
+         BGP routing table entry for mac-ip 001c.73c0.c617 10.111.112.202, Route Distinguisher: 10.111.254.4:112
+          Paths: 2 available
+           65100 65104
+             10.111.253.4 from 10.111.0.1 (10.111.0.1)
+               Origin IGP, metric -, localpref 100, weight 0, valid, external, ECMP head, ECMP, best, ECMP contributor
+               Extended Community: Route-Target-AS:112:112 Route-Target-AS:5001:5001 TunnelEncap:tunnelTypeVxlan EvpnRouterMac:00:1c:73:c0:c6:15 EvpnNdFlags:pflag
+               VNI: 112 L3 VNI: 5001 ESI: 0034:0000:0000:0000:0005
+           65100 65104
+             10.111.253.4 from 10.111.0.2 (10.111.0.2)
+               Origin IGP, metric -, localpref 100, weight 0, valid, external, ECMP, ECMP contributor
+               Extended Community: Route-Target-AS:112:112 Route-Target-AS:5001:5001 TunnelEncap:tunnelTypeVxlan EvpnRouterMac:00:1c:73:c0:c6:15 EvpnNdFlags:pflag
+               VNI: 112 L3 VNI: 5001 ESI: 0034:0000:0000:0000:0005
+      
+      #. On **s1-leaf1**, check the EVPN control-plane for the EVPN A-A Signaling associated with the **s1-host2**.
 
-   
+      .. note::
+
+         We saw above that the Type 2 routes contained an **ESI** value. We can then determine all of the VTEPs that are 
+         members of that **ES** by inspecting the Auto-Discovery, or EVPN Type 1, routes. Highlighted below are the entries 
+         associated with the EVPN A-A **ES** that is attached to **s1-host2**. **s1-leaf1** has learned that both **s1-leaf3** and 
+         **s1-leaf4** are members of the same **ES**. This is done on a per MAC-VRF (or VLAN) basis.
+
+         By looking at the detailed output for that **ESI** specifically for VNI 112, we can see further information about 
+         associated **RT** and **VNI** information. By interpretting this, **s1-leaf1** understands that to reach **s1-host2**, 
+         packets can be sent to either **s1-leaf3** OR **s1-leaf4** since they are members of the same **ES** where the **s1-host2** 
+         is attached (even though **s1-lea4** never generated a Type 2 MAC Only route in our example).
+
+      .. code-block:: text
+         :emphasize-lines: 1,28,29,30,31,36,37,38,39,52,55,68
+ 
+         s1-leaf1#show bgp evpn route-type auto-discovery
+         BGP routing table information for VRF default
+         Router identifier 10.111.254.1, local AS number 65101
+         Route status codes: * - valid, > - active, S - Stale, E - ECMP head, e - ECMP
+                             c - Contributing to ECMP, % - Pending BGP convergence
+         Origin codes: i - IGP, e - EGP, ? - incomplete
+         AS Path Attributes: Or-ID - Originator ID, C-LST - Cluster List, LL Nexthop - Link Local Nexthop
+         
+                   Network                Next Hop              Metric  LocPref Weight  Path
+          * >      RD: 10.111.254.1:112 auto-discovery 0 0012:0000:0000:0000:0005
+                                          -                     -       -       0       i
+          * >      RD: 10.111.254.1:134 auto-discovery 0 0012:0000:0000:0000:0005
+                                          -                     -       -       0       i
+          * >Ec    RD: 10.111.254.2:112 auto-discovery 0 0012:0000:0000:0000:0005
+                                          10.111.253.2          -       100     0       65100 65102 i
+          *  ec    RD: 10.111.254.2:112 auto-discovery 0 0012:0000:0000:0000:0005
+                                          10.111.253.2          -       100     0       65100 65102 i
+          * >Ec    RD: 10.111.254.2:134 auto-discovery 0 0012:0000:0000:0000:0005
+                                          10.111.253.2          -       100     0       65100 65102 i
+          *  ec    RD: 10.111.254.2:134 auto-discovery 0 0012:0000:0000:0000:0005
+                                          10.111.253.2          -       100     0       65100 65102 i
+          * >      RD: 10.111.253.1:1 auto-discovery 0012:0000:0000:0000:0005
+                                          -                     -       -       0       i
+          * >Ec    RD: 10.111.253.2:1 auto-discovery 0012:0000:0000:0000:0005
+                                          10.111.253.2          -       100     0       65100 65102 i
+          *  ec    RD: 10.111.253.2:1 auto-discovery 0012:0000:0000:0000:0005
+                                          10.111.253.2          -       100     0       65100 65102 i
+          * >Ec    RD: 10.111.254.3:112 auto-discovery 0 0034:0000:0000:0000:0005
+                                          10.111.253.3          -       100     0       65100 65103 i
+          *  ec    RD: 10.111.254.3:112 auto-discovery 0 0034:0000:0000:0000:0005
+                                          10.111.253.3          -       100     0       65100 65103 i
+          * >Ec    RD: 10.111.254.3:134 auto-discovery 0 0034:0000:0000:0000:0005
+                                          10.111.253.3          -       100     0       65100 65103 i
+          *  ec    RD: 10.111.254.3:134 auto-discovery 0 0034:0000:0000:0000:0005
+                                          10.111.253.3          -       100     0       65100 65103 i
+          * >Ec    RD: 10.111.254.4:112 auto-discovery 0 0034:0000:0000:0000:0005
+                                          10.111.253.4          -       100     0       65100 65104 i
+          *  ec    RD: 10.111.254.4:112 auto-discovery 0 0034:0000:0000:0000:0005
+                                          10.111.253.4          -       100     0       65100 65104 i
+          * >Ec    RD: 10.111.254.4:134 auto-discovery 0 0034:0000:0000:0000:0005
+                                          10.111.253.4          -       100     0       65100 65104 i
+          *  ec    RD: 10.111.254.4:134 auto-discovery 0 0034:0000:0000:0000:0005
+                                          10.111.253.4          -       100     0       65100 65104 i
+          * >Ec    RD: 10.111.253.3:1 auto-discovery 0034:0000:0000:0000:0005
+                                          10.111.253.3          -       100     0       65100 65103 i
+          *  ec    RD: 10.111.253.3:1 auto-discovery 0034:0000:0000:0000:0005
+                                          10.111.253.3          -       100     0       65100 65103 i
+          * >Ec    RD: 10.111.253.4:1 auto-discovery 0034:0000:0000:0000:0005
+                                          10.111.253.4          -       100     0       65100 65104 i
+          *  ec    RD: 10.111.253.4:1 auto-discovery 0034:0000:0000:0000:0005
+                                          10.111.253.4          -       100     0       65100 65104 i
+         s1-leaf1#show bgp evpn route-type auto-discovery vni 112 esi 0034:0000:0000:0000:0005 detail
+         BGP routing table information for VRF default
+         Router identifier 10.111.254.1, local AS number 65101
+         BGP routing table entry for auto-discovery 0 0034:0000:0000:0000:0005, Route Distinguisher: 10.111.254.3:112
+          Paths: 2 available
+           65100 65103
+             10.111.253.3 from 10.111.0.2 (10.111.0.2)
+               Origin IGP, metric -, localpref 100, weight 0, valid, external, ECMP head, ECMP, best, ECMP contributor
+               Extended Community: Route-Target-AS:112:112 TunnelEncap:tunnelTypeVxlan
+               VNI: 112
+           65100 65103
+             10.111.253.3 from 10.111.0.1 (10.111.0.1)
+               Origin IGP, metric -, localpref 100, weight 0, valid, external, ECMP, ECMP contributor
+               Extended Community: Route-Target-AS:112:112 TunnelEncap:tunnelTypeVxlan
+               VNI: 112
+         BGP routing table entry for auto-discovery 0 0034:0000:0000:0000:0005, Route Distinguisher: 10.111.254.4:112
+          Paths: 2 available
+           65100 65104
+             10.111.253.4 from 10.111.0.2 (10.111.0.2)
+               Origin IGP, metric -, localpref 100, weight 0, valid, external, ECMP head, ECMP, best, ECMP contributor
+               Extended Community: Route-Target-AS:112:112 TunnelEncap:tunnelTypeVxlan
+               VNI: 112
+           65100 65104
+             10.111.253.4 from 10.111.0.1 (10.111.0.1)
+               Origin IGP, metric -, localpref 100, weight 0, valid, external, ECMP, ECMP contributor
+               Extended Community: Route-Target-AS:112:112 TunnelEncap:tunnelTypeVxlan
+               VNI: 112
+
    #. On **s1-leaf1**, verify the BGP table to ensure the Tenant networks on **s1-leaf4** has been learned in the overlay.
 
       .. note::
@@ -460,11 +849,72 @@ L2 and L3 EVPN - Symmetric IRB with All-Active Multihoming
          highlights below focus on the 10.111.112.0/24 network.
          
       .. code-block:: text
-         :emphasize-lines: 1,16,17,18,19,31,34.39,40,44,45
+         :emphasize-lines: 1,20,21,22,23,38,41,46,47,51,52
          
          s1-leaf1#show bgp evpn route-type ip-prefix ipv4
-
+         BGP routing table information for VRF default
+         Router identifier 10.111.254.1, local AS number 65101
+         Route status codes: * - valid, > - active, S - Stale, E - ECMP head, e - ECMP
+                             c - Contributing to ECMP, % - Pending BGP convergence
+         Origin codes: i - IGP, e - EGP, ? - incomplete
+         AS Path Attributes: Or-ID - Originator ID, C-LST - Cluster List, LL Nexthop - Link Local Nexthop
+         
+                   Network                Next Hop              Metric  LocPref Weight  Path
+          * >      RD: 10.111.254.1:1 ip-prefix 10.111.112.0/24
+                                          -                     -       -       0       i
+          * >Ec    RD: 10.111.254.2:1 ip-prefix 10.111.112.0/24
+                                          10.111.253.2          -       100     0       65100 65102 i
+          *  ec    RD: 10.111.254.2:1 ip-prefix 10.111.112.0/24
+                                          10.111.253.2          -       100     0       65100 65102 i
+          * >Ec    RD: 10.111.254.3:1 ip-prefix 10.111.112.0/24
+                                          10.111.253.3          -       100     0       65100 65103 i
+          *  ec    RD: 10.111.254.3:1 ip-prefix 10.111.112.0/24
+                                          10.111.253.3          -       100     0       65100 65103 i
+          * >Ec    RD: 10.111.254.4:1 ip-prefix 10.111.112.0/24
+                                          10.111.253.4          -       100     0       65100 65104 i
+          *  ec    RD: 10.111.254.4:1 ip-prefix 10.111.112.0/24
+                                          10.111.253.4          -       100     0       65100 65104 i
+          * >      RD: 10.111.254.1:1 ip-prefix 10.111.134.0/24
+                                          -                     -       -       0       i
+          * >Ec    RD: 10.111.254.2:1 ip-prefix 10.111.134.0/24
+                                          10.111.253.2          -       100     0       65100 65102 i
+          *  ec    RD: 10.111.254.2:1 ip-prefix 10.111.134.0/24
+                                          10.111.253.2          -       100     0       65100 65102 i
+          * >Ec    RD: 10.111.254.3:1 ip-prefix 10.111.134.0/24
+                                          10.111.253.3          -       100     0       65100 65103 i
+          *  ec    RD: 10.111.254.3:1 ip-prefix 10.111.134.0/24
+                                          10.111.253.3          -       100     0       65100 65103 i
+          * >Ec    RD: 10.111.254.4:1 ip-prefix 10.111.134.0/24
+                                          10.111.253.4          -       100     0       65100 65104 i
+          *  ec    RD: 10.111.254.4:1 ip-prefix 10.111.134.0/24
+                                          10.111.253.4          -       100     0       65100 65104 i
          s1-leaf1#show bgp evpn route-type ip-prefix ipv4 rd 10.111.254.4:1 detail
+         BGP routing table information for VRF default
+         Router identifier 10.111.254.1, local AS number 65101
+         BGP routing table entry for ip-prefix 10.111.112.0/24, Route Distinguisher: 10.111.254.4:1
+          Paths: 2 available
+           65100 65104
+             10.111.253.4 from 10.111.0.2 (10.111.0.2)
+               Origin IGP, metric -, localpref 100, weight 0, valid, external, ECMP head, ECMP, best, ECMP contributor
+               Extended Community: Route-Target-AS:5001:5001 TunnelEncap:tunnelTypeVxlan EvpnRouterMac:00:1c:73:c0:c6:15
+               VNI: 5001
+           65100 65104
+             10.111.253.4 from 10.111.0.1 (10.111.0.1)
+               Origin IGP, metric -, localpref 100, weight 0, valid, external, ECMP, ECMP contributor
+               Extended Community: Route-Target-AS:5001:5001 TunnelEncap:tunnelTypeVxlan EvpnRouterMac:00:1c:73:c0:c6:15
+               VNI: 5001
+         BGP routing table entry for ip-prefix 10.111.134.0/24, Route Distinguisher: 10.111.254.4:1
+          Paths: 2 available
+           65100 65104
+             10.111.253.4 from 10.111.0.2 (10.111.0.2)
+               Origin IGP, metric -, localpref 100, weight 0, valid, external, ECMP head, ECMP, best, ECMP contributor
+               Extended Community: Route-Target-AS:5001:5001 TunnelEncap:tunnelTypeVxlan EvpnRouterMac:00:1c:73:c0:c6:15
+               VNI: 5001
+           65100 65104
+             10.111.253.4 from 10.111.0.1 (10.111.0.1)
+               Origin IGP, metric -, localpref 100, weight 0, valid, external, ECMP, ECMP contributor
+               Extended Community: Route-Target-AS:5001:5001 TunnelEncap:tunnelTypeVxlan EvpnRouterMac:00:1c:73:c0:c6:15
+               VNI: 5001
 
    #. On **s1-leaf1**, check the local ARP and MAC address-table.
 
@@ -474,44 +924,123 @@ L2 and L3 EVPN - Symmetric IRB with All-Active Multihoming
          the ARP and MAC entry of **s1-host2** has been learned and imported via the Vxlan1 interface on **s1-leaf1** in 
          both Host VLANs.
 
-         We also see the remote MAC for the shared MLAG System ID of **s1-leaf3** and **s1-leaf4** associated with VLAN 
-         4093 and the Vxlan1 interface. This is how the local VTEP knows where to send routed (ie inter-subnet) traffic 
+         We also see the remote MAC of each VTEPs System ID including the highlighted one for **s1-leaf4** associated 
+         with VLAN 4093 and the Vxlan1 interface. This is how the local VTEP knows where to send routed (ie inter-subnet) traffic 
          when destined to the remote MLAG pair. We can see this VLAN is dynamically created in the VLAN database and is 
          mapped to our Layer 3 VNI (5001) in our VXLAN interface output. Be aware that since this VLAN is dynamic, the ID 
          used in your lab may be different.
 
       .. code-block:: text
-         :emphasize-lines: 1,4,6,7,14,16,17,26,31,32,42,46
+         :emphasize-lines: 1,4,6,7,14,16,19,28,33,34,44,48
          
          s1-leaf1#show ip arp vrf TENANT
-
+         Address         Age (sec)  Hardware Addr   Interface
+         10.111.112.201    0:05:14  001c.73c0.c616  Vlan112, Port-Channel5
+         10.111.112.202          -  001c.73c0.c617  Vlan112, Vxlan1
+         10.111.134.201    0:04:14  001c.73c0.c616  Vlan134, Port-Channel5
+         10.111.134.202          -  001c.73c0.c617  Vlan134, Vxlan1
          s1-leaf1#show mac address-table dynamic
-
+                   Mac Address Table
+         ------------------------------------------------------------------
+         
+         Vlan    Mac Address       Type        Ports      Moves   Last Move
+         ----    -----------       ----        -----      -----   ---------
+          112    001c.73c0.c616    DYNAMIC     Po5        1       0:05:27 ago
+          112    001c.73c0.c617    DYNAMIC     Vx1        1       0:04:15 ago
+          134    001c.73c0.c616    DYNAMIC     Po5        1       0:04:27 ago
+          134    001c.73c0.c617    DYNAMIC     Vx1        1       0:05:30 ago
+         4093    001c.73c0.c613    DYNAMIC     Vx1        1       1:00:13 ago
+         4093    001c.73c0.c614    DYNAMIC     Vx1        1       1:00:06 ago
+         4093    001c.73c0.c615    DYNAMIC     Vx1        1       0:52:35 ago
+         Total Mac Addresses for this criterion: 7
+         
+                   Multicast Mac Address Table
+         ------------------------------------------------------------------
+         
+         Vlan    Mac Address       Type        Ports
+         ----    -----------       ----        -----
+         Total Mac Addresses for this criterion: 0
          s1-leaf1#show vlan 4093
+         VLAN  Name                             Status    Ports
+         ----- -------------------------------- --------- -------------------------------
+         4093* VLAN4093                         active    Cpu, Vx1
          
+         * indicates a Dynamic VLAN
          s1-leaf1#show interfaces Vxlan1
-         
+         Vxlan1 is up, line protocol is up (connected)
+           Hardware is Vxlan
+           Source interface is Loopback1 and is active with 10.111.253.1
+           Replication/Flood Mode is headend with Flood List Source: EVPN
+           Remote MAC learning via EVPN
+           VNI mapping to VLANs
+           Static VLAN to VNI mapping is
+             [112, 112]        [134, 134]
+           Dynamic VLAN to VNI mapping for 'evpn' is
+             [4093, 5001]
+           Note: All Dynamic VLANs used by VCS are internal VLANs.
+                 Use 'show vxlan vni' for details.
+           Static VRF to VNI mapping is
+            [TENANT, 5001]
+           Headend replication flood vtep list is:
+            112 10.111.253.3    10.111.253.4    10.111.253.2
+            134 10.111.253.3    10.111.253.4    10.111.253.2
+           Shared Router MAC is 0000.0000.0000
        
    #. On **s1-leaf1**, check the VXLAN data-plane for MAC address.
 
       .. note::
 
-         Though both **s1-leaf3** and **s1-leaf4** are advertising the MAC of **s1-host2** recall that 
-         they have a shared MLAG VTEP IP for VXLAN reachability. Therefore we only see one possible 
+         Recall above that the Type 2 EVPN route for **s1-host2** was associated with an **ESI** and our Type 1 
+         EVPN routes showed us that **s1-leaf3** and **s1-leaf4** are both members of that **ES**. Therefore we see two possible 
          destination for this host MAC. The ``show l2rib output mac <MAC of remote host>`` command then 
-         allows us to see the VTEP info in the hardware.  Finally we can verify the ECMP path to the remote 
-         MLAG VTEP via **s1-spine1** and **s1-spine2** with a simple ``show ip route 10.111.253.3`` command.
+         allows us to see the VTEP info in the hardware showing us the load-balancing that will occur.  
+         Finally we can verify the ECMP path to the remote VTEP **s1-leaf4** via **s1-spine1** and **s1-spine2** 
+         with a simple ``show ip route 10.111.253.4`` command.
 
       .. code-block:: text
-         :emphasize-lines: 1,7,9,12
+         :emphasize-lines: 1,7,8,15,16,17,18,19,24
  
-         s1-leaf1#show vxlan address-table evpn 
+         s1-leaf1#show vxlan address-table evpn
+                   Vxlan Mac Address Table
+         ----------------------------------------------------------------------
          
+         VLAN  Mac Address     Type      Prt  VTEP             Moves   Last Move
+         ----  -----------     ----      ---  ----             -----   ---------
+          112  001c.73c0.c617  EVPN      Vx1  10.111.253.3     1       0:07:51 ago
+                                              10.111.253.4
+          134  001c.73c0.c617  EVPN      Vx1  10.111.253.3     1       0:09:06 ago
+                                              10.111.253.4
+         4093  001c.73c0.c613  EVPN      Vx1  10.111.253.2     1       1:03:50 ago
+         4093  001c.73c0.c614  EVPN      Vx1  10.111.253.3     1       1:03:43 ago
+         4093  001c.73c0.c615  EVPN      Vx1  10.111.253.4     1       0:56:11 ago
+         Total Remote Mac Addresses for this criterion: 5
          s1-leaf1#show l2rib output mac 001c.73c0.c617
+         001c.73c0.c617, VLAN 112, seq 1, pref 16, evpnDynamicRemoteMac, source: BGP
+            Load Balance entry: 2-way
+               VTEP 10.111.253.3
+               VTEP 10.111.253.4
+         001c.73c0.c617, VLAN 134, seq 1, pref 16, evpnDynamicRemoteMac, source: BGP
+            Load Balance entry: 2-way
+               VTEP 10.111.253.3
+               VTEP 10.111.253.4
+         s1-leaf1#show ip route 10.111.253.4
          
-         s1-leaf1#show ip route 10.111.253.3
+         VRF: default
+         Codes: C - connected, S - static, K - kernel,
+                O - OSPF, IA - OSPF inter area, E1 - OSPF external type 1,
+                E2 - OSPF external type 2, N1 - OSPF NSSA external type 1,
+                N2 - OSPF NSSA external type2, B - Other BGP Routes,
+                B I - iBGP, B E - eBGP, R - RIP, I L1 - IS-IS level 1,
+                I L2 - IS-IS level 2, O3 - OSPFv3, A B - BGP Aggregate,
+                A O - OSPF Summary, NG - Nexthop Group Static Route,
+                V - VXLAN Control Service, M - Martian,
+                DH - DHCP client installed default route,
+                DP - Dynamic Policy Route, L - VRF Leaked,
+                G  - gRIBI, RC - Route Cache Route
          
-
+          B E      10.111.253.4/32 [200/0] via 10.111.1.0, Ethernet2
+                                           via 10.111.2.0, Ethernet3
+         
    #. On **s1-leaf1**, verify the Tenant Route table to ensure the Tenant networks on **s1-leaf4** has been installed in the overlay.
 
       .. note::
@@ -524,10 +1053,34 @@ L2 and L3 EVPN - Symmetric IRB with All-Active Multihoming
          always directed to the VTEP where the host currently resides. This route is directed to the shared MLAG VTEP 
          IP and EVPN Router MAC. It will be ECMPed via the Spines providing a dual path for load-balancing and redundancy.
 
+         And again due to our Type 1 EVPN Routes, each /32 host is known to be attached to both **s1-leaf3** and **s1-leaf4** 
+         as they are members of the associated **ES**.
+
       .. code-block:: text
-         :emphasize-lines: 1,18,20
+         :emphasize-lines: 1,18,19,21,22
  
          s1-leaf1#show ip route vrf TENANT
          
+         VRF: TENANT
+         Codes: C - connected, S - static, K - kernel,
+                O - OSPF, IA - OSPF inter area, E1 - OSPF external type 1,
+                E2 - OSPF external type 2, N1 - OSPF NSSA external type 1,
+                N2 - OSPF NSSA external type2, B - Other BGP Routes,
+                B I - iBGP, B E - eBGP, R - RIP, I L1 - IS-IS level 1,
+                I L2 - IS-IS level 2, O3 - OSPFv3, A B - BGP Aggregate,
+                A O - OSPF Summary, NG - Nexthop Group Static Route,
+                V - VXLAN Control Service, M - Martian,
+                DH - DHCP client installed default route,
+                DP - Dynamic Policy Route, L - VRF Leaked,
+                G  - gRIBI, RC - Route Cache Route
+         
+         Gateway of last resort is not set
+         
+          B E      10.111.112.202/32 [200/0] via VTEP 10.111.253.3 VNI 5001 router-mac 00:1c:73:c0:c6:14 local-interface Vxlan1
+                                             via VTEP 10.111.253.4 VNI 5001 router-mac 00:1c:73:c0:c6:15 local-interface Vxlan1
+          C        10.111.112.0/24 is directly connected, Vlan112
+          B E      10.111.134.202/32 [200/0] via VTEP 10.111.253.3 VNI 5001 router-mac 00:1c:73:c0:c6:14 local-interface Vxlan1
+                                             via VTEP 10.111.253.4 VNI 5001 router-mac 00:1c:73:c0:c6:15 local-interface Vxlan1
+          C        10.111.134.0/24 is directly connected, Vlan134
 
 **LAB COMPLETE!**
