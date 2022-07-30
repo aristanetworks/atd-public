@@ -650,7 +650,7 @@ L2 and L3 EVPN - Symmetric IRB with MLAG
 
       .. code-block:: text
          :emphasize-lines: 1,16,17,18,19,31,34.39,40,44,45
-∂
+ 
          s1-leaf1#show bgp evpn route-type ip-prefix ipv4
          BGP routing table information for VRF default
          Router identifier 10.111.254.1, local AS number 65101
