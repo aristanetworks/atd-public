@@ -649,7 +649,7 @@ L2 and L3 EVPN - Symmetric IRB with MLAG
          highlights below focus on the 10.111.112.0/24 network.
 
       .. code-block:: text
-         :emphasize-lines: 1
+         :emphasize-lines: 1,16,17,18,19,30,33,38,39,43,44
  
          s1-leaf1#show bgp evpn route-type ip-prefix ipv4
          BGP routing table information for VRF default

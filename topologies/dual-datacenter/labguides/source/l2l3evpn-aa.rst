@@ -93,10 +93,10 @@ L2 and L3 EVPN - Symmetric IRB with All-Active Multihoming
 
       .. note::
          
-         Notice that **s1-leaf4** has 2 ECMP paths for reaching **s1-leaf1** or **s1-leaf2** loopacks.
+         Notice that **s1-leaf4** has 2 ECMP paths for reaching **s1-leaf1**, **s1-leaf2** and **s1-leaf3** loopacks.
 
       .. code-block:: text
-         :emphasize-lines: 1,25,26,28,29,30,31
+         :emphasize-lines: 1,31,32,33,34,35,36
 
          s1-leaf4#show ip route
 
@@ -124,12 +124,16 @@ L2 and L3 EVPN - Symmetric IRB with All-Active Multihoming
          B I      10.111.112.0/24 [200/0] via 10.255.255.1, Vlan4094
          B E      10.111.253.1/32 [200/0] via 10.111.1.6, Ethernet2
                                           via 10.111.2.6, Ethernet3
-         B I      10.111.253.3/32 [200/0] via 10.255.255.1, Vlan4094
+         B E      10.111.253.2/32 [200/0] via 10.111.1.6, Ethernet2
+                                          via 10.111.2.6, Ethernet3
+         B E      10.111.253.3/32 [200/0] via 10.111.1.6, Ethernet2
+                                          via 10.111.2.6, Ethernet3
          B E      10.111.254.1/32 [200/0] via 10.111.1.6, Ethernet2
                                           via 10.111.2.6, Ethernet3
          B E      10.111.254.2/32 [200/0] via 10.111.1.6, Ethernet2
                                           via 10.111.2.6, Ethernet3
-         B I      10.111.254.3/32 [200/0] via 10.255.255.1, Vlan4094
+         B E      10.111.254.3/32 [200/0] via 10.111.1.6, Ethernet2
+                                          via 10.111.2.6, Ethernet3
          C        10.111.254.4/32 is directly connected, Loopback0
          C        10.255.255.0/30 is directly connected, Vlan4094
          C        192.168.0.0/24 is directly connected, Management0
@@ -141,7 +145,8 @@ L2 and L3 EVPN - Symmetric IRB with All-Active Multihoming
       .. note::
 
          In this lab, the Spines serve as EVPN Route Servers. They receive the EVPN Routes from 
-         each leaf and, due to our eBGP setup, will naturally pass them along the other leaves.
+         each leaf and, due to our eBGP setup, will naturally pass them along the other leaves. In an EVPN A-A 
+         setup with eBGP, each VTEP has its own unique ASN.
 
          Also note that BGP standard and extended communities are explicitly enabled on the peering. EVPN makes 
          use of extended BGP communities for route signaling and standard communities allow for various other 
@@ -414,7 +419,7 @@ L2 and L3 EVPN - Symmetric IRB with All-Active Multihoming
          In an EVPN A-A Ethernet Segment, only one member of the **ES** is elected as the Designated 
          Forwarder, or **DF**. The **DF** is responsible for forwarding BUM traffic to the connected 
          downstream device. By default, a modulus operation is run by all members of the **ES** to uniformly 
-         elect the DF based on the received Ethernet Segment, or EVPN Type 4, routes. Highlighted below we can 
+         elect the DF based on the received **Ethernet Segment**, or EVPN Type 4, routes. Highlighted below we can 
          see the received EVPN Type 4 routes from **s1-leaf3** with the matching **ESI** value. The detailed 
          output shows the associated **ES RT** value as well.
 
@@ -422,7 +427,7 @@ L2 and L3 EVPN - Symmetric IRB with All-Active Multihoming
          been elected as the **DF**.
 
       .. code-block:: text
-         :emphasize-lines: 1,18,19,20,21,24,27,32,36,42,52,58,59,69,75,76
+         :emphasize-lines: 1,18,19,20,21,24,27,32,36,43,53,59,60,70,76,77
 
          s1-leaf4#show bgp evpn route-type ethernet-segment
          BGP routing table information for VRF default
@@ -515,7 +520,7 @@ L2 and L3 EVPN - Symmetric IRB with All-Active Multihoming
          in our case is the VTEP address to flood BUM traffic to. 
 
       .. code-block:: text
-         :emphasize-lines: 1,26,27,28,29,38,41,46,47,48,53,54,55,56,72
+         :emphasize-lines: 1,26,27,28,29,38,41,46,47,48,52,53,54,55,71
 
          s1-leaf1#show bgp evpn route-type imet
          BGP routing table information for VRF default
@@ -648,7 +653,7 @@ L2 and L3 EVPN - Symmetric IRB with All-Active Multihoming
          as part of an EVPN A-A link.
 
       .. code-block:: text
-         :emphasize-lines: 1,38,39,40,41,50,53,59,64,77,82,83,87,88
+         :emphasize-lines: 1,38,39,40,41,50,53,58,59,63,64,77,82,83,87,88
  
          s1-leaf1#show bgp evpn route-type mac-ip
          BGP routing table information for VRF default
@@ -744,7 +749,7 @@ L2 and L3 EVPN - Symmetric IRB with All-Active Multihoming
       .. note::
 
          We saw above that the Type 2 routes contained an **ESI** value. We can then determine all of the VTEPs that are 
-         members of that **ES** by inspecting the Auto-Discovery, or EVPN Type 1, routes. Highlighted below are the entries 
+         members of that **ES** by inspecting the **Auto-Discovery**, or EVPN Type 1, routes. Highlighted below are the entries 
          associated with the EVPN A-A **ES** that is attached to **s1-host2**. **s1-leaf1** has learned that both **s1-leaf3** and 
          **s1-leaf4** are members of the same **ES**. This is done on a per MAC-VRF (or VLAN) basis.
 
@@ -754,7 +759,7 @@ L2 and L3 EVPN - Symmetric IRB with All-Active Multihoming
          is attached (even though **s1-lea4** never generated a Type 2 MAC Only route in our example).
 
       .. code-block:: text
-         :emphasize-lines: 1,28,29,30,31,36,37,38,39,52,55,68
+         :emphasize-lines: 1,28,29,30,31,36,37,38,39,52,55,67
  
          s1-leaf1#show bgp evpn route-type auto-discovery
          BGP routing table information for VRF default
