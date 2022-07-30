@@ -323,12 +323,20 @@ L2 and L3 EVPN - Symmetric IRB with All-Active Multihoming
                route-target export evpn 5001:5001
                redistribute connected
 
-   #. Configure the host-facing MLAG port.
+   #. Configure the host-facing EVPN A-A Port-Channel.
+
+      .. note::
+
+         This is where we configure the Ethernet Segment Identifier, or **ESI**, as well as a **RT** value 
+         for the Ethernet Segment. We will see how the EVPN control-plane leverages these to negotitate the 
+         charactertisics and state of the A-A Port-Channel. We also configure a static LACP System-ID. This is 
+         to ensure that all members of the Ethernet Segment appear as one LACP system to the downstream device. 
+         Note that all these values must match on members of the same Ethernet Segment (or Port-Channel).
 
       .. code-block:: text
 
          interface Port-Channel5
-            description MLAG Downlink - s1-host2
+            description EVPN A-A Downlink - s1-host2
             switchport trunk allowed vlan 112,134
             switchport mode trunk
             !
@@ -338,10 +346,10 @@ L2 and L3 EVPN - Symmetric IRB with All-Active Multihoming
             lacp system-id 1234.5678.0304
          !
          interface Ethernet4
-            description MLAG Downlink - s1-host2
+            description EVPN A-A Downlink - s1-host2
             channel-group 5 mode active
 
-#. With the Layer 2 and 3 EVPN Service configured, verify the operational state.
+#. With the Layer 2 and 3 EVPN Services configured, verify the operational state.
 
    a. Check the VXLAN data-plane configuration.
 

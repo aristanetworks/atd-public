@@ -7,7 +7,7 @@ vlan 134
 vrf instance TENANT
 !
 interface Port-Channel5
-   description MLAG Downlink - s1-host2
+   description EVPN A-A Downlink - s1-host2
    switchport trunk allowed vlan 112,134
    switchport mode trunk
    !

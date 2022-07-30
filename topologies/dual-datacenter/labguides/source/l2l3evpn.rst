@@ -383,7 +383,7 @@ L2 and L3 EVPN - Symmetric IRB with MLAG
             description MLAG Downlink - s1-host2
             channel-group 5 mode active
 
-#. With the Layer 2 and 3 EVPN Service configured, verify the operational state.
+#. With the Layer 2 and 3 EVPN Services configured, verify the operational state.
 
    a. Check the VXLAN data-plane configuration.
 
