@@ -2,7 +2,7 @@
 L2 and L3 EVPN - Symmetric IRB with All-Active Multihoming
 ==========================================================
 
-.. thumbnail:: images/l2evpn/nested_l2evpn_topo_dual_dc.png
+.. thumbnail:: images/l2l3evpn-aa/nested_l2l3evpn-aa_topo_dual_dc.png
    :align: center
 
       Click image to enlarge

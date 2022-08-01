@@ -2,7 +2,7 @@
 L2 and L3 EVPN - Symmetric IRB with MLAG
 ========================================
 
-.. thumbnail:: images/l2evpn/nested_l2evpn_topo_dual_dc.png
+.. thumbnail:: images/l2l3evpn/nested_l2l3evpn_topo_dual_dc.png
    :align: center
 
       Click image to enlarge
