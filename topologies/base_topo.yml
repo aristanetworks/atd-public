@@ -21,7 +21,7 @@ topologies:
               ram: 54
             branch: nested/2021.3
             orderable: true
-            image: base-atd-dual-datacenter-ceos-c2021-3-0-20220324u
+            image: base-atd-dual-datacenter-ceos-c2021-3-0-20220801u
             eos:
               - 4.27.1.1F
               - 4.27.2F
@@ -41,7 +41,7 @@ topologies:
               ram: 64
             branch: nested/2022.1
             orderable: true
-            image: base-atd-dual-datacenter-ceos-c2022-1-1-20220720
+            image: base-atd-dual-datacenter-ceos-c2022-1-1-20220801u
             eos:
               - 4.28.1F
               - 4.27.2F
