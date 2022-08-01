@@ -1,0 +1,16 @@
+interface Port-Channel1
+   description MLAG Uplink - s1-leaf3 and s1-leaf4
+   no switchport
+   ip address 10.111.134.202/24
+!
+interface Ethernet1
+   description MLAG Uplink - s1-leaf3
+   channel-group 1 mode active
+   lacp timer fast
+!
+interface Ethernet2
+   description MLAG Uplink - s1-leaf4
+   channel-group 1 mode active
+   lacp timer fast
+!
+ip route 10.111.112.0/24 10.111.134.1

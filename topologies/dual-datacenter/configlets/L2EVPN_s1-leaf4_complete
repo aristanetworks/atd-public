@@ -47,10 +47,6 @@ interface Loopback1
    description VTEP
    ip address 10.111.253.3/32
 !
-interface Vlan112
-   description Host Network
-   ip address virtual 10.111.112.1/24
-!
 interface Vlan4094
    description MLAG Peer Network
    ip address 10.255.255.2/30
@@ -60,13 +56,18 @@ interface Vxlan1
    vxlan udp-port 4789
    vxlan vlan 112 vni 112
 !
-ip virtual-router mac-address 00:1C:73:00:00:01
-!
 mlag configuration
    domain-id MLAG
    local-interface Vlan4094
    peer-address 10.255.255.1
    peer-link Port-Channel1
+!
+ip prefix-list LOOPBACKS
+   seq 100 permit 10.111.253.0/24 eq 32
+   seq 110 permit 10.111.254.0/24 eq 32
+!
+route-map LOOPBACKS permit 100
+   match ip address prefix-list LOOPBACKS
 !
 router bgp 65102
    router-id 10.111.254.4
@@ -75,7 +76,7 @@ router bgp 65102
    neighbor MLAG peer group
    neighbor MLAG remote-as 65102
    neighbor MLAG next-hop-self
-   neighbor MLAG send-community extended
+   neighbor MLAG send-community standard extended
    neighbor SPINE peer group
    neighbor SPINE remote-as 65100
    neighbor SPINE send-community standard extended
@@ -101,9 +102,7 @@ router bgp 65102
    address-family ipv4
       neighbor MLAG activate
       neighbor SPINE activate
-      network 10.111.254.4/32
-      network 10.111.253.3/32
-      network 10.111.112.0/24
+      redistribute connected route-map LOOPBACKS
 
 
 

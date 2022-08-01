@@ -50,7 +50,7 @@ interface Loopback1
    ip address 10.111.253.3/32
 !
 interface Vlan134
-   description Host Network
+   description Host Network 134
    vrf TENANT
    ip address virtual 10.111.134.1/24
 !
@@ -75,6 +75,13 @@ mlag configuration
    peer-address 10.255.255.1
    peer-link Port-Channel1
 !
+ip prefix-list LOOPBACKS
+   seq 100 permit 10.111.253.0/24 eq 32
+   seq 110 permit 10.111.254.0/24 eq 32
+!
+route-map LOOPBACKS permit 100
+   match ip address prefix-list LOOPBACKS
+!
 router bgp 65102
    router-id 10.111.254.4
    rd auto
@@ -83,7 +90,7 @@ router bgp 65102
    neighbor MLAG peer group
    neighbor MLAG remote-as 65102
    neighbor MLAG next-hop-self
-   neighbor MLAG send-community extended
+   neighbor MLAG send-community standard extended
    neighbor SPINE peer group
    neighbor SPINE remote-as 65100
    neighbor SPINE send-community standard extended
@@ -109,8 +116,7 @@ router bgp 65102
    address-family ipv4
       neighbor MLAG activate
       neighbor SPINE activate
-      network 10.111.254.4/32
-      network 10.111.253.3/32
+      redistribute connected route-map LOOPBACKS
    !
    vrf TENANT
       route-target import evpn 5001:5001

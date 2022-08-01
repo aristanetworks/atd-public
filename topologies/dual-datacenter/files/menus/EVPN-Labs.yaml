@@ -4,18 +4,14 @@ lab_list:
     additional_commands: 
       - "bash /home/arista/Broadcaster/pushhostDefaultConfig.sh"
     description: "Reset All Devices to Base ATD (reset)"
-  l2ls:
-    description: "Layer 2 Leaf-Spine Lab (l2ls) - Site 1 Only"
-  l3ls:
-    description: "Layer 3 Leaf-Spine Lab (l3ls) - Site 1 Only"
-  vxlan:
-    description: "VXLAN Static Flood List Lab (vxlan) - Site 1 Only"
   l2evpn:
-    description: "VXLAN EVPN Type 2 Lab (l2evpn) - Site 1 Only"
+    description: "Layer 2 EVPN VXLAN Lab (l2evpn) - Site 1 Only with MLAG"
   l3evpn:
-    description: "VXLAN EVPN Type 5 Lab (l3evpn) - Site 1 Only"
-  cvp:
-    description: "CloudVision Portal Lab (cvp) - Site 1 Only"
+    description: "Layer 3 EVPN VXLAN Lab (l3evpn) - Site 1 Only with MLAG"
+  l2l3evpn:
+    description: "Layer 2 and 3 EVPN VXLAN Lab (l2l3evpn) - Site 1 Only with MLAG"
+  l2l3evpn-aa:
+    description: "Layer 2 and 3 EVPN VXLAN Lab (l2l3evpn-aa) - Site 1 Only with EVPN A-A"
 labconfiglets:
   reset:
     s1-spine1:
@@ -42,176 +38,6 @@ labconfiglets:
       - "BASE_s1-host1"
     s1-host2:
       - "BASE_s1-host2"
-    s2-spine1:
-      - "BASE_s2-spine1"
-    s2-spine2:
-      - "BASE_s2-spine2"
-    s2-leaf1:
-      - "BASE_s2-leaf1"
-    s2-leaf2:
-      - "BASE_s2-leaf2"
-    s2-leaf3:
-      - "BASE_s2-leaf3"
-    s2-leaf4:
-      - "BASE_s2-leaf4"
-    s2-brdr1:
-      - "BASE_s2-brdr1"
-    s2-brdr2:
-      - "BASE_s2-brdr2"
-    s2-core1:
-      - "BASE_s2-core1"
-    s2-core2:
-      - "BASE_s2-core2"
-    s2-host1:
-      - "BASE_s2-host1"
-    s2-host2:
-      - "BASE_s2-host2"
-  l2ls:
-    s1-spine1:
-      - "BASE_s1-spine1"
-      - "L2LS_s1-spine1"
-    s1-spine2:
-      - "BASE_s1-spine2"
-      - "L2LS_s1-spine2"
-    s1-leaf1:
-      - "BASE_s1-leaf1"
-      - "L2LS_s1-leaf1"
-    s1-leaf2:
-      - "BASE_s1-leaf2"
-      - "L2LS_s1-leaf2"
-    s1-leaf3:
-      - "BASE_s1-leaf3"
-      - "L2LS_s1-leaf3"
-    s1-leaf4:
-      - "BASE_s1-leaf4"
-    s1-brdr1:
-      - "BASE_s1-brdr1"
-    s1-brdr2:
-      - "BASE_s1-brdr2"
-    s1-core1:
-      - "BASE_s1-core1"
-    s1-core2:
-      - "BASE_s1-core2"
-    s1-host1:
-      - "BASE_s1-host1"
-      - "L2LS_s1-host1"
-    s1-host2:
-      - "BASE_s1-host2"
-      - "L2LS_s1-host2"
-    s2-spine1:
-      - "BASE_s2-spine1"
-    s2-spine2:
-      - "BASE_s2-spine2"
-    s2-leaf1:
-      - "BASE_s2-leaf1"
-    s2-leaf2:
-      - "BASE_s2-leaf2"
-    s2-leaf3:
-      - "BASE_s2-leaf3"
-    s2-leaf4:
-      - "BASE_s2-leaf4"
-    s2-brdr1:
-      - "BASE_s2-brdr1"
-    s2-brdr2:
-      - "BASE_s2-brdr2"
-    s2-core1:
-      - "BASE_s2-core1"
-    s2-core2:
-      - "BASE_s2-core2"
-    s2-host1:
-      - "BASE_s2-host1"
-    s2-host2:
-      - "BASE_s2-host2"
-  l3ls:
-    s1-spine1:
-      - "BASE_s1-spine1"
-      - "L3LS_s1-spine1"
-    s1-spine2:
-      - "BASE_s1-spine2"
-      - "L3LS_s1-spine2"
-    s1-leaf1:
-      - "BASE_s1-leaf1"
-      - "L3LS_s1-leaf1"
-    s1-leaf2:
-      - "BASE_s1-leaf2"
-      - "L3LS_s1-leaf2"
-    s1-leaf3:
-      - "BASE_s1-leaf3"
-      - "L3LS_s1-leaf3"
-    s1-leaf4:
-      - "BASE_s1-leaf4"
-      - "L3LS_s1-leaf4"
-    s1-brdr1:
-      - "BASE_s1-brdr1"
-    s1-brdr2:
-      - "BASE_s1-brdr2"
-    s1-core1:
-      - "BASE_s1-core1"
-    s1-core2:
-      - "BASE_s1-core2"
-    s1-host1:
-      - "BASE_s1-host1"
-      - "L3LS_s1-host1"
-    s1-host2:
-      - "BASE_s1-host2"
-      - "L3LS_s1-host2"
-    s2-spine1:
-      - "BASE_s2-spine1"
-    s2-spine2:
-      - "BASE_s2-spine2"
-    s2-leaf1:
-      - "BASE_s2-leaf1"
-    s2-leaf2:
-      - "BASE_s2-leaf2"
-    s2-leaf3:
-      - "BASE_s2-leaf3"
-    s2-leaf4:
-      - "BASE_s2-leaf4"
-    s2-brdr1:
-      - "BASE_s2-brdr1"
-    s2-brdr2:
-      - "BASE_s2-brdr2"
-    s2-core1:
-      - "BASE_s2-core1"
-    s2-core2:
-      - "BASE_s2-core2"
-    s2-host1:
-      - "BASE_s2-host1"
-    s2-host2:
-      - "BASE_s2-host2"
-  vxlan:
-    s1-spine1:
-      - "BASE_s1-spine1"
-      - "VXLAN_s1-spine1"
-    s1-spine2:
-      - "BASE_s1-spine2"
-      - "VXLAN_s1-spine2"
-    s1-leaf1:
-      - "BASE_s1-leaf1"
-      - "VXLAN_s1-leaf1"
-    s1-leaf2:
-      - "BASE_s1-leaf2"
-      - "VXLAN_s1-leaf2"
-    s1-leaf3:
-      - "BASE_s1-leaf3"
-      - "VXLAN_s1-leaf3"
-    s1-leaf4:
-      - "BASE_s1-leaf4"
-      - "VXLAN_s1-leaf4"
-    s1-brdr1:
-      - "BASE_s1-brdr1"
-    s1-brdr2:
-      - "BASE_s1-brdr2"
-    s1-core1:
-      - "BASE_s1-core1"
-    s1-core2:
-      - "BASE_s1-core2"
-    s1-host1:
-      - "BASE_s1-host1"
-      - "VXLAN_s1-host1"
-    s1-host2:
-      - "BASE_s1-host2"
-      - "VXLAN_s1-host2"
     s2-spine1:
       - "BASE_s2-spine1"
     s2-spine2:
@@ -350,25 +176,25 @@ labconfiglets:
       - "BASE_s2-host1"
     s2-host2:
       - "BASE_s2-host2"
-  cvp:
+  l2l3evpn:
     s1-spine1:
       - "BASE_s1-spine1"
-      - "L3LS_s1-spine1"
+      - "L2L3EVPN_s1-spine1"
     s1-spine2:
       - "BASE_s1-spine2"
-      - "L3LS_s1-spine2"
+      - "L2L3EVPN_s1-spine2"
     s1-leaf1:
       - "BASE_s1-leaf1"
-      - "L3LS_s1-leaf1"
+      - "L2L3EVPN_s1-leaf1"
     s1-leaf2:
       - "BASE_s1-leaf2"
-      - "L3LS_s1-leaf2"
+      - "L2L3EVPN_s1-leaf2"
     s1-leaf3:
       - "BASE_s1-leaf3"
-      - "L3LS_s1-leaf3"
+      - "L2L3EVPN_s1-leaf3"
     s1-leaf4:
       - "BASE_s1-leaf4"
-      - "L3LS_s1-leaf4_complete"
+      - "L2L3EVPN_s1-leaf4"
     s1-brdr1:
       - "BASE_s1-brdr1"
     s1-brdr2:
@@ -379,10 +205,67 @@ labconfiglets:
       - "BASE_s1-core2"
     s1-host1:
       - "BASE_s1-host1"
-      - "L3LS_s1-host1"
+      - "L2L3EVPN_s1-host1"
     s1-host2:
       - "BASE_s1-host2"
-      - "L3LS_s1-host2"
+      - "L2L3EVPN_s1-host2"
+    s2-spine1:
+      - "BASE_s2-spine1"
+    s2-spine2:
+      - "BASE_s2-spine2"
+    s2-leaf1:
+      - "BASE_s2-leaf1"
+    s2-leaf2:
+      - "BASE_s2-leaf2"
+    s2-leaf3:
+      - "BASE_s2-leaf3"
+    s2-leaf4:
+      - "BASE_s2-leaf4"
+    s2-brdr1:
+      - "BASE_s2-brdr1"
+    s2-brdr2:
+      - "BASE_s2-brdr2"
+    s2-core1:
+      - "BASE_s2-core1"
+    s2-core2:
+      - "BASE_s2-core2"
+    s2-host1:
+      - "BASE_s2-host1"
+    s2-host2:
+      - "BASE_s2-host2"
+  l2l3evpn-aa:
+    s1-spine1:
+      - "BASE_s1-spine1"
+      - "L2L3EVPN-AA_s1-spine1"
+    s1-spine2:
+      - "BASE_s1-spine2"
+      - "L2L3EVPN-AA_s1-spine2"
+    s1-leaf1:
+      - "BASE_s1-leaf1"
+      - "L2L3EVPN-AA_s1-leaf1"
+    s1-leaf2:
+      - "BASE_s1-leaf2"
+      - "L2L3EVPN-AA_s1-leaf2"
+    s1-leaf3:
+      - "BASE_s1-leaf3"
+      - "L2L3EVPN-AA_s1-leaf3"
+    s1-leaf4:
+      - "BASE_s1-leaf4"
+      - "L2L3EVPN-AA_s1-leaf4"
+    s1-brdr1:
+      - "BASE_s1-brdr1"
+    s1-brdr2:
+      - "BASE_s1-brdr2"
+    s1-core1:
+      - "BASE_s1-core1"
+    s1-core2:
+      - "BASE_s1-core2"
+    s1-host1:
+      - "BASE_s1-host1"
+      - "L2L3EVPN-AA_s1-host1"
+    s1-host2:
+      - "BASE_s1-host2"
+      - "L2L3EVPN-AA_s1-host2"
     s2-spine1:
       - "BASE_s2-spine1"
     s2-spine2:
