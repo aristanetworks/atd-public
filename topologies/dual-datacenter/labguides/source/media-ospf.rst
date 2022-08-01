@@ -11,7 +11,7 @@ Media OSPF Lab
 1. Log into the **LabAccess** jumpserver:
 
    1. Type ``labs`` at the Main Menu prompt. This will bring up additional lab menu selections.
-   2. Type ``media`` at this prompt to open the media lab section (If you were previously in the Media Labs Menu, you can type ``back`` to go back).
+   2. Type ``media-labs`` at this prompt to open the media lab section (If you were previously in the Media Labs Menu, you can type ``back`` to go back).
    3. Type ``media-ospf`` at the prompt. The script will configure the topology with the exception of **s1-Leaf 4**.
 
    4. On **s1-Spine 2**, verify OSPF operation (it should not be operating correctly) and you will see all the routes currently in the environment.
