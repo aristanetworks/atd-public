@@ -103,7 +103,7 @@ class TopologyHandler(tornado.web.RequestHandler):
                     cvp = ConfigureTopology(accessinfo, CVP_NODES, TOPO_USER, TOPO_PWD)
                     cvp.lab = _lab
                     if _module in cvp.lab_list:
-                        cvp.update_lab(_module, grouped=False)
+                        cvp.update_lab(_module, grouped=True)
 
 class topoDataHandler(tornado.websocket.WebSocketHandler):
     # executor = ThreadPoolExecutor(max_workers=4)

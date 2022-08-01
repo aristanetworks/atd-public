@@ -209,10 +209,16 @@ class ConfigureTopology():
                         response = self.cvp_clnt.api.create_change_control_v3(
                             f"confTopo_{self.lab}_{self.lab_module}_{_tmp_uuid}",
                             f"confTopo_{self.lab}_{self.lab_module}_{_tmp_uuid}",
-                            self.task_ids
+                            self.task_ids,
+                            sequential=False
                         )
                         if len(response) > 0:
                             self.cc_ids.append(response[0]['id'])
+                        pS(f"Change Control Ids {self.cc_ids}")
+                        pS(f"{self.cvp_clnt.api.get_change_controls(query=self.cc_ids[0])}")
+                        # while True:
+                        #     if self.cc_ids[0] in self.cvp_clnt.api.get_change_controls():
+                        #         break
                     # Check to see if any CC IDs have been created
                     if self.cc_ids:
                         # Iterate through all CC IDs to approve and execute
