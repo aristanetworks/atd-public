@@ -67,10 +67,10 @@ ip virtual-router mac-address 00:1C:73:00:00:12
 !
 interface Vlan4094
    description MLAG Peer Network
-   ip address 10.255.255.254/30
+   ip address 10.255.255.2/30
 !
 mlag configuration
    domain-id MLAG
    local-interface Vlan4094
-   peer-address 10.255.255.253
+   peer-address 10.255.255.1
    peer-link Port-Channel1

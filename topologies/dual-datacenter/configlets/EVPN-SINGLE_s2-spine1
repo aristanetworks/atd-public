@@ -1,0 +1,74 @@
+interface Ethernet1
+   shutdown
+!
+interface Ethernet2
+   description L3 Downlink - s1-leaf1
+   no switchport
+   ip address 10.222.1.0/31
+!
+interface Ethernet3
+   description L3 Downlink - s1-leaf2
+   no switchport
+   ip address 10.222.1.2/31
+!
+interface Ethernet4
+   description L3 Downlink - s1-leaf3
+   no switchport
+   ip address 10.222.1.4/31
+!
+interface Ethernet5
+   description L3 Downlink - s1-leaf4
+   no switchport
+   ip address 10.222.1.6/31
+!
+interface Ethernet6
+   shutdown
+!
+interface Ethernet7
+   description L3 Downlink - s1-brdr1
+   no switchport
+   ip address 10.222.1.8/31
+!
+interface Ethernet8
+   description L3 Downlink - s1-brdr2
+   no switchport
+   ip address 10.222.1.10/31
+!
+interface Loopback0
+   description Management and Router-id
+   ip address 10.222.0.1/32
+!
+ip route 10.222.1.0/24 Null0
+!
+peer-filter LEAF-ASN
+   10 match as-range 65201-65205 result accept
+!
+router bgp 65200
+   router-id 10.222.0.1
+   no bgp default ipv4-unicast
+   maximum-paths 2
+   bgp listen range 10.222.1.0/24 peer-group LEAVES peer-filter LEAF-ASN
+   bgp listen range 10.222.254.0/24 peer-group LEAVES-EVPN peer-filter LEAF-ASN
+   neighbor DC1-SPINES-EVPN peer group
+   neighbor DC1-SPINES-EVPN remote-as 65100
+   neighbor DC1-SPINES-EVPN update-source Loopback0
+   neighbor DC1-SPINES-EVPN ebgp-multihop 6
+   neighbor DC1-SPINES-EVPN send-community standard extended
+   neighbor LEAVES peer group
+   neighbor LEAVES send-community standard extended
+   neighbor LEAVES-EVPN peer group
+   neighbor LEAVES-EVPN update-source Loopback0
+   neighbor LEAVES-EVPN ebgp-multihop 3
+   neighbor LEAVES-EVPN send-community standard extended
+   neighbor 10.111.0.1 peer group DC1-SPINES-EVPN
+   neighbor 10.111.0.2 peer group DC1-SPINES-EVPN
+   !
+   address-family evpn
+      neighbor DC1-SPINES-EVPN activate
+      neighbor LEAVES-EVPN activate
+      bgp next-hop-unchanged
+   !
+   address-family ipv4
+      neighbor LEAVES activate
+      network 10.222.0.1/32
+      network 10.222.1.0/24

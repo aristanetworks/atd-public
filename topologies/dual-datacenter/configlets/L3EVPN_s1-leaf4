@@ -1,8 +1,5 @@
 no spanning-tree vlan-id 4094
 !
-vlan 134
-   name Host_Network_134
-!
 vlan 4094
    name MLAG_VLAN
    trunk group MLAGPEER
@@ -11,11 +8,6 @@ interface Port-Channel1
    description MLAG Peer-link - s1-leaf3
    switchport mode trunk
    switchport trunk group MLAGPEER
-!
-interface Port-Channel5
-   description MLAG Downlink - s1-host2
-   switchport access vlan 134
-   mlag 5
 !
 interface Ethernet1
    description MLAG Peer-link - s1-leaf3
@@ -33,8 +25,6 @@ interface Ethernet3
    ip address 10.111.2.7/31
 !
 interface Ethernet4
-   description MLAG Downlink - s1-host2
-   channel-group 5 mode active
 !
 interface Ethernet6
    description MLAG Peer-link - s1-leaf3
@@ -45,21 +35,22 @@ interface Loopback0
    description Management and Router-id
    ip address 10.111.254.4/32
 !
-interface Loopback1
-   description VTEP
-   ip address 10.111.253.3/32
-!
 interface Vlan4094
    description MLAG Peer Network
    ip address 10.255.255.2/30
-!
-ip virtual-router mac-address 00:1C:73:00:00:01
 !
 mlag configuration
    domain-id MLAG
    local-interface Vlan4094
    peer-address 10.255.255.1
    peer-link Port-Channel1
+!
+ip prefix-list LOOPBACKS
+   seq 100 permit 10.111.253.0/24 eq 32
+   seq 110 permit 10.111.254.0/24 eq 32
+!
+route-map LOOPBACKS permit 100
+   match ip address prefix-list LOOPBACKS
 !
 router bgp 65102
    router-id 10.111.254.4
@@ -68,7 +59,7 @@ router bgp 65102
    neighbor MLAG peer group
    neighbor MLAG remote-as 65102
    neighbor MLAG next-hop-self
-   neighbor MLAG send-community extended
+   neighbor MLAG send-community standard extended
    neighbor SPINE peer group
    neighbor SPINE remote-as 65100
    neighbor SPINE send-community standard extended
@@ -79,6 +70,4 @@ router bgp 65102
    address-family ipv4
       neighbor MLAG activate
       neighbor SPINE activate
-      network 10.111.112.0/24
-      network 10.111.253.3/32
-      network 10.111.254.4/32
+      redistribute connected route-map LOOPBACKS

@@ -1,0 +1,152 @@
+no spanning-tree vlan-id 4094
+!
+vlan 4094
+   name MLAG_VLAN
+   trunk group MLAGPEER
+!
+vrf instance TENANT
+!
+interface Port-Channel1
+   description MLAG Peer-link - s1-brdr2
+   switchport mode trunk
+   switchport trunk group MLAGPEER
+!
+interface Ethernet1
+   description MLAG Peer-link - s1-brdr2
+   channel-group 1 mode active
+!
+interface Ethernet2
+   description L3 Uplink - s1-spine1
+   no switchport
+   ip address 10.222.1.11/31
+!
+interface Ethernet3
+   description L3 Uplink - s1-spine2
+   no switchport
+   ip address 10.222.2.11/31
+!
+interface Ethernet4
+   description L3 Uplink - s1-core1
+   no switchport
+!
+interface Ethernet4.222
+   description L3 Uplink - s1-core1 for Default VRF
+   encapsulation dot1q vlan 222
+   ip address 10.222.99.3/31
+!
+interface Ethernet4.223
+   description L3 Uplink - s1-core1 for TENANT VRF
+   encapsulation dot1q vlan 223
+   vrf TENANT
+   ip address 10.223.99.3/31
+!
+interface Ethernet5
+   description L3 Uplink - s1-core2
+   no switchport
+!
+interface Ethernet5.222
+   description L3 Uplink - s1-core2 for Default VRF
+   encapsulation dot1q vlan 222
+   ip address 10.222.99.131/31
+!
+interface Ethernet5.223
+   description L3 Uplink - s1-core2 for TENANT VRF
+   encapsulation dot1q vlan 223
+   vrf TENANT
+   ip address 10.223.99.131/31
+!
+interface Ethernet6
+   description MLAG Peer-link - s1-brdr2
+   channel-group 1 mode active
+!
+interface Loopback0
+   description Management and Router-id
+   ip address 10.222.254.6/32
+!
+interface Loopback1
+   description VTEP
+   ip address 10.222.253.5/32
+!
+interface Vlan4094
+   description MLAG Peer Network
+   ip address 10.255.255.2/30
+!
+interface Vxlan1
+   vxlan source-interface Loopback1
+   vxlan virtual-router encapsulation mac-address mlag-system-id
+   vxlan udp-port 4789
+   vxlan vrf TENANT vni 5001
+!
+ip virtual-router mac-address 00:1C:73:00:00:01
+!
+ip routing vrf TENANT
+!
+mlag configuration
+   domain-id MLAG
+   local-interface Vlan4094
+   peer-address 10.255.255.1
+   peer-link Port-Channel1
+!
+ip prefix-list DEAFULT-TENS
+   seq 100 permit 10.0.0.0/8
+!
+ip prefix-list LOOPBACKS
+   seq 100 permit 10.222.253.0/24 eq 32
+   seq 110 permit 10.222.254.0/24 eq 32
+!
+route-map DEAFULT-TENS permit 100
+   match ip address prefix-list DEAFULT-TENS
+!
+route-map LOOPBACKS permit 100
+   match ip address prefix-list LOOPBACKS
+!
+router bgp 65203
+   router-id 10.222.254.6
+   rd auto
+   maximum-paths 2
+   no bgp default ipv4-unicast
+   neighbor CORE peer group
+   neighbor CORE remote-as 65002
+   neighbor CORE send-community standard extended
+   neighbor CORE-TENANT peer group
+   neighbor CORE-TENANT remote-as 65002
+   neighbor CORE-TENANT send-community standard extended
+   neighbor CORE-TENANT route-map DEAFULT-TENS in
+   neighbor MLAG peer group
+   neighbor MLAG remote-as 65203
+   neighbor MLAG next-hop-self
+   neighbor MLAG send-community standard extended
+   neighbor SPINE peer group
+   neighbor SPINE remote-as 65200
+   neighbor SPINE send-community standard extended
+   neighbor SPINE-EVPN peer group
+   neighbor SPINE-EVPN remote-as 65200
+   neighbor SPINE-EVPN update-source Loopback0
+   neighbor SPINE-EVPN ebgp-multihop 3
+   neighbor SPINE-EVPN send-community standard extended
+   neighbor 10.222.0.1 peer group SPINE-EVPN
+   neighbor 10.222.0.2 peer group SPINE-EVPN
+   neighbor 10.222.1.10 peer group SPINE
+   neighbor 10.222.2.10 peer group SPINE
+   neighbor 10.222.99.2 peer group CORE
+   neighbor 10.222.99.130 peer group CORE
+   neighbor 10.255.255.1 peer group MLAG
+   redistribute connected route-map LOOPBACKS
+   !
+   address-family evpn
+      neighbor SPINE-EVPN activate
+      route import match-failure action discard
+   !
+   address-family ipv4
+      neighbor CORE activate
+      neighbor CORE-TENANT activate
+      neighbor MLAG activate
+      neighbor SPINE activate
+      redistribute connected route-map LOOPBACKS
+   !
+   vrf TENANT
+      route-target import evpn 5001:5001
+      route-target export evpn 5001:5001
+      neighbor 10.223.99.2 peer group CORE-TENANT
+      neighbor 10.223.99.130 peer group CORE-TENANT
+      redistribute connected
