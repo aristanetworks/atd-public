@@ -174,7 +174,7 @@ VxLAN
 
             interface vxlan 1
               vxlan source-interface loopback 1
-              vxlan vlan 12 vni 112
+              vxlan vlan 112 vni 112
               vxlan flood vtep 10.111.253.1 
 
       .. note:: ``vxlan flood vtep 10.111.253.1`` adds the shared loopback1 IP address on Leaf1 & Leaf2 to the HER list. Note that for autodiscovery of VTEPs, one must use BGP eVPN (see eVPN labs) or CVX (see CVX lab).
