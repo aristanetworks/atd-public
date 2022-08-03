@@ -1,0 +1,39 @@
+// For format details, see https://aka.ms/vscode-remote/devcontainer.json or this file's README at:
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.117.1/containers/docker-existing-dockerfile
+{
+	"name": "GO - ConfTopo - ATD Public",
+
+	// Sets the run context to one level up instead of the .devcontainer folder.
+	"context": "..",
+
+	// Update the 'dockerFile' property if you aren't using the standard 'Dockerfile' filename.
+	"dockerFile": "Dockerfile",
+	// Set *default* container specific settings.json values on container create.
+	"settings": { 
+		"terminal.integrated.shell.linux": "/bin/zsh",
+		"go.toolsManagement.checkForUpdates": "local",
+		"go.useLanguageServer": true
+	},
+	// "containerEnv": {
+	// },
+	"build": {
+		"args": {
+			"CONTAINERWS": "${containerWorkspaceFolder}",
+		},
+	},
+	// Add the IDs of extensions you want installed when the container is created.
+	"extensions": [
+		"redhat.vscode-yaml",
+		"ms-azuretools.vscode-docker",
+		"golang.go"
+	],
+	"postCreateCommand": "touch ${containerWorkspaceFolder}/.history",
+	"mounts": [ 
+		"source=${localEnv:HOME}/.ssh,target=/home/atddev/.ssh,type=bind,consistency=cached",
+		"source=${localEnv:HOME}/.gitconfig,target=/home/atddev/.gitconfig,type=bind,consistency=cached"
+	],
+
+	// Uncomment to connect as a non-root user. See https://aka.ms/vscode-remote/containers/non-root.
+	"remoteUser": "atddev"
+}
+

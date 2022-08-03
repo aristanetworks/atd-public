@@ -1,13 +1,11 @@
 package main
 
 import (
-	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
-	"os"
 	"strings"
 	"time"
 
@@ -17,57 +15,6 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
-type Cred_struct struct {
-	Pw   string `yaml:"pw"`
-	User string `yaml:"user"`
-}
-
-type Login_struct struct {
-	Jump_host Cred_struct `yaml:"jump_host"`
-}
-
-type Access_yaml struct {
-	Login_info     Login_struct `yaml:"login_info"`
-	Nodes          interface{}  `yaml:"nodes"`
-	Topology       string       `yaml:"topology"`
-	Eos_type       string       `yaml:"eos_type"`
-	Version        string       `yaml:"version"`
-	Cvp_mode       string       `yaml:"cvp_mode"`
-	Zone           string       `yaml:"zone"`
-	Name           string       `yaml:"name"`
-	Project        string       `yaml:"project"`
-	Title          string       `yaml:"title"`
-	Cvp            string       `yaml:"cvp"`
-	Disabled_links []string     `yaml:"disabled_links"`
-	Labguides      string       `yaml:"labguides"`
-}
-
-type Cvp_struct struct {
-	Status  string      `json:"status"`
-	Version string      `json:"version"`
-	Total   int         `json:"total"`
-	Tasks   interface{} `json:"tasks"`
-}
-
-type Received_msg struct {
-	Type string        `json:"type"`
-	Data Received_data `json:"data"`
-}
-
-type Received_data struct {
-	Lab    string `json:"lab"`
-	Module string `json:"module"`
-}
-
-type Client_data struct {
-	Status string `json:"status"`
-}
-type Client_pkg struct {
-	Type      string      `json:"type"`
-	Timestamp string      `json:"time"`
-	Data      Client_data `json:"data"`
-}
-
 var upgrader = websocket.Upgrader{
 	ReadBufferSize:  1024,
 	WriteBufferSize: 1024,
@@ -75,10 +22,12 @@ var upgrader = websocket.Upgrader{
 
 var APP_PORT int = 50010
 var ACCESS string = "/etc/atd/ACCESS_INFO.yaml"
+var MENU_DIR string = "/home/arista/menus"
 var SLEEP_DELAY = (60 * time.Second)
 var CVP_NODES = []string{"192.168.0.5"}
 var TOPO_USER string = ""
 var TOPO_PWD string = ""
+var BASE_CFGS = []string{"ATD-INFRA"}
 
 // Create the CVP Client
 var CVP_client, _ = client.NewCvpClient(
@@ -86,81 +35,6 @@ var CVP_client, _ = client.NewCvpClient(
 	client.Port(443),
 	client.Hosts(CVP_NODES...),
 	client.Debug(false))
-
-// ====================================================
-// Utility Functions
-// ====================================================
-
-func decodeID(tmp_data string) (map[string]interface{}, error) {
-	decoded, err := base64.StdEncoding.DecodeString(tmp_data)
-	if err != nil {
-		log.Println("Decode Error: ", err)
-		return nil, err
-	}
-	decoded_json := map[string]interface{}{}
-	if err := json.Unmarshal(decoded, &decoded_json); err != nil {
-		log.Println("Error converting to JSON: ", err)
-		return nil, err
-	}
-
-	return decoded_json, nil
-}
-
-func decodeID_to_string(tmp_data string) (string, error) {
-	decoded, err := base64.StdEncoding.DecodeString(tmp_data)
-	if err != nil {
-		log.Println("Decode Error: ", err)
-		return "", err
-	}
-	var decoded_json string
-	if err := json.Unmarshal(decoded, &decoded_json); err != nil {
-		log.Println("Error converting to JSON: ", err)
-		return "", err
-	}
-
-	return decoded_json, nil
-}
-
-func encodeID(tmp_data map[string]interface{}) string {
-	en_json, err := json.Marshal(tmp_data)
-	if err != nil {
-		log.Fatal("ERROR")
-	}
-	encoded_string := base64.StdEncoding.EncodeToString(en_json)
-	return encoded_string
-}
-
-func fileExists(filename string) bool {
-	info, err := os.Stat(filename)
-	if os.IsNotExist(err) {
-		return false
-	}
-	return !info.IsDir()
-}
-
-func cvpCheckAndConnect(cvp_client *client.CvpClient) bool {
-	if cvp_client.SessID == "" {
-		log.Println("CVP is not active, re-trying to connect.")
-		if err := cvp_client.Connect(TOPO_USER, TOPO_PWD); err != nil {
-			log.Printf("CVP is not running or is starting up: %s\n", err)
-			return false
-		} else {
-			log.Println("CVP is up and running")
-			return true
-		}
-	} else {
-		// Verify that the CVP SessionID is active
-		_, err := cvp_client.API.GetCvpInfo()
-		if err != nil {
-			log.Println("CVP Session is no longer active")
-			cvp_client.SessID = ""
-			return false
-		} else {
-			log.Println("CVP is active.")
-			return true
-		}
-	}
-}
 
 // =============================================================
 // Websocket and Web Handler GO Routines
@@ -278,6 +152,22 @@ func TopoRequestHandler(w http.ResponseWriter, r *http.Request) {
 				res.Version = ""
 			}
 			json.NewEncoder(w).Encode(res)
+		} else if decoded_action == "update_lab" {
+			_encoded_module, okmod := params["module"]
+			_encoded_lab, oklab := params["lab"]
+			if okmod && oklab {
+				_module, errmod := decodeID_to_string(_encoded_module[0])
+				_lab, errlab := decodeID_to_string(_encoded_lab[0])
+				if errmod != nil {
+					log.Printf("Error decoding module paraemter or: %s", params["module"][0])
+				} else if errlab != nil {
+					log.Printf("Error decoding lab paraemter or: %s", params["lab"][0])
+				} else {
+					// Continue on to update labs
+					log.Printf("Update %s lab for %s", _module, _lab)
+					configureTopo(_module, _lab)
+				}
+			}
 		}
 	} else {
 		log.Println("No action parameter provided")

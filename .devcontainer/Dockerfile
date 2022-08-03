@@ -50,11 +50,6 @@ RUN apt-add-repository https://cli.github.com/packages
 
 RUN apt update && apt install -y gh
 
-# Install GoLang
-
-RUN wget https://golang.org/dl/go1.16.6.linux-amd64.tar.gz
-
-RUN rm -rf /usr/local/go && tar -C /usr/local -xzf go1.16.6.linux-amd64.tar.gz
 
 USER $USERNAME
 
@@ -63,10 +58,3 @@ USER $USERNAME
 RUN SNIPPET="export PROMPT_COMMAND='history -a' && export HISTFILE=$CONTAINERWS/.history" \
     && echo $SNIPPET >> "/home/$USERNAME/.zshrc"
     
-ENV PATH=$PATH:/usr/local/go/bin
-
-# ENV GOPATH=/home/${USERNAME}/go
-
-RUN go get -v golang.org/x/tools/gopls
-RUN go get -v golang.org/x/tools/cmd/goimports
-RUN go get -v golang.org/x/tools/cmd/goimports
