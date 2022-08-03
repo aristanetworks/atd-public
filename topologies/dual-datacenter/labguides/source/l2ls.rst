@@ -37,14 +37,14 @@ Layer 2 Leaf-Spine
          :emphasize-lines: 1, 25
 
          s1-leaf3#show mlag
-         MLAG Configuration:
+         MLAG Configuration:              
          domain-id                          :                MLAG
          local-interface                    :            Vlan4094
          peer-address                       :        10.255.255.2
          peer-link                          :       Port-Channel1
-         peer-config                        :
-         
-         MLAG Status:
+         peer-config                        :                   
+                                                               
+         MLAG Status:                     
          state                              :            Inactive
          negotiation status                 :          Connecting
          peer-link status                   :      Lowerlayerdown
@@ -52,21 +52,21 @@ Layer 2 Leaf-Spine
          system-id                          :   00:00:00:00:00:00
          dual-primary detection             :            Disabled
          dual-primary interface errdisabled :               False
-         
-         MLAG Ports:
+                                                               
+         MLAG Ports:                      
          Disabled                           :                   2
          Configured                         :                   0
          Inactive                           :                   0
          Active-partial                     :                   0
          Active-full                        :                   0
-         
-         s1-leaf3#show mlag interfaces
-                                                                                                 local/remote
-            mlag       desc                                    state       local       remote          status
-         ---------- ------------------------------------ -------------- ----------- ------------ ------------
-               4       MLAG Downlink - s1-host2             disabled         Po4            -            up/-
-              34       MLAG Uplink - s1-spine1 and s1       disabled        Po34            -            up/-
 
+         s1-leaf3#show mlag interfaces 
+                                                                           local/remote
+         mlag   desc                                state   local   remote        status
+         ----- -------------------------------- ---------- ------- -------- ------------
+         5    MLAG Downlink - s1-host2         disabled     Po5        -          up/-
+         34   MLAG Uplink - s1-spine1 and s1   disabled    Po34        -          up/-
+         
 #. Configure the MLAG domain on **s1-leaf4** using the following steps.
 
    a. Configure the layer 2 VLANs for host connectivity.
