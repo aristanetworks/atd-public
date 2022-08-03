@@ -7,10 +7,15 @@ vlan 134
 vlan 4094
    trunk group MLAGPEER
 !
-interface Port-Channel4
+interface Port-Channel1
+   description MLAG Peer-link - s1-leaf4
+   switchport mode trunk
+   switchport trunk group MLAGPEER
+!
+interface Port-Channel5
    description MLAG Downlink - s1-host2
    switchport access vlan 112
-   mlag 4
+   mlag 5
 !
 interface Port-Channel1
    description MLAG Peer-link - s1-leaf4
@@ -36,7 +41,7 @@ interface Ethernet3
 !
 interface Ethernet4
    description MLAG Downlink - s1-host2
-   channel-group 4 mode active
+   channel-group 5 mode active
 !
 interface Ethernet6
    description MLAG Peer-link - s1-leaf4
