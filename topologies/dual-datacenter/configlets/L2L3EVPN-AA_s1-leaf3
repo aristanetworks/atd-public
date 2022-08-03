@@ -1,0 +1,115 @@
+vlan 112
+   name Host_Network_112
+!
+vlan 134
+   name Host_Network_134
+!
+vrf instance TENANT
+!
+interface Port-Channel5
+   description MLAG Downlink - s1-host2
+   switchport trunk allowed vlan 112,134
+   switchport mode trunk
+   !
+   evpn ethernet-segment
+      identifier 0034:0000:0000:0000:0005
+      route-target import 00:03:04:00:00:05
+   lacp system-id 1234.5678.0304
+!
+interface Ethernet1
+   description Unused
+   shutdown
+!
+interface Ethernet2
+   description L3 Uplink - s1-spine1
+   no switchport
+   ip address 10.111.1.5/31
+!
+interface Ethernet3
+   description L3 Uplink - s1-spine2
+   no switchport
+   ip address 10.111.2.5/31
+!
+interface Ethernet4
+   description EVPN A-A Downlink - s1-host2
+   channel-group 5 mode active
+!
+interface Ethernet6
+   description Unused
+   shutdown
+!
+interface Loopback0
+   description Management and Router-id
+   ip address 10.111.254.3/32
+!
+interface Loopback1
+   description VTEP
+   ip address 10.111.253.3/32
+!
+interface Vlan112
+   description Host Network 112
+   vrf TENANT
+   ip address virtual 10.111.112.1/24
+!
+interface Vlan134
+   description Host Network 134
+   vrf TENANT
+   ip address virtual 10.111.134.1/24
+!
+interface Vxlan1
+   vxlan source-interface Loopback1
+   vxlan udp-port 4789
+   vxlan vlan 112 vni 112
+   vxlan vlan 134 vni 134
+   vxlan vrf TENANT vni 5001
+!
+ip virtual-router mac-address 00:1C:73:00:00:01
+!
+ip routing vrf TENANT
+!
+ip prefix-list LOOPBACKS
+   seq 100 permit 10.111.253.0/24 eq 32
+   seq 110 permit 10.111.254.0/24 eq 32
+!
+route-map LOOPBACKS permit 100
+   match ip address prefix-list LOOPBACKS
+!
+router bgp 65103
+   router-id 10.111.254.3
+   rd auto
+   maximum-paths 2
+   no bgp default ipv4-unicast
+   neighbor SPINE peer group
+   neighbor SPINE remote-as 65100
+   neighbor SPINE send-community standard extended
+   neighbor SPINE-EVPN peer group
+   neighbor SPINE-EVPN remote-as 65100
+   neighbor SPINE-EVPN update-source Loopback0
+   neighbor SPINE-EVPN ebgp-multihop 3
+   neighbor SPINE-EVPN send-community standard extended
+   neighbor 10.111.0.1 peer group SPINE-EVPN
+   neighbor 10.111.0.2 peer group SPINE-EVPN
+   neighbor 10.111.1.4 peer group SPINE
+   neighbor 10.111.2.4 peer group SPINE
+   !
+   vlan 112
+      rd auto
+      route-target both 112:112
+      redistribute learned
+   !
+   vlan 134
+      rd auto
+      route-target both 134:134
+      redistribute learned
+   !
+   address-family evpn
+      neighbor SPINE-EVPN activate
+   !
+   address-family ipv4
+      neighbor SPINE activate
+      redistribute connected route-map LOOPBACKS
+   !
+   vrf TENANT
+      route-target import evpn 5001:5001
+      route-target export evpn 5001:5001
+      redistribute connected

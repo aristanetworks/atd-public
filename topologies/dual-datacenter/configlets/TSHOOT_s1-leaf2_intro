@@ -4,7 +4,7 @@ spanning-tree mst 0 priority 4096
 vlan 12,34
 !
 interface Ethernet1
-   description LEAF1
+   description S1-LEAF1
    switchport mode trunk
 !
 interface Ethernet2

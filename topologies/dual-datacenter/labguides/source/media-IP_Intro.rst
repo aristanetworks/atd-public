@@ -6,22 +6,24 @@ Media Intro to IP Lab
 
 .. note:: An IP address serves two principal functions. It identifies the host, or more specifically its network interface, and it provides the location of the host in the network, and thus the capability of establishing a path to that host. Its role has been characterized as follows: "A name indicates what we seek. An address indicates where it is. A route indicates how to get there."
 
+.. note:: This lab has been limited to the following devices s1-Leaf 1, s1-Leaf 4, s1-Spine 1, s1-Spine 2, s1-Host 1 and s1-Host 2. Additional devices on this topology are out of scope for this lab.
+
 1. Log into the **LabAccess** jumpserver:
 
    1. Type ``labs`` at the Main Menu prompt. This will bring up additional lab menu selections.
-   2. Type ``media`` at this prompt to open the media lab section.
+   2. Type ``media-labs`` at this prompt to open the media lab section.
    3. Type ``media-intro`` at this prompt and wait for the process to run.
-   4. The script will configure the topology with the exception of **Leaf 4**. The main task is to configure the remaining device so there is connectivity between the two hosts
+   4. The script will configure the topology with the exception of **s1-Leaf 4**. The main task is to configure this device so there is connectivity between the two hosts
 
 
-2. Connect to **Leaf 4** from the menu:
+2. Connect to **s1-Leaf 4** from the menu:
 
-   1.  Connect to ``Leaf 4`` by selecting option ``6`` from the ``Device SSH`` menu (Type ``ssh`` at the prompt).  Once in the switch we are in the *Privileged EXEC* mode, denoted by the **#** preceding the device name.  This is similar to a admin user, in this mode can configure and view information on the switch. To configure devices we will need to go into the global configuration mode by typing *configure* at the prompt, in *Privileged EXEC (enable)* mode.  As you do the labs you will see this *configure* command being used to ensure that you are in the *config* mode.  One prompt that you may come across is the **>** this denotes that you are in EXEC mode, where you can do basic tests and view system information.  EXEC mode is the default mode for all switches.
+   1.  Connect to ``s1-Leaf 4`` by selecting option ``10`` from the ``Device SSH`` menu (Type ``ssh`` at the prompt).  Once in the switch we are in the *Privileged EXEC* mode, denoted by the **#** preceding the device name.  This is similar to a admin user, in this mode can configure and view information on the switch. To configure devices we will need to go into the global configuration mode by typing *configure* at the prompt, this will bring you into *Privileged EXEC (enable)* mode.  As you do the labs you will see this *configure* command being used to ensure that you are in the *config* mode.  One prompt that you may come across is the **>** this denotes that you are in EXEC mode, in this mode you can do basic tests and view system information.  EXEC mode is the default mode for all switches.
 
 
 3.  Configure the proper ip address on the interfaces along with the appropriate static routes to ensure there is end-to-end connectivity for the two end hosts to reach each other.  All interfaces in this lab are designed as point-to-point  connections
 
-   1. On **Leaf 4** assign the appropriate ip address and ensure the adjacent devices can be reached
+   1. On **s1-Leaf 4** assign the appropriate ip address and ensure the adjacent devices can be reached
 
         .. code-block:: text
 
@@ -39,29 +41,28 @@ Media Intro to IP Lab
 
          .. code-block:: text
 
-            leaf4#configure
-            leaf4(config)#interface ethernet 3
-            leaf4(config-if-Et3)#no switchport
-            leaf4(config-if-Et3)#ip address 10.127.34.4/24
-            leaf4(config-if-Et3)#interface ethernet 4
-            leaf4(config-if-Et4)#no switchport
-            leaf4(config-if-Et4)#ip address 172.16.46.4/24
+            s1-leaf4#configure
+            s1-leaf4(config)#interface ethernet 3
+            s1-leaf4(config-if-Et3)#no switchport
+            s1-leaf4(config-if-Et3)#ip address 10.127.34.4/24
+            s1-leaf4(config-if-Et3)#interface ethernet 4
+            s1-leaf4(config-if-Et4)#no switchport
+            s1-leaf4(config-if-Et4)#ip address 172.16.46.4/24
 
 
-      .. note::
-        It is worth mentioning by default all interfaces on an Arista switch is set to be a switchport (Layer 2 interface). We need to allow it to be a routed interface and thus ``no switchport`` is added (turns into Layer 3 interface).  Once the IP address has been added to the appropriate interface, ensure reachability to the adjacent device by leveraging the ``ping`` command on **Leaf 4**
+      .. note:: It is worth mentioning by default all interfaces on an Arista switch is set to be a switchport (Layer 2 interface). We need to allow it to be a routed interface and thus ``no switchport`` is added (turns into Layer 3 interface).  Once the IP address has been added to the appropriate interface, ensure reachability to the adjacent device by leveraging the ``ping`` command on **s1-Leaf 4**
 
+    2. Test Connect to s1-Spine2 and to s1-Host2
         .. code-block:: text
 
-
-             ping 10.127.34.3
-             ping 172.16.46.6
+            ping 10.127.34.3
+            ping 172.16.46.6
 
       **Example:**
 
         .. code-block:: text
 
-            leaf4# ping 10.127.34.3
+            s1-leaf4# ping 10.127.34.3
             PING 10.127.34.3 (10.127.34.3) 72(100) bytes of data.
             80 bytes from 10.127.34.3: icmp_seq=1 ttl=64 time=17.0 ms
             80 bytes from 10.127.34.3: icmp_seq=2 ttl=64 time=18.8 ms
@@ -72,7 +73,7 @@ Media Intro to IP Lab
             5 packets transmitted, 4 received, 20% packet loss, time 62ms
             rtt min/avg/max/mdev = 12.605/15.868/18.844/2.332 ms, pipe 2, ipg/ewma 15.602/16.435 ms
 
-            leaf4# ping 172.16.46.6
+            s1-leaf4# ping 172.16.46.6
             PING 172.16.46.6 (172.16.46.6) 72(100) bytes of data.
             80 bytes from 172.16.46.6: icmp_seq=1 ttl=64 time=38.4 ms
             80 bytes from 172.16.46.6: icmp_seq=2 ttl=64 time=32.1 ms
@@ -88,7 +89,7 @@ Media Intro to IP Lab
       At this point if the adjacent devices can be reached, you have configured the IP address correctly
 
 
-   2. Once the address has been assigned to the appropriate interfaces, we can enable the routing as well as add the appropriate static routes on **Leaf 4** to allow reachability between the two host end-points.
+   3. Once the address has been assigned to the appropriate interfaces, we can enable the routing as well as add the appropriate static routes on **s1-Leaf 4** to allow reachability between the two host end-points.
 
 
         .. code-block:: text
@@ -104,9 +105,9 @@ Media Intro to IP Lab
 
         .. code-block:: text
 
-            leaf4(config-if-Et4)#configure
-            leaf4(config)#ip routing
-            leaf4(config)#ip route 172.16.15.0/24 10.127.34.3
+            s1-leaf4(config-if-Et4)#configure
+            s1-leaf4(config)#ip routing
+            s1-leaf4(config)#ip route 172.16.15.0/24 10.127.34.3
 
       .. note::
          We added the entire prefix for the static route but we could have also put the specific host address.  Normally your internal security policies will dictate which approach to take
@@ -114,7 +115,7 @@ Media Intro to IP Lab
 
 4. Validate end-to-end connectivity from the hosts once IP addresses and static routes have been configured from the previous steps
 
-   1. Log into **Host 2** and verify there is reachability to **Host 1**
+   1. Log into **s1-Host 2** and verify there is reachability to **s1-Host 1**
 
         .. code-block:: text
 
@@ -124,7 +125,7 @@ Media Intro to IP Lab
 
         .. code-block:: text
 
-            host2# ping 172.16.15.5
+            s1-host2# ping 172.16.15.5
             PING 172.16.15.5 (172.16.15.5) 72(100) bytes of data.
             80 bytes from 172.16.15.5: icmp_seq=1 ttl=60 time=307 ms
             80 bytes from 172.16.15.5: icmp_seq=2 ttl=60 time=300 ms
@@ -140,7 +141,7 @@ Media Intro to IP Lab
 
 .. admonition:: **Test your knowledge:**
 
-    When **Leaf 4** receives the incoming icmp packet from **Host 2**, what would the process be for the switch to determine the path for the packet to be fowarded?
+    When **s1-Leaf 4** receives the incoming icmp packet from **s1-Host 2**, what would the process be for the switch to determine the path for the packet to be fowarded?
 
 
 **LAB COMPLETE!**

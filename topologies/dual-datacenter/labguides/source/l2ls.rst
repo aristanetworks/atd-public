@@ -22,7 +22,7 @@ Layer 2 Leaf-Spine
       .. note::
 
          The manually-entered commands below that are part of this lab are
-         equivalent to ``L2LS_s1-leaf4``.
+         equivalent to ``L2LS_s1-leaf4_complete``.
 
 #. Prior to configuration, verify the current operational status of the environment.
 
@@ -37,14 +37,14 @@ Layer 2 Leaf-Spine
          :emphasize-lines: 1, 25
 
          s1-leaf3#show mlag
-         MLAG Configuration:
+         MLAG Configuration:              
          domain-id                          :                MLAG
          local-interface                    :            Vlan4094
-         peer-address                       :      10.255.255.254
+         peer-address                       :        10.255.255.2
          peer-link                          :       Port-Channel1
-         peer-config                        :
-         
-         MLAG Status:
+         peer-config                        :                   
+                                                               
+         MLAG Status:                     
          state                              :            Inactive
          negotiation status                 :          Connecting
          peer-link status                   :      Lowerlayerdown
@@ -52,21 +52,21 @@ Layer 2 Leaf-Spine
          system-id                          :   00:00:00:00:00:00
          dual-primary detection             :            Disabled
          dual-primary interface errdisabled :               False
-         
-         MLAG Ports:
+                                                               
+         MLAG Ports:                      
          Disabled                           :                   2
          Configured                         :                   0
          Inactive                           :                   0
          Active-partial                     :                   0
          Active-full                        :                   0
-         
-         s1-leaf3#show mlag interfaces
-                                                                                                 local/remote
-            mlag       desc                                    state       local       remote          status
-         ---------- ------------------------------------ -------------- ----------- ------------ ------------
-               4       MLAG Downlink - s1-host2             disabled         Po4            -            up/-
-              34       MLAG Uplink - s1-spine1 and s1       disabled        Po34            -            up/-
 
+         s1-leaf3#show mlag interfaces 
+                                                                           local/remote
+         mlag   desc                                state   local   remote        status
+         ----- -------------------------------- ---------- ------- -------- ------------
+         5    MLAG Downlink - s1-host2         disabled     Po5        -          up/-
+         34   MLAG Uplink - s1-spine1 and s1   disabled    Po34        -          up/-
+         
 #. Configure the MLAG domain on **s1-leaf4** using the following steps.
 
    a. Configure the layer 2 VLANs for host connectivity.
@@ -188,22 +188,22 @@ Layer 2 Leaf-Spine
 
          interface Vlan4094
             description MLAG Peer Network
-            ip address 10.255.255.254/30
+            ip address 10.255.255.2/30
 
    #. Verify layer 3 connectivity between the peer switches on the MLAG VLAN.
 
       .. code-block:: text
          :emphasize-lines: 1
 
-         s1-leaf4(config-if-Vl4094)#ping 10.255.255.253
-         PING 10.255.255.253 (10.255.255.253) 72(100) bytes of data.
-         80 bytes from 10.255.255.253: icmp_seq=1 ttl=64 time=7.33 ms
-         80 bytes from 10.255.255.253: icmp_seq=2 ttl=64 time=6.82 ms
-         80 bytes from 10.255.255.253: icmp_seq=3 ttl=64 time=5.65 ms
-         80 bytes from 10.255.255.253: icmp_seq=4 ttl=64 time=7.16 ms
-         80 bytes from 10.255.255.253: icmp_seq=5 ttl=64 time=7.53 ms
+         s1-leaf4(config-if-Vl4094)#ping 10.255.255.1
+         PING 10.255.255.253 (10.255.255.1) 72(100) bytes of data.
+         80 bytes from 10.255.255.1: icmp_seq=1 ttl=64 time=7.33 ms
+         80 bytes from 10.255.255.1: icmp_seq=2 ttl=64 time=6.82 ms
+         80 bytes from 10.255.255.1: icmp_seq=3 ttl=64 time=5.65 ms
+         80 bytes from 10.255.255.1: icmp_seq=4 ttl=64 time=7.16 ms
+         80 bytes from 10.255.255.1: icmp_seq=5 ttl=64 time=7.53 ms
          
-         --- 10.255.255.253 ping statistics ---
+         --- 10.255.255.1 ping statistics ---
          5 packets transmitted, 5 received, 0% packet loss, time 29ms
          rtt min/avg/max/mdev = 5.659/6.903/7.530/0.663 ms, ipg/ewma 7.281/7.135 ms
 
@@ -220,7 +220,7 @@ Layer 2 Leaf-Spine
          mlag configuration
             domain-id MLAG
             local-interface Vlan4094
-            peer-address 10.255.255.253
+            peer-address 10.255.255.1
             peer-link Port-Channel1
 
    #. Verify the MLAG relationship between **s1-leaf3** and **s1-leaf4**.
@@ -232,7 +232,7 @@ Layer 2 Leaf-Spine
          MLAG Configuration:
          domain-id                          :                MLAG
          local-interface                    :            Vlan4094
-         peer-address                       :      10.255.255.253
+         peer-address                       :        10.255.255.1
          peer-link                          :       Port-Channel1
          peer-config                        :          consistent
          
@@ -405,7 +405,7 @@ Layer 2 Leaf-Spine
          MLAG Configuration:
          domain-id                          :                MLAG
          local-interface                    :            Vlan4094
-         peer-address                       :      10.255.255.253
+         peer-address                       :        10.255.255.1
          peer-link                          :       Port-Channel1
          peer-config                        :          consistent
          

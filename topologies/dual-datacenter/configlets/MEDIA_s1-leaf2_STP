@@ -10,9 +10,9 @@ interface Ethernet6
    shutdown
 !
 banner motd
-******************************
-*** Note Leaf Switch 2  is ***
-*** not used for this lab. ***
-*** Please return to menu  ***
-******************************
+*********************************
+*** Note: This Leaf switch is ***
+*** not used for this lab.    ***
+*** Please return to menu     ***
+*********************************
 EOF

@@ -11,11 +11,14 @@ Welcome to the Arista ATD documentation!
    vxlan.rst
    l2evpn.rst
    l3evpn.rst
+   l2l3evpn.rst
+   l2l3evpn-aa.rst
 
 .. toctree::
    :maxdepth: 1
    :caption: CloudVision Portal
-
+   
+   aa-initial_configuration.rst
    cvp_configlet.rst
    cvp_cc.rst
 

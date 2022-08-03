@@ -19,8 +19,9 @@ interface Vlan15
    no autostate
    ip address 172.16.15.1/24
    ip pim sparse-mode
-!   
+!
 ip routing
+ip multicast-routing
 !
 router multicast
    ipv4
