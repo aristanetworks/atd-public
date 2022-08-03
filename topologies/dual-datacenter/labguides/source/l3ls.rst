@@ -51,9 +51,27 @@ Layer 3 Leaf-Spine
    #. Validate the configuration with the following:
 
       .. code-block:: text
+         :emphasize-lines: 1,9
 
-         show ip interface brief
-         show ip virtual-router
+         s1-leaf4#show ip interface brief 
+                                                                                        Address
+         Interface         IP Address            Status       Protocol           MTU    Owner  
+         ----------------- --------------------- ------------ -------------- ---------- -------
+         Management0       192.168.0.15/24       up           up                1500           
+         Vlan134           10.111.134.3/24       up           up                1500           
+         Vlan4094          10.255.255.2/30       up           up                1500           
+
+         s1-leaf4#show ip virtual-router
+         IP virtual router is configured with MAC address: 001c.7300.0034
+         IP virtual router address subnet routes not enabled
+         MAC address advertisement interval: 30 seconds
+
+         Protocol: U - Up, D - Down, T - Testing, UN - Unknown
+                  NP - Not Present, LLD - Lower Layer Down
+
+         Interface       Vrf           Virtual IP Address       Protocol       State 
+         --------------- ------------- ------------------------ -------------- ------
+         Vl134           default       10.111.134.1             U              active
 
 #. Configure BGP on the **s1-leaf4** switch using the following criteria
 
@@ -78,8 +96,18 @@ Layer 3 Leaf-Spine
    #. Validate the configuration with the following:
 
       .. code-block:: text
-
-         show ip interface brief
+         :emphasize-lines: 1
+         
+         s1-leaf4#show ip interface brief
+                                                                                       Address
+         Interface         IP Address            Status       Protocol            MTU    Owner  
+         ----------------- --------------------- ------------ -------------- ----------- -------
+         Ethernet2         10.111.1.7/31         up           up                 1500           
+         Ethernet3         10.111.2.7/31         up           up                 1500           
+         Loopback0         10.111.254.4/32       up           up                65535           
+         Management0       192.168.0.15/24       up           up                 1500           
+         Vlan134           10.111.134.3/24       up           up                 1500           
+         Vlan4094          10.255.255.2/30       up           up                 1500           
 
    #. Based on the diagram, turn on BGP and configure the neighbor
       relationships on **s1-leaf4**. eBGP to **s1-spine1/s1-spine2** and iBGP to **s1-leaf3**.
@@ -114,9 +142,26 @@ Layer 3 Leaf-Spine
    #. Validate the configuration and neighbor establishment
 
       .. code-block:: text
+         :emphasize-lines: 1,11
 
-         show active
-         show ip bgp summary
+         s1-leaf4(config-router-bgp)#show active
+         router bgp 65102
+            router-id 10.111.254.4
+            neighbor SPINE peer group
+            neighbor SPINE remote-as 65100
+            neighbor SPINE send-community standard extended
+            neighbor 10.111.1.6 peer group SPINE
+            neighbor 10.111.2.6 peer group SPINE
+            neighbor 10.255.255.1 remote-as 65102
+            neighbor 10.255.255.1 next-hop-self
+         s1-leaf4(config-router-bgp)#show ip bgp summary
+         BGP summary information for VRF default
+         Router identifier 10.111.254.4, local AS number 65102
+         Neighbor Status Codes: m - Under maintenance
+         Neighbor     V AS           MsgRcvd   MsgSent  InQ OutQ  Up/Down State   PfxRcd PfxAcc
+         10.111.1.6   4 65100             10         8    0    0 00:01:02 Estab   5      5
+         10.111.2.6   4 65100              9         9    0    0 00:01:02 Estab   5      5
+         10.255.255.1 4 65102              9         8    0    0 00:01:00 Estab   9      9
 
 #. Configure networks on **s1-leaf4** to advertise to **s1-spine1/s1-spine2**
 
@@ -128,13 +173,99 @@ Layer 3 Leaf-Spine
             network 10.111.134.0/24
             network 10.111.254.4/32
 
-   #. Verify all of the **Spines** and **Leafs** see these new network announcements
+   #. Verify that these networks are being advertised to the other Spines and Leafs
 
       .. code-block:: text
+         :emphasize-lines: 1,25,29,33,54-56,62-64,66,85,88 
 
-         show ip route
-         show ip bgp
-         show ip route bgp
+         s1-leaf1#show ip route
+
+            VRF: default
+            Codes: C - connected, S - static, K - kernel, 
+                  O - OSPF, IA - OSPF inter area, E1 - OSPF external type 1,
+                  E2 - OSPF external type 2, N1 - OSPF NSSA external type 1,
+                  N2 - OSPF NSSA external type2, B - Other BGP Routes,
+                  B I - iBGP, B E - eBGP, R - RIP, I L1 - IS-IS level 1,
+                  I L2 - IS-IS level 2, O3 - OSPFv3, A B - BGP Aggregate,
+                  A O - OSPF Summary, NG - Nexthop Group Static Route,
+                  V - VXLAN Control Service, M - Martian,
+                  DH - DHCP client installed default route,
+                  DP - Dynamic Policy Route, L - VRF Leaked,
+                  G  - gRIBI, RC - Route Cache Route
+
+            Gateway of last resort is not set
+
+            B E      10.111.0.1/32 [200/0] via 10.111.1.0, Ethernet2
+            B E      10.111.0.2/32 [200/0] via 10.111.2.0, Ethernet3
+            C        10.111.1.0/31 is directly connected, Ethernet2
+            B E      10.111.1.0/24 [200/0] via 10.111.1.0, Ethernet2
+            C        10.111.2.0/31 is directly connected, Ethernet3
+            B E      10.111.2.0/24 [200/0] via 10.111.2.0, Ethernet3
+            C        10.111.112.0/24 is directly connected, Vlan112
+            B E      10.111.134.0/24 [200/0] via 10.111.1.0, Ethernet2
+            C        10.111.254.1/32 is directly connected, Loopback0
+            B I      10.111.254.2/32 [200/0] via 10.255.255.2, Vlan4094
+            B E      10.111.254.3/32 [200/0] via 10.111.1.0, Ethernet2
+            B E      10.111.254.4/32 [200/0] via 10.111.1.0, Ethernet2
+            C        10.255.255.0/30 is directly connected, Vlan4094
+            C        192.168.0.0/24 is directly connected, Management0
+
+            s1-leaf1#show ip bgp
+            BGP routing table information for VRF default
+            Router identifier 10.111.254.1, local AS number 65101
+            Route status codes: s - suppressed, * - valid, > - active, E - ECMP head, e - ECMP
+                              S - Stale, c - Contributing to ECMP, b - backup, L - labeled-unicast
+                              % - Pending BGP convergence
+            Origin codes: i - IGP, e - EGP, ? - incomplete
+            RPKI Origin Validation codes: V - valid, I - invalid, U - unknown
+            AS Path Attributes: Or-ID - Originator ID, C-LST - Cluster List, LL Nexthop - Link Local Nexthop
+
+                     Network                Next Hop              Metric  AIGP       LocPref Weight  Path
+            * >      10.111.0.1/32          10.111.1.0            0       -          100     0       65100 i
+            *        10.111.0.1/32          10.255.255.2          0       -          100     0       65100 i
+            * >      10.111.0.2/32          10.111.2.0            0       -          100     0       65100 i
+            *        10.111.0.2/32          10.255.255.2          0       -          100     0       65100 i
+            * >      10.111.1.0/24          10.111.1.0            0       -          100     0       65100 ?
+            *        10.111.1.0/24          10.255.255.2          0       -          100     0       65100 ?
+            * >      10.111.2.0/24          10.111.2.0            0       -          100     0       65100 ?
+            *        10.111.2.0/24          10.255.255.2          0       -          100     0       65100 ?
+            * >      10.111.112.0/24        -                     -       -          -       0       i
+            *        10.111.112.0/24        10.255.255.2          0       -          100     0       i
+            * >      10.111.134.0/24        10.111.1.0            0       -          100     0       65100 65102 i
+            *        10.111.134.0/24        10.111.2.0            0       -          100     0       65100 65102 i
+            *        10.111.134.0/24        10.255.255.2          0       -          100     0       65100 65102 i
+            * >      10.111.254.1/32        -                     -       -          -       0       i
+            * >      10.111.254.2/32        10.255.255.2          0       -          100     0       i
+            * >      10.111.254.3/32        10.111.1.0            0       -          100     0       65100 65102 i
+            *        10.111.254.3/32        10.111.2.0            0       -          100     0       65100 65102 i
+            *        10.111.254.3/32        10.255.255.2          0       -          100     0       65100 65102 i
+            * >      10.111.254.4/32        10.111.1.0            0       -          100     0       65100 65102 i
+            *        10.111.254.4/32        10.111.2.0            0       -          100     0       65100 65102 i
+            *        10.111.254.4/32        10.255.255.2          0       -          100     0       65100 65102 i
+            
+            s1-leaf1#show ip route bgp
+
+            VRF: default
+            Codes: C - connected, S - static, K - kernel, 
+                  O - OSPF, IA - OSPF inter area, E1 - OSPF external type 1,
+                  E2 - OSPF external type 2, N1 - OSPF NSSA external type 1,
+                  N2 - OSPF NSSA external type2, B - Other BGP Routes,
+                  B I - iBGP, B E - eBGP, R - RIP, I L1 - IS-IS level 1,
+                  I L2 - IS-IS level 2, O3 - OSPFv3, A B - BGP Aggregate,
+                  A O - OSPF Summary, NG - Nexthop Group Static Route,
+                  V - VXLAN Control Service, M - Martian,
+                  DH - DHCP client installed default route,
+                  DP - Dynamic Policy Route, L - VRF Leaked,
+                  G  - gRIBI, RC - Route Cache Route
+
+            B E      10.111.0.1/32 [200/0] via 10.111.1.0, Ethernet2
+            B E      10.111.0.2/32 [200/0] via 10.111.2.0, Ethernet3
+            B E      10.111.1.0/24 [200/0] via 10.111.1.0, Ethernet2
+            B E      10.111.2.0/24 [200/0] via 10.111.2.0, Ethernet3
+            B E      10.111.134.0/24 [200/0] via 10.111.1.0, Ethernet2
+            B I      10.111.254.2/32 [200/0] via 10.255.255.2, Vlan4094
+            B E      10.111.254.3/32 [200/0] via 10.111.1.0, Ethernet2
+            B E      10.111.254.4/32 [200/0] via 10.111.1.0, Ethernet2
 
    #. Add in multiple paths by enabling ECMP, on **s1-leaf4**, jump into BGP configuration mode and add:
 
@@ -143,15 +274,103 @@ Layer 3 Leaf-Spine
          router bgp 65102
             maximum-paths 2
 
-   #. Check the BGP and IP route tables on each of the **Spines** and **Leafs**
+   #. Check the BGP and IP route tables on **s1-leaf4** as well as each of the **Spines** and **Leafs**
 
       .. code-block:: text
+         :emphasize-lines: 1,26-27,34-35,38,53-54,61-62,64,83-84,89-90
 
-         show ip bgp
-         show ip route
-         show ip route bgp
+         s1-spine1#show ip route
 
-      .. note:: ECMP is now working - notice the new status code in the `show ip bgp` output
+            VRF: default
+            Codes: C - connected, S - static, K - kernel, 
+                  O - OSPF, IA - OSPF inter area, E1 - OSPF external type 1,
+                  E2 - OSPF external type 2, N1 - OSPF NSSA external type 1,
+                  N2 - OSPF NSSA external type2, B - Other BGP Routes,
+                  B I - iBGP, B E - eBGP, R - RIP, I L1 - IS-IS level 1,
+                  I L2 - IS-IS level 2, O3 - OSPFv3, A B - BGP Aggregate,
+                  A O - OSPF Summary, NG - Nexthop Group Static Route,
+                  V - VXLAN Control Service, M - Martian,
+                  DH - DHCP client installed default route,
+                  DP - Dynamic Policy Route, L - VRF Leaked,
+                  G  - gRIBI, RC - Route Cache Route
+
+            Gateway of last resort is not set
+
+            C        10.111.0.1/32 is directly connected, Loopback0
+            C        10.111.1.0/31 is directly connected, Ethernet2
+            C        10.111.1.2/31 is directly connected, Ethernet3
+            C        10.111.1.4/31 is directly connected, Ethernet4
+            C        10.111.1.6/31 is directly connected, Ethernet5
+            S        10.111.1.0/24 is directly connected, Null0
+            B E      10.111.112.0/24 [200/0] via 10.111.1.1, Ethernet2
+                                             via 10.111.1.3, Ethernet3
+            B E      10.111.134.0/24 [200/0] via 10.111.1.5, Ethernet4
+                                             via 10.111.1.7, Ethernet5
+            B E      10.111.254.1/32 [200/0] via 10.111.1.1, Ethernet2
+                                             via 10.111.1.3, Ethernet3
+            B E      10.111.254.2/32 [200/0] via 10.111.1.1, Ethernet2
+                                             via 10.111.1.3, Ethernet3
+            B E      10.111.254.3/32 [200/0] via 10.111.1.5, Ethernet4
+                                             via 10.111.1.7, Ethernet5
+            B E      10.111.254.4/32 [200/0] via 10.111.1.5, Ethernet4
+                                             via 10.111.1.7, Ethernet5
+            C        192.168.0.0/24 is directly connected, Management0
+
+            s1-spine1#show ip bgp
+            BGP routing table information for VRF default
+            Router identifier 10.111.0.1, local AS number 65100
+            Route status codes: s - suppressed, * - valid, > - active, E - ECMP head, e - ECMP
+                              S - Stale, c - Contributing to ECMP, b - backup, L - labeled-unicast
+                              % - Pending BGP convergence
+            Origin codes: i - IGP, e - EGP, ? - incomplete
+            RPKI Origin Validation codes: V - valid, I - invalid, U - unknown
+            AS Path Attributes: Or-ID - Originator ID, C-LST - Cluster List, LL Nexthop - Link Local Nexthop
+
+                     Network                Next Hop              Metric  AIGP       LocPref Weight  Path
+            * >      10.111.0.1/32          -                     -       -          -       0       i
+            * >      10.111.1.0/24          -                     -       -          -       0       ?
+            * >Ec    10.111.112.0/24        10.111.1.1            0       -          100     0       65101 i
+            *  ec    10.111.112.0/24        10.111.1.3            0       -          100     0       65101 i
+            * >Ec    10.111.134.0/24        10.111.1.5            0       -          100     0       65102 i
+            *  ec    10.111.134.0/24        10.111.1.7            0       -          100     0       65102 i
+            * >Ec    10.111.254.1/32        10.111.1.1            0       -          100     0       65101 i
+            *  ec    10.111.254.1/32        10.111.1.3            0       -          100     0       65101 i
+            * >Ec    10.111.254.2/32        10.111.1.3            0       -          100     0       65101 i
+            *  ec    10.111.254.2/32        10.111.1.1            0       -          100     0       65101 i
+            * >Ec    10.111.254.3/32        10.111.1.5            0       -          100     0       65102 i
+            *  ec    10.111.254.3/32        10.111.1.7            0       -          100     0       65102 i
+            * >Ec    10.111.254.4/32        10.111.1.7            0       -          100     0       65102 i
+            *  ec    10.111.254.4/32        10.111.1.5            0       -          100     0       65102 i
+            
+            s1-spine1#sh ip route bgp
+
+            VRF: default
+            Codes: C - connected, S - static, K - kernel, 
+                  O - OSPF, IA - OSPF inter area, E1 - OSPF external type 1,
+                  E2 - OSPF external type 2, N1 - OSPF NSSA external type 1,
+                  N2 - OSPF NSSA external type2, B - Other BGP Routes,
+                  B I - iBGP, B E - eBGP, R - RIP, I L1 - IS-IS level 1,
+                  I L2 - IS-IS level 2, O3 - OSPFv3, A B - BGP Aggregate,
+                  A O - OSPF Summary, NG - Nexthop Group Static Route,
+                  V - VXLAN Control Service, M - Martian,
+                  DH - DHCP client installed default route,
+                  DP - Dynamic Policy Route, L - VRF Leaked,
+                  G  - gRIBI, RC - Route Cache Route
+
+            B E      10.111.112.0/24 [200/0] via 10.111.1.1, Ethernet2
+                                             via 10.111.1.3, Ethernet3
+            B E      10.111.134.0/24 [200/0] via 10.111.1.5, Ethernet4
+                                             via 10.111.1.7, Ethernet5
+            B E      10.111.254.1/32 [200/0] via 10.111.1.1, Ethernet2
+                                             via 10.111.1.3, Ethernet3
+            B E      10.111.254.2/32 [200/0] via 10.111.1.1, Ethernet2
+                                             via 10.111.1.3, Ethernet3
+            B E      10.111.254.3/32 [200/0] via 10.111.1.5, Ethernet4
+                                             via 10.111.1.7, Ethernet5
+            B E      10.111.254.4/32 [200/0] via 10.111.1.5, Ethernet4
+                                             via 10.111.1.7, Ethernet5
+
+      .. note:: ECMP is now working - notice the new status code in the `show ip bgp` output on s1-leaf4
 
 #. Validate connectivity from **s1-host1** to **s1-host2**. From **s1-host1** execute:
 
