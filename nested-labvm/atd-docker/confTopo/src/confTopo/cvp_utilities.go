@@ -19,6 +19,13 @@ var COUNTRY_CODE string = "United States"
 
 func updateDeviceConfigs(_node_data ConfInventory, _lab_data *ConfigueCvp, _cfg_data map[string]cvpapi.Configlet, wg *sync.WaitGroup) {
 	defer wg.Done()
+	// Create the CVP Client
+	var atd_cvp, _ = client.NewCvpClient(
+		client.Protocol("https"),
+		client.Port(443),
+		client.Hosts(CVP_NODES...),
+		client.Debug(false))
+
 	var _cfgs_remove []cvpapi.Configlet
 	var _cfgs_remain []cvpapi.Configlet
 	// Build Set of device Cfgs
@@ -42,48 +49,60 @@ func updateDeviceConfigs(_node_data ConfInventory, _lab_data *ConfigueCvp, _cfg_
 			_cfgs_remain = append(_cfgs_remain, _cfg_info)
 		}
 	}
-	log.Printf("Prepped configs for %s, checking and making API Calls\n", _node_data.Cvp.Hostname)
-	// Make call to remove configlets for device
-	if len(_cfgs_remove) > 0 {
-		_remove, err_remove := CVP_client.API.RemoveConfigletsFromDevice("GO-Conftopo", _node_data.Cvp, true, _cfgs_remove...)
-		log.Printf("Remove: %s\n", _remove)
-		if err_remove != nil {
-			log.Printf("Error removing configlets from device %s\nError: %+v\n", _node_data.Cvp.Hostname, err_remove)
+	if cvpCheckAndConnect(atd_cvp) {
+		log.Printf("Prepped configs for %s, checking and making API Calls\n", _node_data.Cvp.Hostname)
+		// Make call to remove configlets for device
+		if len(_cfgs_remove) > 0 {
+			_remove, err_remove := atd_cvp.API.RemoveConfigletsFromDevice("GO-Conftopo", _node_data.Cvp, true, _cfgs_remove...)
+			log.Printf("Remove: %s\n", _remove)
+			if err_remove != nil {
+				log.Printf("Error removing configlets from device %s\nError: %+v\n", _node_data.Cvp.Hostname, err_remove)
+			}
+		} else {
+			log.Printf("No configlets to remove for %s\n", _node_data.Cvp.Hostname)
 		}
-	} else {
-		log.Printf("No configlets to remove for %s\n", _node_data.Cvp.Hostname)
-	}
-	// Make API call to apply configlets for a device
-	// TODO Check and see if creating multiple CVP_clients will speed up API Calls
-	if len(_cfgs_remain) > 0 {
-		_apply, err_apply := CVP_client.API.ApplyConfigletsToDevice("GO-ConfTopo", _node_data.Cvp, true, _cfgs_remain...)
-		log.Printf("Apply: %+v\n", _apply)
+		// Make API call to apply configlets for a device
+		// TODO Check and see if creating multiple atd_cvp will speed up API Calls
+		if len(_cfgs_remain) > 0 {
+			_apply, err_apply := atd_cvp.API.ApplyConfigletsToDevice("GO-ConfTopo", _node_data.Cvp, true, _cfgs_remain...)
+			log.Printf("Apply: %+v\n", _apply)
 
-		if err_apply != nil {
-			log.Printf("Error adding configlets to device %s\nERROR: %+v\n", _node_data.Cvp.Hostname, err_apply)
+			if err_apply != nil {
+				log.Printf("Error adding configlets to device %s\nERROR: %+v\n", _node_data.Cvp.Hostname, err_apply)
+			}
+		} else {
+			log.Printf("No configlets to apply for %s\n", _node_data.Cvp.Hostname)
 		}
-	} else {
-		log.Printf("No configlets to apply for %s\n", _node_data.Cvp.Hostname)
+		atd_cvp.API.Logout()
 	}
+
 }
 
 func checkTaskStatus(_task_id int, wg *sync.WaitGroup) {
 	defer wg.Done()
-	for {
-		_task_status, err := CVP_client.API.GetTaskByID(_task_id)
-		if err != nil {
-			log.Printf("Error getting task status for %d\n", _task_id)
+	var atd_cvp, _ = client.NewCvpClient(
+		client.Protocol("https"),
+		client.Port(443),
+		client.Hosts(CVP_NODES...),
+		client.Debug(false))
+	if cvpCheckAndConnect(atd_cvp) {
+		for {
+			_task_status, err := CVP_client.API.GetTaskByID(_task_id)
+			if err != nil {
+				log.Printf("Error getting task status for %d\n", _task_id)
+			}
+			if _task_status.WorkOrderState == "COMPLETED" {
+				log.Printf("Task %d is Complete\n", _task_id)
+				break
+			} else if _task_status.WorkOrderState == "FAILED" {
+				log.Printf("Task %d Failed\n", _task_id)
+				break
+			} else {
+				log.Printf("Task %d is currently %s\n", _task_id, _task_status.WorkOrderState)
+				time.Sleep(2 * time.Second)
+			}
 		}
-		if _task_status.WorkOrderState == "COMPLETED" {
-			log.Printf("Task %d is Complete\n", _task_id)
-			break
-		} else if _task_status.WorkOrderState == "FAILED" {
-			log.Printf("Task %d Failed\n", _task_id)
-			break
-		} else {
-			log.Printf("Task %d is currently %s\n", _task_id, _task_status.WorkOrderState)
-			time.Sleep(2 * time.Second)
-		}
+		atd_cvp.API.Logout()
 	}
 
 }
