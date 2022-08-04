@@ -54,6 +54,7 @@ func updateDeviceConfigs(_node_data ConfInventory, _lab_data *ConfigueCvp, _cfg_
 		log.Printf("No configlets to remove for %s\n", _node_data.Cvp.Hostname)
 	}
 	// Make API call to apply configlets for a device
+	// TODO Check and see if creating multiple CVP_clients will speed up API Calls
 	if len(_cfgs_remain) > 0 {
 		_apply, err_apply := CVP_client.API.ApplyConfigletsToDevice("GO-ConfTopo", _node_data.Cvp, true, _cfgs_remain...)
 		log.Printf("Apply: %+v\n", _apply)
