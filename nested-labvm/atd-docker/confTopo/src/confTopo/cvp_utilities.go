@@ -54,7 +54,7 @@ func updateDeviceConfigs(_node_data ConfInventory, _lab_data *ConfigueCvp, _cfg_
 		// Make call to remove configlets for device
 		if len(_cfgs_remove) > 0 {
 			_remove, err_remove := atd_cvp.API.RemoveConfigletsFromDevice("GO-Conftopo", _node_data.Cvp, true, _cfgs_remove...)
-			log.Printf("Remove: %s\n", _remove)
+			log.Printf("Remove from %s: %+v\n", _node_data.Cvp.Hostname, _remove)
 			if err_remove != nil {
 				log.Printf("Error removing configlets from device %s\nError: %+v\n", _node_data.Cvp.Hostname, err_remove)
 			}
@@ -65,7 +65,7 @@ func updateDeviceConfigs(_node_data ConfInventory, _lab_data *ConfigueCvp, _cfg_
 		// TODO Check and see if creating multiple atd_cvp will speed up API Calls
 		if len(_cfgs_remain) > 0 {
 			_apply, err_apply := atd_cvp.API.ApplyConfigletsToDevice("GO-ConfTopo", _node_data.Cvp, true, _cfgs_remain...)
-			log.Printf("Apply: %+v\n", _apply)
+			log.Printf("Apply to %s: %+v\n", _node_data.Cvp.Hostname, _apply)
 
 			if err_apply != nil {
 				log.Printf("Error adding configlets to device %s\nERROR: %+v\n", _node_data.Cvp.Hostname, err_apply)
@@ -99,7 +99,7 @@ func checkTaskStatus(_task_id int, wg *sync.WaitGroup) {
 				break
 			} else {
 				log.Printf("Task %d is currently %s\n", _task_id, _task_status.WorkOrderState)
-				time.Sleep(2 * time.Second)
+				time.Sleep(5 * time.Second)
 			}
 		}
 		atd_cvp.API.Logout()
