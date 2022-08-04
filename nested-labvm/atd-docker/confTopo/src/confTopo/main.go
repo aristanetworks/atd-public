@@ -165,7 +165,7 @@ func TopoRequestHandler(w http.ResponseWriter, r *http.Request) {
 				} else {
 					// Continue on to update labs
 					log.Printf("Update %s lab for %s", _module, _lab)
-					configureTopo(_module, _lab)
+					configureTopo(_module, _lab, CVP_client)
 				}
 			}
 		}

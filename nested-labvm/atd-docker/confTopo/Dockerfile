@@ -10,7 +10,7 @@ COPY src/confTopo/go.sum ./
 
 RUN go mod download
 
-COPY src/confTopo/main.go ./
+COPY src/confTopo/*.go ./
 
 RUN go build -o /confTopo
 
