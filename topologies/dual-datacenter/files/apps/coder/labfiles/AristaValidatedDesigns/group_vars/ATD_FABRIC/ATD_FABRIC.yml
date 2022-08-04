@@ -55,6 +55,7 @@ CEOS_MLAG_Interfaces: ['Ethernet1', 'Ethernet6']
 #Platform UPLINK Standards
 CEOS_HOST_UPLINK_Interfaces: ['Ethernet1', 'Ethernet2']
 CEOS_LEAF_UPLINK_Interfaces: ['Ethernet1', 'Ethernet2']
+CEOS_SPINE_UPLINK_Interfaces: ['Ethernet2', 'Ethernet3']
 CEOS_CORE_UPLINK_Interfaces: ['Ethernet2', 'Ethernet3']
 CEOS_UPLINK_SWITCH_Interfaces: ['Ethernet4', 'Ethernet4']
 

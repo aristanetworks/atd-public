@@ -1,0 +1,14 @@
+---
+custom_structured_configuration_host_ethernet_interfaces:
+  Ethernet4:
+    description: "s2-brdr1_Ethernet3"
+    shutdown: false
+    channel_group:
+      id: 4
+      mode: "active"
+  Ethernet5:
+    description: "s2-brdr2_Ethernet3"
+    shutdown: false
+    channel_group:
+      id: 4
+      mode: "active"
