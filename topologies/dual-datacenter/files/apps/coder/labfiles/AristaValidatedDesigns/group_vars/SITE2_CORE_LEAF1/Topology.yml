@@ -16,7 +16,7 @@ l2leaf:
     # mlag_peer_l3_ipv4_pool: 10.2.10.0/24
     mlag_peer_ipv4_pool: 10.2.11.0/24
     uplink_switches: ['s2-brdr1', 's2-brdr2']
-    uplink_switch_interfaces: "{{ CEOS_CORE_UPLINK_Interfaces }}"
+    uplink_interfaces: "{{ CEOS_CORE_UPLINK_Interfaces }}"
     max_uplink_switches: 2
     #evpn_route_servers: "{{ atd_evpn_route_servers }}"
     spanning_tree_mode: mstp
@@ -34,6 +34,8 @@ l2leaf:
         s2-core1:
           id: 1
           mgmt_ip: 192.168.0.202/24
+          uplink_switch_interfaces: ['Ethernet4', 'Ethernet4']
         s2-core2:
           id: 2
           mgmt_ip: 192.168.0.203/24
+          uplink_switch_interfaces: ['Ethernet5', 'Ethernet5']
