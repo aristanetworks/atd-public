@@ -7,6 +7,8 @@ RUN sudo pip3 install --upgrade pip
 
 RUN sudo pip3 install pyeapi jsonrpclib-pelix shyaml
 
+RUN sudo pip3 install "ansible-core>=2.11.3,<2.13.0"
+
 # Install arista.avd, community.general and ansible.posix ansible-galaxy collections, Use this for version control of AVD topologies
 RUN ansible-galaxy collection install arista.avd:==3.6.0
 
@@ -16,7 +18,7 @@ RUN ansible-galaxy collection install community.general --upgrade
 
 RUN ansible-galaxy collection install ansible.posix --upgrade
 
-RUN wget --quiet https://raw.githubusercontent.com/aristanetworks/ansible-avd/devel/ansible_collections/arista/avd/requirements.txt
+RUN wget --quiet https://raw.githubusercontent.com/aristanetworks/ansible-avd/v3.6.0/ansible_collections/arista/avd/requirements.txt
 
 RUN sudo pip3 install -r requirements.txt
 
