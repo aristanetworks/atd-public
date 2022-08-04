@@ -45,7 +45,7 @@ VxLAN
        local-interface                    :            Vlan4094
        peer-address                       :        10.255.255.1
        peer-link                          :       Port-Channel1
-       peer-config                        :          consistent
+       peer-config                        :        inconsistent
           
        MLAG Status:
        state                              :              Active
@@ -174,7 +174,7 @@ VxLAN
 
             interface vxlan 1
               vxlan source-interface loopback 1
-              vxlan vlan 12 vni 1212
+              vxlan vlan 112 vni 112
               vxlan flood vtep 10.111.253.1 
 
       .. note:: ``vxlan flood vtep 10.111.253.1`` adds the shared loopback1 IP address on Leaf1 & Leaf2 to the HER list. Note that for autodiscovery of VTEPs, one must use BGP eVPN (see eVPN labs) or CVX (see CVX lab).
@@ -191,18 +191,20 @@ VxLAN
           vxlan vlan 112 vni 112
           vxlan flood vtep 10.111.253.1
 
-       s1-leaf4#show interfaces vxlan 1
-       Vxlan1 is down, line protocol is down (notconnect)
+       s1-leaf4(config-if-Vx1)#sh int vxlan 1
+         Vxlan1 is up, line protocol is up (connected)
          Hardware is Vxlan
-         Source interface is Loopback1 and is inactive
-         Replication/Flood Mode is not initialized yet
+         Source interface is Loopback1 and is active with 10.111.253.3
+         Replication/Flood Mode is headend with Flood List Source: CLI
          Remote MAC learning via Datapath
          VNI mapping to VLANs
          Static VLAN to VNI mapping is
-           [112, 112]
+            [12, 112]
          Note: All Dynamic VLANs used by VCS are internal VLANs.
                Use 'show vxlan vni' for details.
          Static VRF to VNI mapping is not configured
+         Headend replication flood vtep list is:
+            12 10.111.253.1
          MLAG Shared Router MAC is 0000.0000.0000
 
 
@@ -297,6 +299,29 @@ VxLAN
            ----  -----------     ----      ---  ----             -----   ---------
             112  001c.73c0.c617  DYNAMIC   Vx1  10.111.253.3     1       0:01:13 ago
            Total Remote Mac Addresses for this criterion: 1
+
+        .. code-block:: text
+           :emphasize-lines: 1,10
+
+               s1-leaf4(config)#show vxlan vtep
+               Remote VTEPS for Vxlan1:
+
+               VTEP               Tunnel Type(s)
+               ------------------ --------------
+               10.111.253.1       unicast, flood
+
+               Total number of remote VTEPS:  1
+
+               s1-leaf4(config)#show vxlan address-table
+                        Vxlan Mac Address Table
+               ----------------------------------------------------------------------
+
+               VLAN  Mac Address     Type      Prt  VTEP             Moves   Last Move
+               ----  -----------     ----      ---  ----             -----   ---------
+               112  001c.73c0.c616  DYNAMIC   Vx1  10.111.253.1     1       0:00:33 ago
+               Total Remote Mac Addresses for this criterion: 1
+
+
 
 
       .. note:: For ``show vxlan vtep`` & ``show vxlan address-table`` to be
