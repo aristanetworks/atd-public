@@ -42,40 +42,49 @@ func updateDeviceConfigs(_node_data ConfInventory, _lab_data *ConfigueCvp, _cfg_
 			_cfgs_remain = append(_cfgs_remain, _cfg_info)
 		}
 	}
+	log.Printf("Prepped configs for %s, checking and making API Calls\n", _node_data.Cvp.Hostname)
 	// Make call to remove configlets for device
-	_remove, err_remove := CVP_client.API.RemoveConfigletsFromDevice("GO-Conftopo", _node_data.Cvp, true, _cfgs_remove...)
-	log.Printf("Remove: %s\n", _remove)
-	// Make API call to apply configlets for a device
-	_apply, err_apply := CVP_client.API.ApplyConfigletsToDevice("GO-ConfTopo", _node_data.Cvp, true, _cfgs_remain...)
-	log.Printf("Apply: %s\n", _apply)
-	if err_remove != nil {
-		log.Printf("Error removing configlets from device %s\n", _node_data.Cvp.Hostname)
+	if len(_cfgs_remove) > 0 {
+		_remove, err_remove := CVP_client.API.RemoveConfigletsFromDevice("GO-Conftopo", _node_data.Cvp, true, _cfgs_remove...)
+		log.Printf("Remove: %s\n", _remove)
+		if err_remove != nil {
+			log.Printf("Error removing configlets from device %s\nError: %+v\n", _node_data.Cvp.Hostname, err_remove)
+		}
+	} else {
+		log.Printf("No configlets to remove for %s\n", _node_data.Cvp.Hostname)
 	}
-	if err_apply != nil {
-		log.Printf("Error adding configlets to device %s\n", _node_data.Cvp.Hostname)
+	// Make API call to apply configlets for a device
+	if len(_cfgs_remain) > 0 {
+		_apply, err_apply := CVP_client.API.ApplyConfigletsToDevice("GO-ConfTopo", _node_data.Cvp, true, _cfgs_remain...)
+		log.Printf("Apply: %+v\n", _apply)
+
+		if err_apply != nil {
+			log.Printf("Error adding configlets to device %s\nERROR: %+v\n", _node_data.Cvp.Hostname, err_apply)
+		}
+	} else {
+		log.Printf("No configlets to apply for %s\n", _node_data.Cvp.Hostname)
 	}
 }
 
 func checkTaskStatus(_task_id int, wg *sync.WaitGroup) {
 	defer wg.Done()
-	var _task_status *cvpapi.CvpTask
-	_task_status, err := CVP_client.API.GetTaskByID(_task_id)
-	if err != nil {
-		log.Printf("Error getting task status for %d\n", _task_id)
-	} else {
-		for {
-			if _task_status.WorkOrderState == "COMPLETED" {
-				log.Printf("Task %d is Complete\n", _task_id)
-				break
-			} else if _task_status.WorkOrderState == "FAILED" {
-				log.Printf("Task %d Failed\n", _task_id)
-				break
-			} else {
-				log.Printf("Task %d is currently %s", _task_id, _task_status.WorkOrderState)
-				time.Sleep(2 * time.Second)
-			}
+	for {
+		_task_status, err := CVP_client.API.GetTaskByID(_task_id)
+		if err != nil {
+			log.Printf("Error getting task status for %d\n", _task_id)
+		}
+		if _task_status.WorkOrderState == "COMPLETED" {
+			log.Printf("Task %d is Complete\n", _task_id)
+			break
+		} else if _task_status.WorkOrderState == "FAILED" {
+			log.Printf("Task %d Failed\n", _task_id)
+			break
+		} else {
+			log.Printf("Task %d is currently %s\n", _task_id, _task_status.WorkOrderState)
+			time.Sleep(2 * time.Second)
 		}
 	}
+
 }
 
 // ===============================================================
@@ -136,6 +145,7 @@ func configureTopo(module_opt string, lab_opt string, Cvp_client *client.CvpClie
 						cfg_lab_data[BASE_CFGS[i]] = *_cfg_info
 					}
 				}
+				log.Println("Finished grabbing all lab module configlet data")
 				// Get Configlet data for lab Configlets
 				for _, value := range topo_conf.Lab_cfgs[topo_conf.Lab] {
 					for i := 0; i < len(value); i++ {
@@ -143,7 +153,9 @@ func configureTopo(module_opt string, lab_opt string, Cvp_client *client.CvpClie
 						if err != nil {
 							log.Printf("Error getting Configlet data for %s\n", value[i])
 						} else {
-							log.Printf("Grabbed configlet data for %s\n", topo_conf.Lab_cfgs[topo_conf.Lab])
+							// TODO CHECK OUTPUT
+							// 2022/08/04 01:40:20 Grabbed configlet data for map[s1-brdr1:[BASE_s1-brdr1] s1-brdr2:[BASE_s1-brdr2] s1-core1:[BASE_s1-core1] s1-core2:[BASE_s1-core2] s1-host1:[BASE_s1-host1 VXLAN_s1-host1] s1-host2:[BASE_s1-host2 VXLAN_s1-host2] s1-leaf1:[BASE_s1-leaf1 VXLAN_s1-leaf1] s1-leaf2:[BASE_s1-leaf2 VXLAN_s1-leaf2] s1-leaf3:[BASE_s1-leaf3 VXLAN_s1-leaf3] s1-leaf4:[BASE_s1-leaf4 VXLAN_s1-leaf4] s1-spine1:[BASE_s1-spine1 VXLAN_s1-spine1] s1-spine2:[BASE_s1-spine2 VXLAN_s1-spine2] s2-brdr1:[BASE_s2-brdr1] s2-brdr2:[BASE_s2-brdr2] s2-core1:[BASE_s2-core1] s2-core2:[BASE_s2-core2] s2-host1:[BASE_s2-host1] s2-host2:[BASE_s2-host2] s2-leaf1:[BASE_s2-leaf1] s2-leaf2:[BASE_s2-leaf2] s2-leaf3:[BASE_s2-leaf3] s2-leaf4:[BASE_s2-leaf4] s2-spine1:[BASE_s2-spine1] s2-spine2:[BASE_s2-spine2]]
+							log.Printf("Grabbed configlet data for %s\n", value[i])
 							cfg_lab_data[value[i]] = *_cfg_info
 						}
 					}
