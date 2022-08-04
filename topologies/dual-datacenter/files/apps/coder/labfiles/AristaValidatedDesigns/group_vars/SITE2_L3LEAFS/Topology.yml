@@ -15,7 +15,7 @@ l3leaf:
     mlag_peer_l3_ipv4_pool: 10.2.5.0/24
     mlag_peer_ipv4_pool: 10.2.6.0/24
     uplink_switches: ['s2-spine1', 's2-spine2']
-    uplink_switch_interfaces: "{{ CEOS_LEAF_UPLINK_Interfaces }}"
+    uplink_interfaces: "{{ CEOS_SPINE_UPLINK_Interfaces }}"
     max_uplink_switches: 4
     #evpn_route_servers: "{{ atd_evpn_route_servers }}"
     spanning_tree_mode: mstp
@@ -33,9 +33,11 @@ l3leaf:
         s2-leaf1:
           id: 1
           mgmt_ip: 192.168.0.22/24
+          uplink_switch_interfaces: ['Ethernet2', 'Ethernet2']
         s2-leaf2:
           id: 2
           mgmt_ip: 192.168.0.23/24
+          uplink_switch_interfaces: ['Ethernet3', 'Ethernet3']
     SITE2_DC_LEAF2:
       bgp_as: 65212
       filter:
@@ -45,9 +47,11 @@ l3leaf:
         s2-leaf3:
           id: 3
           mgmt_ip: 192.168.0.24/24
+          uplink_switch_interfaces: ['Ethernet4', 'Ethernet4']
         s2-leaf4:
           id: 4
           mgmt_ip: 192.168.0.25/24
+          uplink_switch_interfaces: ['Ethernet5', 'Ethernet5']
     SITE2_BORDER_LEAF1:
       bgp_as: 65213
       filter:
@@ -57,6 +61,8 @@ l3leaf:
         s2-brdr1:
           id: 5
           mgmt_ip: 192.168.0.200/24
+          uplink_switch_interfaces: ['Ethernet7', 'Ethernet7']
         s2-brdr2:
           id: 6
           mgmt_ip: 192.168.0.201/24
+          uplink_switch_interfaces: ['Ethernet8', 'Ethernet8']
