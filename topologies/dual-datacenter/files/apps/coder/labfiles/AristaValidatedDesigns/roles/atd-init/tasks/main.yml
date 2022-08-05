@@ -3,7 +3,7 @@
 - name: 'Create configlets on CVP {{inventory_hostname}}.'
   arista.cvp.cv_configlet_v3:
     configlets:
-      ATD-BASE: "{{lookup('env','PWD')}}/group_vars/CVP/ATD-BASE.txt}}"
+      ATD-BASE: "{{ lookup('file','~/project/labfiles/AristaValidatedDesigns/group_vars/CVP/ATD-BASE.txt') }}"
     configlets_notes: "Configlet managed by Ansible"
 
 - name: "Building initial Containers topology"
