@@ -18,7 +18,6 @@ Welcome to the Arista ATD documentation!
    :maxdepth: 1
    :caption: CloudVision Portal
    
-   aa-initial_configuration.rst
    cvp_configlet.rst
    cvp_cc.rst
 
