@@ -97,7 +97,7 @@ func TopoRequestHandler(w http.ResponseWriter, r *http.Request) {
 		}
 		log.Printf("GET: %s", decoded_action)
 		if decoded_action == "cvp_status" {
-			if cvpCheckAndConnect(CVP_client) {
+			if cvpCheckAndConnect(CVP_client, true) {
 				data, err := CVP_client.API.GetCvpInfo()
 				if err != nil {
 					log.Printf("ERROR: %s\n", err)
@@ -115,7 +115,7 @@ func TopoRequestHandler(w http.ResponseWriter, r *http.Request) {
 		} else if decoded_action == "cvp_tasks" {
 			_cvp_tasks := make(map[string]int)
 			_active_tasks := 0
-			if cvpCheckAndConnect(CVP_client) {
+			if cvpCheckAndConnect(CVP_client, true) {
 				// Get tasks from CVP
 				data, err := CVP_client.API.GetTaskByStatus("active")
 				if err != nil {

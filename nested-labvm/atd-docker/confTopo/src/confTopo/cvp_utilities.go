@@ -25,9 +25,10 @@ func updateDeviceConfigs(_node_data ConfInventory, _lab_data *ConfigueCvp, _cfg_
 		client.Port(443),
 		client.Hosts(CVP_NODES...),
 		client.Debug(false))
-
+	var _device_update bool = false
 	var _cfgs_remove []cvpapi.Configlet
 	var _cfgs_remain []cvpapi.Configlet
+	var _current_cfgs []string
 	// Build Set of device Cfgs
 	var _device_cfgs []string
 	_device_cfgs = append(_device_cfgs, BASE_CFGS...)
@@ -35,7 +36,9 @@ func updateDeviceConfigs(_node_data ConfInventory, _lab_data *ConfigueCvp, _cfg_
 
 	// Loop through cfgs currently assigned to a node and remove if not needed
 	for i := 0; i < len(_node_data.Cfgs); i++ {
+		_current_cfgs = append(_current_cfgs, _node_data.Cfgs[i].Name)
 		if !stringExists(_node_data.Cfgs[i].Name, _device_cfgs) {
+			_device_update = true
 			log.Printf("Configlet %s is not part of the lab configlets on %s - Removing from device\n", _node_data.Cfgs[i].Name, _node_data.Cvp.Hostname)
 			_cfgs_remove = append(_cfgs_remove, _node_data.Cfgs[i])
 		}
@@ -44,36 +47,47 @@ func updateDeviceConfigs(_node_data ConfInventory, _lab_data *ConfigueCvp, _cfg_
 	for i := 0; i < len(_device_cfgs); i++ {
 		_cfg_name := _device_cfgs[i]
 		_cfg_info, _ok := _cfg_data[_cfg_name]
+		if !stringExists(_cfg_name, _current_cfgs) {
+			_device_update = true
+		}
 		if _ok {
 			log.Printf("Configlet %s will be applied to %s\n", _device_cfgs[i], _node_data.Cvp.Hostname)
 			_cfgs_remain = append(_cfgs_remain, _cfg_info)
 		}
 	}
-	if cvpCheckAndConnect(atd_cvp) {
-		log.Printf("Prepped configs for %s, checking and making API Calls\n", _node_data.Cvp.Hostname)
-		// Make call to remove configlets for device
-		if len(_cfgs_remove) > 0 {
-			_remove, err_remove := atd_cvp.API.RemoveConfigletsFromDevice("GO-Conftopo", _node_data.Cvp, true, _cfgs_remove...)
-			log.Printf("Remove from %s: %+v\n", _node_data.Cvp.Hostname, _remove)
-			if err_remove != nil {
-				log.Printf("Error removing configlets from device %s\nError: %+v\n", _node_data.Cvp.Hostname, err_remove)
+	if _device_update {
+		if cvpCheckAndConnect(atd_cvp, false) {
+			log.Printf("Prepped configs for %s, checking and making API Calls\n", _node_data.Cvp.Hostname)
+			// Make call to remove configlets for device
+			if len(_cfgs_remove) > 0 {
+				log.Printf("Making API Call to remove configs for %s\n", _node_data.Cvp.Hostname)
+				_remove, err_remove := atd_cvp.API.RemoveConfigletsFromDevice("GO-Conftopo", _node_data.Cvp, true, _cfgs_remove...)
+				if _remove != nil {
+					log.Printf("Removal of configlets from %s: %s\n", _node_data.Cvp.Hostname, _remove.Status)
+				}
+				if err_remove != nil {
+					log.Printf("Error removing configlets from device %s\nError: %+v\n", _node_data.Cvp.Hostname, err_remove)
+				}
+			} else {
+				log.Printf("No configlets to remove for %s\n", _node_data.Cvp.Hostname)
 			}
-		} else {
-			log.Printf("No configlets to remove for %s\n", _node_data.Cvp.Hostname)
-		}
-		// Make API call to apply configlets for a device
-		// TODO Check and see if creating multiple atd_cvp will speed up API Calls
-		if len(_cfgs_remain) > 0 {
-			_apply, err_apply := atd_cvp.API.ApplyConfigletsToDevice("GO-ConfTopo", _node_data.Cvp, true, _cfgs_remain...)
-			log.Printf("Apply to %s: %+v\n", _node_data.Cvp.Hostname, _apply)
-
-			if err_apply != nil {
-				log.Printf("Error adding configlets to device %s\nERROR: %+v\n", _node_data.Cvp.Hostname, err_apply)
+			// Make API call to apply configlets for a device
+			if len(_cfgs_remain) > 0 {
+				log.Printf("Making API Call to apply configlets to %s\n", _node_data.Cvp.Hostname)
+				_apply, err_apply := atd_cvp.API.ApplyConfigletsToDevice("GO-ConfTopo", _node_data.Cvp, true, _cfgs_remain...)
+				if _apply != nil {
+					log.Printf("Applying configlets to %s: %s\n", _node_data.Cvp.Hostname, _apply.Status)
+				}
+				if err_apply != nil {
+					log.Printf("Error adding configlets to device %s\nERROR: %+v\n", _node_data.Cvp.Hostname, err_apply)
+				}
+			} else {
+				log.Printf("No configlets to apply for %s\n", _node_data.Cvp.Hostname)
 			}
-		} else {
-			log.Printf("No configlets to apply for %s\n", _node_data.Cvp.Hostname)
+			atd_cvp.API.Logout()
 		}
-		atd_cvp.API.Logout()
+	} else {
+		log.Printf("No config changes for %s\n", _node_data.Cvp.Hostname)
 	}
 
 }
@@ -85,7 +99,7 @@ func checkTaskStatus(_task_id int, wg *sync.WaitGroup) {
 		client.Port(443),
 		client.Hosts(CVP_NODES...),
 		client.Debug(false))
-	if cvpCheckAndConnect(atd_cvp) {
+	if cvpCheckAndConnect(atd_cvp, false) {
 		for {
 			_task_status, err := CVP_client.API.GetTaskByID(_task_id)
 			if err != nil {
@@ -98,7 +112,7 @@ func checkTaskStatus(_task_id int, wg *sync.WaitGroup) {
 				log.Printf("Task %d Failed\n", _task_id)
 				break
 			} else {
-				log.Printf("Task %d is currently %s\n", _task_id, _task_status.WorkOrderState)
+				log.Printf("Task %d is currently %s\n", _task_id, _task_status.WorkOrderUserDefinedStatus)
 				time.Sleep(5 * time.Second)
 			}
 		}
@@ -140,7 +154,7 @@ func configureTopo(module_opt string, lab_opt string, Cvp_client *client.CvpClie
 		topo_conf.Lab_cfgs = module_info.Labconfiglets
 		topo_conf.Lab_list = module_info.Lab_lists
 		// Check and connect to CVP
-		if cvpCheckAndConnect(CVP_client) {
+		if cvpCheckAndConnect(CVP_client, true) {
 			_, err := CVP_client.API.GetCvpInfo()
 			if err != nil {
 				log.Printf("ERROR: %s\n", err)
@@ -173,8 +187,6 @@ func configureTopo(module_opt string, lab_opt string, Cvp_client *client.CvpClie
 						if err != nil {
 							log.Printf("Error getting Configlet data for %s\n", value[i])
 						} else {
-							// TODO CHECK OUTPUT
-							// 2022/08/04 01:40:20 Grabbed configlet data for map[s1-brdr1:[BASE_s1-brdr1] s1-brdr2:[BASE_s1-brdr2] s1-core1:[BASE_s1-core1] s1-core2:[BASE_s1-core2] s1-host1:[BASE_s1-host1 VXLAN_s1-host1] s1-host2:[BASE_s1-host2 VXLAN_s1-host2] s1-leaf1:[BASE_s1-leaf1 VXLAN_s1-leaf1] s1-leaf2:[BASE_s1-leaf2 VXLAN_s1-leaf2] s1-leaf3:[BASE_s1-leaf3 VXLAN_s1-leaf3] s1-leaf4:[BASE_s1-leaf4 VXLAN_s1-leaf4] s1-spine1:[BASE_s1-spine1 VXLAN_s1-spine1] s1-spine2:[BASE_s1-spine2 VXLAN_s1-spine2] s2-brdr1:[BASE_s2-brdr1] s2-brdr2:[BASE_s2-brdr2] s2-core1:[BASE_s2-core1] s2-core2:[BASE_s2-core2] s2-host1:[BASE_s2-host1] s2-host2:[BASE_s2-host2] s2-leaf1:[BASE_s2-leaf1] s2-leaf2:[BASE_s2-leaf2] s2-leaf3:[BASE_s2-leaf3] s2-leaf4:[BASE_s2-leaf4] s2-spine1:[BASE_s2-spine1] s2-spine2:[BASE_s2-spine2]]
 							log.Printf("Grabbed configlet data for %s\n", value[i])
 							cfg_lab_data[value[i]] = *_cfg_info
 						}
@@ -192,10 +204,11 @@ func configureTopo(module_opt string, lab_opt string, Cvp_client *client.CvpClie
 				log.Println("Started all Update Devices")
 				// Wait for all GO Routines to finish
 				instance_wait_group.Wait()
-				log.Printf("Finished updating Configlet assignments for %d devices\n", _instance_count)
+				log.Printf("Finished checking Configlet assignments for %d devices\n", _instance_count)
 				// Get All Task IDs that have been generated
 				// Section to temporarily manually execute each task individually
 				// ================================================================
+				log.Println("Getting all Pending tasks")
 				available_tasks, err := CVP_client.API.GetTaskByStatus("PENDING")
 				// ================================================================
 				//
@@ -206,6 +219,7 @@ func configureTopo(module_opt string, lab_opt string, Cvp_client *client.CvpClie
 				if err != nil {
 					log.Println("Error getting Pending Tasks")
 				} else {
+					log.Printf("Found %d Pending tasks\n", len(available_tasks))
 					for i := 0; i < len(available_tasks); i++ {
 						// Section to temporarily manually execute each task individually
 						// ================================================================
@@ -227,10 +241,12 @@ func configureTopo(module_opt string, lab_opt string, Cvp_client *client.CvpClie
 					}
 					// Section to temporarily manually execute each task individually
 					// ================================================================
+					log.Printf("Making API call to execute %d tasks\n", len(available_tasks))
 					err := CVP_client.API.ExecuteTasks(_task_ids_list)
 					if err != nil {
 						log.Println("Error executing tasks")
 					} else {
+						log.Println("Starting Check for Task statuses")
 						var _task_count int = len(_task_ids_list)
 						task_wait_group := new(sync.WaitGroup)
 						task_wait_group.Add(_task_count)
@@ -260,25 +276,35 @@ func configureTopo(module_opt string, lab_opt string, Cvp_client *client.CvpClie
 	}
 }
 
-func cvpCheckAndConnect(cvp_client *client.CvpClient) bool {
+func cvpCheckAndConnect(cvp_client *client.CvpClient, cvp_debug bool) bool {
 	if cvp_client.SessID == "" {
-		log.Println("CVP is not active, re-trying to connect.")
+		if cvp_debug {
+			log.Println("CVP is not active, re-trying to connect.")
+		}
 		if err := cvp_client.Connect(TOPO_USER, TOPO_PWD); err != nil {
-			log.Printf("CVP is not running or is starting up: %s\n", err)
+			if cvp_debug {
+				log.Printf("CVP is not running or is starting up: %s\n", err)
+			}
 			return false
 		} else {
-			log.Println("CVP is up and running")
+			if cvp_debug {
+				log.Println("CVP is up and running")
+			}
 			return true
 		}
 	} else {
 		// Verify that the CVP SessionID is active
 		_, err := cvp_client.API.GetCvpInfo()
 		if err != nil {
-			log.Println("CVP Session is no longer active")
+			if cvp_debug {
+				log.Println("CVP Session is no longer active")
+			}
 			cvp_client.SessID = ""
 			return false
 		} else {
-			log.Println("CVP is active.")
+			if cvp_debug {
+				log.Println("CVP is active.")
+			}
 			return true
 		}
 	}
