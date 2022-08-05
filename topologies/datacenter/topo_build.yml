@@ -2,7 +2,7 @@ host_cpu: 8
 cvp_cpu: 24
 cvp_ram: 32
 cvp_nodes: 1
-veos_cpu: 1
+veos_cpu: 2
 
 nodes:
   - spine1:
