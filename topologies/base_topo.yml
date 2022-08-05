@@ -37,7 +37,7 @@ topologies:
               - 4.27.2F
           2022.1.1:
             resources:
-              cpu: 40
+              cpu: 54
               ram: 64
             branch: nested/2022.1
             orderable: true
