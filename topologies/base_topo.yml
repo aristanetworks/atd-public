@@ -21,7 +21,7 @@ topologies:
               cpu: 40
               ram: 64
             branch: nested/2022.1
-            orderable: false
+            orderable: true
             image: base-atd-dual-datacenter-ceos-c2022-1-0-20220621
             eos:
               - 4.28.1F
