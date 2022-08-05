@@ -20,7 +20,6 @@ Welcome to the Arista ATD documentation!
    aa-initial_configuration.rst
    cvp_configlet.rst
    cvp_cc.rst
-   cvp_studios_l3ls_evpn.rst
 
 .. toctree::
    :maxdepth: 1
