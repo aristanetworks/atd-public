@@ -65,7 +65,7 @@ topologies:
     name: 'Dual Data Center'
     title: 'Dual Data Center Lab'
     disk_size: 300
-    access: admin
+    access: standard
     disable_links: []
     labguides: self
   datacenter:
