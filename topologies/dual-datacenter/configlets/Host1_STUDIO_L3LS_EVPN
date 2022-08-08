@@ -2,7 +2,7 @@ vlan 60
 vlan 70
 
 
-interface E1-E2 
+interface E1-E4 
  lacp timer fast
 channel-group 1 mode active
 

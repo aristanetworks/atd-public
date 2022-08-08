@@ -18,7 +18,7 @@
 |br| **do not initalize any of the preset labs, instead follow the steps below:** 
 
 
-|br| **1. SSH into s1-host1 and s1-host2 on the left datacenter and remove the existing port channels.**
+|br| **1. SSH into Host1 and Host2 on the left datacenter and remove the existing port channels.**
 |br| **2. Reconfigure as trunks with interfaces E1-E4 in PO1 for each Host.** 
 |br| **3. Create vlan60 and vlan70 with the SVIs as shown.**
 |br| **4. Set a default route to 10.60.60.1** 
@@ -26,10 +26,10 @@
 
 
 
-CloudVision Studios  -  L3LS/EVPN LAB GUIDE  ``CVP 2021.3.0``
+CloudVision Studios  -  L3LS/EVPN LAB GUIDE
 ===========================================
 
-
+*CVP Version 2021.3.0*
 
 Our "Datacenter1" topology for this lab consists of two spines, four leafs, and two "hosts" for reachability testing. The borderleafs, cores, and Datacenter 2 are not a part of this lab guide. 
 Our hosts will be pre-configured as L2 LACP trunk port-channels up to their respective leafs. 
@@ -66,7 +66,7 @@ Once created, let's go to the **"Inventory Studio"**
 - Navigate to **Provisioning>Studios>Inventory and Topology**.
 
 
-.. note:: This is where we will tell studios which devices to include, and the studio will know how the physical topology is built. It will allow the other studios to auto detect links to assign properly for a functional network. All of our devices should be there, ignore anything that isn’t ``s1-Spines`` or ``s1-leaf1-4``.  
+.. note:: This is where we will tell studios which devices to include, and the studio will know how the physical topology is built. It will allow the other studios to auto detect links to assign properly for a functional network. All of our devices should be there, ignore anything that isn’t ``Spines`` or ``Leaf1-4``.  
   
 
 - Enter the studio and click the *“add updates”* tab.
@@ -176,7 +176,7 @@ Once complete, let's *“Add Pod”*, give it a name of *“1”* then make use 
 Once again, you’ll find we have to manually assign our devices.  
 |br| Add the spines first, and you’ll see them automatically get added! Now add the leafs. Once done, we need to make our **leaf domains.** 
 |br| A leaf domain can be a pair of switches or a standalone. So in this lab, we need to make two. 
-|br| ``s1-leaf1`` and ``s1-leaf2`` will be in ``Leaf Domain 1``, and ``s1-leaf3`` and ``s1-leaf4`` will be in ``Leaf Domain 2``. 
+|br| ``Leaf1`` and ``Leaf2`` will be in ``Leaf Domain 1``, and ``Leaf3`` and ``Leaf4`` will be in ``Leaf Domain 2``. 
 |br| Let’s do this now. 
 
    .. warning:: Leaf Domains must be an integer or the build process will fail.
@@ -214,7 +214,7 @@ Success! Now that we have these changes saved to our workspace, let’s work on 
 - Navigate to the **Provisioning>Studios>EVPN Services** studio. 
 
 Once again, we need to add our device query. But seeing as how this is EVPN, our focus is on the leafs. 
-|br| Let’s use  ``DC:DC1 AND Role:Leaf`` as our query, then create our tenant, which we’ll call **“A”**. 
+|br| Let’s use  ``Role:Leaf AND DC:DC1`` as our query, then create our tenant, which we’ll call **“A”**. 
 
 .. thumbnail:: images/cvp_DDC_studios_l3ls_evpn/14EVPNPT1.gif
    :align: center
@@ -231,16 +231,14 @@ Then, let’s enter our tenant and set up our VRF, let’s also call this one **
 
 
 Our next step is to create the vlans in the VRF, and assign them to the devices that will carry them. 
-|br| We can also use VLAN Aware Bundles if all devices support it.
-|br| (if you are cross vendor, you might not be able to use bundles)
-
+|br| We can also use VLAN Aware Bundles if all devices support it *(if you are cross vendor, you might not be able to use bundles)* width: 50%
 |br| We will configure a VLAN Aware Bundle for this lab in a moment. 
 |br| Let’s add ``vlan60`` and ``vlan70``, then configure them. Let’s start with ``vlan60``.
 |br| Enter 60 in the VLAN ID field and enter the configuration. Let's make a name. Let’s call it “PROD” and then set our SVI of **10.60.60.1/24** 
 
    .. warning:: The CIDR is required. 
 
-|br| Now, let's choose our VRF to ``“A”``, and assign our device assignments. Use ``DC:DC1 AND Role:Leaf`` as our search. Enter the vlan area and  mark all to “Yes”. 
+|br| Now, let's choose our VRF to ``“A”``, and assign our device assignments. Use ``Role:Leaf AND DC:DC1`` as our search. Enter the vlan area and  mark all to “Yes”. 
 |br| Repeat with creation of ``vlan70`` with a SVI of **10.70.70.1/24** and description of “PROD2.”
 
    Note: 
@@ -278,7 +276,7 @@ Success! We now have a working L3LS/EVPN topology, but not for the hosts yet. We
 
 - Navigate to the **'Provisioning>Studios>Interface Configuration”** studio. 
 
-Let’s take a look at our topology. The hosts are already pre configured for PO1 on ports ``E1-2`` in LACP. Our yet to be configured Leafs are connected to the hosts on ``E4`` and ``E5``. 
+Let’s take a look at our topology. The hosts are already pre configured for PO1 on ports ``E1-4`` in LACP. Our yet to be configured Leafs are connected to the hosts on ``E4`` and ``E5``. 
 
 .. thumbnail:: images/cvp_DDC_studios_l3ls_evpn/18-topoforPO.PNG
    :align: center
@@ -287,7 +285,7 @@ Let’s take a look at our topology. The hosts are already pre configured for PO
 The hosts are also configured in vlan 60 and 70 with respective SVIs for testing. 
 Let’s navigate to our Interface Studio and start our configuration. 
 
-Let’s start by adding our search query ``DC:DC1 AND Role:Leaf``.
+Let’s start by adding our search query ``Role:Leaf AND DC:DC1``.
 |br| Then make a  profile, let’s call it **“MLAG-PO”**.  Let’s make it a **trunk port**, set native VLAN of **“1”**, allow ``vlan60`` and ``vlan70``, and give the PO a number of **"1"**, and check **“yes”** for mlag. 
 
 .. thumbnail:: images/cvp_DDC_studios_l3ls_evpn/19-intstudio1.gif
@@ -295,7 +293,7 @@ Let’s start by adding our search query ``DC:DC1 AND Role:Leaf``.
    :width: 50%
 
 
-|br| Now, let’s apply our profile to port ``E4`` on each leaf pair.
+Now, let’s apply our profile to ports ``E4`` and ``E5`` on each leaf pair.
 
 
    .. thumbnail:: images/cvp_DDC_studios_l3ls_evpn/20-intstudio1.gif
@@ -376,18 +374,18 @@ Now, on Leafs 1 and 3 let's verify our Port-Channel status.
 .. code-block:: bash 
    
    Port-Channel       Protocol    Ports             
-   Po1(U)            LACP(a)     Et1(PG+) Et2(PG+) PEt1(P) PEt2(P)
+   Po1(U)            LACP(a)     Et4(PG+) Et5(PG+) PEt4(P) PEt5(P)
 
 
 Now that we’ve confirmed all our base connectivity, let’s test our fabric and look at some outputs. 
 
 
-Let’s start with ``s1-host1``, and ensure we can ping our gateway at **10.60.60.1**. This should be successful. 
+Let’s start with ``Host1``, and ensure we can ping our gateway at **10.60.60.1**. This should be successful. 
 |br| Next, let's ensure we can ping our local SVI at **10.60.60.160**. This should also be successful. Let’s ping across the fabric now in the same vlan, from **.160 to .161.** This should be successful as well. 
 
-Do a **“show int vlan 60”** on ``s1-host1`` and on ``s1-host2`` and make note of their **mac**. On ``s1-leaf1``, do ``“show mac address-table vlan 60”`` and notice ``s1-host1’s`` mac comes across PO1 and ``s1-host2’s`` comes across Vx1.
+Do a **“show int vlan 60”** on ``Host1`` and on ``Host2`` and make note of their **mac**. On ``Leaf1``, do ``“show mac address-table vlan 60”`` and notice ``Host1’s`` mac comes across PO1 and ``Host2’s`` comes across Vx1.
 
-Next, let’s ping inter-vlan from **10.60.60.160** to **10.70.70.171**, which should be successful. On ``s1-leaf1``, review the EVPN routing table using **“show bgp evpn“**. 
+Next, let’s ping inter-vlan from **10.60.60.160** to **10.70.70.171**, which should be successful. On ``leaf1``, review the EVPN routing table using **“show bgp evpn“**. 
 
 **LAB COMPLETE!**
 --------------------------------
