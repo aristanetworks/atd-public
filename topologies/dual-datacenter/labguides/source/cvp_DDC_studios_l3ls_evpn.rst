@@ -26,10 +26,10 @@
 
 
 
-CloudVision Studios  -  L3LS/EVPN LAB GUIDE
+CloudVision Studios  -  L3LS/EVPN LAB GUIDE  ``CVP 2021.3.0``
 ===========================================
 
-*CVP Version 2021.3.0*
+
 
 Our "Datacenter1" topology for this lab consists of two spines, four leafs, and two "hosts" for reachability testing. The borderleafs, cores, and Datacenter 2 are not a part of this lab guide. 
 Our hosts will be pre-configured as L2 LACP trunk port-channels up to their respective leafs. 
@@ -295,7 +295,7 @@ Let’s start by adding our search query ``DC:DC1 AND Role:Leaf``.
    :width: 50%
 
 
-Now, let’s apply our profile to ports ``E1`` and ``E2`` on each leaf pair.
+|br| Now, let’s apply our profile to port ``E4`` on each leaf pair.
 
 
    .. thumbnail:: images/cvp_DDC_studios_l3ls_evpn/20-intstudio1.gif
@@ -376,7 +376,7 @@ Now, on Leafs 1 and 3 let's verify our Port-Channel status.
 .. code-block:: bash 
    
    Port-Channel       Protocol    Ports             
-   Po1(U)            LACP(a)     Et4(PG+) Et5(PG+) PEt4(P) PEt5(P)
+   Po1(U)            LACP(a)     Et1(PG+) Et2(PG+) PEt1(P) PEt2(P)
 
 
 Now that we’ve confirmed all our base connectivity, let’s test our fabric and look at some outputs. 
