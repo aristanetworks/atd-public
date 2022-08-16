@@ -1,6 +1,6 @@
 daemon TerminAttr
-  exec /usr/bin/TerminAttr -disableaaa -cvaddr=192.168.0.5:9910 -taillogs -cvauth=key,atd-lab -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent
-  no shutdown
+   exec /usr/bin/TerminAttr -cvcompression=gzip -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -cvaddr=192.168.0.5:9910 -cvauth=token,/tmp/token -cvvrf=default -taillogs -disableaaa
+   no shutdown
 !
 transceiver qsfp default-mode 4x10G
 !
