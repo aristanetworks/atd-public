@@ -1,25 +1,39 @@
+hostname eos3
+!
+interface Management0
+   ip address 192.168.0.12/24
+daemon TerminAttr
+   exec /usr/bin/TerminAttr -cvcompression=gzip -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -cvaddr=192.168.0.5:9910 -cvauth=token,/tmp/token -cvvrf=default -taillogs -disableaaa
+   no shutdown
+!
+transceiver qsfp default-mode 4x10G
+!
+service routing protocols model multi-agent
+!
+dns domain atd.lab
+!
+ntp server 192.168.0.1 iburst source Management0
+!
 radius-server host 192.168.0.1 key 7 0207165218120E
 !
 aaa group server radius atds
    server 192.168.0.1
 !
+spanning-tree mode mstp
+!
 aaa authentication login default group atds local
 aaa authorization exec default group atds local
 aaa authorization commands all default local
 !
-username arista privilege 15 secret 5 $1$4VjIjfd1$XkUVulbNDESHFzcxDU.Tk1
+no aaa root
+!
+username admin privilege 15 role network-admin secret 5 $1$5O85YVVn$HrXcfOivJEnISTMb6xrJc.
+username arista privilege 15 role network-admin secret 5 $1$4VjIjfd1$XkUVulbNDESHFzcxDU.Tk1
+username arista ssh-key ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC+ERvV4GaPq3FzxY8T+5hMF/1T+l8wiPsVCtOrZU4Hy6NCNlAiDBdA/RUtX5/aOu5JvHyPTVHqWJ0qi9BqU3rxCNl/l2/5UZbm9RPzdZ1QCwoYwPB9/j/tYJV8lZdr6t0yGBfxgzD3oW/zF7a+ZtASaMAu7lkgoqPK2pVIGa+Y9ZCsA0Xq756XpLCw+d3pHKHvIkgWLCo9FoeIv8f/bu5u/ztzRE+Nvl+o5add6MxnjsXz3s7BnW2FX6JNjyp0Z+OXjupQc2gcfFvpd/dA2lCNuuaCHkRgyPwIZtWPmNqMRXPp37mlPwV43qDJRVPQkvh0xPxwS35BbzUxWdT+ZLZv
+!
+ip routing
 !
 ip radius source-interface Management0
 !
 management api http-commands
    no shutdown
-!
-daemon TerminAttr
-   exec /usr/bin/TerminAttr -disableaaa -cvaddr=192.168.0.5:9910 -taillogs -cvauth=key,atd-lab -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent
-   no shutdown
-!
-service routing protocols model multi-agent
-interface Management0
-   ip address 192.168.0.12/24
-!
-hostname eos3
