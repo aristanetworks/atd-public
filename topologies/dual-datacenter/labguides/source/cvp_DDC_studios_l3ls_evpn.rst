@@ -9,24 +9,7 @@
 .. role:: red
 
 
-|br|:red:`If you are running the lab from ATD-DEV, disregard the disclaimer below.`
-|br|:red:`Option 8 on the ATD-DEV console will format the hosts.`
-|br|:red:`If running from standard ATD, please ensure you follow the below section.`
-
-
-**To successfully run this lab in the Datacenter ATD, once the environment is up,** 
-|br| **do not initalize any of the preset labs, instead follow the steps below:** 
-
-
-|br| **1. SSH into s1-host1 and s1-host2 on the left datacenter and remove the existing port channels.**
-|br| **2. Reconfigure as trunks with interfaces E1-E4 in PO1 for each Host.** 
-|br| **3. Create vlan60 and vlan70 with the SVIs as shown.**
-|br| **4. Set a default route to 10.60.60.1** 
-
-
-
-
-CloudVision Studios  -  L3LS/EVPN LAB GUIDE  ``CVP 2021.3.0``
+CloudVision Studios  -  L3LS/EVPN LAB GUIDE
 ===========================================
 
 
@@ -37,6 +20,8 @@ VLAN 60 and 70 will be pre-configured with SVIs on each host for post change rea
 All underlay addressing will be performed by CVPS.
 
 The hosts are already configured via lab configlets, we will not be involving them in the Studios process. 
+|br| First, provision the via lab console and run  option 6, ``CVP lab for Studios L3LS/EVPN (studiosl3ls)`` 
+|br| Allow the task to complete, and proceed to step 1. 
 
 .. thumbnail:: images/cvp_DDC_studios_l3ls_evpn/3TOPO.PNG
 	:align: center
@@ -44,114 +29,109 @@ The hosts are already configured via lab configlets, we will not be involving th
 
 
  
-Let’s open CVP, and get started!
---------------------------------
+Let’s open CVP via the topology page, and get started!
 
-**1. Workspace Creation**
---------------------------------------------------------------------------------------------
+1. Workspace Creation
 
-- Navigate to **Provisioning>Studios>Create Workspace**. Name it anything you want.
 
-Once created, let's go to the **"Inventory Studio"**
-
+   a. Navigate to **Provisioning>Studios>Create Workspace**. Name it **"LAB"**
+   b. Once created, let's go to the **"Inventory Studio"**
 
 
 .. thumbnail:: images/cvp_DDC_studios_l3ls_evpn/4WorkspaceIntro.gif
    :align: center
    :width: 50%
 
-**2. Inventory studio.** 
---------------------------------------------------------------------------
 
-- Navigate to **Provisioning>Studios>Inventory and Topology**.
+2. Inventory studio
+    
+   a. Navigate to **Provisioning>Studios>Inventory and Topology**.
+   b. Enter the studio and click the *“add updates”* tab.
+   c. Select ``s1-Spines`` and  ``s1-leaf1-4``, Ignore anything else. 
+   d. Click **"Add Updates"**.
+   e. Notice that there are devices now in the *“onboarded devices”* section. 
+   f. Enter the device and see how Studios has detected the topology connections.
 
 
-.. note:: This is where we will tell studios which devices to include, and the studio will know how the physical topology is built. It will allow the other studios to auto detect links to assign properly for a functional network. All of our devices should be there, ignore anything that isn’t ``s1-Spines`` or ``s1-leaf1-4``.  
+
+
+
+.. note:: This is where we will tell studios which devices to include, and the studio will know how the physical topology is built via lldp. It will allow the other studios to auto detect links to assign properly for a functional network.
   
 
-- Enter the studio and click the *“add updates”* tab.
-  
-
-|br| Now, notice that there are devices in the *“onboarded devices”* section. 
-|br| You can enter the device and see how Studios has detected the topology connections.
 
 .. thumbnail:: images/cvp_DDC_studios_l3ls_evpn/5Inventory.gif
    :align: center
    :width: 50%
 
-**3. Workspace review**
------------------------
+3. Workspace review
+
     
-- Click on *“Review Workspace”* on the upper right. This will take us to the *"Workspace Summary"* page to save our inputs for this studio to the staging area for later use. 
+   a. Click on *“Review Workspace”* on the upper right. This will take us to the *"Workspace Summary"* page to save our inputs for this studio to the staging area for later use. 
   |br| Once we hit review, it will run through the checks and tell us if we are good to proceed. You can see in the workspace summary what studios have been modified.
   |br| **In the current CVPS build the build process will only kick off automatically the first time. As we modify other studios, we will manually start this process by clicking "Start Build".** 
  
- .. note:: You can absolutely make a separate workspace for every studio if you wish, however for this lab we are going to do all this work in the same workspace, because I want to demonstrate how this process builds on itself in our staging area. 
-
-
- .. thumbnail:: images/cvp_DDC_studios_l3ls_evpn/6InventoryBuild.PNG
+ 
+  .. thumbnail:: images/cvp_DDC_studios_l3ls_evpn/6InventoryBuild.PNG
    :align: center
    :width: 50%
+ 
+ 
+ .. note:: You can absolutely make a separate workspace for every studio if you wish, however for this lab we are going to do all this work in the same workspace, because we need  to demonstrate how this process builds on itself in the  staging area. 
+
+
+
 
  
 
-**4. Device Tagging**
----------------------
-
-- Go to the Provisioning tab and click *"Tags"* on the lower left 
+4. Device Tagging
 
 Tagging is used to easily group devices and assign them to a studio. 
-Tagging can be done from within a workspace even though it's technically not a studio. 
+|br| This can be done from within a workspace even though it's technically not a studio.
+|br| There are user tags and tags the system creates using the *"auto tagger"* as we move through our studio configurations. 
+|br| Tags are formed in a **label:value format.** For this lab, we will be using ``“DC:DC1”`` for all assets in ``DC1``,
 
+a. Go to the Provisioning tab and click *"Tags"* on the lower left 
+   
  
-   
-   
-
  .. thumbnail:: images/cvp_DDC_studios_l3ls_evpn/7tagslocation.PNG
    :align: center
    :width: 50%
 
 
-There are user tags and tags the system creates using the *"auto tagger"* as we move through our studio configurations. 
-|br| Tags are formed in a **label:value format.** 
-|br| For this lab, we will be using ``“DC:DC1”`` for all assets in ``DC1``, Let's go ahead and tag our devices now. 
-
-.. note:: You can use almost any naming convention that makes sense for your use case. Examples are for this lab.
-
+b. tag devices with ``“DC:DC1”`` 
 
 
 .. thumbnail:: images/cvp_DDC_studios_l3ls_evpn/8tagsprocess.gif
    :align: center
    :width: 50%
 
-Click on **"Review Workspace"** in the upper right and observe that the workspace now shows we have two tag changes. 
+.. note:: You can use almost any naming convention that makes sense for your use case. Examples are for this lab.
 
-|br| Now, let's trigger the *“start build”* and allow the build process to complete. 
+
+
+c. Click on **"Review Workspace"** in the upper right and observe that the workspace now shows we have two tag changes. 
+d. Trigger the *“start build”* and allow the build process to complete. 
+
 |br| Let's move on with the lab, we are going to focus on **L3LS** first, then do **EVPN** after.
 
 
-**5. L3LS Studio**
-------------------
+5. L3LS Studio
 
-- Navigate to the **Provisioning>Studios>L3 Leaf-Spine Fabric** studio. 
+   a. Navigate to the **Provisioning>Studios>L3 Leaf-Spine Fabric** studio. 
+   b. Set our tag query to assign our devices.
+   c. include all devices with the ``DC:DC1`` tag pair. You’ll see the number of devices it finds and their IDs.
+   d. In the "Data Centers" section, let's use a value of **"1"**  *(this can be a name or an integer, but for the lab let's use the aforementioned value)*
+   e. Once complete, click the arrow to proceed into the configuration.  
 
-First, we need to set our tag query to assign our devices.
-|br| Let’s include all devices with the ``DC:DC1`` tag pair. You’ll see the number of devices it finds and their IDs. 
-
-
-
-Once the query is complete and you verify all devices are included, let's create our Datacenter.
-|br| In the "Data Centers" section, let's use a value of **"1"**  *(this can be a name or an integer, but for the lab let's use the aforementioned value)*
-|br| Once complete, click the arrow to proceed into the configuration. 
-
-**Important Tip:** 
-|br| **Anytime you see “create” in a field the autotagger is automatically creating a tag for the devices included in the studio. We’ll come back to this later.** 
-
- 
 
 .. thumbnail:: images/cvp_DDC_studios_l3ls_evpn/9L3LSPT1.gif
    :align: center
    :width: 50%
+
+   |br|
+**Important Tip:** 
+|br| **Anytime you see “create” in a field the autotagger is automatically creating a tag for the devices included in the studio. We’ll come back to this later.** 
 
 
 
@@ -160,30 +140,39 @@ Once the query is complete and you verify all devices are included, let's create
 
 |br| Let’s do this now. 
 
+f. assign roles and device numbers for each switch
+|br|
 
- .. note:: The devices in the Fabric Device section will auto fill important sections later in the EVPN Studio. 
+ 
 
-
-
-  
 
 .. thumbnail:: images/cvp_DDC_studios_l3ls_evpn/10L3LSPT2.gif
    :align: center
    :width: 50%
+  
+   
+   
 
-Once complete, let's *“Add Pod”*, give it a name of *“1”* then make use of the arrow in the pod field to move on. 
 
-Once again, you’ll find we have to manually assign our devices.  
-|br| Add the spines first, and you’ll see them automatically get added! Now add the leafs. Once done, we need to make our **leaf domains.** 
-|br| A leaf domain can be a pair of switches or a standalone. So in this lab, we need to make two. 
-|br| ``s1-leaf1`` and ``s1-leaf2`` will be in ``Leaf Domain 1``, and ``s1-leaf3`` and ``s1-leaf4`` will be in ``Leaf Domain 2``. 
-|br| Let’s do this now. 
+|br| Once complete, let's "**Add Pod**", give it a name of *“1”* then make use of the arrow in the pod field to move on. 
 
-   .. warning:: Leaf Domains must be an integer or the build process will fail.
+g. Add Pod 1
+h. Enter Pod 1 configuration
+i. Manually add swiches to "Assigned Devices up top"
+j. Add the spines first, and you’ll see them automatically get added! 
+k. Now add the leafs. 
+l. Make the  **leaf domains.** 
 
 .. thumbnail:: images/cvp_DDC_studios_l3ls_evpn/11L3LSPT3.gif
    :align: center
    :width: 50%
+
+|br| A leaf domain can be a pair of switches or a standalone. So in this lab, we need to make two. 
+|br| ``s1-leaf1`` and ``s1-leaf2`` will be in ``Leaf Domain 1``, and ``s1-leaf3`` and ``s1-leaf4`` will be in ``Leaf Domain 2``. 
+
+   .. warning:: Leaf Domains must be an integer or the build process will fail.
+
+
 
 And that’s it! 
 
@@ -208,77 +197,94 @@ Let's start our build! Now remember, we need to manually kick the build off, and
 
 Success! Now that we have these changes saved to our workspace, let’s work on EVPN, which will pull data from this configuration. 
 
-**6. EVPN Studio**
-------------------
+6. EVPN Studio
+
 
 - Navigate to the **Provisioning>Studios>EVPN Services** studio. 
 
 Once again, we need to add our device query. But seeing as how this is EVPN, our focus is on the leafs. 
-|br| Let’s use  ``DC:DC1 AND Role:Leaf`` as our query, then create our tenant, which we’ll call **“A”**. 
+
+a. Use  ``DC:DC1 AND Role:Leaf`` as our query
+b. Create tenant, which we’ll call **“A”**.
+c. Enter tenant for further configuration 
 
 .. thumbnail:: images/cvp_DDC_studios_l3ls_evpn/14EVPNPT1.gif
    :align: center
    :width: 50%
 
-Then, let’s enter our tenant and set up our VRF, let’s also call this one **“A”**, and enter the configuration. 
+|br| d. set up VRF, **“A”**, and enter the configuration.
+|br| 
 |br| The only required entry here is the **VNI**. Your **VNI** can be whatever you want, just ensure it does not conflict with the VNI the VLANS will get auto assigned with (though you can override the VNI on the VLAN page) 
 |br| As best practice we will set our **VNI** as **50000**.
 
+d. Set VNI to 5000
+e. Exit back to Tenant to configure vlans
 
-.. thumbnail:: images/cvp_DDC_studios_l3ls_evpn/15EVPNPT2.gif
-   :align: center
-   :width: 50%
 
 
 Our next step is to create the vlans in the VRF, and assign them to the devices that will carry them. 
-|br| We can also use VLAN Aware Bundles if all devices support it.
-|br| (if you are cross vendor, you might not be able to use bundles)
 
-|br| We will configure a VLAN Aware Bundle for this lab in a moment. 
-|br| Let’s add ``vlan60`` and ``vlan70``, then configure them. Let’s start with ``vlan60``.
-|br| Enter 60 in the VLAN ID field and enter the configuration. Let's make a name. Let’s call it “PROD” and then set our SVI of **10.60.60.1/24** 
+|br| f. In the Tenant, add ``60`` in the vlan field then enter configuration.
+|br| g. Choose the "A" tenant, name the VLAN  “PROD” and then set SVI of **10.60.60.1/24** 
+|br| h. Scroll down to Devices and use ``DC:DC1 AND Role:Leaf`` as our search, then enter configuration. 
+|br| i. Change "Apply" on all devices to "Yes"
+|br| j. Repeat the above steps with ``vlan70``, name PROD2 and set SVI of **10.70.70.1/24** 
 
-   .. warning:: The CIDR is required. 
+.. warning:: The CIDR is required. 
 
-|br| Now, let's choose our VRF to ``“A”``, and assign our device assignments. Use ``DC:DC1 AND Role:Leaf`` as our search. Enter the vlan area and  mark all to “Yes”. 
-|br| Repeat with creation of ``vlan70`` with a SVI of **10.70.70.1/24** and description of “PROD2.”
-
-   Note: 
+.. note::
    |br| Notice how when you add the leafs to the vlan the router_bgp.router_id and router_bgp.as variables auto-filled. 
    |br| The studio is pulling this information directly from our information stored from our L3LS studio! 
+
+.. note::
+
+
+
+
+.. thumbnail:: images/cvp_DDC_studios_l3ls_evpn/15EVPNPT2.gif
+    :align: center
+    :width: 50%
+
+   
+
+
+   
+
 
 .. thumbnail:: images/cvp_DDC_studios_l3ls_evpn/16EVPNPT3.gif
    :align: center
    :width: 50%
 
 
-   
 
+As the final step of this studio, let's  create our vlan aware bundle. 
+|br| (if you are cross vendor, you might not be able to use VLAN Aware Bundles)
 
-As the final step of this studio, let's quickly create our vlan aware bundle. 
-|br| As our value, let's call it **"BUNDLE”** then enter the configuration. 
-|br| Use 60,70 as our vlan range for this example.  
+|br| k. In the tenant, scroll down to Vlan Aware Bundles and create it. 
+|br| l. Call it **"BUNDLE”** then enter the configuration. 
+|br| m. Use 60,70 as our vlan range for this example.  
+
 
 .. thumbnail:: images/cvp_DDC_studios_l3ls_evpn/16.1EVPNPT3.png
    :align: center
    :width: 50%
 
-We’re done with the EVPN studio! Let’s spin the wheel of build and see how we did. Click review workspace and then start the build.  
+|br| We’re done with the EVPN studio! Let’s see if our inputs are correct. Click review workspace and then start the build.  
 
 .. thumbnail:: images/cvp_DDC_studios_l3ls_evpn/17EVPNPT4.gif
    :align: center
    :width: 50%
 
-Success! We now have a working L3LS/EVPN topology, but not for the hosts yet. We need to configure the port-channels on the leafs to the hosts below them. 
+|br| Success! We now have a working L3LS/EVPN topology, but not for the hosts yet. We need to configure the port-channels on the leafs to the hosts below them. 
+|br|
 |br| For that, let’s use the **Interface Configuration Studio** and then we’ll test connectivity across the fabric. 
 
 
-**7. Interface Studio**
------------------------
+7. Interface Studio
 
-- Navigate to the **'Provisioning>Studios>Interface Configuration”** studio. 
-
-Let’s take a look at our topology. The hosts are already pre configured for PO1 on ports ``E1-2`` in LACP. Our yet to be configured Leafs are connected to the hosts on ``E4`` and ``E5``. 
+  
+Let’s take a look at our topology. The hosts are already pre configured for PO1 on ports ``E1-2`` in LACP. 
+|br| Our yet to be configured Leafs are connected to the hosts on ``E4`` and ``E5``. 
 
 .. thumbnail:: images/cvp_DDC_studios_l3ls_evpn/18-topoforPO.PNG
    :align: center
@@ -286,39 +292,48 @@ Let’s take a look at our topology. The hosts are already pre configured for PO
 
 The hosts are also configured in vlan 60 and 70 with respective SVIs for testing. 
 Let’s navigate to our Interface Studio and start our configuration. 
+  
+  
+a. Navigate to the **'Provisioning>Studios>Interface Configuration”** studio. 
+b. Add the search query ``DC:DC1 AND Role:Leaf`` to assign devices to the studio
+c. Create a profile, named **“MLAG-PO”**, and enter configuration.
+d. Set as **trunk port**, set native VLAN of **“1”**, allow ``vlan60`` and ``vlan70``, set PO to **"1"**, check **“yes”** for mlag. 
 
-Let’s start by adding our search query ``DC:DC1 AND Role:Leaf``.
-|br| Then make a  profile, let’s call it **“MLAG-PO”**.  Let’s make it a **trunk port**, set native VLAN of **“1”**, allow ``vlan60`` and ``vlan70``, and give the PO a number of **"1"**, and check **“yes”** for mlag. 
 
 .. thumbnail:: images/cvp_DDC_studios_l3ls_evpn/19-intstudio1.gif
    :align: center
    :width: 50%
 
 
-|br| Now, let’s apply our profile to port ``E4`` on each leaf pair.
+e. apply the profile to port ``E4`` on each leaf pair.
 
 
    .. thumbnail:: images/cvp_DDC_studios_l3ls_evpn/20-intstudio1.gif
     :align: center
     :width: 50%
 
-
-Let’s review our workspace so we can kick off a build! Hit “Start Build” and you should get a successful build. 
-|br| Once your build is successful, we are going to  “Submit Workspace”.
-
-   .. warning:: As discussed previously, we are going to commit this workspace as a final build to studios. Once we submit, this workspace will close out and it cannot be modified. However, because our inputs are committed to Studios (the repository) we can open up a new workspace and make/add/remove new changes. 
+8. Final Revew and Submission to Change Control
+    a. Hit “Start Build” and you should get a successful action. 
 
 
-Hit “Submit Workspace” to close out and create our Change Control. 
+   .. warning:: As discussed, we are going to commit this workspace as a final build to studios. Once we submit, this workspace will close out and it cannot be modified. However, because our inputs are committed to Studios (the repository) we can open up a new workspace and make/add/remove new changes. 
+
+
+b. Hit “Submit Workspace” to close out and create our Change Control. 
  
  .. thumbnail:: images/cvp_DDC_studios_l3ls_evpn/21-CC1.gif
    :align: center
    :width: 50%
 
 After the Workspace has been submitted and the Change Control created, you’ll see a *“View Change Control”* option. 
-|br| Hit that to be taken to Change Control. Now we are going to *“Review and Approve”* and apply our changes to the network. 
-|br| We are going to run these changes in parallel, and execute them immediately. 
-|br| Click *“Review and Approve”*. All tasks should complete successfully, and we can move onto the verification part of the lab.
+
+c. Click  *“View Change Control”* to be taken to Change Control. 
+d. *“Review and Approve”* to prep the changes to the network. 
+e. Run the  changes in parallel, and choose "execute immediately" to apply to devices. 
+f. Click *“Approve and Execute”*. 
+
+
+|br| All tasks should complete successfully, and we can move onto the verification part of the lab.
 
 
 
@@ -326,9 +341,17 @@ After the Workspace has been submitted and the Change Control created, you’ll 
    :align: center
    :width: 50%
 
-Let’s log into our Spines and run “sh bgp summary” and verify our underlay and overlay BGP adjacencies are “Established” 
+|br|
+|br|
 
-|br| Repeat for Leafs. Outputs should be similar.
+8. Lab Verification
+
+   |br| a. Log into the  Spines and run **sh bgp summary**, verify underlay and overlay BGP adjacencies are **Established**.
+   |br| b. Repeat for Leafs. Outputs should be similar.
+
+
+
+
 
 SPINES - BGP Summary
 ----------------------
@@ -358,7 +381,8 @@ LEAFS - BGP Summary
  192.168.255.255       65001 Established   IPv4 Unicast            Negotiated             13         13
 
 
-Now, let’s verify MLAG on our Leafs. On Leafs 1-4 run the **“show mlag”** command and verify all Leafs show as **“Active”** and **“Up-Up.”**
+c. Verify MLAG on our Leafs. On Leafs 1-4 run the **“show mlag”** command 
+d. Verify all Leafs show as **“Active”** and **“Up-Up.”**
 
 .. code-block:: bash 
    
@@ -368,8 +392,8 @@ Now, let’s verify MLAG on our Leafs. On Leafs 1-4 run the **“show mlag”** 
  peer-link status                   :                  Up
  local-int status                   :                  Up
 
-Now, on Leafs 1 and 3 let's verify our Port-Channel status. 
-|br| Run the command **“sh port-channel dense”**
+e. On leafs 1 and 3 verify the  Port-Channel status. 
+f. Run the command **“sh port-channel dense”**
 
  .. note:: MLAG has an enhancement where the port-channel command will show the status of the port channel across both switches in the pair. See the section below. This output shows the status and configuration of the MLAG PortChannel of the local switch as well as the peer, with the **(P)** being the opposite switch. 
 
@@ -381,13 +405,16 @@ Now, on Leafs 1 and 3 let's verify our Port-Channel status.
 
 Now that we’ve confirmed all our base connectivity, let’s test our fabric and look at some outputs. 
 
+|br| g. Ping the gateway at **10.60.60.1**. from ``s1-host1``.
+|br| h. Ping the SVI local to the switch at at **10.60.60.160**. from ``s1-host1``.
+|br| i. Ping across the fabric in the same vlan, from ``s1-host1`` **10.60.60.160** to ``s1-host2`` **10.60.60.161.**
+|br| j. Ping across the fabric intervlan from ``s1-host1`` **10.60.60.160** to ``s1-host2`` **10.70.70.171.**
+|br| k. On ``s1-leaf1``, review the EVPN routing table using **“show bgp evpn“**.
+|br| l. On ``s1-host1`` and on ``s1-host2`` do **“show int vlan 60”**  and make note of their **mac.**
+|br| m. On ``s1-leaf1``, do ``“show mac address-table vlan 60”``.
+|br| n. notice ``s1-host1’s`` mac comes across PO1 and ``s1-host2’s`` comes across Vx1.
 
-Let’s start with ``s1-host1``, and ensure we can ping our gateway at **10.60.60.1**. This should be successful. 
-|br| Next, let's ensure we can ping our local SVI at **10.60.60.160**. This should also be successful. Let’s ping across the fabric now in the same vlan, from **.160 to .161.** This should be successful as well. 
 
-Do a **“show int vlan 60”** on ``s1-host1`` and on ``s1-host2`` and make note of their **mac**. On ``s1-leaf1``, do ``“show mac address-table vlan 60”`` and notice ``s1-host1’s`` mac comes across PO1 and ``s1-host2’s`` comes across Vx1.
-
-Next, let’s ping inter-vlan from **10.60.60.160** to **10.70.70.171**, which should be successful. On ``s1-leaf1``, review the EVPN routing table using **“show bgp evpn“**. 
 
 **LAB COMPLETE!**
 --------------------------------
