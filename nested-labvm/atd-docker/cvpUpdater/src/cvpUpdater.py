@@ -4,7 +4,7 @@ from cvprac.cvp_client import CvpClient
 from ruamel.yaml import YAML
 from rcvpapi.rcvpapi import *
 from paramiko import SSHClient
-from parmaiko import AutoAddPolicy
+from paramiko import AutoAddPolicy
 from scp import SCPClient
 from os import path, listdir, system
 from sys import exit
