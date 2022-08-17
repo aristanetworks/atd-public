@@ -36,7 +36,7 @@ topologies:
             eos:
               - 4.28.1F
               - 4.27.2F
-          2022.2.0-RC2:
+          2022.2.0-rc2:
             resources:
               cpu: 54
               ram: 64
@@ -115,7 +115,7 @@ topologies:
             eos:
               - 4.28.1F
               - 4.27.2F
-          2022.2.0-RC2:
+          2022.2.0-rc2:
             resources:
               cpu: 36
               ram: 58
