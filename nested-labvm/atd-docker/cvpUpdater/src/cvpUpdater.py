@@ -1,9 +1,11 @@
 #!/usr/bin/env python
 
-
+from cvprac.cvp_client import CvpClient
 from ruamel.yaml import YAML
 from rcvpapi.rcvpapi import *
-import requests, json
+from paramiko import SSHClient
+from parmaiko import AutoAddPolicy
+from scp import SCPClient
 from os import path, listdir, system
 from sys import exit
 from time import sleep
@@ -19,6 +21,7 @@ sleep_delay = 30
 
 # Temporary file_path location for CVP Custom info
 cvp_file = '/home/arista/cvp/cvp_info.yaml'
+
 
 # ==================================
 # Start of Global Functions
@@ -198,6 +201,9 @@ def main():
     cvpPassword = atd_yaml['login_info']['jump_host']['pw']
     while not cvp_clnt:
         try:
+            cvprac_clnt = CvpClient()
+            cvprac_clnt.api.request_timeout = 180
+            cvprac_clnt.connect([atd_yaml['nodes']['cvp'][0]['ip']], cvpUsername, cvpPassword)
             cvp_clnt = CVPCON(atd_yaml['nodes']['cvp'][0]['ip'], cvpUsername, cvpPassword)
             pS("OK","Connected to CVP at {0}".format(atd_yaml['nodes']['cvp'][0]['ip']))
         except:
@@ -220,6 +226,29 @@ def main():
             pS("INFO", "CVP will be bare and no configuration.")
             return(True)
     if cvp_clnt:
+        # ==========================================
+        # Check the current version to see if a 
+        # token needs to be generated
+        # ==========================================
+        _version = cvprac_clnt.api.get_cvp_info()
+        _version = _version['version'].split('.')
+        _version_major = float(f"{_version[0]}.{_version[1]}")
+        if _version_major >= 2022.2:
+            pS("INFO", "Generating a token for onboarding...")
+            _token_response = cvprac_clnt.api.create_enroll_token("24h")
+            _token_path = path.expanduser(f"~/token")
+            with open(f"{_token_path}", 'w') as token_out:
+                    token_out.write(_token_response['data'])
+            for _node in eos_info:
+                with SSHClient() as ssh:
+                    ssh.set_missing_host_key_policy(AutoAddPolicy())
+                    ssh.connect(_node.ip, username=cvpUsername, password=cvpPassword,)
+                    with SCPClient(ssh.get_transport()) as scp:
+                        pS("INFO", f"Transferring token to {_node.hostname}")
+                        scp.put(f"{_token_path}", "/tmp/token")
+        else:
+            pS("INFO", f"Version does not require a token for onboarding...")
+        
         # ==========================================
         # Check to see how many nodes have connected
         # ==========================================
