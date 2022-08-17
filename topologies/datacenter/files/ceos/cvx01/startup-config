@@ -1,7 +1,9 @@
 hostname cvx01
 !
 interface Management0
-   ip address 192.168.0.18/24daemon TerminAttr
+   ip address 192.168.0.18/24
+!
+daemon TerminAttr
    exec /usr/bin/TerminAttr -cvcompression=gzip -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -cvaddr=192.168.0.5:9910 -cvauth=token,/tmp/token -cvvrf=default -taillogs -disableaaa
    no shutdown
 !
