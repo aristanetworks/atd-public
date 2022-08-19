@@ -56,7 +56,7 @@ topologies:
             resources:
               cpu: 40
               ram: 54
-            branch: v2021.3-20220805a
+            branch: v2021.3-20220818a
             orderable: true
             image: base-atd-dual-datacenter-ceos-c2021-3-0-20220801u
             eos:
@@ -66,7 +66,7 @@ topologies:
             resources:
               cpu: 54
               ram: 64
-            branch: v2022.1-20220805a
+            branch: v2022.1-20220818a
             orderable: true
             image: base-atd-dual-datacenter-ceos-c2022-1-1-20220801u
             eos:
@@ -195,7 +195,7 @@ topologies:
             resources:
               cpu: 36
               ram: 48
-            branch: v2021.3-20220805a
+            branch: v2021.3-20220818a
             orderable: true
             image: base-atd-datacenter-ceos-c2021-3-0-20220324u
             eos:
@@ -205,7 +205,7 @@ topologies:
             resources:
               cpu: 36
               ram: 58
-            branch: v2022.1-20220805a
+            branch: v2022.1-20220818a
             orderable: true
             image: base-atd-datacenter-ceos-c2022-1-1-20220720
             eos:
@@ -246,7 +246,7 @@ topologies:
             resources:
               cpu: 48
               ram: 64
-            branch: v2021.3-20220805a
+            branch: v2021.3-20220818a
             orderable: true
             image: base-atd-datacenter-e4-27-2f-c2021-3-0-20220805
             eos:
@@ -255,7 +255,7 @@ topologies:
             resources:
               cpu: 48
               ram: 74
-            branch: v2022.1-20220805a
+            branch: v2022.1-20220818a
             orderable: true
             image: base-atd-datacenter-e4-28-1f-c2022-1-1-20220805
             eos:
@@ -264,7 +264,7 @@ topologies:
             resources:
               cpu: 48
               ram: 74
-            branch: v2022.1-20220805a
+            branch: v2022.1-20220818a
             orderable: true
             image: base-atd-datacenter-e4-28-1f-c2022-1-1-bare-20220805
             eos:
@@ -361,7 +361,7 @@ topologies:
             resources:
               cpu: 36
               ram: 64
-            branch: v2021.3-20220805a
+            branch: v2021.3-20220818a
             orderable: true
             image: base-atd-routing-ceos-c2021-3-0-20220324u
             eos:
@@ -371,7 +371,7 @@ topologies:
             resources:
               cpu: 40
               ram: 64
-            branch: v2022.1-20220805a
+            branch: v2022.1-20220818a
             orderable: true
             image: base-atd-routing-ceos-c2022-1-1-20220720
             eos:
@@ -403,7 +403,7 @@ topologies:
             resources:
               cpu: 50
               ram: 90
-            branch: v2021.3-20220805a
+            branch: v2021.3-20220818a
             orderable: true
             image: base-atd-routing-e4-27-2f-c2021-3-0-20220324u
             eos:
@@ -412,7 +412,7 @@ topologies:
             resources:
               cpu: 50
               ram: 90
-            branch: v2022.1-20220805a
+            branch: v2022.1-20220818a
             orderable: true
             image: base-atd-routing-e4-28-1f-c2022-1-1-20220720
             eos:
