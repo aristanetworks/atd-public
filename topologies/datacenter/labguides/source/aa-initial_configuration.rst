@@ -96,7 +96,7 @@ You should now see the **localhost login:** prompt.
 
 |
 
-6. At the prompt, select **s** to choose singlenode
+6. Since we are only setting up one CVP server, select **s** to choose singlenode
 
 |
 
@@ -223,11 +223,39 @@ All of these settings are saved in the /cvpi/cvp-config.yaml file
 
 |
 
-12. You will need to change this password at first login, and you will also be asked for an email address. You can put anything you want in this field, and then click **Finish**.
+12. You will need to change this password at first login, and you will also be asked for an email address. You can put anything you want in this field. Give your cluster a name and Logo on step 3, then click **Finish**.
 
+.. thumbnail:: images/aa-initial_configuration/initial-config-4.png
+    :width: 80%
 |
 
 13. Log into CVP one more time and you'll be greeted by the Devices screen, along with green check marks indicating that all of our devices are streaming to CVP. Success!
+
+|
+
+14. Now lets set up network-admin and network-operator accounts. Click on the gear in the upper right. Select **Users** under **Access Control**. Fill out the Add User screen and under **Roles** Select **network-admin**. Click **Add**.  Follow this step again, but select **network operator** to set up the network-operator account.
+
+
+.. thumbnail:: images/aa-initial_configuration/initial-config-5.png
+    :width: 70%
+
+|
+
+15. Bonus Step - (Requires an Arista.com account) We can now subscribe to bug alerts, so that CVP will populate compliance data automatically on the **Compliance Overview** screen.
+
+16. Browse to **arista.com** and log in. Once logged in, click on your name on the top bar and select **My Profile**. Copy your Access Token listed at the bottom of the page.
+
+
+17. Back in CVP, click on the Gear icon in the top right, then select **Compliance Updates** on the left. Paste the Token that was copied from arista.com and click **Save**
+
+.. thumbnail:: images/aa-initial_configuration/initial-config-6.png
+
+|
+
+.. Warning:: 
+
+    This step will error in the ATD environment, but on a standard deployment, where the CVP server can reach the internet, it will complete successfully.
+
 
 
 .. Note::
