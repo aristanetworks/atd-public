@@ -22,7 +22,7 @@ CloudVision Portal Upgrade
 
   .. thumbnail:: images/connecting/connecting_IDE.png
      :align: center
-     
+     :width: 75%
 
            Click image to enlarge
 
