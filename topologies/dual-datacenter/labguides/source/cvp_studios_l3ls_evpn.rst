@@ -27,9 +27,7 @@ The hosts are already configured via lab configlets, we will not be involving th
 	:align: center
 	:width: 50%
 
-
- 
- Open CVP via the topology page. 
+Open CVP via the topology page and login. 
 
 1. Workspace Creation
 
