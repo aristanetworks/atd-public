@@ -1,4 +1,4 @@
-CloudVision Initial Configuraion
+CloudVision Initial Configuration
 ================================
 
 .. Note:: 
