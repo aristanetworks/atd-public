@@ -39,6 +39,7 @@ services:
       - /home/arista/.ssh:/home/arista/.ssh:rw
       - /opt/sftp/uploads:/opt/sftp:ro
       - /var/run/libvirt/libvirt-sock:/var/run/libvirt/libvirt-sock:ro
+      - /var/lib/libvirt/images/veos:/var/lib/libvirt/images/veos:rw
   cvpupdater:
     container_name: atd-cvpupdater
     image: us.gcr.io/beta-atds/atddocker_cvpupdater:2.1.1
@@ -174,6 +175,7 @@ services:
       - /home/arista/arista-dir/.ansible.cfg:/home/coder/.ansible.cfg:rw
       - /opt/sftp/uploads:/opt/sftp:ro
       - /var/run/libvirt/libvirt-sock:/var/run/libvirt/libvirt-sock:ro
+      - /var/lib/libvirt/images/veos:/var/lib/libvirt/images/veos:rw
   ssh:
     container_name: atd-ssh
     image: us.gcr.io/beta-atds/atddocker_ssh:2.0
