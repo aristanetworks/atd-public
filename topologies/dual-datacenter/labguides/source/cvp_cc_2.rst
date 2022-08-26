@@ -6,7 +6,7 @@ CVP Telemetry and Introduction to Dashboards  (Advanced Change Control Lab Pt. 2
 
 View Telemetry
 **************
-.. Note:: Please complete the Advanced Change Control Lab first in order to see the additional IPv4 routes shown below
+.. Note:: Please complete the Advanced Change Control Lab first in order to see the additional IPv4 routes shown below. `<--Click here to go back to part 1 of this lab <cvp_cc.html>`_
 
 |
 
