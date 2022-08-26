@@ -51,3 +51,10 @@ Welcome to the Arista ATD documentation!
    :caption: Troubleshooting Training
 
    tshoot-intro.rst
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Arista Academy
+
+   aa-cvp_upgrade.rst
+   cvp_studios_l3ls_evpn.rst
