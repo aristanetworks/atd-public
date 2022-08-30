@@ -20,6 +20,7 @@ Welcome to the Arista ATD documentation!
    
    cvp_configlet.rst
    cvp_cc.rst
+   cvp_cc_2.rst
    cvp_studios_l3ls_evpn.rst
 
 .. toctree::
@@ -54,12 +55,7 @@ Welcome to the Arista ATD documentation!
 
 .. toctree::
    :maxdepth: 1
-   :caption: EVPN Class Guide
+   :caption: Arista Academy
 
-   EVPN_Class_Guide.rst
-
-.. toctree::
-   :maxdepth: 1
-   :caption: EVPN Class Guide Answer Key
-
-   EVPN_Class_Guide_Answer_Key.rst
+   aa-cvp_upgrade.rst
+   cvp_studios_l3ls_evpn.rst
