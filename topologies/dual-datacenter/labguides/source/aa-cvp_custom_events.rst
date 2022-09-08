@@ -48,6 +48,7 @@ In this lab we will use the EOS CLI to send log messages that CVP will detect an
 
 #. Next, log in to the CLI of a leaf switch like ``s1-leaf2``.
 #. Type the following EOS CLI command:
+
     .. code-block:: shell
 
        s1-leaf2# send log level alerts message CR123456 starting now!
