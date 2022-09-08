@@ -42,7 +42,7 @@ services:
       - /var/lib/libvirt/images/veos:/var/lib/libvirt/images/veos:rw
   cvpupdater:
     container_name: atd-cvpupdater
-    image: us.gcr.io/beta-atds/atddocker_cvpupdater:2.1.1
+    image: us.gcr.io/beta-atds/atddocker_cvpupdater:2.2.1
     user: $ArID:$ArGD
     restart: always
     environment:
