@@ -34,12 +34,13 @@ In this lab we will use the EOS CLI to send log messages that CVP will detect an
 *  Click **Add Rule** and scroll down until you see **Syslog Details**. in the **Log Message** field 
    add the following Regular Expression:
    
-   ``CR\d{6}``
+  :kbd:`CR\\d{6}`
 
-   This Regular expression will match when the log 
-   message contains a string beginning with "CR" followed 
-   by exactly 6 numeric digits. In this example CR means **Change Record**. 
-   This will give the NOC the change record to review when an event is logged
+.. tip:: 
+   This Regular expression will match when the log
+   message contains a string beginning with "CR" followed
+   by exactly 6 numeric digits. In this example CR means **Change Record**.
+   This will give the NOC the change record to review when an event is logged.
 
 .. image:: images/aa-cvp_custom_events/cvp-custom-events-event-gen2.png
    :align: center
