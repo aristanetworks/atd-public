@@ -16,6 +16,7 @@ In this lab we will use the EOS CLI to send log messages that CVP will detect an
 
 #. Start by choosing the **Events** tab. Then **Click** **Event Generation**
 
+|br|
 
 .. image:: images/aa-cvp_custom_events/cvp-custom-events-start.png
    :align: center
