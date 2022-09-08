@@ -58,7 +58,6 @@ In this lab we will use the EOS CLI to send log messages that CVP will detect an
 .. image:: images/aa-cvp_custom_events/cvp-custom-events-send-log.gif
    :align: center
 
-
 #. Review the events in CVP. You should see an event similar to the one below.
 
 .. image:: images/aa-cvp_custom_events/cvp-custom-event-view.gif
