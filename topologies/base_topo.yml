@@ -52,8 +52,30 @@ topologies:
               cpu: 54
               ram: 64
             branch: nested-release
-            orderable: true
+            orderable: false
             image: base-atd-dual-datacenter-ceos-c2022-2-0-rc3-20220823
+            eos:
+              - 4.28.2F
+              - 4.28.1F
+              - 4.27.2F
+          2022.2.0:
+            resources:
+              cpu: 54
+              ram: 64
+            branch: nested-release
+            orderable: true
+            image: base-atd-dual-datacenter-ceos-c2022-2-0-20220908
+            eos:
+              - 4.28.2F
+              - 4.28.1F
+              - 4.27.2F
+          2022.2.0-bare:
+            resources:
+              cpu: 54
+              ram: 64
+            branch: nested-release
+            orderable: true
+            image: base-atd-dual-datacenter-ceos-c2022-2-0--bare-20220909
             eos:
               - 4.28.2F
               - 4.28.1F
@@ -142,7 +164,7 @@ topologies:
               cpu: 36
               ram: 58
             branch: nested-release
-            orderable: true
+            orderable: false
             image: base-atd-datacenter-ceos-c2022-2-0-rc3-20220823
             eos:
               - 4.28.2F
@@ -322,6 +344,15 @@ topologies:
             image: base-atd-routing-e4-28-1f-c2022-1-1-20220720
             eos:
               - 4.28.1F
+          2022.2.0:
+            resources:
+              cpu: 50
+              ram: 90
+            branch: nested-release
+            orderable: true
+            image: base-atd-routing-e4-28-2f-c2022-2-0-20220908
+            eos:
+              - 4.28.2F
       ceos:
         cpu: 32
         ram: 64
@@ -344,6 +375,17 @@ topologies:
             orderable: true
             image: base-atd-routing-ceos-c2022-1-1-20220720
             eos:
+              - 4.28.1F
+              - 4.27.2F
+          2022.2.0:
+            resources:
+              cpu: 40
+              ram: 64
+            branch: nested-release
+            orderable: true
+            image: base-atd-routing-ceos-c2022-2-0-20220908
+            eos:
+              - 4.28.2F
               - 4.28.1F
               - 4.27.2F
     prod:
