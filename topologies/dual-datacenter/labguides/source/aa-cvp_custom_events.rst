@@ -47,9 +47,9 @@ In this lab we will use the EOS CLI to send log messages that CVP will detect an
 |br|
 
 *  Scroll down and click **Save Changes** to finish creating the
-   Custom Syslog Event.
+   Custom Syslog Event. See below for an animated gif of the setup.
 
-.. image:: images/aa-cvp_custom_events/cvp-custom-events-event-gen2.png
+.. image:: images/aa-cvp_custom_events/cvp-custom-event-creation.gif
    :align: center
 
 |br|
