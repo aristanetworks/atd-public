@@ -14,7 +14,7 @@ In this lab we will use the EOS CLI to send log messages that CVP will detect an
 |br|
 
 
-*  Start by choosing the **Events** tab. Then **Click** **Event Generation**
+*  Start by choosing the **Events** tab. Then *Click* **Event Generation**
 
 |br|
 
