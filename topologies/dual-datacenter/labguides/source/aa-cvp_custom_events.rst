@@ -14,20 +14,24 @@ In this lab we will use the EOS CLI to send log messages that CVP will detect an
 |br|
 
 
-#. Start by choosing the **Events** tab. Then **Click** **Event Generation**
+*  Start by choosing the **Events** tab. Then **Click** **Event Generation**
 
 |br|
 
 .. image:: images/aa-cvp_custom_events/cvp-custom-events-start.png
    :align: center
 
-#. After clicking **Event Generation** choose and click **Custom Syslog Event** 
+|br|
+
+* After clicking **Event Generation** choose and click **Custom Syslog Event** 
    on the left vertical navigation area. 
 
 .. image:: images/aa-cvp_custom_events/cvp-custom-events-event-gen1.png
    :align: center
 
-#. Click **Add Rule** and scroll down until you see **Syslog Details**. in the **Log Message** field 
+|br|
+
+* Click **Add Rule** and scroll down until you see **Syslog Details**. in the **Log Message** field 
    add the following Regular Expression:
    
    ``CR\d{6}``
@@ -40,16 +44,18 @@ In this lab we will use the EOS CLI to send log messages that CVP will detect an
 .. image:: images/aa-cvp_custom_events/cvp-custom-events-event-gen2.png
    :align: center
 
+|br|
 
-#. Scroll down and click **Save Changes** to finish creating the
+* Scroll down and click **Save Changes** to finish creating the
    Custom Syslog Event.
 
 .. image:: images/aa-cvp_custom_events/cvp-custom-events-event-gen2.png
    :align: center
 
+|br|
 
-#. Next, log in to the CLI of a leaf switch like ``s1-leaf2``.
-#. Type the following EOS CLI command:
+* Next, log in to the CLI of a leaf switch like ``s1-leaf2``.
+* Type the following EOS CLI command:
 
   .. code-block:: shell
 
@@ -58,13 +64,17 @@ In this lab we will use the EOS CLI to send log messages that CVP will detect an
 .. image:: images/aa-cvp_custom_events/cvp-custom-events-send-log.gif
    :align: center
 
-#. Review the events in CVP. You should see an event similar to the one below.
+|br|
+
+* Review the events in CVP. You should see an event similar to the one below.
 
 .. image:: images/aa-cvp_custom_events/cvp-custom-event-view.gif
    :align: center
 
-#. Experiment by sending messages with different severity levels, and modify the **CR123456** example using only 5 digits, or 7 digits. Does the event still trigger when using 5 or 7 digits?
-#. Experiment with different regular expressions, perhaps try to build a match for other logs happening on **s1-leaf2**
+|br|
+
+* Experiment by sending messages with different severity levels, and modify the **CR123456** example using only 5 digits, or 7 digits. Does the event still trigger when using 5 or 7 digits?
+* Experiment with different regular expressions, perhaps try to build a match for other logs happening on **s1-leaf2**
 
 
 LAB COMPLETE
