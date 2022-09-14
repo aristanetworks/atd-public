@@ -29,12 +29,12 @@ daemon_terminattr:
   cvaddrs:
     - 192.168.0.5:9910
   cvauth:
-    method: key
-    key: "atd-lab"
+    method: token
+    token_file: "/tmp/token"
   disable_aaa: true
   smashexcludes: "ale,flexCounter,hardware,kni,pulse,strata"
   ingestexclude: "/Sysdb/cell/1/agent,/Sysdb/cell/2/agent"
-  # cvvrf: default
+  cvvrf: default
 
 # Enable Multi-Agent mode
 service_routing_protocols_model: multi-agent
