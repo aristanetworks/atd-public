@@ -22,6 +22,14 @@ services:
       - /etc/atd:/etc/atd:rw
       - /opt/atd/topologies:/opt/atd/topologies:ro
       - /home/arista/arista-dir:/home/arista:rw
+  alertapi:
+    container_name: atd-alert
+    image: us.gcr.io/beta-atds/atddocker_alertapi:0.1
+    restart: always
+    networks:
+      - atd_nginx
+    environment:
+      - PYTHONUNBUFFERED=1
   login:
     container_name: atd-login
     image: us.gcr.io/beta-atds/atddocker_login:2.1.0
