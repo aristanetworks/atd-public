@@ -51,6 +51,11 @@
                     <a href="/cv" target="_blank">CVP</a>
                 </li>
                 {% end %}
+                {% if "alertapi" not in disable_links %}
+                <li>
+                    <a href="/alert" target="_blank">Event Alert API</a>
+                </li>
+                {% end %}
                 {% if "jenkins" not in disable_links %}
                 <li>
                     <a href="/jenkins" target="_blank">Jenkins</a>
