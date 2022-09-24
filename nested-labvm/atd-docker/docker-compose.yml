@@ -22,6 +22,16 @@ services:
       - /etc/atd:/etc/atd:rw
       - /opt/atd/topologies:/opt/atd/topologies:ro
       - /home/arista/arista-dir:/home/arista:rw
+  alertapi:
+    container_name: atd-alert
+    image: us.gcr.io/beta-atds/atddocker_alertapi:1.0.1
+    restart: always
+    ports:
+      - 5000:5000
+    networks:
+      - atd_nginx
+    environment:
+      - PYTHONUNBUFFERED=1
   login:
     container_name: atd-login
     image: us.gcr.io/beta-atds/atddocker_login:2.1.0
@@ -86,7 +96,7 @@ services:
       - /opt/ceos:/opt/ceos:rw
   uilanding:
     container_name: atd-uilanding
-    image: us.gcr.io/beta-atds/atddocker_uilanding:2.0.2
+    image: us.gcr.io/beta-atds/atddocker_uilanding:2.1.1
     restart: always
     environment:
       - PYTHONUNBUFFERED=1
@@ -118,7 +128,7 @@ services:
       - "1813:1813/udp"
   nginx:
     container_name: atd-nginx
-    image: us.gcr.io/beta-atds/atddocker_nginx:2.0.2
+    image: us.gcr.io/beta-atds/atddocker_nginx:2.1.1
     restart: always
     depends_on:
       - uilanding
