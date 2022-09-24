@@ -1,0 +1,45 @@
+<html>
+    <head>
+        {{check}}
+        {% if title %}
+        <title>{{ title }}</title>
+        {% else %}
+        <title>Alert Report</title>
+        {% endif %}
+        <style>
+            table{
+                table-layout: auto;
+                border-spacing: 5px;
+                width: 90%;
+            }
+            th,
+            td {
+                border: 1px solid black;
+                width: 90px; 
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Reported Alerts</h1>
+        <table>
+        <tr>
+            <th>Start_Date</th>
+            <th>Device</th>
+            <th>AlertSource </th>
+            <th>Event</th>
+            <th>Severity</th>
+            <th>Status</th>
+        </tr>
+        {% for line in report %}
+        <tr>
+            <td>{{line.Started}}</td>
+            <td>{{line.DeviceId}}</td>
+            <td>{{line.AlertSource}}</td>
+            <td>{{line.Event}}</td>
+            <td>{{line.Severity}}</td>
+            <td>{{line.Status}}</td>
+        </tr>
+        {% endfor %}
+        </table>
+    </body>
+</html>
