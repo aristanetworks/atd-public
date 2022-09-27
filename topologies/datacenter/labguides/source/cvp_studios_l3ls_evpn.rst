@@ -8,28 +8,8 @@
  <style>.red{color:#aa0060; font-weight:bold; font-size:16px}</style>
 .. role:: red
 
-
-|br|:red:`If you are running the lab from ATD-DEV, disregard the disclaimer below.`
-|br|:red:`Option 8 on the ATD-DEV console will format the hosts.`
-|br|:red:`If running from standard ATD, please ensure you follow the below section.`
-
-
-**To successfully run this lab in the Datacenter ATD, once the environment is up,** 
-|br| **do not initalize any of the preset labs, instead follow the steps below:** 
-
-
-|br| **1. SSH into Host1 and Host2 and remove the existing port channels.**
-|br| **2. Reconfigure as trunks with interfaces E1-E4 in PO1 for each Host.** 
-|br| **3. Create vlan60 and vlan70 with the SVIs as shown.**
-|br| **4. Set a default route to 10.60.60.1** 
-
-
-
-
 CloudVision Studios  -  L3LS/EVPN LAB GUIDE
 ===========================================
-
-*CVP Version 2021.3.0*
 
 Our topology consists of two spines, four leafs, and two "hosts" for reachability testing. 
 Our hosts will be pre-configured as L2 LACP trunk port-channels up to their respective leafs. 
