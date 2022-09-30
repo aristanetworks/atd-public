@@ -194,6 +194,17 @@ def main(uargs):
         TOPO_TAG = host_yaml['topology']
     except:
         print("File not found")
+    # Perform check if topology is dual deployed and node type
+    if 'atd_role' in host_yaml:
+        if host_yaml['atd_role'] == 'cvp':
+            DEPLOY_CVP = True
+            DEPLOY_VEOS = False
+        else:
+            DEPLOY_CVP = False
+            DEPLOY_VEOS = True
+    else:
+        DEPLOY_CVP = True
+        DEPLOY_VEOS = True
     FILE_BUILD = YAML().load(open(REPO_TOPO + TOPO_TAG + '/topo_build.yml', 'r'))
     host_cpu_count = FILE_BUILD['host_cpu']
     cvp_cpu_count = FILE_BUILD['cvp_cpu']
@@ -229,88 +240,90 @@ def main(uargs):
     createOVS(TOPO_TAG)
     # Output as script OVS Bridge deletion
     deleteOVS(TOPO_TAG)
-    # Create xml file for CVP KVM Node
-    for _cvp in range(cvp_node_count):
-        # Open base cvp xml
-        tree = ET.parse(BASE_XML_CVP)
-        root = tree.getroot()
-        # Add name item for KVM domain
-        vname = ET.SubElement(root, 'name')
-        vname.text = 'cvp{0}'.format(_cvp + 1)
-        # Add CPU Configuration
-        vcpu = ET.SubElement(root, 'vcpu')
-        # vcpu = ET.SubElement(root, 'vcpu', attrib={
-        #     'placement': 'static',
-        #     'cpuset': CVP_NODES_CPUS[_cvp]
-        # })
-        vcpu.text = str(cvp_cpu_count)
-        # Add RAM Configuration for CVP
-        vmem = ET.SubElement(root, 'memory', attrib={
-            'unit': 'MiB'
-        })
-        vmem.text = str(cvp_ram_count)
-        vcurmem = ET.SubElement(root, 'currentMemory', attrib={
-            'unit': 'MiB'
-        })
-        vcurmem.text = str(cvp_ram_count)
-        # Get to the device section and add interfaces
-        xdev = root.find('./devices')
-        # Add/Create disk location for xml
-        tmp_disk1 = ET.SubElement(xdev, 'disk', attrib={
-            'type': 'file',
-            'device': 'disk'
-        })
-        ET.SubElement(tmp_disk1, 'driver', attrib={
-            'name': 'qemu',
-            'type': 'qcow2',
-            'cache': 'directsync',
-            'io': 'native'
-        })
-        ET.SubElement(tmp_disk1, 'source', attrib={'file': '/var/lib/libvirt/images/cvp{0}/disk1.qcow2'.format(_cvp + 1)})
-        ET.SubElement(tmp_disk1, 'target', attrib={
-            'dev': 'vda',
-            'bus': 'virtio'
-        })
-        # Second disk for CVP
-        tmp_disk2 = ET.SubElement(xdev, 'disk', attrib={
-            'type': 'file',
-            'device': 'disk'
-        })
-        ET.SubElement(tmp_disk2, 'driver', attrib={
-            'name': 'qemu',
-            'type': 'qcow2',
-            'cache': 'directsync',
-            'io': 'native'
-        })
-        ET.SubElement(tmp_disk2, 'source', attrib={'file': '/var/lib/libvirt/images/cvp{0}/disk2.qcow2'.format(_cvp + 1)})
-        ET.SubElement(tmp_disk2, 'target', attrib={
-            'dev': 'vdb',
-            'bus': 'virtio'
-        })
-        # Starting interface section
-        tmp_int = ET.SubElement(xdev, 'interface', attrib={'type': 'bridge'})
-        ET.SubElement(tmp_int, 'source', attrib={'bridge': 'vmgmt'})
-        ET.SubElement(tmp_int, 'mac', attrib={'address': '00:1c:73:{0}:c6:01'.format(createMac('cvp', _cvp))})
-        ET.SubElement(tmp_int, 'target', attrib={'dev': 'cvp{0}'.format(_cvp + 1)})
-        ET.SubElement(tmp_int, 'model', attrib={'type': 'virtio'})
-        ET.SubElement(tmp_int, 'address', attrib={
-            'type': 'pci',
-            'domain': '0x0000',
-            'bus': '0x00',
-            'slot': '0x03',
-            'function': '0x0'
-        })
-        # Export out xml for CVP node
-        tree.write(DATA_OUTPUT + 'cvp{0}.xml'.format(_cvp + 1))
-        if _cvp + 1 == cvp_node_count:
-            KOUT_LINES.append("sudo mv /var/lib/libvirt/images/cvp /var/lib/libvirt/images/cvp{0}".format(_cvp + 1))
-        else:
-            KOUT_LINES.append("sudo mkdir /var/lib/libvirt/images/cvp{0}".format(_cvp + 1))
-            KOUT_LINES.append("sudo cp -r /var/lib/libvirt/images/cvp/disk* /var/lib/libvirt/images/cvp{0}/".format(_cvp + 1))
-        KOUT_LINES.append("sudo virsh define cvp{0}.xml".format(_cvp + 1))
-        KOUT_LINES.append("sudo virsh start cvp{0}".format(_cvp + 1))
-        KOUT_LINES.append("sudo virsh autostart cvp{0}".format(_cvp + 1))
-        pS("OK", "Created Virsh commands for cvp{0}".format(_cvp + 1))
+    # Check if app should deploy CVP
+    if DEPLOY_CVP:
+        # Create xml file for CVP KVM Node
+        for _cvp in range(cvp_node_count):
+            # Open base cvp xml
+            tree = ET.parse(BASE_XML_CVP)
+            root = tree.getroot()
+            # Add name item for KVM domain
+            vname = ET.SubElement(root, 'name')
+            vname.text = 'cvp{0}'.format(_cvp + 1)
+            # Add CPU Configuration
+            vcpu = ET.SubElement(root, 'vcpu')
+            # vcpu = ET.SubElement(root, 'vcpu', attrib={
+            #     'placement': 'static',
+            #     'cpuset': CVP_NODES_CPUS[_cvp]
+            # })
+            vcpu.text = str(cvp_cpu_count)
+            # Add RAM Configuration for CVP
+            vmem = ET.SubElement(root, 'memory', attrib={
+                'unit': 'MiB'
+            })
+            vmem.text = str(cvp_ram_count)
+            vcurmem = ET.SubElement(root, 'currentMemory', attrib={
+                'unit': 'MiB'
+            })
+            vcurmem.text = str(cvp_ram_count)
+            # Get to the device section and add interfaces
+            xdev = root.find('./devices')
+            # Add/Create disk location for xml
+            tmp_disk1 = ET.SubElement(xdev, 'disk', attrib={
+                'type': 'file',
+                'device': 'disk'
+            })
+            ET.SubElement(tmp_disk1, 'driver', attrib={
+                'name': 'qemu',
+                'type': 'qcow2',
+                'cache': 'directsync',
+                'io': 'native'
+            })
+            ET.SubElement(tmp_disk1, 'source', attrib={'file': '/var/lib/libvirt/images/cvp{0}/disk1.qcow2'.format(_cvp + 1)})
+            ET.SubElement(tmp_disk1, 'target', attrib={
+                'dev': 'vda',
+                'bus': 'virtio'
+            })
+            # Second disk for CVP
+            tmp_disk2 = ET.SubElement(xdev, 'disk', attrib={
+                'type': 'file',
+                'device': 'disk'
+            })
+            ET.SubElement(tmp_disk2, 'driver', attrib={
+                'name': 'qemu',
+                'type': 'qcow2',
+                'cache': 'directsync',
+                'io': 'native'
+            })
+            ET.SubElement(tmp_disk2, 'source', attrib={'file': '/var/lib/libvirt/images/cvp{0}/disk2.qcow2'.format(_cvp + 1)})
+            ET.SubElement(tmp_disk2, 'target', attrib={
+                'dev': 'vdb',
+                'bus': 'virtio'
+            })
+            # Starting interface section
+            tmp_int = ET.SubElement(xdev, 'interface', attrib={'type': 'bridge'})
+            ET.SubElement(tmp_int, 'source', attrib={'bridge': 'vmgmt'})
+            ET.SubElement(tmp_int, 'mac', attrib={'address': '00:1c:73:{0}:c6:01'.format(createMac('cvp', _cvp))})
+            ET.SubElement(tmp_int, 'target', attrib={'dev': 'cvp{0}'.format(_cvp + 1)})
+            ET.SubElement(tmp_int, 'model', attrib={'type': 'virtio'})
+            ET.SubElement(tmp_int, 'address', attrib={
+                'type': 'pci',
+                'domain': '0x0000',
+                'bus': '0x00',
+                'slot': '0x03',
+                'function': '0x0'
+            })
+            # Export out xml for CVP node
+            tree.write(DATA_OUTPUT + 'cvp{0}.xml'.format(_cvp + 1))
+            if _cvp + 1 == cvp_node_count:
+                KOUT_LINES.append("sudo mv /var/lib/libvirt/images/cvp /var/lib/libvirt/images/cvp{0}".format(_cvp + 1))
+            else:
+                KOUT_LINES.append("sudo mkdir /var/lib/libvirt/images/cvp{0}".format(_cvp + 1))
+                KOUT_LINES.append("sudo cp -r /var/lib/libvirt/images/cvp/disk* /var/lib/libvirt/images/cvp{0}/".format(_cvp + 1))
+            KOUT_LINES.append("sudo virsh define cvp{0}.xml".format(_cvp + 1))
+            KOUT_LINES.append("sudo virsh start cvp{0}".format(_cvp + 1))
+            KOUT_LINES.append("sudo virsh autostart cvp{0}".format(_cvp + 1))
+            pS("OK", "Created Virsh commands for cvp{0}".format(_cvp + 1))
 
     if 'eos_type' in host_yaml:
         if host_yaml['eos_type'] == 'veos':
@@ -319,7 +332,7 @@ def main(uargs):
             VEOS = False
     else:
         VEOS = True
-    if VEOS:
+    if VEOS and DEPLOY_VEOS:
         # Create xml files for vEOS KVM Nodes
         node_counter = 0
         for vdev in VEOS_NODES:
