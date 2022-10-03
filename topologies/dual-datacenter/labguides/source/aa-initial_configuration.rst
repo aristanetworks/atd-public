@@ -1,5 +1,5 @@
 CloudVision Initial Configuration
-================================
+=================================
 
 .. Note:: 
 
@@ -226,7 +226,7 @@ All of these settings are saved in the /cvpi/cvp-config.yaml file
     :width: 80%
 |
 
-13. Log into CVP one more time and you'll be greeted by the Devices screen, You have now installed and configured CVP successfully!
+13. Log into CVP one more time and you'll be greeted by the Devices screen. You have now installed and configured CVP Successfully!
 
 |
 
