@@ -75,6 +75,8 @@ def main():
                 self_ip = json_self['privateIP']
                 if self_ip and type(self_ip) == str:
                     break
+                else:
+                    pS(f"Did not get self_ip: {json_peer}")
             except:
                 pS("Unable to get self IP")
             sleep(SLEEP_DELAY)
@@ -86,6 +88,8 @@ def main():
                 peer_ip = json_peer['privateIP']
                 if peer_ip and type(peer_ip) == str:
                     break
+                else:
+                    pS(f"Did not get peer_ip: {json_peer}")
             except:
                 pS("Unable to get Peer IP")
             sleep(SLEEP_DELAY)
