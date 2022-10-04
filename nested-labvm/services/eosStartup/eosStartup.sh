@@ -93,7 +93,7 @@ fi
 # if VTEP file present
 if [ -f "/etc/atd/.init" ]
 then
-    docker run -d -e PYTHONUNBUFFERED=1 --name atd-vtepinfo -v /etc/atd:/etc/atd:rw us.gcr.io/beta-atds/atddocker_vtepinfo:0.1.6
+    bash docker_run.sh
     while : ; do
         [[ -f "/etc/atd/.vtep.sh" ]] && break
         echo "Pausing until file exists."
