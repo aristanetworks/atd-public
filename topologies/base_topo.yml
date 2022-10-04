@@ -63,7 +63,7 @@ topologies:
             resources_eos:
               cpu: 16
               ram: 32
-              disk: 50
+              disk: 100
             resources_cvp:
               cpu: 28
               ram: 36
