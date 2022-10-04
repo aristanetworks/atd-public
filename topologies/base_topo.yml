@@ -73,7 +73,7 @@ topologies:
             resources:
               cpu: 54
               ram: 64
-            branch: nested-release
+            branch: dual-deploy
             orderable: true
             image: base-atd-dual-datacenter-ceos-c2022-2-0-20220908
             eos:
