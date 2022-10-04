@@ -65,8 +65,8 @@ def main():
             _self_state_url = f"{function_state_url}?function=state&instance={name}-eos&zone={zone}"
             _peer_state_url = f"{function_state_url}?function=state&instance={name}-cvp&zone={zone}"
         else:
-            _self_state_url = f"{function_state_url}?function=state&instance={name}-eos&zone={zone}"
-            _peer_state_url = f"{function_state_url}?function=state&instance={name}-cvp&zone={zone}"
+            _self_state_url = f"{function_state_url}?function=state&instance={name}-cvp&zone={zone}"
+            _peer_state_url = f"{function_state_url}?function=state&instance={name}-eos&zone={zone}"
         # Perform loop until Private IP is available
         while True:
             response_self = requests.get(_self_state_url)
