@@ -59,6 +59,17 @@ topologies:
               - 4.28.1F
               - 4.27.2F
           2022.2.0:
+            version: 2
+            resources_eos:
+              cpu: 16
+              ram: 32
+              disk: 50
+            resources_cvp:
+              cpu: 28
+              ram: 36
+              disk: 300
+            image_eos: atd-dual-datacenter-nodes-ceos-c2022-2-0-20221003
+            image_cvp: atd-dual-datacenter-cvp-c2022-2-0-20221003
             resources:
               cpu: 54
               ram: 64
@@ -66,6 +77,7 @@ topologies:
             orderable: true
             image: base-atd-dual-datacenter-ceos-c2022-2-0-20220908
             eos:
+              - 4.28.3M
               - 4.28.2F
               - 4.28.1F
               - 4.27.2F
