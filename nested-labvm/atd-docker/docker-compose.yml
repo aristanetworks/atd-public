@@ -96,7 +96,7 @@ services:
       - /opt/ceos:/opt/ceos:rw
   uilanding:
     container_name: atd-uilanding
-    image: us.gcr.io/beta-atds/atddocker_uilanding:2.1.1
+    image: us.gcr.io/beta-atds/atddocker_uilanding:2.1.2
     restart: always
     environment:
       - PYTHONUNBUFFERED=1
@@ -145,7 +145,7 @@ services:
       - atd_nginx
   monitor:
     container_name: atd-monitor
-    image: us.gcr.io/beta-atds/atddocker_monitor:2.0
+    image: us.gcr.io/beta-atds/atddocker_monitor:2.1
     restart: always
     environment:
       - PYTHONUNBUFFERED=1
