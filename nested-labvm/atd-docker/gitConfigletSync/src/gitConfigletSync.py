@@ -53,7 +53,7 @@ def main():
          break
       else:
          pS("ERROR", "ACCESS_INFO file is not available...Waiting for {0} seconds".format(sleep_delay))
-         sleep(sleep_delay)
+         time.sleep(sleep_delay)
    try:
       f = open(ACCESS)
       accessinfo = yaml.safe_load(f)
@@ -133,17 +133,17 @@ def main():
             res = cvp_clnt.impConfiglet("static",configletName,configletConfig)
             pS("OK", "{0} Configlet: {1}".format(res[0],configletName))
    # Perform a check to see if there any pending tasks to be executed due to configlet update
-   sleep(20)
+   time.sleep(20)
    pS("INFO", "Checking for any pending tasks")
    cvp_clnt.getAllTasks("pending")
    if cvp_clnt.tasks['pending']:
       pS("INFO", "{0} Pending tasks found, will be executing".format(len(cvp_clnt.tasks['pending'])))
       task_response = cvp_clnt.execAllTasks("pending")
-      sleep(10)
+      time.sleep(10)
       while len(cvp_clnt.tasks['pending']) > 0:
          pS("INFO", "{0} Pending tasks found, will be executing".format(len(cvp_clnt.tasks['pending'])))
          _tmp_response = cvp_clnt.execAllTasks("pending")
-         sleep(5)
+         time.sleep(5)
          cvp_clnt.getAllTasks("pending")
       # Perform check to see if there are any existing tasks to be executed
       if task_response:
@@ -160,7 +160,7 @@ def main():
                      break
                else:
                      pS("INFO", "Task ID: {0} Status: {1}, Waiting 10 seconds...".format(task_id, task_status))
-                     sleep(10)
+                     time.sleep(10)
    else:
       pS("INFO", "No pending tasks found to be executed.")
 
@@ -174,4 +174,4 @@ if __name__ == '__main__':
    else:
       pS("INFO", "CVP not provisioned, holding off on configlet sync.")
    while True:
-      sleep(600)
+      time.sleep(600)
