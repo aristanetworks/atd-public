@@ -64,7 +64,7 @@ topologies:
             resources_eos:
               cpu: 16
               ram: 32
-              disk: 100
+              disk: 50
               image: atd-dual-datacenter-nodes-ceos-c2022-2-0-20221005
             resources_cvp:
               cpu: 28
