@@ -161,6 +161,26 @@ def main():
                else:
                      pS("INFO", "Task ID: {0} Status: {1}, Waiting 10 seconds...".format(task_id, task_status))
                      time.sleep(10)
+      # Perform check to see if any tasks failed
+      cvp_clnt.getAllTasks("failed")
+      if len(cvp_clnt.tasks["failed"]) > 0:
+         pS("INFO", "Failed tasks found, will execute tasks...")
+         task_response = cvp_clnt.execAllTasks("failed")
+         if task_response:
+            pS("OK", "All pending tasks are executing")
+            for task_id in task_response['ids']:
+               task_status = cvp_clnt.getTaskStatus(task_id)['taskStatus']
+               while task_status != "Completed":
+                  task_status = cvp_clnt.getTaskStatus(task_id)['taskStatus']
+                  if task_status == 'Failed':
+                        pS("iBerg", "Task ID: {0} Status: {1}".format(task_id, task_status))
+                        break
+                  elif task_status == 'Completed':
+                        pS("INFO", "Task ID: {0} Status: {1}".format(task_id, task_status))
+                        break
+                  else:
+                        pS("INFO", "Task ID: {0} Status: {1}, Waiting 10 seconds...".format(task_id, task_status))
+                        time.sleep(10)
    else:
       pS("INFO", "No pending tasks found to be executed.")
 
