@@ -65,12 +65,12 @@ topologies:
               cpu: 16
               ram: 32
               disk: 100
-              image: atd-dual-datacenter-nodes-ceos-c2022-2-0-20221004
+              image: atd-dual-datacenter-nodes-ceos-c2022-2-0-20221005
             resources_cvp:
               cpu: 28
               ram: 36
               disk: 300
-              image: atd-dual-datacenter-cvp-c2022-2-0-20221004
+              image: atd-dual-datacenter-cvp-c2022-2-0-20221005
             resources:
               cpu: 54
               ram: 64
