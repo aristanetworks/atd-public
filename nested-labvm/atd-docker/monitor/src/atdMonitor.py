@@ -112,10 +112,10 @@ def main():
     else:
         _schema = 1
     if _schema == 2:
-        _list_stop.append(f"function_state_url?function=stop&instance={name}-cvp&zone={zone}")
-        _list_stop.append(f"function_state_url?function=stop&instance={name}-eos&zone={zone}")
+        _list_stop.append(f"{function_state_url}?function=stop&instance={name}-cvp&zone={zone}")
+        _list_stop.append(f"{function_state_url}?function=stop&instance={name}-eos&zone={zone}")
     else:
-        _list_stop.append(f"function_state_url?function=stop&instance={name}&zone={zone}")
+        _list_stop.append(f"{function_state_url}?function=stop&instance={name}&zone={zone}")
     pS("Done setting instance variables")
     # Start loop for checking instance status
     while True:

@@ -145,7 +145,7 @@ services:
       - atd_nginx
   monitor:
     container_name: atd-monitor
-    image: us.gcr.io/beta-atds/atddocker_monitor:2.1
+    image: us.gcr.io/beta-atds/atddocker_monitor:2.2
     restart: always
     environment:
       - PYTHONUNBUFFERED=1
