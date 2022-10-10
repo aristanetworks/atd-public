@@ -397,7 +397,17 @@ topologies:
               - 4.28.1F
               - 4.27.2F
           2022.2.0:
-            schema: 1
+            schema: 2
+            resources_eos:
+              cpu: 16
+              ram: 32
+              disk: 50
+              image: atd-routing-nodes-ceos-c2022-2-0-20221010
+            resources_cvp:
+              cpu: 28
+              ram: 36
+              disk: 300
+              image: atd-routing-cvp-c2022-2-0-20221010
             resources:
               cpu: 40
               ram: 64
