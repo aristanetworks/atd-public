@@ -397,7 +397,7 @@ topologies:
               - 4.28.1F
               - 4.27.2F
           2022.2.0:
-            schema: 2
+            schema: 1
             resources_eos:
               cpu: 16
               ram: 32
@@ -415,7 +415,6 @@ topologies:
             orderable: true
             image: base-atd-routing-ceos-c2022-2-0-20220908
             eos:
-              - 4.28.3M
               - 4.28.2F
               - 4.28.1F
               - 4.27.2F
