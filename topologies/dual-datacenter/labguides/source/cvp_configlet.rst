@@ -91,7 +91,7 @@ been defined for AAA and VLANs.
 
 18. When the tasks are completed, navigate into the task by clicking on the task object.
 
-19. Select **Show Details** icon on the rightpwd side of the screen to review the *Designed Configuration* vs. *Running Configuration*. The Designed Configuration is a combination of all configlets to build a full device configuration. The Running Configuration is the running-config prior to executing the task. Configuration differences are highlighted to show New Lines, Mismatch Lines, and To Reconcile.
+19. Select **Show Details** icon on the right side of the screen to review the *Designed Configuration* vs. *Running Configuration*. The Designed Configuration is a combination of all configlets to build a full device configuration. The Running Configuration is the running-config prior to executing the task. Configuration differences are highlighted to show New Lines, Mismatch Lines, and To Reconcile.
 
 |
 Rollback
