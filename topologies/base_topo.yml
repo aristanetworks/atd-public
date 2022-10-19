@@ -65,12 +65,12 @@ topologies:
               cpu: 16
               ram: 32
               disk: 50
-              image: atd-dual-datacenter-nodes-ceos-c2022-2-0-20221005
+              image: atd-dual-datacenter-nodes-ceos-c2022-2-0-20221019
             resources_cvp:
               cpu: 28
               ram: 36
               disk: 300
-              image: atd-dual-datacenter-cvp-c2022-2-0-20221005
+              image: atd-dual-datacenter-cvp-c2022-2-0-20221019
             resources:
               cpu: 54
               ram: 64
@@ -402,12 +402,12 @@ topologies:
               cpu: 16
               ram: 32
               disk: 50
-              image: atd-routing-nodes-ceos-c2022-2-0-20221013
+              image: atd-routing-nodes-ceos-c2022-2-0-20221019
             resources_cvp:
               cpu: 28
               ram: 36
               disk: 300
-              image: atd-routing-cvp-c2022-2-0-20221013
+              image: atd-routing-cvp-c2022-2-0-20221019
             resources:
               cpu: 40
               ram: 64
