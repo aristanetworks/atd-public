@@ -1,26 +1,26 @@
 Rollback
 ========
 
-Oops. We’ve made a horrible mistake and we need to roll it back before
+Oops. We’ve made a horrible mistake, and we need to roll it back before
 anyone notices.
 
-Fortunately, using Git we have a record of what changed and we can
-revert everything back to the previous ``commit``. Once we revert the change,
-Jenkins will see see it and run your playbook again, undoing the changes
-that we just made.
+Fortunately, using Git, we have a record of what changed, and we can
+revert everything to the previous ``commit``. Once we revert the change,
+Jenkins will see it and rerun your playbook, undoing the changes
+we just made.
 
 Step #1: See the diff(erence)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Before we roll back, let’s check what Git has on record. To do that,
-we’re going to have to get the checksum of the first commit in Lab #6
+we will have to get the checksum of the first commit in Lab #6
 and the checksum of the commit after you added VLAN 2000 and 3000. Once
 we get the checksums, we can ``diff`` them. ``Diff`` shows the difference between
 two items.
 
-To find the checksums, we need to use the ``git reflog`` command
-in the **IDE** terminal. The ``git reflog`` command lists every commit, their checksum, their
-distance from the current commit, and the commit message.
+We need to use the ``git reflog`` command in the **IDE** terminal to find the checksums.
+The ``git reflog`` command lists every commit, its checksum, distance from the current
+commit, and the commit message.
 
 Run ``git reflog`` inside your lab6 directory (``~/project/labfiles/lab6/lab``):
 
@@ -34,8 +34,7 @@ Note the two checksums, ``116aaae`` and ``2ad37af`` (In this example). Let’s d
 2ad37af 116aaae``.
 
 .. note:: Your checksums will be different than in this lab guide. Please
-          make sure to use your checksums from git reflog and not the ones in
-          the guide.
+          use your checksums from git reflog, not the ones in the guide.
 
 .. code-block:: bash
 
@@ -62,10 +61,10 @@ right? We’re good to go!
 Step #2: Revert the change
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To roll back, we need to use the ``git revert`` command, coupled
+To roll back, we need to use the ``git revert`` command coupled
 with ``HEAD``. ``HEAD`` is the Git method of saying the last commit (in the
-checked out branch). If you revert the last commit it will bring you
-back to the commit before the latest commit.
+checked-out branch). If you revert the previous commit, it will return you
+to the commit before the latest one.
 
 You can also use this command to revert to any other commit - useful if
 you want to roll back to 2 weeks and 30 commits ago.
@@ -76,7 +75,7 @@ Let’s revert with ``git revert HEAD``.
 
     lab git:(master) git revert HEAD
 
-A window will pop up asking you to enter a commit message. Let’s just
+A window will pop up asking you to enter a commit message. Let’s
 stick with the default. Hit **Ctrl-X** to save.
 
 .. code-block:: bash
@@ -84,12 +83,12 @@ stick with the default. Hit **Ctrl-X** to save.
     lab git:(master) git revert HEAD
     [master 9534ae0] Revert "Added VLAN 2000 and 3000"
     1 file changed, 0 insertion(+), 4 deletions(-)
- 
-Note the 4 deletions - those are the 4 lines in the ``diff`` above. If you
+
+Note the four deletions - those are the four lines in the ``diff`` above. If you
 were to open your group_vars file, you would see that those lines are
 now missing.
 
-Now if you were to look at your log using git reflog, you will see a
+Now, if you were to look at your log using git reflog, you would see a
 revert:
 
 .. code-block:: bash
@@ -99,7 +98,7 @@ revert:
     116aaae (origin/master) HEAD@{1}: commit: Added VLAN 2000 and 3000
     2ad37af HEAD@{2}: commit (initial): Initial commit
 
-Now let's push our changes to our remote repo so Jenkins can pick up on the changes
+Now let's push our changes to our remote repo so Jenkins can pick up on the changes.
 
 .. code-block:: bash
 
