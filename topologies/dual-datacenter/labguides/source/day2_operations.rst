@@ -1,14 +1,13 @@
 Day 2 Operations
 ========================
 
-If you were recall the earlier presentation, we mentioned Continuous
+If you recall the earlier presentation, we mentioned Continuous
 Integration and Continuous Development (CI/CD). Now we’re going to show
 you an example.
 
-In this lab we’re going to go from 0-60 pretty quickly and introduce a
+In this lab, we’re going to go from 0-60 pretty quickly and introduce a
 couple of new tools. We’re also going to do things a little bit
-differently - we’re going to action against many switches at the same
-time.
+differently - we’re going to modify multiple switches simultaneously.
 
 Tools used in this lab
 ----------------------
@@ -21,11 +20,11 @@ maintains a record of what changed and by whom.
 
 .. note:: Git is an incredibly powerful tool. We’re using shortcuts that
           are specific to this lab. When using Git in production - or even just
-          for fun, please make sure that you understand the commands you are
+          for fun - please ensure you understand the commands you are
           using. Some Git commands are destructive and irreversible!
 
 `Jenkins <https://www.google.com/url?q=https://jenkins.io/&sa=D&ust=1523980190034000>`__\  is
-one of the most popular open source automation tools with hundreds of
+one of the most popular open-source automation tools with hundreds of
 plugins for building/deploying/automating pretty much anything. It’s not
 outside the realm of possibility to have it test and push changes to
 your switches and then order you a pizza if it’s successful.
@@ -33,7 +32,7 @@ your switches and then order you a pizza if it’s successful.
 Git commands
 ~~~~~~~~~~~~
 
-This lab makes use of a handful of git commands, and the table below
+This lab makes use of a handful of git commands and the table below
 describes their function:
 
 .. cssclass:: table-hover
@@ -67,14 +66,14 @@ Making a change
 ---------------
 
 Our tried and true “add a VLAN” task is back in full force for this lab,
-but with a twist. We’re going to set up the usual suspects - a hosts
-file and a playbook, but this time we’re going to use group variables as
-well. Group variables are similar to the variables defined within your
-playbook in Lab #4 and Lab #5, but can be consumed by a group of hosts
-and not just the target of the play.
+but with a twist. We're going to set up the usual suspects - a hosts
+file and a playbook, but this time we will also use group variables.
+Group variables are similar to the variables defined within your
+playbook in Lab #4 and #5 but can be consumed by a group of hosts,
+not just the play’s target.
 
 This is particularly useful for things like adding a VLAN where you
-typically want to add the VLAN to multiple devices at a same time.
+typically want to add the VLAN to multiple devices at the same time.
 
 Write it
 ~~~~~~~~
@@ -84,7 +83,7 @@ This lab is broken into steps.
 Step #1: Hosts File
 ^^^^^^^^^^^^^^^^^^^
 
-Let’s start out with a different looking hosts file, this time with
+Let’s start out with a different-looking hosts file, this time with
 every one of your leaf switches in it. Take special note of ``[leafs]`` -
 we’ll be using this later.
 
@@ -126,7 +125,7 @@ In the **IDE**, create the file below:
           config:
           - vlan_id: "{{ item.vlanid }}"
             name: "{{ item.name }}"
-          state: replaced
+          state: overridden
         loop: "{{ vlans }}"
 
 
@@ -135,9 +134,9 @@ Save the file with the name ``vlan.yml`` into the ``/home/coder/project/labfil
 Step #3: Group Variables
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-Now we’re really going to mix it up a bit. In previous labs, we
-used ``vars:`` and only actioned against a single host. This time around,
-we’re going to be using what are called group variables. Group variables
+Now we’re going to mix it up a bit. We used ``vars:`` in previous labs
+and only acted against a single host. This time around,
+we will be using what is called group variables. Group variables
 are used for groups of hosts and not individuals.
 
 Remember how in the hosts file above we started with ``[leafs]``? If we
@@ -235,7 +234,7 @@ Open a **terminal** window and type:
 
 .. code-block:: bash
 
-    cd ~/project/labfiles/lab6/lab 
+    cd ~/project/labfiles/lab6/lab
 
 First we will need to prep our "remote" git repository. Type the following command:
 
@@ -256,9 +255,9 @@ Now enter the following:
 Run it
 ~~~~~~
 
-Phew, that was a lot of setup! Fortunately. unlike previous labs we’re
-not going to be running this one by hand - that wouldn’t be CI/CD! We’re
-going to use Jenkins to run the playbook.
+Phew, that was a lot of setup! Fortunately, unlike previous labs, we’re
+not going to be running this one by hand - that wouldn’t be CI/CD! Instead
+We’re going to use Jenkins to run the playbook.
 
 At a high level, the workflow of the “Run it” part of the lab looks like
 this:
@@ -290,8 +289,8 @@ Add the following highlighted lines directly below the existing text:
 Step #2: Add the file to the Git commit and push it
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Now, let’s add the file into Git commit and push it.We’re going to need
-to act somewhat quickly here if you want to see it run, so get ready!
+Now, let’s add the file, commit, and push it. If you want to see it run,
+we’ll need to act quickly here, so get ready!
 
 In the **terminal** window, type:
 
@@ -312,8 +311,8 @@ Quickly, open Jenkins!
 Step #3: Jenkins
 ^^^^^^^^^^^^^^^^
 
-Depending on how fast you were able to switch to Jenkins, you will see
-different things. If you were quick, you will see this:
+You will see different things depending on how fast you switched to
+Jenkins. For example, if you were quick, you will see this:
 
 .. image:: images/day2/nested_jenkins_4.png
    :align: center
@@ -339,17 +338,17 @@ bottom to see:
 .. code-block:: html
 
     PLAY RECAP *********************************************************************
-    192.168.0.12               : ok=7    changed=1    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0   
-    192.168.0.13               : ok=7    changed=1    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0   
-    192.168.0.14               : ok=7    changed=1    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0   
-    192.168.0.15               : ok=7    changed=1    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0   
+    192.168.0.12               : ok=7    changed=1    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0
+    192.168.0.13               : ok=7    changed=1    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0
+    192.168.0.14               : ok=7    changed=1    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0
+    192.168.0.15               : ok=7    changed=1    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0
 
 Woot, sweet success!
 
 Step #4: Switches are configured
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Now, for the final step log into a couple of the leaf switches. Notice
+Now, log into a couple of the leaf switches for the final step. Notice
 the VLANs are there. Pretty cool, huh?
 
 You can do this for 1 or 1000 switches using this playbook.
