@@ -23,31 +23,44 @@ topologies:
               cpu: 16
               ram: 32
               disk: 50
-              image: atd-dual-datacenter-nodes-ceos-c2022-2-0-20221019
+              image: atd-dual-datacenter-nodes-ceos-c2022-2-0-20221107
             resources_cvp:
               cpu: 28
               ram: 36
               disk: 300
-              image: atd-dual-datacenter-cvp-c2022-2-0-20221019
+              image: atd-dual-datacenter-cvp-c2022-2-0-20221107
             resources:
               cpu: 54
               ram: 64
-            branch: nested-release
+            branch: nested/2022.2
             orderable: true
             image: base-atd-dual-datacenter-ceos-c2022-2-0-20220908
             eos:
+              - 4.29.0.2F
               - 4.28.3M
               - 4.28.2F
               - 4.28.1F
               - 4.27.2F
           2022.2.0-bare:
+            schema: 2
+            resources_eos:
+              cpu: 16
+              ram: 32
+              disk: 50
+              image: atd-dual-datacenter-nodes-ceos-c2022-2-0-bare-20221107
+            resources_cvp:
+              cpu: 28
+              ram: 36
+              disk: 300
+              image: atd-dual-datacenter-cvp-c2022-2-0-bare-20221107
             resources:
               cpu: 54
               ram: 64
-            branch: nested-release
+            branch: nested/2022.2
             orderable: true
             image: base-atd-dual-datacenter-ceos-c2022-2-0--bare-20220909
             eos:
+              - 4.29.0.2F
               - 4.28.2F
               - 4.28.1F
               - 4.27.2F
@@ -211,6 +224,16 @@ topologies:
               - 4.28.1F
           2022.2.0:
             schema: 1
+            resources_eos:
+              cpu: 32
+              ram: 64
+              disk: 50
+              image: atd-routing-nodes-veos-e4-29-0-2f-c2022-2-0-20221107
+            resources_cvp:
+              cpu: 28
+              ram: 36
+              disk: 300
+              image: atd-routing-e4-29-0-2f-cvp-c2022-2-0-20221107
             resources:
               cpu: 50
               ram: 90
@@ -218,7 +241,7 @@ topologies:
             orderable: true
             image: base-atd-routing-e4-28-2f-c2022-2-0-20221026u
             eos:
-              - 4.28.2F
+              - 4.29.0.2F
       ceos:
         cpu: 32
         ram: 64
@@ -240,19 +263,20 @@ topologies:
               cpu: 16
               ram: 32
               disk: 50
-              image: atd-routing-nodes-ceos-c2022-2-0-20221019
+              image: atd-routing-nodes-ceos-c2022-2-0-20221107
             resources_cvp:
               cpu: 28
               ram: 36
               disk: 300
-              image: atd-routing-cvp-c2022-2-0-20221019
+              image: atd-routing-cvp-c2022-2-0-20221107
             resources:
               cpu: 40
               ram: 64
-            branch: nested-release
+            branch: nested/2022.2
             orderable: true
             image: base-atd-routing-ceos-c2022-2-0-20220908
             eos:
+              - 4.29.0.2F
               - 4.28.3M
               - 4.28.2F
               - 4.28.1F
