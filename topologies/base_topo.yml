@@ -337,7 +337,7 @@ topologies:
               cpu: 32
               ram: 64
             branch: nested/2021.3
-            orderable: true
+            orderable: false
             image: base-training-l1-e4-27-2f-c2021-3-0-20220629
             eos:
               - 4.27.2F
@@ -362,7 +362,7 @@ topologies:
               cpu: 32
               ram: 64
             branch: v2021.3-20220609a
-            orderable: true
+            orderable: false
             image: base-training-l1-e4-27-2f-c2021-3-0-20220629
             eos:
               - 4.27.2F
@@ -395,7 +395,7 @@ topologies:
               cpu: 32
               ram: 64
             branch: nested/2021.3
-            orderable: true
+            orderable: false
             image: base-training-l2-e4-27-2f-c2021-3-0-20220629
             eos:
               - 4.27.2F
@@ -410,7 +410,7 @@ topologies:
               cpu: 32
               ram: 64
             branch: v2021.3-20220609a
-            orderable: true
+            orderable: false
             image: base-training-l2-e4-27-2f-c2021-3-0-20220629
             eos:
               - 4.27.2F
@@ -453,7 +453,7 @@ topologies:
               cpu: 40
               ram: 80
             branch: nested/2021.3
-            orderable: true
+            orderable: false
             image: base-training-l3-e4-27-2f-c2021-3-0-20220629
             eos:
               - 4.27.2F
@@ -488,7 +488,7 @@ topologies:
               cpu: 40
               ram: 80
             branch: v2021.3-20220609a
-            orderable: true
+            orderable: false
             image: base-training-l3-e4-27-2f-c2021-3-0-20220629
             eos:
               - 4.27.2F
@@ -521,7 +521,7 @@ topologies:
               cpu: 40
               ram: 80
             branch: nested/2021.3
-            orderable: true
+            orderable: false
             image: base-training-l3-exam-e4-27-2f-c2021-3-0-20220629
             eos:
               - 4.27.2F
@@ -546,7 +546,7 @@ topologies:
               cpu: 40
               ram: 80
             branch: v2021.3-20220609a
-            orderable: true
+            orderable: false
             image: base-training-l3-exam-e4-27-2f-c2021-3-0-20220629
             eos:
               - 4.27.2F
@@ -579,7 +579,7 @@ topologies:
               cpu: 40
               ram: 80
             branch: nested/2021.3
-            orderable: true
+            orderable: false
             image: base-training-l3-2-e4-27-2f-c2021-3-0-20220629
             eos:
               - 4.27.2F
@@ -594,7 +594,7 @@ topologies:
               cpu: 40
               ram: 80
             branch: v2021.3-20220609a
-            orderable: true
+            orderable: false
             image: base-training-l3-2-e4-27-2f-c2021-3-0-20220629
             eos:
               - 4.27.2F
@@ -632,7 +632,7 @@ topologies:
               cpu: 60
               ram: 90
             branch: nested/2021.3
-            orderable: true
+            orderable: false
             image: base-training-l4-e4-27-2f-c2021-3-0-20220629
             eos:
               - 4.27.2F
@@ -657,7 +657,7 @@ topologies:
               cpu: 60
               ram: 90
             branch: v2021.3-20220609a
-            orderable: true
+            orderable: false
             image: base-training-l4-e4-27-2f-c2021-3-0-20220629
             eos:
               - 4.27.2F
@@ -691,7 +691,7 @@ topologies:
               cpu: 48
               ram: 72
             branch: nested/2021.3
-            orderable: true
+            orderable: false
             image: base-training-l5-ceos-c2021-3-0-20220629
             eos:
               - 4.27.2F
@@ -717,7 +717,7 @@ topologies:
               cpu: 48
               ram: 72
             branch: v2021.3-20220609a
-            orderable: true
+            orderable: false
             image: base-training-l5-ceos-c2021-3-0-20220629
             eos:
               - 4.27.2F
@@ -751,7 +751,7 @@ topologies:
               cpu: 40
               ram: 70
             branch: nested/2021.3
-            orderable: true
+            orderable: false
             image: base-training-l7-ceos-c2021-3-0-20220629
             eos:
               - 4.27.2F
@@ -777,7 +777,7 @@ topologies:
               cpu: 40
               ram: 70
             branch: v2021.3-20220609a
-            orderable: true
+            orderable: false
             image: base-training-l7-ceos-c2021-3-0-20220629
             eos:
               - 4.27.2F
