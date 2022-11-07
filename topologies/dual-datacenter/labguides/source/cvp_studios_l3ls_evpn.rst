@@ -10,13 +10,6 @@ CloudVision Studios  -  L3LS/EVPN LAB GUIDE
 ===========================================
 
 
-|br| **THERE IS A 7ZIP FILE AVAILABLE TO ARISTA EMPLOYEES THAT WILL ALLOW A PREVIEW OF THIS GUIDE AS HTML.** 
-|br| **THE FORMATTING WON'T BE EXACT, BUT ALL GIFS AND PNGS WILL BE VIEWABLE.**
-|br| **ONCE THIS GUIDE GOES GA, THIS COMMENT WILL BE REMOVED**
-
-https://drive.google.com/drive/folders/1nUnFtSekre4ShSfKmJ5GfWLrh9ylapkB?usp=sharing
-
-
 .. thumbnail:: images/cvp_studios_l3ls_evpn/1TOPO.PNG
 	:align: center
 	:width: 50%
