@@ -12,7 +12,6 @@ CloudVision Studios  -  L3LS/EVPN LAB GUIDE
 
 .. thumbnail:: images/cvp_studios_l3ls_evpn/1TOPO.PNG
 	:align: center
-	:width: 50%
 
 The "Datacenter1" topology for this lab consists of two **spines,** four **leafs**, and two **"hosts"** for reachability testing. The borderleafs, cores, and Datacenter 2 are not a part of this lab guide. 
 The hosts will be pre-configured as L2 LACP trunk port-channels up to their respective leafs. 
