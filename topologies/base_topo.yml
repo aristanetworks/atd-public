@@ -223,7 +223,7 @@ topologies:
             eos:
               - 4.28.1F
           2022.2.0:
-            schema: 1
+            schema: 2
             resources_eos:
               cpu: 32
               ram: 64
