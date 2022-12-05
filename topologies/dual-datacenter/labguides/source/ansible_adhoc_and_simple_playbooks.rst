@@ -34,7 +34,7 @@ the **labfiles** directory with the filename ``hosts``.
 
 This is an Ansible hosts file - you might recognize it as INI formatted!
 The top bracketed entry is a group, and the entry below it is a host.
-Save the file to your project directory.
+Save the file to your **project/labfiles** directory.
 
 Now, let’s run an ad-hoc command. Open up your handy terminal window,
 and enter:
