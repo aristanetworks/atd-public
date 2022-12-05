@@ -105,7 +105,7 @@ Alternatively, if you’d just like to paste in the code, you can copy and paste
 **Cmd+v** on Macs.
 
 
-Once done, save the file to your project directory.
+Once done, save the file to your **project/labfiles** directory.
 
 ``/home/coder/project/labfiles/show_version.py``
 
