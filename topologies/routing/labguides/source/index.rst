@@ -112,3 +112,11 @@ configurations necessary to deploy IS-IS, Segment Routing, BGP EVPN, etc.
    :caption: IS-IS Protocol Configuration - Class Guide
 
    isis_guides/isis_class_guides/isis_class_guide.rst
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Routing ATD - Studios Labs
+
+   studios_guides/studios_lab_guides/lab-setup.rst
+   studios_guides/studios_lab_guides/sanitizing.rst
+   studios_guides/studios_lab_guides/studios-1-campus-to-isp.rst
