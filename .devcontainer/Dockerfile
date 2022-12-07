@@ -1,18 +1,18 @@
 FROM python:3.8
 
 RUN apt update && apt install -y sudo \
-                                 vim \
-                                 git \
-                                 zip \
-                                 cloc \
-                                 lastpass-cli \
-                                 dnsutils \
-                                 zsh \
-                                 zsh-syntax-highlighting \
-                                 zsh-doc \
-                                 less \
-                                 liquidprompt \
-                                 software-properties-common
+    vim \
+    git \
+    zip \
+    cloc \
+    lastpass-cli \
+    dnsutils \
+    zsh \
+    zsh-syntax-highlighting \
+    zsh-doc \
+    less \
+    liquidprompt \
+    software-properties-common
 
 RUN apt -y dist-upgrade
 
@@ -46,9 +46,15 @@ RUN pip install dotbot docutils rstcheck sphinx sphinx-bootstrap-theme sphinxcon
 
 RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-key C99B11DEB97541F0
 
-RUN apt-add-repository https://cli.github.com/packages
+#RUN apt-add-repository https://cli.github.com/packages
+RUN type -p curl >/dev/null || sudo apt install curl -y 
 
-RUN apt update && apt install -y gh
+RUN curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | \
+    sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg \
+    && sudo chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg \
+    && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
+    && sudo apt update \
+    && sudo apt install gh -y
 
 USER $USERNAME
 
