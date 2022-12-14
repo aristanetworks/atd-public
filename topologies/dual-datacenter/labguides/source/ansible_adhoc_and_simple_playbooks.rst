@@ -208,4 +208,4 @@ Bonus
 Create a new playbook (or alter the one you have) that creates a new
 VLAN and then adds it to ``interface Ethernet2`` as ``switchport access vlan``.
 
-.. note:: Check out the Ansible eos_config module \ `documentation <https://www.google.com/url?q=http://docs.ansible.com/ansible/latest/eos_config_module.html&sa=D&ust=1523980190009000>`__\ .
+.. note:: Check out the Ansible eos_config module \ `documentation <https://docs.ansible.com/ansible/latest/collections/arista/eos/eos_config_module.html>`__\ .
