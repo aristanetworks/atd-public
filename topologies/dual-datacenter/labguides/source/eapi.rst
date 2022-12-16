@@ -36,7 +36,7 @@ The script is the same as in the presentation you just saw:
 
     ssl._create_default_https_context = ssl._create_unverified_context
 
-    switch = Server ("https://arista:{REPLACE_PWD}@192.168.0.12/command-api")
+    switch = Server("https://arista:{REPLACE_PWD}@192.168.0.12/command-api")
 
     response = switch.runCmds( 1, ["show version"] )
 
@@ -105,7 +105,7 @@ Alternatively, if you’d just like to paste in the code, you can copy and paste
 **Cmd+v** on Macs.
 
 
-Once done, save the file to your project directory.
+Once done, save the file to your **project/labfiles** directory.
 
 ``/home/coder/project/labfiles/show_version.py``
 
@@ -157,7 +157,7 @@ doing something with it:
 
     ssl._create_default_https_context = ssl._create_unverified_context
 
-    switch = Server ("https://arista:{REPLACE_PWD}@192.168.0.12/command-api")
+    switch = Server("https://arista:{REPLACE_PWD}@192.168.0.12/command-api")
 
     response = switch.runCmds( 1, ["show version"] )
 

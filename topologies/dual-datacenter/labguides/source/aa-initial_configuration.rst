@@ -1,9 +1,9 @@
-CloudVision Initial Configuraion
-================================
+CloudVision Initial Configuration
+=================================
 
 .. Note:: 
 
-    This must be deployed as a veos topology with the CVP version set to **CVP-2022.1.0-bare**
+    This must be deployed as a cEOS topology with the CVP version set to **CVP-2022.2.0-bare**
 
 1. Log into the Arista Test Drive Portal by using SSH  
 
@@ -96,8 +96,9 @@ You should now see the **localhost login:** prompt.
 
 |
 
-6. At the prompt, select **s** to choose singlenode
+6. Since we are only setting up one CVP server, select **s** to choose singlenode
 
+|
 
 7. You will now fill in the network settings for your CVP installation. Please enter the following into the fields. You can then select **v** to verify your install prior to applying the changes. 
 
@@ -120,8 +121,6 @@ You should now see the **localhost login:** prompt.
     **Cluster Interface Name:** - Allows you to specify a cluster interface name, This is typically left as the default value
 
     **Device Interface Name:** - Allows you to specify a device interface name, This is typecally also left as the default value
-
-    **Telemetry Ingest Key:** - This must be the same value for each node in a 3-node cluster. For our sinngle node install, we will just use **atd-lab**
 
     **CloudVision WiFi Enabled:** - This should be enabled if you are deploying Access Points in your environment. For our lab scenario, we will select the default value **N**
 
@@ -146,7 +145,7 @@ You should now see the **localhost login:** prompt.
 
 
 .. code-block:: text
-    :emphasize-lines: 12-16
+    :emphasize-lines: 12-23, 27-33
     
     CVP Installation Menu
 
@@ -167,7 +166,6 @@ You should now see the **localhost login:** prompt.
     Is Auth enabled for NTP Server #1: n
     Cluster Interface Name: eth0
     Device Interface Name: eth0
-    Telemetry Ingest Key: atd-lab
     CloudVision WiFi Enabled: no
     *Enter a private IP range for the internal cluster network (overlay): 10.42.0.0
     /16
@@ -213,8 +211,8 @@ All of these settings are saved in the /cvpi/cvp-config.yaml file
 
 10. When you see the configuration menu on the screen again, we know that CVP has been configured successfully. Go back to the main ATD screen and click on the **CVP** link.
 
-.. thumbnail:: images/aa-initial_configuration/initial-config-2.png
-    :width: 75%
+.. thumbnail:: images/aa-initial_configuration/initial-config-3.png
+    :width: 50%
 
 |
 
@@ -222,11 +220,39 @@ All of these settings are saved in the /cvpi/cvp-config.yaml file
 
 |
 
-12. You will need to change this password at first login, and you will also be asked for an email address. You can put anything you want in this field, and then click **Finish**.
+12. You will need to change this password at first login, and you will also be asked for an email address. You can put anything you want in this field. Give your cluster a name and Logo on step 3, then click **Finish**.
+
+.. thumbnail:: images/aa-initial_configuration/initial-config-4.png
+    :width: 80%
+|
+
+13. Log into CVP one more time and you'll be greeted by the Devices screen. You have now installed and configured CVP Successfully!
 
 |
 
-13. Log into CVP one more time and you'll be greeted by the Devices screen, along with green check marks indicating that all of our devices are streaming to CVP. Success!
+14. Now lets set up network-admin and network-operator accounts. Click on the gear in the upper right. Select **Users** under **Access Control**. Fill out the Add User screen and under **Roles** Select **network-admin**. Click **Add**.  Follow this step again, but select **network operator** to set up the network-operator account.
+
+
+.. thumbnail:: images/aa-initial_configuration/initial-config-5.png
+    :width: 70%
+
+|
+
+15. Bonus Step - (Requires an Arista.com account) We can now subscribe to bug alerts, so that CVP will populate compliance data automatically on the **Compliance Overview** screen.
+
+16. Browse to **arista.com** and log in. Once logged in, click on your name on the top bar and select **My Profile**. Copy your Access Token listed at the bottom of the page.
+
+
+17. Back in CVP, click on the Gear icon in the top right, then select **Compliance Updates** on the left. Paste the Token that was copied from arista.com and click **Save**
+
+.. thumbnail:: images/aa-initial_configuration/initial-config-6.png
+
+|
+
+.. Warning:: 
+
+    This step will error in the ATD environment, but on a standard deployment, where the CVP server can reach the internet, it will complete successfully.
+
 
 
 .. Note::

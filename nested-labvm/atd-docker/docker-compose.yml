@@ -12,7 +12,7 @@ services:
       - atd_nginx
   conftopo:
     container_name: atd-conftopo
-    image: us.gcr.io/beta-atds/atddocker_conftopo:0.1
+    image: us.gcr.io/beta-atds/atddocker_conftopo:0.2
     restart: always
     networks:
       - atd_nginx
@@ -22,9 +22,19 @@ services:
       - /etc/atd:/etc/atd:rw
       - /opt/atd/topologies:/opt/atd/topologies:ro
       - /home/arista/arista-dir:/home/arista:rw
+  alertapi:
+    container_name: atd-alert
+    image: us.gcr.io/beta-atds/atddocker_alertapi:1.0.1
+    restart: always
+    ports:
+      - 5000:5000
+    networks:
+      - atd_nginx
+    environment:
+      - PYTHONUNBUFFERED=1
   login:
     container_name: atd-login
-    image: us.gcr.io/beta-atds/atddocker_login:2.0.8
+    image: us.gcr.io/beta-atds/atddocker_login:2.1.0
     user: $ArID:$ArGD
     restart: always
     hostname: devbox
@@ -39,9 +49,10 @@ services:
       - /home/arista/.ssh:/home/arista/.ssh:rw
       - /opt/sftp/uploads:/opt/sftp:ro
       - /var/run/libvirt/libvirt-sock:/var/run/libvirt/libvirt-sock:ro
+      - /var/lib/libvirt/images/veos:/var/lib/libvirt/images/veos:rw
   cvpupdater:
     container_name: atd-cvpupdater
-    image: us.gcr.io/beta-atds/atddocker_cvpupdater:2.0.4
+    image: us.gcr.io/beta-atds/atddocker_cvpupdater:2.2.1
     user: $ArID:$ArGD
     restart: always
     environment:
@@ -53,7 +64,7 @@ services:
       - cvp_dir:/home/arista/CVP_DATA:rw
   gitconfigletsync:
     container_name: atd-gitconfigletsync
-    image: us.gcr.io/beta-atds/atddocker_gitconfigletsync:2.0.5
+    image: us.gcr.io/beta-atds/atddocker_gitconfigletsync:2.1.1
     user: $ArID:$ArGD
     restart: always
     environment:
@@ -64,7 +75,7 @@ services:
       - cvp_dir:/home/arista/CVP_DATA:rw
   kvmbuilder:
     container_name: atd-kvmbuilder
-    image: us.gcr.io/beta-atds/atddocker_kvmbuilder:2.1.2
+    image: us.gcr.io/beta-atds/atddocker_kvmbuilder:2.1.3
     user: $AtID:$AtGD
     restart: on-failure
     environment:
@@ -85,7 +96,7 @@ services:
       - /opt/ceos:/opt/ceos:rw
   uilanding:
     container_name: atd-uilanding
-    image: us.gcr.io/beta-atds/atddocker_uilanding:2.0.2
+    image: us.gcr.io/beta-atds/atddocker_uilanding:2.1.2
     restart: always
     environment:
       - PYTHONUNBUFFERED=1
@@ -117,7 +128,7 @@ services:
       - "1813:1813/udp"
   nginx:
     container_name: atd-nginx
-    image: us.gcr.io/beta-atds/atddocker_nginx:2.0.2
+    image: us.gcr.io/beta-atds/atddocker_nginx:2.1.1
     restart: always
     depends_on:
       - uilanding
@@ -134,7 +145,7 @@ services:
       - atd_nginx
   monitor:
     container_name: atd-monitor
-    image: us.gcr.io/beta-atds/atddocker_monitor:2.0
+    image: us.gcr.io/beta-atds/atddocker_monitor:2.2
     restart: always
     environment:
       - PYTHONUNBUFFERED=1
@@ -158,7 +169,7 @@ services:
       - ./jenkins/src/groovy/users.groovy.override:/usr/share/jenkins/ref/init.groovy.d/users.groovy.override:rw
   coder:
     container_name: atd-coder
-    image: us.gcr.io/beta-atds/atddocker_coder:2.1.1
+    image: us.gcr.io/beta-atds/atddocker_coder:2.3.2
     restart: always
     user: $ArID:$ArGD
     command: /home/coder/project
@@ -174,6 +185,7 @@ services:
       - /home/arista/arista-dir/.ansible.cfg:/home/coder/.ansible.cfg:rw
       - /opt/sftp/uploads:/opt/sftp:ro
       - /var/run/libvirt/libvirt-sock:/var/run/libvirt/libvirt-sock:ro
+      - /var/lib/libvirt/images/veos:/var/lib/libvirt/images/veos:rw
   ssh:
     container_name: atd-ssh
     image: us.gcr.io/beta-atds/atddocker_ssh:2.0

@@ -2,7 +2,7 @@
 lab_list:
   reset:
     additional_commands: 
-      - "bash /home/arista/Broadcaster/pushhostDefaultConfig.sh"
+      - "bash /home/arista/Broadcaster/pushHostDefaultConfig.sh"
     description: "Reset All Devices to Base ATD (reset)"
   l2ls:
     description: "Layer 2 Leaf-Spine Lab (l2ls) - Site 1 Only"
@@ -12,6 +12,9 @@ lab_list:
     description: "VXLAN Static Flood List Lab (vxlan) - Site 1 Only"
   cvp:
     description: "CloudVision Portal Lab (cvp) - Site 1 Only"
+  studiosl3ls:
+    description: "CVP lab for Studios L3LS/EVPN (studiosl3ls)"
+
 labconfiglets:
   reset:
     s1-spine1:
@@ -265,6 +268,57 @@ labconfiglets:
     s1-host2:
       - "BASE_s1-host2"
       - "L3LS_s1-host2"
+    s2-spine1:
+      - "BASE_s2-spine1"
+    s2-spine2:
+      - "BASE_s2-spine2"
+    s2-leaf1:
+      - "BASE_s2-leaf1"
+    s2-leaf2:
+      - "BASE_s2-leaf2"
+    s2-leaf3:
+      - "BASE_s2-leaf3"
+    s2-leaf4:
+      - "BASE_s2-leaf4"
+    s2-brdr1:
+      - "BASE_s2-brdr1"
+    s2-brdr2:
+      - "BASE_s2-brdr2"
+    s2-core1:
+      - "BASE_s2-core1"
+    s2-core2:
+      - "BASE_s2-core2"
+    s2-host1:
+      - "BASE_s2-host1"
+    s2-host2:
+      - "BASE_s2-host2"
+  studiosl3ls:
+    s1-spine1:
+      - "BASE_s1-spine1"
+    s1-spine2:
+      - "BASE_s1-spine2"
+    s1-leaf1:
+      - "BASE_s1-leaf1"
+    s1-leaf2:
+      - "BASE_s1-leaf2"
+    s1-leaf3:
+      - "BASE_s1-leaf3"
+    s1-leaf4:
+      - "BASE_s1-leaf4" 
+    s1-brdr1:
+      - "BASE_s1-brdr1"
+    s1-brdr2:
+      - "BASE_s1-brdr2"
+    s1-core1:
+      - "BASE_s1-core1"
+    s1-core2:
+      - "BASE_s1-core2"
+    s1-host1:
+      - "BASE_s1-host1"
+      - "Host1_STUDIO_L3LS_EVPN"
+    s1-host2:
+      - "BASE_s1-host2"
+      - "Host2_STUDIO_L3LS_EVPN"
     s2-spine1:
       - "BASE_s2-spine1"
     s2-spine2:

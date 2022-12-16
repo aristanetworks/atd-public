@@ -1,8 +1,8 @@
 Openconfig gNMI Lab
 ===================
-.. thumbnail:: images/gnmi/gnmi-cvp-streaming.png
+.. image:: images/gnmi/gnmi-cvp-streaming.png
 
-.. thumbnail:: images/gnmi/gnmi-eos-streaming.png
+.. image:: images/gnmi/gnmi-eos-streaming.png
 
 Summary
 -------
@@ -42,11 +42,13 @@ Lab changes for gNMIC that need to be made prior to this lab.
 
 .. note::
     Notice the -cnmi flag at the end.  This is the flag that tells Terminattr to tunnel its openconfig traffic to CVP. For example, it will stream all of its Openconfig traffic gNMI through Terminattr so it is accessible via CVP as well. 
+
 |
+
 Installation of gNMIC
 	To install gNMIC we will first need to go to the Programmability IDE and open a new terminal.  We do this once we are within the IDE by clicking the 3 line menu in the upper left > Terminal > New Terminal. 
 
-.. thumbnail:: images/gnmi/gNMI-terminal.png
+.. image:: images/gnmi/gNMI-terminal.png
     :width: 75%
 |
 Once in the terminal we simply need to install the binary by the following one liner command. 
@@ -231,21 +233,23 @@ The same gNMI service that we use for EOS we are able to move to CVP.  In the us
 Get a token
 	Since CVP does not use a username/password for the gNMI service a service account and token are required.  On the **Settings gear** in the upper right hand corner click on that.  Then on the left click under **Service Accounts.**	
 
-.. thumbnail:: images/gnmi/gnmi-serviceaccount1.png
+.. image:: images/gnmi/gnmi-serviceaccount1.png
 
 |
 
 Click **+ Add Service Account.** Service Account name **test** Description **test**. Roles **network-admin**. Status **Enabled**.
 
 
-.. thumbnail:: images/gnmi/gnmi-serviceaccount2.png
+.. image:: images/gnmi/gnmi-serviceaccount2.png
 
 |
 
 Click **Add**. Now create a token for test. Click **test**.
 
-.. thumbnail:: images/gnmi/gnmi-serviceaccount3.png
+.. image:: images/gnmi/gnmi-serviceaccount3.png
+
 |
+
 Under the **Generate Service Account Token** section, give your token a description, Select a date in the future for valid Until.
 Click **Generate**.  
 

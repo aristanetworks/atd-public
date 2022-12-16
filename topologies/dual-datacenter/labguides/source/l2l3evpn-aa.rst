@@ -581,7 +581,7 @@ L2 and L3 EVPN - Symmetric IRB with All-Active Multihoming
                Extended Community: Route-Target-AS:112:112 TunnelEncap:tunnelTypeVxlan
                VNI: 112
                PMSI Tunnel: Ingress Replication, MPLS Label: 112, Leaf Information Required: false, Tunnel ID: 10.111.253.4
-         s1-leaf4#show interfaces Vxlan1
+         s1-leaf1#show interfaces Vxlan1
          Vxlan1 is up, line protocol is up (connected)
            Hardware is Vxlan
            Source interface is Loopback1 and is active with 10.111.253.1

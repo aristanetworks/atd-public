@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+from csv import list_dialects
 from ruamel.yaml import YAML
 from time import sleep
 from datetime import datetime, timezone
@@ -82,6 +83,7 @@ def runCmd(cmd):
 def main():
     _ENABLE_MONITOR = True
     _tmp_counter = 0
+    _list_stop = []
     pS("Performing log query every {0} minutes".format(int(QUERY_TIMEOUT / 60)))
     pS("Inactivity threshold is set for {0} minutes.".format(int(INACTIVITY_THRESHOLD / 60)))
     # Open ACCESS_INFO file
@@ -105,7 +107,15 @@ def main():
     name = access_yaml['name']
     zone = access_yaml['zone']
     function_state_url = FUNC_STATE.format(project)
-    _func_stop = function_state_url + "?function=stop&instance={0}&zone={1}".format(name, zone)
+    if 'schema' in access_yaml:
+        _schema = int(access_yaml['schema'])
+    else:
+        _schema = 1
+    if _schema == 2:
+        _list_stop.append(f"{function_state_url}?function=stop&instance={name}-cvp&zone={zone}")
+        _list_stop.append(f"{function_state_url}?function=stop&instance={name}-eos&zone={zone}")
+    else:
+        _list_stop.append(f"{function_state_url}?function=stop&instance={name}&zone={zone}")
     pS("Done setting instance variables")
     # Start loop for checking instance status
     while True:
@@ -208,7 +218,8 @@ def main():
         if _stale_nginx and _stale_ssh:
             pS("Last session is over threshold of {0} minutes".format(int(INACTIVITY_THRESHOLD / 60)))
             pS("STALE SESSIONS SHUTTING DOWN!!!!")
-            response = requests.post(_func_stop)
+            for _stop_url in _list_stop:
+                response = requests.post(_stop_url)
             break
         else:
             sleep(QUERY_TIMEOUT)

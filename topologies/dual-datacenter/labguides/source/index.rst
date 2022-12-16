@@ -18,9 +18,11 @@ Welcome to the Arista ATD documentation!
    :maxdepth: 1
    :caption: CloudVision Portal
    
-   aa-initial_configuration.rst
    cvp_configlet.rst
    cvp_cc.rst
+   cvp_cc_2.rst
+   aa-cvp_custom_events
+   cvp_studios_l3ls_evpn.rst
 
 .. toctree::
    :maxdepth: 1
@@ -51,3 +53,11 @@ Welcome to the Arista ATD documentation!
    :caption: Troubleshooting Training
 
    tshoot-intro.rst
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Arista Academy
+
+   aa-cvp_upgrade.rst
+   aa-cvp_custom_events
+   cvp_studios_l3ls_evpn.rst
