@@ -1,26 +1,25 @@
-FROM codercom/code-server:4.7.0
+FROM codercom/code-server:4.9.1
 
 RUN sudo apt update && \
-    sudo apt install -y python3 git openssh-server vim nano less rsync man-db jq python3-pip wget zsh sshpass libvirt-clients
+    sudo apt-get install -y python3 python3-venv git openssh-server vim nano less rsync man-db jq python3-pip wget zsh sshpass libvirt-clients && \
+    sudo apt-get clean  && \
+    sudo rm -rf /var/lib/apt/lists/*
 
-RUN sudo pip3 install --upgrade pip
+RUN pip3 install --upgrade pip --no-cache-dir
 
-RUN sudo pip3 install pyeapi jsonrpclib-pelix shyaml
-
-RUN sudo pip3 install "ansible-core>=2.12.7,<2.13.0"
+ENV VIRTUAL_ENV=/home/coder/venv
+RUN python3 -m venv $VIRTUAL_ENV
+ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
 # Install arista.avd, community.general and ansible.posix ansible-galaxy collections, Use this for version control of AVD topologies
-RUN ansible-galaxy collection install arista.avd:==3.6.0
-
-RUN ansible-galaxy collection install arista.cvp:==3.4.0 --upgrade
-
-RUN ansible-galaxy collection install community.general --upgrade
-
-RUN ansible-galaxy collection install ansible.posix --upgrade
-
-RUN wget --quiet https://raw.githubusercontent.com/aristanetworks/ansible-avd/v3.6.0/ansible_collections/arista/avd/requirements.txt
-
-RUN sudo pip3 install -r requirements.txt
+RUN pip3 install pyeapi jsonrpclib-pelix shyaml --no-cache-dir && \
+    pip3 install "ansible-core>=2.12.7,<2.13.0" --no-cache-dir && \
+    ansible-galaxy collection install arista.avd:=3.8.0-dev2 && \
+    ansible-galaxy collection install arista.cvp && \
+    ansible-galaxy collection install community.general --upgrade && \
+    ansible-galaxy collection install ansible.posix --upgrade && \
+    wget --quiet https://raw.githubusercontent.com/aristanetworks/ansible-avd/v3.7.0/ansible_collections/arista/avd/requirements.txt && \
+    pip3 install -r requirements.txt --no-cache-dir
 
 # Install Code extensions
 COPY src/vs-extensions.txt /home/coder/
@@ -36,8 +35,8 @@ RUN wget --quiet https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/inst
 
 RUN sudo usermod --shell /bin/zsh coder
 
-RUN sudo chown -R coder:coder /home/coder
+WORKDIR /home/coder/project
 
-VOLUME /home/coder/project
+RUN sudo chown -R coder:coder /home/coder/project
 
 ENV SHELL /bin/zsh
