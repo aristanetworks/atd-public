@@ -141,7 +141,7 @@ labconfiglets:
       - "dctshoot1_s1-leaf3"
     s1-leaf4:
       - "BASE_s1-leaf4"
-      - "dctshoot1_s1-leaf4"	  
+      - "dctshoot1_s1-leaf4"
     s1-brdr1:
       - "BASE_s1-brdr1"
     s1-brdr2:
