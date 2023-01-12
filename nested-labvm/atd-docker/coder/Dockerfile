@@ -1,7 +1,10 @@
 FROM codercom/code-server:4.7.0
 
 RUN sudo apt update && \
-    sudo apt install -y python3 git openssh-server vim nano less rsync man-db jq python3-pip wget zsh sshpass libvirt-clients
+    sudo apt install -y python3 git openssh-server vim nano less rsync man-db jq python3-pip wget zsh sshpass libvirt-clients && \
+    # clean unnecessary files after install
+    sudo rm -rf /var/lib/apt/lists/* && \
+    sudo apt-get clean
 
 RUN sudo pip3 install --upgrade pip
 
