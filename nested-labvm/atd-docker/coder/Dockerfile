@@ -31,7 +31,8 @@ COPY src/.gitconfig /home/coder/
 
 RUN wget --quiet https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh || true \
     && echo 'plugins=(ansible common-aliases safe-paste git jsontools history git-extras)' >> $HOME/.zshrc \
-    && echo 'eval `ssh-agent -s`' >> $HOME/.zshrc \
+    # redirect to &>/dev/null is required to silence `agent pid XXXX` message from ssh-agent
+    && echo 'eval `ssh-agent -s` &>/dev/null' >> $HOME/.zshrc \
     && echo 'export TERM=xterm' >>  $HOME/.zshrc
 
 RUN sudo usermod --shell /bin/zsh coder
