@@ -40,8 +40,8 @@ RUN wget --quiet https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/inst
 
 RUN sudo usermod --shell /bin/zsh coder
 
-RUN sudo chown -R coder:coder /home/coder
+WORKDIR /home/coder/project
 
-VOLUME /home/coder/project
+RUN sudo chown -R coder:coder /home/coder/project
 
 ENV SHELL /bin/zsh
