@@ -16,17 +16,14 @@ RUN pip3 config set global.disable-pip-version-check true && \
     pip3 install --user --no-cache-dir "ansible-core>=2.12.7,<2.13.0"
 
 # Install arista.avd, community.general and ansible.posix ansible-galaxy collections, Use this for version control of AVD topologies
-RUN ansible-galaxy collection install arista.avd:==3.6.0
+RUN ansible-galaxy collection install arista.avd:==3.6.0 && \
+    ansible-galaxy collection install arista.cvp:==3.4.0 --upgrade && \
+    ansible-galaxy collection install community.general --upgrade && \
+    ansible-galaxy collection install ansible.posix --upgrade
 
-RUN ansible-galaxy collection install arista.cvp:==3.4.0 --upgrade
-
-RUN ansible-galaxy collection install community.general --upgrade
-
-RUN ansible-galaxy collection install ansible.posix --upgrade
-
-RUN wget --quiet https://raw.githubusercontent.com/aristanetworks/ansible-avd/v3.6.0/ansible_collections/arista/avd/requirements.txt
-
-RUN pip3 install --user --no-cache-dir -r requirements.txt
+# Install Ansible-AVD collection requirements
+RUN wget --quiet https://raw.githubusercontent.com/aristanetworks/ansible-avd/v3.6.0/ansible_collections/arista/avd/requirements.txt && \
+    pip3 install --user --no-cache-dir -r requirements.txt
 
 # Install Code extensions
 COPY src/vs-extensions.txt /home/coder/
