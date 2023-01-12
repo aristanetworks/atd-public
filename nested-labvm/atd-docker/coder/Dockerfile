@@ -6,6 +6,8 @@ RUN sudo apt update && \
     sudo rm -rf /var/lib/apt/lists/* && \
     sudo apt-get clean
 
+RUN pip3 config set global.disable-pip-version-check true
+
 RUN sudo pip3 install --no-cache-dir pyeapi jsonrpclib-pelix shyaml
 
 RUN sudo pip3 install --no-cache-dir "ansible-core>=2.12.7,<2.13.0"
