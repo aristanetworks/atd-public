@@ -4,6 +4,9 @@ lab_list:
     description: "Troubleshooting Lab 1 (tshoot-intro)"
   tshoot-sp:
     description: "Troubleshooting Lab 2 (tshoot-sp)"
+dctshoot1:
+    description: "Datacenter Troubleshooting Scenario 1 (dctshoot1) - Site 1 Only"
+
 labconfiglets:
   tshoot-intro:
     s1-spine1:
@@ -95,6 +98,64 @@ labconfiglets:
     s1-host2:
       - "BASE_s1-host2"
       - "TSHOOT_s1-host2_sp"
+    s2-spine1:
+      - "BASE_s2-spine1"
+    s2-spine2:
+      - "BASE_s2-spine2"
+    s2-leaf1:
+      - "BASE_s2-leaf1"
+    s2-leaf2:
+      - "BASE_s2-leaf2"
+    s2-leaf3:
+      - "BASE_s2-leaf3"
+    s2-leaf4:
+      - "BASE_s2-leaf4"
+    s2-brdr1:
+      - "BASE_s2-brdr1"
+    s2-brdr2:
+      - "BASE_s2-brdr2"
+    s2-core1:
+      - "BASE_s2-core1"
+    s2-core2:
+      - "BASE_s2-core2"
+    s2-host1:
+      - "BASE_s2-host1"
+    s2-host2:
+      - "BASE_s2-host2"
+
+  dctshoot1:
+    s1-spine1:
+      - "BASE_s1-spine1"
+      - "dctshoot1_s1-spine1"
+    s1-spine2:
+      - "BASE_s1-spine2"
+      - "dctshoot1_s1-spine2"
+    s1-leaf1:
+      - "BASE_s1-leaf1"
+      - "dctshoot1_s1-leaf1"
+    s1-leaf2:
+      - "BASE_s1-leaf2"
+      - "dctshoot1_s1-leaf2"
+    s1-leaf3:
+      - "BASE_s1-leaf3"
+      - "dctshoot1_s1-leaf3"
+    s1-leaf4:
+      - "BASE_s1-leaf4"
+      - "dctshoot1_s1-leaf4"	  
+    s1-brdr1:
+      - "BASE_s1-brdr1"
+    s1-brdr2:
+      - "BASE_s1-brdr2"
+    s1-core1:
+      - "BASE_s1-core1"
+    s1-core2:
+      - "BASE_s1-core2"
+    s1-host1:
+      - "BASE_s1-host1"
+      - "dctshoot1_s1-host1"
+    s1-host2:
+      - "BASE_s1-host2"
+      - "dctshoot1_s1-host2"
     s2-spine1:
       - "BASE_s2-spine1"
     s2-spine2:
