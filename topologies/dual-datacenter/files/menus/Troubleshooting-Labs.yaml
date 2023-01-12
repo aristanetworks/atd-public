@@ -4,7 +4,7 @@ lab_list:
     description: "Troubleshooting Lab 1 (tshoot-intro)"
   tshoot-sp:
     description: "Troubleshooting Lab 2 (tshoot-sp)"
-dctshoot1:
+  dctshoot1:
     description: "Datacenter Troubleshooting Scenario 1 (dctshoot1)"
 
 labconfiglets:
