@@ -53,6 +53,7 @@ Welcome to the Arista ATD documentation!
    :caption: Troubleshooting Training
 
    tshoot-intro.rst
+   dc_tshoot_scenario_1.rst
 
 .. toctree::
    :maxdepth: 1
