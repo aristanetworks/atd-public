@@ -1,14 +1,19 @@
 FROM codercom/code-server:4.9.1
 
+# set the enviroment correctly first, including path
+USER coder
+ENV HOME=/home/coder
+ENV PATH=$PATH:/home/coder/.local/bin
+
 RUN sudo apt update && \
     sudo apt install -y python3 git openssh-server vim nano less rsync man-db jq python3-pip wget zsh sshpass libvirt-clients && \
     # clean unnecessary files after install
     sudo rm -rf /var/lib/apt/lists/* && \
     sudo apt-get clean
 
-RUN sudo pip3 config set global.disable-pip-version-check true && \
-    sudo pip3 install --no-cache-dir pyeapi jsonrpclib-pelix shyaml && \
-    sudo pip3 install --no-cache-dir "ansible-core>=2.12.7,<2.13.0"
+RUN pip3 config set global.disable-pip-version-check true && \
+    pip3 install --user --no-cache-dir pyeapi jsonrpclib-pelix shyaml && \
+    pip3 install --user --no-cache-dir "ansible-core>=2.12.7,<2.13.0"
 
 # Install arista.avd, community.general and ansible.posix ansible-galaxy collections, Use this for version control of AVD topologies
 RUN ansible-galaxy collection install arista.avd:==3.6.0
@@ -21,7 +26,7 @@ RUN ansible-galaxy collection install ansible.posix --upgrade
 
 RUN wget --quiet https://raw.githubusercontent.com/aristanetworks/ansible-avd/v3.6.0/ansible_collections/arista/avd/requirements.txt
 
-RUN sudo pip3 install --no-cache-dir -r requirements.txt
+RUN pip3 install --user --no-cache-dir -r requirements.txt
 
 # Install Code extensions
 COPY src/vs-extensions.txt /home/coder/
