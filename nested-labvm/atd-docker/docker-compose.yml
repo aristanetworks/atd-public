@@ -128,7 +128,7 @@ services:
       - "1813:1813/udp"
   nginx:
     container_name: atd-nginx
-    image: us.gcr.io/beta-atds/atddocker_nginx:2.1.1
+    image: us.gcr.io/beta-atds/atddocker_nginx:2.2.1
     restart: always
     depends_on:
       - uilanding
