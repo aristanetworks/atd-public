@@ -95,8 +95,11 @@ Open CVP via the topology page.
    |br| *(The DC name  can be a name or an integer, but for the lab use the aforementioned value)*
 
    .. thumbnail:: images/cvp_studios_l3ls_evpn/6l3ls.gif .. warning:: The CIDR is required. `spine``
-   #. Create Pod, name as **1** Ignore the warning on creation.
+   f. Assign devices to the DC via "Assigned Devices" 
+   #. Under Role, specify ``Leaf`` or ``Spine`` where needed.   
+   #. Create Pod, name as **1** and ignore the warning on creation.
    #. Enter Pod configuration
+
    
    .. thumbnail:: images/cvp_studios_l3ls_evpn/7l3ls.gif
       :align: center
@@ -104,7 +107,7 @@ Open CVP via the topology page.
 
   
 
-   j. Assign devices to the Pod via "Assigned Devices" 
+   j. Assign devices to the Pod via "Assigned Devices"
    #. Spines are automatically added, number ``s1-spine1`` as 1, ``s1-spine2``  as 2.
    #. Add Leaf Domain 1 and 2
    #. In Leaf Domain 1 add ``s1-leaf1``, number as 1, ``s1-leaf2``, number as 2.
@@ -112,15 +115,17 @@ Open CVP via the topology page.
    
    |br| 
 
+   .. thumbnail:: images/cvp_studios_l3ls_evpn/8l3ls.gif
+       :align: center
+       :width: 50%
+
    .. warning:: Leaf Domains *MUST* be an integer or the build process will fail. 
       |br| Also, in a Pod all switches in a role **MUST** have a unique number or the build process will fail.
    
    .. note:: A leaf domain can be a pair of switches or a standalone. 
       |br| MLAG configuration is the default when domains are a pair.
    
-   .. thumbnail:: images/cvp_studios_l3ls_evpn/8l3ls.gif
-       :align: center
-       :width: 50%
+
 
 
    |br| The next step is to review the **workspace**. But before we do that, have a good look at the lower section. 
@@ -161,7 +166,7 @@ Open CVP via the topology page.
    |br| To show the flexibility of the query engine, our search query for assignment will be ``DC:1 AND Role:Leaf`` 
 
    a. Navigate to the **Provisioning>Studios>EVPN Services** studio. 
-   #. Use ``DC:D1 AND Role:Leaf`` as the query
+   #. Use ``DC:1 AND Role:Leaf`` as the query
    #. Create the tenant, called **“A”**
    #. Enter the tenant configuration
    #. Create a VRF, called "**A**"
@@ -183,7 +188,7 @@ Open CVP via the topology page.
    
    j. Create VLAN ID 60
    #. Enter the configuration for VLAN 60
-   #. Add VTEP, using ``DC:D1 AND Role:Leaf`` as the query
+   #. Add VTEP, using ``DC:1 AND Role:Leaf`` as the query
    #. Enter the VTEP configuration to allow the tags to be assigned automatically
    #. Exit the VTEP configuration
    #. Under VRF, choose **A**
