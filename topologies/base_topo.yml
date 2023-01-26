@@ -94,7 +94,7 @@ topologies:
               ram: 36
               disk: 300
               image: atd-dual-datacenter-cvp-c2023-1-0-eft2-20230126
-            branch: nested/2022.3
+            branch: nested-release
             orderable: true
             eos:
               - 4.29.1F
