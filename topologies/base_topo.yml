@@ -82,6 +82,22 @@ topologies:
               - 4.29.1F
               - 4.29.0.2F
               - 4.28.3M
+          2023.1.0-EFT2:
+            schema: 2
+            resources_eos:
+              cpu: 16
+              ram: 32
+              disk: 50
+              image: atd-dual-datacenter-nodes-ceos-c2023-1-0-eft2-20230126
+            resources_cvp:
+              cpu: 28
+              ram: 36
+              disk: 300
+              image: atd-dual-datacenter-cvp-c2023-1-0-eft2-20230126
+            branch: nested/2022.3
+            orderable: true
+            eos:
+              - 4.29.1F
     prod:
       ceos:
         cpu: 40
