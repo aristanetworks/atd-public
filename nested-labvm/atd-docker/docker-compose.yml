@@ -71,6 +71,7 @@ services:
       - PYTHONUNBUFFERED=1
     volumes:
       - /etc/atd:/etc/atd:ro
+      - /home/arista/arista-dir/cvp:/home/arista/cvp:ro
       - /opt/atd:/opt/atd:ro
       - cvp_dir:/home/arista/CVP_DATA:rw
   kvmbuilder:
