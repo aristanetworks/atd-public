@@ -213,6 +213,7 @@ def main(args):
         startup_output.append(NOTIFY_ADD)
         startup_output.append("ip netns add atd\n")
         mtu_output.append("#!/bin/bash\n")
+        mtu_output.append("sleep 120\n")
         # Get the veths created
         create_output.append("# Creating veths\n")
         for _veth in VETH_PAIRS:
