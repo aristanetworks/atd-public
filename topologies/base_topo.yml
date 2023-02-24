@@ -98,6 +98,22 @@ topologies:
             orderable: true
             eos:
               - 4.29.1F
+          2023.1.0-EFT5-Ubuntu:
+            schema: 2
+            resources_eos:
+              cpu: 24
+              ram: 36
+              disk: 50
+              image: a-ubnt-dual-datacenter-nodes-ceos-c2023-1-0-eft5-20230225
+            resources_cvp:
+              cpu: 28
+              ram: 36
+              disk: 300
+              image: a-ubnt-dual-datacenter-cvp-c2023-1-0-eft5-20230225
+            branch: nested-ubuntu
+            orderable: true
+            eos:
+              - 4.29.1F
     prod:
       ceos:
         cpu: 40
