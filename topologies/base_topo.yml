@@ -98,7 +98,7 @@ topologies:
             orderable: true
             eos:
               - 4.29.1F
-          2023.1.0-EFT5-Ubuntu:
+          2023.1.0-eft5-ubuntu:
             schema: 2
             resources_eos:
               cpu: 24
