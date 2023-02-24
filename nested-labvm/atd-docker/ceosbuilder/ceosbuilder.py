@@ -253,12 +253,16 @@ def main(args):
             startup_output.append("sleep 1\n")
             startup_output.append("docker run -d --name={0} --log-opt max-size=1m --net=container:{0}-net --ip {1} --privileged -v /etc/sysctl.d/99-zatd.conf:/etc/sysctl.d/99-zatd.conf:ro -v {2}/{0}:/mnt/flash:Z -e INTFTYPE=et -e MGMT_INTF=eth0 -e ETBA=1 -e SKIP_ZEROTOUCH_BARRIER_IN_SYSDBINIT=1 -e CEOS=1 -e EOS_PLATFORM=ceoslab -e container=docker -i -t ceosimage:{3} /sbin/init systemd.setenv=INTFTYPE=et systemd.setenv=MGMT_INTF=eth0 systemd.setenv=ETBA=1 systemd.setenv=SKIP_ZEROTOUCH_BARRIER_IN_SYSDBINIT=1 systemd.setenv=CEOS=1 systemd.setenv=EOS_PLATFORM=ceoslab systemd.setenv=container=docker\n".format(_node, CEOS[_node].ip, CEOS_NODES, CEOS_VERSION))
         # Pausing to wait for cEOS nodes to come online to then modify the eth0 mtu
-        create_output.append("sleep 5\n")
-        startup_output.append("sleep 5\n")
+        create_output.append("# Pausing for nodes to come up\n")
+        create_output.append("sleep 10\n")
+        startup_output.append("# Pausing for nodes to come up\n")
+        startup_output.append("sleep 10\n")
         for _node in CEOS:
+            create_output.append(f"# Setting the eth0 interface MTU to {CEOS_MTU}\n")
             create_output.append(f"ip netns exec {_node} ip link set eth0 down\n")
             create_output.append(f"ip netns exec {_node} ip link set eth0 mtu {CEOS_MTU}\n")
             create_output.append(f"ip netns exec {_node} ip link set eth0 up\n")
+            startup_output.append(f"# Setting the eth0 interface MTU to {CEOS_MTU}\n")
             startup_output.append(f"ip netns exec {_node} ip link set eth0 down\n")
             startup_output.append(f"ip netns exec {_node} ip link set eth0 mtu {CEOS_MTU}\n")
             startup_output.append(f"ip netns exec {_node} ip link set eth0 up\n")
