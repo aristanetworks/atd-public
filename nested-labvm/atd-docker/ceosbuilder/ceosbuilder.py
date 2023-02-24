@@ -169,6 +169,7 @@ def main(args):
     """
     create_output = []
     startup_output = []
+    mtu_output = []
     _CEOS = False
     while True:
         if exists(FILE_TOPO):
@@ -211,6 +212,7 @@ def main(args):
         startup_output.append("#!/bin/bash\n")
         startup_output.append(NOTIFY_ADD)
         startup_output.append("ip netns add atd\n")
+        mtu_output.append("#!/bin/bash\n")
         # Get the veths created
         create_output.append("# Creating veths\n")
         for _veth in VETH_PAIRS:
@@ -252,15 +254,13 @@ def main(args):
             startup_output.append("ip link set {0}-mgmt up\n".format(CEOS[_node].name_short))
             startup_output.append("sleep 1\n")
             startup_output.append("docker run -d --name={0} --log-opt max-size=1m --net=container:{0}-net --ip {1} --privileged -v /etc/sysctl.d/99-zatd.conf:/etc/sysctl.d/99-zatd.conf:ro -v {2}/{0}:/mnt/flash:Z -e INTFTYPE=et -e MGMT_INTF=eth0 -e ETBA=1 -e SKIP_ZEROTOUCH_BARRIER_IN_SYSDBINIT=1 -e CEOS=1 -e EOS_PLATFORM=ceoslab -e container=docker -i -t ceosimage:{3} /sbin/init systemd.setenv=INTFTYPE=et systemd.setenv=MGMT_INTF=eth0 systemd.setenv=ETBA=1 systemd.setenv=SKIP_ZEROTOUCH_BARRIER_IN_SYSDBINIT=1 systemd.setenv=CEOS=1 systemd.setenv=EOS_PLATFORM=ceoslab systemd.setenv=container=docker\n".format(_node, CEOS[_node].ip, CEOS_NODES, CEOS_VERSION))
+            mtu_output.append(f"echo \"Setting the eth0 interface MTU to {CEOS_MTU}\"\n")
+            mtu_output.append(f"ip netns exec {_node} ip link set eth0 down\n")
+            mtu_output.append(f"ip netns exec {_node} ip link set eth0 mtu {CEOS_MTU}\n")
+            mtu_output.append(f"ip netns exec {_node} ip link set eth0 up\n")
         # Pausing to wait for cEOS nodes to come online to then modify the eth0 mtu
         create_output.append("echo \"Pausing for nodes to come up\"\n")
         create_output.append("sleep 60\n")
-        for _node in CEOS:
-            create_output.append(f"echo \"Setting the eth0 interface MTU to {CEOS_MTU}\"\n")
-            create_output.append(f"ip netns exec {_node} ip link set eth0 down\n")
-            create_output.append(f"ip netns exec {_node} ip link set eth0 mtu {CEOS_MTU}\n")
-            create_output.append(f"ip netns exec {_node} ip link set eth0 up\n")
-            create_output.append("sleep 2\n")
 
         create_output.append('touch {0}.ceos.txt'.format(CEOS_SCRIPTS))
         startup_output.append('rm -- "$0"\n')
@@ -272,6 +272,9 @@ def main(args):
         with open(CEOS_SCRIPTS + 'Startup.sh', 'w') as cout:
             for _start in startup_output:
                 cout.write(_start)
+        with open(CEOS_SCRIPTS + 'Mtu.sh', 'w') as cout:
+            for _mtu in mtu_output:
+                cout.write(_mtu)
     else:
         pS("OK", "Exiting as it is a non-cEOS topology.")
 
