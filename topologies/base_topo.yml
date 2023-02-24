@@ -104,12 +104,12 @@ topologies:
               cpu: 24
               ram: 36
               disk: 50
-              image: a-ubnt-dual-datacenter-nodes-ceos-c2023-1-0-eft5-20230225
+              image: a-ubnt-dual-datacenter-nodes-ceos-c2023-1-0-eft5-20230226
             resources_cvp:
               cpu: 28
               ram: 36
               disk: 300
-              image: a-ubnt-dual-datacenter-cvp-c2023-1-0-eft5-20230225
+              image: a-ubnt-dual-datacenter-cvp-c2023-1-0-eft5-20230226
             branch: nested-ubuntu
             orderable: true
             eos:
