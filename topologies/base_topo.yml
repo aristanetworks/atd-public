@@ -111,7 +111,7 @@ topologies:
               disk: 300
               image: a-ubnt-dual-datacenter-cvp-c2023-1-0-eft5-20230226
             branch: nested-ubuntu
-            orderable: true
+            orderable: false
             eos:
               - 4.29.1F
     prod:
