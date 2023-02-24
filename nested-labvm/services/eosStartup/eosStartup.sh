@@ -88,8 +88,6 @@ then
         sleep 1
     done
     bash /opt/ceos/scripts/Startup.sh
-else
-    bash /opt/ceos/scripts/Mtu.sh &
 fi
 
 # if VTEP file present
