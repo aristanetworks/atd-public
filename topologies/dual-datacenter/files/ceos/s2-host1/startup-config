@@ -2,7 +2,6 @@ hostname s2-host1
 !
 interface Management0
    ip address 192.168.0.26/24
-   mtu 1380
 !
 ip routing
 daemon TerminAttr

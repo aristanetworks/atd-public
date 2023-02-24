@@ -2,7 +2,6 @@ hostname s2-core2
 !
 interface Management0
    ip address 192.168.0.203/24
-   mtu 1380
 !
 ip routing
 daemon TerminAttr

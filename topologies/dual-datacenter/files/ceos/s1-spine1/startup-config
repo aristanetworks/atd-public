@@ -2,7 +2,6 @@ hostname s1-spine1
 !
 interface Management0
    ip address 192.168.0.10/24
-   mtu 1380
 !
 ip routing
 daemon TerminAttr

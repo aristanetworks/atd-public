@@ -2,7 +2,6 @@ hostname s2-leaf4
 !
 interface Management0
    ip address 192.168.0.25/24
-   mtu 1380
 !
 ip routing
 daemon TerminAttr
