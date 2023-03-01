@@ -173,7 +173,7 @@ def main():
    _version_major = float(f"{_version[0]}.{_version[1]}")
    build_yaml = getTopoInfo(REPO_TOPO + accessinfo['topology'] + '/topo_build.yml')
    # Perform check if it is a cEOS based topo and 2022.2 or later CVP
-   if _version_major >= 2022.2 and accessinfo['eos_type'] == 'ceos':
+   if _version_major >= 2022.2:
       pS("INFO", "Generating a token for onboarding...")
       _token_response = cvprac_clnt.api.create_enroll_token("24h")
       _token_path = path.expanduser(f"~/token")
