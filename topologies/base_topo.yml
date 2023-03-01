@@ -174,7 +174,7 @@ topologies:
             resources:
               cpu: 54
               ram: 64
-            branch: v2022.2-20230208b
+            branch: v2022.2-20230301a
             orderable: true
             image: base-atd-dual-datacenter-ceos-c2022-2-0-20220908
             eos:
@@ -506,7 +506,7 @@ topologies:
             resources:
               cpu: 40
               ram: 64
-            branch: v2022.2-20230208b
+            branch: v2022.2-20230301a
             orderable: true
             image: base-atd-routing-ceos-c2022-2-0-20220908
             eos:
@@ -554,7 +554,7 @@ topologies:
             resources:
               cpu: 50
               ram: 90
-            branch: v2022.2-20230208b
+            branch: v2022.2-20230301a
             orderable: true
             image: base-atd-routing-e4-28-2f-c2022-2-0-20221026u
             eos:
