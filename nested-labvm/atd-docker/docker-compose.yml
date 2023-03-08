@@ -109,7 +109,7 @@ services:
       - atd_nginx
   labguides:
     container_name: atd-labguides
-    image: us.gcr.io/beta-atds/atddocker_labguides:2.0.2
+    image: us.gcr.io/beta-atds/atddocker_labguides:2.1.1
     restart: always
     environment:
       - PYTHONUNBUFFERED=1
