@@ -113,7 +113,7 @@ topologies:
               disk: 300
               image: atd-dual-datacenter-cvp-c2023-1-0-eft2-20230126
             branch: nested-release
-            orderable: true
+            orderable: false
             eos:
               - 4.29.1F
           2023.1.0-eft7:
