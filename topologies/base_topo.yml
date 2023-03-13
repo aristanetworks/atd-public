@@ -116,6 +116,23 @@ topologies:
             orderable: true
             eos:
               - 4.29.1F
+          2023.1.0-eft7:
+            schema: 2
+            resources_eos:
+              cpu: 16
+              ram: 32
+              disk: 50
+              image: atd-dual-datacenter-nodes-ceos-c2023-1-0-eft7-20230313
+            resources_cvp:
+              cpu: 28
+              ram: 36
+              disk: 300
+              image: atd-dual-datacenter-cvp-c2023-1-0-eft7-20230313
+            branch: nested-release
+            orderable: true
+            eos:
+              - 4.29.2F
+              - 4.29.1F
           2023.1.0-eft5-ubuntu:
             schema: 2
             resources_eos:
