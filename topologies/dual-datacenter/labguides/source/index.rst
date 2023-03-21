@@ -59,6 +59,7 @@ Welcome to the Arista ATD documentation!
    :maxdepth: 1
    :caption: Arista Academy
 
+   aa-initial_configuration.rst
    aa-cvp_upgrade.rst
    aa-cvp_custom_events
    cvp_studios_l3ls_evpn.rst
