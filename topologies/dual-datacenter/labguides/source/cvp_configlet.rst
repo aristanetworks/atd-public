@@ -11,28 +11,24 @@ been defined for AAA and VLANs.
 1. Log into the Arista Test Drive portal with your assigned URL. If you
    don’t have one, please see your ATD staff.
 
-.. image:: images/cvp_configlet/nested_cvp_overview_1.png
+.. thumbnail:: images/cvp_configlet/nested_cvp_overview_1.png
    :align: center
+   :title: This your lab access page. You can access your topology from here or copy your unique lab address to use with an ssh client.
 
 |
 
-2. Click on the link "Click Here To Access Topology" and navigate to the below page. Click the **CVP** link on the left side of the screen.
+2. Click on the link **Click Here To Access Topology** and navigate to the below page. Click the **CVP** link on the left side of the screen.
 
 |
 
-.. image:: images/cvp_configlet/nested_cvp_landing_1.png
+.. thumbnail:: images/cvp_configlet/nested_cvp_landing_1.png
    :align: center
+   :title: This is the main landing page for your lab. From here you can browse to CVP, Console Access (in your browser), click the individual icons to SSH to them, and access the Lab Guides. 
 
 |
 
 3. You will come to a login screen for CloudVision Portal. Enter the username ``arista`` and the password ``{REPLACE_PWD}``
 
-|
-
-.. image:: images/cvp_configlet/cvp_configlet_1.gif
-   :align: center
-
-|
 
 4. For this lab, select **Provisioning** -> **Configlets** from CloudVision.
 
@@ -48,14 +44,23 @@ been defined for AAA and VLANs.
 
 7. Name the Configlet **Alias**.
 
-8. The Configlet can be validated against a device to ensure there isn’t a conflict and the configuration is validated. To validate, click the checkbox in the top right section.
+|
 
-9. Once the configuration is validated, Click the **Save** button to save the Configlet
+.. thumbnail:: images/cvp_configlet/cvp_configlet_1.gif
+   :align: center
+   :title: Creating the Alias configlet
 
 |
 
-.. image:: images/cvp_configlet/cvp_configlet_2.gif
+8. The Configlet can be validated against a device to ensure there isn’t a conflict and the configuration is validated. To validate, click the checkbox in the top right section.
+
+9.  Once the configuration is validated, Click the **Save** button to save the Configlet
+
+|
+
+.. thumbnail:: images/cvp_configlet/cvp_configlet_2.gif
    :align: center
+   :title: Assigning the Alias configlet we just created.
 
 |
 
@@ -71,8 +76,9 @@ been defined for AAA and VLANs.
 
 |
 
-.. image:: images/cvp_configlet/cvp_configlet_3.gif
+.. thumbnail:: images/cvp_configlet/cvp_configlet_3.gif
    :align: center
+   :title: Creating a basic Change Control and running it to push the Alias to the devices.
 
 |
 
@@ -82,7 +88,7 @@ been defined for AAA and VLANs.
 
 15. Check each Task in the 'Assignable Tasks' section, then click the **Create Change Control with 9 Tasks** button.
 
-    *\**See the 'CVP Change Control, Telemetry & Rollback' lab guide for more information on Change Controls*
+    *\**See the 'CVP Advanced Change Control' lab guide for more information on Change Controls*
 
 
 16. Select **Review and Approve** in the top right, then **Approve** in the bottom right to approve the Change Control.
@@ -106,8 +112,9 @@ Oh no! That Alias wasn't supposed to be deployed to production yet and now we ne
 
 |
 
-.. image:: images/cvp_configlet/cvp_configlet_4.png
+.. thumbnail:: images/cvp_configlet/cvp_configlet_4.png
    :align: center
+   :title: location of the Rollback button
 
 |
 
@@ -115,9 +122,9 @@ Oh no! That Alias wasn't supposed to be deployed to production yet and now we ne
 
 |
 
-.. image:: images/cvp_configlet/cvp_configlet_5.png
+.. thumbnail:: images/cvp_configlet/cvp_configlet_5.png
    :align: center
-
+   :title: This is the rollback confirmation page where you can select the specific tasks you would like to roll back
 |
 
 3. Click **Review and Approve**. You will be shown the specific lines that will be removed from the running configuration of the switches. This time, lets select the **Execute Immediately** switch, then select **Approve and Execute**. The changes are being rolled back. Whew!
