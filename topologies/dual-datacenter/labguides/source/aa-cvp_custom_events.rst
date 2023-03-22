@@ -22,6 +22,7 @@ In this lab we will use the EOS CLI to send log messages that CVP will detect an
 .. thumbnail:: images/aa-cvp_custom_events/cvp-custom-events-start.png
    :align: center
    :width: 70%
+   :title: Showing the location of the Event Generation button
 
 |br|
 
@@ -31,6 +32,7 @@ In this lab we will use the EOS CLI to send log messages that CVP will detect an
 .. thumbnail:: images/aa-cvp_custom_events/cvp-custom-events-event-gen1.png
    :align: center
    :width: 70%
+   :title: Location of the Custom Syslog Event settings
 
 |br|
 
@@ -48,6 +50,7 @@ In this lab we will use the EOS CLI to send log messages that CVP will detect an
 .. thumbnail:: images/aa-cvp_custom_events/cvp-custom-events-event-gen2.png
    :align: center
    :width: 70%
+   :title: Setting up a new rule for Custom Syslog Events
 
 |br|
 
@@ -70,6 +73,7 @@ In this lab we will use the EOS CLI to send log messages that CVP will detect an
 .. thumbnail:: images/aa-cvp_custom_events/cvp-custom-events-send-log.gif
    :align: center
    :width: 70%
+   :title: Generating a custom log event
 
 |br|
 
@@ -78,6 +82,7 @@ In this lab we will use the EOS CLI to send log messages that CVP will detect an
 .. thumbnail:: images/aa-cvp_custom_events/cvp-custom-event-view.gif
    :align: center
    :width: 70%
+   :title: Viewing our custom log event on the CVP Events page
 
 |br|
 
