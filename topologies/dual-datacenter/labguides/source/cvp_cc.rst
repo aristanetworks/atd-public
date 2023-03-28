@@ -25,7 +25,8 @@ Now we want to add several Loopbacks to each device using a Configlet Builder at
 
 .. thumbnail:: images/cvp_cc/cvp_cc_1.gif
    :align: center
-
+   :title: assigning the Add_Loopbacks configlet to the S1-Leaf container
+   
 |
 
 1. Navigate to the **Network Provisioning** page under the **Provisioning** tab.
@@ -42,6 +43,7 @@ Now we want to add several Loopbacks to each device using a Configlet Builder at
 
 .. thumbnail:: images/cvp_cc/cvp_cc_2.gif
    :align: center
+   :title: creating and customizing a Change Control to include snapshot steps before and after the tasks.
 
 |
 
@@ -56,6 +58,7 @@ Now we want to add several Loopbacks to each device using a Configlet Builder at
 10. Next we will need to change the root stage to Serial execution. To do this, click on the Root stage, then on the right side, change the drop down to **Series**
 
 .. thumbnail:: images/cvp_cc/cvp_cc_6.png
+   :title: changing our change control root stage to series so they'll run in order
 
 
 11. Then we will create 3 new child stages. Click the **+** on the right side of the screen three times in order to create 3 new stages.
@@ -71,6 +74,7 @@ Now we want to add several Loopbacks to each device using a Configlet Builder at
 16. Repeat step 15, but select 'After Snapshot'. We should now have 2 stages that will take a before and after snapshot of the devices being changed and your Change Conrol screen should look like this.
 
 .. thumbnail:: images/cvp_cc/cvp_cc_7.png
+   :title: This is how our change control looks just before we review, approve and execute it.
 
 .. note:: A few notes about Change Control:
 
@@ -94,6 +98,7 @@ Now we want to add several Loopbacks to each device using a Configlet Builder at
 
 .. thumbnail:: images/cvp_cc/cvp_cc_3.gif
    :align: center
+   :title: Comparing our ipv4 routes before and after our change control, then showing our snapshot that was created during our change control
 
 |
 
