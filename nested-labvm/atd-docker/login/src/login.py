@@ -124,7 +124,7 @@ def device_menu():
          print(f"=============================================")
          print(f"To connect to the CVP Console perform the following below:")
          print(f"1. Enter the arista users password of: {login_info['jump_host']['pw']}")
-         print(f"2. Once prompted with the 'virsh' prompt. Enter 'console cvp1")
+         print(f"2. Once prompted with the 'virsh' prompt. Enter 'console cvp1'")
          print(f"=============================================")
          os.system(f"virsh --connect qemu+ssh://arista@{access_info['vtep_remote']}/system")
       elif user_input == '96' or user_input.lower() == 'screen':
