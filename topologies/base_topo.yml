@@ -423,6 +423,22 @@ topologies:
             orderable: true
             eos:
               - 4.29.2F
+          2023.1.0-eft10:
+            schema: 2
+            resources_eos:
+              cpu: 32
+              ram: 64
+              disk: 50
+              image: atd-routing-nodes-veos-e4-30-0f-c2023-1-0--eft10-20230424
+            resources_cvp:
+              cpu: 28
+              ram: 36
+              disk: 300
+              image: atd-routing-cvp-c2023-1-0-eft10-20230424
+            branch: nested-release
+            orderable: true
+            eos:
+              - 4.30.0F
       ceos:
         cpu: 32
         ram: 64
