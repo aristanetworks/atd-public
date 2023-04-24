@@ -95,7 +95,7 @@ topologies:
               disk: 300
               image: atd-dual-datacenter-cvp-c2022-3-1-20230227
             branch: nested/2022.3
-            orderable: true
+            orderable: false
             eos:
               - 4.29.2F
               - 4.29.1F
