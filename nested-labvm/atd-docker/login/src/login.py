@@ -107,6 +107,7 @@ def device_menu():
         counter += 1
     
     print("\nOther Options: ")
+    print("95. Connect to CVP Console (console) - Type 'console cvp1' after connecting")
     print("96. Screen (screen) - Opens a screen session to each of the hosts")
     print("97. Back to Previous Menu (back)")
     print("98. Shell (shell/bash)")
@@ -119,6 +120,13 @@ def device_menu():
     try:
       if user_input.lower() in device_dict:
           os.system('ssh -o StrictHostKeyChecking=no ' + device_dict[user_input])
+      elif user_input == '95' or user_input.lower() == 'console':
+         print(f"=============================================")
+         print(f"To connect to the CVP Console perform the following below:")
+         print(f"1. Enter the arista users password of: {login_info['jump_host']['pw']}")
+         print(f"2. Once prompted with the 'virsh' prompt. Enter 'console cvp1")
+         print(f"=============================================")
+         os.system(f"virsh --connect qemu+ssh://arista@{access_info['vtep_remote']}/system")
       elif user_input == '96' or user_input.lower() == 'screen':
           os.system('/usr/bin/screen')
       elif user_input == '97' or user_input.lower() == 'back':
