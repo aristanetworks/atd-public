@@ -19,7 +19,7 @@ In this lab we will use the EOS CLI to send log messages that CVP will detect an
 
 |br|
 
-.. thumbnail:: images/aa-cvp_custom_events/cvp-custom-events-start.png
+.. thumbnail:: images/ag-cvp_custom_events/cvp-custom-events-start.png
    :align: center
    :width: 70%
 
@@ -28,7 +28,7 @@ In this lab we will use the EOS CLI to send log messages that CVP will detect an
 *  After clicking **Event Generation** choose and click **Custom Syslog Event** 
    on the left vertical navigation area. 
 
-.. thumbnail:: images/aa-cvp_custom_events/cvp-custom-events-event-gen1.png
+.. thumbnail:: images/ag-cvp_custom_events/cvp-custom-events-event-gen1.png
    :align: center
    :width: 70%
 
@@ -45,7 +45,7 @@ In this lab we will use the EOS CLI to send log messages that CVP will detect an
    by exactly 6 numeric digits. In this example CR means **Change Record**.
    This will give the NOC the change record to review when an event is logged.
 
-.. thumbnail:: images/aa-cvp_custom_events/cvp-custom-events-event-gen2.png
+.. thumbnail:: images/ag-cvp_custom_events/cvp-custom-events-event-gen2.png
    :align: center
    :width: 70%
 
@@ -54,7 +54,7 @@ In this lab we will use the EOS CLI to send log messages that CVP will detect an
 *  Scroll down and click **Save Changes** to finish creating the
    Custom Syslog Event. See below for an animated gif of the setup.
 
-.. thumbnail:: images/aa-cvp_custom_events/cvp-custom-event-creation.gif
+.. thumbnail:: images/ag-cvp_custom_events/cvp-custom-event-creation.gif
    :align: center
    :width: 70%
 
@@ -67,7 +67,7 @@ In this lab we will use the EOS CLI to send log messages that CVP will detect an
 
    s1-leaf2# send log level alerts message CR123456 starting now!
 
-.. thumbnail:: images/aa-cvp_custom_events/cvp-custom-events-send-log.gif
+.. thumbnail:: images/ag-cvp_custom_events/cvp-custom-events-send-log.gif
    :align: center
    :width: 70%
 
@@ -75,7 +75,7 @@ In this lab we will use the EOS CLI to send log messages that CVP will detect an
 
 *  Review the events in CVP. You should see an event similar to the one below.
 
-.. thumbnail:: images/aa-cvp_custom_events/cvp-custom-event-view.gif
+.. thumbnail:: images/ag-cvp_custom_events/cvp-custom-event-view.gif
    :align: center
    :width: 70%
 

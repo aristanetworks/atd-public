@@ -14,7 +14,7 @@ CloudVision Initial Configuration
 
 or by clicking on "Console Access" on the main ATD screen. Log in with the arista user and the auto-generated password
 
-.. thumbnail:: images/aa-initial_configuration/initial-config-1.png
+.. thumbnail:: images/ag-initial_configuration/initial-config-1.png
 
 |
 
@@ -211,7 +211,7 @@ All of these settings are saved in the /cvpi/cvp-config.yaml file
 
 10. When you see the configuration menu on the screen again, we know that CVP has been configured successfully. Go back to the main ATD screen and click on the **CVP** link.
 
-.. thumbnail:: images/aa-initial_configuration/initial-config-3.png
+.. thumbnail:: images/ag-initial_configuration/initial-config-3.png
     :width: 50%
 
 |
@@ -222,7 +222,7 @@ All of these settings are saved in the /cvpi/cvp-config.yaml file
 
 12. You will need to change this password at first login, and you will also be asked for an email address. You can put anything you want in this field. Give your cluster a name and Logo on step 3, then click **Finish**.
 
-.. thumbnail:: images/aa-initial_configuration/initial-config-4.png
+.. thumbnail:: images/ag-initial_configuration/initial-config-4.png
     :width: 80%
 |
 
@@ -233,7 +233,7 @@ All of these settings are saved in the /cvpi/cvp-config.yaml file
 14. Now lets set up network-admin and network-operator accounts. Click on the gear in the upper right. Select **Users** under **Access Control**. Fill out the Add User screen and under **Roles** Select **network-admin**. Click **Add**.  Follow this step again, but select **network operator** to set up the network-operator account.
 
 
-.. thumbnail:: images/aa-initial_configuration/initial-config-5.png
+.. thumbnail:: images/ag-initial_configuration/initial-config-5.png
     :width: 70%
 
 |
@@ -245,7 +245,7 @@ All of these settings are saved in the /cvpi/cvp-config.yaml file
 
 17. Back in CVP, click on the Gear icon in the top right, then select **Compliance Updates** on the left. Paste the Token that was copied from arista.com and click **Save**
 
-.. thumbnail:: images/aa-initial_configuration/initial-config-6.png
+.. thumbnail:: images/ag-initial_configuration/initial-config-6.png
 
 |
 
