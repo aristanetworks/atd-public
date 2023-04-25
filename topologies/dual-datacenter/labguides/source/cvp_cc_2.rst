@@ -20,16 +20,18 @@ View Telemetry
 
 .. thumbnail:: images/cvp_cc/cvp_cc_4.gif
    :align: center
+   :title: Creating a Dashboard to display telemetry data for multiple devices
 
 |
 
 4. To view Telemetry information for multiple devices in a common dashboard, select the **Dashboard** tab.
 
-5. To build a dashboard, select **+ New Dahsboard** on the top right to bring up a list of available telemetry metrics to add. Drag the **Horizon Graph** to the middle pane, then click it to configure it.
+5. To build a dashboard, select **+ New Dashboard** on the top right to bring up a list of available telemetry metrics to add. Drag the **Horizon Graph** to the middle pane, then click it to configure it.
 
 6. Under the **Metric Data Type** dropdown, select **IPv4 Total Route Count**. In the **Local Devices Query** box type **device: S1-Leaf1, S1-Leaf2, S1-Leaf3, S1-Leaf4** to add them to the dashboard view.
 
 .. thumbnail:: images/cvp_cc/cvp_cc_8.png
+   :title: Using local devices query to select the devices that will appear on our dashboard
 
 7. This will bring up a live rolling view of the selected metric.  In the timeline at the bottom, select 'Show Last: 1h' to view metric data for the last hour.  You will see a graphical representation of the increase in routes for each device. (you may need to click the time near your dashboard name to get the timeline to show up)
 
@@ -45,10 +47,11 @@ Rollback
 
 .. thumbnail:: images/cvp_cc/cvp_cc_5.gif
    :align: center
+   :title: Rollback in progress for the Add_Loopbacks CC
 
 |
 
-1. Initiate a Network Rollback to revert the changes that were implemented. Go to the 'Provisioning -> Change Control' page and find the change control we just executed: 'Add_Loopbacks_CC'.
+1. Just as we did in the Configlet lab, we can initiate a Network Rollback to revert the changes that were implemented. Go to the 'Provisioning -> Change Control' page and find the change control we just executed: 'Add_Loopbacks_CC'.
 
 2. In the top right, click 'Rollback Change'.
 

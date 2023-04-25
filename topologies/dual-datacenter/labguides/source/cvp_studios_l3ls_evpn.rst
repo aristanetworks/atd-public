@@ -24,7 +24,6 @@ The hosts are already configured via lab configlets, we will not be involving th
 
 .. thumbnail:: images/cvp_studios_l3ls_evpn/0jumpbox.png
       :align: center
-      :width: 50%
 
 
 
@@ -41,20 +40,19 @@ Open CVP via the topology page.
 
       .. thumbnail:: images/cvp_studios_l3ls_evpn/2WorkspaceIntro.gif
          :align: center
-         :width: 50%
 
 #. Inventory studio
     
    a. Navigate to **Provisioning>Studios>Inventory and Topology**.
-   #. Enter the studio and click the *“add updates”* tab.
+   #. Enter the studio and click the **Accept Updates** tab.
    #. Select both ``s1-Spines`` and  ``s1-leaf1-4``, Ignore anything else. 
-   #. Click **"Add Updates"**.
-   #. Notice that there are devices now in the *“onboarded devices”* section. 
+   #. Click **"Accept Updates"**.
+   #. Notice that there are devices now in the ***onboarded devices** section. 
    #. Enter the device and see how Studios has detected the topology connections.
 
    .. thumbnail:: images/cvp_studios_l3ls_evpn/3Inventory.gif
          :align: center
-         :width: 50%
+         
 
    .. note:: 
    This is where we will tell studios which devices to include, and the studio will know how the physical topology is built via lldp. It will allow the other studios to auto detect links to assign properly for a functional network.
@@ -63,16 +61,19 @@ Open CVP via the topology page.
 #. Workspace Review
 
    .. note:: 
-      You can  make a separate workspace for every studio if you wish, however for this lab we are going to do all this work in the same workspace, because we need  to demonstrate how this process builds on itself in the  staging area.
+      You can  make a separate workspace for every studio if you wish, however for this lab we are going to do all this work in the same workspace, because we would like to demonstrate how this process builds on itself in the staging area.
 
-   Click on *“Review Workspace”* on the upper right. This will take us to the *"Workspace Summary"* page to store the inputs for this studio to the staging area for later use. 
+   Click on **Review Workspace** on the upper right. This will take us to the **Workspace Summary** page to store the inputs for this studio to the staging area for later use. 
    Once we click review, it will run through the checks and tell us if we are good to proceed. You can see in the workspace summary what studios have been modified.
       
    .. thumbnail:: images/cvp_studios_l3ls_evpn/4InventoryBuild.PNG
       :align: center
-      :width: 50%
+      
+   |
 
 #. L3LS Studio
+
+
 
    The L3LS studio is a powerful and flexible tool to get our underlay topology up and running quickly. 
    |br| In this lab we will have the studio "autotag" our devices to assign them. 
@@ -83,19 +84,19 @@ Open CVP via the topology page.
       
    .. thumbnail:: images/cvp_studios_l3ls_evpn/5tagexample.png
       :align: center
-      :width: 50%
+      
 
 
    a. Navigate to the **Provisioning>Studios>L3 Leaf-Spine Fabric** studio. 
-   #. Under **Data Centers** add a DC, name it **1**, and create. This will establish a tag pair of ``DC:1``  
-   #. Edit Device Selection to chose **Device By Tag Query**
-   #. Use the tag pair of ``DC:1``
+   #. Under *Data Centers*, click **Add Data Centers (DCs)** to add a DC, name it **1**, and click **+ Create "1"**. This will establish a tag pair of ``DC:1``  
+   #. Click **Edit** next to Device Selection and choose **Tag Query**
+   #. Use the tag pair of ``DC:1`` (You may ignore the message that says No Devices Found" since we haven't assigned this tag to any devices yet)
    #. Once complete, click the arrow to proceed into the configuration.
    
    |br| *(The DC name  can be a name or an integer, but for the lab use the aforementioned value)*
 
    .. thumbnail:: images/cvp_studios_l3ls_evpn/6l3ls.gif .. warning:: The CIDR is required. `spine``
-   f. Assign devices to the DC via "Assigned Devices" 
+   f. Assign devices to the DC by clicking on the **Assigned Devices** field and clicking each individual device. 
    #. Under Role, specify ``Leaf`` or ``Spine`` where needed.   
    #. Create Pod, name as **1** and ignore the warning on creation.
    #. Enter Pod configuration
@@ -103,12 +104,14 @@ Open CVP via the topology page.
    
    .. thumbnail:: images/cvp_studios_l3ls_evpn/7l3ls.gif
       :align: center
-      :width: 50%
+   
+   ..
+      The above gif will need to be re-recorded after bug #788113 is resolved (devices don't show up under Role after adding them to Assigned Devices - 2022.3.1)
 
   
 
    j. Assign devices to the Pod via "Assigned Devices"
-   #. Spines are automatically added, number ``s1-spine1`` as 1, ``s1-spine2``  as 2.
+   #. Add the two spines to the Spines section. number ``s1-spine1`` as 1, ``s1-spine2``  as 2.
    #. Add Leaf Domain 1 and 2
    #. In Leaf Domain 1 add ``s1-leaf1``, number as 1, ``s1-leaf2``, number as 2.
    #. In Leaf Domain 2 add ``s1-leaf3``, number as 3, ``s1-leaf4``, number as 4.
@@ -117,7 +120,7 @@ Open CVP via the topology page.
 
    .. thumbnail:: images/cvp_studios_l3ls_evpn/8l3ls.gif
        :align: center
-       :width: 50%
+      
 
    .. warning:: Leaf Domains *MUST* be an integer or the build process will fail. 
       |br| Also, in a Pod all switches in a role **MUST** have a unique number or the build process will fail.
@@ -136,7 +139,7 @@ Open CVP via the topology page.
 
    .. thumbnail:: images/cvp_studios_l3ls_evpn/9l3ls.gif
        :align: center
-       :width: 50%
+       
 
    |br| This studio is complete, click **Review Workspace** in the upper right.
    |br| CloudVision will now take all the inputs made to the studio and build the switch configurations.
@@ -151,7 +154,7 @@ Open CVP via the topology page.
 
    .. thumbnail:: images/cvp_studios_l3ls_evpn/10tags.png
        :align: center
-       :width: 50%
+      
 
    |br| The tags are what allows studios to determine the logical and physical relationships of the switches in the fabric.
    |br| Let's move onto the next section, EVPN. 
@@ -182,7 +185,7 @@ Open CVP via the topology page.
 
    .. thumbnail:: images/cvp_studios_l3ls_evpn/11evpn.gif
        :align: center
-       :width: 50%
+      
 
    |br| Next, VLANs 60 and 70 will be configured in the tenant.
    
@@ -201,7 +204,7 @@ Open CVP via the topology page.
 
    .. thumbnail:: images/cvp_studios_l3ls_evpn/12evpn.gif
        :align: center
-       :width: 50%
+      
 
 
    .. warning:: You MUST enter the VTEP configuration area for each VLAN in order for the tags to automatically assign.
@@ -218,14 +221,14 @@ Open CVP via the topology page.
 
    .. thumbnail:: images/cvp_studios_l3ls_evpn/13evpn.gif
        :align: center
-       :width: 50%
+       
 
    |br| We’re done with the EVPN studio.
    |br| Click review workspace and then start the build.
 
    .. thumbnail:: images/cvp_studios_l3ls_evpn/14evpn.gif
        :align: center
-       :width: 50% 
+      
 
    |br| The last Studio before submitting the workspace to Change Control will be the Interface Studio for the leaf to host connectivity.
 
@@ -240,7 +243,7 @@ Open CVP via the topology page.
 
    .. thumbnail:: images/cvp_studios_l3ls_evpn/16interface.png
          :align: center
-         :width: 50% 
+         
 
 
    a. Navigate to the **'Provisioning>Studios>Interface Configuration”** studio. 
@@ -251,7 +254,7 @@ Open CVP via the topology page.
 
    .. thumbnail:: images/cvp_studios_l3ls_evpn/17interface.gif
          :align: center
-         :width: 50% 
+        
 
    .. warning:: The **MLAG** and **LACP** options are hidden until a PO number is entered. 
                |br| Ensure you scroll after completing the PO to ensure both are set to Yes.
@@ -260,7 +263,7 @@ Open CVP via the topology page.
 
    .. thumbnail:: images/cvp_studios_l3ls_evpn/18interface.gif
          :align: center
-         :width: 50% 
+         
 
 #. Final Revew and Submission to Change Control
 
@@ -283,7 +286,7 @@ Open CVP via the topology page.
 
    .. thumbnail:: images/cvp_studios_l3ls_evpn/19CC.gif
          :align: center
-         :width: 50% 
+       
 
    |br| All tasks should complete successfully, and we can move onto the verification part of the lab.
 

@@ -21,7 +21,7 @@ Welcome to the Arista ATD documentation!
    cvp_configlet.rst
    cvp_cc.rst
    cvp_cc_2.rst
-   aa-cvp_custom_events
+   ag-cvp_custom_events
    cvp_studios_l3ls_evpn.rst
 
 .. toctree::
@@ -57,8 +57,9 @@ Welcome to the Arista ATD documentation!
 
 .. toctree::
    :maxdepth: 1
-   :caption: Arista Academy
-
-   aa-cvp_upgrade.rst
-   aa-cvp_custom_events
+   :caption: Arista Graduate
+   
+   ag-initial_configuration.rst
+   ag-cvp_upgrade.rst
+   ag-cvp_custom_events
    cvp_studios_l3ls_evpn.rst
