@@ -469,7 +469,7 @@ L3 EVPN Services
          MLAG System ID of **s1-leaf3** and **s1-leaf4** associated with VLAN 4092 and the Vxlan1 interface. This is how 
          the local VTEP knows where to send routed traffic when destined to the remote MLAG pair. We can see this VLAN is 
          dynamically created in the VLAN database and is mapped to our Layer 3 VNI (5001) in our VXLAN interface output. 
-         Be aware that since this VLAN is dynamic, the ID used in your lab may be different.
+         **Be aware that since this VLAN is dynamic, the ID used in your lab may be different.**
          
          Since we are using VXLAN ONLY for Layer 3 VRF services and not extending any local VLANs, **s1-host2**'s MAC 
          and ARP are not learned. It is reached via the IP Prefix route only.

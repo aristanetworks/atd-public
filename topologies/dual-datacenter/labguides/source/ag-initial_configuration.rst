@@ -253,12 +253,15 @@ All of these settings are saved in the /cvpi/cvp-config.yaml file
 
     This step will error in the ATD environment, but on a standard deployment, where the CVP server can reach the internet, it will complete successfully.
 
+<<<<<<< HEAD
     The manual way of updating the bug database is to browse to Arista.com, click on **Support > Software Downloads** and browse to **CloudVision > CloudVision Portal > Bug Alerts** and download the **AlertBase-CVP.json** file (as seen in the screenshot below)
 
 .. thumbnail:: images/aa-initial_configuration/initial-config-7.png
     
 
 
+=======
+>>>>>>> 9f03fc82cb15b75ff1d01f39454f7c0cad97c92d
 
 .. Note::
     
