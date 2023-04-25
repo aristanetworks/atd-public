@@ -34,7 +34,7 @@ services:
       - PYTHONUNBUFFERED=1
   login:
     container_name: atd-login
-    image: us.gcr.io/beta-atds/atddocker_login:2.1.0
+    image: us.gcr.io/beta-atds/atddocker_login:2.1.2
     user: $ArID:$ArGD
     restart: always
     hostname: devbox
@@ -87,7 +87,7 @@ services:
       - /home/atdadmin/KVM_scripts:/home/atdadmin/kvm:rw
   ceosbuilder:
     container_name: atd-ceosbuilder
-    image: us.gcr.io/beta-atds/atddocker_ceosbuilder:2.0.2
+    image: us.gcr.io/beta-atds/atddocker_ceosbuilder:2.1.1
     restart: on-failure
     environment:
       - PYTHONUNBUFFERED=1
