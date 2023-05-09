@@ -170,12 +170,9 @@ nodes:
         - neighborDevice: s1-spine2
           neighborPort: Ethernet7
           port: Ethernet3
-        - neighborDevice: s1-core1
-          neighborPort: Ethernet2
+        - neighborDevice: s2-brdr1
+          neighborPort: Ethernet4
           port: Ethernet4
-        - neighborDevice: s1-core2
-          neighborPort: Ethernet2
-          port: Ethernet5
         - neighborDevice: s1-brdr2
           neighborPort: Ethernet6
           port: Ethernet6
@@ -192,12 +189,9 @@ nodes:
         - neighborDevice: s1-spine2
           neighborPort: Ethernet8
           port: Ethernet3
-        - neighborDevice: s1-core1
-          neighborPort: Ethernet3
+        - neighborDevice: s2-brdr2
+          neighborPort: Ethernet4
           port: Ethernet4
-        - neighborDevice: s1-core2
-          neighborPort: Ethernet3
-          port: Ethernet5
         - neighborDevice: s1-brdr1
           neighborPort: Ethernet6
           port: Ethernet6
@@ -208,12 +202,6 @@ nodes:
         - neighborDevice: s1-core2
           neighborPort: Ethernet1
           port: Ethernet1
-        - neighborDevice: s1-brdr1
-          neighborPort: Ethernet4
-          port: Ethernet2
-        - neighborDevice: s1-brdr2
-          neighborPort: Ethernet4
-          port: Ethernet3
         - neighborDevice: s2-core1
           neighborPort: Ethernet4
           port: Ethernet4
@@ -227,12 +215,6 @@ nodes:
         - neighborDevice: s1-core1
           neighborPort: Ethernet1
           port: Ethernet1
-        - neighborDevice: s1-brdr1
-          neighborPort: Ethernet5
-          port: Ethernet2
-        - neighborDevice: s1-brdr2
-          neighborPort: Ethernet5
-          port: Ethernet3
         - neighborDevice: s2-core2
           neighborPort: Ethernet4
           port: Ethernet4
@@ -404,12 +386,9 @@ nodes:
         - neighborDevice: s2-spine2
           neighborPort: Ethernet7
           port: Ethernet3
-        - neighborDevice: s2-core1
-          neighborPort: Ethernet2
+        - neighborDevice: s1-brdr1
+          neighborPort: Ethernet4
           port: Ethernet4
-        - neighborDevice: s2-core2
-          neighborPort: Ethernet2
-          port: Ethernet5
         - neighborDevice: s2-brdr2
           neighborPort: Ethernet6
           port: Ethernet6
@@ -426,12 +405,9 @@ nodes:
         - neighborDevice: s2-spine2
           neighborPort: Ethernet8
           port: Ethernet3
-        - neighborDevice: s2-core1
-          neighborPort: Ethernet3
+        - neighborDevice: s1-brdr2
+          neighborPort: Ethernet4
           port: Ethernet4
-        - neighborDevice: s2-core2
-          neighborPort: Ethernet3
-          port: Ethernet5
         - neighborDevice: s2-brdr1
           neighborPort: Ethernet6
           port: Ethernet6
@@ -442,12 +418,6 @@ nodes:
         - neighborDevice: s2-core2
           neighborPort: Ethernet1
           port: Ethernet1
-        - neighborDevice: s2-brdr1
-          neighborPort: Ethernet4
-          port: Ethernet2
-        - neighborDevice: s2-brdr2
-          neighborPort: Ethernet4
-          port: Ethernet3
         - neighborDevice: s1-core1
           neighborPort: Ethernet4
           port: Ethernet4
@@ -461,12 +431,6 @@ nodes:
         - neighborDevice: s2-core1
           neighborPort: Ethernet1
           port: Ethernet1
-        - neighborDevice: s2-brdr1
-          neighborPort: Ethernet5
-          port: Ethernet2
-        - neighborDevice: s2-brdr2
-          neighborPort: Ethernet5
-          port: Ethernet3
         - neighborDevice: s1-core2
           neighborPort: Ethernet4
           port: Ethernet4
