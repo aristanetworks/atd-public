@@ -19,7 +19,7 @@ sleep_delay = 30
 NOTIFY_BASE = 1250
 CEOS_VERSION = '4.24.1.1F'
 REGIS_PATH = 'us.gcr.io/beta-atds'
-MTU = 9500
+MTU = 10000
 VETH_PAIRS = []
 CEOS = {}
 
