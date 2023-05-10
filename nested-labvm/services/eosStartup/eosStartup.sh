@@ -89,13 +89,13 @@ then
     done
     bash /opt/ceos/scripts/Startup.sh
     # ===============================================
-    # Adding below section to adjust veth pair MTUs to 9500
+    # Adding below section to adjust veth pair MTUs to 10000
     # ===============================================
     sleep 5
     for i in $(ifconfig | grep veth | awk '{print $1}')
     do
         echo $i
-        ip link set $i mtu 9500
+        ip link set $i mtu 10000
     done
     # ===============================================
     # End veth mtu adjustment section
