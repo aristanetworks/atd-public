@@ -25,11 +25,10 @@ topologies:
             orderable: true
             image: base-atd-dual-datacenter-ceos-c2022-2-0-20220908
             eos:
+              - 4.30.0F
+              - 4.29.2F
+              - 4.29.1F
               - 4.29.0.2F
-              - 4.28.3M
-              - 4.28.2F
-              - 4.28.1F
-              - 4.27.2F
           2022.2.0-bare:
             schema: 2
             resources_eos:
@@ -49,10 +48,10 @@ topologies:
             orderable: true
             image: base-atd-dual-datacenter-ceos-c2022-2-0--bare-20220909
             eos:
+              - 4.30.0F
+              - 4.29.2F
+              - 4.29.1F
               - 4.29.0.2F
-              - 4.28.2F
-              - 4.28.1F
-              - 4.27.2F
           2022.3.1:
             schema: 2
             resources_eos:
@@ -374,11 +373,10 @@ topologies:
             orderable: true
             image: base-atd-routing-ceos-c2022-2-0-20220908
             eos:
+              - 4.30.0F
+              - 4.29.2F
+              - 4.29.1F
               - 4.29.0.2F
-              - 4.28.3M
-              - 4.28.2F
-              - 4.28.1F
-              - 4.27.2F
           2022.3.1:
             schema: 2
             resources_eos:
