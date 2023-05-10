@@ -129,15 +129,14 @@ topologies:
             resources:
               cpu: 54
               ram: 64
-            branch: v2022.2-20230301a
+            branch: v2022.2-20230510a
             orderable: true
             image: base-atd-dual-datacenter-ceos-c2022-2-0-20220908
             eos:
+              - 4.30.0F
+              - 4.29.2F
+              - 4.29.1F
               - 4.29.0.2F
-              - 4.28.3M
-              - 4.28.2F
-              - 4.28.1F
-              - 4.27.2F
           2022.2.0-bare:
             schema: 2
             resources_eos:
@@ -153,14 +152,14 @@ topologies:
             resources:
               cpu: 54
               ram: 64
-            branch: v2022.2-20230208b
+            branch: v2022.2-20230510a
             orderable: true
             image: base-atd-dual-datacenter-ceos-c2022-2-0--bare-20220909
             eos:
+              - 4.30.0F
+              - 4.29.2F
+              - 4.29.1F
               - 4.29.0.2F
-              - 4.28.2F
-              - 4.28.1F
-              - 4.27.2F
     desc: 'Dual Data Center ATD Topology'
     name: 'Dual Data Center'
     title: 'Dual Data Center Lab'
@@ -453,15 +452,14 @@ topologies:
             resources:
               cpu: 40
               ram: 64
-            branch: v2022.2-20230301a
+            branch: v2022.2-20230510a
             orderable: true
             image: base-atd-routing-ceos-c2022-2-0-20220908
             eos:
+              - 4.30.0F
+              - 4.29.2F
+              - 4.29.1F
               - 4.29.0.2F
-              - 4.28.3M
-              - 4.28.2F
-              - 4.28.1F
-              - 4.27.2F
       veos:
         cpu: 44
         ram: 90
@@ -501,7 +499,7 @@ topologies:
             resources:
               cpu: 50
               ram: 90
-            branch: v2022.2-20230301a
+            branch: v2022.2-20230510a
             orderable: true
             image: base-atd-routing-e4-28-2f-c2022-2-0-20221026u
             eos:
