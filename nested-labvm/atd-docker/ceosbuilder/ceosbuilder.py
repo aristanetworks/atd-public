@@ -18,7 +18,8 @@ MGMT_BRIDGE = 'vmgmt'
 sleep_delay = 30
 NOTIFY_BASE = 1250
 CEOS_VERSION = '4.24.1.1F'
-
+REGIS_PATH = 'us.gcr.io/beta-atds'
+MTU = 9500
 VETH_PAIRS = []
 CEOS = {}
 
@@ -233,11 +234,11 @@ def main(args):
             for _intf in CEOS[_node].intfs:
                 _tmp_intf = CEOS[_node].intfs[_intf]
                 if CEOS[_node].name_short in  _tmp_intf['veth'].split('-')[0]:
-                    create_output.append("ip link set {0} netns {1} name {2} up\n".format(_tmp_intf['veth'].split('-')[0], _node, _tmp_intf['port']))
-                    startup_output.append("ip link set {0} netns {1} name {2} up\n".format(_tmp_intf['veth'].split('-')[0], _node, _tmp_intf['port']))
+                    create_output.append("ip link set {0} mtu {3} netns {1} name {2} up\n".format(_tmp_intf['veth'].split('-')[0], _node, _tmp_intf['port'], MTU))
+                    startup_output.append("ip link set {0} mtu {3} netns {1} name {2} up\n".format(_tmp_intf['veth'].split('-')[0], _node, _tmp_intf['port'], MTU))
                 else:
-                    create_output.append("ip link set {0} netns {1} name {2} up\n".format(_tmp_intf['veth'].split('-')[1], _node, _tmp_intf['port']))
-                    startup_output.append("ip link set {0} netns {1} name {2} up\n".format(_tmp_intf['veth'].split('-')[1], _node, _tmp_intf['port']))
+                    create_output.append("ip link set {0} mtu {3} netns {1} name {2} up\n".format(_tmp_intf['veth'].split('-')[1], _node, _tmp_intf['port'], MTU))
+                    startup_output.append("ip link set {0} mtu {3} netns {1} name {2} up\n".format(_tmp_intf['veth'].split('-')[1], _node, _tmp_intf['port'], MTU))
             # Get MGMT VETHS
             create_output.append("ip link add {0}-eth0 type veth peer name {0}-mgmt\n".format(CEOS[_node].name_short))
             create_output.append("brctl addif {0} {1}-mgmt\n".format(MGMT_BRIDGE, CEOS[_node].name_short))
