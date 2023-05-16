@@ -91,7 +91,7 @@ Open CVP via the topology page.
    #. Under *Data Centers*, click **Add Data Centers (DCs)** to add a DC, name it **1**, and click **+ Create "1"**. This will establish a tag pair of ``DC:1``  
    #. Click **Edit** next to Device Selection and choose **Tag Query**
    #. Use the tag pair of ``DC:1`` (You may ignore the message that says No Devices Found" since we haven't assigned this tag to any devices yet)
-   #. Once complete, click the arrow to proceed into the configuration.
+   #. Once complete, click the arrow in the Datacenter section to proceed into the configuration.
    
    |br| *(The DC name  can be a name or an integer, but for the lab use the aforementioned value)*
 
@@ -104,10 +104,6 @@ Open CVP via the topology page.
    
    .. thumbnail:: images/cvp_studios_l3ls_evpn/7l3ls.gif
       :align: center
-   
-   ..
-      The above gif will need to be re-recorded after bug #788113 is resolved (devices don't show up under Role after adding them to Assigned Devices - 2022.3.1)
-
   
 
    j. Assign devices to the Pod via "Assigned Devices"
@@ -128,8 +124,6 @@ Open CVP via the topology page.
    .. note:: A leaf domain can be a pair of switches or a standalone. 
       |br| MLAG configuration is the default when domains are a pair.
    
-
-
 
    |br| The next step is to review the **workspace**. But before we do that, have a good look at the lower section. 
    |br| These are all the variables that the topology will be built on. For this lab we’ll leave it all at defaults. 
