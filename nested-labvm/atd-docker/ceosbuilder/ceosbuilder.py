@@ -27,11 +27,17 @@ NOTIFY_ADJUST = """
 echo "fs.inotify.max_user_instances = {notify_instances}" > /etc/sysctl.d/99-zatd.conf
 sysctl -w fs.inotify.max_user_instances={notify_instances}
 """
+
+CEOS_CONFIG = """
+echo "SERIALNUMBER={0}" > /opt/ceos/node/{0}/ceos-config
+echo "SYSTEMMACADDR={1}" >> /opt/ceos/node/{0}/ceos-config
+"""
 class CEOS_NODE():
-    def __init__(self, node_name, node_ip, node_neighbors):
+    def __init__(self, node_name, node_ip, node_neighbors, mac_addr):
         self.name = node_name
         self.name_short = parseNames(node_name)['code']
         self.ip = node_ip
+        self.system_mac = mac_addr
         self.intfs = {}
         self.portMappings(node_neighbors)
     def portMappings(self, node_neighbors):
@@ -195,7 +201,7 @@ def main(args):
         NODES = FILE_BUILD['nodes']
         for vdev in NODES:
             vdevn = list(vdev.keys())[0]
-            CEOS[vdevn] = CEOS_NODE(vdevn, vdev[vdevn]['ip_addr'], vdev[vdevn]['neighbors'])
+            CEOS[vdevn] = CEOS_NODE(vdevn, vdev[vdevn]['ip_addr'], vdev[vdevn]['neighbors'], vdev[vdevn]['mac'])
         # Update NOTIFY adjust for instances
         NOTIFY_ADD = NOTIFY_ADJUST.format(
             notify_instances = NOTIFY_BASE * len(NODES)
@@ -220,8 +226,10 @@ def main(args):
         create_output.append("#\n#\n# Creating anchor containers\n#\n")
         # Create initial anchor containers
         create_output.append("mkdir {0}\n".format(CEOS_NODES))
-        create_output.append("cp -r {0}{1}/files/ceos/* {2}/\n".format(REPO_TOPO, TOPO_TAG, CEOS_NODES))
+        # create_output.append("cp -r {0}{1}/files/ceos/* {2}/\n".format(REPO_TOPO, TOPO_TAG, CEOS_NODES))
         for _node in CEOS:
+            create_output.append(CEOS_CONFIG.format(_node, CEOS[_node].system_mac))
+            create_output.append(f"echo \"DISABLE=False\" > /opt/ceos/nodes/{_node}/zerotouch-config")
             create_output.append("# Getting {0} nodes plubming\n".format(_node))
             create_output.append("docker run -d --restart=always --log-opt max-size=10k --name={0}-net --net=none busybox /bin/init\n".format(_node))
             create_output.append("{0}pid=$(docker inspect --format '{{{{.State.Pid}}}}' {1}-net)\n".format(_node.replace('-',''), _node))
@@ -245,13 +253,13 @@ def main(args):
             create_output.append("ip link set {0}-eth0 netns {1} name eth0 up\n".format(CEOS[_node].name_short, _node))
             create_output.append("ip link set {0}-mgmt up\n".format(CEOS[_node].name_short))
             create_output.append("sleep 1\n")
-            create_output.append(f"docker run -d --name={_node} --log-opt max-size=1m --net=container:{_node}-net --ip {CEOS[_node].ip} --privileged -v /etc/sysctl.d/99-zatd.conf:/etc/sysctl.d/99-zatd.conf:ro -v {CEOS_NODES}/{_node}:/mnt/flash:Z -e INTFTYPE=et -e MGMT_INTF=eth0 -e ETBA=1 -e SKIP_ZEROTOUCH_BARRIER_IN_SYSDBINIT=1 -e CEOS=1 -e EOS_PLATFORM=ceoslab -e container=docker -i -t {REGIS_PATH}/ceosimage:{CEOS_VERSION} /sbin/init systemd.setenv=INTFTYPE=et systemd.setenv=MGMT_INTF=eth0 systemd.setenv=ETBA=1 systemd.setenv=SKIP_ZEROTOUCH_BARRIER_IN_SYSDBINIT=1 systemd.setenv=CEOS=1 systemd.setenv=EOS_PLATFORM=ceoslab systemd.setenv=container=docker\n")
+            create_output.append(f"docker run -d --name={_node} --log-opt max-size=1m --net=container:{_node}-net --privileged -v /etc/sysctl.d/99-zatd.conf:/etc/sysctl.d/99-zatd.conf:ro -v {CEOS_NODES}/{_node}:/mnt/flash:Z -e INTFTYPE=et -e MGMT_INTF=eth0 -e ETBA=1 -e CEOS=1 -e EOS_PLATFORM=ceoslab -e container=docker -i -t {REGIS_PATH}/ceosimage:{CEOS_VERSION} /sbin/init systemd.setenv=INTFTYPE=et systemd.setenv=MGMT_INTF=eth0 systemd.setenv=ETBA=1 systemd.setenv=CEOS=1 systemd.setenv=EOS_PLATFORM=ceoslab systemd.setenv=container=docker\n")
             startup_output.append("ip link add {0}-eth0 type veth peer name {0}-mgmt\n".format(CEOS[_node].name_short))
             startup_output.append("brctl addif {0} {1}-mgmt\n".format(MGMT_BRIDGE, CEOS[_node].name_short))
             startup_output.append("ip link set {0}-eth0 netns {1} name eth0 up\n".format(CEOS[_node].name_short, _node))
             startup_output.append("ip link set {0}-mgmt up\n".format(CEOS[_node].name_short))
             startup_output.append("sleep 1\n")
-            startup_output.append(f"docker run -d --name={_node} --log-opt max-size=1m --net=container:{_node}-net --ip {CEOS[_node].ip} --privileged -v /etc/sysctl.d/99-zatd.conf:/etc/sysctl.d/99-zatd.conf:ro -v {CEOS_NODES}/{_node}:/mnt/flash:Z -e INTFTYPE=et -e MGMT_INTF=eth0 -e ETBA=1 -e SKIP_ZEROTOUCH_BARRIER_IN_SYSDBINIT=1 -e CEOS=1 -e EOS_PLATFORM=ceoslab -e container=docker -i -t {REGIS_PATH}/ceosimage:{CEOS_VERSION} /sbin/init systemd.setenv=INTFTYPE=et systemd.setenv=MGMT_INTF=eth0 systemd.setenv=ETBA=1 systemd.setenv=SKIP_ZEROTOUCH_BARRIER_IN_SYSDBINIT=1 systemd.setenv=CEOS=1 systemd.setenv=EOS_PLATFORM=ceoslab systemd.setenv=container=docker\n")
+            startup_output.append(f"docker run -d --name={_node} --log-opt max-size=1m --net=container:{_node}-net--privileged -v /etc/sysctl.d/99-zatd.conf:/etc/sysctl.d/99-zatd.conf:ro -v {CEOS_NODES}/{_node}:/mnt/flash:Z -e INTFTYPE=et -e MGMT_INTF=eth0 -e ETBA=1 -e CEOS=1 -e EOS_PLATFORM=ceoslab -e container=docker -i -t {REGIS_PATH}/ceosimage:{CEOS_VERSION} /sbin/init systemd.setenv=INTFTYPE=et systemd.setenv=MGMT_INTF=eth0 systemd.setenv=ETBA=1 systemd.setenv=CEOS=1 systemd.setenv=EOS_PLATFORM=ceoslab systemd.setenv=container=docker\n")
         create_output.append('touch {0}.ceos.txt'.format(CEOS_SCRIPTS))
         startup_output.append('rm -- "$0"\n')
 
