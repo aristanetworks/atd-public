@@ -279,6 +279,9 @@ def main(args):
         with open(CEOS_SCRIPTS + 'Startup.sh', 'w') as cout:
             for _start in startup_output:
                 cout.write(_start)
+        with open(CEOS_SCRIPTS + 'Upgrade.sh', 'w') as cout:
+            for _upgrade in upgrade_output:
+                cout.write(_upgrade)
     else:
         pS("OK", "Exiting as it is a non-cEOS topology.")
 
