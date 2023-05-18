@@ -269,19 +269,19 @@ def main():
         for p_cnt in cvp_yaml['cvp_info']['containers'].keys():
             if p_cnt not in containers:
                 _results = cvprac_clnt.api.search_topology(p_cnt)
-                containers[p_cnt] = _results['containerList'][0]['key']
+                containers[p_cnt] = _results['containerList'][0]
             if p_cnt not in cvp_clnt.containers.keys():
                 if cvp_yaml['cvp_info']['containers'][p_cnt]:
                     parent_name = cvp_yaml['cvp_info']['containers'][p_cnt]['parent']
                     if parent_name not in containers:
                         _results = cvprac_clnt.api.search_topology(parent_name)
-                        containers[parent_name] = _results['containerList'][0]['key']
-                    cvprac_clnt.api.add_container(p_cnt, parent_name, containers[parent_name])
+                        containers[parent_name] = _results['containerList'][0]
+                    cvprac_clnt.api.add_container(p_cnt, parent_name, containers[parent_name]['key'])
                 else:
                     if "Tenant" not in containers:
                         _results = cvprac_clnt.api.search_topology("Tenant")
-                        containers["Tenant"] = _results['containerList'][0]['key']
-                    cvprac_clnt.api.add_container(p_cnt, "Tenant", containers["Tenant"])
+                        containers["Tenant"] = _results['containerList'][0]
+                    cvprac_clnt.api.add_container(p_cnt, "Tenant", containers["Tenant"]['key'])
                 # cvp_clnt.saveTopology()
                 # cvp_clnt.getAllContainers()
                 pS("OK","Added {0} container".format(p_cnt))
