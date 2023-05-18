@@ -360,7 +360,7 @@ def main():
             if _dev['serialNumber'] in cvp_yaml['cvp_info']['configlets']['netelements']:
                 for _cfg in cvp_yaml['cvp_info']['configlets']['netelements'][_dev['serialNumber']]:
                     _tmp_eos_cfg.append(cvprac_clnt.api.get_configlet_by_name(_cfg))
-            cvprac_clnt.api.deploy_device(_dev, containers[_target_cnt], configlets=_tmp_eos_cfg)
+            cvprac_clnt.api.deploy_device(_dev, _target_cnt, configlets=_tmp_eos_cfg)
         # for eos in eos_info:
         #     # Check to see if the device is already provisioned
         #     if eos.hostname not in cvp_clnt.inventory.keys():
