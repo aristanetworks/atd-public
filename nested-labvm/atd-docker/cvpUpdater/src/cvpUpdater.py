@@ -279,6 +279,9 @@ def main():
                         _results = cvprac_clnt.api.search_topology("Tenant")
                         containers["Tenant"] = _results['containerList'][0]['key']
                     cvprac_clnt.api.add_container(p_cnt, "Tenant", containers["Tenant"])
+                if p_cnt not in containers:
+                    _results = cvprac_clnt.api.search_topology(p_cnt)
+                    containers[p_cnt] = _results['containerList'][0]['key']
                 # cvp_clnt.saveTopology()
                 # cvp_clnt.getAllContainers()
                 pS("OK","Added {0} container".format(p_cnt))
