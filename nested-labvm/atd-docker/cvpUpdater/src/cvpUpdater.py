@@ -417,8 +417,8 @@ def main():
                 task_info = cvprac_clnt.api.get_task_by_id(task_id)
                 task_status = task_info['taskStatus']
                 # task_status = cvp_clnt.getTaskStatus(task_id)
-                if 'taskStatus' in task_status:
-                    task_status = task_status['taskStatus']
+                if task_status:
+                    # task_status = task_status['taskStatus']
                     if task_status == 'Failed':
                         pS("iBerg", "Task ID: {0} Status: {1}".format(task_id, task_status))
                         break
