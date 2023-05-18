@@ -256,7 +256,7 @@ def main():
         # ==========================================
         # Check to see how many nodes have connected
         # ==========================================
-        checkConnected(cvp_clnt, NODES, atd_yaml['eos_type'])
+        checkConnected(cvprac_clnt, NODES, atd_yaml['eos_type'])
 
         # ==========================================
         # Add configlets into CVP
