@@ -89,7 +89,7 @@ def pS(mstat,mtype):
 # CVP Utility Functions
 # ============================================
 
-def checkConnected(cvp_clnt, NODES):
+def checkConnected(cvp_clnt, NODES, eos_type):
     """
     Function to check if all nodes have connected and
     are reachable via ping
@@ -97,26 +97,28 @@ def checkConnected(cvp_clnt, NODES):
     cvp_clnt = CVP rCVPAPI client (object)
     NODES = EOS Node yaml (dict)
     """
-    tmp_device_count = len(cvp_clnt.inventory)
+    cvp_inventory = cvp_clnt.api.get_inventory()
+    tmp_device_count = len(cvp_inventory)
     while len(NODES) > tmp_device_count:
         pS("INFO", "Only {0} out of {1} nodes have registered to CVP. Sleeping {2} seconds.".format(tmp_device_count, len(NODES), sleep_delay))
         sleep(sleep_delay)
-        cvp_clnt.getDeviceInventory()
-        tmp_device_count = len(cvp_clnt.inventory)
+        cvp_inventory = cvp_clnt.api.get_inventory()
+        tmp_device_count = len(cvp_inventory)
     pS("OK", "All {0} out of {1} nodes have registered to CVP.".format(tmp_device_count, len(NODES)))
-    pS("INFO", "Checking to see if all nodes are reachable")
-    # Make sure all nodes are up and reachable
-    for vnode in cvp_clnt.inventory:
-        while True:
-            vresponse = cvp_clnt.ipConnectivityTest(cvp_clnt.inventory[vnode]['ipAddress'])
-            if 'data' in vresponse:
-                if vresponse['data'] == 'success':
-                    pS("OK", "{0} is up and reachable at {1}".format(vnode, cvp_clnt.inventory[vnode]['ipAddress']))
-                    break
-            else:
-                pS("INFO", "{0} is NOT reachable at {1}. Sleeping {2} seconds.".format(vnode, cvp_clnt.inventory[vnode]['ipAddress'], sleep_delay))
-                sleep(sleep_delay)
-    pS("OK", "All Devices are registered and reachable.")
+    if eos_type != "ceos":
+        pS("INFO", "Checking to see if all nodes are reachable")
+        # Make sure all nodes are up and reachable
+        for vnode in cvp_inventory:
+            while True:
+                vresponse = cvp_clnt.ipConnectivityTest(cvp_clnt.inventory[vnode]['ipAddress'])
+                if 'data' in vresponse:
+                    if vresponse['data'] == 'success':
+                        pS("OK", "{0} is up and reachable at {1}".format(vnode, cvp_clnt.inventory[vnode]['ipAddress']))
+                        break
+                else:
+                    pS("INFO", "{0} is NOT reachable at {1}. Sleeping {2} seconds.".format(vnode, cvp_clnt.inventory[vnode]['ipAddress'], sleep_delay))
+                    sleep(sleep_delay)
+        pS("OK", "All Devices are registered and reachable.")
     return(True)
 
 
@@ -167,6 +169,7 @@ def main():
     """
     cvp_clnt = ""
     file_counter = 0
+    containers = {}
     while True:
         if path.exists(topo_file):
             pS("OK", "ACCESS_INFO file is available.")
@@ -233,27 +236,27 @@ def main():
         _version = cvprac_clnt.api.get_cvp_info()
         _version = _version['version'].split('.')
         _version_major = float(f"{_version[0]}.{_version[1]}")
-        # Perform check if it is a cEOS based topo and 2022.2 or later CVP
-        if _version_major >= 2022.2 and atd_yaml['eos_type'] == 'ceos':
-            pS("INFO", "Generating a token for onboarding...")
-            _token_response = cvprac_clnt.api.create_enroll_token("24h")
-            _token_path = path.expanduser(f"~/token")
-            with open(f"{_token_path}", 'w') as token_out:
-                    token_out.write(_token_response['data'])
-            for _node in eos_info:
-                with SSHClient() as ssh:
-                    ssh.set_missing_host_key_policy(AutoAddPolicy())
-                    ssh.connect(_node.ip, username=cvpUsername, password=cvpPassword,)
-                    with SCPClient(ssh.get_transport()) as scp:
-                        pS("INFO", f"Transferring token to {_node.hostname}")
-                        scp.put(f"{_token_path}", "/tmp/token")
-        else:
-            pS("INFO", f"Version does not require a token for onboarding...")
+        # # Perform check if it is a cEOS based topo and 2022.2 or later CVP
+        # if _version_major >= 2022.2 and atd_yaml['eos_type'] == 'ceos':
+        #     pS("INFO", "Generating a token for onboarding...")
+        #     _token_response = cvprac_clnt.api.create_enroll_token("24h")
+        #     _token_path = path.expanduser(f"~/token")
+        #     with open(f"{_token_path}", 'w') as token_out:
+        #             token_out.write(_token_response['data'])
+        #     for _node in eos_info:
+        #         with SSHClient() as ssh:
+        #             ssh.set_missing_host_key_policy(AutoAddPolicy())
+        #             ssh.connect(_node.ip, username=cvpUsername, password=cvpPassword,)
+        #             with SCPClient(ssh.get_transport()) as scp:
+        #                 pS("INFO", f"Transferring token to {_node.hostname}")
+        #                 scp.put(f"{_token_path}", "/tmp/token")
+        # else:
+        #     pS("INFO", f"Version does not require a token for onboarding...")
         
         # ==========================================
         # Check to see how many nodes have connected
         # ==========================================
-        checkConnected(cvp_clnt, NODES)
+        checkConnected(cvp_clnt, NODES, atd_yaml['eos_type'])
 
         # ==========================================
         # Add configlets into CVP
@@ -266,38 +269,65 @@ def main():
         for p_cnt in cvp_yaml['cvp_info']['containers'].keys():
             if p_cnt not in cvp_clnt.containers.keys():
                 if cvp_yaml['cvp_info']['containers'][p_cnt]:
-                    cvp_clnt.addContainer(p_cnt, cvp_yaml['cvp_info']['containers'][p_cnt]['parent'])
+                    parent_name = cvp_yaml['cvp_info']['containers'][p_cnt]['parent']
+                    if parent_name not in containers:
+                        _results = cvprac_clnt.api.search_topology(parent_name)
+                        containers[parent_name] = _results['containerList'][0]['key']
+                    cvprac_clnt.api.add_container(p_cnt, parent_name, containers[parent_name])
                 else:
-                    cvp_clnt.addContainer(p_cnt,"Tenant")
-                cvp_clnt.saveTopology()
-                cvp_clnt.getAllContainers()
+                    if "Tenant" not in containers:
+                        _results = cvprac_clnt.api.search_topology("Tenant")
+                        containers["Tenant"] = _results['containerList'][0]['key']
+                    cvprac_clnt.api.add_container(p_cnt, "Tenant", containers["Tenant"])
+                # cvp_clnt.saveTopology()
+                # cvp_clnt.getAllContainers()
                 pS("OK","Added {0} container".format(p_cnt))
             else:
                 pS("INFO","{0} container already exists....skipping".format(p_cnt))
             # Check and add configlets to containers
             if p_cnt in cvp_yaml['cvp_info']['configlets']['containers'].keys():
                 cfgs_cnt_ignore = []
+                proposed_cfgs = []
                 proposed_cnt_cfgs = cvp_yaml['cvp_info']['configlets']['containers'][p_cnt]
-                p_cnt_id = cvp_clnt.getContainerId(p_cnt)[0]['Key']
-                existing_cnt_cfgs = cvp_clnt.getConfigletsByContainerId(p_cnt_id)
+                # Get Proposed configlet info
+                for _cfg in proposed_cnt_cfgs:
+                    _cfg_result = cvprac_clnt.api.get_configlet_by_name(_cfg)
+                    proposed_cfgs.append(_cfg_result)
+                container_info = cvprac_clnt.api.get_container_by_name(p_cnt)
+                p_cnt_id = container_info['key']
+                existing_cnt_cfgs = cvprac_clnt.api.get_configlets_by_container_id(p_cnt_id)
                 if existing_cnt_cfgs:
                     for ex_cfg in existing_cnt_cfgs['configletList']:
                         if ex_cfg['name'] not in proposed_cnt_cfgs:
-                            cfgs_cnt_ignore.append(ex_cfg['name'])
+                            cfgs_cnt_ignore.append({
+                                'name': ex_cfg['name'],
+                                'key': ex_cfg['key']
+                            })
                 pS("OK","Configlets found for {0} container.  Will apply".format(p_cnt))
-                cvp_clnt.removeContainerConfiglets(p_cnt, cfgs_cnt_ignore)
-                cvp_clnt.addContainerConfiglets(p_cnt, proposed_cnt_cfgs)
-                cvp_clnt.applyConfigletsContainers(p_cnt)
-                cvp_clnt.saveTopology()
-                cvp_clnt.getAllTasks("pending")
-                task_response = cvp_clnt.execAllTasks("pending")
+                cvprac_clnt.api.remove_configlets_from_container("cvpUpdater", container_info, cfgs_cnt_ignore)
+                # cvp_clnt.removeContainerConfiglets(p_cnt, cfgs_cnt_ignore)
+                cvprac_clnt.api.apply_configlets_to_container("cvpUpdater", container_info, proposed_cfgs)
+                # cvp_clnt.addContainerConfiglets(p_cnt, proposed_cnt_cfgs)
+                # cvp_clnt.applyConfigletsContainers(p_cnt)
+                # cvp_clnt.saveTopology()
+                pending_tasks = cvprac_clnt.api.get_tasks_by_status("pending")
+                # cvp_clnt.getAllTasks("pending")
+                # Execute all Tasks
+                for _task in pending_tasks:
+                    cvprac_clnt.api.execute_task(_task['workOrderId'])
+                # task_response = cvp_clnt.execAllTasks("pending")
                 # Perform check to see if there are any existing tasks to be executed
-                if task_response:
+                if pending_tasks:
                     pS("OK", "All pending tasks are executing")
-                    for task_id in task_response['ids']:
-                        task_status = cvp_clnt.getTaskStatus(task_id)['taskStatus']
+                    for task in pending_tasks:
+                        task_id = task['workOrderId']
+                        task_info = cvprac_clnt.api.get_task_by_id(task_id)
+                        task_status = task_info['taskStatus']
+                        # task_status = cvp_clnt.getTaskStatus(task_id)['taskStatus']
                         while task_status != "Completed":
-                            task_status = cvp_clnt.getTaskStatus(task_id)['taskStatus']
+                            task_info = cvprac_clnt.api.get_task_by_id(task_id)
+                            task_status = task_info['taskStatus']
+                            # task_status = cvp_clnt.getTaskStatus(task_id)['taskStatus']
                             if task_status == 'Failed':
                                 pS("iBerg", "Task ID: {0} Status: {1}".format(task_id, task_status))
                                 break
@@ -309,63 +339,81 @@ def main():
                                 sleep(10)
                 else:
                     pS("INFO", "No pending tasks found")
-        # ==========================================
-        # Update configlet info for all containers
-        # ==========================================
-        for p_cnt in cvp_clnt.containers:
-            cvp_clnt.updateContainersConfigletsInfo(p_cnt)
+        # # ==========================================
+        # # Update configlet info for all containers
+        # # ==========================================
+        # for p_cnt in cvp_clnt.containers:
+        #     cvp_clnt.updateContainersConfigletsInfo(p_cnt)
         # ==========================================
         # Add devices to Inventory/Provisioning
         # ==========================================
         # Perform initial check and do a group add of devices
         tmp_eos_add = []
-        for eos in eos_info:
-            # Check to see if the device is already provisioned
-            if eos.hostname not in cvp_clnt.inventory.keys():
-                pS("INFO","Adding {}".format(eos.hostname))
-                tmp_eos_add.append(eos.ip)
-            else:
-                pS("INFO","{} is already added into Provisioning".format(eos.hostname))
-        if tmp_eos_add:
-            # Import all devices not 
-            pS("INFO","Importing devices: {0}".format(", ".join(tmp_eos_add)))
-            cvp_clnt.addDeviceInventory(tmp_eos_add)
-        for eos in eos_info:
-            # Check to see if the device has a target container
-            if eos.targetContainerName:
-                pS("INFO", "{0} is the target container for {1}".format(eos.targetContainerName, eos.hostname))
-                eos.updateContainer(cvp_clnt)
-                if eos.targetContainerName != eos.parentContainer["name"]:
-                    pS("INFO", "Moving {0} from {1} to {2}".format(eos.hostname, eos.parentContainer['name'], eos.targetContainerName))
-                    cvp_clnt.moveDevice(eos)
-                    try:
-                        cvp_clnt.genConfigBuilders(eos)
-                    except KeyError:
-                        pS("INFO", "No Configlet Builders Found for {0}".format(eos.hostname))
-                if cvp_yaml['cvp_info']['configlets']['netelements']:
-                    if eos.hostname in cvp_yaml['cvp_info']['configlets']['netelements']:
-                        eos_new_cfgs = cvp_yaml['cvp_info']['configlets']['netelements'][eos.hostname]
-                        # Check to see if there are any existing configlets applied
-                        tmp_eos_cfgs = cvp_clnt.getConfigletsByNetElementId(eos)
-                        if tmp_eos_cfgs:
-                            tmp_cfgs_remove = []
-                            for cfg in tmp_eos_cfgs['configletList']:
-                                if cfg['name'] not in eos_new_cfgs and cfg['name'] not in cvp_clnt.containers['Tenant']['configlets']['names'] and cfg['name'] not in cvp_clnt.containers[eos.targetContainerName]['configlets']['names']:
-                                    tmp_cfgs_remove.append(cfg['name'])
-                            pS("INFO", "[{0}] Configlets to remove: {1}".format(eos.hostname, ", ".join(tmp_cfgs_remove)))
-                            eos.removeConfiglets(cvp_clnt, tmp_cfgs_remove)
-                        cvp_clnt.addDeviceConfiglets(eos, eos_new_cfgs)
-                cvp_clnt.applyConfiglets(eos)
-        cvp_clnt.saveTopology()
-        pS("OK", "Topology saved")
-        cvp_clnt.getAllTasks("pending")
-        task_response = cvp_clnt.execAllTasks("pending")
+        cvp_inventory = cvprac_clnt.api.get_inventory()
+        for _dev in cvp_inventory:
+            _tmp_eos_cfg = []
+            pS("INFO", f"Adding {_dev['hostname']} with s/n {_dev['serialNumber']}")
+            _target_cnt = eos_cnt_map[_dev['serialNumber']]
+            if _dev['serialNumber'] in cvp_yaml['cvp_info']['configlets']['netelements']:
+                for _cfg in cvp_yaml['cvp_info']['configlets']['netelements'][_dev['serialNumber']]:
+                    _tmp_eos_cfg.append(cvprac_clnt.api.get_configlet_by_name(_cfg))
+            cvprac_clnt.api.deploy_device(_dev, containers[_target_cnt], configlets=_tmp_eos_cfg)
+        # for eos in eos_info:
+        #     # Check to see if the device is already provisioned
+        #     if eos.hostname not in cvp_clnt.inventory.keys():
+        #         pS("INFO","Adding {}".format(eos.hostname))
+        #         tmp_eos_add.append(eos.ip)
+        #     else:
+        #         pS("INFO","{} is already added into Provisioning".format(eos.hostname))
+        # if tmp_eos_add:
+        #     # Import all devices not 
+        #     pS("INFO","Importing devices: {0}".format(", ".join(tmp_eos_add)))
+        #     cvp_clnt.addDeviceInventory(tmp_eos_add)
+        # for eos in eos_info:
+        #     # Check to see if the device has a target container
+        #     if eos.targetContainerName:
+        #         pS("INFO", "{0} is the target container for {1}".format(eos.targetContainerName, eos.hostname))
+        #         eos.updateContainer(cvp_clnt)
+        #         if eos.targetContainerName != eos.parentContainer["name"]:
+        #             pS("INFO", "Moving {0} from {1} to {2}".format(eos.hostname, eos.parentContainer['name'], eos.targetContainerName))
+        #             cvp_clnt.moveDevice(eos)
+        #             try:
+        #                 cvp_clnt.genConfigBuilders(eos)
+        #             except KeyError:
+        #                 pS("INFO", "No Configlet Builders Found for {0}".format(eos.hostname))
+        #         if cvp_yaml['cvp_info']['configlets']['netelements']:
+        #             if eos.hostname in cvp_yaml['cvp_info']['configlets']['netelements']:
+        #                 eos_new_cfgs = cvp_yaml['cvp_info']['configlets']['netelements'][eos.hostname]
+        #                 # Check to see if there are any existing configlets applied
+        #                 tmp_eos_cfgs = cvp_clnt.getConfigletsByNetElementId(eos)
+        #                 if tmp_eos_cfgs:
+        #                     tmp_cfgs_remove = []
+        #                     for cfg in tmp_eos_cfgs['configletList']:
+        #                         if cfg['name'] not in eos_new_cfgs and cfg['name'] not in cvp_clnt.containers['Tenant']['configlets']['names'] and cfg['name'] not in cvp_clnt.containers[eos.targetContainerName]['configlets']['names']:
+        #                             tmp_cfgs_remove.append(cfg['name'])
+        #                     pS("INFO", "[{0}] Configlets to remove: {1}".format(eos.hostname, ", ".join(tmp_cfgs_remove)))
+        #                     eos.removeConfiglets(cvp_clnt, tmp_cfgs_remove)
+        #                 cvp_clnt.addDeviceConfiglets(eos, eos_new_cfgs)
+        #         cvp_clnt.applyConfiglets(eos)
+        # cvp_clnt.saveTopology()
+        # pS("OK", "Topology saved")
+        pending_tasks = cvprac_clnt.api.get_tasks_by_status("pending")
+        for _task in pending_tasks:
+            cvprac_clnt.api.execute_task(_task['workOrderId'])
+        # cvp_clnt.getAllTasks("pending")
+        # task_response = cvp_clnt.execAllTasks("pending")
         pS("OK", "All pending tasks are executing")
-        for task_id in task_response['ids']:
+        # for task_id in task_response['ids']:
+        for task in pending_tasks:
+            task_id = task['workOrderId']
+            task_info = cvprac_clnt.api.get_task_by_id(task_id)
+            task_status = task_info['taskStatus']
             previous_status = ''
-            task_status = cvp_clnt.getTaskStatus(task_id)['taskStatus']
+            # task_status = cvp_clnt.getTaskStatus(task_id)['taskStatus']
             while task_status != "Completed":
-                task_status = cvp_clnt.getTaskStatus(task_id)
+                task_info = cvprac_clnt.api.get_task_by_id(task_id)
+                task_status = task_info['taskStatus']
+                # task_status = cvp_clnt.getTaskStatus(task_id)
                 if 'taskStatus' in task_status:
                     task_status = task_status['taskStatus']
                     if task_status == 'Failed':
