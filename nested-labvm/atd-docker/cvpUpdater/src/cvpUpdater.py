@@ -267,9 +267,6 @@ def main():
         # Add new containers into CVP
         # ==========================================
         for p_cnt in cvp_yaml['cvp_info']['containers'].keys():
-            if p_cnt not in containers:
-                _results = cvprac_clnt.api.search_topology(p_cnt)
-                containers[p_cnt] = _results['containerList'][0]
             if p_cnt not in cvp_clnt.containers.keys():
                 if cvp_yaml['cvp_info']['containers'][p_cnt]:
                     parent_name = cvp_yaml['cvp_info']['containers'][p_cnt]['parent']
@@ -287,6 +284,9 @@ def main():
                 pS("OK","Added {0} container".format(p_cnt))
             else:
                 pS("INFO","{0} container already exists....skipping".format(p_cnt))
+            if p_cnt not in containers:
+                _results = cvprac_clnt.api.search_topology(p_cnt)
+                containers[p_cnt] = _results['containerList'][0]
             # Check and add configlets to containers
             if p_cnt in cvp_yaml['cvp_info']['configlets']['containers'].keys():
                 cfgs_cnt_ignore = []
@@ -325,11 +325,11 @@ def main():
                     for task in pending_tasks:
                         task_id = task['workOrderId']
                         task_info = cvprac_clnt.api.get_task_by_id(task_id)
-                        task_status = task_info['taskStatus']
+                        task_status = task_info['workOrderUserDefinedStatus']
                         # task_status = cvp_clnt.getTaskStatus(task_id)['taskStatus']
                         while task_status != "Completed":
                             task_info = cvprac_clnt.api.get_task_by_id(task_id)
-                            task_status = task_info['taskStatus']
+                            task_status = task_info['workOrderUserDefinedStatus']
                             # task_status = cvp_clnt.getTaskStatus(task_id)['taskStatus']
                             if task_status == 'Failed':
                                 pS("iBerg", "Task ID: {0} Status: {1}".format(task_id, task_status))
@@ -410,12 +410,12 @@ def main():
         for task in pending_tasks:
             task_id = task['workOrderId']
             task_info = cvprac_clnt.api.get_task_by_id(task_id)
-            task_status = task_info['taskStatus']
+            task_status = task_info['workOrderUserDefinedStatus']
             previous_status = ''
             # task_status = cvp_clnt.getTaskStatus(task_id)['taskStatus']
             while task_status != "Completed":
                 task_info = cvprac_clnt.api.get_task_by_id(task_id)
-                task_status = task_info['taskStatus']
+                task_status = task_info['workOrderUserDefinedStatus']
                 # task_status = cvp_clnt.getTaskStatus(task_id)
                 if task_status:
                     # task_status = task_status['taskStatus']
