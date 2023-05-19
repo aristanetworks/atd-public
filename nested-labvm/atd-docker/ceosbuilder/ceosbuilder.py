@@ -151,16 +151,18 @@ def createMac(dev_id):
     """
     Function to build dev specific MAC Address.
     """
+    base = "00:1c:73:{0}:c6:01"
     if dev_id < 10:
-        return('b{0}'.format(dev_id))
+        dev_mac = 'b{0}'.format(dev_id)
     elif dev_id >= 10 and dev_id < 20:
-        return('c{0}'.format(dev_id - 10))
+        dev_mac = 'c{0}'.format(dev_id - 10)
     elif dev_id >=20 and dev_id < 30:
-        return('d{0}'.format(dev_id - 20))
+        dev_mac = 'd{0}'.format(dev_id - 20)
     elif dev_id >=30 and dev_id < 40:
-        return('e{0}'.format(dev_id - 30))
+        dev_mac = 'e{0}'.format(dev_id - 30)
     elif dev_id >=40 and dev_id < 50:
-        return('f{0}'.format(dev_id - 40))
+        dev_mac = 'f{0}'.format(dev_id - 40)
+    return(base.format(dev_mac))
 
 def pS(mstat,mtype):
     """
@@ -233,9 +235,9 @@ def main(args):
         create_output.append("mkdir {0}\n".format(CEOS_NODES))
         # create_output.append("cp -r {0}{1}/files/ceos/* {2}/\n".format(REPO_TOPO, TOPO_TAG, CEOS_NODES))
         for _node in CEOS:
-            create_output.append(f"echo \"SERIALNUMBER={_node}\" > /opt/ceos/node/{_node}/ceos-config\n")
-            create_output.append(f"echo \"SYSTEMMACADDR={CEOS[_node].system_mac}\" >> /opt/ceos/node/{_node}/ceos-config\n")
-            create_output.append(f"echo \"DISABLE=False\" > /opt/ceos/nodes/{_node}/zerotouch-config\n")
+            create_output.append(f'echo "SERIALNUMBER={_node}" > /opt/ceos/nodes/{_node}/ceos-config\n')
+            create_output.append(f'echo "SYSTEMMACADDR={CEOS[_node].system_mac}" >> /opt/ceos/nodes/{_node}/ceos-config\n')
+            create_output.append(f'echo "DISABLE=False" > /opt/ceos/nodes/{_node}/zerotouch-config\n')
             create_output.append("# Getting {0} nodes plubming\n".format(_node))
             create_output.append("docker run -d --restart=always --log-opt max-size=10k --name={0}-net --net=none busybox /bin/init\n".format(_node))
             create_output.append("{0}pid=$(docker inspect --format '{{{{.State.Pid}}}}' {1}-net)\n".format(_node.replace('-',''), _node))
