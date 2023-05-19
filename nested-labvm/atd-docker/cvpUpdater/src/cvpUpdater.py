@@ -62,6 +62,23 @@ def getEosDevice(topo,eosYaml,cvpMapper):
             EOS_DEV.append(CVPSWITCH(devn,dev[devn]['ip_addr']))
     return(EOS_DEV)
 
+def eosDeviceMapper(eos_type, eos_yaml):
+    """
+    Function that parses the topology yaml file and makes a mapper object to be used later.
+    Parameters:
+    eos_type = EOS topology type (ceos/veos) string (required)
+    eos_yaml = Topology yaml file (required)
+    """
+    EOS_DEV = {}
+    for dev in eos_yaml:
+        devn = list(dev.keys())[0]
+        if eos_type == "ceos":
+            EOS_DEV[devn] = devn
+        else:
+            _ip_addr = dev[devn]['ip_addr']
+            EOS_DEV[_ip_addr] = devn
+    return(EOS_DEV)
+
 def eosContainerMapper(cvpYaml):
     """
     Function that Parses through the YAML file and maps device to container.
@@ -199,6 +216,7 @@ def main():
     build_yaml = getTopoInfo(REPO_TOPO + atd_yaml['topology'] + '/topo_build.yml')
     eos_cnt_map = eosContainerMapper(cvp_yaml['cvp_info']['containers'])
     eos_info = getEosDevice(atd_yaml['topology'],build_yaml['nodes'],eos_cnt_map)
+    eos_dev_map = eosDeviceMapper(atd_yaml['eos_type'], build_yaml['nodes'])
     configlet_location = '/opt/atd/topologies/{0}/configlets/'.format(atd_yaml['topology'])
     cvpUsername = atd_yaml['login_info']['jump_host']['user']
     cvpPassword = atd_yaml['login_info']['jump_host']['pw']
@@ -324,10 +342,18 @@ def main():
         cvp_inventory = cvprac_clnt.api.get_inventory()
         for _dev in cvp_inventory:
             _tmp_eos_cfg = []
-            pS("INFO", f"Adding {_dev['hostname']} with s/n {_dev['serialNumber']}")
-            _target_cnt = eos_cnt_map[_dev['serialNumber']]
-            if _dev['serialNumber'] in cvp_yaml['cvp_info']['configlets']['netelements']:
-                for _cfg in cvp_yaml['cvp_info']['configlets']['netelements'][_dev['serialNumber']]:
+            _device_name = ''
+            # Check if this is a cEOS ZTP setup
+            if atd_yaml['eos_type'] == "ceos":
+                pS("INFO", f"Adding {_dev['hostname']} with s/n {_dev['serialNumber']}")
+                _device_name = eos_dev_map[_dev['serialNumber']]
+                _target_cnt = eos_cnt_map[_device_name]
+            else:
+                pS("INFO", f"Adding {_dev['hostname']}")
+                _device_name = eos_dev_map[_dev['ipAddress']]
+                _target_cnt = eos_cnt_map[_device_name]
+            if _device_name in cvp_yaml['cvp_info']['configlets']['netelements']:
+                for _cfg in cvp_yaml['cvp_info']['configlets']['netelements'][_device_name]:
                     _tmp_eos_cfg.append(cvprac_clnt.api.get_configlet_by_name(_cfg))
             cvprac_clnt.api.deploy_device(_dev, _target_cnt, configlets=_tmp_eos_cfg)
         pending_tasks = cvprac_clnt.api.get_tasks_by_status("pending")
@@ -375,12 +401,6 @@ def main():
         # Logout and close session to CVP
         cvp_clnt.execLogout()
         pS("OK","Logged out of CVP")
-        # # Adding section to reboot all vEOS nodes in case 
-        # # multi-agent needs to initialize on initial deployment
-        # for eos in eos_info:
-        #     pS("INFO", "Rebooting {0}".format(eos.hostname))
-        #     system("/usr/bin/ssh -f arista@{0} reload now".format(eos.ip))
-        #     pS("OK", "{0} has been rebooted.".format(eos.hostname))
     else:
         pS("ERROR","Couldn't connect to CVP")
 
