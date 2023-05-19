@@ -122,20 +122,6 @@ def checkConnected(cvp_clnt, NODES, eos_type):
         cvp_inventory = cvp_clnt.api.get_inventory()
         tmp_device_count = len(cvp_inventory)
     pS("OK", "All {0} out of {1} nodes have registered to CVP.".format(tmp_device_count, len(NODES)))
-    if eos_type != "ceos":
-        pS("INFO", "Checking to see if all nodes are reachable")
-        # Make sure all nodes are up and reachable
-        for vnode in cvp_inventory:
-            while True:
-                vresponse = cvp_clnt.ipConnectivityTest(cvp_clnt.inventory[vnode]['ipAddress'])
-                if 'data' in vresponse:
-                    if vresponse['data'] == 'success':
-                        pS("OK", "{0} is up and reachable at {1}".format(vnode, cvp_clnt.inventory[vnode]['ipAddress']))
-                        break
-                else:
-                    pS("INFO", "{0} is NOT reachable at {1}. Sleeping {2} seconds.".format(vnode, cvp_clnt.inventory[vnode]['ipAddress'], sleep_delay))
-                    sleep(sleep_delay)
-        pS("OK", "All Devices are registered and reachable.")
     return(True)
 
 
