@@ -236,22 +236,6 @@ def main():
         _version = cvprac_clnt.api.get_cvp_info()
         _version = _version['version'].split('.')
         _version_major = float(f"{_version[0]}.{_version[1]}")
-        # # Perform check if it is a cEOS based topo and 2022.2 or later CVP
-        # if _version_major >= 2022.2 and atd_yaml['eos_type'] == 'ceos':
-        #     pS("INFO", "Generating a token for onboarding...")
-        #     _token_response = cvprac_clnt.api.create_enroll_token("24h")
-        #     _token_path = path.expanduser(f"~/token")
-        #     with open(f"{_token_path}", 'w') as token_out:
-        #             token_out.write(_token_response['data'])
-        #     for _node in eos_info:
-        #         with SSHClient() as ssh:
-        #             ssh.set_missing_host_key_policy(AutoAddPolicy())
-        #             ssh.connect(_node.ip, username=cvpUsername, password=cvpPassword,)
-        #             with SCPClient(ssh.get_transport()) as scp:
-        #                 pS("INFO", f"Transferring token to {_node.hostname}")
-        #                 scp.put(f"{_token_path}", "/tmp/token")
-        # else:
-        #     pS("INFO", f"Version does not require a token for onboarding...")
         
         # ==========================================
         # Check to see how many nodes have connected
@@ -279,8 +263,6 @@ def main():
                         _results = cvprac_clnt.api.search_topology("Tenant")
                         containers["Tenant"] = _results['containerList'][0]
                     cvprac_clnt.api.add_container(p_cnt, "Tenant", containers["Tenant"]['key'])
-                # cvp_clnt.saveTopology()
-                # cvp_clnt.getAllContainers()
                 pS("OK","Added {0} container".format(p_cnt))
             else:
                 pS("INFO","{0} container already exists....skipping".format(p_cnt))
@@ -308,17 +290,11 @@ def main():
                             })
                 pS("OK","Configlets found for {0} container.  Will apply".format(p_cnt))
                 cvprac_clnt.api.remove_configlets_from_container("cvpUpdater", container_info, cfgs_cnt_ignore)
-                # cvp_clnt.removeContainerConfiglets(p_cnt, cfgs_cnt_ignore)
                 cvprac_clnt.api.apply_configlets_to_container("cvpUpdater", container_info, proposed_cfgs)
-                # cvp_clnt.addContainerConfiglets(p_cnt, proposed_cnt_cfgs)
-                # cvp_clnt.applyConfigletsContainers(p_cnt)
-                # cvp_clnt.saveTopology()
                 pending_tasks = cvprac_clnt.api.get_tasks_by_status("pending")
-                # cvp_clnt.getAllTasks("pending")
                 # Execute all Tasks
                 for _task in pending_tasks:
                     cvprac_clnt.api.execute_task(_task['workOrderId'])
-                # task_response = cvp_clnt.execAllTasks("pending")
                 # Perform check to see if there are any existing tasks to be executed
                 if pending_tasks:
                     pS("OK", "All pending tasks are executing")
@@ -326,11 +302,9 @@ def main():
                         task_id = task['workOrderId']
                         task_info = cvprac_clnt.api.get_task_by_id(task_id)
                         task_status = task_info['workOrderUserDefinedStatus']
-                        # task_status = cvp_clnt.getTaskStatus(task_id)['taskStatus']
                         while task_status != "Completed":
                             task_info = cvprac_clnt.api.get_task_by_id(task_id)
                             task_status = task_info['workOrderUserDefinedStatus']
-                            # task_status = cvp_clnt.getTaskStatus(task_id)['taskStatus']
                             if task_status == 'Failed':
                                 pS("iBerg", "Task ID: {0} Status: {1}".format(task_id, task_status))
                                 break
@@ -342,11 +316,6 @@ def main():
                                 sleep(10)
                 else:
                     pS("INFO", "No pending tasks found")
-        # # ==========================================
-        # # Update configlet info for all containers
-        # # ==========================================
-        # for p_cnt in cvp_clnt.containers:
-        #     cvp_clnt.updateContainersConfigletsInfo(p_cnt)
         # ==========================================
         # Add devices to Inventory/Provisioning
         # ==========================================
@@ -361,69 +330,26 @@ def main():
                 for _cfg in cvp_yaml['cvp_info']['configlets']['netelements'][_dev['serialNumber']]:
                     _tmp_eos_cfg.append(cvprac_clnt.api.get_configlet_by_name(_cfg))
             cvprac_clnt.api.deploy_device(_dev, _target_cnt, configlets=_tmp_eos_cfg)
-        # for eos in eos_info:
-        #     # Check to see if the device is already provisioned
-        #     if eos.hostname not in cvp_clnt.inventory.keys():
-        #         pS("INFO","Adding {}".format(eos.hostname))
-        #         tmp_eos_add.append(eos.ip)
-        #     else:
-        #         pS("INFO","{} is already added into Provisioning".format(eos.hostname))
-        # if tmp_eos_add:
-        #     # Import all devices not 
-        #     pS("INFO","Importing devices: {0}".format(", ".join(tmp_eos_add)))
-        #     cvp_clnt.addDeviceInventory(tmp_eos_add)
-        # for eos in eos_info:
-        #     # Check to see if the device has a target container
-        #     if eos.targetContainerName:
-        #         pS("INFO", "{0} is the target container for {1}".format(eos.targetContainerName, eos.hostname))
-        #         eos.updateContainer(cvp_clnt)
-        #         if eos.targetContainerName != eos.parentContainer["name"]:
-        #             pS("INFO", "Moving {0} from {1} to {2}".format(eos.hostname, eos.parentContainer['name'], eos.targetContainerName))
-        #             cvp_clnt.moveDevice(eos)
-        #             try:
-        #                 cvp_clnt.genConfigBuilders(eos)
-        #             except KeyError:
-        #                 pS("INFO", "No Configlet Builders Found for {0}".format(eos.hostname))
-        #         if cvp_yaml['cvp_info']['configlets']['netelements']:
-        #             if eos.hostname in cvp_yaml['cvp_info']['configlets']['netelements']:
-        #                 eos_new_cfgs = cvp_yaml['cvp_info']['configlets']['netelements'][eos.hostname]
-        #                 # Check to see if there are any existing configlets applied
-        #                 tmp_eos_cfgs = cvp_clnt.getConfigletsByNetElementId(eos)
-        #                 if tmp_eos_cfgs:
-        #                     tmp_cfgs_remove = []
-        #                     for cfg in tmp_eos_cfgs['configletList']:
-        #                         if cfg['name'] not in eos_new_cfgs and cfg['name'] not in cvp_clnt.containers['Tenant']['configlets']['names'] and cfg['name'] not in cvp_clnt.containers[eos.targetContainerName]['configlets']['names']:
-        #                             tmp_cfgs_remove.append(cfg['name'])
-        #                     pS("INFO", "[{0}] Configlets to remove: {1}".format(eos.hostname, ", ".join(tmp_cfgs_remove)))
-        #                     eos.removeConfiglets(cvp_clnt, tmp_cfgs_remove)
-        #                 cvp_clnt.addDeviceConfiglets(eos, eos_new_cfgs)
-        #         cvp_clnt.applyConfiglets(eos)
-        # cvp_clnt.saveTopology()
-        # pS("OK", "Topology saved")
         pending_tasks = cvprac_clnt.api.get_tasks_by_status("pending")
         for _task in pending_tasks:
             cvprac_clnt.api.execute_task(_task['workOrderId'])
-        # cvp_clnt.getAllTasks("pending")
-        # task_response = cvp_clnt.execAllTasks("pending")
         pS("OK", "All pending tasks are executing")
-        # for task_id in task_response['ids']:
         for task in pending_tasks:
             task_id = task['workOrderId']
             task_info = cvprac_clnt.api.get_task_by_id(task_id)
             task_status = task_info['workOrderUserDefinedStatus']
             previous_status = ''
-            # task_status = cvp_clnt.getTaskStatus(task_id)['taskStatus']
+            if task_status == "Completed":
+                pS("OK", "Task ID: {0} Status: {1}".format(task_id, task_status))
             while task_status != "Completed":
                 task_info = cvprac_clnt.api.get_task_by_id(task_id)
                 task_status = task_info['workOrderUserDefinedStatus']
-                # task_status = cvp_clnt.getTaskStatus(task_id)
                 if task_status:
-                    # task_status = task_status['taskStatus']
                     if task_status == 'Failed':
                         pS("iBerg", "Task ID: {0} Status: {1}".format(task_id, task_status))
                         break
                     elif task_status == 'Completed':
-                        pS("INFO", "Task ID: {0} Status: {1}".format(task_id, task_status))
+                        pS("OK", "Task ID: {0} Status: {1}".format(task_id, task_status))
                     else:
                         pS("INFO", "Task ID: {0} Status: {1}, Waiting 10 seconds...".format(task_id, task_status))
                         previous_status = task_status
