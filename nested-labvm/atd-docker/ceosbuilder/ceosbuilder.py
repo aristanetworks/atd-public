@@ -235,6 +235,7 @@ def main(args):
         create_output.append("mkdir {0}\n".format(CEOS_NODES))
         # create_output.append("cp -r {0}{1}/files/ceos/* {2}/\n".format(REPO_TOPO, TOPO_TAG, CEOS_NODES))
         for _node in CEOS:
+            create_output.append(f"mkdir -p /opt/ceos/nodes/{_node}\n")
             create_output.append(f'echo "SERIALNUMBER={_node}" > /opt/ceos/nodes/{_node}/ceos-config\n')
             create_output.append(f'echo "SYSTEMMACADDR={CEOS[_node].system_mac}" >> /opt/ceos/nodes/{_node}/ceos-config\n')
             create_output.append(f'echo "DISABLE=False" > /opt/ceos/nodes/{_node}/zerotouch-config\n')
