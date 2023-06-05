@@ -45,7 +45,7 @@ Open CVP via the topology page.
     
    a. Navigate to **Provisioning>Studios>Inventory and Topology**.
    #. Enter the studio and click the **Accept Updates** tab.
-   #. Select both ``s1-Spines`` and  ``s1-leaf1-4``, Ignore anything else. 
+   #. Select both site 1 spines: ``S1-Spine1 and S1-Spine2`` as well as the leafs in site1:   ``S1-Leaf1, S1-Leaf2, S1-Leaf3, S1-Leaf4``, Ignore anything else. 
    #. Click **"Accept Updates"**.
    #. Notice that there are devices now in the ***onboarded devices** section. 
    #. Enter the device and see how Studios has detected the topology connections.
