@@ -96,7 +96,7 @@ services:
       - /opt/ceos:/opt/ceos:rw
   uilanding:
     container_name: atd-uilanding
-    image: us.gcr.io/beta-atds/atddocker_uilanding:2.1.2
+    image: atddocker_uilanding:0.1
     restart: always
     environment:
       - PYTHONUNBUFFERED=1
@@ -128,7 +128,7 @@ services:
       - "1813:1813/udp"
   nginx:
     container_name: atd-nginx
-    image: us.gcr.io/beta-atds/atddocker_nginx:2.1.1
+    image: atddocker_nginx:0.1
     restart: always
     depends_on:
       - uilanding
@@ -204,6 +204,59 @@ services:
       - "/home/arista/arista-dir/apps/webui:/config:rw"
     networks:
       - atd_nginx
+  nautobot:
+    container_name: nbot-ui
+    image: "networktocode/nautobot:1.5-py3.9"
+    env_file:
+      - "nautobot/nbot-local.env"
+    networks:
+      - atd_nginx
+    ports:
+      - "8080:8080"
+    restart: "unless-stopped"
+    volumes:
+      - "/opt/nautobot:/opt/nautobot:rw"
+  nautobot-worker:
+    container_name: nbot-worker
+    image: "networktocode/nautobot:1.5-py3.9"
+    env_file:
+      - "nautobot/nbot-local.env"
+    entrypoint: "nautobot-server rqworker"
+    depends_on:
+      - "nautobot"
+    restart: "unless-stopped"
+  redis-cacheops:
+    container_name: nbot-redis-cacheops
+    image: "redis:alpine"
+    env_file:
+      - "nautobot/nbot-local.env"
+    command:
+      - "sh"
+      - "-c"  # this is to evaluate the $REDIS_PASSWORD from the env
+      - "redis-server --appendonly yes --requirepass $$NAUTOBOT_REDIS_PASSWORD"  ## $$ because of docker-compose
+    restart: "unless-stopped"
+  redis-queue:
+    container_name: nbot-redis-queue
+    image: "redis:alpine"
+    ports:
+      - "6379:6379"
+    env_file:
+      - "nautobot/nbot-local.env"
+    command:
+      - "sh"
+      - "-c"  # this is to evaluate the $REDIS_PASSWORD from the env
+      - "redis-server --appendonly yes --requirepass $$NAUTOBOT_REDIS_PASSWORD"  ## $$ because of docker-compose
+    restart: "unless-stopped"
+  postgres:
+    container_name: nbot-postgres
+    image: "postgres:10"
+    ports:
+      - "5432:5432"
+    env_file:
+      - "nautobot/nbot-local.env"
+    volumes:
+      - "postgres_data:/var/lib/postgresql/data"
+    restart: "unless-stopped"
 networks:
   atd_nginx:
 volumes:
@@ -212,3 +265,5 @@ volumes:
   jenkins_home:
   cvp_dir:
   nginx_log:
+  postgres_data:
+  nautobot:

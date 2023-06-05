@@ -28,7 +28,8 @@
                 <hr class="hr">
                 {% if "labguides" not in disable_links %}
                 <li>
-                    <a href="{{ labguides }}" target="_blank">Lab Guides</a> <a href="/labguides/ATD.pdf" target="_blank">(PDF)</a>
+                    <a href="{{ labguides }}" target="_blank">Lab Guides</a> <a href="/labguides/ATD.pdf"
+                        target="_blank">(PDF)</a>
                 </li>
                 {% end %}
                 {% if "console" not in disable_links %}
@@ -61,6 +62,11 @@
                     <a href="/jenkins" target="_blank">Jenkins</a>
                 </li>
                 {% end %}
+                {% if "ipam" not in disable_links %}
+                <li>
+                    <a href="/ipam" target="_blank">ipam</a>
+                </li>
+                {% end %}
             </ul>
         </div>
         <!-- /#sidebar-wrapper -->
@@ -80,28 +86,50 @@
                 <map name="image_map">
                     {% for node in NODES %}
                     {% if node == "CVP" %}
-                        <area alt="{{ escape(node) }}" title="{{ escape(node) }}" href="/cv" target="_blank" coords="{{ escape(NODES[node]['coords']) }}" shape="rect">
+                    <area alt="{{ escape(node) }}" title="{{ escape(node) }}" href="/cv" target="_blank"
+                        coords="{{ escape(NODES[node]['coords']) }}" shape="rect">
                     {% else %}
-                        <area alt="{{ escape(node) }}" title="{{ escape(node) }}" href="/ssh/host/{{ escape(NODES[node]['ip']) }}" target="_blank" coords="{{ escape(NODES[node]['coords']) }}" shape="rect">
+                    <area alt="{{ escape(node) }}" title="{{ escape(node) }}"
+                        href="/ssh/host/{{ escape(NODES[node]['ip']) }}" target="_blank"
+                        coords="{{ escape(NODES[node]['coords']) }}" shape="rect">
                     {% end %}
                     {% end %}
                 </map>
                 <br /><br />
                 {% if topo_cvp %}
-                    <span id="cvp_info"></span>
-                    <br /><br />
+                <span id="cvp_info"></span>
+                <br /><br />
                 {% end %}
                 <h2>Usernames and Passwords</h2>
                 Use the following usernames and passwords to access the ATD:
                 <br>
                 <br>
                 <table class="table table-striped">
-                  <thead> <tr> <th>Device</th> <th>Username</th> <th>Password</th> </tr> </thead>
-                  <tbody> 
-                    <tr><td>Lab Credentials</td> <td>arista</td> <td>{{ ARISTA_PWD }}</td> </tr>
-                    <tr><td>Programmability IDE</td> <td></td><td>{{ ARISTA_PWD }}</td></tr>
-                    <tr><td>WebUI</td> <td></td><td>@rista1</td></tr>
-                  </tbody> </table>
+                    <thead>
+                        <tr>
+                            <th>Device</th>
+                            <th>Username</th>
+                            <th>Password</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Lab Credentials</td>
+                            <td>arista</td>
+                            <td>{{ ARISTA_PWD }}</td>
+                        </tr>
+                        <tr>
+                            <td>Programmability IDE</td>
+                            <td></td>
+                            <td>{{ ARISTA_PWD }}</td>
+                        </tr>
+                        <tr>
+                            <td>WebUI</td>
+                            <td></td>
+                            <td>@rista1</td>
+                        </tr>
+                    </tbody>
+                </table>
 
                 <br>
             </div>
