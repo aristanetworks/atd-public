@@ -86,7 +86,7 @@ been defined for AAA and VLANs.
 
 14. Click **Tasks** in the left navigation column.
 
-15. Check each Task in the 'Assignable Tasks' section, then click the **Create Change Control with 9 Tasks** button.
+15. Check each Task in the 'Assignable Tasks' section, then click the **Create Change Control with 4 Tasks** button.
 
     *\**See the 'CVP Advanced Change Control' lab guide for more information on Change Controls*
 

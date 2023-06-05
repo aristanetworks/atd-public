@@ -17,7 +17,7 @@ TASK 1: Apply a Configlet Builder to create a group of Tasks
 |
 
 * Log into the LabAccess jumpserver:
-    .. warning:: If starting from this lab module, type ``cvp`` or ``7`` at the prompt. The script will configure all devices in the lab so you can complete this lab. The configlet builder will fail to generate device configlets if this script hasn't been run.
+    .. warning:: If starting from this lab module, type ``cvp`` or ``4`` at the prompt. The script will configure all devices in the lab so you can complete this lab. The configlet builder will fail to generate device configlets if this script hasn't been run.
 
 
 Now we want to add several Loopbacks to each device using a Configlet Builder at the ``s1/s1-Leaf`` level.
