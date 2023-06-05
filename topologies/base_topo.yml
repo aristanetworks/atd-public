@@ -126,7 +126,7 @@ topologies:
             resources_eos:
               cpu: 16
               ram: 32
-              disk: 50
+              disk: 100
               image: atd-dual-datacenter-c2023-1-0-rc1-ceos-20230526
             resources_cvp:
               cpu: 28
@@ -143,7 +143,7 @@ topologies:
             resources_eos:
               cpu: 16
               ram: 32
-              disk: 50
+              disk: 100
               image: atd-dual-datacenter-c2023-1-0-rc1-bare-ceos-20230526
             resources_cvp:
               cpu: 28
@@ -438,7 +438,7 @@ topologies:
             resources_eos:
               cpu: 32
               ram: 64
-              disk: 50
+              disk: 100
               image: atd-routing-c2023-1-0-rc1-veos-4-30-0f-20230526
             resources_cvp:
               cpu: 28
@@ -531,7 +531,7 @@ topologies:
             resources_eos:
               cpu: 16
               ram: 32
-              disk: 50
+              disk: 100
               image: atd-routing-c2023-1-0-rc1-ceos-20230526
             resources_cvp:
               cpu: 28
