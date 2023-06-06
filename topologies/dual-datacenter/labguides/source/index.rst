@@ -61,5 +61,7 @@ Welcome to the Arista ATD documentation!
    
    ag-initial_configuration.rst
    ag-cvp_upgrade.rst
-   ag-cvp_custom_events
+   ag-cvp_custom_events.rst
+   ag-event_api.rst
    cvp_studios_l3ls_evpn.rst
+   
