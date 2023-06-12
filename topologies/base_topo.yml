@@ -480,7 +480,7 @@ topologies:
               disk: 300
               image: atd-routing-c2023-1-0-rc1-veos-4-30-0f-cvp-20230526
             branch: nested-release
-            orderable: true
+            orderable: false
             eos:
               - 4.30.0F
       ceos:
