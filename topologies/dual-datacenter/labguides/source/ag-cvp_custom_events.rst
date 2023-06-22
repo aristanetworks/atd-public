@@ -55,7 +55,7 @@ In this lab we will use the EOS CLI to send log messages that CVP will detect an
 |br|
 
 *  Scroll down and click **Save Changes** to finish creating the
-   Custom Syslog Event. See below for an animated gif of the setup.
+   Custom Syslog Event. See below for an animated gif of the setup. Log Message should be **CR\d{6}** Event title should be **Change Control Event Logged** and the description should be **Change Control Event Logged. See CR number for details**. Mute Period should  be **10 sec**
 
 .. thumbnail:: images/aa-cvp_custom_events/cvp-custom-event-creation.gif
    :align: center
