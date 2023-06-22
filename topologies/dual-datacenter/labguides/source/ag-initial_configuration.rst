@@ -22,20 +22,15 @@ or by clicking on "Console Access" on the main ATD screen. Log in with the arist
 
 |
 
-3. Again, select **98. Shell (shell/bash)**. This will take you to the bash prompt for our jump host 
+1. Next, select **95. Connect to CVP Console (console)**. This will take you to the bash prompt for our jump host 
 
 |
 
-4. Since CVP is not configured and doesn't have an IP yet, we cannot SSH to it. Instead we need to create a Console connection to the VM by using the command **sudo virsh console cvp1** at the arista@devbox:~$ prompt
+4. Since CVP is not configured and doesn't have an IP yet, we cannot SSH to it. Instead we need to create a Console connection to the VM by using the command **console cvp1** at the virsh # prompt
 
 |
 
 .. code-block::
-
-    *****************************************
-    *****Jump Host for Arista Test Drive*****
-    *****************************************
-
 
     ==========Device SSH Menu==========
 
@@ -47,33 +42,57 @@ or by clicking on "Console Access" on the main ATD screen. Log in with the arist
     * Exit all screens (return to menu) - Ctrl + a \
 
     Please select from the following options:
-    1. host1 (host1)
-    2. host2 (host2)
-    3. leaf1 (leaf1)
-    4. leaf2 (leaf2)
-    5. leaf3 (leaf3)
-    6. leaf4 (leaf4)
-    7. spine1 (spine1)
-    8. spine2 (spine2)
-    9. cvx01 (cvx01)
+    1. s1-brdr1 (s1-brdr1)
+    2. s1-brdr2 (s1-brdr2)
+    3. s1-core1 (s1-core1)
+    4. s1-core2 (s1-core2)
+    5. s1-host1 (s1-host1)
+    6. s1-host2 (s1-host2)
+    7. s1-leaf1 (s1-leaf1)
+    8. s1-leaf2 (s1-leaf2)
+    9. s1-leaf3 (s1-leaf3)
+    10. s1-leaf4 (s1-leaf4)
+    11. s1-spine1 (s1-spine1)
+    12. s1-spine2 (s1-spine2)
+    13. s2-brdr1 (s2-brdr1)
+    14. s2-brdr2 (s2-brdr2)
+    15. s2-core1 (s2-core1)
+    16. s2-core2 (s2-core2)
+    17. s2-host1 (s2-host1)
+    18. s2-host2 (s2-host2)
+    19. s2-leaf1 (s2-leaf1)
+    20. s2-leaf2 (s2-leaf2)
+    21. s2-leaf3 (s2-leaf3)
+    22. s2-leaf4 (s2-leaf4)
+    23. s2-spine1 (s2-spine1)
+    24. s2-spine2 (s2-spine2)
 
     Other Options: 
+    95. Connect to CVP Console (console) - Type 'console cvp1' after connecting
     96. Screen (screen) - Opens a screen session to each of the hosts
     97. Back to Previous Menu (back)
     98. Shell (shell/bash)
     99. Back to Main Menu (main/exit) - CTRL + c
 
-    What would you like to do? 98
-    arista@devbox:~$ sudo virsh console cvp1
+    What would you like to do? 95
+    =============================================
+    To connect to the CVP Console perform the following below:
+    1. Enter the arista users password of: **uniquepassword**
+    2. Once prompted with the 'virsh' prompt. Enter 'console cvp1'
+    =============================================
     setlocale: No such file or directory
+    The authenticity of host '10.128.0.64 (10.128.0.64)' can't be established.
+    ECDSA key fingerprint is SHA256:6tG42X0yPktTfl8bxhNjGUWO4f8qc7iU9WgaFMTJKRA.
+    Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+    arista@10.128.0.64's password: 
+    Welcome to virsh, the virtualization interactive terminal.
+
+    Type:  'help' for help with commands
+        'quit' to quit
+
+    virsh # console cvp1
     Connected to domain 'cvp1'
     Escape character is ^] (Ctrl + ])
-
-    CentOS Linux 7 (Core)
-    Kernel 5.12.12-1.el7.elrepo.x86_64 on an x86_64
-
-    localhost login: cvpadmin
-
 
 You should now see the **localhost login:** prompt. 
 
@@ -100,7 +119,7 @@ You should now see the **localhost login:** prompt.
 
 |
 
-7. You will now fill in the network settings for your CVP installation. Please enter the following into the fields. You can then select **v** to verify your install prior to applying the changes. 
+7. You will now fill in the network settings for your CVP installation. Please enter the following into the fields.  
 
 |
 
@@ -120,11 +139,12 @@ You should now see the **localhost login:** prompt.
 
     **Cluster Interface Name:** - Allows you to specify a cluster interface name, This is typically left as the default value
 
-    **Device Interface Name:** - Allows you to specify a device interface name, This is typecally also left as the default value
+    **Device Interface Name:** - Allows you to specify a device interface name, This is typically also left as the default value
 
     **CloudVision WiFi Enabled:** - This should be enabled if you are deploying Access Points in your environment. For our lab scenario, we will select the default value **N**
 
     **Enter a private IP range for the internal cluster network (overlay):** This is the private IP range used for the kubernetes cluster network. This value must be unique; must be /20 or larger; shouldn't be link-local, reserved or multicast. Default value is 10.42.0.0/16. We will accept this default for our lab.
+
 
     |
 
@@ -147,6 +167,10 @@ You should now see the **localhost login:** prompt.
 .. code-block:: text
     :emphasize-lines: 12-23, 27-33
     
+
+
+
+
     CVP Installation Menu
 
     [q]uit [p]rint [s]inglenode [m]ultinode [r]eplace [u]pgrade
@@ -169,6 +193,7 @@ You should now see the **localhost login:** prompt.
     CloudVision WiFi Enabled: no
     *Enter a private IP range for the internal cluster network (overlay): 10.42.0.0
     /16
+    *Fips mode: no
 
     Node Configuration:
 
@@ -180,7 +205,51 @@ You should now see the **localhost login:** prompt.
     Number of Static Routes: 
     TACACS Server IP Address: 
 
-    Singlenode Configuration Menu
+|
+
+.. Note:: 
+
+    There may be options listed on your deployment that do not exist in this guide. If you encounter this, just accept the default value for that field.
+
+    All of these settings are saved in the /cvpi/cvp-config.yaml file
+
+|
+
+8. You can now select **p** to view the output of the /cvpi/cvp-config.yaml file. Then select **v** to verify the configuration. Your output should look similar to this:
+
+|
+.. code-block:: text
+
+        Singlenode Configuration Menu
+
+    [q]uit [p]rint [e]dit [v]erify [s]ave [a]pply [h]elp ve[r]bose
+    >p
+    common:
+    cluster_interface: eth0
+    cv_wifi_enabled: 'no'
+    deployment_model: DEFAULT
+    device_interface: eth0
+    dns:
+    - 192.168.0.1
+    dns_domains:
+    - atd.lab
+    fips_mode: 'no'
+    kube_cluster_network: 10.42.0.0/16
+    mode: singlenode
+    ntp_servers:
+    - auth: n
+        server: 192.168.0.1
+    num_ntp_servers: '1'
+    node1:
+    default_route: 192.168.0.1
+    hostname: cvp.atd.lab
+    interfaces:
+        eth0:
+        ip_address: 192.168.0.5
+        netmask: 255.255.255.0
+    version: 2
+
+       Singlenode Configuration Menu
 
     [q]uit [p]rint [e]dit [v]erify [s]ave [a]pply [h]elp ve[r]bose
     >v
@@ -196,41 +265,38 @@ You should now see the **localhost login:** prompt.
     [ 4489.294334] warning: `/bin/ping' has both setuid-root and effective capabilities. Therefore not raising all capabilities.
     Valid config.
 
+|
 
-All of these settings are saved in the /cvpi/cvp-config.yaml file
+9. Finally, enter **a** to apply the changes and begin CVP installation.
 
 |
 
-8. Finally, enter **a** to apply the changes and begin CVP installation.
+10. You should now see the installation running and a lot of scrolling text. This should take about 10 minutes to complete. You know it's close to complete when flannelbr0 shows up.
 
 |
 
-9. You should now see the installation running and a lot of scrolling text. This should take about 10 minutes to complete. You know it's close to complete when flannelbr0 shows up.
-
-|
-
-10. When you see the configuration menu on the screen again, we know that CVP has been configured successfully. Go back to the main ATD screen and click on the **CVP** link.
+11. When you see the configuration menu on the screen again, we know that CVP has been configured successfully. Go back to the main ATD screen and click on the **CVP** link.
 
 .. thumbnail:: images/aa-initial_configuration/initial-config-3.png
     :width: 50%
 
 |
 
-11. On the login screen, use **cvpadmin** as the username and the password you set in step 5 above
+12. On the login screen, use **cvpadmin** as the username and **cvpadmin** as the password
 
 |
 
-12. You will need to change this password at first login, and you will also be asked for an email address. You can put anything you want in this field. Give your cluster a name and Logo on step 3, then click **Finish**.
+13. You will need to change this password at first login, and you will also be asked for an email address. You can put anything you want in this field. Give your cluster a name and Logo on step 3, then click **Finish**.
 
 .. thumbnail:: images/aa-initial_configuration/initial-config-4.png
     :width: 80%
 |
 
-13. Log into CVP one more time and you'll be greeted by the Devices screen. You have now installed and configured CVP Successfully!
+14. Log into CVP one more time and you'll be greeted by the Devices screen. You have now installed and configured CVP Successfully!
 
 |
 
-14. Now lets set up network-admin and network-operator accounts. Click on the gear in the upper right. Select **Users** under **Access Control**. Fill out the Add User screen and under **Roles** Select **network-admin**. Click **Add**.  Follow this step again, but select **network operator** to set up the network-operator account.
+15. Now lets set up network-admin and network-operator accounts. Click on the gear in the upper right. Select **Users** under **Access Control**. Fill out the Add User screen and under **Roles** Select **network-admin**. Click **Add**.  Follow this step again, but select **network operator** to set up the network-operator account.
 
 
 .. thumbnail:: images/aa-initial_configuration/initial-config-5.png
@@ -238,12 +304,12 @@ All of these settings are saved in the /cvpi/cvp-config.yaml file
 
 |
 
-15. Bonus Step - (Requires an Arista.com account) We can now subscribe to bug alerts, so that CVP will populate compliance data automatically on the **Compliance Overview** screen.
+16. Bonus Step - (Requires an Arista.com account) We can now subscribe to bug alerts, so that CVP will populate compliance data automatically on the **Compliance Overview** screen.
 
-16. Browse to **arista.com** and log in. Once logged in, click on your name on the top bar and select **My Profile**. Copy your Access Token listed at the bottom of the page.
+17. Browse to **arista.com** and log in. Once logged in, click on your name on the top bar and select **My Profile**. Copy your Access Token listed at the bottom of the page.
 
 
-17. Back in CVP, click on the Gear icon in the top right, then select **Compliance Updates** on the left. Paste the Token that was copied from arista.com and click **Save**
+18. Back in CVP, click on the Gear icon in the top right, then select **Compliance Updates** on the left. Paste the Token that was copied from arista.com and click **Save**
 
 .. thumbnail:: images/aa-initial_configuration/initial-config-6.png
 
@@ -253,15 +319,12 @@ All of these settings are saved in the /cvpi/cvp-config.yaml file
 
     This step will error in the ATD environment, but on a standard deployment, where the CVP server can reach the internet, it will complete successfully.
 
-<<<<<<< HEAD
-    The manual way of updating the bug database is to browse to Arista.com, click on **Support > Software Downloads** and browse to **CloudVision > CloudVision Portal > Bug Alerts** and download the **AlertBase-CVP.json** file (as seen in the screenshot below)
+The manual way of updating the bug database is to browse to Arista.com, click on **Support > Software Downloads** and browse to **CloudVision > CloudVision Portal > Bug Alerts** and download the **AlertBase-CVP.json** file (as seen in the screenshot below)
 
 .. thumbnail:: images/aa-initial_configuration/initial-config-7.png
     
 
 
-=======
->>>>>>> 9f03fc82cb15b75ff1d01f39454f7c0cad97c92d
 
 .. Note::
     

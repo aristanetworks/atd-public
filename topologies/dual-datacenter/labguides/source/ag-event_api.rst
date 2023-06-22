@@ -62,7 +62,7 @@ Now that we have a receiver to send our events to, we have to configure a rule t
 
 |
 
-15. You may need to refresh the page a few times but you should see your test alert come through momentarily.
+1.  You may need to refresh the page a few times but you should see your test alert come through after a minute or two.
 
 .. thumbnail:: images/ag-event_api/ag-event_api6.png
 
