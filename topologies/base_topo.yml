@@ -452,7 +452,7 @@ topologies:
               disk: 300
               image: TODO
             branch: nested-release
-            orderable: true
+            orderable: false
             eos:
               - 4.30.1F
     prod:
