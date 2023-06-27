@@ -22,54 +22,13 @@ topologies:
               cpu: 54
               ram: 64
             branch: nested/2022.2
-            orderable: true
+            orderable: false
             image: base-atd-dual-datacenter-ceos-c2022-2-0-20220908
             eos:
               - 4.30.0F
               - 4.29.2F
               - 4.29.1F
               - 4.29.0.2F
-          2022.2.0-bare:
-            schema: 2
-            resources_eos:
-              cpu: 16
-              ram: 32
-              disk: 50
-              image: atd-dual-datacenter-nodes-ceos-c2022-2-0-bare-20221107
-            resources_cvp:
-              cpu: 28
-              ram: 36
-              disk: 300
-              image: atd-dual-datacenter-cvp-c2022-2-0-bare-20221107
-            resources:
-              cpu: 54
-              ram: 64
-            branch: nested/2022.2
-            orderable: false
-            image: base-atd-dual-datacenter-ceos-c2022-2-0--bare-20220909
-            eos:
-              - 4.30.0F
-              - 4.29.2F
-              - 4.29.1F
-              - 4.29.0.2F
-          2022.3.1:
-            schema: 2
-            resources_eos:
-              cpu: 16
-              ram: 32
-              disk: 50
-              image: atd-dual-datacenter-nodes-ceos-c2022-3-1-20230227
-            resources_cvp:
-              cpu: 28
-              ram: 36
-              disk: 300
-              image: atd-dual-datacenter-cvp-c2022-3-1-20230227
-            branch: nested/2022.3
-            orderable: false
-            eos:
-              - 4.29.2F
-              - 4.29.1F
-              - 4.28.3M
           2023.1.0-eft10:
             schema: 2
             resources_eos:
@@ -82,40 +41,6 @@ topologies:
               ram: 36
               disk: 300
               image: atd-dual-datacenter-cvp-c2023-1-0-eft10-20230425
-            branch: nested-release
-            orderable: false
-            eos:
-              - 4.30.0F
-              - 4.29.2F
-          2023.1.0-rc1:
-            schema: 2
-            resources_eos:
-              cpu: 16
-              ram: 32
-              disk: 100
-              image: atd-dual-datacenter-c2023-1-0-rc1-ceos-20230526
-            resources_cvp:
-              cpu: 28
-              ram: 36
-              disk: 300
-              image: atd-dual-datacenter-c2023-1-0-rc1-ceos-cvp-20230526
-            branch: nested-release
-            orderable: false
-            eos:
-              - 4.30.0F
-              - 4.29.2F
-          2023.1.0-rc1-bare:
-            schema: 2
-            resources_eos:
-              cpu: 16
-              ram: 32
-              disk: 100
-              image: atd-dual-datacenter-c2023-1-0-rc1-bare-ceos-20230526
-            resources_cvp:
-              cpu: 28
-              ram: 36
-              disk: 300
-              image: atd-dual-datacenter-c2023-1-0-rc1-bare-ceos-cvp-20230526
             branch: nested-release
             orderable: false
             eos:
@@ -134,7 +59,7 @@ topologies:
               disk: 300
               image: atd-dual-datacenter-c2023-1-0-rc3-ceos-cvp-20230612
             branch: nested-release
-            orderable: true
+            orderable: false
             eos:
               - 4.30.0F
               - 4.29.2F
@@ -151,8 +76,44 @@ topologies:
               disk: 300
               image: atd-dual-datacenter-c2023-1-0-rc3-bare-ceos-cvp-20230612
             branch: nested-release
+            orderable: false
+            eos:
+              - 4.30.0F
+              - 4.29.2F
+          2023.1.0:
+            schema: 2
+            resources_eos:
+              cpu: 16
+              ram: 32
+              disk: 50
+              image: atd-dual-datacenter-c2023-1-0-ceos-20230627
+            resources_cvp:
+              cpu: 28
+              ram: 36
+              disk: 300
+              image: atd-dual-datacenter-c2023-1-0-ceos-cvp-20230627
+            branch: nested/2023.1
             orderable: true
             eos:
+              - 4.30.1F
+              - 4.30.0F
+              - 4.29.2F
+          2023.1.0-bare:
+            schema: 2
+            resources_eos:
+              cpu: 16
+              ram: 32
+              disk: 50
+              image: atd-dual-datacenter-c2023-1-0-bare-ceos-20230627
+            resources_cvp:
+              cpu: 28
+              ram: 36
+              disk: 300
+              image: atd-dual-datacenter-c2023-1-0-bare-ceos-cvp-20230627
+            branch: nested/2023.1
+            orderable: true
+            eos:
+              - 4.30.1F
               - 4.30.0F
               - 4.29.2F
     prod:
@@ -247,7 +208,7 @@ topologies:
               cpu: 36
               ram: 58
             branch: nested/2022.1
-            orderable: true
+            orderable: false
             image: base-atd-datacenter-ceos-c2022-1-1-20221026u
             eos:
               - 4.28.1F
@@ -262,7 +223,7 @@ topologies:
               cpu: 48
               ram: 74
             branch: nested/2022.1
-            orderable: true
+            orderable: false
             image: base-atd-datacenter-e4-28-1f-c2022-1-1-20221026u
             eos:
               - 4.28.1F
@@ -272,7 +233,7 @@ topologies:
               cpu: 48
               ram: 74
             branch: nested/2022.1
-            orderable: true
+            orderable: false
             image: base-atd-datacenter-e4-28-1f-c2022-1-1-bare-20221026u
             eos:
               - 4.28.1F
@@ -289,7 +250,7 @@ topologies:
               disk: 300
               image: agp-datacenter-cvp-c2023-1-0-eft10-bare-20230426
             branch: nested-release
-            orderable: true
+            orderable: false
             eos:
               - 4.30.0F
     prod:
@@ -303,7 +264,7 @@ topologies:
               cpu: 36
               ram: 48
             branch: v2021.3-20220927a
-            orderable: true
+            orderable: false
             image: base-atd-datacenter-ceos-c2021-3-0-20220324u
             eos:
               - 4.27.1.1F
@@ -329,7 +290,7 @@ topologies:
               cpu: 48
               ram: 64
             branch: v2021.3-20220927a
-            orderable: true
+            orderable: false
             image: base-atd-datacenter-e4-27-2f-c2021-3-0-20220805
             eos:
               - 4.27.2F
@@ -381,7 +342,7 @@ topologies:
               cpu: 50
               ram: 90
             branch: nested/2022.2
-            orderable: true
+            orderable: false
             image: base-atd-routing-e4-28-2f-c2022-2-0-20221026u
             eos:
               - 4.29.0.2F
@@ -398,41 +359,25 @@ topologies:
               disk: 300
               image: atd-routing-e4-29-2f-cvp-c2022-3-1-20230227
             branch: nested/2022.3
-            orderable: true
+            orderable: false
             eos:
               - 4.29.2F
-          2023.1.0-eft10:
+          2023.1.0:
             schema: 2
             resources_eos:
               cpu: 32
               ram: 64
               disk: 50
-              image: atd-routing-nodes-veos-e4-30-0f-c2023-1-0--eft10-20230425
+              image: atd-routing-c2023-1-0-veos-4-30-1f-20230627
             resources_cvp:
               cpu: 28
               ram: 36
               disk: 300
-              image: atd-routing-e4-30-0f-cvp-c2023-1-0-eft10-202304025
-            branch: nested-release
-            orderable: false
+              image: atd-routing-c2023-1-0-veos-4-30-1f-cvp-20230627
+            branch: nested/2023.1
+            orderable: true
             eos:
-              - 4.30.0F
-          2023.1.0-rc1:
-            schema: 2
-            resources_eos:
-              cpu: 32
-              ram: 64
-              disk: 100
-              image: atd-routing-c2023-1-0-rc1-veos-4-30-0f-20230526
-            resources_cvp:
-              cpu: 28
-              ram: 36
-              disk: 300
-              image: atd-routing-c2023-1-0-rc1-veos-4-30-0f-cvp-20230526
-            branch: nested-release
-            orderable: false
-            eos:
-              - 4.30.0F
+              - 4.30.1F
       ceos:
         cpu: 32
         ram: 64
@@ -453,7 +398,7 @@ topologies:
               cpu: 40
               ram: 64
             branch: nested/2022.2
-            orderable: true
+            orderable: false
             image: base-atd-routing-ceos-c2022-2-0-20220908
             eos:
               - 4.30.0F
@@ -473,43 +418,11 @@ topologies:
               disk: 300
               image: atd-routing-cvp-c2022-3-1-20230227
             branch: nested/2022.3
-            orderable: true
+            orderable: false
             eos:
               - 4.29.2F
               - 4.29.1F
               - 4.28.3M
-          2023.1.0-eft10:
-            schema: 2
-            resources_eos:
-              cpu: 16
-              ram: 32
-              disk: 50
-              image: atd-routing-nodes-ceos-c2023-1-0-eft10-20230425
-            resources_cvp:
-              cpu: 28
-              ram: 36
-              disk: 300
-              image: atd-routing-cvp-c2023-1-0-eft10-20230425
-            branch: nested-release
-            orderable: false
-            eos:
-              - 4.30.0F
-          2023.1.0-rc1:
-            schema: 2
-            resources_eos:
-              cpu: 16
-              ram: 32
-              disk: 100
-              image: atd-routing-c2023-1-0-rc1-ceos-20230526
-            resources_cvp:
-              cpu: 28
-              ram: 36
-              disk: 300
-              image: atd-routing-c2023-1-0-rc1-ceos-cvp-20230526
-            branch: nested-release
-            orderable: false
-            eos:
-              - 4.30.0F
           2023.1.0-rc3:
             schema: 2
             resources_eos:
@@ -523,9 +436,25 @@ topologies:
               disk: 300
               image: atd-routing-c2023-1-0-rc3-ceos-cvp-20230612
             branch: nested-release
-            orderable: true
+            orderable: false
             eos:
               - 4.30.0F
+          2023.1.0:
+            schema: 2
+            resources_eos:
+              cpu: 16
+              ram: 32
+              disk: 50
+              image: TODO
+            resources_cvp:
+              cpu: 28
+              ram: 36
+              disk: 300
+              image: TODO
+            branch: nested-release
+            orderable: true
+            eos:
+              - 4.30.1F
     prod:
       ceos:
         cpu: 24
