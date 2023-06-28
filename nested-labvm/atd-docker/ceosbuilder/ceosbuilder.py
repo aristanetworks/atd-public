@@ -260,7 +260,10 @@ def main(args):
     try:
         host_yaml = YAML().load(open(FILE_TOPO, 'r'))
         TOPO_TAG = host_yaml['topology']
-        _tag = TOPO_TAG
+        _tmp = TOPO_TAG.split('-')
+        _tag = ""
+        for _char in _tmp:
+            _tag += _char[0].lower()
     except:
         print("File not found")
     if 'eos_type' in host_yaml:
