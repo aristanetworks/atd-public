@@ -44,9 +44,9 @@ Click on **CVP** on the topology landing page to access CloudVision Portal
       .. thumbnail:: images/cvp_studios_l3ls_evpn/2WorkspaceIntro.gif
          :align: center
 
-|
-.. Note::
-   The term "studio" is used to describe the pre-built configuration sections within CloudVision Studios. These include Connectivity Monitoring, Date and Time, Interface Configuration, Postcard Telemetry, Streaming Telemetry Agent, Campus Fabric, Enterprise Routing, L3 Leaf-Spine Fabric, EVPN Services, and Segment Security.
+
+   .. note::
+      The term "studio" is used to describe the pre-built configuration sections within CloudVision Studios. These include Connectivity Monitoring, Date and Time, Interface Configuration, Postcard Telemetry, Streaming Telemetry Agent, Campus Fabric, Enterprise Routing, L3 Leaf-Spine Fabric, EVPN Services, and Segment Security.
 
 
 #. Inventory studio
@@ -60,11 +60,11 @@ Click on **CVP** on the topology landing page to access CloudVision Portal
 
    .. thumbnail:: images/cvp_studios_l3ls_evpn/3Inventory.gif
          :align: center
-         
+   
+   .. note::
+      This is where we will tell studios which devices to include, and the studio will know how the physical topology is built via lldp. It will allow the other studios to auto detect links to assign properly for a functional network.
 
-   .. note:: 
-   This is where we will tell studios which devices to include, and the studio will know how the physical topology is built via lldp. It will allow the other studios to auto detect links to assign properly for a functional network.
-
+|br|
 
 #. Workspace Review
 
@@ -224,9 +224,6 @@ Click on **CVP** on the topology landing page to access CloudVision Portal
    s. In the Tenant, click on **Add Vlan Aware Bundle** and name it **"Bundle"**
    #. Enter the configuration, set the vlan range to ``60,70``
    #. Exit back to the tenant
-
-   .. thumbnail:: images/cvp_studios_l3ls_evpn/13evpn.gif
-       :align: center
        
 
    |br| We’re done with the EVPN studio.
@@ -280,7 +277,7 @@ Click on **CVP** on the topology landing page to access CloudVision Portal
       |br| This allows new workspaces to use those same inputs to perform Day2 change/add/remove actions. 
 
 
-   a. Click **“Start Build”** and you should get a successful action. 
+   a. After the build completes, you should see a "Build Succeeded" message at the top. 
    #. Click **“Submit Workspace”** to close the workspace and create the Change Control.
    #. Click  **“View Change Control”** to be taken to Change Control. 
    #. **“Review and Approve”** to prep the changes to the network. 
