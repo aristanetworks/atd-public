@@ -276,7 +276,7 @@ def main(args):
         except:
             pS("INFO", "Version parameter not found.")
         if args.topo:
-            FILE_BUILD = YAML().load(open(REPO_TOPO + TOPO_TAG + '/topo_build.yml', 'r'))
+            FILE_BUILD = YAML().load(open(REPO_TOPO + TOPO_TAG + '/ceos_build.yml', 'r'))
         else:
             FILE_BUILD = YAML().load(open('ceos_build.yml', 'r'))
         
