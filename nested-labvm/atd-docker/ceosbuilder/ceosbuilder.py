@@ -273,7 +273,7 @@ def main(args):
             upgrade_output.append(f"docker rm {_node}\n")
             upgrade_output.append(f"docker run -d --name={_node} --log-opt max-size=1m --net=container:{_node}-net --privileged -v /etc/sysctl.d/99-zatd.conf:/etc/sysctl.d/99-zatd.conf:ro -v {CEOS_NODES}/{_node}:/mnt/flash:Z -e INTFTYPE=et -e MGMT_INTF=eth0 -e ETBA=1 -e CEOS=1 -e EOS_PLATFORM=ceoslab -e container=docker -i -t {REGIS_PATH}/ceosimage:$EOS_TYPE /sbin/init systemd.setenv=INTFTYPE=et systemd.setenv=MGMT_INTF=eth0 systemd.setenv=ETBA=1 systemd.setenv=CEOS=1 systemd.setenv=EOS_PLATFORM=ceoslab systemd.setenv=container=docker\n")
         create_output.append('touch {0}.ceos.txt'.format(CEOS_SCRIPTS))
-        startup_output.append('rm -- "$0"\n')
+        # startup_output.append('rm -- "$0"\n')
 
         # Create the initial deployment files
         with open(CEOS_SCRIPTS + 'Create.sh', 'w') as cout:
