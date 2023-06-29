@@ -437,12 +437,12 @@ def main(args):
                 _tmp_intf = CEOS[_node].intfs[_intf]
                 if CEOS[_node].dev_id in  _tmp_intf['veth'].split('-')[0]:
                     create_output.append(f"echo \"Plugged patch cable into {_node} port {_tmp_intf['port']}\"\n")
-                    create_output.append(f"sudo ip link set {_tmp_intf['veth'].split('-')[0]} netns {CEOS[_node].tag}{CEOS[_node].dev_id} name {_tmp_intf['port']} up\n")
-                    startup_output.append(f"sudo ip link set {_tmp_intf['veth'].split('-')[0]} netns {CEOS[_node].tag}{CEOS[_node].dev_id} name {_tmp_intf['port']} up\n")
+                    create_output.append(f"sudo ip link set {_tmp_intf['veth'].split('-')[0]} mtu {MTU} netns {CEOS[_node].tag}{CEOS[_node].dev_id} name {_tmp_intf['port']} up\n")
+                    startup_output.append(f"sudo ip link set {_tmp_intf['veth'].split('-')[0]} mtu {MTU} netns {CEOS[_node].tag}{CEOS[_node].dev_id} name {_tmp_intf['port']} up\n")
                 else:
                     create_output.append(f"echo \"Plugged patch cable into {_node} port {_tmp_intf['port']}\"\n")
-                    create_output.append(f"sudo ip link set {_tmp_intf['veth'].split('-')[1]} netns {CEOS[_node].tag}{CEOS[_node].dev_id} name {_tmp_intf['port']} up\n")
-                    startup_output.append(f"sudo ip link set {_tmp_intf['veth'].split('-')[1]} netns {CEOS[_node].tag}{CEOS[_node].dev_id} name {_tmp_intf['port']} up\n")
+                    create_output.append(f"sudo ip link set {_tmp_intf['veth'].split('-')[1]} mtu {MTU} netns {CEOS[_node].tag}{CEOS[_node].dev_id} name {_tmp_intf['port']} up\n")
+                    startup_output.append(f"sudo ip link set {_tmp_intf['veth'].split('-')[1]} mtu {MTU} netns {CEOS[_node].tag}{CEOS[_node].dev_id} name {_tmp_intf['port']} up\n")
             # Get MGMT VETHS
             create_output.append(f"sudo ip link add {CEOS[_node].tag}{CEOS[_node].dev_id}-eth0 type veth peer name {CEOS[_node].tag}{CEOS[_node].dev_id}-mgmt\n")
             create_output.append(f"sudo ip link set {CEOS[_node].tag}{CEOS[_node].dev_id}-eth0 netns {CEOS[_node].tag}{CEOS[_node].dev_id} name eth0 up\n")
