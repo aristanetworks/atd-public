@@ -334,13 +334,13 @@ def main(args):
         pS("INFO", "Examining devices for topology")
         if hosts:
             for _container_node in (NODES + hosts):
-                _node_name = list(_container_node.keys())[0]
+                _node_name = _container_node['name']
                 _container_uid = getDevID()
                 CEOS_IDS.append(_container_uid)
                 CEOS_MAPPER[_node_name] = _container_uid
         else:
             for _container_node in NODES:
-                _node_name = list(_container_node.keys())[0]
+                _node_name = _container_node['name']
                 _container_uid = getDevID()
                 CEOS_IDS.append(_container_uid)
                 CEOS_MAPPER[_node_name] = _container_uid
@@ -351,13 +351,13 @@ def main(args):
                 _node_ip = _node['ip_addr']
             except KeyError:
                 _node_ip = ""
-            _node_name = list(_node.keys())[0]
+            _node_name = _node['name']
             CEOS[_node_name] = CEOS_NODE(_node_name, _node_ip, _node['mac'], CEOS_LINKS[_node_name], _tag, CEOS_VERSION)
             DEVICE_INFO.append(f"# {_node_name} = {CEOS[_node_name].tag}{CEOS[_node_name].dev_id}\n")
         # Load Host nodes specific information
         if hosts:
             for _host in hosts:
-                _host_name = list(_host.keys())[0]
+                _host_name = _host_name['name']
                 HOSTS[_host_name] = HOST_NODE(_host_name, _host['ip_addr'], _host['mask'], _host['gateway'], CEOS_LINKS[_host_name], _tag, host_image)
                 DEVICE_INFO.append(f"# {_host_name} = {HOSTS[_host_name].tag}{HOSTS[_host_name].dev_id}\n")
 

@@ -67,472 +67,76 @@ links:
   - [["s2-brdr2", "et5"], ["s2-core2", "et3"]]
 
 nodes:
-  - s1-spine1:
+  - name: s1-spine1
     mac: 00:1c:73:c0:c6:10
     ip_addr: 192.168.0.10
-    neighbors:
-      - neighborDevice: s1-spine2
-        neighborPort: Ethernet1
-        port: Ethernet1
-      - neighborDevice: s1-leaf1
-        neighborPort: Ethernet2
-        port: Ethernet2
-      - neighborDevice: s1-leaf2
-        neighborPort: Ethernet2
-        port: Ethernet3
-      - neighborDevice: s1-leaf3
-        neighborPort: Ethernet2
-        port: Ethernet4
-      - neighborDevice: s1-leaf4
-        neighborPort: Ethernet2
-        port: Ethernet5
-      - neighborDevice: s1-spine2
-        neighborPort: Ethernet6
-        port: Ethernet6
-      - neighborDevice: s1-brdr1
-        neighborPort: Ethernet2
-        port: Ethernet7
-      - neighborDevice: s1-brdr2
-        neighborPort: Ethernet2
-        port: Ethernet8
-  - s1-spine2:
+  - name: s1-spine2
     mac: 00:1c:73:c0:c6:11
     ip_addr: 192.168.0.11
-    neighbors:
-      - neighborDevice: s1-spine1
-        neighborPort: Ethernet1
-        port: Ethernet1
-      - neighborDevice: s1-leaf1
-        neighborPort: Ethernet3
-        port: Ethernet2
-      - neighborDevice: s1-leaf2
-        neighborPort: Ethernet3
-        port: Ethernet3
-      - neighborDevice: s1-leaf3
-        neighborPort: Ethernet3
-        port: Ethernet4
-      - neighborDevice: s1-leaf4
-        neighborPort: Ethernet3
-        port: Ethernet5
-      - neighborDevice: s1-spine1
-        neighborPort: Ethernet6
-        port: Ethernet6
-      - neighborDevice: s1-brdr1
-        neighborPort: Ethernet3
-        port: Ethernet7
-      - neighborDevice: s1-brdr2
-        neighborPort: Ethernet3
-        port: Ethernet8
-  - s1-leaf1:
+  - name: s1-leaf1
     mac: 00:1c:73:c0:c6:12
     ip_addr: 192.168.0.12
-    neighbors:
-      - neighborDevice: s1-leaf2
-        neighborPort: Ethernet1
-        port: Ethernet1
-      - neighborDevice: s1-spine1
-        neighborPort: Ethernet2
-        port: Ethernet2
-      - neighborDevice: s1-spine2
-        neighborPort: Ethernet2
-        port: Ethernet3
-      - neighborDevice: s1-host1
-        neighborPort: Ethernet1
-        port: Ethernet4
-      - neighborDevice: s1-leaf2
-        neighborPort: Ethernet6
-        port: Ethernet6
-  - s1-leaf2:
+  - name: s1-leaf2
     mac: 00:1c:73:c0:c6:13
     ip_addr: 192.168.0.13
-    neighbors:
-      - neighborDevice: s1-leaf1
-        neighborPort: Ethernet1
-        port: Ethernet1
-      - neighborDevice: s1-spine1
-        neighborPort: Ethernet3
-        port: Ethernet2
-      - neighborDevice: s1-spine2
-        neighborPort: Ethernet3
-        port: Ethernet3
-      - neighborDevice: s1-host1
-        neighborPort: Ethernet2
-        port: Ethernet4
-      - neighborDevice: s1-leaf1
-        neighborPort: Ethernet6
-        port: Ethernet6
-  - s1-leaf3:
+  - name: s1-leaf3
     mac: 00:1c:73:c0:c6:14
     ip_addr: 192.168.0.14
-    neighbors:
-      - neighborDevice: s1-leaf4
-        neighborPort: Ethernet1
-        port: Ethernet1
-      - neighborDevice: s1-spine1
-        neighborPort: Ethernet4
-        port: Ethernet2
-      - neighborDevice: s1-spine2
-        neighborPort: Ethernet4
-        port: Ethernet3
-      - neighborDevice: s1-host2
-        neighborPort: Ethernet1
-        port: Ethernet4
-      - neighborDevice: s1-leaf4
-        neighborPort: Ethernet6
-        port: Ethernet6
-  - s1-leaf4:
+  - name: s1-leaf4
     mac: 00:1c:73:c0:c6:15
     ip_addr: 192.168.0.15
-    neighbors:
-      - neighborDevice: s1-leaf3
-        neighborPort: Ethernet1
-        port: Ethernet1
-      - neighborDevice: s1-spine1
-        neighborPort: Ethernet5
-        port: Ethernet2
-      - neighborDevice: s1-spine2
-        neighborPort: Ethernet5
-        port: Ethernet3
-      - neighborDevice: s1-host2
-        neighborPort: Ethernet2
-        port: Ethernet4
-      - neighborDevice: s1-leaf3
-        neighborPort: Ethernet6
-        port: Ethernet6
-  - s1-host1:
+  - name: s1-host1
     mac: 00:1c:73:c0:c6:16
     ip_addr: 192.168.0.16
-    neighbors:
-      - neighborDevice: s1-leaf1
-        neighborPort: Ethernet4
-        port: Ethernet1
-      - neighborDevice: s1-leaf2
-        neighborPort: Ethernet4
-        port: Ethernet2
-  - s1-host2:
+  - name: s1-host2
     mac: 00:1c:73:c0:c6:17
     ip_addr: 192.168.0.17
-    neighbors:
-      - neighborDevice: s1-leaf3
-        neighborPort: Ethernet4
-        port: Ethernet1
-      - neighborDevice: s1-leaf4
-        neighborPort: Ethernet4
-        port: Ethernet2
-  - s1-brdr1:
+  - name: s1-brdr1
     mac: 00:1c:73:c0:c1:00
     ip_addr: 192.168.0.100
-    neighbors:
-      - neighborDevice: s1-brdr2
-        neighborPort: Ethernet1
-        port: Ethernet1
-      - neighborDevice: s1-spine1
-        neighborPort: Ethernet7
-        port: Ethernet2
-      - neighborDevice: s1-spine2
-        neighborPort: Ethernet7
-        port: Ethernet3
-      - neighborDevice: s1-core1
-        neighborPort: Ethernet2
-        port: Ethernet4
-      - neighborDevice: s1-core2
-        neighborPort: Ethernet2
-        port: Ethernet5
-      - neighborDevice: s1-brdr2
-        neighborPort: Ethernet6
-        port: Ethernet6
-  - s1-brdr2:
+  - name: s1-brdr2
     mac: 00:1c:73:c0:c1:01
     ip_addr: 192.168.0.101
-    neighbors:
-      - neighborDevice: s1-brdr1
-        neighborPort: Ethernet1
-        port: Ethernet1
-      - neighborDevice: s1-spine1
-        neighborPort: Ethernet8
-        port: Ethernet2
-      - neighborDevice: s1-spine2
-        neighborPort: Ethernet8
-        port: Ethernet3
-      - neighborDevice: s1-core1
-        neighborPort: Ethernet3
-        port: Ethernet4
-      - neighborDevice: s1-core2
-        neighborPort: Ethernet3
-        port: Ethernet5
-      - neighborDevice: s1-brdr1
-        neighborPort: Ethernet6
-        port: Ethernet6
-  - s1-core1:
+  - name: s1-core1
     mac: 00:1c:73:c0:c1:02
     ip_addr: 192.168.0.102
-    neighbors:
-      - neighborDevice: s1-core2
-        neighborPort: Ethernet1
-        port: Ethernet1
-      - neighborDevice: s1-brdr1
-        neighborPort: Ethernet4
-        port: Ethernet2
-      - neighborDevice: s1-brdr2
-        neighborPort: Ethernet4
-        port: Ethernet3
-      - neighborDevice: s2-core1
-        neighborPort: Ethernet4
-        port: Ethernet4
-      - neighborDevice: s1-core2
-        neighborPort: Ethernet6
-        port: Ethernet6
-  - s1-core2:
+  - name: s1-core2
     mac: 00:1c:73:c0:c1:03
     ip_addr: 192.168.0.103
-    neighbors:
-      - neighborDevice: s1-core1
-        neighborPort: Ethernet1
-        port: Ethernet1
-      - neighborDevice: s1-brdr1
-        neighborPort: Ethernet5
-        port: Ethernet2
-      - neighborDevice: s1-brdr2
-        neighborPort: Ethernet5
-        port: Ethernet3
-      - neighborDevice: s2-core2
-        neighborPort: Ethernet4
-        port: Ethernet4
-      - neighborDevice: s1-core1
-        neighborPort: Ethernet6
-        port: Ethernet6
-  - s2-spine1:
+  - name: s2-spine1
     mac: 00:1c:73:c0:c6:20
     ip_addr: 192.168.0.20
-    neighbors:
-      - neighborDevice: s2-spine2
-        neighborPort: Ethernet1
-        port: Ethernet1
-      - neighborDevice: s2-leaf1
-        neighborPort: Ethernet2
-        port: Ethernet2
-      - neighborDevice: s2-leaf2
-        neighborPort: Ethernet2
-        port: Ethernet3
-      - neighborDevice: s2-leaf3
-        neighborPort: Ethernet2
-        port: Ethernet4
-      - neighborDevice: s2-leaf4
-        neighborPort: Ethernet2
-        port: Ethernet5
-      - neighborDevice: s2-spine2
-        neighborPort: Ethernet6
-        port: Ethernet6
-      - neighborDevice: s2-brdr1
-        neighborPort: Ethernet2
-        port: Ethernet7
-      - neighborDevice: s2-brdr2
-        neighborPort: Ethernet2
-        port: Ethernet8
-  - s2-spine2:
+  - name: s2-spine2
     mac: 00:1c:73:c0:c6:21
     ip_addr: 192.168.0.21
-    neighbors:
-      - neighborDevice: s2-spine1
-        neighborPort: Ethernet1
-        port: Ethernet1
-      - neighborDevice: s2-leaf1
-        neighborPort: Ethernet3
-        port: Ethernet2
-      - neighborDevice: s2-leaf2
-        neighborPort: Ethernet3
-        port: Ethernet3
-      - neighborDevice: s2-leaf3
-        neighborPort: Ethernet3
-        port: Ethernet4
-      - neighborDevice: s2-leaf4
-        neighborPort: Ethernet3
-        port: Ethernet5
-      - neighborDevice: s2-spine1
-        neighborPort: Ethernet6
-        port: Ethernet6
-      - neighborDevice: s2-brdr1
-        neighborPort: Ethernet3
-        port: Ethernet7
-      - neighborDevice: s2-brdr2
-        neighborPort: Ethernet3
-        port: Ethernet8
-  - s2-leaf1:
+  - name: s2-leaf1
     mac: 00:1c:73:c0:c6:22
     ip_addr: 192.168.0.22
-    neighbors:
-      - neighborDevice: s2-leaf2
-        neighborPort: Ethernet1
-        port: Ethernet1
-      - neighborDevice: s2-spine1
-        neighborPort: Ethernet2
-        port: Ethernet2
-      - neighborDevice: s2-spine2
-        neighborPort: Ethernet2
-        port: Ethernet3
-      - neighborDevice: s2-host1
-        neighborPort: Ethernet1
-        port: Ethernet4
-      - neighborDevice: s2-leaf2
-        neighborPort: Ethernet6
-        port: Ethernet6
-  - s2-leaf2:
+  - name: s2-leaf2
     mac: 00:1c:73:c0:c6:23
     ip_addr: 192.168.0.23
-    neighbors:
-      - neighborDevice: s2-leaf1
-        neighborPort: Ethernet1
-        port: Ethernet1
-      - neighborDevice: s2-spine1
-        neighborPort: Ethernet3
-        port: Ethernet2
-      - neighborDevice: s2-spine2
-        neighborPort: Ethernet3
-        port: Ethernet3
-      - neighborDevice: s2-host1
-        neighborPort: Ethernet2
-        port: Ethernet4
-      - neighborDevice: s2-leaf1
-        neighborPort: Ethernet6
-        port: Ethernet6
-  - s2-leaf3:
+  - name: s2-leaf3
     mac: 00:1c:73:c0:c6:24
     ip_addr: 192.168.0.24
-    neighbors:
-      - neighborDevice: s2-leaf4
-        neighborPort: Ethernet1
-        port: Ethernet1
-      - neighborDevice: s2-spine1
-        neighborPort: Ethernet4
-        port: Ethernet2
-      - neighborDevice: s2-spine2
-        neighborPort: Ethernet4
-        port: Ethernet3
-      - neighborDevice: s2-host2
-        neighborPort: Ethernet1
-        port: Ethernet4
-      - neighborDevice: s2-leaf4
-        neighborPort: Ethernet6
-        port: Ethernet6
-  - s2-leaf4:
+  - name: s2-leaf4
     mac: 00:1c:73:c0:c6:25
     ip_addr: 192.168.0.25
-    neighbors:
-      - neighborDevice: s2-leaf3
-        neighborPort: Ethernet1
-        port: Ethernet1
-      - neighborDevice: s2-spine1
-        neighborPort: Ethernet5
-        port: Ethernet2
-      - neighborDevice: s2-spine2
-        neighborPort: Ethernet5
-        port: Ethernet3
-      - neighborDevice: s2-host2
-        neighborPort: Ethernet2
-        port: Ethernet4
-      - neighborDevice: s2-leaf3
-        neighborPort: Ethernet6
-        port: Ethernet6
-  - s2-host1:
+  - name: s2-host1
     mac: 00:1c:73:c0:c6:26
     ip_addr: 192.168.0.26
-    neighbors:
-      - neighborDevice: s2-leaf1
-        neighborPort: Ethernet4
-        port: Ethernet1
-      - neighborDevice: s2-leaf2
-        neighborPort: Ethernet4
-        port: Ethernet2
-  - s2-host2:
+  - name: s2-host2
     mac: 00:1c:73:c0:c6:27
     ip_addr: 192.168.0.27
-    neighbors:
-      - neighborDevice: s2-leaf3
-        neighborPort: Ethernet4
-        port: Ethernet1
-      - neighborDevice: s2-leaf4
-        neighborPort: Ethernet4
-        port: Ethernet2
-  - s2-brdr1:
+  - name: s2-brdr1
     mac: 00:1c:73:c0:c2:00
     ip_addr: 192.168.0.200
-    neighbors:
-      - neighborDevice: s2-brdr2
-        neighborPort: Ethernet1
-        port: Ethernet1
-      - neighborDevice: s2-spine1
-        neighborPort: Ethernet7
-        port: Ethernet2
-      - neighborDevice: s2-spine2
-        neighborPort: Ethernet7
-        port: Ethernet3
-      - neighborDevice: s2-core1
-        neighborPort: Ethernet2
-        port: Ethernet4
-      - neighborDevice: s2-core2
-        neighborPort: Ethernet2
-        port: Ethernet5
-      - neighborDevice: s2-brdr2
-        neighborPort: Ethernet6
-        port: Ethernet6
-  - s2-brdr2:
+  - name: s2-brdr2
     mac: 00:1c:73:c0:c2:01
     ip_addr: 192.168.0.201
-    neighbors:
-      - neighborDevice: s2-brdr1
-        neighborPort: Ethernet1
-        port: Ethernet1
-      - neighborDevice: s2-spine1
-        neighborPort: Ethernet8
-        port: Ethernet2
-      - neighborDevice: s2-spine2
-        neighborPort: Ethernet8
-        port: Ethernet3
-      - neighborDevice: s2-core1
-        neighborPort: Ethernet3
-        port: Ethernet4
-      - neighborDevice: s2-core2
-        neighborPort: Ethernet3
-        port: Ethernet5
-      - neighborDevice: s2-brdr1
-        neighborPort: Ethernet6
-        port: Ethernet6
-  - s2-core1:
+  - name: s2-core1
     mac: 00:1c:73:c0:c2:02
     ip_addr: 192.168.0.202
-    neighbors:
-      - neighborDevice: s2-core2
-        neighborPort: Ethernet1
-        port: Ethernet1
-      - neighborDevice: s2-brdr1
-        neighborPort: Ethernet4
-        port: Ethernet2
-      - neighborDevice: s2-brdr2
-        neighborPort: Ethernet4
-        port: Ethernet3
-      - neighborDevice: s1-core1
-        neighborPort: Ethernet4
-        port: Ethernet4
-      - neighborDevice: s2-core2
-        neighborPort: Ethernet6
-        port: Ethernet6
-  - s2-core2:
+  - name: s2-core2
     mac: 00:1c:73:c0:c2:03
     ip_addr: 192.168.0.203
-    neighbors:
-      - neighborDevice: s2-core1
-        neighborPort: Ethernet1
-        port: Ethernet1
-      - neighborDevice: s2-brdr1
-        neighborPort: Ethernet5
-        port: Ethernet2
-      - neighborDevice: s2-brdr2
-        neighborPort: Ethernet5
-        port: Ethernet3
-      - neighborDevice: s1-core2
-        neighborPort: Ethernet4
-        port: Ethernet4
-      - neighborDevice: s2-core1
-        neighborPort: Ethernet6
-        port: Ethernet6
 additional_ssh_nodes:
