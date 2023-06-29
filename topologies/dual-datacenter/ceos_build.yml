@@ -42,7 +42,7 @@ links:
   - [["s2-spine1", "et3"], ["s2-leaf2", "et2"]]
   - [["s2-spine1", "et4"], ["s2-leaf3", "et2"]]
   - [["s2-spine1", "et5"], ["s2-leaf4", "et2"]]
-  - [["s2-spine1", "et6"], ["s2-spine1", "et6"]]
+  - [["s2-spine1", "et6"], ["s2-spine2", "et6"]]
   - [["s2-spine1", "et7"], ["s2-brdr1", "et2"]]
   - [["s2-spine1", "et8"], ["s2-brdr2", "et2"]]
   - [["s2-spine2", "et2"], ["s2-leaf1", "et3"]]
