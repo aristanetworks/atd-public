@@ -45,7 +45,7 @@ class CEOS_NODE():
         self.ip = node_ip
         self.tag = _tag.lower()
         self.image = image
-        self.ceos_name = self.tag + self.name
+        self.ceos_name = self.name
         self.intfs = {}
         self.dev_id = CEOS_MAPPER[self.name]
         self.portMappings(node_neighbors)
