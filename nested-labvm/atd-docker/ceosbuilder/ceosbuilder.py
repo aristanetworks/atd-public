@@ -25,7 +25,6 @@ REGIS_PATH = 'us.gcr.io/beta-atds'
 MTU = 10000
 VETH_PAIRS = []
 CEOS = {}
-HOSTS = {}
 
 ALL_MACS = []
 CEOS_IDS = []
@@ -55,37 +54,6 @@ class CEOS_NODE():
         else:
             self.mgmt_mac = generateMac()
             self.system_mac = node_mac
-
-    def portMappings(self, node_neighbors):
-        """
-        Function to create port mappings.
-        """
-        for intf in node_neighbors:
-            lport = intf['port'].replace('/', '_')
-            rport = intf['neighborPort'].replace('/', '_')
-            rneigh = f"{self.tag}{CEOS_MAPPER[intf['neighborDevice']]}"
-            _vethCheck = checkVETH(f"{self.tag}{self.dev_id}{lport}", f"{rneigh}{rport}")
-            if _vethCheck['status']:
-                pS("OK", f"Found Patch Cable for {self.name} {lport} to {intf['neighborDevice']} {rport} will be created.")
-                VETH_PAIRS.append(_vethCheck['name'])
-            self.intfs[intf['port']] = {
-                'veth': _vethCheck['name'],
-                'port': lport
-            }
-
-class HOST_NODE():
-    def __init__(self, node_name, node_ip, node_mask, node_gw, node_neighbors, _tag, image):
-        self.name = node_name
-        self.ip = node_ip
-        self.mask = node_mask
-        self.gw = node_gw
-        self.tag = _tag.lower()
-        self.c_name = self.tag + self.name
-        self.image = image
-        self.ceos_name = self.tag + self.name
-        self.intfs = {}
-        self.dev_id = CEOS_MAPPER[self.name]
-        self.portMappings(node_neighbors)
 
     def portMappings(self, node_neighbors):
         """
@@ -284,10 +252,6 @@ def main(args):
 
         LINKS = FILE_BUILD['links']
         NODES = FILE_BUILD['nodes']
-        if 'hosts' in FILE_BUILD:
-            hosts = FILE_BUILD['hosts']
-        else:
-            hosts = []
         # Check for 32 or 64 bit EOS image to use
         try:
             if FILE_BUILD["images"]["64-bit"]:
@@ -332,18 +296,11 @@ def main(args):
 
         # Generate Unique IDs for container hosts
         pS("INFO", "Examining devices for topology")
-        if hosts:
-            for _container_node in (NODES + hosts):
-                _node_name = _container_node['name']
-                _container_uid = getDevID()
-                CEOS_IDS.append(_container_uid)
-                CEOS_MAPPER[_node_name] = _container_uid
-        else:
-            for _container_node in NODES:
-                _node_name = _container_node['name']
-                _container_uid = getDevID()
-                CEOS_IDS.append(_container_uid)
-                CEOS_MAPPER[_node_name] = _container_uid
+        for _container_node in NODES:
+            _node_name = _container_node['name']
+            _container_uid = getDevID()
+            CEOS_IDS.append(_container_uid)
+            CEOS_MAPPER[_node_name] = _container_uid
 
         # Load cEOS nodes specific information
         for _node in NODES:
@@ -351,15 +308,14 @@ def main(args):
                 _node_ip = _node['ip_addr']
             except KeyError:
                 _node_ip = ""
+            try:
+                _node_mac = _node['mac']
+            except KeyError:
+                _id = NODES.index(_node)
+                _node_mac = createMac(_id)
             _node_name = _node['name']
-            CEOS[_node_name] = CEOS_NODE(_node_name, _node_ip, _node['mac'], CEOS_LINKS[_node_name], _tag, CEOS_VERSION)
+            CEOS[_node_name] = CEOS_NODE(_node_name, _node_ip, _node_mac, CEOS_LINKS[_node_name], _tag, CEOS_VERSION)
             DEVICE_INFO.append(f"# {_node_name} = {CEOS[_node_name].tag}{CEOS[_node_name].dev_id}\n")
-        # Load Host nodes specific information
-        if hosts:
-            for _host in hosts:
-                _host_name = _host_name['name']
-                HOSTS[_host_name] = HOST_NODE(_host_name, _host['ip_addr'], _host['mask'], _host['gateway'], CEOS_LINKS[_host_name], _tag, host_image)
-                DEVICE_INFO.append(f"# {_host_name} = {HOSTS[_host_name].tag}{HOSTS[_host_name].dev_id}\n")
 
         # Update NOTIFY adjust for instances
         NOTIFY_ADD = NOTIFY_ADJUST.format(
@@ -482,48 +438,6 @@ def main(args):
                 upgrade_output.append(f"{cnt_cmd} stop {_node}\n")
                 upgrade_output.append(f"{cnt_cmd} rm {_node}\n")
                 upgrade_output.append(f"{cnt_cmd} run -d --name={CEOS[_node].ceos_name} {cnt_log}1m --net=container:{CEOS[_node].ceos_name}-net --privileged -v /etc/sysctl.d/99-zceos.conf:/etc/sysctl.d/99-zceos.conf:ro -v {CEOS_NODES}/{_node}:/mnt/flash:Z -e INTFTYPE=et -e MGMT_INTF=eth0 -e ETBA=1 -e CEOS=1 -e EOS_PLATFORM=ceoslab -e container=docker -i -t {registry_cmd}{ceos_build}:{CEOS[_node].image} /sbin/init systemd.setenv=INTFTYPE=et systemd.setenv=MGMT_INTF=eth0 systemd.setenv=ETBA=1 systemd.setenv=CEOS=1 systemd.setenv=EOS_PLATFORM=ceoslab systemd.setenv=container=docker 1> /dev/null 2> /dev/null\n")
-        # Create initial host anchor containers
-        create_output.append(f"echo \"Waiting on the server team to get their servers up and running...\"\n")
-        startup_output.append(f"echo \"Waiting on the server team to get their servers up and running...\"\n")
-        for _host in HOSTS:
-            create_output.append(f"# Getting {_host} nodes plumbing\n")
-            create_output.append(f"{cnt_cmd} run -d --restart=always {cnt_log}10k --name={HOSTS[_host].c_name}-net --net=none busybox /bin/init 1> /dev/null 2> /dev/null\n")
-            startup_output.append(f"{cnt_cmd} start {HOSTS[_host].c_name}-net 1> /dev/null 2> /dev/null\n")
-            create_output.append(f"{HOSTS[_host].c_name}pid=$({cnt_cmd} inspect --format '{{{{.State.Pid}}}}' {HOSTS[_host].c_name}-net)\n")
-            create_output.append(f"sudo ln -sf /proc/${{{HOSTS[_host].c_name}pid}}/ns/net /var/run/netns/{HOSTS[_host].tag}{HOSTS[_host].dev_id}\n")
-            # Stop host containers
-            delete_output.append(f"echo \"Pulling power and removing patch cables from {_host}\"\n")
-            stop_output.append(f"echo \"Pulling power from {_host}\"\n")
-            startup_output.append(f"{cnt_cmd} stop -t {STOP_WAIT} {HOSTS[_host].c_name} 1> /dev/null 2> /dev/null\n")
-            stop_output.append(f"{cnt_cmd} stop -t {STOP_WAIT} {HOSTS[_host].c_name} 1> /dev/null 2> /dev/null\n")
-            stop_output.append(f"{cnt_cmd} stop -t {STOP_WAIT} {HOSTS[_host].c_name}-net 1> /dev/null 2> /dev/null\n")
-            delete_output.append(f"{cnt_cmd} stop -t {STOP_WAIT} {HOSTS[_host].c_name} 1> /dev/null 2> /dev/null\n")
-            delete_output.append(f"{cnt_cmd} stop -t {STOP_WAIT} {HOSTS[_host].c_name}-net 1> /dev/null 2> /dev/null\n")
-            # Remove host containers
-            startup_output.append(f"{cnt_cmd} rm {HOSTS[_host].c_name} 1> /dev/null 2> /dev/null\n")
-            delete_output.append(f"{cnt_cmd} rm {HOSTS[_host].c_name} 1> /dev/null 2> /dev/null\n")
-            delete_output.append(f"{cnt_cmd} rm {HOSTS[_host].c_name}-net 1> /dev/null 2> /dev/null\n")
-            delete_net_output.append(f"sudo rm -rf /var/run/netns/{HOSTS[_host].tag}{HOSTS[_host].dev_id}\n")
-            startup_output.append(f"{HOSTS[_host].c_name}pid=$({cnt_cmd} inspect --format '{{{{.State.Pid}}}}' {HOSTS[_host].c_name}-net) 1> /dev/null 2> /dev/null\n")
-            startup_output.append(f"sudo ln -sf /proc/${{{HOSTS[_host].c_name}pid}}/ns/net /var/run/netns/{HOSTS[_host].tag}{HOSTS[_host].dev_id} 1> /dev/null 2> /dev/null\n")
-            create_output.append("# Connecting host containers together\n")
-            # Output veth commands
-            for _intf in HOSTS[_host].intfs:
-                _tmp_intf = HOSTS[_host].intfs[_intf]
-                if HOSTS[_host].dev_id in  _tmp_intf['veth'].split('-')[0]:
-                    create_output.append(f"echo \"Plugged patch cable into {_host} port {_tmp_intf['port']}\"\n")
-                    create_output.append(f"sudo ip link set {_tmp_intf['veth'].split('-')[0]} netns {HOSTS[_host].tag}{HOSTS[_host].dev_id} name {_tmp_intf['port']} up\n")
-                    startup_output.append(f"sudo ip link set {_tmp_intf['veth'].split('-')[0]} netns {HOSTS[_host].tag}{HOSTS[_host].dev_id} name {_tmp_intf['port']} up\n")
-                else:
-                    create_output.append(f"echo \"Plugged patch cable into {_host} port {_tmp_intf['port']}\"\n")
-                    create_output.append(f"sudo ip link set {_tmp_intf['veth'].split('-')[1]} netns {HOSTS[_host].tag}{HOSTS[_host].dev_id} name {_tmp_intf['port']} up\n")
-                    startup_output.append(f"sudo ip link set {_tmp_intf['veth'].split('-')[1]} netns {HOSTS[_host].tag}{HOSTS[_host].dev_id} name {_tmp_intf['port']} up\n")
-            create_output.append(f"echo \"Powering on {_host}\"\n")
-            startup_output.append(f"echo \"Powering on {_host}\"\n")
-            create_output.append("sleep 1\n")
-            create_output.append(f"{cnt_cmd} run -d --name={HOSTS[_host].c_name} --privileged {cnt_log}1m --net=container:{HOSTS[_host].c_name}-net -e HOSTNAME={HOSTS[_host].c_name} -e HOST_IP={HOSTS[_host].ip} -e HOST_MASK={HOSTS[_host].mask} -e HOST_GW={HOSTS[_host].gw} {registry_cmd}chost:{HOSTS[_host].image} ipnet 1> /dev/null 2> /dev/null\n")
-            startup_output.append("sleep 1\n")
-            startup_output.append(f"{cnt_cmd} run -d --name={HOSTS[_host].c_name} --privileged {cnt_log}1m --net=container:{HOSTS[_host].c_name}-net -e HOSTNAME={HOSTS[_host].c_name} -e HOST_IP={HOSTS[_host].ip} -e HOST_MASK={HOSTS[_host].mask} -e HOST_GW={HOSTS[_host].gw} {registry_cmd}chost:{HOSTS[_host].image} ipnet 1> /dev/null 2> /dev/null\n")
 
         create_output.append('touch {0}.ceos.txt'.format(CEOS_SCRIPTS))
         # startup_output.append('rm -- "$0"\n')
