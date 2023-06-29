@@ -1,0 +1,81 @@
+host_cpu: 8
+cvp_cpu: 24
+cvp_ram: 32
+cvp_nodes: 1
+veos_cpu: 2
+
+links:
+  - [["eos1", "et1"], ["eos2", "et5"]]
+  - [["eos1", "et2"], ["eos7", "et3"]]
+  - [["eos1", "et3"], ["eos11", "et1"]]
+  - [["eos1", "et4"], ["eos6", "et4"]]
+  - [["eos1", "et5"], ["eos5", "et4"]]
+  - [["eos1", "et6"], ["eos17", "et1"]]
+  - [["eos2", "et1"], ["eos3", "et3"]]
+  - [["eos2", "et2"], ["eos4", "et4"]]
+  - [["eos2", "et3"], ["eos5", "et3"]]
+  - [["eos2", "et4"], ["eos6", "et5"]]
+  - [["eos3", "et1"], ["eos9", "et2"]]
+  - [["eos3", "et2"], ["eos7", "et1"]]
+  - [["eos3", "et4"], ["eos5", "et2"]]
+  - [["eos3", "et5"], ["eos4", "et5"]]
+  - [["eos3", "et6"], ["eos20", "et1"]]
+  - [["eos4", "et1"], ["eos9", "et1"]]
+  - [["eos4", "et2"], ["eos8", "et1"]]
+  - [["eos4", "et3"], ["eos5", "et1"]]
+  - [["eos4", "et6"], ["eos16", "et1"]]
+  - [["eos5", "et6"], ["eos6", "et1"]]
+  - [["eos6", "et2"], ["eos8", "et3"]]
+  - [["eos6", "et3"], ["eos13", "et1"]]
+  - [["eos6", "et6"], ["eos14", "et2"]]
+  - [["eos7", "et2"], ["eos10", "et1"]]
+  - [["eos7", "et4"], ["eos19", "et1"]]
+  - [["eos8", "et2"], ["eos15", "et1"]]
+  - [["eos8", "et4"], ["eos14", "et1"]]
+  - [["eos8", "et5"], ["eos18", "et1"]]
+  - [["eos11", "et2"], ["eos12", "et2"]]
+  - [["eos11", "et3"], ["eos13", "et3"]]
+  - [["eos12", "et1"], ["eos13", "et2"]]
+
+nodes:
+  - name: eos1
+    ip_addr: "192.168.0.10"
+  - name: eos2
+    ip_addr: "192.168.0.11"
+  - name: eos3
+    ip_addr: "192.168.0.12"
+  - name: eos4
+    ip_addr: "192.168.0.13"
+  - name: eos5
+    ip_addr: "192.168.0.14"
+  - name: eos6
+    ip_addr: "192.168.0.15"
+  - name: eos7
+    ip_addr: "192.168.0.16"
+  - name: eos8
+    ip_addr: "192.168.0.17"
+  - name: eos9
+    ip_addr: "192.168.0.18"
+  - name: eos10
+    ip_addr: "192.168.0.19"
+  - name: eos11
+    ip_addr: "192.168.0.20"
+  - name: eos12
+    ip_addr: "192.168.0.21"
+  - name: eos13
+    ip_addr: "192.168.0.22"
+  - name: eos14
+    ip_addr: "192.168.0.23"
+  - name: eos15
+    ip_addr: "192.168.0.24"
+  - name: eos16
+    ip_addr: "192.168.0.25"
+  - name: eos17
+    ip_addr: "192.168.0.26"
+  - name: eos18
+    ip_addr: "192.168.0.27"
+  - name: eos19
+    ip_addr: "192.168.0.28"
+  - name: eos20
+    ip_addr: "192.168.0.29"
+additional_ssh_nodes:
