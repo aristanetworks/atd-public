@@ -170,7 +170,7 @@ services:
       - ./jenkins/src/groovy/users.groovy.override:/usr/share/jenkins/ref/init.groovy.d/users.groovy.override:rw
   coder:
     container_name: atd-coder
-    image: us.gcr.io/beta-atds/atddocker_coder:4.1.0
+    image: us.gcr.io/beta-atds/atddocker_coder:4.1.1
     restart: always
     user: $ArID:$ArGD
     command: /home/coder/project
