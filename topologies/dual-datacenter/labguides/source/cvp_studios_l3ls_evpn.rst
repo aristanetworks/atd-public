@@ -13,55 +13,63 @@ CloudVision Studios  -  L3LS/EVPN LAB GUIDE
 .. thumbnail:: images/cvp_studios_l3ls_evpn/1TOPO.PNG
 	:align: center
 
-The "Datacenter1" topology for this lab consists of two **spines,** four **leafs**, and two **"hosts"** for reachability testing. The borderleafs, cores, and Datacenter 2 are not a part of this lab guide. 
-The hosts will be pre-configured as L2 LACP trunk port-channels up to their respective leafs. 
-VLAN 60 and 70 will be pre-configured with SVIs on each host for post change reachability testing. 
-All underlay addressing will be performed by CVPS.
+|
 
-The hosts are already configured via lab configlets, we will not be involving them in the Studios process. 
-|br| First, provision the via lab console and run  option 6, ``CVP lab for Studios L3LS/EVPN (studiosl3ls)`` 
+* The "Datacenter1" topology for this lab consists of two **spines,** four **leafs**, and two **"hosts"** for reachability testing. 
+* The borderleafs, cores, and Datacenter 2 are not a part of this lab guide. 
+* The hosts will be pre-configured as L2 LACP trunk port-channels up to their respective leafs. 
+* VLAN 60 and 70 will be pre-configured with SVIs on each host for post change reachability testing. 
+* All underlay addressing will be performed by CVPS.
+|br|
+The hosts are already configured via lab configlets, we will not be involving them in the Studios process.
+|br|
+
+|br| First, on the lab topology landing page, click on **Console Access** and provision the lab by running option 6, ``CVP lab for Studios L3LS/EVPN (studiosl3ls)`` 
 |br| Allow the task to complete, and proceed to step 1. 
 
 .. thumbnail:: images/cvp_studios_l3ls_evpn/0jumpbox.png
       :align: center
 
+|
 
-
-
- 
-Open CVP via the topology page. 
+Click on **CVP** on the topology landing page to access CloudVision Portal 
 
 1. Workspace Creation
 
 
-   a. Navigate to **Provisioning>Studios>Create Workspace**. Name it **"LAB"**
-   #. Once created, go to the **"Inventory Studio"**
+   a. Navigate to **Provisioning** on the top menu, then click on **Studios** on the left, then click the **Create Workspace** button. Name it **"LAB"** then click **Create**
+   #. Once created, click on **"Inventory and Topology"** to enter the Inventory "studio"
 
 
       .. thumbnail:: images/cvp_studios_l3ls_evpn/2WorkspaceIntro.gif
          :align: center
 
+
+   .. note::
+      The term "studio" is used to describe the pre-built configuration sections within CloudVision Studios. These include Connectivity Monitoring, Date and Time, Interface Configuration, Postcard Telemetry, Streaming Telemetry Agent, Campus Fabric, Enterprise Routing, L3 Leaf-Spine Fabric, EVPN Services, and Segment Security.
+
+
 #. Inventory studio
     
-   a. Navigate to **Provisioning>Studios>Inventory and Topology**.
-   #. Enter the studio and click the **Accept Updates** tab.
-   #. Select both ``s1-Spines`` and  ``s1-leaf1-4``, Ignore anything else. 
+   a. You are now looking at the Inventory studio, where we will select the devices we would like to configure.
+   #. We will start adding devices into our workspace by clicking the **Accept Updates** tab.
+   #. Select both site 1 spines: ``S1-Spine1 and S1-Spine2`` as well as the leafs in site1:   ``S1-Leaf1, S1-Leaf2, S1-Leaf3, S1-Leaf4``, Ignore anything else. 
    #. Click **"Accept Updates"**.
    #. Notice that there are devices now in the ***onboarded devices** section. 
    #. Enter the device and see how Studios has detected the topology connections.
 
    .. thumbnail:: images/cvp_studios_l3ls_evpn/3Inventory.gif
          :align: center
-         
+   
+   .. note::
+      This is where we will tell studios which devices to include, and the studio will know how the physical topology is built via lldp. It will allow the other studios to auto detect links to assign properly for a functional network.
 
-   .. note:: 
-   This is where we will tell studios which devices to include, and the studio will know how the physical topology is built via lldp. It will allow the other studios to auto detect links to assign properly for a functional network.
-
+|br|
 
 #. Workspace Review
 
    .. note:: 
-      You can  make a separate workspace for every studio if you wish, however for this lab we are going to do all this work in the same workspace, because we would like to demonstrate how this process builds on itself in the staging area.
+      We created our workspace named 'LAB' at the beginning of this lab. You can  make a separate workspace for every studio if you wish, however for this lab we are going to do all this work in the same workspace, because we would like to demonstrate how this process builds on itself in the staging area.
 
    Click on **Review Workspace** on the upper right. This will take us to the **Workspace Summary** page to store the inputs for this studio to the staging area for later use. 
    Once we click review, it will run through the checks and tell us if we are good to proceed. You can see in the workspace summary what studios have been modified.
@@ -88,31 +96,30 @@ Open CVP via the topology page.
 
 
    a. Navigate to the **Provisioning>Studios>L3 Leaf-Spine Fabric** studio. 
-   #. Under *Data Centers*, click **Add Data Centers (DCs)** to add a DC, name it **1**, and click **+ Create "1"**. This will establish a tag pair of ``DC:1``  
-   #. Click **Edit** next to Device Selection and choose **Tag Query**
+   #. Under *Data Centers*, click **Add Data Center** to add a DC, name it **1**, and click **+ Create "1"**. This will establish a tag pair of ``DC:1``  
+   #. Click **Edit** next to Device Selection, then click the drop down menu and choose **Tag Query**
    #. Use the tag pair of ``DC:1`` (You may ignore the message that says No Devices Found" since we haven't assigned this tag to any devices yet)
-   #. Once complete, click the arrow to proceed into the configuration.
+   #. Once complete, click the arrow next to DC 1 in the Datacenter section to proceed into the configuration.
    
    |br| *(The DC name  can be a name or an integer, but for the lab use the aforementioned value)*
 
-   .. thumbnail:: images/cvp_studios_l3ls_evpn/6l3ls.gif .. warning:: The CIDR is required. `spine``
+   .. thumbnail:: images/cvp_studios_l3ls_evpn/6l3ls.gif 
+      
+
+
    f. Assign devices to the DC by clicking on the **Assigned Devices** field and clicking each individual device. 
-   #. Under Role, specify ``Leaf`` or ``Spine`` where needed.   
+   #. Under the Role section below, specify ``Leaf`` or ``Spine`` where needed.   
    #. Create Pod, name as **1** and ignore the warning on creation.
-   #. Enter Pod configuration
+   #. Enter Pod configuration by clicking the arrow.
 
    
    .. thumbnail:: images/cvp_studios_l3ls_evpn/7l3ls.gif
       :align: center
-   
-   ..
-      The above gif will need to be re-recorded after bug #788113 is resolved (devices don't show up under Role after adding them to Assigned Devices - 2022.3.1)
-
   
 
-   j. Assign devices to the Pod via "Assigned Devices"
+   j. Assign all devices to the Pod via "Assigned Devices"
    #. Add the two spines to the Spines section. number ``s1-spine1`` as 1, ``s1-spine2``  as 2.
-   #. Add Leaf Domain 1 and 2
+   #. Add L3 Leaf Domain 1 and 2
    #. In Leaf Domain 1 add ``s1-leaf1``, number as 1, ``s1-leaf2``, number as 2.
    #. In Leaf Domain 2 add ``s1-leaf3``, number as 3, ``s1-leaf4``, number as 4.
    
@@ -129,11 +136,10 @@ Open CVP via the topology page.
       |br| MLAG configuration is the default when domains are a pair.
    
 
-
-
    |br| The next step is to review the **workspace**. But before we do that, have a good look at the lower section. 
    |br| These are all the variables that the topology will be built on. For this lab we’ll leave it all at defaults. 
    |br| Noteworthy are those blue knobs below. 
+   |br|
    |br| Some options are BGP dynamic listeners on the Spines, VXLAN Overlay, topology settings for EVPN, etc. 
    |br| If all you wanted was strictly L3LS as a foundation you could turn off VXLAN/EVPN if you so chose.
 
@@ -200,7 +206,7 @@ Open CVP via the topology page.
    #. Set the VLAN 70 SVI Virtual IP Address to ``10.70.70.1/24``
 
    |br| Notice when entering the VTEP config the router_bgp.router_id and router_bgp.as variables are auto-filled. 
-   |br| The studio is pulling this information directly from the information stored from the L3LS studio.
+   |br| The studio is pulling this information directly from the information stored from the L3LS studio we finished earlier in this lab.
 
    .. thumbnail:: images/cvp_studios_l3ls_evpn/12evpn.gif
        :align: center
@@ -218,13 +224,10 @@ Open CVP via the topology page.
    s. In the Tenant, click on **Add Vlan Aware Bundle** and name it **"Bundle"**
    #. Enter the configuration, set the vlan range to ``60,70``
    #. Exit back to the tenant
-
-   .. thumbnail:: images/cvp_studios_l3ls_evpn/13evpn.gif
-       :align: center
        
 
    |br| We’re done with the EVPN studio.
-   |br| Click review workspace and then start the build.
+   |br| Click **Review Workspace** and then start the build.
 
    .. thumbnail:: images/cvp_studios_l3ls_evpn/14evpn.gif
        :align: center
@@ -274,12 +277,12 @@ Open CVP via the topology page.
       |br| This allows new workspaces to use those same inputs to perform Day2 change/add/remove actions. 
 
 
-   a. Click “Start Build” and you should get a successful action. 
-   #. Click “Submit Workspace” to close the workspace and create the Change Control.
-   #. Click  *“View Change Control”* to be taken to Change Control. 
-   #. *“Review and Approve”* to prep the changes to the network. 
-   #. Run the  changes in parallel, and choose "execute immediately" to apply to devices. 
-   #. Click *“Approve and Execute”*.  
+   a. After the build completes, you should see a "Build Succeeded" message at the top. 
+   #. Click **“Submit Workspace”** to close the workspace and create the Change Control.
+   #. Click  **“View Change Control”** to be taken to Change Control. 
+   #. **“Review and Approve”** to prep the changes to the network. 
+   #. Run the  changes in parallel, and choose **"execute immediately"** to apply to devices. 
+   #. Click **“Approve and Execute”**.  
 
    .. note:: The gif of the change control process has been compressed for time. 
             |br| Actual change control time was about 1 minute. 

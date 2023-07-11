@@ -31,17 +31,9 @@ RUN mkdir .ssh
 
 COPY src/login.py /usr/local/bin
 
-COPY src/resetVMs.py /usr/local/bin
-
-COPY src/uploadExam.py /usr/local/bin
-
 COPY src/saveRunning.py /usr/local/bin
 
 RUN chmod +x /usr/local/bin/login.py
-
-RUN chmod +x /usr/local/bin/resetVMs.py
-
-RUN chmod +x /usr/local/bin/uploadExam.py
 
 RUN chmod +x /usr/local/bin/saveRunning.py
 
