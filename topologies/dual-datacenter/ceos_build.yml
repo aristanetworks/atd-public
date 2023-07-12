@@ -65,6 +65,8 @@ links:
   - [["s2-brdr1", "et6"], ["s2-brdr2", "et6"]]
   - [["s2-brdr2", "et4"], ["s2-core1", "et3"]]
   - [["s2-brdr2", "et5"], ["s2-core2", "et3"]]
+  - [["s2-core1", "et1"], ["s2-core2", "et1"]]
+  - [["s2-core1", "et6"], ["s2-core2", "et6"]]
 
 nodes:
   - name: s1-spine1
