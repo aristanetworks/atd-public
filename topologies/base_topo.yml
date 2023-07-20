@@ -189,6 +189,42 @@ topologies:
               - 4.29.2F
               - 4.29.1F
               - 4.29.0.2F
+          2023.1.0:
+            schema: 2
+            resources_eos:
+              cpu: 16
+              ram: 32
+              disk: 50
+              image: atd-dual-datacenter-c2023-1-0-ceos-20230712-eos
+            resources_cvp:
+              cpu: 28
+              ram: 36
+              disk: 300
+              image: atd-dual-datacenter-c2023-1-0-ceos-20230712-cvp
+            branch: v2023.1-20230720a
+            orderable: true
+            eos:
+              - 4.30.1F
+              - 4.30.0F
+              - 4.29.2F
+          2023.1.0-bare:
+            schema: 2
+            resources_eos:
+              cpu: 16
+              ram: 32
+              disk: 50
+              image: atd-dual-datacenter-c2023-1-0-bare-ceos-20230712-eos
+            resources_cvp:
+              cpu: 28
+              ram: 36
+              disk: 300
+              image: atd-dual-datacenter-c2023-1-0-bare-ceos-20230712-cvp
+            branch: v2023.1-20230720a
+            orderable: true
+            eos:
+              - 4.30.1F
+              - 4.30.0F
+              - 4.29.2F
     desc: 'Dual Data Center ATD Topology'
     name: 'Dual Data Center'
     title: 'Dual Data Center Lab'
@@ -309,7 +345,7 @@ topologies:
               cpu: 48
               ram: 74
             branch: v2022.1-20221013a
-            orderable: true
+            orderable: false
             image: base-atd-datacenter-e4-28-1f-c2022-1-1-bare-20221026u
             eos:
               - 4.28.1F
@@ -477,7 +513,7 @@ topologies:
               cpu: 40
               ram: 64
             branch: v2022.1-20221013a
-            orderable: true
+            orderable: false
             image: base-atd-routing-ceos-c2022-1-1-20221026u
             eos:
               - 4.28.1F
@@ -505,6 +541,24 @@ topologies:
               - 4.29.2F
               - 4.29.1F
               - 4.29.0.2F
+          2023.1.0:
+            schema: 2
+            resources_eos:
+              cpu: 16
+              ram: 32
+              disk: 50
+              image: atd-routing-c2023-1-0-ceos-20230629
+            resources_cvp:
+              cpu: 28
+              ram: 36
+              disk: 300
+              image: atd-routing-c2023-1-0-ceos-cvp-20230629
+            branch: v2023.1-20230720a
+            orderable: true
+            eos:
+              - 4.30.1F
+              - 4.30.0F
+              - 4.29.2F
       veos:
         cpu: 44
         ram: 90
@@ -525,7 +579,7 @@ topologies:
               cpu: 50
               ram: 90
             branch: v2022.1-20221013a
-            orderable: true
+            orderable: false
             image: base-atd-routing-e4-28-1f-c2022-1-1-20221026u
             eos:
               - 4.28.1F
@@ -549,6 +603,22 @@ topologies:
             image: base-atd-routing-e4-28-2f-c2022-2-0-20221026u
             eos:
               - 4.29.0.2F
+          2023.1.0:
+            schema: 2
+            resources_eos:
+              cpu: 16
+              ram: 32
+              disk: 50
+              image: atd-routing-c2023-1-0-ceos-20230629
+            resources_cvp:
+              cpu: 28
+              ram: 36
+              disk: 300
+              image: atd-routing-c2023-1-0-ceos-cvp-20230629
+            branch: v2023.1-20230720a
+            orderable: true
+            eos:
+              - 4.30.1F
     desc: 'Twenty nodes. Focused on advanced routing, L2VPN and L3VPN topics'
     name: 'Advanced Routing'
     title: 'Advanced Routing Lab'
