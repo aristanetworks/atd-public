@@ -606,15 +606,15 @@ topologies:
           2023.1.0:
             schema: 2
             resources_eos:
-              cpu: 16
-              ram: 32
+              cpu: 32
+              ram: 64
               disk: 50
-              image: atd-routing-c2023-1-0-ceos-20230629
+              image: atd-routing-c2023-1-0-veos-4-30-1f-20230629
             resources_cvp:
               cpu: 28
               ram: 36
               disk: 300
-              image: atd-routing-c2023-1-0-ceos-cvp-20230629
+              image: atd-routing-c2023-1-0-veos-4-30-1f-cvp-20230629
             branch: v2023.1-20230720a
             orderable: true
             eos:
