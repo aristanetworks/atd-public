@@ -34,7 +34,7 @@ services:
       - PYTHONUNBUFFERED=1
   login:
     container_name: atd-login
-    image: us.gcr.io/beta-atds/atddocker_login:2.1.4
+    image: us.gcr.io/beta-atds/atddocker_login:2.2.1
     user: $ArID:$ArGD
     restart: always
     hostname: devbox
@@ -52,7 +52,7 @@ services:
       - /var/lib/libvirt/images/veos:/var/lib/libvirt/images/veos:rw
   cvpupdater:
     container_name: atd-cvpupdater
-    image: us.gcr.io/beta-atds/atddocker_cvpupdater:2.2.1
+    image: us.gcr.io/beta-atds/atddocker_cvpupdater:2.3.1
     user: $ArID:$ArGD
     restart: always
     environment:
@@ -64,13 +64,14 @@ services:
       - cvp_dir:/home/arista/CVP_DATA:rw
   gitconfigletsync:
     container_name: atd-gitconfigletsync
-    image: us.gcr.io/beta-atds/atddocker_gitconfigletsync:2.1.1
+    image: us.gcr.io/beta-atds/atddocker_gitconfigletsync:2.2.2
     user: $ArID:$ArGD
     restart: always
     environment:
       - PYTHONUNBUFFERED=1
     volumes:
       - /etc/atd:/etc/atd:ro
+      - /home/arista/arista-dir/cvp:/home/arista/cvp:ro
       - /opt/atd:/opt/atd:ro
       - cvp_dir:/home/arista/CVP_DATA:rw
   kvmbuilder:
@@ -84,19 +85,19 @@ services:
       - /etc/atd:/etc/atd:ro
       - /opt/atd:/opt/atd:ro
       - /home/atdadmin/KVM_scripts:/home/atdadmin/kvm:rw
-  ceosbuilder:
-    container_name: atd-ceosbuilder
-    image: us.gcr.io/beta-atds/atddocker_ceosbuilder:2.0.2
-    restart: on-failure
-    environment:
-      - PYTHONUNBUFFERED=1
-    volumes:
-      - /etc/atd:/etc/atd:ro
-      - /opt/atd:/opt/atd:ro
-      - /opt/ceos:/opt/ceos:rw
+  # ceosbuilder:
+  #   container_name: atd-ceosbuilder
+  #   image: us.gcr.io/beta-atds/atddocker_ceosbuilder:2.3.4
+  #   restart: on-failure
+  #   environment:
+  #     - PYTHONUNBUFFERED=1
+  #   volumes:
+  #     - /etc/atd:/etc/atd:ro
+  #     - /opt/atd:/opt/atd:ro
+  #     - /opt/ceos:/opt/ceos:rw
   uilanding:
     container_name: atd-uilanding
-    image: atddocker_uilanding:0.1
+    image: us.gcr.io/beta-atds/atddocker_uilanding:2.1.2
     restart: always
     environment:
       - PYTHONUNBUFFERED=1
@@ -108,7 +109,7 @@ services:
       - atd_nginx
   labguides:
     container_name: atd-labguides
-    image: us.gcr.io/beta-atds/atddocker_labguides:2.0.2
+    image: us.gcr.io/beta-atds/atddocker_labguides:2.1.1
     restart: always
     environment:
       - PYTHONUNBUFFERED=1
@@ -128,7 +129,7 @@ services:
       - "1813:1813/udp"
   nginx:
     container_name: atd-nginx
-    image: atddocker_nginx:0.1
+    image: us.gcr.io/beta-atds/atddocker_nginx:2.4.1
     restart: always
     depends_on:
       - uilanding
@@ -170,7 +171,7 @@ services:
       - ./jenkins/src/groovy/users.groovy.override:/usr/share/jenkins/ref/init.groovy.d/users.groovy.override:rw
   coder:
     container_name: atd-coder
-    image: us.gcr.io/beta-atds/atddocker_coder:2.3.2
+    image: us.gcr.io/beta-atds/atddocker_coder:4.1.1
     restart: always
     user: $ArID:$ArGD
     command: /home/coder/project
@@ -194,7 +195,7 @@ services:
     networks:
       - atd_nginx
     volumes:
-      - "/home/arista/arista-dir/apps/ssh/web.json:/opt/webssh2/app/config.json:ro"
+      - /home/arista/arista-dir/apps/ssh/web.json:/opt/webssh2/app/config.json:ro
   webui:
     container_name: atd-webui
     image: jlesage/firefox:latest
@@ -289,6 +290,5 @@ volumes:
   jenkins_home:
   cvp_dir:
   nginx_log:
-  postgres_data:
   nautobot:
 
