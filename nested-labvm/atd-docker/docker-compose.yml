@@ -218,6 +218,7 @@ services:
     restart: "unless-stopped"
     volumes:
       - "/opt/nautobot:/opt/nautobot:rw"
+      - "/opt/atd:/opt/atd:rw"
   nautobot-worker:
     container_name: atd-nbot-worker
     image: "networktocode/nautobot:1.5-py3.9"
@@ -290,4 +291,5 @@ volumes:
   jenkins_home:
   cvp_dir:
   nginx_log:
+  postgres_data:
   nautobot:
