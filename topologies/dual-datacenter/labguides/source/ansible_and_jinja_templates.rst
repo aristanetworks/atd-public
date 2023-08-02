@@ -91,7 +91,7 @@ Ansible playbook (``ntp.yml``):
           username: "arista"
           password: "{REPLACE_PWD}"
           authorize: yes
-          transport: eapi
+          transport: httpapi
           validate_certs: no
         ntp:
           host: 192.168.0.1
