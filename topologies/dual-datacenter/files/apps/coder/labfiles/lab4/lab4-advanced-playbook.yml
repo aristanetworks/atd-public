@@ -9,7 +9,7 @@
       username: "arista"
       password: "arista"
       authorize: 'yes'
-      transport: eapi
+      transport: httpapi
       validate_certs: 'no'
   tasks:
     - eos_config:
