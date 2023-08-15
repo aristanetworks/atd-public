@@ -211,19 +211,19 @@ services:
     container_name: atd-nbot-ui
     image: "networktocode/nautobot:1.5-py3.9"
     env_file:
-      - "nautobot/nbot-local.env"
+      - ./nautobot/nbot-local.env
     networks:
       - atd_nginx
     ports:
       - "8080:8080"
     restart: "unless-stopped"
     volumes:
-      - "/opt/nautobot:/opt/nautobot:rw"
+      - nautobot:/opt/nautobot:rw
       - "/opt/atd:/opt/atd:rw"
   nautobot-worker:
     container_name: atd-nbot-worker
     image: "networktocode/nautobot:1.5-py3.9"
-    entrypoint: "sh -c 'nautobot-server celery worker -l $$NAUTOBOT_LOG_LEVEL'"
+    entrypoint: "sh -c 'nautobot-server celery worker'"
     healthcheck:
       interval: "5s"
       timeout: "5s"
@@ -231,7 +231,7 @@ services:
       retries: 3
       test: ["CMD", "nautobot-server", "health_check"]
     env_file:
-      - "nautobot/nbot-local.env"
+      - ./nautobot/nbot-local.env
     volumes:
       - /opt/atd/nested-labvm/atd-docker/nautobot/nautobot_config.py:/opt/atd/nested-labvm/atd-docker/nautobot/nautobot_config.py:ro
     depends_on:
@@ -242,7 +242,7 @@ services:
     container_name: atd-nbot-redis-cacheops
     image: "redis:alpine"
     env_file:
-      - "nautobot/nbot-local.env"
+      - ./nautobot/nbot-local.env
     command:
       - "sh"
       - "-c"  # this is to evaluate the $REDIS_PASSWORD from the env
@@ -251,7 +251,7 @@ services:
   nautobot-beat:
     container_name: atd-nbot-beat
     image: "networktocode/nautobot:1.5-py3.9"
-    entrypoint: "sh -c 'nautobot-server celery beat -l $$NAUTOBOT_LOG_LEVEL'"
+    entrypoint: "sh -c 'nautobot-server celery beat'"
     healthcheck:
       interval: "5s"
       timeout: "5s"
@@ -264,7 +264,7 @@ services:
       - "nautobot"
       - "redis-queue"
     env_file:
-      - "nautobot/nbot-local.env"
+      - ./nautobot/nbot-local.env
     restart: "unless-stopped"
   redis-queue:
     container_name: atd-nbot-redis-queue
@@ -272,7 +272,7 @@ services:
     ports:
       - "6379:6379"
     env_file:
-      - "nautobot/nbot-local.env"
+      - ./nautobot/nbot-local.env
     command:
       - "sh"
       - "-c"  # this is to evaluate the $REDIS_PASSWORD from the env
@@ -284,7 +284,7 @@ services:
     ports:
       - "5432:5432"
     env_file:
-      - "nautobot/nbot-local.env"
+      - ./nautobot/nbot-local.env
     volumes:
       - "postgres_data:/var/lib/postgresql/data"
     restart: "unless-stopped"
