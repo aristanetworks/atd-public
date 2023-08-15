@@ -232,6 +232,8 @@ services:
       test: ["CMD", "nautobot-server", "health_check"]
     env_file:
       - "nautobot/nbot-local.env"
+    volumes:
+      - /opt/atd/nested-labvm/atd-docker/nautobot/nautobot_config.py:/opt/atd/nested-labvm/atd-docker/nautobot/nautobot_config.py:ro
     depends_on:
       - "nautobot"
       - "redis-queue"
@@ -256,6 +258,8 @@ services:
       start_period: "5s"
       retries: 3
       test: ["CMD", "nautobot-server", "health_check"]
+    volumes:
+      - /opt/atd/nested-labvm/atd-docker/nautobot/nautobot_config.py:/opt/atd/nested-labvm/atd-docker/nautobot/nautobot_config.py:ro
     depends_on:
       - "nautobot"
       - "redis-queue"
