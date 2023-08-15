@@ -97,7 +97,7 @@ services:
   #     - /opt/ceos:/opt/ceos:rw
   uilanding:
     container_name: atd-uilanding
-    image: us.gcr.io/beta-atds/atddocker_uilanding:2.1.2
+    image: us.gcr.io/beta-atds/atddocker_uilanding:2.2.0
     restart: always
     environment:
       - PYTHONUNBUFFERED=1
@@ -129,7 +129,7 @@ services:
       - "1813:1813/udp"
   nginx:
     container_name: atd-nginx
-    image: us.gcr.io/beta-atds/atddocker_nginx:2.4.1
+    image: us.gcr.io/beta-atds/atddocker_nginx:2.5.1
     restart: always
     depends_on:
       - uilanding
@@ -143,6 +143,7 @@ services:
       - nginx_log:/var/log/nginx:rw
       - /etc/atd:/etc/atd:ro
       - /opt/nginx/certs:/opt/nginx/certs:ro
+      - /opt/atd/nested-labvm/atd-docker/nginx/src/atd.conf:/etc/nginx/conf.d/atd.conf:ro
     networks:
       - atd_nginx
   monitor:
