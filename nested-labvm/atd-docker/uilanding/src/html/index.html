@@ -61,6 +61,11 @@
                     <a href="/jenkins" target="_blank">Jenkins</a>
                 </li>
                 {% end %}
+                {% if "ipam" not in disable_links %}
+                <li>
+                    <a href="/ipam" target="_blank">ipam</a>
+                </li>
+                {% end %}
             </ul>
         </div>
         <!-- /#sidebar-wrapper -->
