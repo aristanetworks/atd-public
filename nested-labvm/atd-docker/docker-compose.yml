@@ -97,7 +97,7 @@ services:
   #     - /opt/ceos:/opt/ceos:rw
   uilanding:
     container_name: atd-uilanding
-    image: us.gcr.io/beta-atds/atddocker_uilanding:2.1.2
+    image: us.gcr.io/beta-atds/atddocker_uilanding:2.2.0
     restart: always
     environment:
       - PYTHONUNBUFFERED=1
@@ -129,12 +129,13 @@ services:
       - "1813:1813/udp"
   nginx:
     container_name: atd-nginx
-    image: us.gcr.io/beta-atds/atddocker_nginx:2.4.1
+    image: us.gcr.io/beta-atds/atddocker_nginx:2.5.1
     restart: always
     depends_on:
       - uilanding
       - jenkins
       - coder
+      - nautobot
     ports:
       - "80:80/tcp"
       - "443:443/tcp"
@@ -142,6 +143,7 @@ services:
       - nginx_log:/var/log/nginx:rw
       - /etc/atd:/etc/atd:ro
       - /opt/nginx/certs:/opt/nginx/certs:ro
+      - /opt/atd/nested-labvm/atd-docker/nginx/src/atd.conf:/etc/nginx/conf.d/atd.conf:ro
     networks:
       - atd_nginx
   monitor:
@@ -205,6 +207,87 @@ services:
       - "/home/arista/arista-dir/apps/webui:/config:rw"
     networks:
       - atd_nginx
+  nautobot:
+    container_name: atd-nbot-ui
+    image: "networktocode/nautobot:1.5-py3.9"
+    env_file:
+      - ./nautobot/nbot-local.env
+    networks:
+      - atd_nginx
+    ports:
+      - "8080:8080"
+    restart: "unless-stopped"
+    volumes:
+      - nautobot:/opt/nautobot:rw
+      - "/opt/atd:/opt/atd:rw"
+  nautobot-worker:
+    container_name: atd-nbot-worker
+    image: "networktocode/nautobot:1.5-py3.9"
+    entrypoint: "sh -c 'nautobot-server celery worker'"
+    healthcheck:
+      interval: "5s"
+      timeout: "5s"
+      start_period: "5s"
+      retries: 3
+      test: ["CMD", "nautobot-server", "health_check"]
+    env_file:
+      - ./nautobot/nbot-local.env
+    volumes:
+      - /opt/atd/nested-labvm/atd-docker/nautobot/nautobot_config.py:/opt/atd/nested-labvm/atd-docker/nautobot/nautobot_config.py:ro
+    depends_on:
+      - "nautobot"
+      - "redis-queue"
+    restart: "unless-stopped"
+  redis-cacheops:
+    container_name: atd-nbot-redis-cacheops
+    image: "redis:alpine"
+    env_file:
+      - ./nautobot/nbot-local.env
+    command:
+      - "sh"
+      - "-c"  # this is to evaluate the $REDIS_PASSWORD from the env
+      - "redis-server --appendonly yes --requirepass $$NAUTOBOT_REDIS_PASSWORD"  ## $$ because of docker-compose
+    restart: "unless-stopped"
+  nautobot-beat:
+    container_name: atd-nbot-beat
+    image: "networktocode/nautobot:1.5-py3.9"
+    entrypoint: "sh -c 'nautobot-server celery beat'"
+    healthcheck:
+      interval: "5s"
+      timeout: "5s"
+      start_period: "5s"
+      retries: 3
+      test: ["CMD", "nautobot-server", "health_check"]
+    volumes:
+      - /opt/atd/nested-labvm/atd-docker/nautobot/nautobot_config.py:/opt/atd/nested-labvm/atd-docker/nautobot/nautobot_config.py:ro
+    depends_on:
+      - "nautobot"
+      - "redis-queue"
+    env_file:
+      - ./nautobot/nbot-local.env
+    restart: "unless-stopped"
+  redis-queue:
+    container_name: atd-nbot-redis-queue
+    image: "redis:alpine"
+    ports:
+      - "6379:6379"
+    env_file:
+      - ./nautobot/nbot-local.env
+    command:
+      - "sh"
+      - "-c"  # this is to evaluate the $REDIS_PASSWORD from the env
+      - "redis-server --appendonly yes --requirepass $$NAUTOBOT_REDIS_PASSWORD"  ## $$ because of docker-compose
+    restart: "unless-stopped"
+  postgres:
+    container_name: atd-nbot-postgres
+    image: "postgres:10"
+    ports:
+      - "5432:5432"
+    env_file:
+      - ./nautobot/nbot-local.env
+    volumes:
+      - "postgres_data:/var/lib/postgresql/data"
+    restart: "unless-stopped"
 networks:
   atd_nginx:
 volumes:
@@ -213,3 +296,5 @@ volumes:
   jenkins_home:
   cvp_dir:
   nginx_log:
+  postgres_data:
+  nautobot:
