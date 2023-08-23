@@ -1,0 +1,9 @@
+---
+- name: Deploy DC1 Configurations via EAPI
+  hosts: dc1_fabric
+  tasks:
+
+    - name: load configuration from file
+      arista.eos.eos_config:
+        src: ../sites/dc1/intended/configs/{{inventory_hostname}}.cfg
+

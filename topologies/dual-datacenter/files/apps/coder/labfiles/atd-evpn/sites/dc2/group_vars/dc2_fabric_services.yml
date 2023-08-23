@@ -1,0 +1,29 @@
+---
+# DC2 fab services vars
+
+tenants:
+  ATD_DC:
+    mac_vrf_vni_base: 10000
+    evpn_l2_multi_domain: false
+    vrfs:
+      A:
+        vrf_vni: 50001
+        mlag_ibgp_peering_vlan: 4001
+        mlag_ibgp_peering_ipv4_pool: 192.2.2.0/23
+        svis:
+          10:
+            name: ten
+            description: ten
+            tags: ['DC']
+            enabled: true
+            mtu: 9014
+            ip_address_virtual: 10.10.10.1/24
+            evpn_l2_multi_domain: true
+          20:
+            name: twenty
+            description: twenty
+            tags: ['DC']
+            enabled: true
+            mtu: 9014
+            ip_address_virtual: 10.20.20.1/24
+            evpn_l2_multi_domain: true

@@ -1,0 +1,36 @@
+---
+dc1:
+  children:
+    CVP:
+      hosts:
+        cvp:
+    dc1_fabric:
+      children:
+        dc1_spines:
+          hosts:
+            s1-spine1:
+            s1-spine2:
+        dc1_leafs:
+          hosts:
+            s1-leaf1:
+            s1-leaf2:
+            s1-brdr1:
+            s1-brdr2:
+        # dc1_hosts:
+        #   hosts:
+        #     s1-host1:
+        #     s1-host2:
+    dc1_fabric_services:
+      children:
+        dc1_spines:
+        dc1_leafs:
+        # dc1_hosts:
+    dc1_fabric_ports:
+      children:
+        dc1_spines:
+        dc1_leafs:
+        # dc1_hosts:
+    dc1_dci:
+      hosts:
+        s1-core1:
+        s1-core2:

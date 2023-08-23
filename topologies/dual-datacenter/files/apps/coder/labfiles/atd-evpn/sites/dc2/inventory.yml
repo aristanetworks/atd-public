@@ -1,0 +1,36 @@
+---
+dc2:
+  children:
+    CVP:
+      hosts:
+        cvp:
+    dc2_fabric:
+      children:
+        dc2_spines:
+          hosts:
+            s2-spine1:
+            s2-spine2:
+        dc2_leafs:
+          hosts:
+            s2-leaf1:
+            s2-leaf2:
+            s2-brdr1:
+            s2-brdr2:
+        # dc2_hosts:
+        #   hosts:
+        #     s2-host1:
+        #     s2-host2:
+    dc2_fabric_services:
+      children:
+        dc2_spines:
+        dc2_leafs:
+        dc2_hosts:
+    dc2_fabric_ports:
+      children:
+        dc2_spines:
+        dc2_leafs:
+        dc2_hosts:
+    dc2_dci:
+      hosts:
+        s2-core1:
+        s2-core2:

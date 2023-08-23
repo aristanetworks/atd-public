@@ -1,0 +1,9 @@
+---
+- name: Modify DC1 s1-core1/core2 Configurations
+  hosts: dc1_dci
+  tasks:
+
+    - name: load configuration from file
+      arista.eos.eos_config:
+        src: ../sites/dc1/dci_configs/{{inventory_hostname}}.cfg
+
