@@ -58,6 +58,7 @@ For dc1, you will modify: ``sites/dc1/inventory.yml``
 Add the following switches into the correct location in the file:
 
 .. code-block:: bash
+
     s1-Leaf3
     s1-Leaf4
 
@@ -66,6 +67,7 @@ For dc2, you will modify: ``sites/dc2/inventory.yml``
 Add the following switches into the correct location in the file:
 
 .. code-block:: bash
+
     s2-Leaf3
     s2-Leaf4
 
@@ -76,6 +78,7 @@ For dc1, you will modify: ``sites/dc1/group_vars/dc1_fabric.yml``
 Use the following parameters for Leafs 3 and 4, which are leaf pair 2.
 
 .. code-block:: yaml
+
     group: LeafPair2
     bgp_as: 65002
 
@@ -94,6 +97,7 @@ For dc2, you will modify:  ``sites/dc2/group_vars/dc2_fabric.yml``
 Use the following parameters for Leafs 3 and 4, which are leaf pair 2.
 
 .. code-block:: yaml
+
     group: LeafPair2
     bgp_as: 65102
 
