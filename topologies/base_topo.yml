@@ -62,8 +62,8 @@ topologies:
           2023.1.1:
             schema: 2
             resources_eos:
-              cpu: 16
-              ram: 32
+              cpu: 22
+              ram: 38
               disk: 50
               image: atd-dual-datacenter-c2023-1-1-ceos-20230814-eos
             resources_cvp:
@@ -81,8 +81,8 @@ topologies:
           2023.1.1-bare:
             schema: 2
             resources_eos:
-              cpu: 16
-              ram: 32
+              cpu: 22
+              ram: 38
               disk: 50
               image: atd-dual-datacenter-c2023-1-1-bare-ceos-20230814-eos
             resources_cvp:
@@ -187,8 +187,8 @@ topologies:
           2023.1.1:
             schema: 2
             resources_eos:
-              cpu: 16
-              ram: 32
+              cpu: 22
+              ram: 38
               disk: 50
               image: atd-dual-datacenter-c2023-1-1-ceos-20230814-eos
             resources_cvp:
@@ -206,8 +206,8 @@ topologies:
           2023.1.1-bare:
             schema: 2
             resources_eos:
-              cpu: 16
-              ram: 32
+              cpu: 22
+              ram: 38
               disk: 50
               image: atd-dual-datacenter-c2023-1-1-bare-ceos-20230814-eos
             resources_cvp:
@@ -294,8 +294,8 @@ topologies:
           2023.1.1:
             schema: 2
             resources_eos:
-              cpu: 32
-              ram: 64
+              cpu: 38
+              ram: 70
               disk: 50
               image: atd-routing-c2023-1-1-veos-4-30-1f-20230814-eos
             resources_cvp:
@@ -330,8 +330,8 @@ topologies:
           2023.1.1:
             schema: 2
             resources_eos:
-              cpu: 16
-              ram: 32
+              cpu: 22
+              ram: 38
               disk: 50
               image: atd-routing-c2023-1-1-ceos-20230814-eos
             resources_cvp:
@@ -393,8 +393,8 @@ topologies:
           2023.1.1:
             schema: 2
             resources_eos:
-              cpu: 16
-              ram: 32
+              cpu: 22
+              ram: 38
               disk: 50
               image: atd-routing-c2023-1-1-ceos-20230814-eos
             resources_cvp:
@@ -450,8 +450,8 @@ topologies:
           2023.1.1:
             schema: 2
             resources_eos:
-              cpu: 32
-              ram: 64
+              cpu: 38
+              ram: 70
               disk: 50
               image: atd-routing-c2023-1-1-veos-4-30-1f-20230814-eos
             resources_cvp:
