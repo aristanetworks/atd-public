@@ -9,11 +9,19 @@ dc2:
         dc2_spines:
           hosts:
             s2-spine1:
+              ansible_host: 192.168.0.20
             s2-spine2:
+              ansible_host: 192.168.0.21
         dc2_leafs:
           hosts:
             s2-leaf1:
+              ansible_host: 192.168.0.22
             s2-leaf2:
+              ansible_host: 192.168.0.23
+            s2-leaf3:
+              ansible_host: 192.168.0.24
+            s2-leaf4:
+              ansible_host: 192.168.0.25
             s2-brdr1:
             s2-brdr2:
         # dc2_hosts:
@@ -34,3 +42,47 @@ dc2:
       hosts:
         s2-core1:
         s2-core2:
+
+# # Site 2
+#         SITE2:
+#           children:
+#             SITE2_SPINES:
+#               hosts:
+#                 s2-spine1:
+#                   ansible_host: 192.168.0.20
+#                 s2-spine2:
+#                   ansible_host: 192.168.0.21
+#             SITE2_L3LEAFS:
+#               children:
+#                 SITE2_DC_LEAF1:
+#                   hosts:
+#                     s2-leaf1:
+#                       ansible_host: 192.168.0.22
+#                     s2-leaf2:
+#                       ansible_host: 192.168.0.23
+#                 SITE2_DC_LEAF2:
+#                   hosts:
+#                     s2-leaf3:
+#                       ansible_host: 192.168.0.24
+#                     s2-leaf4:
+#                       ansible_host: 192.168.0.25
+#                 SITE2_BORDER_LEAF1:
+#                   hosts:
+#                     s2-brdr1:
+#                       ansible_host: 192.168.0.200
+#                     s2-brdr2:
+#                       ansible_host: 192.168.0.201
+#                 SITE2_CORE_LEAF1:
+#                   hosts:
+#                     s2-core1:
+#                       ansible_host: 192.168.0.202
+#                     s2-core2:
+#                       ansible_host: 192.168.0.203
+#             SITE2_L2LEAFS:
+#               children:
+#                 SITE2_HOSTS:
+#                   hosts:
+#                     s2-host1:
+#                       ansible_host: 192.168.0.26
+#                     s2-host2:
+#                       ansible_host: 192.168.0.27
