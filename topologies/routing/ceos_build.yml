@@ -24,7 +24,7 @@ links:
   - [["eos4", "et2"], ["eos8", "et1"]]
   - [["eos4", "et3"], ["eos5", "et1"]]
   - [["eos4", "et6"], ["eos16", "et1"]]
-  - [["eos5", "et6"], ["eos6", "et1"]]
+  - [["eos5", "et5"], ["eos6", "et1"]]
   - [["eos6", "et2"], ["eos8", "et3"]]
   - [["eos6", "et3"], ["eos13", "et1"]]
   - [["eos6", "et6"], ["eos14", "et2"]]
