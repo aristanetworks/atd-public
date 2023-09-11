@@ -97,6 +97,25 @@ topologies:
               - 4.30.1F
               - 4.30.0F
               - 4.29.2F
+          2023.2.0-rc1:
+            schema: 2
+            resources_eos:
+              cpu: 22
+              ram: 42
+              disk: 50
+              image: atd-dual-datacenter-c2023-2-0-rc1-ceos-20230911-eos
+            resources_cvp:
+              cpu: 28
+              ram: 36
+              disk: 300
+              image: atd-dual-datacenter-c2023-2-0-rc1-ceos-20230911-cvp
+            branch: nested-release
+            orderable: true
+            eos:
+              - 4.30.2F
+              - 4.30.1F
+              - 4.30.0F
+              - 4.29.2F
     prod:
       ceos:
         cpu: 40
