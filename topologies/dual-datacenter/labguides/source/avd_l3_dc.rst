@@ -1,6 +1,7 @@
 AVD L3 DC Labs
 ===================
 The goal of these labs are to demonstrate how to use AVD to deploy and configure EVPN/VXLAN Datacenter networks.
+
 |
 
 #. Connect to the Programmability IDE
@@ -24,15 +25,15 @@ The goal of these labs are to demonstrate how to use AVD to deploy and configure
 
     a. Open the ``sites/dc1/group_vars/dc1.yml`` file 
 
-    .. thumbnail:: images/avd_l3_dc/Setup_Select_DC1yml.PNG
-        :align: center
+        .. thumbnail:: images/avd_l3_dc/Setup_Select_DC1yml.PNG
+            :align: center
     |
 
 
     b. Edit the ``ansible_password:`` field with your lab password: ``{REPLACE_PWD}`` 
 
-    .. image:: images/avd_l3_dc/Setup_DC1_Password.PNG
-        :align: center
+        .. image:: images/avd_l3_dc/Setup_DC1_Password.PNG
+            :align: center
 
 
 |
@@ -77,7 +78,7 @@ In this lab you will configure DC1 using AVD and then deploy DC1 using CloudVisi
         .. note:: The current topology view will be very basic due to DC1 being undeployed
 
 
-#. Open the device view and look at S1-Leaf1
+#. Open the ``Device`` view and look at S1-Leaf1
 
     a. Select ``Configuration`` and look at the current running config 
 
@@ -121,9 +122,11 @@ In this lab you will configure DC1 using AVD and then deploy DC1 using CloudVisi
 #. Return to Cloudvision
 
     a. Go the ``Device`` view of S1-Leaf1 and view ``Routing -> BGP`` output
+
         .. note:: S1-Leaf1 should now have several BGP peers in the Established statement
     
     b. Go the ``Topology`` view, re-apply the DC1 filter
+
         .. note:: Now that DC1 is configured, you should see correct tree structure for DC1
 
         .. image:: images/avd_l3_dc/Lab1_Topology_after.PNG
@@ -134,11 +137,13 @@ In this lab you will configure DC1 using AVD and then deploy DC1 using CloudVisi
 
 Lab #1: Summary
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Congratulations, you have now deployed an entire datacenter simply by running the ``make build_dc1`` command. This is the power automation can bring you. 
+Congratulations! 
+
+You have now deployed an entire datacenter simply by running the ``make build_dc1`` command. This is the power automation can bring you. 
 
 
-
-
+|
+|
 
 Lab #2: Building and Deploying DC2 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
