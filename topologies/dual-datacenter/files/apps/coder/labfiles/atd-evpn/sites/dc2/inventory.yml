@@ -15,15 +15,17 @@ dc2:
         dc2_leafs:
           hosts:
             s2-leaf1:
-              ansible_host: 192.168.0.22
+              ansible_host: 192.168.0.122
             s2-leaf2:
-              ansible_host: 192.168.0.23
+              ansible_host: 192.168.0.123
             s2-leaf3:
-              ansible_host: 192.168.0.24
+              ansible_host: 192.168.0.124
             s2-leaf4:
-              ansible_host: 192.168.0.25
-            s2-brdr1:
-            s2-brdr2:
+              ansible_host: 192.168.0.125
+            # s2-brdr1:
+            #   ansible_host: 192.168.0.200
+            # s2-brdr2:
+            #   ansible_host: 192.168.0.201
         # dc2_hosts:
         #   hosts:
         #     s2-host1:

@@ -76,64 +76,64 @@ l3leaf:
     ####################################################
     # DC2 Border Leafs                                 #
     ####################################################
-    - group: BrdrLeafs
-      platform: ceos
-      structured_config:
-        router_bgp:
-          address_family_ipv4:
-            networks:
-              10.231.0.2/32:
-              10.231.0.4/32:
-              10.231.1.2/32:
-      filter:
-        tenants: [ATD_DC]
-        tags: ['DC']
-      bgp_as: 65199
-      evpn_gateway:
-        evpn_l2:
-          enabled: true
-        remote_peers:
-        - hostname: s1-brdr1
-          ip_address: 10.1.0.2
-          bgp_as: 65099
-        - hostname: s1-brdr2
-          ip_address: 10.1.0.4
-          bgp_as: 65099
-      nodes:
-        - name: s2-brdr1
-          id: 102
-          mgmt_ip: 192.168.0.200/24
-          uplink_switch_interfaces: [Ethernet7, Ethernet7]
-          uplink_interfaces: [Ethernet2, Ethernet3]
-          mlag_interfaces: [Ethernet1, Ethernet6]
-          structured_config:
-            router_bgp:
-              neighbors:
-                172.16.255.129:
-                  remote_as: 65502
-                  description: s2-core1 VRF Default
-                  peer_group: IPV4-UNDERLAY-PEERS
-                172.16.255.131:
-                  remote_as: 65502
-                  description: s2-core2 VRF Default
-                  peer_group: IPV4-UNDERLAY-PEERS
-        - name: s2-brdr2
-          id: 104
-          mgmt_ip: 192.168.0.201/24
-          uplink_switch_interfaces: [Ethernet8, Ethernet8]
-          uplink_interfaces: [Ethernet2, Ethernet3]
-          mlag_interfaces: [Ethernet1, Ethernet6]
-          structured_config:
-            router_bgp:
-              neighbors:
-                172.16.255.133:
-                  remote_as: 65502
-                  description: s2-core1 VRF Default
-                  peer_group: IPV4-UNDERLAY-PEERS
-                172.16.255.135:
-                  remote_as: 65502
-                  description: s2-core2 VRF Default
-                  peer_group: IPV4-UNDERLAY-PEERS
+    # - group: BrdrLeafs
+    #   platform: ceos
+    #   structured_config:
+    #     router_bgp:
+    #       address_family_ipv4:
+    #         networks:
+    #           10.231.0.2/32:
+    #           10.231.0.4/32:
+    #           10.231.1.2/32:
+    #   filter:
+    #     tenants: [ATD_DC]
+    #     tags: ['DC']
+    #   bgp_as: 65199
+    #   evpn_gateway:
+    #     evpn_l2:
+    #       enabled: true
+    #     remote_peers:
+    #     - hostname: s1-brdr1
+    #       ip_address: 10.1.0.2
+    #       bgp_as: 65099
+    #     - hostname: s1-brdr2
+    #       ip_address: 10.1.0.4
+    #       bgp_as: 65099
+    #   nodes:
+    #     - name: s2-brdr1
+    #       id: 102
+    #       mgmt_ip: 192.168.0.200/24
+    #       uplink_switch_interfaces: [Ethernet7, Ethernet7]
+    #       uplink_interfaces: [Ethernet2, Ethernet3]
+    #       mlag_interfaces: [Ethernet1, Ethernet6]
+    #       structured_config:
+    #         router_bgp:
+    #           neighbors:
+    #             172.16.255.129:
+    #               remote_as: 65502
+    #               description: s2-core1 VRF Default
+    #               peer_group: IPV4-UNDERLAY-PEERS
+    #             172.16.255.131:
+    #               remote_as: 65502
+    #               description: s2-core2 VRF Default
+    #               peer_group: IPV4-UNDERLAY-PEERS
+    #     - name: s2-brdr2
+    #       id: 104
+    #       mgmt_ip: 192.168.0.201/24
+    #       uplink_switch_interfaces: [Ethernet8, Ethernet8]
+    #       uplink_interfaces: [Ethernet2, Ethernet3]
+    #       mlag_interfaces: [Ethernet1, Ethernet6]
+    #       structured_config:
+    #         router_bgp:
+    #           neighbors:
+    #             172.16.255.133:
+    #               remote_as: 65502
+    #               description: s2-core1 VRF Default
+    #               peer_group: IPV4-UNDERLAY-PEERS
+    #             172.16.255.135:
+    #               remote_as: 65502
+    #               description: s2-core2 VRF Default
+    #               peer_group: IPV4-UNDERLAY-PEERS
 
     ####################################################
     # DC2 Leaf Pair 1                                  #
@@ -152,6 +152,24 @@ l3leaf:
           id: 116
           mgmt_ip: 192.168.0.23/24
           uplink_switch_interfaces: [Ethernet3, Ethernet3]
+
+    ####################################################
+    # DC2 Leaf Pair 2                                  #
+    ####################################################
+    - group: LeafPair2
+      filter:
+        tenants: [ATD_DC]
+        tags: ['DC']
+      bgp_as: 65102
+      nodes:
+        - name: s2-leaf3
+          id: 115
+          mgmt_ip: 192.168.0.23/24
+          uplink_switch_interfaces: [Ethernet4, Ethernet4]
+        - name: s2-leaf4
+          id: 117
+          mgmt_ip: 192.168.0.24/24
+          uplink_switch_interfaces: [Ethernet5, Ethernet5]
 
 ####################################################
 # External Fabric PtP L3 Conncectivity             #
