@@ -30,7 +30,7 @@ Change your working directory to ``avd_l3_dc``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 We are going to add your lab password: ``{REPLACE_PWD}`` to the ``dc1.yml`` file 
 
-    1. Open the ``sites/dc1/group_vars/dc1.yml`` file 
+    a. Open the ``sites/dc1/group_vars/dc1.yml`` file 
 
 .. image:: images/avd_l3_dc/Setup_Select_DC1yml.PNG
    :align: center
@@ -38,7 +38,7 @@ We are going to add your lab password: ``{REPLACE_PWD}`` to the ``dc1.yml`` file
 |
 |
 
-    2. Edit the ``ansible_password:`` field with your lab password: ``{REPLACE_PWD}`` 
+    b. Edit the ``ansible_password:`` field with your lab password: ``{REPLACE_PWD}`` 
 
 .. image:: images/avd_l3_dc/Setup_DC1_Password.PNG
    :align: center
@@ -52,7 +52,7 @@ In this lab you will configure DC1 using AVD and then deploy DC1 using CloudVisi
 
 |
 
-    1. Open Cloudvision from your initial Lab page
+1. Open Cloudvision from your initial Lab page
 
     .. warning:: Cloudvision can take 10-15 minutes to boot after initial lab deployment before it is accessible
 
@@ -62,16 +62,16 @@ In this lab you will configure DC1 using AVD and then deploy DC1 using CloudVisi
 |
 |
 
-    #. Open the topology view and filter based on tags for DC1 
+#. Open the topology view and filter based on tags for DC1 
 
-        a. Click on the topology view
+    a. Click on the topology view
 
 .. image:: images/avd_l3_dc/Lab1_open_CVP_topology_view.PNG
    :align: center
 
 |
 
-        b. Apply a filter to specify viewing only DC1 devices
+    b. Apply a filter to specify viewing only DC1 devices
 
 .. image:: images/avd_l3_dc/xxxxxxx.PNG
    :align: center
@@ -87,23 +87,23 @@ Your view should appear similar to the following
 
 |
 
-    #. Open the device view and look at S1-Leaf1
+#. Open the device view and look at S1-Leaf1
 
-        a. Select ``Configuration`` and look at the current running config 
+    a. Select ``Configuration`` and look at the current running config 
 
-            .. note:: S1-Leaf1 currently contains only a basic minimal configuration. Enough to allow Ansible to login and push a full configuration.
+        .. note:: S1-Leaf1 currently contains only a basic minimal configuration. Enough to allow Ansible to login and push a full configuration.
     
-        b. Select ``Routing -> BGP`` and look and verify there are no BGP peers 
+    b. Select ``Routing -> BGP`` and look and verify there are no BGP peers 
 
 |
 
-    #. Return to your  ``Programmability IDE``
+#. Return to your  ``Programmability IDE``
 
-        You will build and then deploy the entirety of DC1 using a makefile 
+    You will build and then deploy the entirety of DC1 using a makefile 
 
-        .. note:: The makefile contains recipes to allow you to run the lab playbooks using a simple command syntax
+    .. note:: The makefile contains recipes to allow you to run the lab playbooks using a simple command syntax
 
-    #. Build DC1 using the makefile 
+#. Build DC1 using the makefile 
 
     .. note:: Make sure your terminal working directory is within the AVD_L3_DC folder
 
@@ -113,7 +113,7 @@ Your view should appear similar to the following
 
 |
 
-        If the playbook ran successfully, you should see output similar to the following:
+If the playbook ran successfully, you should see output similar to the following:
 
     .. code-block:: text
 
@@ -128,12 +128,12 @@ Your view should appear similar to the following
 
 |
 
-    #. Return to Cloudvision
+#. Return to Cloudvision
 
-        a. Go the ``Device`` view of S1-Leaf1 and view ``Routing -> BGP`` output
+    a. Go the ``Device`` view of S1-Leaf1 and view ``Routing -> BGP`` output
         .. note:: S1-Leaf1 should now have several BGP peers in the Established statement
     
-        b. Go the ``Topology`` view, re-apply the DC1 filter
+    b. Go the ``Topology`` view, re-apply the DC1 filter
         .. note:: Now that DC1 is configured, you should see correct tree structure for DC1
 
     .. image:: images/avd_l3_dc/Lab1_Topology_after.PNG
