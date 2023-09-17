@@ -1,19 +1,18 @@
 AVD L3 DC Labs
 ===================
 The goal of these labs are to demonstrate how to use AVD to deploy and configure EVPN/VXLAN Datacenter networks.
-
 |
 
 #. Connect to the Programmability IDE
-Connect to the **Programmability IDE** service. This IDE is running VS Code. If prompted for a password, enter in your
-lab password: ``{REPLACE_PWD}``.
+    Connect to the **Programmability IDE** service. This IDE is running VS Code. If prompted for a password, enter in your
+    lab password: ``{REPLACE_PWD}``.
 
-    .. image:: images/avd_l3_dc/Setup_ProgrammabilityIDE.png
-        :align: center
-    |
+        .. image:: images/avd_l3_dc/Setup_ProgrammabilityIDE.png
+            :align: center
+        |
 
 #. Change directory to the AVD_L3_DC folder
-Change your working directory to ``avd_l3_dc``
+    Change your working directory to ``avd_l3_dc``
 
     .. code-block:: text
 
@@ -21,7 +20,7 @@ Change your working directory to ``avd_l3_dc``
 
 
 #. Set the Ansible password for DC1
-We are going to add your lab password: ``{REPLACE_PWD}`` to the ``dc1.yml`` file 
+    We are going to add your lab password: ``{REPLACE_PWD}`` to the ``dc1.yml`` file 
 
     a. Open the ``sites/dc1/group_vars/dc1.yml`` file 
 
@@ -41,13 +40,14 @@ We are going to add your lab password: ``{REPLACE_PWD}`` to the ``dc1.yml`` file
 Lab #1: Building and Deploying DC1
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 In this lab you will configure DC1 using AVD and then deploy DC1 using CloudVision
+|
 
 #. Open Cloudvision from your initial Lab page
 
     .. warning:: Cloudvision can take 10-15 minutes to boot after initial lab deployment
 
-.. image:: images/avd_l3_dc/Lab1_Open_CVP.PNG
-    :align: center
+    .. image:: images/avd_l3_dc/Lab1_Open_CVP.PNG
+        :align: center
 
 
 
@@ -66,15 +66,15 @@ In this lab you will configure DC1 using AVD and then deploy DC1 using CloudVisi
         |
         .. image:: images/avd_l3_dc/Lab1_CVP_Filter2.PNG
             :align: center
+        |
 
 
+        Your view should appear similar to the following
 
-    Your view should appear similar to the following
+        .. image:: images/avd_l3_dc/Lab1_S1filter_before.PNG
+            :align: center
 
-.. image:: images/avd_l3_dc/Lab1_S1filter_before.PNG
-    :align: center
-
-.. note:: The current topology view will be very basic due to DC1 being undeployed
+        .. note:: The current topology view will be very basic due to DC1 being undeployed
 
 
 #. Open the device view and look at S1-Leaf1
@@ -103,17 +103,17 @@ In this lab you will configure DC1 using AVD and then deploy DC1 using CloudVisi
 
 
 
-If the playbook ran successfully, you should see output similar to the following:
+    If the playbook ran successfully, you should see output similar to the following:
 
-    .. code-block:: text
+        .. code-block:: text
 
-        PLAY RECAP ***************************************************************************************************************************
-        s1-leaf1                   : ok=5    changed=3    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
-        s1-leaf2                   : ok=5    changed=3    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
-        s1-leaf3                   : ok=5    changed=3    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
-        s1-leaf4                   : ok=5    changed=3    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
-        s1-spine1                  : ok=13   changed=8    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0   
-        s1-spine2                  : ok=5    changed=3    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+            PLAY RECAP ***************************************************************************************************************************
+            s1-leaf1                   : ok=5    changed=3    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+            s1-leaf2                   : ok=5    changed=3    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+            s1-leaf3                   : ok=5    changed=3    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+            s1-leaf4                   : ok=5    changed=3    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+            s1-spine1                  : ok=13   changed=8    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0   
+            s1-spine2                  : ok=5    changed=3    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
 
 
 
@@ -126,8 +126,8 @@ If the playbook ran successfully, you should see output similar to the following
     b. Go the ``Topology`` view, re-apply the DC1 filter
         .. note:: Now that DC1 is configured, you should see correct tree structure for DC1
 
-    .. image:: images/avd_l3_dc/Lab1_Topology_after.PNG
-        :align: center
+        .. image:: images/avd_l3_dc/Lab1_Topology_after.PNG
+            :align: center
 
 
 
