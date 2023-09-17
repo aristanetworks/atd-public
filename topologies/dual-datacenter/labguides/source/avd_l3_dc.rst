@@ -41,6 +41,7 @@ The goal of these labs are to demonstrate how to use AVD to deploy and configure
 Lab #1: Building and Deploying DC1
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 In this lab you will configure DC1 using AVD and then deploy DC1 using CloudVision
+
 |
 
 #. Open Cloudvision from your initial Lab page
@@ -75,7 +76,7 @@ In this lab you will configure DC1 using AVD and then deploy DC1 using CloudVisi
         .. image:: images/avd_l3_dc/Lab1_S1filter_before.PNG
             :align: center
 
-        .. note:: The current topology view will be very basic due to DC1 being undeployed
+        .. note:: The current topology is very because DC1 is undeployed
 
 
 #. Open the ``Device`` view and look at S1-Leaf1
@@ -139,8 +140,10 @@ Lab #1: Summary
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Congratulations! 
 
-You have now deployed an entire datacenter simply by running the ``make build_dc1`` command. This is the power automation can bring you. 
+You have now deployed an entire datacenter simply by running the ``make build_dc1`` command. 
 
+This is the power automation can bring you. 
+------
 
 |
 |
