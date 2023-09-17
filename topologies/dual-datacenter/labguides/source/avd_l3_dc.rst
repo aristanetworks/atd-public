@@ -4,15 +4,15 @@ The goal of these labs are to demonstrate how to use AVD to deploy and configure
 
 |
 
-#. Connect to the Programmability IDE
+#. **Connect to the Programmability IDE**
     Connect to the **Programmability IDE** service. This IDE is running VS Code. If prompted for a password, enter in your
-    lab password: ``{REPLACE_PWD}``.
+    lab password: ``{REPLACE_PWD}``
 
         .. image:: images/avd_l3_dc/Setup_ProgrammabilityIDE.png
             :align: center
         |
 
-#. Change directory to the AVD_L3_DC folder
+#. **Change directory to the AVD_L3_DC folder**
     Change your working directory to ``avd_l3_dc``
 
     .. code-block:: text
@@ -20,7 +20,7 @@ The goal of these labs are to demonstrate how to use AVD to deploy and configure
         cd labfiles/avd_l3_dc
 
 
-#. Set the Ansible password for DC1
+#. **Set the Ansible password for DC1**
     We are going to add your lab password: ``{REPLACE_PWD}`` to the ``dc1.yml`` file 
 
     a. Open the ``sites/dc1/group_vars/dc1.yml`` file 
@@ -44,7 +44,7 @@ In this lab you will configure DC1 using AVD and then deploy DC1 using CloudVisi
 
 |
 
-#. Open Cloudvision from your initial Lab page
+#. **Open Cloudvision from your initial Lab page**
 
     .. warning:: Cloudvision can take 10-15 minutes to boot after initial lab deployment
 
@@ -53,7 +53,7 @@ In this lab you will configure DC1 using AVD and then deploy DC1 using CloudVisi
 
 
 
-#. Open the topology view and filter based on tags for DC1 
+#. **Open the topology view and filter based on tags for DC1 **
 
     a. Click on the topology view
 
@@ -79,7 +79,7 @@ In this lab you will configure DC1 using AVD and then deploy DC1 using CloudVisi
         .. note:: The current topology is very because DC1 is undeployed
 
 
-#. Open the ``Device`` view and look at S1-Leaf1
+#. **Open the ``Device`` view and look at S1-Leaf1**
 
     a. Select ``Configuration`` and look at the current running config 
 
@@ -89,13 +89,13 @@ In this lab you will configure DC1 using AVD and then deploy DC1 using CloudVisi
 
 
 
-#. Return to your  ``Programmability IDE``
+#. **Return to your Programmability IDE**
 
     You will build and then deploy the entirety of DC1 using a makefile 
 
     .. note:: The makefile contains recipes to allow you to run the lab playbooks using a simple command syntax
 
-#. Build DC1 using the makefile 
+#. **Build DC1 using the makefile**
 
     .. code-block:: text
 
@@ -120,7 +120,7 @@ In this lab you will configure DC1 using AVD and then deploy DC1 using CloudVisi
 
 
 
-#. Return to Cloudvision
+#. **Return to Cloudvision**
 
     a. Go the ``Device`` view of S1-Leaf1 and view ``Routing -> BGP`` output
 
@@ -138,7 +138,7 @@ In this lab you will configure DC1 using AVD and then deploy DC1 using CloudVisi
 
 Lab #1: Summary
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Congratulations! 
+**Congratulations! **
 
 You have now deployed an entire datacenter simply by running the ``make build_dc1`` command. 
 
