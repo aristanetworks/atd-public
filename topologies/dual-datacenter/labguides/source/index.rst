@@ -37,7 +37,6 @@ Welcome to the Arista ATD documentation!
    ansible_and_jinja_templates.rst
    day2_operations.rst
    rollback.rst
-   avd-evpn.rst
    avd_l3_dc.rst
 
 .. toctree::
