@@ -73,7 +73,9 @@ In this lab you will configure DC1 using AVD and then deploy DC1 using CloudVisi
 
     b. Apply a filter to specify viewing only DC1 devices
 
-        .. image:: images/avd_l3_dc/xxxxxxx.PNG
+        .. image:: images/avd_l3_dc/Lab1_CVP_Filter.PNG
+        :align: center
+        .. image:: images/avd_l3_dc/Lab1_CVP_Filter2.PNG
         :align: center
 
 |
