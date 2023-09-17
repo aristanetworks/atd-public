@@ -2,18 +2,15 @@ AVD L3 DC Labs
 ===================
 The goal of these labs are to demonstrate how to use AVD to deploy and configure EVPN/VXLAN Datacenter networks.
 
+|
 
-
-1. Connect to the Programmability IDE
+#. Connect to the Programmability IDE
 Connect to the **Programmability IDE** service. This IDE is running VS Code. If prompted for a password, enter in your
 lab password: ``{REPLACE_PWD}``.
 
-
-
     .. image:: images/avd_l3_dc/Setup_ProgrammabilityIDE.png
         :align: center
-
-
+    |
 
 #. Change directory to the AVD_L3_DC folder
 Change your working directory to ``avd_l3_dc``
@@ -23,7 +20,6 @@ Change your working directory to ``avd_l3_dc``
         cd labfiles/avd_l3_dc
 
 
-
 #. Set the Ansible password for DC1
 We are going to add your lab password: ``{REPLACE_PWD}`` to the ``dc1.yml`` file 
 
@@ -31,8 +27,7 @@ We are going to add your lab password: ``{REPLACE_PWD}`` to the ``dc1.yml`` file
 
     .. thumbnail:: images/avd_l3_dc/Setup_Select_DC1yml.PNG
         :align: center
-
-
+    |
 
 
     b. Edit the ``ansible_password:`` field with your lab password: ``{REPLACE_PWD}`` 
@@ -47,7 +42,7 @@ Lab #1: Building and Deploying DC1
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 In this lab you will configure DC1 using AVD and then deploy DC1 using CloudVision
 
-1. Open Cloudvision from your initial Lab page
+#. Open Cloudvision from your initial Lab page
 
     .. warning:: Cloudvision can take 10-15 minutes to boot after initial lab deployment
 
@@ -68,12 +63,13 @@ In this lab you will configure DC1 using AVD and then deploy DC1 using CloudVisi
 
         .. image:: images/avd_l3_dc/Lab1_CVP_Filter.PNG
             :align: center
+        |
         .. image:: images/avd_l3_dc/Lab1_CVP_Filter2.PNG
             :align: center
 
 
 
-Your view should appear similar to the following
+    Your view should appear similar to the following
 
 .. image:: images/avd_l3_dc/Lab1_S1filter_before.PNG
     :align: center
