@@ -150,7 +150,9 @@ You have now deployed an entire datacenter simply by running the ``make build_dc
 
 |
 |
+|
+|
 
 Lab #2: Building and Deploying DC2 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
+In this lab you will configure DC2 using AVD and then deploy DC2 using CloudVision
