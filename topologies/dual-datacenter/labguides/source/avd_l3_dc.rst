@@ -25,7 +25,7 @@ The goal of these labs are to demonstrate how to use AVD to deploy and configure
 
     a. Open the ``sites/dc1/group_vars/dc1.yml`` file 
 
-        .. thumbnail:: images/avd_l3_dc/Setup_Select_DC1yml.PNG
+        .. image:: images/avd_l3_dc/Setup_Select_DC1yml.PNG
             :align: center
     |
 
