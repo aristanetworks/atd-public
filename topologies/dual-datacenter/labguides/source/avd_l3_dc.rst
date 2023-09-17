@@ -12,8 +12,8 @@ lab password: ``{REPLACE_PWD}``.
 
 |
 
-.. image:: images/avd_l3_dc/Setup_ProgrammabilityIDE.png
-   :align: center
+    .. image:: images/avd_l3_dc/Setup_ProgrammabilityIDE.png
+    :align: center
 
 |
 
@@ -22,6 +22,7 @@ lab password: ``{REPLACE_PWD}``.
 Change your working directory to ``avd_l3_dc``
 
     .. code-block:: text
+        
         cd labfiles/avd_l3_dc
 
 |
@@ -32,16 +33,16 @@ We are going to add your lab password: ``{REPLACE_PWD}`` to the ``dc1.yml`` file
 
     a. Open the ``sites/dc1/group_vars/dc1.yml`` file 
 
-.. image:: images/avd_l3_dc/Setup_Select_DC1yml.PNG
-   :align: center
+    .. image:: images/avd_l3_dc/Setup_Select_DC1yml.PNG
+    :align: center
 
 |
 |
 
     b. Edit the ``ansible_password:`` field with your lab password: ``{REPLACE_PWD}`` 
 
-.. image:: images/avd_l3_dc/Setup_DC1_Password.PNG
-   :align: center
+    .. image:: images/avd_l3_dc/Setup_DC1_Password.PNG
+    :align: center
 
 |
 |
@@ -67,7 +68,7 @@ In this lab you will configure DC1 using AVD and then deploy DC1 using CloudVisi
     a. Click on the topology view
 
         .. image:: images/avd_l3_dc/Lab1_open_CVP_topology_view.PNG
-        :align: center
+            :align: center
 
 |
 
