@@ -46,3 +46,105 @@ Edit the ``ansible_password:`` field with your lab password: ``{REPLACE_PWD}``
 
 |
 |
+
+Lab #1: Building and Deploying DC1
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In this lab you will configure DC1 using AVD and then deploy DC1 using CloudVision
+
+1. Open Cloudvision from your initial Lab page
+
+.. warning:: Cloudvision can take 10-15 minutes to boot after initial lab deployment before it is accessible
+
+.. image:: images/avd_l3_dc/Lab1_Open_CVP.PNG
+   :align: center
+
+|
+|
+
+#. Open the topology view and filter based on tags for DC1 
+
+    a. Click on the topology view
+
+.. image:: images/avd_l3_dc/Lab1_open_CVP_topology_view.PNG
+   :align: center
+
+|
+
+    b. Apply a filter to specify viewing only DC1 devices
+
+.. image:: images/avd_l3_dc/xxxxxxx.PNG
+   :align: center
+
+|
+
+Your view should appear similar to the following
+
+.. note:: The current topology view is basic due to DC1 being undeployed
+
+.. image:: images/avd_l3_dc/Lab1_S1filter_before.PNG
+   :align: center
+
+|
+
+#. Open the device view and look at S1-Leaf1
+
+    a. Select ``Configuration`` and look at the current running config 
+    .. note:: S1-Leaf1 currently contains only a basic minimal configuration. Enough to allow Ansible to login and push a full configuration.
+    b. Select ``Routing -> BGP`` and look and verify there are no BGP peers 
+
+|
+
+#. Return to your  ``Programmability IDE``
+You will build and then deploy the entirety of DC1 using a makefile 
+
+.. note:: The makefile contains recipes to allow you to run the lab playbooks using a simple command syntax
+
+Build DC1 using the makefile 
+
+.. note:: Make sure your terminal working directory is within the AVD_L3_DC folder
+
+    .. code-block:: text
+
+        make build_dc1
+
+|
+
+If the playbook ran successfully, you should see output similar to the following:
+
+    .. code-block:: text
+
+        PLAY RECAP ***************************************************************************************************************************
+        s1-leaf1                   : ok=5    changed=3    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+        s1-leaf2                   : ok=5    changed=3    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+        s1-leaf3                   : ok=5    changed=3    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+        s1-leaf4                   : ok=5    changed=3    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+        s1-spine1                  : ok=13   changed=8    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0   
+        s1-spine2                  : ok=5    changed=3    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+
+
+|
+
+#. Return to Cloudvision
+    a. Go the ``Device`` view of S1-Leaf1 and view ``Routing -> BGP`` output
+    .. note:: S1-Leaf1 should now have several BGP peers in the Established statement
+    
+    b. Go the ``Topology`` view, re-apply the DC1 filter
+    .. note:: Now that DC1 is configured, you should see correct tree structure for DC1
+
+    .. image:: images/avd_l3_dc/Lab1_Topology_after.PNG
+        :align: center
+
+|
+|
+
+Lab #1: Summary
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Congratulations, you have now deployed an entire datacenter simply by running the ``make build_dc1`` command. This is the power automation can bring you. 
+
+|
+|
+|
+
+Lab #2: Building and Deploying DC2 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
