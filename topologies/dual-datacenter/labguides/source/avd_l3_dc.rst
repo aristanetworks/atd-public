@@ -1,37 +1,36 @@
 AVD L3 DC Labs
 ===================
-The goal of these labs are to demonstrate how to use AVD to deploy and configure EVPN/VXLAN Datacenter networks
+The goal of these labs are to demonstrate how to use AVD to deploy and configure EVPN/VXLAN Datacenter networks.
 
-
-
+|
+|
 
 1. Connect to the Programmability IDE
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Connect to the **Programmability IDE** service. This IDE is running VS Code. If prompted for a password, enter in your
-lab password: ``{REPLACE_PWD}``
+lab password: ``{REPLACE_PWD}``.
+
+|
 
 .. image:: images/avd_l3_dc/Setup_ProgrammabilityIDE.png
    :align: center
 
 |
-|
 
 2. Change directory to the AVD_L3_DC folder
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Change your working directory to ``avd_l3_dc``
-``cd labfiles/avd_l3_dc``
 
-.. image:: images/avd_l3_dc/Setup_ChangeFolder.PNG
-   :align: center
+    .. code-block:: text
+        cd labfiles/avd_l3_dc
 
-|
 |
 
 3. Set the Ansible password for DC1
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 We are going to add your lab password: ``{REPLACE_PWD}`` to the ``dc1.yml`` file 
 
-Open the ``sites/dc1/group_vars/dc1.yml`` file 
+    1. Open the ``sites/dc1/group_vars/dc1.yml`` file 
 
 .. image:: images/avd_l3_dc/Setup_Select_DC1yml.PNG
    :align: center
@@ -39,7 +38,7 @@ Open the ``sites/dc1/group_vars/dc1.yml`` file
 |
 |
 
-Edit the ``ansible_password:`` field with your lab password: ``{REPLACE_PWD}`` 
+    2. Edit the ``ansible_password:`` field with your lab password: ``{REPLACE_PWD}`` 
 
 .. image:: images/avd_l3_dc/Setup_DC1_Password.PNG
    :align: center
@@ -51,26 +50,28 @@ Lab #1: Building and Deploying DC1
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 In this lab you will configure DC1 using AVD and then deploy DC1 using CloudVision
 
-1. Open Cloudvision from your initial Lab page
+|
 
-.. warning:: Cloudvision can take 10-15 minutes to boot after initial lab deployment before it is accessible
+    1. Open Cloudvision from your initial Lab page
+
+    .. warning:: Cloudvision can take 10-15 minutes to boot after initial lab deployment before it is accessible
 
 .. image:: images/avd_l3_dc/Lab1_Open_CVP.PNG
-   :align: center
+    :align: center
 
 |
 |
 
-#. Open the topology view and filter based on tags for DC1 
+    #. Open the topology view and filter based on tags for DC1 
 
-    a. Click on the topology view
+        a. Click on the topology view
 
 .. image:: images/avd_l3_dc/Lab1_open_CVP_topology_view.PNG
    :align: center
 
 |
 
-    b. Apply a filter to specify viewing only DC1 devices
+        b. Apply a filter to specify viewing only DC1 devices
 
 .. image:: images/avd_l3_dc/xxxxxxx.PNG
    :align: center
@@ -79,29 +80,32 @@ In this lab you will configure DC1 using AVD and then deploy DC1 using CloudVisi
 
 Your view should appear similar to the following
 
-.. note:: The current topology view is basic due to DC1 being undeployed
+.. note:: The current topology view will be very basic due to DC1 being undeployed
 
 .. image:: images/avd_l3_dc/Lab1_S1filter_before.PNG
    :align: center
 
 |
 
-#. Open the device view and look at S1-Leaf1
+    #. Open the device view and look at S1-Leaf1
 
-    a. Select ``Configuration`` and look at the current running config 
-    .. note:: S1-Leaf1 currently contains only a basic minimal configuration. Enough to allow Ansible to login and push a full configuration.
-    b. Select ``Routing -> BGP`` and look and verify there are no BGP peers 
+        a. Select ``Configuration`` and look at the current running config 
+
+            .. note:: S1-Leaf1 currently contains only a basic minimal configuration. Enough to allow Ansible to login and push a full configuration.
+    
+        b. Select ``Routing -> BGP`` and look and verify there are no BGP peers 
 
 |
 
-#. Return to your  ``Programmability IDE``
-You will build and then deploy the entirety of DC1 using a makefile 
+    #. Return to your  ``Programmability IDE``
 
-.. note:: The makefile contains recipes to allow you to run the lab playbooks using a simple command syntax
+        You will build and then deploy the entirety of DC1 using a makefile 
 
-Build DC1 using the makefile 
+        .. note:: The makefile contains recipes to allow you to run the lab playbooks using a simple command syntax
 
-.. note:: Make sure your terminal working directory is within the AVD_L3_DC folder
+    #. Build DC1 using the makefile 
+
+    .. note:: Make sure your terminal working directory is within the AVD_L3_DC folder
 
     .. code-block:: text
 
@@ -109,7 +113,7 @@ Build DC1 using the makefile
 
 |
 
-If the playbook ran successfully, you should see output similar to the following:
+        If the playbook ran successfully, you should see output similar to the following:
 
     .. code-block:: text
 
@@ -124,12 +128,13 @@ If the playbook ran successfully, you should see output similar to the following
 
 |
 
-#. Return to Cloudvision
-    a. Go the ``Device`` view of S1-Leaf1 and view ``Routing -> BGP`` output
-    .. note:: S1-Leaf1 should now have several BGP peers in the Established statement
+    #. Return to Cloudvision
+
+        a. Go the ``Device`` view of S1-Leaf1 and view ``Routing -> BGP`` output
+        .. note:: S1-Leaf1 should now have several BGP peers in the Established statement
     
-    b. Go the ``Topology`` view, re-apply the DC1 filter
-    .. note:: Now that DC1 is configured, you should see correct tree structure for DC1
+        b. Go the ``Topology`` view, re-apply the DC1 filter
+        .. note:: Now that DC1 is configured, you should see correct tree structure for DC1
 
     .. image:: images/avd_l3_dc/Lab1_Topology_after.PNG
         :align: center
