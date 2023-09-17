@@ -1,4 +1,4 @@
-AVD EVPN VXLAN Labs
+AVD L3 DC Labs
 ===================
 The goal of these labs are to demonstrate how to use AVD to deploy and configure EVPN/VXLAN Datacenter networks
 
@@ -19,7 +19,7 @@ lab password: ``{REPLACE_PWD}``
 Change your working directory to ``avd_l3_dc``
 ``cd labfiles/avd_l3_dc``
 
-.. image:: images/avd_l3_dc/Setup_ChangeFolder.png
+.. image:: images/avd_l3_dc/Setup_ChangeFolder.PNG
    :align: center
 
 
@@ -33,6 +33,6 @@ Open the ``sites/dc1/group_vars/dc1.yml`` file
 
 Edit the ``ansible_password:`` field with your lab password: ``{REPLACE_PWD}`` 
 
-.. image:: images/avd_l3_dc/Setup_DC1_Password.png
+.. image:: images/avd_l3_dc/Setup_DC1_Password.PNG
    :align: center
 
