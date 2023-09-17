@@ -13,8 +13,8 @@ lab password: ``{REPLACE_PWD}``
 .. image:: images/avd_l3_dc/Setup_ProgrammabilityIDE.png
    :align: center
 
-
-
+|
+|
 
 2. Change directory to the AVD_L3_DC folder
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -24,8 +24,8 @@ Change your working directory to ``avd_l3_dc``
 .. image:: images/avd_l3_dc/Setup_ChangeFolder.PNG
    :align: center
 
-
-
+|
+|
 
 3. Set the Ansible password for DC1
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -36,8 +36,13 @@ Open the ``sites/dc1/group_vars/dc1.yml`` file
 .. image:: images/avd_l3_dc/Setup_Select_DC1yml.PNG
    :align: center
 
+|
+|
+
 Edit the ``ansible_password:`` field with your lab password: ``{REPLACE_PWD}`` 
 
 .. image:: images/avd_l3_dc/Setup_DC1_Password.PNG
    :align: center
 
+|
+|
