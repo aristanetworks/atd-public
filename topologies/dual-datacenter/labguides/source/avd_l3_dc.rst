@@ -4,7 +4,6 @@ The goal of these labs are to demonstrate how to use AVD to deploy and configure
 
 
 
-
 1. Connect to the Programmability IDE
 Connect to the **Programmability IDE** service. This IDE is running VS Code. If prompted for a password, enter in your
 lab password: ``{REPLACE_PWD}``.
