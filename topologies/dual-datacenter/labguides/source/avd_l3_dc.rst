@@ -52,9 +52,9 @@ In this lab you will configure DC1 using AVD and then deploy DC1 using CloudVisi
 
 |
 
-1. Open Cloudvision from your initial Lab page
+#. Open Cloudvision from your initial Lab page
 
-    .. warning:: Cloudvision can take 10-15 minutes to boot after initial lab deployment before it is accessible
+    .. warning:: Cloudvision can take 10-15 minutes to boot after initial lab deployment
 
 .. image:: images/avd_l3_dc/Lab1_Open_CVP.PNG
     :align: center
@@ -66,25 +66,24 @@ In this lab you will configure DC1 using AVD and then deploy DC1 using CloudVisi
 
     a. Click on the topology view
 
-.. image:: images/avd_l3_dc/Lab1_open_CVP_topology_view.PNG
-   :align: center
+        .. image:: images/avd_l3_dc/Lab1_open_CVP_topology_view.PNG
+        :align: center
 
 |
 
     b. Apply a filter to specify viewing only DC1 devices
 
-.. image:: images/avd_l3_dc/xxxxxxx.PNG
-   :align: center
+        .. image:: images/avd_l3_dc/xxxxxxx.PNG
+        :align: center
 
 |
 
 Your view should appear similar to the following
 
-.. note:: The current topology view will be very basic due to DC1 being undeployed
-
 .. image:: images/avd_l3_dc/Lab1_S1filter_before.PNG
    :align: center
 
+.. note:: The current topology view will be very basic due to DC1 being undeployed
 |
 
 #. Open the device view and look at S1-Leaf1
@@ -105,11 +104,11 @@ Your view should appear similar to the following
 
 #. Build DC1 using the makefile 
 
-    .. note:: Make sure your terminal working directory is within the AVD_L3_DC folder
-
     .. code-block:: text
 
         make build_dc1
+
+    .. note:: Make sure your terminal working directory is within the AVD_L3_DC folder
 
 |
 
