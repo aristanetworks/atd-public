@@ -53,7 +53,7 @@ In this lab you will configure DC1 using AVD and then deploy DC1 using CloudVisi
 
 
 
-#. **Open the topology view and filter based on tags for DC1 **
+#. **Open the topology view and filter based on tags for DC1**
 
     a. Click on the topology view
 
@@ -79,7 +79,7 @@ In this lab you will configure DC1 using AVD and then deploy DC1 using CloudVisi
         .. note:: The current topology is very because DC1 is undeployed
 
 
-#. **Open the ``Device`` view and look at S1-Leaf1**
+#. **Open the Device view and look at S1-Leaf1**
 
     a. Select ``Configuration`` and look at the current running config 
 
@@ -122,11 +122,11 @@ In this lab you will configure DC1 using AVD and then deploy DC1 using CloudVisi
 
 #. **Return to Cloudvision**
 
-    a. Go the ``Device`` view of S1-Leaf1 and view ``Routing -> BGP`` output
+    a. Go the **Device** view of S1-Leaf1 and view ``Routing -> BGP`` output
 
         .. note:: S1-Leaf1 should now have several BGP peers in the Established statement
     
-    b. Go the ``Topology`` view, re-apply the DC1 filter
+    b. Go the **Topology** view, re-apply the DC1 filter
 
         .. note:: Now that DC1 is configured, you should see correct tree structure for DC1
 
@@ -138,12 +138,15 @@ In this lab you will configure DC1 using AVD and then deploy DC1 using CloudVisi
 
 Lab #1: Summary
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-**Congratulations! **
+**Congratulations!**
 
 You have now deployed an entire datacenter simply by running the ``make build_dc1`` command. 
 
-This is the power automation can bring you. 
-------
+**This** is the power automation can bring you. 
+
+END OF LAB 1
+------------
+
 
 |
 |
