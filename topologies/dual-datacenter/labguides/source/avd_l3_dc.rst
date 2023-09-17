@@ -6,35 +6,32 @@ The goal of these labs are to demonstrate how to use AVD to deploy and configure
 |
 
 1. Connect to the Programmability IDE
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Connect to the **Programmability IDE** service. This IDE is running VS Code. If prompted for a password, enter in your
 lab password: ``{REPLACE_PWD}``.
 
 |
 
     .. image:: images/avd_l3_dc/Setup_ProgrammabilityIDE.png
-    :align: center
+        :align: center
 
 |
 
 2. Change directory to the AVD_L3_DC folder
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Change your working directory to ``avd_l3_dc``
 
     .. code-block:: text
-        
+
         cd labfiles/avd_l3_dc
 
 |
 
 3. Set the Ansible password for DC1
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 We are going to add your lab password: ``{REPLACE_PWD}`` to the ``dc1.yml`` file 
 
     a. Open the ``sites/dc1/group_vars/dc1.yml`` file 
 
-    .. image:: images/avd_l3_dc/Setup_Select_DC1yml.PNG
-    :align: center
+    .. thumbnail:: images/avd_l3_dc/Setup_Select_DC1yml.PNG
+        :align: center
 
 |
 |
@@ -42,7 +39,7 @@ We are going to add your lab password: ``{REPLACE_PWD}`` to the ``dc1.yml`` file
     b. Edit the ``ansible_password:`` field with your lab password: ``{REPLACE_PWD}`` 
 
     .. image:: images/avd_l3_dc/Setup_DC1_Password.PNG
-    :align: center
+        :align: center
 
 |
 |
@@ -75,16 +72,16 @@ In this lab you will configure DC1 using AVD and then deploy DC1 using CloudVisi
     b. Apply a filter to specify viewing only DC1 devices
 
         .. image:: images/avd_l3_dc/Lab1_CVP_Filter.PNG
-        :align: center
+            :align: center
         .. image:: images/avd_l3_dc/Lab1_CVP_Filter2.PNG
-        :align: center
+            :align: center
 
 |
 
 Your view should appear similar to the following
 
 .. image:: images/avd_l3_dc/Lab1_S1filter_before.PNG
-   :align: center
+    :align: center
 
 .. note:: The current topology view will be very basic due to DC1 being undeployed
 |
