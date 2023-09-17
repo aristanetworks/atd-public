@@ -76,7 +76,7 @@ In this lab you will configure DC1 using AVD and then deploy DC1 using CloudVisi
         .. image:: images/avd_l3_dc/Lab1_S1filter_before.PNG
             :align: center
 
-        .. note:: The current topology is very because DC1 is undeployed
+        .. note:: The current topology is very basic because DC1 is undeployed
 
 
 #. **Open the Device view and look at S1-Leaf1**
@@ -144,7 +144,7 @@ You have now deployed an entire datacenter simply by running the ``make build_dc
 
 **This** is the power automation can bring you. 
 
-END OF LAB 1
+***END OF LAB 1***
 ------------
 
 
