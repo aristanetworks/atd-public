@@ -3,6 +3,8 @@ AVD L3 DC Labs
 The goal of these labs are to demonstrate how to use AVD to deploy and configure EVPN/VXLAN Datacenter networks
 
 
+
+
 1. Connect to the Programmability IDE
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Connect to the **Programmability IDE** service. This IDE is running VS Code. If prompted for a password, enter in your
@@ -14,7 +16,7 @@ lab password: ``{REPLACE_PWD}``
 
 
 
-#. Change directory to the AVD_L3_DC folder
+2. Change directory to the AVD_L3_DC folder
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Change your working directory to ``avd_l3_dc``
 ``cd labfiles/avd_l3_dc``
@@ -25,11 +27,14 @@ Change your working directory to ``avd_l3_dc``
 
 
 
-#. Set the Ansible password for DC1
+3. Set the Ansible password for DC1
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 We are going to add your lab password: ``{REPLACE_PWD}`` to the ``dc1.yml`` file 
 
 Open the ``sites/dc1/group_vars/dc1.yml`` file 
+
+.. image:: images/avd_l3_dc/Setup_Select_DC1yml.PNG
+   :align: center
 
 Edit the ``ansible_password:`` field with your lab password: ``{REPLACE_PWD}`` 
 
