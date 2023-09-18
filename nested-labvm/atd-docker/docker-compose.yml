@@ -207,6 +207,32 @@ services:
       - "/home/arista/arista-dir/apps/webui:/config:rw"
     networks:
       - atd_nginx
+  gitlab-ce:
+    container_name: atd-gitlab-ce
+    image: gitlab/gitlab-ce:latest
+    env_file:
+      - ./gitlab/gitlab-local.env
+    networks:
+      - atd_nginx
+    ports:
+      - "8080:8080"
+    restart: "unless-stopped"
+    volumes:
+      - "./gitlab/data:/var/opt/gitlab:rw"
+      - "./gitlab/config:/etc/gitlab:rw"
+      - "./gitlab/logs:/var/log/gitlab:rw"
+  gitlab-runner:
+    container_name: atd-gitlab-runner
+    image: gitlab/gitlab-runner:latest
+    env_file:
+      - ./gitlab/gitlab-local.env
+    networks:
+      - atd_nginx
+    ports:
+      - "8080:8080"
+    restart: "unless-stopped"
+    volumes:
+      - "./gitlab/runner/config:/etc/gitlab-runner:rw"
   nautobot:
     container_name: atd-nbot-ui
     image: "networktocode/nautobot:1.5-py3.9"

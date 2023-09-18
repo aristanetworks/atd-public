@@ -66,6 +66,11 @@
                     <a href="/ipam" target="_blank">IPAM</a>
                 </li>
                 {% end %}
+                {% if "gitlab" not in disable_links %}
+                <li>
+                    <a href="/gitlab" target="_blank">Gitlab</a>
+                </li>
+                {% end %}
             </ul>
         </div>
         <!-- /#sidebar-wrapper -->
