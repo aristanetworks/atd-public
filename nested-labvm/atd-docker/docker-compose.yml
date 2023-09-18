@@ -215,7 +215,7 @@ services:
     networks:
       - atd_nginx
     ports:
-      - "8080:8080"
+      - "8180:8180"
     restart: "unless-stopped"
     volumes:
       - "./gitlab/data:/var/opt/gitlab:rw"
