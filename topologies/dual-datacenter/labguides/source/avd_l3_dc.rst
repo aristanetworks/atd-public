@@ -96,6 +96,7 @@ In this lab you will configure DC1 using AVD and then deploy DC1 using CloudVisi
     .. note:: The makefile contains recipes to allow you to run the lab playbooks using a simple command syntax
 
 #. **Build DC1 using the makefile**
+    Run the following command:
 
     .. code-block:: text
 
@@ -143,6 +144,9 @@ Lab #1: Summary
 You have now deployed an entire datacenter simply by running the ``make build_dc1`` command. 
 
 **This** is the power automation can bring you. 
+
+|
+|
 
 ***END OF LAB 1***
 ------------
