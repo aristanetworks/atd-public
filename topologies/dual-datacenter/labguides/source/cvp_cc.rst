@@ -17,7 +17,7 @@ TASK 1: Apply a Configlet Builder to create a group of Tasks
 |
 
 * Log into the LabAccess jumpserver:
-    .. warning:: If starting from this lab module, type ``cvp`` or ``4`` at the prompt. The script will configure all devices in the lab so you can complete this lab. The configlet builder will fail to generate device configlets if this script hasn't been run.
+    .. warning:: If starting from this lab module, type ``cvp`` or ``5`` at the prompt. The script will configure all devices in the lab so you can complete this lab. The configlet builder will fail to generate device configlets if this script hasn't been run.
 
 
 Now we want to add several Loopbacks to each device using a Configlet Builder at the ``s1/s1-Leaf`` level.
@@ -39,13 +39,7 @@ Now we want to add several Loopbacks to each device using a Configlet Builder at
 
 5. Select **Update** to return to 'Network Provisioning' and select **Save** at the bottom of the screen. Tasks will be generated and a notifcation will show next to the 'Tasks' option in the Navigation column. Now that we have Tasks created we can use Change Control feature.
 
-|
 
-.. thumbnail:: images/cvp_cc/cvp_cc_2.gif
-   :align: center
-   :title: creating and customizing a Change Control to include snapshot steps before and after the tasks.
-
-|
 
 6. Navigate to **Change Control** from the Provisioning Tab.
 
@@ -55,15 +49,31 @@ Now we want to add several Loopbacks to each device using a Configlet Builder at
 
 9. First, we need to give the Change Control a name. Click the pencil on the top right to edit the CC name. Name it **Add_Loopbacks_CC** and hit Enter.
 
-10. Next we will need to change the root stage to Serial execution. To do this, click on the Root stage, then on the right side, change the drop down to **Series**
+10. Next we will need to change the root stage to Serial execution. To do this, click on the Root stage, then on the right side, change the drop down to **Series**. You can also change between Parallel and Series within the Change Control screen as well. 
 
 .. thumbnail:: images/cvp_cc/cvp_cc_6.png
    :title: changing our change control root stage to series so they'll run in order
 
+|
 
-11. Then we will create 3 new child stages. Click the **+** on the right side of the screen three times in order to create 3 new stages.
+1.  Then we will create 3 new child stages. Click the **...** on the right side of the root stage to create 3 stage containers.
+
+|
+
+.. thumbnail:: images/cvp_cc/cvp_cc_9.png
+   :align: center
+
+|
 
 12. Rename the top and bottom stages to **Before Snapshot** and **After Snapshot** respectively by clicking the Pencil icon. Name the middle stage **Configuration Changes**.
+
+|
+
+.. thumbnail:: images/cvp_cc/cvp_cc_2.gif
+   :align: center
+   :title: creating and customizing a Change Control to include snapshot steps before and after the tasks.
+
+|
 
 13. Next we can select a Snapshot template that we want to run before and after the change. Select the **Before Snapshot** stage and click **Add Actions** under the right side menu.
 
@@ -84,15 +94,15 @@ Now we want to add several Loopbacks to each device using a Configlet Builder at
 
 |
 
-17. For this lab, we now want to execute the CC. First a review and approval will need to take place. Select **Review and Approve**.  Here we can view all of the changes for the tasks, snapshots to be taken, and any other information relative to the change control in order to approve it.
+1.  We now want to execute the CC. First a review and approval will need to take place. Select **Review and Approve**.  Here we can view all of the changes for the tasks, snapshots to be taken, and any other information relative to the change control in order to approve it.
 
-18. Once changes have been reviewed, we can click **Approve** in the bottom right.
+2.  Once changes have been reviewed, we can click **Approve** in the bottom right.
 
-19. Once the change has been approved, we should now have a button that says **Execute Change Control** in the top right corner. Click this to execute the changes.
+3.  Once the change has been approved, we should now have a button that says **Execute Change Control** in the top right corner. Click this to execute the changes.
 
-20. We will now be prompted with with a confirmation. Click **Execute** to confirm the CC execution.
+4.  We will now be prompted with with a confirmation. Click **Execute** to confirm the CC execution.
 
-21. While the CC executes, we can see the progress of each task as it is executed.
+5.  While the CC executes, we can see the progress of each task as it is executed.
 
 |
 
