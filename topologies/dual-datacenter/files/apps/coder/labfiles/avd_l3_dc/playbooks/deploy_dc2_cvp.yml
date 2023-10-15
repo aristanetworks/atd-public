@@ -10,4 +10,4 @@
       vars:
         container_root: 'dc2_fabric'
         state: present
-        execute_tasks: true
+        execute_tasks: false

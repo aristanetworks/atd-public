@@ -12,7 +12,8 @@ The goal of these labs are to demonstrate how to use AVD to deploy and configure
             :align: center
         |
 
-#. **Change directory to the AVD_L3_DC folder**
+#. **Open a terminal and change directory to the AVD_L3_DC folder**
+    Open a terminal by clicking on the top left icon > Terminal > New Terminal, or by pressing ``CTRL+Shift+` ``
     Change your working directory to ``avd_l3_dc``
 
     .. code-block:: text
@@ -95,7 +96,7 @@ In this lab you will configure DC1 using AVD and then deploy DC1 using CloudVisi
 
     .. note:: The makefile contains recipes to allow you to run the lab playbooks using a simple command syntax
 
-#. **Build DC1 using the makefile**
+#. **Build and deploy DC1 using the makefile**
     Run the following command:
 
     .. code-block:: text
@@ -118,8 +119,15 @@ In this lab you will configure DC1 using AVD and then deploy DC1 using CloudVisi
             s1-spine1                  : ok=13   changed=8    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0   
             s1-spine2                  : ok=5    changed=3    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
 
+    Now that the configurations have been created, we will deploy them using Cloudvision
 
+    Run the following command:
 
+    .. code-block:: text
+
+        make deploy_dc1_cvp
+
+    If the playbook ran successfully, you should see output similar to the following:
 
 #. **Return to Cloudvision**
 
@@ -127,7 +135,11 @@ In this lab you will configure DC1 using AVD and then deploy DC1 using CloudVisi
 
         .. note:: S1-Leaf1 should now have several BGP peers in the Established statement
     
-    b. Go the **Topology** view, re-apply the DC1 filter
+    b. Go the **Topology** view, you will need to create a new filter because AVD created new containers for the DC1 devices
+
+            .. code-block:: text
+
+                container: FILL IN LATER
 
         .. note:: Now that DC1 is configured, you should see correct tree structure for DC1
 
@@ -141,7 +153,7 @@ Lab #1: Summary
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 **Congratulations!**
 
-You have now deployed an entire datacenter simply by running the ``make build_dc1`` command. 
+You have now deployed an entire datacenter simply by running two make commands. 
 
 **This** is the power automation can bring you. 
 
@@ -159,4 +171,128 @@ You have now deployed an entire datacenter simply by running the ``make build_dc
 
 Lab #2: Building and Deploying DC2 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-In this lab you will configure DC2 using AVD and then deploy DC2 using CloudVision
+In this lab you will configure DC2 using AVD and then deploy DC2 using CloudVision while going through the normal change control process
+
+|
+
+#. **Set the Ansible password for DC2**
+
+|
+
+    Once again, we are going to add your lab password: ``{REPLACE_PWD}`` to the ``dc2.yml`` file 
+
+    a. Open the ``sites/dc2/group_vars/dc2.yml`` file 
+
+    b. Edit the ``ansible_password:`` field with your lab password: ``{REPLACE_PWD}`` 
+
+#. **Build DC2 using the correct makefile**
+
+|
+
+    Run the following command:
+
+    .. code-block:: text
+
+        make build_dc2
+
+    This time, there will be errors when trying to build the DC2 configs
+
+        .. image:: images/avd_l3_dc/Lab2_inventory_failure.PNG
+            :align: center
+
+    These errors are the result of the IP addresses for Leafs 1-4 being incorrect in the DC2 inventory file
+
+#. **Correct the errors in the DC2 inventory.yml file**
+
+|
+
+    Open the ``sites/dc2/inventory.yml`` file, and edit the IP addresses for Leafs1-4 to the following:
+
+    .. code-block:: text
+
+        s2-leaf1:   192.168.0.22
+        s2-leaf2:   192.168.0.23
+        s2-leaf3:   192.168.0.24
+        s2-leaf4:   192.168.0.25
+
+        .. image:: images/avd_l3_dc/Lab2_inventory_failure.PNG
+            :align: center
+
+#. **Re-build DC2 using the correct makefile**
+
+|
+
+    Run the following command:
+
+    .. code-block:: text
+
+        make build_dc2
+
+    There should be no errors building the DC2 config this time.
+
+#. **Deploy DC2 using the correct makefile**
+
+|
+
+    We are going to deploy DC2 using Cloudvision similar to DC1, but this time we will also go through the full change control process
+
+    Run the following command:
+
+        .. code-block:: text
+
+        make deploy_dc2_cvp
+
+    The command executed successfully, but the change has not yet been implemented.
+
+#. **Create, approve, and execute the change within Cloudvision**
+
+|
+
+    Go back to Cloudvision, then go to ``Provisioning > Tasks`` 
+
+        a. Select all the tasks then click on ``Create Change Control``
+
+            .. image:: images/avd_l3_dc/Lab2_CVP_Select_Tasks.PNG
+                :align: center
+
+        b. Click on ``Parallel`` arrangement, then ``Create Change Control with 6 Tasks``
+
+            .. image:: images/avd_l3_dc/Lab2_CVP_Parallel_Tasks.PNG
+                :align: center
+
+        c. Click on the ``Review and Approve`` button
+        
+            .. image:: images/avd_l3_dc/Lab2_CVP_Approve.PNG
+                :align: center
+
+        d. Click on the ``Execute immediately`` toggle, and then ``Approve and execute`` button
+        
+            .. image:: images/avd_l3_dc/Lab2_CVP_Execute.PNG
+                :align: center
+
+#. **Verify your changes**
+
+|
+
+    a. Go the **Device** view of S1-Leaf2 and view ``Routing -> BGP`` output
+
+        .. note:: S1-Leaf1 should have several BGP peers in the Established statement
+    
+    b. Go the **Topology** view, create a new filter for DC2
+
+            .. code-block:: text
+
+                container: FILL IN LATER
+
+Lab #2: Summary
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+**Congratulations!**
+
+You built DC2, fixed errors with the DC2 Ansible inventory file, went through a full Cloudvision change control, and verified it was deployed successfully. 
+
+
+Lab #3: Adding new VLANs to DC1
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In this lab you will add new VLANs to DC1, and then get familiar with the AVD ``Validate State`` feature
+
+
