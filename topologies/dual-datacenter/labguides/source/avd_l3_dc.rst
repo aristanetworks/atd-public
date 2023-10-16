@@ -177,7 +177,7 @@ In this lab you will configure DC2 using AVD and then deploy DC2 using CloudVisi
 
 #. **Set the Ansible password for DC2**
 
-|
+    |
 
     Once again, we are going to add your lab password: ``{REPLACE_PWD}`` to the ``dc2.yml`` file 
 
@@ -185,9 +185,9 @@ In this lab you will configure DC2 using AVD and then deploy DC2 using CloudVisi
 
     b. Edit the ``ansible_password:`` field with your lab password: ``{REPLACE_PWD}`` 
 
-#. **Build DC2 using the correct makefile**
+#. **Build DC2 using the makefile**
 
-|
+    |
 
     Run the following command:
 
@@ -204,7 +204,7 @@ In this lab you will configure DC2 using AVD and then deploy DC2 using CloudVisi
 
 #. **Correct the errors in the DC2 inventory.yml file**
 
-|
+    |
 
     Open the ``sites/dc2/inventory.yml`` file, and edit the IP addresses for Leafs1-4 to the following:
 
@@ -215,12 +215,12 @@ In this lab you will configure DC2 using AVD and then deploy DC2 using CloudVisi
         s2-leaf3:   192.168.0.24
         s2-leaf4:   192.168.0.25
 
-        .. image:: images/avd_l3_dc/Lab2_inventory_failure.PNG
-            :align: center
+    .. image:: images/avd_l3_dc/Lab2_inventory_failure.PNG
+        :align: center
 
-#. **Re-build DC2 using the correct makefile**
+#. **Re-build DC2 using the makefile**
 
-|
+    |
 
     Run the following command:
 
@@ -230,23 +230,23 @@ In this lab you will configure DC2 using AVD and then deploy DC2 using CloudVisi
 
     There should be no errors building the DC2 config this time.
 
-#. **Deploy DC2 using the correct makefile**
+#. **Deploy DC2 using the makefile**
 
-|
+    |
 
-    We are going to deploy DC2 using Cloudvision similar to DC1, but this time we will also go through the full change control process
+    We are going to deploy DC2 using Cloudvision similar to how we deployed DC1, but this time we will also go through the full change control process within Cloudvision.
 
     Run the following command:
 
-        .. code-block:: text
+    .. code-block:: text
 
         make deploy_dc2_cvp
 
-    The command executed successfully, but the change has not yet been implemented.
+    The command executed successfully, but we need to go through the change control process within Cloudvision to deploy the change.
 
 #. **Create, approve, and execute the change within Cloudvision**
 
-|
+    |
 
     Go back to Cloudvision, then go to ``Provisioning > Tasks`` 
 
@@ -272,11 +272,11 @@ In this lab you will configure DC2 using AVD and then deploy DC2 using CloudVisi
 
 #. **Verify your changes**
 
-|
+    |
 
     a. Go the **Device** view of S1-Leaf2 and view ``Routing -> BGP`` output
 
-        .. note:: S1-Leaf1 should have several BGP peers in the Established statement
+        .. note:: S1-Leaf1 should have several BGP peers in the Established state
     
     b. Go the **Topology** view, create a new filter for DC2
 
@@ -289,6 +289,8 @@ Lab #2: Summary
 **Congratulations!**
 
 You built DC2, fixed errors with the DC2 Ansible inventory file, went through a full Cloudvision change control, and verified it was deployed successfully. 
+
+|
 
 
 Lab #3: Adding new VLANs to DC1
