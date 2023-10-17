@@ -52,6 +52,8 @@ In this lab you will configure DC1 using AVD and then deploy DC1 using CloudVisi
     .. image:: images/avd_l3_dc/Lab1_Open_CVP.PNG
         :align: center
 
+    |
+
     Login to Cloudvision. Username: ``arista``, Password: ``{REPLACE_PWD}``
 
     .. image:: images/avd_l3_dc/Lab1_CVP_Login.PNG
@@ -108,7 +110,7 @@ In this lab you will configure DC1 using AVD and then deploy DC1 using CloudVisi
 
         make build_dc1
 
-    .. note:: Make sure your terminal working directory is within the AVD_L3_DC folder
+    .. note:: Make sure your terminal working directory is within the ``/home/coder/project/labfiles/avd_l3_dc`` folder
 
     If the playbook ran successfully, you should see output similar to the following:
 
@@ -132,11 +134,15 @@ In this lab you will configure DC1 using AVD and then deploy DC1 using CloudVisi
 
     If the playbook ran successfully, you should see output similar to the following:
 
+    .. code-block:: text
+
+        INSERT TEXT HERE
+
 #. **Return to Cloudvision**
 
     a. Go the **Device** view of S1-Leaf1 and view the ``Routing -> BGP`` output
 
-        .. note:: S1-Leaf1 should now have several BGP peers in the Established statement
+        .. note:: S1-Leaf1 should now have several BGP peers in the Established state
     
     b. Go the **Topology** view, you will need to create a new filter because AVD created new containers for the DC1 devices
 
@@ -183,7 +189,9 @@ In this lab you will configure DC2 using AVD and then deploy DC2 using CloudVisi
     Once again, we are going to add your lab password: ``{REPLACE_PWD}`` to the ``dc2.yml`` file 
 
     a. Open the ``sites/dc2/group_vars/dc2.yml`` file 
+
     |
+
     b. Edit the ``ansible_password:`` field with your lab password: ``{REPLACE_PWD}`` 
 
 #. **Build DC2 using the makefile**
@@ -237,7 +245,7 @@ In this lab you will configure DC2 using AVD and then deploy DC2 using CloudVisi
 
         make deploy_dc2_cvp
 
-    The command executed successfully, but we need to go through the change control process within Cloudvision to deploy the change.
+    The command should execute successfully, but we need to go through the change control process within Cloudvision to deploy the change.
 
 #. **Create, approve, and execute the change within Cloudvision**
 
@@ -286,14 +294,16 @@ You built DC2, fixed errors with the DC2 Ansible inventory file, went through a 
 
 **Lab #3: Adding new VLANs to DC1**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-In this lab you will add new VLANs to DC1, deploy directly to the switches using eAPI, and then get familiar with the AVD ``Validate State`` feature
+In this lab you will add new VLANs to DC1, deploy directly to the switches using eAPI, and then get familiar with the AVD ``Documentation`` and ``Validate State`` features
 
 |
 
 #. **Edit DC1's fabric_services to include VLANs 100 and 200**
 
     a. Open ``/sites/dc1/group_vars/dc1_fabric_services.yml`` file within the IDE
+
     |
+
     b. Uncomment out the following lines for VLANs 100 and 200
 
         .. code-block:: text
@@ -313,23 +323,25 @@ In this lab you will add new VLANs to DC1, deploy directly to the switches using
                 mtu: 9014
                 ip_address_virtual: 10.20.200.1/24
 
+        .. note:: You can comment or uncomment multiple lines at once by selecting all of them and pressing ``Ctrl+/``
+
 #. **Run the makefile to re-build DC1**
 
-Run the build makefile for DC1 to re-generate the configuration with the additional VLANs
+    Run the build makefile for DC1 to re-generate the configuration with the additional VLANs
 
-    .. code-block:: text
+        .. code-block:: text
 
-        make build_dc1
+            make build_dc1
 
-Run the deploy makefile using eAPI, this option allows you to deploy your configurations directly to your switches        
+    Run the deploy makefile using eAPI, this option allows you to deploy your configurations directly to your switches        
 
-    .. code-block:: text
+        .. code-block:: text
 
-        make deploy_dc1_eapi
+            make deploy_dc1_eapi
 
 #. **Verify your changes**
 
-We are going to verify the VLANs were successfully deployed to the switches. 
+    We are going to verify the VLANs were successfully deployed to the switches. 
 
     a. Go the **Device** view of S1-Leaf1 and view the ``Switching -> VXLAN`` output
 
@@ -339,17 +351,17 @@ We are going to verify the VLANs were successfully deployed to the switches.
 
 #. **View the outputs from AVD's Documentation and Validate State functions**
 
-AVD will auto-generate network documentation everytime you build a new configuration, presenting the device and fabric level documentation in an easy to read format that is easily underestandable by non-expert administrators. 
+    AVD will auto-generate network documentation everytime you build a new configuration, presenting the device and fabric level documentation in an easy to read format that is easily underestandable by non-expert administrators. 
 
     a. Within the IDE, open the output from: ``/sites/dc1/documentation/devices/s1-leaf1.md``
 
     b. Within the IDE, open the output from: ``/sites/dc1/documentation/fabric/dc1_fabric_documentation.md``
 
-AVD also has the ability to run a series of tests on your network after deployment to verify the current network state
+    AVD also has the ability to run a series of tests on your network after deployment to verify the current network state
 
     c. Within the IDE, open the output from: ``/sites/dc1/reports/fabric/dc1_fabric_state.md``
 
-        .. note:: Your example report will include multiple Errors. 
+        .. note:: Your example report will include multiple errors. 
 
 |
 
