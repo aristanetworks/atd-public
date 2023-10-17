@@ -7,3 +7,15 @@
       arista.eos.eos_config:
         src: ../sites/dc1/intended/configs/{{inventory_hostname}}.cfg
 
+- name: validate states on EOS devices
+  hosts: dc1_fabric
+  connection: httpapi
+  gather_facts: false
+  collections:
+    - arista.avd
+
+  tasks:
+
+    - name: validate states on EOS devices
+      ansible.builtin.import_role:
+        name: arista.avd.eos_validate_state

@@ -1,4 +1,4 @@
-***AVD L3 DC Labs***
+AVD L3 DC Labs
 ===================
 The goal of these labs are to demonstrate how to use AVD to deploy and configure EVPN/VXLAN Datacenter networks.
 
@@ -39,7 +39,7 @@ The goal of these labs are to demonstrate how to use AVD to deploy and configure
 
 |
 
-***Lab #1: Building and Deploying DC1***
+**Lab #1: Building and Deploying DC1**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 In this lab you will configure DC1 using AVD and then deploy DC1 using CloudVision
 
@@ -134,7 +134,7 @@ In this lab you will configure DC1 using AVD and then deploy DC1 using CloudVisi
 
 #. **Return to Cloudvision**
 
-    a. Go the **Device** view of S1-Leaf1 and view ``Routing -> BGP`` output
+    a. Go the **Device** view of S1-Leaf1 and view the ``Routing -> BGP`` output
 
         .. note:: S1-Leaf1 should now have several BGP peers in the Established statement
     
@@ -172,7 +172,7 @@ You have now deployed an entire datacenter simply by running two make commands.
 |
 |
 
-***Lab #2: Building and Deploying DC2***
+**Lab #2: Building and Deploying DC2**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 In this lab you will configure DC2 using AVD and then deploy DC2 using CloudVision while going through the normal change control process
 
@@ -183,7 +183,7 @@ In this lab you will configure DC2 using AVD and then deploy DC2 using CloudVisi
     Once again, we are going to add your lab password: ``{REPLACE_PWD}`` to the ``dc2.yml`` file 
 
     a. Open the ``sites/dc2/group_vars/dc2.yml`` file 
-
+    |
     b. Edit the ``ansible_password:`` field with your lab password: ``{REPLACE_PWD}`` 
 
 #. **Build DC2 using the makefile**
@@ -265,7 +265,7 @@ In this lab you will configure DC2 using AVD and then deploy DC2 using CloudVisi
 
 #. **Verify your changes**
 
-    a. Go the **Device** view of S1-Leaf2 and view ``Routing -> BGP`` output
+    a. Go the **Device** view of S1-Leaf2 and view the ``Routing -> BGP`` output
 
         .. note:: S1-Leaf1 should have several BGP peers in the Established state
     
@@ -284,8 +284,86 @@ You built DC2, fixed errors with the DC2 Ansible inventory file, went through a 
 |
 
 
-Lab #3: Adding new VLANs to DC1
+**Lab #3: Adding new VLANs to DC1**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-In this lab you will add new VLANs to DC1, and then get familiar with the AVD ``Validate State`` feature
+In this lab you will add new VLANs to DC1, deploy directly to the switches using eAPI, and then get familiar with the AVD ``Validate State`` feature
+
+|
+
+#. **Edit DC1's fabric_services to include VLANs 100 and 200**
+
+    a. Open ``/sites/dc1/group_vars/dc1_fabric_services.yml`` file within the IDE
+    |
+    b. Uncomment out the following lines for VLANs 100 and 200
+
+        .. code-block:: text
+
+            100:
+                name: VLAN 100 - Lab 3
+                description: one hundred
+                tags: ['DC']
+                enabled: true
+                mtu: 9014
+                ip_address_virtual: 10.20.100.1/24
+            200:
+                name: VLAN 200 - Lab 3 
+                description: two hundred
+                tags: ['DC']
+                enabled: true
+                mtu: 9014
+                ip_address_virtual: 10.20.200.1/24
+
+#. **Run the makefile to re-build DC1**
+
+Run the build makefile for DC1 to re-generate the configuration with the additional VLANs
+
+    .. code-block:: text
+
+        make build_dc1
+
+Run the deploy makefile using eAPI, this option allows you to deploy your configurations directly to your switches        
+
+    .. code-block:: text
+
+        make deploy_dc1_eapi
+
+#. **Verify your changes**
+
+We are going to verify the VLANs were successfully deployed to the switches. 
+
+    a. Go the **Device** view of S1-Leaf1 and view the ``Switching -> VXLAN`` output
+
+    b. go the **Device** view of S1-Leaf1 and view the ``System -> Configuration`` output
+
+        .. note:: Notice how S1-Leaf1 not only has VLAN 100 and 200, but also that Layer 3 VLAN interfaces, and the VXLAN to VNI mapping were all configured as well. 
+
+#. **View the outputs from AVD's Documentation and Validate State functions**
+
+AVD will auto-generate network documentation everytime you build a new configuration, presenting the device and fabric level documentation in an easy to read format that is easily underestandable by non-expert administrators. 
+
+    a. Within the IDE, open the output from: ``/sites/dc1/documentation/devices/s1-leaf1.md``
+
+    b. Within the IDE, open the output from: ``/sites/dc1/documentation/fabric/dc1_fabric_documentation.md``
+
+AVD also has the ability to run a series of tests on your network after deployment to verify the current network state
+
+    c. Within the IDE, open the output from: ``/sites/dc1/reports/fabric/dc1_fabric_state.md``
+
+        .. note:: Your example report will include multiple Errors. 
+
+|
+
+Lab #3: Summary
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+**Congratulations!**
+
+You deployed new VLANs to DC1 directly through eAPI access to the switches, verified it was deployed successfully, then looked at examples of AVD documentation and reporting.
+
+|
 
 
+**Lab #4: Adding new VLANs to DC1**
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In this lab you will add new VLANs to DC1, deploy directly to the switches using eAPI, and then get familiar with the AVD ``Validate State`` feature
+
+|

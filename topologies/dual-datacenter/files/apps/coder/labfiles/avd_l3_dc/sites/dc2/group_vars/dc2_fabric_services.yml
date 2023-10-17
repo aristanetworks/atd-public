@@ -4,7 +4,6 @@
 tenants:
   ATD_DC:
     mac_vrf_vni_base: 10000
-    #evpn_l2_multi_domain: false
     vrfs:
       A:
         vrf_vni: 50001
@@ -18,7 +17,6 @@ tenants:
             enabled: true
             mtu: 9014
             ip_address_virtual: 10.10.10.1/24
-            #evpn_l2_multi_domain: true
           20:
             name: twenty
             description: twenty
@@ -26,12 +24,3 @@ tenants:
             enabled: true
             mtu: 9014
             ip_address_virtual: 10.20.20.1/24
-            #evpn_l2_multi_domain: true
-          # 100:
-          #   name: hundred
-          #   description: hundred
-          #   tags: ['DC']
-          #   enabled: true
-          #   mtu: 9014
-          #   ip_address_virtual: 10.20.100.1/24
-          #   #evpn_l2_multi_domain: true

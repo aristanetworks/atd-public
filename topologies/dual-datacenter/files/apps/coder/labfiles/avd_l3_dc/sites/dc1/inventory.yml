@@ -22,8 +22,10 @@ dc1:
               ansible_host: 192.168.0.14
             s1-leaf4:
               ansible_host: 192.168.0.15
-            #s1-brdr1:
-            #s1-brdr2:
+            # s1-brdr1:
+            #   ansible_host: 192.168.0.100
+            # s1-brdr2:
+            #   ansible_host: 192.168.0.101
         # dc1_hosts:
         #   hosts:
         #     s1-host1:
