@@ -1,11 +1,11 @@
-FROM ghcr.io/coder/code-server:4.14.1-bullseye
+FROM ghcr.io/coder/code-server:4.17.1-bullseye
 
 # set the enviroment correctly first, including path
 USER coder
 ENV HOME=/home/coder
 ENV PATH=$PATH:/home/coder/.local/bin
-ENV AVD_VERSION="4.1.0"
-ENV CVP_VERSION="3.7.0"
+ENV AVD_VERSION="4.4.0"
+ENV CVP_VERSION="3.8.0"
 
 RUN sudo apt update && \
     sudo apt install -y python3 git openssh-server vim nano less rsync man-db jq python3-pip wget zsh sshpass libvirt-clients && \
@@ -15,7 +15,7 @@ RUN sudo apt update && \
 
 RUN pip3 config set global.disable-pip-version-check true && \
     pip3 install --user --no-cache-dir pyeapi jsonrpclib-pelix shyaml && \
-    pip3 install --user --no-cache-dir "ansible-core>=2.12.7,<2.14.0,!=2.13.0"
+    pip3 install --user --no-cache-dir "ansible-core>=2.14.0,<2.16.0"
 
 # Install arista.avd, community.general and ansible.posix ansible-galaxy collections, Use this for version control of AVD topologies
 RUN ansible-galaxy collection install arista.avd:==${AVD_VERSION} && \
