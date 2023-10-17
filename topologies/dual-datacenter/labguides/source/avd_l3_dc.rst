@@ -190,7 +190,7 @@ In this lab you will configure DC2 using AVD and then deploy DC2 using CloudVisi
 
     a. Open the ``sites/dc2/group_vars/dc2.yml`` file 
 
-    |
+
 
     b. Edit the ``ansible_password:`` field with your lab password: ``{REPLACE_PWD}`` 
 
@@ -302,7 +302,7 @@ In this lab you will add new VLANs to DC1, deploy directly to the switches using
 
     a. Open ``/sites/dc1/group_vars/dc1_fabric_services.yml`` file within the IDE
 
-    |
+    
 
     b. Uncomment out the following lines for VLANs 100 and 200
 
@@ -323,7 +323,7 @@ In this lab you will add new VLANs to DC1, deploy directly to the switches using
                 mtu: 9014
                 ip_address_virtual: 10.20.200.1/24
 
-        .. note:: You can comment or uncomment multiple lines at once by selecting all of them and pressing ``Ctrl+/``
+        .. note:: You can comment or uncomment multiple lines at once by selecting all of them and pressing ``Ctrl+/`` or ``Cmd+/``
 
 #. **Run the makefile to re-build DC1**
 
@@ -356,6 +356,7 @@ In this lab you will add new VLANs to DC1, deploy directly to the switches using
     a. Within the IDE, open the output from: ``/sites/dc1/documentation/devices/s1-leaf1.md``
 
     b. Within the IDE, open the output from: ``/sites/dc1/documentation/fabric/dc1_fabric_documentation.md``
+    
 
     AVD also has the ability to run a series of tests on your network after deployment to verify the current network state
 
