@@ -1,4 +1,4 @@
-AVD L3 DC Labs
+***AVD L3 DC Labs***
 ===================
 The goal of these labs are to demonstrate how to use AVD to deploy and configure EVPN/VXLAN Datacenter networks.
 
@@ -39,7 +39,7 @@ The goal of these labs are to demonstrate how to use AVD to deploy and configure
 
 |
 
-Lab #1: Building and Deploying DC1
+***Lab #1: Building and Deploying DC1***
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 In this lab you will configure DC1 using AVD and then deploy DC1 using CloudVision
 
@@ -52,6 +52,10 @@ In this lab you will configure DC1 using AVD and then deploy DC1 using CloudVisi
     .. image:: images/avd_l3_dc/Lab1_Open_CVP.PNG
         :align: center
 
+    Login to Cloudvision. Username: ``arista``, Password: ``{REPLACE_PWD}``
+
+    .. image:: images/avd_l3_dc/Lab1_CVP_Login.PNG
+        :align: center
 
 
 #. **Open the topology view and filter based on tags for DC1**
@@ -97,6 +101,7 @@ In this lab you will configure DC1 using AVD and then deploy DC1 using CloudVisi
     .. note:: The makefile contains recipes to allow you to run the lab playbooks using a simple command syntax
 
 #. **Build and deploy DC1 using the makefile**
+
     Run the following command:
 
     .. code-block:: text
@@ -104,8 +109,6 @@ In this lab you will configure DC1 using AVD and then deploy DC1 using CloudVisi
         make build_dc1
 
     .. note:: Make sure your terminal working directory is within the AVD_L3_DC folder
-
-
 
     If the playbook ran successfully, you should see output similar to the following:
 
@@ -139,7 +142,7 @@ In this lab you will configure DC1 using AVD and then deploy DC1 using CloudVisi
 
             .. code-block:: text
 
-                container: FILL IN LATER
+                Container:dc1_fabric
 
         .. note:: Now that DC1 is configured, you should see correct tree structure for DC1
 
@@ -169,15 +172,13 @@ You have now deployed an entire datacenter simply by running two make commands.
 |
 |
 
-Lab #2: Building and Deploying DC2 
+***Lab #2: Building and Deploying DC2***
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 In this lab you will configure DC2 using AVD and then deploy DC2 using CloudVision while going through the normal change control process
 
 |
 
 #. **Set the Ansible password for DC2**
-
-    |
 
     Once again, we are going to add your lab password: ``{REPLACE_PWD}`` to the ``dc2.yml`` file 
 
@@ -186,8 +187,6 @@ In this lab you will configure DC2 using AVD and then deploy DC2 using CloudVisi
     b. Edit the ``ansible_password:`` field with your lab password: ``{REPLACE_PWD}`` 
 
 #. **Build DC2 using the makefile**
-
-    |
 
     Run the following command:
 
@@ -204,8 +203,6 @@ In this lab you will configure DC2 using AVD and then deploy DC2 using CloudVisi
 
 #. **Correct the errors in the DC2 inventory.yml file**
 
-    |
-
     Open the ``sites/dc2/inventory.yml`` file, and edit the IP addresses for Leafs1-4 to the following:
 
     .. code-block:: text
@@ -215,12 +212,12 @@ In this lab you will configure DC2 using AVD and then deploy DC2 using CloudVisi
         s2-leaf3:   192.168.0.24
         s2-leaf4:   192.168.0.25
 
-    .. image:: images/avd_l3_dc/Lab2_inventory_failure.PNG
+    |
+
+    .. image:: images/avd_l3_dc/Lab2_inventory_edit.PNG
         :align: center
 
 #. **Re-build DC2 using the makefile**
-
-    |
 
     Run the following command:
 
@@ -231,8 +228,6 @@ In this lab you will configure DC2 using AVD and then deploy DC2 using CloudVisi
     There should be no errors building the DC2 config this time.
 
 #. **Deploy DC2 using the makefile**
-
-    |
 
     We are going to deploy DC2 using Cloudvision similar to how we deployed DC1, but this time we will also go through the full change control process within Cloudvision.
 
@@ -245,8 +240,6 @@ In this lab you will configure DC2 using AVD and then deploy DC2 using CloudVisi
     The command executed successfully, but we need to go through the change control process within Cloudvision to deploy the change.
 
 #. **Create, approve, and execute the change within Cloudvision**
-
-    |
 
     Go back to Cloudvision, then go to ``Provisioning > Tasks`` 
 
@@ -272,8 +265,6 @@ In this lab you will configure DC2 using AVD and then deploy DC2 using CloudVisi
 
 #. **Verify your changes**
 
-    |
-
     a. Go the **Device** view of S1-Leaf2 and view ``Routing -> BGP`` output
 
         .. note:: S1-Leaf1 should have several BGP peers in the Established state
@@ -282,7 +273,7 @@ In this lab you will configure DC2 using AVD and then deploy DC2 using CloudVisi
 
             .. code-block:: text
 
-                container: FILL IN LATER
+                Container:dc2_fabric
 
 Lab #2: Summary
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
