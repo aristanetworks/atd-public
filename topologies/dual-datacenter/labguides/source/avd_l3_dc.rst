@@ -13,7 +13,7 @@ The goal of these labs are to demonstrate how to use AVD to deploy and configure
         |
 
 #. **Open a terminal and change directory to the AVD_L3_DC folder**
-    Open a terminal by clicking on the top left icon > Terminal > New Terminal, or by pressing ``CTRL+Shift+` ``
+    Open a terminal by clicking on the top left icon > Terminal > New Terminal, or by pressing **CTRL+Shift+`** 
     Change your working directory to ``avd_l3_dc``
 
     .. code-block:: text
@@ -169,15 +169,6 @@ You have now deployed an entire datacenter simply by running two make commands.
 |
 |
 
-***END OF LAB 1***
-------------
-
-
-|
-|
-|
-|
-
 **Lab #2: Building and Deploying DC2**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 In this lab you will configure DC2 using AVD and then deploy DC2 using CloudVision while going through the normal change control process
@@ -189,8 +180,6 @@ In this lab you will configure DC2 using AVD and then deploy DC2 using CloudVisi
     Once again, we are going to add your lab password: ``{REPLACE_PWD}`` to the ``dc2.yml`` file 
 
     a. Open the ``sites/dc2/group_vars/dc2.yml`` file 
-
-
 
     b. Edit the ``ansible_password:`` field with your lab password: ``{REPLACE_PWD}`` 
 
@@ -290,6 +279,8 @@ Lab #2: Summary
 You built DC2, fixed errors with the DC2 Ansible inventory file, went through a full Cloudvision change control, and verified it was deployed successfully. 
 
 |
+|
+|
 
 
 **Lab #3: Adding new VLANs to DC1**
@@ -356,7 +347,7 @@ In this lab you will add new VLANs to DC1, deploy directly to the switches using
     a. Within the IDE, open the output from: ``/sites/dc1/documentation/devices/s1-leaf1.md``
 
     b. Within the IDE, open the output from: ``/sites/dc1/documentation/fabric/dc1_fabric_documentation.md``
-    
+
 
     AVD also has the ability to run a series of tests on your network after deployment to verify the current network state
 
@@ -375,8 +366,61 @@ You deployed new VLANs to DC1 directly through eAPI access to the switches, veri
 |
 
 
-**Lab #4: Adding new VLANs to DC1**
+**Lab #4: Adding a pair border leafs to DC1**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-In this lab you will add new VLANs to DC1, deploy directly to the switches using eAPI, and then get familiar with the AVD ``Validate State`` feature
+In this lab you will edit several YAML files to add a new row to DC1 in order to add a new pair of border leaf switches.
 
 |
+
+#. **Add the new switches to the DC1 inventory file**
+
+    Open the ``/sites/dc1/inventory.yml`` file and uncomment out the lines for ``s1-brdr1`` and ``s1-brdr2``
+
+        .. image:: images/avd_l3_dc/Lab4_inventory.PNG
+            :align: center
+
+#. **Edit the DC1 fabric file to add the configuration parameters for the new border leaf switches**
+
+    Open the ``/sites/dc1/dc1_fabric.yml`` file and uncomment out the following lines: 
+    
+        .. code-block:: text
+
+            79-136
+            182-191
+            195-204
+    
+#. **Build and Deploy DC1 using the makefiles**
+
+    Now that the inventory and fabric variables have been set, we need to re-build and redploy DC1.
+
+    a. Build DC1 using the makefile
+
+        .. code-block:: text
+
+            make build_dc1
+
+    b. Deploy DC1 using the makefile 
+
+        .. code-block:: text
+
+            make deploy_dc1_cvp
+
+#. **Verify the DC1 border leaf switches were successfully deployed within Cloudvision**
+
+    a. Go the **Device** view of s1-brdr1 and view the ``Routing -> BGP`` output
+
+        .. note:: You should see s1-brdr1 in the BGP established state with its BGP peers
+
+    b. Go the **Topology** view, create a filter for DC1
+
+            .. code-block:: text
+
+                Container:dc1_fabric
+
+        .. note:: You should see a total of 8 devices now
+
+Lab #4: Summary
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+**Congratulations!**
+
+You successfully added the configurations required for a new border leaf pair to DC1, built and deployed them using makefiles, then verified the changes within Cloudvision
