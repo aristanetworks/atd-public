@@ -25,15 +25,15 @@ tenants:
             mtu: 9014
             ip_address_virtual: 10.20.20.1/24
           # 100:
-          #   name: VLAN 100 - Lab 3
-          #   description: one hundred
+          #   name: one_hundred_lab3
+          #   description: one_hundred_lab3
           #   tags: ['DC']
           #   enabled: true
           #   mtu: 9014
           #   ip_address_virtual: 10.20.100.1/24
           # 200:
-          #   name: VLAN 200 - Lab 3 
-          #   description: two hundred
+          #   name: two_hundred_lab3
+          #   description: two_hundred_lab3
           #   tags: ['DC']
           #   enabled: true
           #   mtu: 9014

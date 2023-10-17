@@ -136,7 +136,8 @@ In this lab you will configure DC1 using AVD and then deploy DC1 using CloudVisi
 
     .. code-block:: text
 
-        INSERT TEXT HERE
+        PLAY RECAP ***************************************************************************************************************************
+        cvp                        : ok=10   changed=0    unreachable=0    failed=0    skipped=3    rescued=0    ignored=0   
 
 #. **Return to Cloudvision**
 
@@ -332,7 +333,12 @@ In this lab you will add new VLANs to DC1, deploy directly to the switches using
 
 #. **Verify your changes**
 
-    We are going to verify the VLANs were successfully deployed to the switches. 
+    We are going to verify the VLANs were successfully deployed to the switches, open the device view in Cloudvision, should see red symbols next to s1-leaf1 through Leafs1-4
+
+        .. image:: images/avd_l3_dc/Lab3_CVP_error.PNG
+            :align: center
+
+        .. note:: This warning from CVP indicates that the switches running configuration no longer matches the designed configuration in CVP. The reason for this is we deployed Lab1 using CVP, but we bypassed CVP in Lab3 by deploying directly to the switches, resulting in a configuration mismatch.
 
     a. Go the **Device** view of S1-Leaf1 and view the ``Switching -> VXLAN`` output
 

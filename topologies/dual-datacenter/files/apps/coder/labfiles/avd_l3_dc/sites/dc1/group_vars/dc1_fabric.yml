@@ -68,10 +68,10 @@ l3leaf:
       - 'graceful-restart'
     spanning_tree_mode: rapid-pvst
     spanning_tree_priority: 0
-    structured_config:
-      spanning_tree:
-        edge_port:
-          bpduguard_default: true
+    # structured_config:
+    #   spanning_tree:
+    #     edge_port:
+    #       bpduguard_default: true
   node_groups:
     ####################################################
     # DC1 Border Leafs                                 #
