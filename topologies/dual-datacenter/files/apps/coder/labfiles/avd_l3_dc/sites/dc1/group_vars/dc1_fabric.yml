@@ -27,6 +27,9 @@ bgp_peer_groups:
 ##################################################
 spine:
   defaults:
+    structured_config:
+      switchport_default:
+        mode: routed
     platform: ceos
     bgp_as: 65000
     loopback_ipv4_pool: 10.1.0.0/24
