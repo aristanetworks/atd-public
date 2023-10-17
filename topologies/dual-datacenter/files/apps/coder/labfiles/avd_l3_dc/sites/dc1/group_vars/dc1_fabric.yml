@@ -89,6 +89,11 @@ l3leaf:
     #     tenants: [ATD_DC]
     #     tags: ['DC']
     #   bgp_as: 65099
+        # errdisable:
+        #   recovery:
+        #     causes:
+        #       - bpduguard
+        #     interval: 30
     #   evpn_gateway:
     #     evpn_l2:
     #       enabled: true
