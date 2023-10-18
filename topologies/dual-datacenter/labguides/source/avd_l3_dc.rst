@@ -391,9 +391,7 @@ In this lab you will edit several YAML files to add a new row to DC1 in order to
     
         .. code-block:: text
 
-            79-136
-            182-191
-            195-204
+            82-110
     
 #. **Build and Deploy DC1 using the makefiles**
 
@@ -415,7 +413,7 @@ In this lab you will edit several YAML files to add a new row to DC1 in order to
 
     a. Go the **Device** view of s1-brdr1 and view the ``Routing -> BGP`` output
 
-        .. note:: You should see s1-brdr1 in the BGP established state with its BGP peers
+        .. note:: You should see s1-brdr1 in the BGP established state with all BGP peers
 
     b. Go the **Topology** view, create a filter for DC1
 
@@ -424,6 +422,9 @@ In this lab you will edit several YAML files to add a new row to DC1 in order to
                 Container:dc1_fabric
 
         .. note:: You should see a total of 8 devices now
+
+        .. image:: images/avd_l3_dc/Lab4_CVP_Topology.PNG
+            :align: center
 
 Lab #4: Summary
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
