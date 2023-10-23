@@ -24,7 +24,7 @@ The goal of these labs are to demonstrate how to use AVD to deploy and configure
 #. **Set the Ansible password for DC1**
     We are going to add your lab password: ``{REPLACE_PWD}`` to the ``dc1.yml`` file 
 
-    a. Open the ``sites/dc1/group_vars/dc1.yml`` file 
+    a. Open the ``/home/coder/project/labfiles/avd_l3_dc/sites/dc1/group_vars/dc1.yml`` file 
 
         .. image:: images/avd_l3_dc/Setup_Select_DC1yml.PNG
             :align: center
@@ -44,17 +44,17 @@ The goal of these labs are to demonstrate how to use AVD to deploy and configure
 In this lab you will configure DC1 using AVD and then deploy DC1 using CloudVision
 
 |
+basic
+#. **Open CloudVision from your initial Lab page**
 
-#. **Open Cloudvision from your initial Lab page**
-
-    .. warning:: Cloudvision can take 10-15 minutes to boot after initial lab deployment
+    .. warning:: CloudVision can take 10-15 minutes to boot after initial lab deployment
 
     .. image:: images/avd_l3_dc/Lab1_Open_CVP.PNG
         :align: center
 
     |
 
-    Login to Cloudvision. Username: ``arista``, Password: ``{REPLACE_PWD}``
+    Login to CloudVision. Username: ``arista``, Password: ``{REPLACE_PWD}``
 
     .. image:: images/avd_l3_dc/Lab1_CVP_Login.PNG
         :align: center
@@ -83,18 +83,19 @@ In this lab you will configure DC1 using AVD and then deploy DC1 using CloudVisi
         .. image:: images/avd_l3_dc/Lab1_S1filter_before.PNG
             :align: center
 
-        .. note:: The current topology is very basic because DC1 is undeployed
+        .. note:: The switch interlinks are down in this view, because they are not configured and up yet. 
 
 
-#. **Open the Device view and look at S1-Leaf1**
+#. **Open the Device view and look at s1-leaf1**
 
-    a. Select ``Configuration`` and look at the current running config 
+    a. Click on ``Devices``, then select ``Configuration`` and look at the current running config 
 
-        .. note:: S1-Leaf1 currently contains only a basic minimal configuration. Enough to allow Ansible to login and push a full configuration.
+        .. note:: s1-leaf1 currently contains only a basic minimal configuration. Enough to allow Ansible to login and push a full configuration.
     
-    b. Select ``Routing -> BGP`` and look and verify there are no BGP peers 
+    b. Click on ``Devices``, then select ``Routing -> BGP`` and look and verify there are no BGP peers 
 
-
+        .. image:: images/avd_l3_dc/Lab1_No_BGP_Peers.PNG
+            :align: center
 
 #. **Return to your Programmability IDE**
 
@@ -104,7 +105,7 @@ In this lab you will configure DC1 using AVD and then deploy DC1 using CloudVisi
 
 #. **Build and deploy DC1 using the makefile**
 
-    Run the following command:
+    Select your terminal window, then type and run the following command:
 
     .. code-block:: text
 
@@ -124,7 +125,7 @@ In this lab you will configure DC1 using AVD and then deploy DC1 using CloudVisi
             s1-spine1                  : ok=13   changed=8    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0   
             s1-spine2                  : ok=5    changed=3    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
 
-    Now that the configurations have been created, we will deploy them using Cloudvision
+    Now that the configurations have been created, we will deploy them using CloudVision
 
     Run the following command:
 
@@ -139,11 +140,14 @@ In this lab you will configure DC1 using AVD and then deploy DC1 using CloudVisi
         PLAY RECAP ***************************************************************************************************************************
         cvp                        : ok=10   changed=0    unreachable=0    failed=0    skipped=3    rescued=0    ignored=0   
 
-#. **Return to Cloudvision**
+#. **Return to CloudVision**
 
-    a. Go the **Device** view of S1-Leaf1 and view the ``Routing -> BGP`` output
+    a. Go the **Device** view of s1-leaf1 and view the ``Routing -> BGP`` output
 
-        .. note:: S1-Leaf1 should now have several BGP peers in the Established state
+        .. image:: images/avd_l3_dc/Lab1_BGP_Peers_Up.PNG
+            :align: center
+
+        .. note:: s1-leaf1 should now have several BGP peers in the Established state
     
     b. Go the **Topology** view, you will need to create a new filter because AVD created new containers for the DC1 devices
 
@@ -165,7 +169,7 @@ Lab #1: Summary
 
 You have now deployed an entire datacenter simply by running two make commands. 
 
-**This** is the power automation can bring you. 
+**This** is the power of automation! 
 
 |
 |
@@ -180,7 +184,7 @@ In this lab you will configure DC2 using AVD and then deploy DC2 using CloudVisi
 
     Once again, we are going to add your lab password: ``{REPLACE_PWD}`` to the ``dc2.yml`` file 
 
-    a. Open the ``sites/dc2/group_vars/dc2.yml`` file 
+    a. Open the ``/home/coder/project/labfiles/avd_l3_dc/sites/dc2/group_vars/dc2.yml`` file 
 
     b. Edit the ``ansible_password:`` field with your lab password: ``{REPLACE_PWD}`` 
 
@@ -227,7 +231,7 @@ In this lab you will configure DC2 using AVD and then deploy DC2 using CloudVisi
 
 #. **Deploy DC2 using the makefile**
 
-    We are going to deploy DC2 using Cloudvision similar to how we deployed DC1, but this time we will also go through the full change control process within Cloudvision.
+    We are going to deploy DC2 using CloudVision similar to how we deployed DC1, but this time we will also go through the full change control process within CloudVision.
 
     Run the following command:
 
@@ -235,11 +239,11 @@ In this lab you will configure DC2 using AVD and then deploy DC2 using CloudVisi
 
         make deploy_dc2_cvp
 
-    The command should execute successfully, but we need to go through the change control process within Cloudvision to deploy the change.
+    The command should execute successfully, but we need to go through the change control process within CloudVision to deploy the change.
 
-#. **Create, approve, and execute the change within Cloudvision**
+#. **Create, approve, and execute the change within CloudVision**
 
-    Go back to Cloudvision, then go to ``Provisioning > Tasks`` 
+    Go back to CloudVision, then go to ``Provisioning > Tasks`` 
 
         a. Select all the tasks then click on ``Create Change Control``
 
@@ -263,9 +267,9 @@ In this lab you will configure DC2 using AVD and then deploy DC2 using CloudVisi
 
 #. **Verify your changes**
 
-    a. Go the **Device** view of S1-Leaf2 and view the ``Routing -> BGP`` output
+    a. Go the **Device** view of s1-leaf2 and view the ``Routing -> BGP`` output
 
-        .. note:: S1-Leaf1 should have several BGP peers in the Established state
+        .. note:: s1-leaf1 should have several BGP peers in the Established state
     
     b. Go the **Topology** view, create a new filter for DC2
 
@@ -277,7 +281,7 @@ Lab #2: Summary
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 **Congratulations!**
 
-You built DC2, fixed errors with the DC2 Ansible inventory file, went through a full Cloudvision change control, and verified it was deployed successfully. 
+You built DC2, fixed errors with the DC2 Ansible inventory file, went through a full CloudVision change control, and verified it was deployed successfully. 
 
 |
 |
@@ -333,24 +337,23 @@ In this lab you will add new VLANs to DC1, deploy directly to the switches using
 
 #. **Verify your changes**
 
-    We are going to verify the VLANs were successfully deployed to the switches, open the device view in Cloudvision, should see red symbols next to s1-leaf1 through Leafs1-4
-
-        .. image:: images/avd_l3_dc/Lab3_CVP_error.PNG
-            :align: center
+    We are going to verify the VLANs were successfully deployed to the switches, open the device view in CloudVision. You should see red symbols next to s1-leaf1 through s1-leaf4
 
         .. note:: This warning from CVP indicates that the switches running configuration no longer matches the designed configuration in CVP. The reason for this is we deployed Lab1 using CVP, but we bypassed CVP in Lab3 by deploying directly to the switches, resulting in a configuration mismatch.
 
-    a. Go the **Device** view of S1-Leaf1 and view the ``Switching -> VXLAN`` output
+    a. Go the **Device** view of s1-leaf1 and view the ``Switching -> VXLAN`` output
 
-    b. go the **Device** view of S1-Leaf1 and view the ``System -> Configuration`` output
+    b. Go the **Device** view of s1-leaf1 and view the ``System -> Configuration`` output
 
-        .. note:: Notice how S1-Leaf1 not only has VLAN 100 and 200, but also that Layer 3 VLAN interfaces, and the VXLAN to VNI mapping were all configured as well. 
+        .. note:: Notice how s1-leaf1 not only has VLAN 100 and 200, but also that Layer 3 VLAN interfaces, and the VXLAN to VNI mapping were all configured as well. 
 
 #. **View the outputs from AVD's Documentation and Validate State functions**
 
     AVD will auto-generate network documentation everytime you build a new configuration, presenting the device and fabric level documentation in an easy to read format that is easily underestandable by non-expert administrators. 
 
     a. Within the IDE, open the output from: ``/sites/dc1/documentation/devices/s1-leaf1.md``
+
+        .. note:: Right click the file and select "Open Preview" to display the file correctly
 
     b. Within the IDE, open the output from: ``/sites/dc1/documentation/fabric/dc1_fabric_documentation.md``
 
@@ -387,7 +390,7 @@ In this lab you will edit several YAML files to add a new row to DC1 in order to
 
 #. **Edit the DC1 fabric file to add the configuration parameters for the new border leaf switches**
 
-    Open the ``/sites/dc1/dc1_fabric.yml`` file and uncomment out the following lines: 
+    Open the ``/sites/dc1/group_vars/dc1_fabric.yml`` file and uncomment out the following lines: 
     
         .. code-block:: text
 
@@ -409,11 +412,7 @@ In this lab you will edit several YAML files to add a new row to DC1 in order to
 
             make deploy_dc1_cvp
 
-#. **Verify the DC1 border leaf switches were successfully deployed within Cloudvision**
-
-    a. Go the **Device** view of s1-brdr1 and view the ``Routing -> BGP`` output
-
-        .. note:: You should see s1-brdr1 in the BGP established state with all BGP peers
+#. **Verify the DC1 border leaf switches were successfully deployed within CloudVision**
 
     b. Go the **Topology** view, create a filter for DC1
 
@@ -430,4 +429,4 @@ Lab #4: Summary
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 **Congratulations!**
 
-You successfully added the configurations required for a new border leaf pair to DC1, built and deployed them using makefiles, then verified the changes within Cloudvision
+You successfully added the configurations required for a new border leaf pair to DC1, built and deployed them using makefiles, then verified the changes within CloudVision
