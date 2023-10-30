@@ -71,6 +71,8 @@ def parseNames(devName):
     numer = ''
     split_len = 2
     devDC = False
+    devSITE = False
+    devCLOUD = False
     devCORE = False
     tmp_devName = ""
     if '-dc' in devName.lower() and 'dci' != devName.lower():
