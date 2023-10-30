@@ -510,7 +510,7 @@ topologies:
             branch: nested/2023.1
             orderable: true
             eos:
-              - 4.30.1F
+              - 4.31.0F
     desc: 'Multi-Site DC and Campus topology with WAN interconnect'
     name: 'WAN'
     title: 'WAN Lab'
