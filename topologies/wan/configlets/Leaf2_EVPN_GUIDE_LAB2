@@ -1,0 +1,14 @@
+router bgp 65012
+   neighbor EVPN-OVERLAY-PEERS peer group
+   neighbor EVPN-OVERLAY-PEERS remote-as 65000
+   neighbor EVPN-OVERLAY-PEERS update-source Loopback0
+   neighbor EVPN-OVERLAY-PEERS bfd
+   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3
+   neighbor EVPN-OVERLAY-PEERS password @rista123
+   neighbor EVPN-OVERLAY-PEERS send-community
+   neighbor EVPN-OVERLAY-PEERS maximum-routes 0 
+   neighbor 1.1.1.201 peer group EVPN-OVERLAY-PEERS
+   neighbor 1.1.1.202 peer group EVPN-OVERLAY-PEERS
+   !
+   address-family evpn
+      neighbor EVPN-OVERLAY-PEERS activate
