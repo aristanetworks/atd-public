@@ -23,13 +23,14 @@ KOUT_LINES = ['#!/bin/bash','']
 
 
 class vNODE():
-    def __init__(self, node_name, node_ip, node_mac, node_neighbors):
+    def __init__(self, node_name, node_ip, node_mac, node_neighbors, node_type):
         self.name = node_name
         self.name_short = parseNames(node_name)['code']
         self.ip = node_ip
         self.sys_mac = node_mac
         self.intfs = {}
         self.portMappings(node_neighbors)
+        self.type = node_type
 
     def portMappings(self,node_neighbors):
         """
@@ -82,6 +83,24 @@ def parseNames(devName):
                 alpha += char
             elif char.isdigit():
                 numer += char
+    elif '-site' in devName.lower():
+        _tmp = devName.split('-')
+        tmp_devName = _tmp[0]
+        devSITE = _tmp[1]
+        for char in tmp_devName:
+            if char.isalpha():
+                alpha += char
+            elif char.isdigit():
+                numer += char
+    elif '-cloud' in devName.lower():
+        _tmp = devName.split('-')
+        tmp_devName = _tmp[0]
+        devCLOUD = _tmp[1]
+        for char in tmp_devName:
+            if char.isalpha():
+                alpha += char
+            elif char.isdigit():
+                numer += char
     elif '-core' in devName.lower():
         _tmp = devName.split('-')
         tmp_devName = _tmp[0]
@@ -103,6 +122,10 @@ def parseNames(devName):
         dev_name = alpha[:split_len]
     if devDC:
         dev_code = devDC.lower().replace('c','')
+    elif devSITE:
+        dev_code = devSITE.lower().replace('ite','')
+    elif devCLOUD:
+        dev_code = devCLOUD.lower().replace('oud','')
     elif devCORE:
         dev_code = devCORE.lower().replace('ore','')
     else:
@@ -235,7 +258,11 @@ def main(uargs):
             v_sys_mac = vdev[vdevn]['sys_mac']
         else:
             v_sys_mac = False
-        VEOS_NODES[vdevn] = vNODE(vdevn, vdev[vdevn]['ip_addr'], v_sys_mac, vdev[vdevn]['neighbors'])
+        if 'type' in list(vdev.keys())[0]:
+            node_type = vdev[vdevn]['type']
+        else:
+            node_type = "veoslab"
+        VEOS_NODES[vdevn] = vNODE(vdevn, vdev[vdevn]['ip_addr'], v_sys_mac, vdev[vdevn]['neighbors'], node_type)
     # Output as script OVS Bridge creation
     createOVS(TOPO_TAG)
     # Output as script OVS Bridge deletion
@@ -410,7 +437,10 @@ def main(uargs):
                     d_intf_counter += 1
             # Export/write of xml for node
             tree.write(DATA_OUTPUT + '{0}.xml'.format(vdev))
-            KOUT_LINES.append("sudo cp /var/lib/libvirt/images/veos/base/veos.qcow2 /var/lib/libvirt/images/veos/{0}.qcow2".format(vdev))
+            if VEOS_NODES[vdev].type == "veoslab":
+                KOUT_LINES.append("sudo cp /var/lib/libvirt/images/veos/base/veos.qcow2 /var/lib/libvirt/images/veos/{0}.qcow2".format(vdev))
+            elif VEOS_NODES[vdev].type == "cloudeos":
+                KOUT_LINES.append("sudo cp /var/lib/libvirt/images/veos/base/cloudeos.qcow2 /var/lib/libvirt/images/veos/{0}.qcow2".format(vdev))
             KOUT_LINES.append("sudo virsh define {0}.xml".format(vdev))
             KOUT_LINES.append("sudo virsh start {0}".format(vdev))
             KOUT_LINES.append("sudo virsh autostart {0}".format(vdev))
