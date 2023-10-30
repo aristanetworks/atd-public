@@ -1,8 +1,0 @@
-vmtracer session ATD
-  url https://192.168.0.20/sdk
-  username root
-  password vmware
-!
-interface Ethernet5
-  vmtracer vmware-esx
-!
