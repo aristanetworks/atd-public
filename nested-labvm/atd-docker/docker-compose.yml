@@ -76,7 +76,7 @@ services:
       - cvp_dir:/home/arista/CVP_DATA:rw
   kvmbuilder:
     container_name: atd-kvmbuilder
-    image: us.gcr.io/beta-atds/atddocker_kvmbuilder:2.2.3
+    image: us.gcr.io/beta-atds/atddocker_kvmbuilder:2.2.4
     user: $AtID:$AtGD
     restart: on-failure
     environment:
