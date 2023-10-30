@@ -1,0 +1,19 @@
+---
+- name: Add a VLAN
+  hosts: 192.168.0.14
+  gather_facts: 'no'
+  connection: local
+  vars:
+    provider:
+      host: "{{ ansible_host }}"
+      username: "arista"
+      password: "arista"
+      authorize: 'yes'
+      transport: eapi
+      validate_certs: 'no'
+  tasks:
+    - eos_config:
+        lines:
+          - name foo
+        parents: vlan 500
+        provider: "{{ provider }}"
