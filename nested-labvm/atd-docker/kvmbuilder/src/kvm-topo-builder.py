@@ -71,6 +71,8 @@ def parseNames(devName):
     numer = ''
     split_len = 2
     devDC = False
+    devSITE = False
+    devCLOUD = False
     devCORE = False
     tmp_devName = ""
     if '-dc' in devName.lower() and 'dci' != devName.lower():
@@ -181,6 +183,10 @@ def createMac(dev_type, dev_id):
             return('c{0}'.format(dev_id - 10))
         elif dev_id >=20 and dev_id < 30:
             return('d{0}'.format(dev_id - 20))
+        elif dev_id >=30 and dev_id < 40:
+            return('e{0}'.format(dev_id - 30))
+        elif dev_id >=40 and dev_id < 50:
+            return('f{0}'.format(dev_id - 40))
 
 def getCPUs(start_cpu,cpu_total=0):
     """
