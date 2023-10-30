@@ -1,0 +1,41 @@
+spanning-tree mode mstp
+spanning-tree mst 0 priority 4096
+!
+vlan 12,34
+!
+interface Ethernet1
+   description LEAF1
+   switchport mode trunk
+!
+interface Ethernet2
+   !! NOT USED FOR LAB
+   !! CONNECTIVITY NOT REQUIRED
+   shutdown
+!
+interface Ethernet3
+   !! NOT USED FOR LAB
+   !! CONNECTIVITY NOT REQUIRED
+   shutdown
+!
+interface Ethernet4
+   !! NOT USED FOR LAB
+   !! CONNECTIVITY NOT REQUIRED
+   shutdown
+!
+interface Ethernet5
+   !! NOT USED FOR LAB
+   !! CONNECTIVITY NOT REQUIRED
+   shutdown
+!
+interface Ethernet6
+   shutdown
+interface Loopback0
+   ip address 172.16.0.4/32
+!
+interface Vlan12
+   ip address 172.16.115.3/24
+   ip virtual-router address 172.16.115.1
+!
+ip virtual-router mac-address 00:1c:73:00:00:12
+!
+!ip route 0.0.0.0/0 192.168.0.254
