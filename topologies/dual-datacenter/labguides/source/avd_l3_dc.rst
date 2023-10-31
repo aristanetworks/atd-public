@@ -41,11 +41,12 @@ The goal of these labs are to demonstrate how to use AVD to deploy and configure
 
 **Lab #1: Building and Deploying DC1**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-In this lab you will configure DC1 using AVD and then deploy DC1 using CloudVision
+In this lab you will configure DC1 using AVD, and then deploy DC1 using CloudVision.
+First we will generate the configuration using AVD, push that configuration to CloudVision using AVD, then deploy that configuration to the devices using CloudVision.
 
 |
-basic
-#. **Open CloudVision from your initial Lab page**
+
+#. **Open CloudVision (CVP) from your initial Lab page**
 
     .. warning:: CloudVision can take 10-15 minutes to boot after initial lab deployment
 
@@ -78,7 +79,8 @@ basic
         |
 
 
-        Your view should appear similar to the following
+        The topology view should now only display devices that are in the DC1 container that exists within CloudVision.  
+        Your view should appear similar to the following:
 
         .. image:: images/avd_l3_dc/Lab1_S1filter_before.PNG
             :align: center
@@ -88,11 +90,11 @@ basic
 
 #. **Open the Device view and look at s1-leaf1**
 
-    a. Click on ``Devices``, then select ``Configuration`` and look at the current running config 
+    a. Click on ``Devices``, then select ``s1-leaf1``. On the device view for s1-leaf1, select ``Configuration`` under ``System``, then examine the current running configuration.
 
         .. note:: s1-leaf1 currently contains only a basic minimal configuration. Enough to allow Ansible to login and push a full configuration.
     
-    b. Click on ``Devices``, then select ``Routing -> BGP`` and look and verify there are no BGP peers 
+    b. While ``s1-leaf1`` is still being viewed, select ``Routing -> BGP`` and look and verify there are no BGP peers 
 
         .. image:: images/avd_l3_dc/Lab1_No_BGP_Peers.PNG
             :align: center
@@ -125,7 +127,7 @@ basic
             s1-spine1                  : ok=13   changed=8    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0   
             s1-spine2                  : ok=5    changed=3    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
 
-    Now that the configurations have been created, we will deploy them using CloudVision
+    Now that the configurations have been created, we will push them to CloudVision and have CloudVision automatically deploy to the devices. 
 
     Run the following command:
 
@@ -239,7 +241,11 @@ In this lab you will configure DC2 using AVD and then deploy DC2 using CloudVisi
 
         make deploy_dc2_cvp
 
-    The command should execute successfully, but we need to go through the change control process within CloudVision to deploy the change.
+    The command should execute successfully, but unlike in Lab 1, CloudVision will not automatically deploy the change. 
+    
+    We need to go through the change control process within CloudVision to deploy the change this time.
+
+    .. note:: The reason CloudVision didn't auto deploy is because the deploy_dc2_cvp.yml playbook has "execute_tasks:" set to false, which requires you to go through the CloudVision change control approval.
 
 #. **Create, approve, and execute the change within CloudVision**
 
@@ -267,9 +273,9 @@ In this lab you will configure DC2 using AVD and then deploy DC2 using CloudVisi
 
 #. **Verify your changes**
 
-    a. Go the **Device** view of s1-leaf2 and view the ``Routing -> BGP`` output
+    a. Go the **Device** view of s2-leaf1 and view the ``Routing -> BGP`` output
 
-        .. note:: s1-leaf1 should have several BGP peers in the Established state
+        .. note:: s2-leaf1 should have several BGP peers in the Established state
     
     b. Go the **Topology** view, create a new filter for DC2
 
@@ -341,11 +347,14 @@ In this lab you will add new VLANs to DC1, deploy directly to the switches using
 
         .. note:: This warning from CVP indicates that the switches running configuration no longer matches the designed configuration in CVP. The reason for this is we deployed Lab1 using CVP, but we bypassed CVP in Lab3 by deploying directly to the switches, resulting in a configuration mismatch.
 
-    a. Go the **Device** view of s1-leaf1 and view the ``Switching -> VXLAN`` output
-
-    b. Go the **Device** view of s1-leaf1 and view the ``System -> Configuration`` output
+    a. Go the **Device** view of s1-leaf1 and view the ``System -> Configuration`` output
 
         .. note:: Notice how s1-leaf1 not only has VLAN 100 and 200, but also that Layer 3 VLAN interfaces, and the VXLAN to VNI mapping were all configured as well. 
+
+    a. Go the **Device** view of s1-leaf1 and view the ``Switching -> VXLAN`` output
+
+        .. note:: You may be wondering why VXLAN configuration was also added for VLANs 100 and 200. The dc2.yml file specifies that all the switches in the DC are Layer 3 and a VXLAN tunnel endpoint, so when you add a new VLAN, AVD recognizes all the other configuration that will be required to make the VLAN functional in a Layer 3 Leaf-Spine design utilizing VXLAN. 
+        
 
 #. **View the outputs from AVD's Documentation and Validate State functions**
 
@@ -378,6 +387,7 @@ You deployed new VLANs to DC1 directly through eAPI access to the switches, veri
 **Lab #4: Adding a pair border leafs to DC1**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 In this lab you will edit several YAML files to add a new row to DC1 in order to add a new pair of border leaf switches.
+Pay attention to how much you *don't* have to configure when setting up a new row. This is because much of the configuration is automatically inherited and generated from both the hierarchy/structure and pre-built node types within AVD.
 
 |
 
@@ -398,7 +408,7 @@ In this lab you will edit several YAML files to add a new row to DC1 in order to
     
 #. **Build and Deploy DC1 using the makefiles**
 
-    Now that the inventory and fabric variables have been set, we need to re-build and redploy DC1.
+    Now that the inventory and fabric variables have been set, we need to re-build and redeploy DC1.
 
     a. Build DC1 using the makefile
 
