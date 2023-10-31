@@ -8,7 +8,9 @@ There are 4 labs in total:
     3. Adding new VLANs to DC1, using AVD deploying through eAPI, along with an overview of AVD Documentation and State Validation 
     4. Adding a new row of border leaves to DC1, and an example of how AVD generates configuration through hierarchy and node types
 
-After completing these labs you should have a working understanding of what AVD can do for you. For a more in-depth training with AVD, talk to your SE about attending an Arista CI Workshop, or visit https://aristanetworks.github.io/avd-workshops/ for more information.
+After completing these labs you should have a working understanding of what AVD can do for you. For a more in-depth training with AVD, talk to your SE about attending an Arista CI Workshop.
+
+Visit https://aristanetworks.github.io/avd-workshops/ for more information.
 
 |
 
@@ -50,6 +52,7 @@ After completing these labs you should have a working understanding of what AVD 
 **Lab #1: Building and Deploying DC1**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 In this lab you will configure DC1 using AVD, and then deploy DC1 using CloudVision.
+
 First we will generate the configuration using AVD, push that configuration to CloudVision using AVD, then deploy that configuration to the devices using CloudVision.
 
 |
@@ -458,13 +461,15 @@ Lab #4: Summary
 
 You successfully added the configurations required for a new border leaf pair to DC1, built and deployed them using makefiles, then verified the changes within CloudVision
 
-
+|
+|
 
 **Would you like to know more??**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arista has a series of workshops designed to teach you the fundamentals of automation and exactly how to deploy using AVD.
 
 https://aristanetworks.github.io/avd-workshops/
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Speak with your SE about attending one of our Arista CI Workshops in your area.
 
