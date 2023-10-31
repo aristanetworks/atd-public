@@ -1,5 +1,6 @@
 {
 	"name": "ATD-Public REPO",
+	"workspaceFolder": "/workspaces",
 	"context": "..",
 	"dockerFile": "Dockerfile",
 	"settings": { 
@@ -22,6 +23,10 @@
 		"aristapublisher.eos",
 		"eamodio.gitlens"
 	],
+	"features": {
+		"ghcr.io/shinepukur/devcontainer-features/vale:1": {},
+        "ghcr.io/devcontainers/features/github-cli:1": {}
+	},
 	"postCreateCommand": "touch ${containerWorkspaceFolder}/.history && cd /tmp; wget https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh && sh install.sh --unattended && if [ -d ~/dotfiles ]; then rm ~/.zshrc; /usr/local/bin/dotbot -c ~/dotfiles/install.conf.yaml; fi",
 	"postStartCommand": "git config --global --add safe.directory ${containerWorkspaceFolder}",
 	"mounts": [ 
