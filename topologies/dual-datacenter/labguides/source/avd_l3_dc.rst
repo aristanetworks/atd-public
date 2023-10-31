@@ -1,6 +1,14 @@
 AVD L3 DC Labs
 ===================
-The goal of these labs are to demonstrate how to use AVD to deploy and configure EVPN/VXLAN Datacenter networks.
+The goal of these labs are to introduce and demonstrate how to use AVD to deploy and configure a Layer 3 Leaf Spine EVPN/VXLAN Datacenter network.
+
+There are 4 labs in total:
+    1. Deploying DC1, using AVD + CloudVision
+    2. Deploying DC2, troubleshooting connectivity issues with AVD, and going through a full CloudVision change control process
+    3. Adding new VLANs to DC1, using AVD deploying through eAPI, along with an overview of AVD Documentation and State Validation 
+    4. Adding a new row of border leaves to DC1, and an example of how AVD generates configuration through hierarchy and node types
+
+After completing these labs you should have a working understanding of what AVD can do for you. For a more in-depth training with AVD, talk to your SE about attending an Arista CI Workshop, or visit https://aristanetworks.github.io/avd-workshops/ for more information.
 
 |
 
@@ -24,7 +32,7 @@ The goal of these labs are to demonstrate how to use AVD to deploy and configure
 #. **Set the Ansible password for DC1**
     We are going to add your lab password: ``{REPLACE_PWD}`` to the ``dc1.yml`` file 
 
-    a. Open the ``/home/coder/project/labfiles/avd_l3_dc/sites/dc1/group_vars/dc1.yml`` file 
+    a. Open the ``/labfiles/avd_l3_dc/sites/dc1/group_vars/dc1.yml`` file 
 
         .. image:: images/avd_l3_dc/Setup_Select_DC1yml.PNG
             :align: center
@@ -178,7 +186,8 @@ You have now deployed an entire datacenter simply by running two make commands.
 
 **Lab #2: Building and Deploying DC2**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-In this lab you will configure DC2 using AVD and then deploy DC2 using CloudVision while going through the normal change control process
+In this lab you will configure DC2 using AVD and then deploy DC2 using CloudVision while going through the normal change control process.
+You will also troubleshoot some common connectivity issues and gain understanding of how to fix them and take a look at Ansible's inventory file.  
 
 |
 
@@ -186,7 +195,7 @@ In this lab you will configure DC2 using AVD and then deploy DC2 using CloudVisi
 
     Once again, we are going to add your lab password: ``{REPLACE_PWD}`` to the ``dc2.yml`` file 
 
-    a. Open the ``/home/coder/project/labfiles/avd_l3_dc/sites/dc2/group_vars/dc2.yml`` file 
+    a. Open the ``labfiles/avd_l3_dc/sites/dc2/group_vars/dc2.yml`` file 
 
     b. Edit the ``ansible_password:`` field with your lab password: ``{REPLACE_PWD}`` 
 
@@ -203,7 +212,13 @@ In this lab you will configure DC2 using AVD and then deploy DC2 using CloudVisi
         .. image:: images/avd_l3_dc/Lab2_inventory_failure.PNG
             :align: center
 
-    These errors are the result of the IP addresses for Leafs 1-4 being incorrect in the DC2 inventory file
+    Looking at the details of the error message, we can see that is a result of not being able to reach the hosts
+
+        .. image:: images/avd_l3_dc/Lab2_NoRoute.PNG
+            :align: center
+
+    Looking further at the IP addresses that are trying to be reached, we can see that these IP addresses are wrong and don't match the IP addresses in the Dual Data Center topology diagram. 
+    We can fix this by entering the correct IP addresses for Leafs 1-4 in the DC2 inventory file.
 
 #. **Correct the errors in the DC2 inventory.yml file**
 
@@ -245,7 +260,10 @@ In this lab you will configure DC2 using AVD and then deploy DC2 using CloudVisi
     
     We need to go through the change control process within CloudVision to deploy the change this time.
 
-    .. note:: The reason CloudVision didn't auto deploy is because the deploy_dc2_cvp.yml playbook has "execute_tasks:" set to false, which requires you to go through the CloudVision change control approval.
+    .. note:: The reason CloudVision didn't auto deploy is because the deploy_dc2_cvp.yml playbook has "execute_tasks:" set to *false*, which requires you to go through the CloudVision change control approval. Whereas in Lab1, the deploy_dc1_cvp.yml had the execute_tasks: set to *true*.
+
+        .. image:: images/avd_l3_dc/Lab2_CVP_Parallel_Tasks.PNG
+            :align: center
 
 #. **Create, approve, and execute the change within CloudVision**
 
@@ -371,7 +389,7 @@ In this lab you will add new VLANs to DC1, deploy directly to the switches using
 
     c. Within the IDE, open the output from: ``/sites/dc1/reports/fabric/dc1_fabric_state.md``
 
-        .. note:: Your example report will include multiple errors. 
+        .. note:: Your example report intetionally includes multiple errors as an example. An in-depth dicussion of this testing is provided in our CI workshops courses.
 
 |
 
@@ -387,7 +405,7 @@ You deployed new VLANs to DC1 directly through eAPI access to the switches, veri
 **Lab #4: Adding a pair border leafs to DC1**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 In this lab you will edit several YAML files to add a new row to DC1 in order to add a new pair of border leaf switches.
-Pay attention to how much you *don't* have to configure when setting up a new row. This is because much of the configuration is automatically inherited and generated from both the hierarchy/structure and pre-built node types within AVD.
+Pay attention to how much you *don't* have to configure when setting up a new row. This is because much of the configuration is automatically inherited and generated from both the hierarchy/structure and pre-built node types that exist within AVD.
 
 |
 
@@ -400,11 +418,10 @@ Pay attention to how much you *don't* have to configure when setting up a new ro
 
 #. **Edit the DC1 fabric file to add the configuration parameters for the new border leaf switches**
 
-    Open the ``/sites/dc1/group_vars/dc1_fabric.yml`` file and uncomment out the following lines: 
+    Open the ``/sites/dc1/group_vars/dc1_fabric.yml`` file and uncomment out lines 82-110: 
     
-        .. code-block:: text
-
-            82-110
+        .. image:: images/avd_l3_dc/Lab4_Uncomment_Lines.PNG
+            :align: center
     
 #. **Build and Deploy DC1 using the makefiles**
 
@@ -440,3 +457,14 @@ Lab #4: Summary
 **Congratulations!**
 
 You successfully added the configurations required for a new border leaf pair to DC1, built and deployed them using makefiles, then verified the changes within CloudVision
+
+
+
+**Would you like to know more??**
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Arista has a series of workshops designed to teach you the fundamentals of automation and exactly how to deploy using AVD.
+
+https://aristanetworks.github.io/avd-workshops/
+
+Speak with your SE about attending one of our Arista CI Workshops in your area.
+
