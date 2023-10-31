@@ -469,7 +469,7 @@ You successfully added the configurations required for a new border leaf pair to
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Arista has workshops designed to teach you the fundamentals of automation and exactly how to deploy using AVD.
 
-**https://aristanetworks.github.io/avd-workshops/**
+https://aristanetworks.github.io/avd-workshops/
 
 Speak with your SE about attending one of our Arista CI Workshops in your area.
 
