@@ -408,6 +408,7 @@ You deployed new VLANs to DC1 directly through eAPI access to the switches, veri
 **Lab #4: Adding a pair border leafs to DC1**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 In this lab you will edit several YAML files to add a new row to DC1 in order to add a new pair of border leaf switches.
+
 Pay attention to how much you *don't* have to configure when setting up a new row. This is because much of the configuration is automatically inherited and generated from both the hierarchy/structure and pre-built node types that exist within AVD.
 
 |
@@ -464,12 +465,11 @@ You successfully added the configurations required for a new border leaf pair to
 |
 |
 
-**Would you like to know more??**
+**Would you like to know more?**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Arista has a series of workshops designed to teach you the fundamentals of automation and exactly how to deploy using AVD.
+Arista has workshops designed to teach you the fundamentals of automation and exactly how to deploy using AVD.
 
-https://aristanetworks.github.io/avd-workshops/
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+**https://aristanetworks.github.io/avd-workshops/**
 
 Speak with your SE about attending one of our Arista CI Workshops in your area.
 
