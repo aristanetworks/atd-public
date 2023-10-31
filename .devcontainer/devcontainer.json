@@ -20,8 +20,7 @@
 		"github.vscode-pull-request-github",
 		"lextudio.restructuredtext",
 		"aristapublisher.eos",
-		"eamodio.gitlens",
-		"swyddfa.esbonio"
+		"eamodio.gitlens"
 	],
 	"postCreateCommand": "touch ${containerWorkspaceFolder}/.history && cd /tmp; wget https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh && sh install.sh --unattended && if [ -d ~/dotfiles ]; then rm ~/.zshrc; /usr/local/bin/dotbot -c ~/dotfiles/install.conf.yaml; fi",
 	"postStartCommand": "git config --global --add safe.directory ${containerWorkspaceFolder}",

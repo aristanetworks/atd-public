@@ -5,13 +5,13 @@ RUN apt update && apt install -y sudo \
     git \
     zip \
     cloc \
-    lastpass-cli \
     dnsutils \
     zsh \
     zsh-syntax-highlighting \
     zsh-doc \
     less \
     liquidprompt \
+    python3-pip \
     software-properties-common
 
 RUN apt -y dist-upgrade
