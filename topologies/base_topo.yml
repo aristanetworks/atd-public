@@ -498,15 +498,15 @@ topologies:
           2023.1.1:
             schema: 2
             resources_eos:
-              cpu: 72
+              cpu: 84
               ram: 96
               disk: 100
-              image: atd-wan-c2023-1-1-cloud-veos-4-31-0f-20231030-eos
+              image: atd-wan-c2023-1-1-cloud-veos-4-31-0f-20231103-eos
             resources_cvp:
               cpu: 28
               ram: 36
               disk: 300
-              image: atd-wan-c2023-1-1-cloud-veos-4-31-0f-20231030-cvp
+              image: atd-wan-c2023-1-1-cloud-veos-4-31-0f-20231103-cvp
             branch: nested/2023.1
             orderable: true
             eos:
