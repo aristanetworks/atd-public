@@ -14,6 +14,7 @@ REPO_TOPO = REPO_PATH + 'topologies/'
 AVAIL_TOPO = REPO_TOPO + 'available_topo.yaml'
 DATA_OUTPUT = expanduser('~/kvm/')
 BASE_XML_VEOS = expanduser('~/base.xml')
+BASE_XML_CLOUDEOS64 = expanduser('~/base64.xml')
 BASE_XML_CVP = expanduser('~/base_cvp.xml')
 
 OVS_BRIDGES = []
@@ -264,7 +265,7 @@ def main(uargs):
             v_sys_mac = vdev[vdevn]['sys_mac']
         else:
             v_sys_mac = False
-        if 'type' in list(vdev.keys())[0]:
+        if 'type' in vdev[vdevn]:
             node_type = vdev[vdevn]['type']
         else:
             node_type = "veoslab"
@@ -370,7 +371,10 @@ def main(uargs):
         node_counter = 0
         for vdev in VEOS_NODES:
             # Open base XML file
-            tree = ET.parse(BASE_XML_VEOS)
+            if VEOS_NODES[vdev].type == "cloudeos":
+                tree = ET.parse(BASE_XML_CLOUDEOS64)
+            else:
+                tree = ET.parse(BASE_XML_VEOS)
             root = tree.getroot()
             # Get to the device section and add interfaces
             xdev = root.find('./devices')
@@ -384,6 +388,7 @@ def main(uargs):
             #     'cpuset': VEOS_CPUS
             # })
             vcpu.text = str(veos_cpu_count)
+
             # Add/Create disk location for xml
             tmp_disk = ET.SubElement(xdev, 'disk', attrib={
                 'type': 'file',
@@ -446,7 +451,7 @@ def main(uargs):
             if VEOS_NODES[vdev].type == "veoslab":
                 KOUT_LINES.append("sudo cp /var/lib/libvirt/images/veos/base/veos.qcow2 /var/lib/libvirt/images/veos/{0}.qcow2".format(vdev))
             elif VEOS_NODES[vdev].type == "cloudeos":
-                KOUT_LINES.append("sudo cp /var/lib/libvirt/images/veos/base/cloudeos.qcow2 /var/lib/libvirt/images/veos/{0}.qcow2".format(vdev))
+                KOUT_LINES.append("sudo cp /var/lib/libvirt/images/veos/base/cloudeos64.qcow2 /var/lib/libvirt/images/veos/{0}.qcow2".format(vdev))
             KOUT_LINES.append("sudo virsh define {0}.xml".format(vdev))
             KOUT_LINES.append("sudo virsh start {0}".format(vdev))
             KOUT_LINES.append("sudo virsh autostart {0}".format(vdev))

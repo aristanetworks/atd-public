@@ -6,7 +6,7 @@ veos_cpu: 2
 
 nodes:
   - mpls-cloud:
-      type: cloudeos
+      type: veoslab
       ip_addr: 192.168.0.10
       neighbors:
         - port: Ethernet1
@@ -35,7 +35,7 @@ nodes:
           neighborPort: Ethernet1
 
   - inet-cloud:
-      type: cloudeos
+      type: veoslab
       ip_addr: 192.168.0.11
       neighbors:
         - port: Ethernet1
