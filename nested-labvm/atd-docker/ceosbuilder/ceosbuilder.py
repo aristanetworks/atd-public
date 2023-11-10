@@ -328,10 +328,12 @@ def main(args):
             pS("iBerg", "Error creating directory.")
         
         create_output.append("#!/bin/bash\n")
+        create_output.append("EOS_TYPE=$(cat /etc/atd/ACCESS_INFO.yaml | python3 -m shyaml get-value version)\n")
         create_output += DEVICE_INFO
         create_output.append(NOTIFY_ADD)
         create_output.append(f"sudo ip netns add {_tag}\n")
         startup_output.append("#!/bin/bash\n")
+        startup_output.append("EOS_TYPE=$(cat /etc/atd/ACCESS_INFO.yaml | python3 -m shyaml get-value version)\n")
         startup_output += DEVICE_INFO
         startup_output.append(NOTIFY_ADD)
         stop_output.append("#!/bin/bash\n")
