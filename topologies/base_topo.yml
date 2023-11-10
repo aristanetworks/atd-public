@@ -209,13 +209,13 @@ topologies:
               cpu: 22
               ram: 42
               disk: 50
-              image: atd-dual-datacenter-c2023-1-1-ceos-20230814-eos-u
+              image: atd-dual-datacenter-c2023-1-1-ceos-20231110-eos
             resources_cvp:
               cpu: 28
               ram: 36
               disk: 300
-              image: atd-dual-datacenter-c2023-1-1-ceos-20230814-cvp
-            branch: v2023.1-20231017a
+              image: atd-dual-datacenter-c2023-1-1-ceos-20231110-cvp
+            branch: v2023.1-20231110a
             orderable: true
             eos:
               - 4.30.2F
@@ -228,13 +228,13 @@ topologies:
               cpu: 22
               ram: 42
               disk: 50
-              image: atd-dual-datacenter-c2023-1-1-bare-ceos-20230814-eos-u
+              image: atd-dual-datacenter-c2023-1-1-bare-ceos-20231110-eos
             resources_cvp:
               cpu: 28
               ram: 36
               disk: 300
-              image: atd-dual-datacenter-c2023-1-1-bare-ceos-20230814-cvp
-            branch: v2023.1-20231017a
+              image: atd-dual-datacenter-c2023-1-1-bare-ceos-20231110-cvp
+            branch: v2023.1-20231110a
             orderable: true
             eos:
               - 4.30.2F
@@ -415,13 +415,13 @@ topologies:
               cpu: 22
               ram: 42
               disk: 50
-              image: atd-routing-c2023-1-1-ceos-20230814-eos-u
+              image: atd-routing-c2023-1-1-ceos-20231110-eos
             resources_cvp:
               cpu: 28
               ram: 36
               disk: 300
-              image: atd-routing-c2023-1-1-ceos-20230814-cvp
-            branch: v2023.1-20231017a
+              image: atd-routing-c2023-1-1-ceos-20231110-cvp
+            branch: v2023.1-20231110a
             orderable: true
             eos:
               - 4.30.2F
@@ -472,13 +472,13 @@ topologies:
               cpu: 38
               ram: 70
               disk: 50
-              image: atd-routing-c2023-1-1-veos-4-30-1f-20230814-eos-u
+              image: atd-routing-c2023-1-1-veos-4-30-1f-20231110-eos
             resources_cvp:
               cpu: 28
               ram: 36
               disk: 300
-              image: atd-routing-c2023-1-1-veos-4-30-1f-20230814-cvp
-            branch: v2023.1-20231017a
+              image: atd-routing-c2023-1-1-veos-4-30-1f-20231110-cvp
+            branch: v2023.1-20231110a20231017a
             orderable: true
             eos:
               - 4.30.1F
