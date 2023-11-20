@@ -1,0 +1,90 @@
+---
+dc2:
+  children:
+    CVP:
+      hosts:
+        cvp:
+    dc2_fabric:
+      children:
+        dc2_spines:
+          hosts:
+            s2-spine1:
+              ansible_host: 192.168.0.20
+            s2-spine2:
+              ansible_host: 192.168.0.21
+        dc2_leafs:
+          hosts:
+            s2-leaf1:
+              ansible_host: 192.168.0.122
+            s2-leaf2:
+              ansible_host: 192.168.0.123
+            s2-leaf3:
+              ansible_host: 192.168.0.124
+            s2-leaf4:
+              ansible_host: 192.168.0.125
+            # s2-brdr1:
+            #   ansible_host: 192.168.0.200
+            # s2-brdr2:
+            #   ansible_host: 192.168.0.201
+        # dc2_hosts:
+        #   hosts:
+        #     s2-host1:
+        #     s2-host2:
+    dc2_fabric_services:
+      children:
+        dc2_spines:
+        dc2_leafs:
+        dc2_hosts:
+    dc2_fabric_ports:
+      children:
+        dc2_spines:
+        dc2_leafs:
+        dc2_hosts:
+    dc2_dci:
+      hosts:
+        s2-core1:
+        s2-core2:
+
+# # Site 2
+#         SITE2:
+#           children:
+#             SITE2_SPINES:
+#               hosts:
+#                 s2-spine1:
+#                   ansible_host: 192.168.0.20
+#                 s2-spine2:
+#                   ansible_host: 192.168.0.21
+#             SITE2_L3LEAFS:
+#               children:
+#                 SITE2_DC_LEAF1:
+#                   hosts:
+#                     s2-leaf1:
+#                       ansible_host: 192.168.0.22
+#                     s2-leaf2:
+#                       ansible_host: 192.168.0.23
+#                 SITE2_DC_LEAF2:
+#                   hosts:
+#                     s2-leaf3:
+#                       ansible_host: 192.168.0.24
+#                     s2-leaf4:
+#                       ansible_host: 192.168.0.25
+#                 SITE2_BORDER_LEAF1:
+#                   hosts:
+#                     s2-brdr1:
+#                       ansible_host: 192.168.0.200
+#                     s2-brdr2:
+#                       ansible_host: 192.168.0.201
+#                 SITE2_CORE_LEAF1:
+#                   hosts:
+#                     s2-core1:
+#                       ansible_host: 192.168.0.202
+#                     s2-core2:
+#                       ansible_host: 192.168.0.203
+#             SITE2_L2LEAFS:
+#               children:
+#                 SITE2_HOSTS:
+#                   hosts:
+#                     s2-host1:
+#                       ansible_host: 192.168.0.26
+#                     s2-host2:
+#                       ansible_host: 192.168.0.27
