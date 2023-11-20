@@ -1,0 +1,67 @@
+---
+# Variables that apply to both DCs
+
+# # AAA
+# aaa_authentication:
+#   login:
+#     default: group atds local
+
+# aaa_authorization:
+#   exec:
+#     default: group atds local
+#   commands:
+#     all_default: local
+
+# # Radius Group and Server
+# aaa_server_groups:
+#   - name: atds
+#     type: radius
+#     servers:
+#       - server: 192.168.0.1
+
+# radius_servers:
+#   - host: 192.168.0.1
+#     key: 0207165218120E
+
+# ip_radius_source_interfaces:
+#   - name: Management0
+#     # vrf: default
+
+# # local users
+# local_users:
+#   arista:
+#     privilege: 15
+#     role: network-admin
+#     sha512_password: "###########"
+#     ssh_key: "ssh-rsa ###########"
+
+# OOB Management network default gateway.
+mgmt_gateway: 192.168.0.1
+mgmt_interface: Management0
+mgmt_interface_vrf: default
+
+# # NTP Servers IP or DNS name, first NTP server will be prefered, and sourced from Managment VRF
+# ntp:
+#   servers:
+#     - name: 192.168.0.1
+#       iburst: true
+#       local_interface: Management0
+
+# # Domain/DNS
+# dns_domain: atd.lab
+
+# # TerminAttr
+# daemon_terminattr:
+#   # Address of the gRPC server on CloudVision
+#   # TCP 9910 is used on on-prem
+#   # TCP 443 is used on CV as a Service
+#   cvaddrs: # For single cluster
+#     - 192.168.0.5:9910
+#   # Authentication scheme used to connect to CloudVision
+#   cvauth:
+#     method: key
+#     key: atd-lab
+#   # Exclude paths from Sysdb on the ingest side
+#   ingestexclude: /Sysdb/cell/1/agent,/Sysdb/cell/2/agent
+#   # Exclude paths from the shared memory table
+#   smashexcludes: ale,flexCounter,hardware,kni,pulse,strata
