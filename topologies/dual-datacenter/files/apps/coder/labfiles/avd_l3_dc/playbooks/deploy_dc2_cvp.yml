@@ -1,0 +1,13 @@
+---
+- name: Deploying DC2 Changes via CVP
+  hosts: cvp
+  connection: local
+  gather_facts: false
+  tasks:
+    - name: run CVP provisioning
+      import_role:
+          name: arista.avd.eos_config_deploy_cvp
+      vars:
+        container_root: 'dc2_fabric'
+        state: present
+        execute_tasks: false
