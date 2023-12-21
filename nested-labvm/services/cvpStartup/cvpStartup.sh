@@ -5,6 +5,9 @@ echo "Starting cvpStartup"
 TOPO=$(cat /etc/atd/ACCESS_INFO.yaml | python3 -m shyaml get-value topology)
 APWD=$(cat /etc/atd/ACCESS_INFO.yaml | python3 -m shyaml get-value login_info.jump_host.pw)
 
+# Reload sysctl for bridge
+sysctl --system
+
 if [ "$(cat /etc/atd/ACCESS_INFO.yaml | grep eos_type)" ]
 then
     EOS_TYPE=$(cat /etc/atd/ACCESS_INFO.yaml | python3 -m shyaml get-value eos_type)
