@@ -16,6 +16,8 @@ RUN mkdir /home/atdadmin/kvm
 
 COPY src/kvm-topo-builder.py .
 
+COPY kvm_xml/. .
+
 COPY src/entrypoint.sh /usr/local/bin/
 
 RUN chmod +x /usr/local/bin/entrypoint.sh
