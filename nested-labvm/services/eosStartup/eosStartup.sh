@@ -43,7 +43,7 @@ rsync -av /opt/atd/topologies/$TOPO/atd-topo.png /opt/atd/topologies/$TOPO/files
 
 # Add files to arista home
 rsync -av --update /opt/atd/topologies/$TOPO/files/ /home/arista/arista-dir
-rsync -av /opt/atd/topologies/$TOPO/files/infra /home/arista/
+# rsync -av /opt/atd/topologies/$TOPO/files/infra /home/arista/
 
 # Perform check if there is a scripts directory
 if [ -d "/opt/atd/topologies/$TOPO/files/scripts" ]
