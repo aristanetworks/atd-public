@@ -11,7 +11,7 @@ For the final lab, we will be playing with Ansible - both ad-hoc
           additional access after the event is completed.
 
           For some good reading, we recommend browsing the \ `Ansible
-          website <https://www.google.com/url?q=http://docs.ansible.com/ansible/latest/intro_getting_started.html&sa=D&ust=1523980189984000>`__\.
+          website <https://docs.ansible.com/ansible/latest/getting_started/index.html>`__\.
 
 Ad-Hoc Commands
 ---------------
@@ -24,7 +24,7 @@ While this is handy, the real power of Ansible comes from using
 orchestrated playbooks.
 
 Before you run your first Ansible ad-hoc command, we’ll need to create a
-hosts file. Open the Atom editor, and create a new file and save it to
+hosts file. Open the text editor, and create a new file and save it to
 your desktop with the filename ``hosts``.
 
 .. code-block:: ini
@@ -102,8 +102,8 @@ it’s doing:
 +-----------------------------------+-----------------------------------+
 | **Command**                       | **Description**                   |
 +-----------------------------------+-----------------------------------+
-| ``---``                           | The standard beginning of an      |
-|                                   | Ansible playbook                  |
+| ``---``                           | The standard beginning of a      |
+|                                   | YAML file                  |
 +-----------------------------------+-----------------------------------+
 | ``- name: Add a VLAN``            | Names the task. This will be      |
 |                                   | displayed at runtime.             |
@@ -117,30 +117,27 @@ it’s doing:
 |                                   | We do this for speed, but you may |
 |                                   | need to use it for some things    |
 +-----------------------------------+-----------------------------------+
-| ``connection: local``             | Sets the task to run from the     |
-|                                   | local machine                     |
-+-----------------------------------+-----------------------------------+
 |   ``vars:``                       | Defines a variable section        |
 +-----------------------------------+-----------------------------------+
-|     ``provider:``                 | Defines a provider section        |
+|     ``ansible_user:``             | Sets the username to ``arista``   |
 +-----------------------------------+-----------------------------------+
-|     ``host: "{{ ansible_host }}"``| Sets the host to run against as   |
-|                                   | an Ansible canned variable        |
-|                                   | of ``ansible_host``. This will key|
-|                                   | off ``hosts`` above. Note that    |
-|                                   | Ansible variables use {{ curly    |
-|                                   | brackets }}                       |
+|     ``ansible_password``          | Sets the password.                |
+|                                   | "{{ lookup('env', 'LABPASSPHRASE') }}" |
+|                                   | means that the password will be   |
+|                                   | set to the value of LABPASSPHRASE |
+|                                   | env variable that must be defined |
+|                                   | in advance                        |
 +-----------------------------------+-----------------------------------+
-|       ``username: "arista"``      | Sets the username to ``arista``   |
+|     ``ansible_network_os``      | Specify the network device OS     |
+|                                   | In our case Arista EOS            |
 +-----------------------------------+-----------------------------------+
-|       ``password: "arista"``      | Sets the password to ``arista``   |
+|     ``ansible_connection: httpapi`` | Use eAPI to connect to Arista switches |
 +-----------------------------------+-----------------------------------+
-|       ``authorize: yes``          | Enables once connected            |
+|     ``ansible_httpapi_port: 443`` | Use port 443 to connect           |
 +-----------------------------------+-----------------------------------+
-|       ``transport: eapi``         | Uses eAPI instead of the SSH. You |
-|                                   | can do either                     |
+|     ``ansible_httpapi_use_ssl: true`` | Connect to eAPI via HTTPS     |
 +-----------------------------------+-----------------------------------+
-|       ``validate_certs: no``      | Don’t validate SSL certificates   |
+|     ``ansible_httpapi_validate_certs: false`` | Don’t validate SSL certificates |
 +-----------------------------------+-----------------------------------+
 |   ``tasks:``                      | Begins the ``tasks`` section      |
 +-----------------------------------+-----------------------------------+
@@ -165,11 +162,6 @@ it’s doing:
 |                                   | interfaces or VLANs. There is     |
 |                                   | always a parent above them        |
 +-----------------------------------+-----------------------------------+
-|         ``provider: "{{ provider  | Specifies the provider            |
-| }}"``                             | (connection information). This is |
-|                                   | also a variable, and it keys in   |
-|                                   | on the provider section above     |
-+-----------------------------------+-----------------------------------+
 
 For all if of its lines, all this Ansible file is really doing is
 creating a vlan named ``foo`` with an ID of ``500``. Note that while this is just
@@ -181,6 +173,8 @@ following and hit **Enter**:
 
 .. code-block:: html
 
+    export LABPASSPHRASE=`cat /home/coder/.config/code-server/config.yaml| grep "password:" | awk '{print $2}'`
+    echo $LABPASSPHRASE
     ansible-playbook -i ~/Desktop/labfiles/lab4/lab4-advanced-hosts ~/Desktop/labfiles/lab4/lab4-advanced-playbook.yml
 
 It’ll look like this when it’s run:
