@@ -432,6 +432,22 @@ topologies:
             orderable: true
             eos:
               - 4.31.0F
+          2023.3.0:
+            schema: 2
+            resources_eos:
+              cpu: 38
+              ram: 70
+              disk: 50
+              image: atd-rocky-routing-c2023-3-0-veos-4-31-1f-20240117-eos
+            resources_cvp:
+              cpu: 28
+              ram: 36
+              disk: 300
+              image: atd-rocky-routing-c2023-3-0-veos-4-31-1f-20240117-cvp
+            branch: nested-release
+            orderable: true
+            eos:
+              - 4.31.1F
       ceos:
         cpu: 32
         ram: 64
@@ -482,6 +498,24 @@ topologies:
               disk: 300
               image: atd-routing-c2023-2-0-ceos-20231120-cvp
             branch: nested/2023.2
+            orderable: true
+            eos:
+              - 4.31.0F
+              - 4.30.2F
+              - 4.30.1F
+          2023.3.0:
+            schema: 2
+            resources_eos:
+              cpu: 22
+              ram: 42
+              disk: 50
+              image: atd-rocky-routing-c2023-3-0-ceos-20240117-eos
+            resources_cvp:
+              cpu: 28
+              ram: 36
+              disk: 300
+              image: atd-rocky-routing-c2023-3-0-ceos-20240117-cvp
+            branch: nested-release
             orderable: true
             eos:
               - 4.31.0F
