@@ -158,12 +158,12 @@ topologies:
               cpu: 22
               ram: 48
               disk: 50
-              image: atd-rocky-dual-datacenter-c2023-3-0-ceos-20240117-eos
+              image: atd-alma-dual-datacenter-c2023-3-0-ceos-20240118-eos
             resources_cvp:
               cpu: 28
               ram: 36
               disk: 300
-              image: atd-rocky-dual-datacenter-c2023-3-0-ceos-20240117-cvp
+              image: atd-alma-dual-datacenter-c2023-3-0-ceos-20240118-cvp
             branch: nested-release
             orderable: true
             eos:
@@ -438,12 +438,12 @@ topologies:
               cpu: 38
               ram: 70
               disk: 50
-              image: atd-rocky-routing-c2023-3-0-veos-4-31-1f-20240117-eos
+              image: atd-alma-routing-c2023-3-0-veos-4-31-1f-20240118-eos
             resources_cvp:
               cpu: 28
               ram: 36
               disk: 300
-              image: atd-rocky-routing-c2023-3-0-veos-4-31-1f-20240117-cvp
+              image: atd-alma-routing-c2023-3-0-veos-4-31-1f-20240118-cvp
             branch: nested-release
             orderable: true
             eos:
@@ -509,12 +509,12 @@ topologies:
               cpu: 22
               ram: 42
               disk: 50
-              image: atd-rocky-routing-c2023-3-0-ceos-20240117-eos
+              image: atd-alma-routing-c2023-3-0-ceos-20240118-eos
             resources_cvp:
               cpu: 28
               ram: 36
               disk: 300
-              image: atd-rocky-routing-c2023-3-0-ceos-20240117-cvp
+              image: atd-alma-routing-c2023-3-0-ceos-20240118-cvp
             branch: nested-release
             orderable: true
             eos:
