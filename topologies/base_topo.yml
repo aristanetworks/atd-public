@@ -158,12 +158,12 @@ topologies:
               cpu: 22
               ram: 48
               disk: 50
-              image: atd-alma-dual-datacenter-c2023-3-0-ceos-20240118-eos
+              image: atd-alma-dual-datacenter-c2023-3-0-ceos-20240129-eos
             resources_cvp:
               cpu: 28
               ram: 36
               disk: 300
-              image: atd-alma-dual-datacenter-c2023-3-0-ceos-20240118-cvp
+              image: atd-alma-dual-datacenter-c2023-3-0-ceos-20240129-cvp
             branch: nested-release
             orderable: true
             eos:
