@@ -307,7 +307,7 @@ topologies:
               ram: 36
               disk: 300
               image: atd-dual-datacenter-c2023-2-0-ceos-20231120-cvp
-            branch: v2023.2-20240115a
+            branch: v2023.2-20240130a
             orderable: true
             eos:
               - 4.31.0F
@@ -325,7 +325,7 @@ topologies:
               ram: 36
               disk: 300
               image: atd-dual-datacenter-c2023-2-0-bare-ceos-20231120-cvp
-            branch: v2023.2-20240115a
+            branch: v2023.2-20240130a
             orderable: true
             eos:
               - 4.31.0F
@@ -596,7 +596,7 @@ topologies:
               ram: 36
               disk: 300
               image: atd-routing-c2023-2-0-ceos-20231120-cvp
-            branch: v2023.2-20240115a
+            branch: v2023.2-20240130a
             orderable: true
             eos:
               - 4.31.0F
@@ -670,7 +670,7 @@ topologies:
               ram: 36
               disk: 300
               image: atd-routing-c2023-2-0-veos-4-31-0f-20231120-cvp
-            branch: v2023.2-20240115a
+            branch: v2023.2-20240130a
             orderable: true
             eos:
               - 4.31.0F
