@@ -74,6 +74,7 @@ topologies:
             branch: nested/2023.1
             orderable: true
             eos:
+              - 4.31.1F
               - 4.30.2F
               - 4.30.1F
               - 4.30.0F
@@ -93,6 +94,7 @@ topologies:
             branch: nested/2023.1
             orderable: true
             eos:
+              - 4.31.1F
               - 4.30.2F
               - 4.30.1F
               - 4.30.0F
@@ -131,6 +133,7 @@ topologies:
             branch: nested/2023.2
             orderable: true
             eos:
+              - 4.31.1F
               - 4.31.0F
               - 4.30.2F
               - 4.30.1F
@@ -149,6 +152,7 @@ topologies:
             branch: nested/2023.2
             orderable: true
             eos:
+              - 4.31.1F
               - 4.31.0F
               - 4.30.2F
               - 4.30.1F
@@ -167,6 +171,7 @@ topologies:
             branch: nested-release
             orderable: true
             eos:
+              - 4.31.1F
               - 4.31.0F
               - 4.30.2F
               - 4.30.1F
@@ -272,6 +277,7 @@ topologies:
             branch: v2023.1-20240115a
             orderable: true
             eos:
+              - 4.31.1F
               - 4.30.2F
               - 4.30.1F
               - 4.30.0F
@@ -291,6 +297,7 @@ topologies:
             branch: v2023.1-20240115a
             orderable: true
             eos:
+              - 4.31.1F
               - 4.30.2F
               - 4.30.1F
               - 4.30.0F
@@ -310,6 +317,7 @@ topologies:
             branch: v2023.2-20240130a
             orderable: true
             eos:
+              - 4.31.1F
               - 4.31.0F
               - 4.30.2F
               - 4.30.1F
@@ -328,6 +336,7 @@ topologies:
             branch: v2023.2-20240130a
             orderable: true
             eos:
+              - 4.31.1F
               - 4.31.0F
               - 4.30.2F
               - 4.30.1F
@@ -500,6 +509,7 @@ topologies:
             branch: nested/2023.2
             orderable: true
             eos:
+              - 4.31.1F
               - 4.31.0F
               - 4.30.2F
               - 4.30.1F
@@ -518,6 +528,7 @@ topologies:
             branch: nested-release
             orderable: true
             eos:
+              - 4.31.1F
               - 4.31.0F
               - 4.30.2F
               - 4.30.1F
@@ -582,6 +593,7 @@ topologies:
             branch: v2023.1-20240115a
             orderable: true
             eos:
+              - 4.31.1F
               - 4.30.2F
               - 4.30.1F
           2023.2.0:
@@ -599,6 +611,7 @@ topologies:
             branch: v2023.2-20240130a
             orderable: true
             eos:
+              - 4.31.1F
               - 4.31.0F
               - 4.30.2F
               - 4.30.1F
