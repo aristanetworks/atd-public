@@ -72,7 +72,7 @@ topologies:
               disk: 300
               image: atd-dual-datacenter-c2023-1-1-ceos-20231110-cvp
             branch: nested/2023.1
-            orderable: true
+            orderable: false
             eos:
               - 4.31.1F
               - 4.30.2F
@@ -92,7 +92,7 @@ topologies:
               disk: 300
               image: atd-dual-datacenter-c2023-1-1-bare-ceos-20231110-cvp
             branch: nested/2023.1
-            orderable: true
+            orderable: false
             eos:
               - 4.31.1F
               - 4.30.2F
@@ -422,7 +422,7 @@ topologies:
               disk: 300
               image: atd-routing-c2023-1-1-veos-4-30-1f-20231110-cvp
             branch: nested/2023.1
-            orderable: true
+            orderable: false
             eos:
               - 4.30.1F
           2023.2.0:
@@ -490,7 +490,7 @@ topologies:
               disk: 300
               image: atd-routing-c2023-1-1-ceos-20231110-cvp
             branch: nested/2023.1
-            orderable: true
+            orderable: false
             eos:
               - 4.30.2F
               - 4.30.1F
