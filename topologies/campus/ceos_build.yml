@@ -5,140 +5,92 @@ cvp_nodes: 1
 veos_cpu: 1
 
 links:
-  - [["s1-spine1", "et1"], ["s1-spine2", "et1"]]
-  - [["s1-spine1", "et2"], ["s1-leaf1", "et2"]]
-  - [["s1-spine1", "et3"], ["s1-leaf2", "et2"]]
-  - [["s1-spine1", "et4"], ["s1-leaf3", "et2"]]
-  - [["s1-spine1", "et5"], ["s1-leaf4", "et2"]]
-  - [["s1-spine1", "et6"], ["s1-spine2", "et6"]]
-  - [["s1-spine1", "et7"], ["s1-brdr1", "et2"]]
-  - [["s1-spine1", "et8"], ["s1-brdr2", "et2"]]
-  - [["s1-spine2", "et2"], ["s1-leaf1", "et3"]]
-  - [["s1-spine2", "et3"], ["s1-leaf2", "et3"]]
-  - [["s1-spine2", "et4"], ["s1-leaf3", "et3"]]
-  - [["s1-spine2", "et5"], ["s1-leaf4", "et3"]]
-  - [["s1-spine2", "et7"], ["s1-brdr1", "et3"]]
-  - [["s1-spine2", "et8"], ["s1-brdr2", "et3"]]
-  - [["s1-leaf1", "et1"], ["s1-leaf2", "et1"]]
-  - [["s1-leaf1", "et4"], ["s1-host1", "et1"]]
-  - [["s1-leaf1", "et6"], ["s1-leaf2", "et6"]]
-  - [["s1-leaf2", "et4"], ["s1-host1", "et2"]]
-  - [["s1-leaf3", "et1"], ["s1-leaf4", "et1"]]
-  - [["s1-leaf3", "et4"], ["s1-host2", "et1"]]
-  - [["s1-leaf3", "et6"], ["s1-leaf4", "et6"]]
-  - [["s1-leaf4", "et4"], ["s1-host2", "et2"]]
-  - [["s1-brdr1", "et1"], ["s1-brdr2", "et1"]]
-  - [["s1-brdr1", "et4"], ["s1-core1", "et2"]]
-  - [["s1-brdr1", "et5"], ["s1-core2", "et2"]]
-  - [["s1-brdr1", "et6"], ["s1-brdr2", "et6"]]
-  - [["s1-brdr2", "et4"], ["s1-core1", "et3"]]
-  - [["s1-brdr2", "et5"], ["s1-core2", "et3"]]
-  - [["s1-core1", "et1"], ["s1-core2", "et1"]]
-  - [["s1-core1", "et4"], ["s2-core1", "et4"]]
-  - [["s1-core1", "et6"], ["s1-core2", "et6"]]
-  - [["s1-core2", "et4"], ["s2-core2", "et4"]]
-  - [["s2-spine1", "et1"], ["s2-spine2", "et1"]]
-  - [["s2-spine1", "et2"], ["s2-leaf1", "et2"]]
-  - [["s2-spine1", "et3"], ["s2-leaf2", "et2"]]
-  - [["s2-spine1", "et4"], ["s2-leaf3", "et2"]]
-  - [["s2-spine1", "et5"], ["s2-leaf4", "et2"]]
-  - [["s2-spine1", "et6"], ["s2-spine2", "et6"]]
-  - [["s2-spine1", "et7"], ["s2-brdr1", "et2"]]
-  - [["s2-spine1", "et8"], ["s2-brdr2", "et2"]]
-  - [["s2-spine2", "et2"], ["s2-leaf1", "et3"]]
-  - [["s2-spine2", "et3"], ["s2-leaf2", "et3"]]
-  - [["s2-spine2", "et4"], ["s2-leaf3", "et3"]]
-  - [["s2-spine2", "et5"], ["s2-leaf4", "et3"]]
-  - [["s2-spine2", "et7"], ["s2-brdr1", "et3"]]
-  - [["s2-spine2", "et8"], ["s2-brdr2", "et3"]]
-  - [["s2-leaf1", "et1"], ["s2-leaf2", "et1"]]
-  - [["s2-leaf1", "et4"], ["s2-host1", "et1"]]
-  - [["s2-leaf1", "et6"], ["s2-leaf2", "et6"]]
-  - [["s2-leaf2", "et4"], ["s2-host1", "et2"]]
-  - [["s2-leaf3", "et1"], ["s2-leaf4", "et1"]]
-  - [["s2-leaf3", "et4"], ["s2-host2", "et1"]]
-  - [["s2-leaf3", "et6"], ["s2-leaf4", "et6"]]
-  - [["s2-leaf4", "et4"], ["s2-host2", "et2"]]
-  - [["s2-brdr1", "et1"], ["s2-brdr2", "et1"]]
-  - [["s2-brdr1", "et4"], ["s2-core1", "et2"]]
-  - [["s2-brdr1", "et5"], ["s2-core2", "et2"]]
-  - [["s2-brdr1", "et6"], ["s2-brdr2", "et6"]]
-  - [["s2-brdr2", "et4"], ["s2-core1", "et3"]]
-  - [["s2-brdr2", "et5"], ["s2-core2", "et3"]]
-  - [["s2-core1", "et1"], ["s2-core2", "et1"]]
-  - [["s2-core1", "et6"], ["s2-core2", "et6"]]
+  - [["router-1", "et1"], ["spine-1", "et1"]]
+  - [["router-1", "et2"], ["spine-2", "et1"]]
+  - [["router-1", "et3"], ["router-2", "et3"]]
+  - [["router-1", "et4"], ["router-2", "et4"]]
+  - [["router-2", "et1"], ["spine-1", "et2"]]
+  - [["router-2", "et2"], ["spine-2", "et2"]]
+  - [["spine-1", "et3"], ["leaf-1a", "et49"]]
+  - [["spine-1", "et4"], ["leaf-2a", "et1/1"]]
+  - [["spine-1", "et5"], ["leaf-3a", "et49"]]
+  - [["spine-1", "et6"], ["leaf-3b", "et49"]]
+  - [["spine-1", "et49/1"], ["spine-2", "et49/1"]]
+  - [["spine-1", "et50/1"], ["spine-2", "et50/1"]]
+  - [["spine-2", "et3"], ["leaf-1a", "et50"]]
+  - [["spine-2", "et4"], ["leaf-2a", "et2/1"]]
+  - [["spine-2", "et5"], ["leaf-3a", "et50"]]
+  - [["spine-2", "et6"], ["leaf-3b", "et50"]]
+  - [["leaf-1a", "et47"], ["leaf-1b", "et47"]]
+  - [["leaf-1a", "et48"], ["leaf-1b", "et48"]]
+  - [["leaf-1a", "et1"], ["host-1", "et1"]]
+  - [["leaf-1b", "et1"], ["host-2", "et1"]]
+  - [["leaf-2a", "et3/1"], ["host-3", "et1"]]
+  - [["leaf-3a", "et47"], ["leaf-3b", "et47"]]
+  - [["leaf-3a", "et48"], ["leaf-3b", "et48"]]
+  - [["leaf-3a", "et51"], ["member-leaf-3c", "et49"]]
+  - [["leaf-3a", "et52"], ["member-leaf-3d", "et49"]]
+  - [["leaf-3a", "et53/1"], ["member-leaf-3e", "et49"]]
+  - [["leaf-3b", "et51"], ["member-leaf-3c", "et50"]]
+  - [["leaf-3b", "et52"], ["member-leaf-3d", "et50"]]
+  - [["leaf-3b", "et53/1"], ["member-leaf-3e", "et50"]]
+  - [["member-leaf-3c", "et1"], ["host-4", "et1"]]
+  - [["member-leaf-3d", "et1"], ["host-5", "et1"]]
+  - [["member-leaf-3e", "et1"], ["host-6", "et1"]]
 
 nodes:
-  - name: s1-spine1
-    mac: 00:1c:73:c0:c6:10
+  - name: router-1
+    mac: 00:1c:73:b0:c6:01
     ip_addr: 192.168.0.10
-  - name: s1-spine2
-    mac: 00:1c:73:c0:c6:11
+  - name: router-2
+    mac: 00:1c:73:b1:c6:01
     ip_addr: 192.168.0.11
-  - name: s1-leaf1
-    mac: 00:1c:73:c0:c6:12
+  - name: spine-1
+    mac: 00:1c:73:b2:c6:01
     ip_addr: 192.168.0.12
-  - name: s1-leaf2
-    mac: 00:1c:73:c0:c6:13
+  - name: spine-2
+    mac: 00:1c:73:b3:c6:01
     ip_addr: 192.168.0.13
-  - name: s1-leaf3
-    mac: 00:1c:73:c0:c6:14
+  - name: leaf-1a
+    mac: 00:1c:73:b4:c6:01
     ip_addr: 192.168.0.14
-  - name: s1-leaf4
-    mac: 00:1c:73:c0:c6:15
+  - name: leaf-1b
+    mac: 00:1c:73:b5:c6:01
     ip_addr: 192.168.0.15
-  - name: s1-host1
-    mac: 00:1c:73:c0:c6:16
+  - name: leaf-2a
+    mac: 00:1c:73:b6:c6:01
     ip_addr: 192.168.0.16
-  - name: s1-host2
-    mac: 00:1c:73:c0:c6:17
+  - name: leaf-3a
+    mac: 00:1c:73:b7:c6:01
     ip_addr: 192.168.0.17
-  - name: s1-brdr1
-    mac: 00:1c:73:c0:c1:00
-    ip_addr: 192.168.0.100
-  - name: s1-brdr2
-    mac: 00:1c:73:c0:c1:01
-    ip_addr: 192.168.0.101
-  - name: s1-core1
-    mac: 00:1c:73:c0:c1:02
-    ip_addr: 192.168.0.102
-  - name: s1-core2
-    mac: 00:1c:73:c0:c1:03
-    ip_addr: 192.168.0.103
-  - name: s2-spine1
-    mac: 00:1c:73:c0:c6:20
+  - name: leaf-3b
+    mac: 00:1c:73:b8:c6:01
+    ip_addr: 192.168.0.18
+  - name: member-leaf-3c
+    mac: 00:1c:73:b9:c6:01
+    ip_addr: 192.168.0.19
+  - name: member-leaf-3d
+    mac: 00:1c:73:c0:c6:01
     ip_addr: 192.168.0.20
-  - name: s2-spine2
-    mac: 00:1c:73:c0:c6:21
+  - name: member-leaf-3e
+    mac: 00:1c:73:c1:c6:01
     ip_addr: 192.168.0.21
-  - name: s2-leaf1
-    mac: 00:1c:73:c0:c6:22
+  - name: host-1
+    mac: 00:1c:73:c2:c6:01
     ip_addr: 192.168.0.22
-  - name: s2-leaf2
-    mac: 00:1c:73:c0:c6:23
+  - name: host-2
+    mac: 00:1c:73:c3:c6:01
     ip_addr: 192.168.0.23
-  - name: s2-leaf3
-    mac: 00:1c:73:c0:c6:24
+  - name: host-3
+    mac: 00:1c:73:c4:c6:01
     ip_addr: 192.168.0.24
-  - name: s2-leaf4
-    mac: 00:1c:73:c0:c6:25
+  - name: host-4
+    mac: 00:1c:73:c5:c6:01
     ip_addr: 192.168.0.25
-  - name: s2-host1
-    mac: 00:1c:73:c0:c6:26
+  - name: host-5
+    mac: 00:1c:73:c6:c6:01
     ip_addr: 192.168.0.26
-  - name: s2-host2
-    mac: 00:1c:73:c0:c6:27
+  - name: host-6
+    mac: 00:1c:73:c7:c6:01
     ip_addr: 192.168.0.27
-  - name: s2-brdr1
-    mac: 00:1c:73:c0:c2:00
-    ip_addr: 192.168.0.200
-  - name: s2-brdr2
-    mac: 00:1c:73:c0:c2:01
-    ip_addr: 192.168.0.201
-  - name: s2-core1
-    mac: 00:1c:73:c0:c2:02
-    ip_addr: 192.168.0.202
-  - name: s2-core2
-    mac: 00:1c:73:c0:c2:03
-    ip_addr: 192.168.0.203
 additional_ssh_nodes:
