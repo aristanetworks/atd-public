@@ -2,5 +2,3 @@ hostname MemberLeaf3E
 !
 interface Management1
    ip address 192.168.0.111/24
-!
-ip routing

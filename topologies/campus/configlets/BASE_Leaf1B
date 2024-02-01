@@ -2,5 +2,3 @@ hostname Leaf1B
 !
 interface Management1
    ip address 192.168.0.105/24
-!
-ip routing

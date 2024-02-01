@@ -2,10 +2,71 @@ cvp_info:
   containers:
     Tenant:
       nodes:
-  snapshots:
+    Campus:
+      parent: Tenant
+      nodes:
+    Campus Spines:
+      parent: Campus
+      nodes:
+      - spine1
+      - spine2
+    Campus Edge:
+      parent: Campus
+      nodes:
+      - router1
+      - router2
+    Campus Leaves:
+      parent: Campus
+      nodes:
+    Closet 1:
+      parent: Campus Leaves
+      nodes:
+      - leaf1a
+      - leaf1b
+    Closet 2:
+      parent: Campus Leaves
+      nodes:
+      - leaf2a
+    Closet 3:
+      parent: Campus Leaves
+      nodes:
+    Closet 3 Leaves:
+      parent: Closet 3
+      nodes:
+      - leaf3a
+      - leaf3b
+    Closet 3 Member Leaves:
+      parent: Closet 3
+      nodes:
+      - memberleaf3c
+      - memberleaf3d
+      - memberleaf3e
   configlets:
     containers:
       Tenant:
         - ATD-INFRA
     netelements:
-        
+      spine1:
+        - BASE_spine1
+      spine2:
+        - BASE_spine2
+      router1:
+        - BASE_router1
+      router2:
+        - BASE_router2
+      leaf1a:
+        - BASE_leaf1a
+      leaf1b:
+        - BASE_leaf1b
+      leaf2a:
+        - BASE_leaf2a
+      leaf3a:
+        - BASE_leaf3a
+      leaf3b:
+        - BASE_leaf3b
+      memberleaf3c:
+        - BASE_memberleaf3c
+      memberleaf3d:
+        - BASE_memberleaf3d
+      memberleaf3e:
+        - BASE_memberleaf3e

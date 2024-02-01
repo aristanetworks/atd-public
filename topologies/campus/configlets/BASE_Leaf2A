@@ -2,5 +2,3 @@ hostname Leaf2A
 !
 interface Management1
    ip address 192.168.0.106/24
-!
-ip routing
