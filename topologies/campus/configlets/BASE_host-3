@@ -1,6 +1,0 @@
-hostname host-3
-!
-interface Management1
-   ip address 192.168.0.114/24
-!
-ip routing

@@ -1,4 +1,4 @@
 hostname spine-1
 !
 interface Management1
-   ip address 192.168.0.102/24
+   ip address 192.168.0.12/24

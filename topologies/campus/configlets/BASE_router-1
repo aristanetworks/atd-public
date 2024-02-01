@@ -3,6 +3,6 @@ hostname router-1
 switchport default mode routed
 !
 interface Management1
-   ip address 192.168.0.100/24
+   ip address 192.168.0.10/24
 !
 ip routing

@@ -3,13 +3,12 @@ hostname host-6
 interface Ethernet1
    description Host Simulation Interface
    no switchport
-! Placehoder IP - Scheme still TBD
-   ip address 10.10.10.106/24
-!
-ip route 10.0.0.0/8 10.10.10.1
+! Placehoder - DHCP still TBD
+   ip address dhcp
+   dhcp client accept default-route
 !
 interface Management0
-   ip address 192.168.0.117/24
+   ip address 192.168.0.27/24
 !
 ip routing
 !

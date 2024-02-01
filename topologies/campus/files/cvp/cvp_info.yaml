@@ -47,9 +47,9 @@ cvp_info:
         - ATD-INFRA
     netelements:
       spine-1:
-        - BASE_spine1
+        - BASE_spine-1
       spine-2:
-        - BASE_spine2
+        - BASE_spine-2
       router-1:
         - BASE_router-1
       router-2:

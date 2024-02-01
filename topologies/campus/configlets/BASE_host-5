@@ -1,6 +1,0 @@
-hostname host-5
-!
-interface Management1
-   ip address 192.168.0.116/24
-!
-ip routing
