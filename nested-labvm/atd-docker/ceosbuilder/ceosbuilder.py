@@ -15,7 +15,6 @@ CEOS_PATH = '/opt/ceos/'
 CEOS_NODES = CEOS_PATH + 'nodes'
 CEOS_SCRIPTS = CEOS_PATH + 'scripts/'
 REPO_TOPO = REPO_PATH + 'topologies/'
-AVAIL_TOPO = REPO_TOPO + 'available_topo.yaml'
 MGMT_BRIDGE = 'vmgmt'
 sleep_delay = 30
 STOP_WAIT = 0

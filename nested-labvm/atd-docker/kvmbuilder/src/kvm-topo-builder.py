@@ -12,7 +12,6 @@ FILE_TOPO = '/etc/atd/ACCESS_INFO.yaml'
 REPO_PATH = '/opt/atd/'
 REPO_KVM = f"{REPO_PATH}nested-labvm/atd-docker/kvmbuilder/kvm_xml"
 REPO_TOPO = REPO_PATH + 'topologies/'
-AVAIL_TOPO = REPO_TOPO + 'available_topo.yaml'
 DATA_OUTPUT = expanduser('~/kvm/')
 BASE_XML_VEOS = expanduser('~/base.xml')
 BASE_XML_CLOUDEOS64 = expanduser('~/base64.xml')

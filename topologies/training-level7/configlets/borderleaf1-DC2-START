@@ -1,6 +1,0 @@
-interface Ethernet12
-   no switchport
-   ip address 10.201.0.5/30
-   
-router bgp 65220
-  neighbor 10.201.0.6 remote-as 65500
