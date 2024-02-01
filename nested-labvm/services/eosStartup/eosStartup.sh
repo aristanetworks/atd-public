@@ -61,6 +61,12 @@ fi
 
 chown -R arista:arista /home/arista
 
+# Copy Static cEOS startup-configs if present
+if [ -d "/opt/atd/topologies/$TOPO/files/ceos" ]
+then
+    rsync -av /opt/atd/topologies/$TOPO/files/ceos/ /opt/ceos/nodes
+fi
+
 # Update ATD containers
 
 cd /opt/atd/nested-labvm/atd-docker
