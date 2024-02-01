@@ -44,7 +44,7 @@ def checkContainer(cnt):
     if cnt not in CVP_CONTAINERS:
         CVP_CONTAINERS.append(cnt)
 
-def getEosDevice(topo,eosYaml,cvpMapper):
+def getEosDevice(topo,eosYaml,cvpMapper,topoType):
     """
     Function that Parses through the YAML file and creates a CVPSWITCH class object for each EOS device in the topo file.
     Parameters:
@@ -54,12 +54,19 @@ def getEosDevice(topo,eosYaml,cvpMapper):
     """
     EOS_DEV = []
     for dev in eosYaml:
-        devn = list(dev.keys())[0]
-        try:
-            EOS_DEV.append(CVPSWITCH(devn,dev[devn]['ip_addr'],cvpMapper[devn]))
-            checkContainer(cvpMapper[dev])
-        except:
-            EOS_DEV.append(CVPSWITCH(devn,dev[devn]['ip_addr']))
+        if topoType == "ceos":
+            try:
+                EOS_DEV.append(CVPSWITCH(dev["name"], dev["ip_addr"], cvpMapper[dev["name"]]))
+                checkContainer(cvpMapper[dev])
+            except:
+                EOS_DEV.append(CVPSWITCH(dev["name"],dev["ip_addr"]))
+        else:
+            devn = list(dev.keys())[0]
+            try:
+                EOS_DEV.append(CVPSWITCH(devn,dev[devn]['ip_addr'],cvpMapper[devn]))
+                checkContainer(cvpMapper[dev])
+            except:
+                EOS_DEV.append(CVPSWITCH(devn,dev[devn]['ip_addr']))
     return(EOS_DEV)
 
 def eosDeviceMapper(eos_type, eos_yaml):
@@ -188,20 +195,24 @@ def main():
     cvp_yaml = getTopoInfo(cvp_file)
     file_counter = 0
     while True:
-        if path.exists(REPO_TOPO + atd_yaml['topology'] + '/topo_build.yml'):
-            pS("OK", "TOPO_BUILD file is available.")
+        if path.exists(REPO_TOPO + atd_yaml['topology'] + '/topo_build.yml') or path.exists(REPO_TOPO + atd_yaml['topology'] + '/ceos_build.yml'):
+            pS("OK", "BUILD file is available.")
             break
         else:
             if file_counter >= 10:
                 exit('Topo Build timer expired')
             else:
                 file_counter += 1
-                pS("ERROR", "TOPO_BUILD file is not available...Waiting for {0} seconds".format(sleep_delay))
+                pS("ERROR", "BUILD file is not available...Waiting for {0} seconds".format(sleep_delay))
                 sleep(sleep_delay)
-
-    build_yaml = getTopoInfo(REPO_TOPO + atd_yaml['topology'] + '/topo_build.yml')
+    try:
+        build_yaml = getTopoInfo(REPO_TOPO + atd_yaml['topology'] + '/ceos_build.yml')
+        topo_type = "ceos"
+    except:
+        build_yaml = getTopoInfo(REPO_TOPO + atd_yaml['topology'] + '/topo_build.yml')
+        topo_type = "veos"
     eos_cnt_map = eosContainerMapper(cvp_yaml['cvp_info']['containers'])
-    eos_info = getEosDevice(atd_yaml['topology'],build_yaml['nodes'],eos_cnt_map)
+    eos_info = getEosDevice(atd_yaml['topology'],build_yaml['nodes'],eos_cnt_map, topo_type)
     eos_dev_map = eosDeviceMapper(atd_yaml['eos_type'], build_yaml['nodes'])
     configlet_location = '/opt/atd/topologies/{0}/configlets/'.format(atd_yaml['topology'])
     cvpUsername = atd_yaml['login_info']['jump_host']['user']
@@ -218,7 +229,10 @@ def main():
             sleep(sleep_delay)
 
     # Check to see if all nodes have connected to CVP before proceeding
-    FILE_BUILD = YAML().load(open(REPO_TOPO + atd_yaml['topology'] + '/topo_build.yml', 'r'))
+    if topo_type == "ceos":
+        FILE_BUILD = YAML().load(open(REPO_TOPO + atd_yaml['topology'] + '/ceos_build.yml', 'r'))
+    else:
+        FILE_BUILD = YAML().load(open(REPO_TOPO + atd_yaml['topology'] + '/topo_build.yml', 'r'))
     NODES = FILE_BUILD['nodes']
     # ==========================================
     # Add Check for configlet import only
