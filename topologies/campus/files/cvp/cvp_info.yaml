@@ -1,0 +1,11 @@
+cvp_info:
+  containers:
+    Tenant:
+      nodes:
+  snapshots:
+  configlets:
+    containers:
+      Tenant:
+        - ATD-INFRA
+    netelements:
+        

@@ -1,0 +1,6 @@
+hostname Leaf3A
+!
+interface Management1
+   ip address 192.168.0.107/24
+!
+ip routing

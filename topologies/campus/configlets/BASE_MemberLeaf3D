@@ -1,0 +1,6 @@
+hostname MemberLeaf3D
+!
+interface Management1
+   ip address 192.168.0.110/24
+!
+ip routing
