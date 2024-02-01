@@ -8,65 +8,65 @@ cvp_info:
     Campus Spines:
       parent: Campus
       nodes:
-      - spine1
-      - spine2
+      - spine-1
+      - spine-2
     Campus Edge:
       parent: Campus
       nodes:
-      - router1
-      - router2
+      - router-1
+      - router-2
     Campus Leaves:
       parent: Campus
       nodes:
     Closet 1:
       parent: Campus Leaves
       nodes:
-      - leaf1a
-      - leaf1b
+      - leaf-1a
+      - leaf-1b
     Closet 2:
       parent: Campus Leaves
       nodes:
-      - leaf2a
+      - leaf-2a
     Closet 3:
       parent: Campus Leaves
       nodes:
     Closet 3 Leaves:
       parent: Closet 3
       nodes:
-      - leaf3a
-      - leaf3b
+      - leaf-3a
+      - leaf-3b
     Closet 3 Member Leaves:
       parent: Closet 3
       nodes:
-      - memberleaf3c
-      - memberleaf3d
-      - memberleaf3e
+      - member-leaf-3c
+      - member-leaf-3d
+      - member-leaf-3e
   configlets:
     containers:
       Tenant:
         - ATD-INFRA
     netelements:
-      spine1:
+      spine-1:
         - BASE_spine1
-      spine2:
+      spine-2:
         - BASE_spine2
-      router1:
-        - BASE_router1
-      router2:
-        - BASE_router2
-      leaf1a:
-        - BASE_leaf1a
-      leaf1b:
-        - BASE_leaf1b
-      leaf2a:
-        - BASE_leaf2a
-      leaf3a:
-        - BASE_leaf3a
-      leaf3b:
-        - BASE_leaf3b
-      memberleaf3c:
-        - BASE_memberleaf3c
-      memberleaf3d:
-        - BASE_memberleaf3d
-      memberleaf3e:
-        - BASE_memberleaf3e
+      router-1:
+        - BASE_router-1
+      router-2:
+        - BASE_router-2
+      leaf-1a:
+        - BASE_leaf-1a
+      leaf-1b:
+        - BASE_leaf-1b
+      leaf-2a:
+        - BASE_leaf-2a
+      leaf-3a:
+        - BASE_leaf-3a
+      leaf-3b:
+        - BASE_leaf-3b
+      member-leaf-3c:
+        - BASE_member-leaf-3c
+      member-leaf-3d:
+        - BASE_member-leaf-3d
+      member-leaf-3e:
+        - BASE_member-leaf-3e

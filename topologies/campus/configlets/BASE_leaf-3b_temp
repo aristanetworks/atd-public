@@ -1,4 +1,4 @@
-hostname Leaf3B
+hostname leaf-3b
 !
 interface Management1
    ip address 192.168.0.108/24

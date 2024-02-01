@@ -41,14 +41,14 @@
             <param name="username">root</param>
             <param name="password">cvproot</param>
         </connection>
-        <connection name="spine1">
+        <connection name="spine-1">
             <protocol>ssh</protocol>
             <param name="hostname">192.168.0.10</param>
             <param name="port">22</param>
             <param name="username">arista</param>
             <param name="password">arista</param>
         </connection>
-        <connection name="spine2">
+        <connection name="spine-2">
             <protocol>ssh</protocol>
             <param name="hostname">192.168.0.11</param>
             <param name="port">22</param>
@@ -83,14 +83,14 @@
             <param name="username">arista</param>
             <param name="password">arista</param>
         </connection>
-        <connection name="host1">
+        <connection name="host-1">
             <protocol>ssh</protocol>
             <param name="hostname">192.168.0.16</param>
             <param name="port">22</param>
             <param name="username">arista</param>
             <param name="password">arista</param>
         </connection>
-        <connection name="host2">
+        <connection name="host-2">
             <protocol>ssh</protocol>
             <param name="hostname">192.168.0.17</param>
             <param name="port">22</param>

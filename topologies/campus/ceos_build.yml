@@ -5,92 +5,92 @@ cvp_nodes: 1
 veos_cpu: 1
 
 links:
-  - [["router1", "et1"], ["spine1", "et1"]]
-  - [["router1", "et2"], ["spine2", "et1"]]
-  - [["router1", "et3"], ["router2", "et3"]]
-  - [["router1", "et4"], ["router2", "et4"]]
-  - [["router2", "et1"], ["spine1", "et2"]]
-  - [["router2", "et2"], ["spine2", "et2"]]
-  - [["spine1", "et3"], ["leaf1a", "et49"]]
-  - [["spine1", "et4"], ["leaf2a", "et1/1"]]
-  - [["spine1", "et5"], ["leaf3a", "et49"]]
-  - [["spine1", "et6"], ["leaf3b", "et49"]]
-  - [["spine1", "et49/1"], ["spine2", "et49/1"]]
-  - [["spine1", "et50/1"], ["spine2", "et50/1"]]
-  - [["spine2", "et3"], ["leaf1a", "et50"]]
-  - [["spine2", "et4"], ["leaf2a", "et2/1"]]
-  - [["spine2", "et5"], ["leaf3a", "et50"]]
-  - [["spine2", "et6"], ["leaf3b", "et50"]]
-  - [["leaf1a", "et47"], ["leaf1b", "et47"]]
-  - [["leaf1a", "et48"], ["leaf1b", "et48"]]
-  - [["leaf1a", "et1"], ["host1", "et1"]]
-  - [["leaf1b", "et1"], ["host2", "et1"]]
-  - [["leaf2a", "et3/1"], ["host3", "et1"]]
-  - [["leaf3a", "et47"], ["leaf3b", "et47"]]
-  - [["leaf3a", "et48"], ["leaf3b", "et48"]]
-  - [["leaf3a", "et51"], ["memberleaf3c", "et49"]]
-  - [["leaf3a", "et52"], ["memberleaf3d", "et49"]]
-  - [["leaf3a", "et53/1"], ["memberleaf3e", "et49"]]
-  - [["leaf3b", "et51"], ["memberleaf3c", "et50"]]
-  - [["leaf3b", "et52"], ["memberleaf3d", "et50"]]
-  - [["leaf3b", "et53/1"], ["memberleaf3e", "et50"]]
-  - [["memberleaf3c", "et1"], ["host4", "et1"]]
-  - [["memberleaf3d", "et1"], ["host5", "et1"]]
-  - [["memberleaf3e", "et1"], ["host6", "et1"]]
+  - [["router-1", "et1"], ["spine-1", "et1"]]
+  - [["router-1", "et2"], ["spine-2", "et1"]]
+  - [["router-1", "et3"], ["router-2", "et3"]]
+  - [["router-1", "et4"], ["router-2", "et4"]]
+  - [["router-2", "et1"], ["spine-1", "et2"]]
+  - [["router-2", "et2"], ["spine-2", "et2"]]
+  - [["spine-1", "et3"], ["leaf-1a", "et49"]]
+  - [["spine-1", "et4"], ["leaf-2a", "et1/1"]]
+  - [["spine-1", "et5"], ["leaf-3a", "et49"]]
+  - [["spine-1", "et6"], ["leaf-3b", "et49"]]
+  - [["spine-1", "et49/1"], ["spine-2", "et49/1"]]
+  - [["spine-1", "et50/1"], ["spine-2", "et50/1"]]
+  - [["spine-2", "et3"], ["leaf-1a", "et50"]]
+  - [["spine-2", "et4"], ["leaf-2a", "et2/1"]]
+  - [["spine-2", "et5"], ["leaf-3a", "et50"]]
+  - [["spine-2", "et6"], ["leaf-3b", "et50"]]
+  - [["leaf-1a", "et47"], ["leaf-1b", "et47"]]
+  - [["leaf-1a", "et48"], ["leaf-1b", "et48"]]
+  - [["leaf-1a", "et1"], ["host-1", "et1"]]
+  - [["leaf-1b", "et1"], ["host-2", "et1"]]
+  - [["leaf-2a", "et3/1"], ["host-3", "et1"]]
+  - [["leaf-3a", "et47"], ["leaf-3b", "et47"]]
+  - [["leaf-3a", "et48"], ["leaf-3b", "et48"]]
+  - [["leaf-3a", "et51"], ["member-leaf-3c", "et49"]]
+  - [["leaf-3a", "et52"], ["member-leaf-3d", "et49"]]
+  - [["leaf-3a", "et53/1"], ["member-leaf-3e", "et49"]]
+  - [["leaf-3b", "et51"], ["member-leaf-3c", "et50"]]
+  - [["leaf-3b", "et52"], ["member-leaf-3d", "et50"]]
+  - [["leaf-3b", "et53/1"], ["member-leaf-3e", "et50"]]
+  - [["member-leaf-3c", "et1"], ["host-4", "et1"]]
+  - [["member-leaf-3d", "et1"], ["host-5", "et1"]]
+  - [["member-leaf-3e", "et1"], ["host-6", "et1"]]
 
 nodes:
-  - name: router1
+  - name: router-1
     mac: 00:1c:73:c0:c6:00
     ip_addr: 192.168.0.100
-  - name: router2
+  - name: router-2
     mac: 00:1c:73:c0:c6:01
     ip_addr: 192.168.0.101
-  - name: spine1
+  - name: spine-1
     mac: 00:1c:73:c0:c6:02
     ip_addr: 192.168.0.102
-  - name: spine2
+  - name: spine-2
     mac: 00:1c:73:c0:c6:03
     ip_addr: 192.168.0.103
-  - name: leaf1a
+  - name: leaf-1a
     mac: 00:1c:73:c0:c6:04
     ip_addr: 192.168.0.104
-  - name: leaf1b
+  - name: leaf-1b
     mac: 00:1c:73:c0:c6:05
     ip_addr: 192.168.0.105
-  - name: leaf2a
+  - name: leaf-2a
     mac: 00:1c:73:c0:c6:06
     ip_addr: 192.168.0.106
-  - name: leaf3a
+  - name: leaf-3a
     mac: 00:1c:73:c0:c6:07
     ip_addr: 192.168.0.107
-  - name: leaf3b
+  - name: leaf-3b
     mac: 00:1c:73:c0:c6:08
     ip_addr: 192.168.0.108
-  - name: memberleaf3c
+  - name: member-leaf-3c
     mac: 00:1c:73:c0:c6:09
     ip_addr: 192.168.0.109
-  - name: memberleaf3d
+  - name: member-leaf-3d
     mac: 00:1c:73:c0:c6:10
     ip_addr: 192.168.0.110
-  - name: memberleaf3e
+  - name: member-leaf-3e
     mac: 00:1c:73:c0:c6:11
     ip_addr: 192.168.0.111
-  - name: host1
+  - name: host-1
     mac: 00:1c:73:c0:c6:12
     ip_addr: 192.168.0.112
-  - name: host2
+  - name: host-2
     mac: 00:1c:73:c0:c6:13
     ip_addr: 192.168.0.113
-  - name: host3
+  - name: host-3
     mac: 00:1c:73:c0:c6:14
     ip_addr: 192.168.0.114
-  - name: host4
+  - name: host-4
     mac: 00:1c:73:c0:c6:15
     ip_addr: 192.168.0.115
-  - name: host5
+  - name: host-5
     mac: 00:1c:73:c0:c6:16
     ip_addr: 192.168.0.116
-  - name: host6
+  - name: host-6
     mac: 00:1c:73:c0:c6:17
     ip_addr: 192.168.0.117
 additional_ssh_nodes:

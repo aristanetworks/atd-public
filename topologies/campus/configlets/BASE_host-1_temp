@@ -1,4 +1,4 @@
-hostname Host1
+hostname host-1
 !
 interface Management1
    ip address 192.168.0.112/24

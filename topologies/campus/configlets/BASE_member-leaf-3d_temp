@@ -1,4 +1,4 @@
-hostname MemberLeaf3D
+hostname member-leaf-3d
 !
 interface Management1
    ip address 192.168.0.110/24

@@ -7,21 +7,21 @@ veos_cpu: 2
 nodes:
 # Not needed in cEOS based topology
 # Leaving in place for potential future use of CloudEOS
-#  - router1:
+#  - router-1:
 #      type: veoslab
 #      ip_addr: 192.168.0.100
 #      neighbors:
 #        - port: Ethernet1
-#          neighborDevice: spine1
+#          neighborDevice: spine-1
 #          neighborPort: Ethernet1
 #        - port: Ethernet2
-#          neighborDevice: spine2
+#          neighborDevice: spine-2
 #          neighborPort: Ethernet1
 #        - port: Ethernet3
-#          neighborDevice: router2
+#          neighborDevice: router-2
 #          neighborPort: Ethernet3
 #        - port: Ethernet4
-#          neighborDevice: router2
+#          neighborDevice: router-2
 #          neighborPort: Ethernet4
 
 additional_ssh_nodes:
