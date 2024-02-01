@@ -1,6 +1,0 @@
-router bgp 200
-   router-id 18.18.18.18
-   neighbor 10.8.18.8 remote-as 100
-   neighbor 10.8.18.8 allowas-in 1
-   neighbor 10.8.18.8 maximum-routes 12000 
-   network 18.18.18.18/32
