@@ -1,0 +1,6 @@
+hostname MemberLeaf3C
+!
+interface Management1
+   ip address 192.168.0.109/24
+!
+ip routing
