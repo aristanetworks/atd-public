@@ -394,17 +394,18 @@ def main():
         # ==========================================
         # Creating Snapshots
         # ==========================================
-        if cvp_yaml['cvp_info']['snapshots']:
-            for p_snap in cvp_yaml['cvp_info']['snapshots']:
-                NEW_SNAP = True
-                for e_snap in cvp_clnt.snapshots:
-                    if p_snap['name'] == e_snap['name']:
-                        NEW_SNAP = False
-                if NEW_SNAP:
-                    cvp_clnt.createSnapshot(p_snap['name'],p_snap['commands'])
-                    pS("OK",f"Created {p_snap['name']} Snapshot")
-                else:
-                    pS("OK",f"Snapshot {p_snap['name']} already exists")
+        if "snapshots" in cvp_yaml["cvp_info"]:
+            if cvp_yaml['cvp_info']['snapshots']:
+                for p_snap in cvp_yaml['cvp_info']['snapshots']:
+                    NEW_SNAP = True
+                    for e_snap in cvp_clnt.snapshots:
+                        if p_snap['name'] == e_snap['name']:
+                            NEW_SNAP = False
+                    if NEW_SNAP:
+                        cvp_clnt.createSnapshot(p_snap['name'],p_snap['commands'])
+                        pS("OK",f"Created {p_snap['name']} Snapshot")
+                    else:
+                        pS("OK",f"Snapshot {p_snap['name']} already exists")
         # Logout and close session to CVP
         cvp_clnt.execLogout()
         pS("OK","Logged out of CVP")

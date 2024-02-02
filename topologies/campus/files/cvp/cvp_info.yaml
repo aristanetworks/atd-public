@@ -41,6 +41,7 @@ cvp_info:
       - member-leaf-3c
       - member-leaf-3d
       - member-leaf-3e
+  snapshots:
   configlets:
     containers:
       Tenant:
