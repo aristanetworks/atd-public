@@ -78,9 +78,12 @@ def eosDeviceMapper(eos_type, eos_yaml):
     """
     EOS_DEV = {}
     for dev in eos_yaml:
-        devn = list(dev.keys())[0]
         if eos_type == "ceos":
-            EOS_DEV[devn] = devn
+            devn = dev["name"]
+        else:
+            devn = list(dev.keys())[0]
+        if eos_type == "ceos":
+            EOS_DEV[devn] = dev
         else:
             _ip_addr = dev[devn]['ip_addr']
             EOS_DEV[_ip_addr] = devn
