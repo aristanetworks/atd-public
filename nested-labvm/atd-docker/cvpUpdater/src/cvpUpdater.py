@@ -80,11 +80,9 @@ def eosDeviceMapper(eos_type, eos_yaml):
     for dev in eos_yaml:
         if eos_type == "ceos":
             devn = dev["name"]
-        else:
-            devn = list(dev.keys())[0]
-        if eos_type == "ceos":
             EOS_DEV[devn] = dev
         else:
+            devn = list(dev.keys())[0]
             _ip_addr = dev[devn]['ip_addr']
             EOS_DEV[_ip_addr] = devn
     return(EOS_DEV)
@@ -355,7 +353,7 @@ def main():
             # Check if this is a cEOS ZTP setup
             if atd_yaml['eos_type'] == "ceos":
                 pS("INFO", f"Adding {_dev['hostname']} with s/n {_dev['serialNumber']}")
-                _device_name = eos_dev_map[_dev['serialNumber']]
+                _device_name = _dev['serialNumber']
                 _target_cnt = eos_cnt_map[_device_name]
             else:
                 pS("INFO", f"Adding {_dev['hostname']}")
