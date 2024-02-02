@@ -199,6 +199,7 @@ def main():
         topo_filename = "ceos_build.yml"
     else:
         topo_filename = "topo_build.yml"
+    pS("INFO", f"Leveraging {topo_filename} build file")
     while True:
         if path.exists(f"{REPO_TOPO}{atd_yaml['topology']}/{topo_filename}"):
             pS("OK", "BUILD file is available.")
