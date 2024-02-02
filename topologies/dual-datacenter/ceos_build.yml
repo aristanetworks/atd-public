@@ -72,73 +72,97 @@ nodes:
   - name: s1-spine1
     mac: 00:1c:73:c0:c6:10
     ip_addr: 192.168.0.10
+    cv_manage: yes
   - name: s1-spine2
     mac: 00:1c:73:c0:c6:11
     ip_addr: 192.168.0.11
+    cv_manage: yes
   - name: s1-leaf1
     mac: 00:1c:73:c0:c6:12
     ip_addr: 192.168.0.12
+    cv_manage: yes
   - name: s1-leaf2
     mac: 00:1c:73:c0:c6:13
     ip_addr: 192.168.0.13
+    cv_manage: yes
   - name: s1-leaf3
     mac: 00:1c:73:c0:c6:14
     ip_addr: 192.168.0.14
+    cv_manage: yes
   - name: s1-leaf4
     mac: 00:1c:73:c0:c6:15
     ip_addr: 192.168.0.15
+    cv_manage: yes
   - name: s1-host1
     mac: 00:1c:73:c0:c6:16
     ip_addr: 192.168.0.16
+    cv_manage: yes
   - name: s1-host2
     mac: 00:1c:73:c0:c6:17
     ip_addr: 192.168.0.17
+    cv_manage: yes
   - name: s1-brdr1
     mac: 00:1c:73:c0:c1:00
     ip_addr: 192.168.0.100
+    cv_manage: yes
   - name: s1-brdr2
     mac: 00:1c:73:c0:c1:01
     ip_addr: 192.168.0.101
+    cv_manage: yes
   - name: s1-core1
     mac: 00:1c:73:c0:c1:02
     ip_addr: 192.168.0.102
+    cv_manage: yes
   - name: s1-core2
     mac: 00:1c:73:c0:c1:03
     ip_addr: 192.168.0.103
+    cv_manage: yes
   - name: s2-spine1
     mac: 00:1c:73:c0:c6:20
     ip_addr: 192.168.0.20
+    cv_manage: yes
   - name: s2-spine2
     mac: 00:1c:73:c0:c6:21
     ip_addr: 192.168.0.21
+    cv_manage: yes
   - name: s2-leaf1
     mac: 00:1c:73:c0:c6:22
     ip_addr: 192.168.0.22
+    cv_manage: yes
   - name: s2-leaf2
     mac: 00:1c:73:c0:c6:23
     ip_addr: 192.168.0.23
+    cv_manage: yes
   - name: s2-leaf3
     mac: 00:1c:73:c0:c6:24
     ip_addr: 192.168.0.24
+    cv_manage: yes
   - name: s2-leaf4
     mac: 00:1c:73:c0:c6:25
     ip_addr: 192.168.0.25
+    cv_manage: yes
   - name: s2-host1
     mac: 00:1c:73:c0:c6:26
     ip_addr: 192.168.0.26
+    cv_manage: yes
   - name: s2-host2
     mac: 00:1c:73:c0:c6:27
     ip_addr: 192.168.0.27
+    cv_manage: yes
   - name: s2-brdr1
     mac: 00:1c:73:c0:c2:00
     ip_addr: 192.168.0.200
+    cv_manage: yes
   - name: s2-brdr2
     mac: 00:1c:73:c0:c2:01
     ip_addr: 192.168.0.201
+    cv_manage: yes
   - name: s2-core1
     mac: 00:1c:73:c0:c2:02
     ip_addr: 192.168.0.202
+    cv_manage: yes
   - name: s2-core2
     mac: 00:1c:73:c0:c2:03
     ip_addr: 192.168.0.203
+    cv_manage: yes
 additional_ssh_nodes:

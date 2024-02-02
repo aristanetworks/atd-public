@@ -40,42 +40,62 @@ links:
 nodes:
   - name: eos1
     ip_addr: "192.168.0.10"
+    cv_manage: yes
   - name: eos2
     ip_addr: "192.168.0.11"
+    cv_manage: yes
   - name: eos3
     ip_addr: "192.168.0.12"
+    cv_manage: yes
   - name: eos4
     ip_addr: "192.168.0.13"
+    cv_manage: yes
   - name: eos5
     ip_addr: "192.168.0.14"
+    cv_manage: yes
   - name: eos6
     ip_addr: "192.168.0.15"
+    cv_manage: yes
   - name: eos7
     ip_addr: "192.168.0.16"
+    cv_manage: yes
   - name: eos8
     ip_addr: "192.168.0.17"
+    cv_manage: yes
   - name: eos9
     ip_addr: "192.168.0.18"
+    cv_manage: yes
   - name: eos10
     ip_addr: "192.168.0.19"
+    cv_manage: yes
   - name: eos11
     ip_addr: "192.168.0.20"
+    cv_manage: yes
   - name: eos12
     ip_addr: "192.168.0.21"
+    cv_manage: yes
   - name: eos13
     ip_addr: "192.168.0.22"
+    cv_manage: yes
   - name: eos14
     ip_addr: "192.168.0.23"
+    cv_manage: yes
   - name: eos15
     ip_addr: "192.168.0.24"
+    cv_manage: yes
   - name: eos16
     ip_addr: "192.168.0.25"
+    cv_manage: yes
   - name: eos17
     ip_addr: "192.168.0.26"
+    cv_manage: yes
   - name: eos18
     ip_addr: "192.168.0.27"
+    cv_manage: yes
   - name: eos19
     ip_addr: "192.168.0.28"
+    cv_manage: yes
   - name: eos20
     ip_addr: "192.168.0.29"
+    cv_manage: yes
 additional_ssh_nodes:
