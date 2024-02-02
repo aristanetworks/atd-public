@@ -94,6 +94,7 @@ def pS(mstat,mtype):
 
 
 def main():
+   NODES = []
    while True:
       if os.path.exists(ACCESS):
          break
@@ -110,6 +111,13 @@ def main():
       
    # Temp path for where repo will be cloned to (include trailing /)
    gitTempPath = '/opt/atd/'
+
+   # Determining the EOS type and build file
+   if accessinfo["eos_type"] == "ceos":
+      topo_filename = "ceos_build.yml"
+   else:
+      topo_filename = "topo_build.yml"
+
    # Check if Configlets should get updated
    # ==========================================
    # Add Check for CVP Mode
@@ -171,7 +179,16 @@ def main():
    _version = cvprac_clnt.api.get_cvp_info()
    _version = _version['version'].split('.')
    _version_major = float(f"{_version[0]}.{_version[1]}")
-   build_yaml = getTopoInfo(REPO_TOPO + accessinfo['topology'] + '/topo_build.yml')
+   build_yaml = getTopoInfo(f"{REPO_TOPO}{accessinfo['topology']}/{topo_filename}")
+
+   # Perform check and iterate over all nodes that are CV Manage
+   if accessinfo["eos_type"] == "ceos":
+      for _node in build_yaml["nodes"]:
+         if _node["cv_manage"]:
+            NODES.append(_node)
+   else:
+      NODES = build_yaml['nodes']
+
    # Perform check if it is a cEOS based topo and 2022.2 or later CVP
    if _version_major >= 2022.2:
       pS("INFO", "Generating a token for onboarding...")
@@ -180,9 +197,13 @@ def main():
       with open(f"{_token_path}", 'w') as token_out:
          token_out.write(_token_response['data'])
       # EOS_DEV = []
-      for dev in build_yaml['nodes']:
-         devn = list(dev.keys())[0]
-         _eos_ip = dev[devn]['ip_addr']
+      for dev in NODES:
+         if accessinfo["eos_type"] == "ceos":
+            devn = dev["name"]
+            _eos_ip = dev["ip_addr"]
+         else:
+            devn = list(dev.keys())[0]
+            _eos_ip = dev[devn]['ip_addr']
          with SSHClient() as ssh:
             ssh.set_missing_host_key_policy(AutoAddPolicy())
             ssh.connect(_eos_ip, username=cvpUsername, password=cvpPassword,)
@@ -195,7 +216,7 @@ def main():
    # ==========================================
    # Check to see how many nodes have connected
    # ==========================================
-   checkConnected(cvp_clnt, build_yaml['nodes'])
+   checkConnected(cvp_clnt, NODES)
 
    configlets = os.listdir(gitTempPath + configletPath)
 
