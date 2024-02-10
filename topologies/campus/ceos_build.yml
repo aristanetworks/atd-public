@@ -17,7 +17,7 @@ links:
   - [["spine-1", "et6"], ["leaf-3b", "et49"]]
   - [["spine-1", "et49/1"], ["spine-2", "et49/1"]]
   - [["spine-1", "et50/1"], ["spine-2", "et50/1"]]
-  - [["spine-2", "et3"], ["leaf-1a", "et50"]]
+  - [["spine-2", "et3"], ["leaf-1b", "et49"]]
   - [["spine-2", "et4"], ["leaf-2a", "et2/1"]]
   - [["spine-2", "et5"], ["leaf-3a", "et50"]]
   - [["spine-2", "et6"], ["leaf-3b", "et50"]]
