@@ -17,7 +17,7 @@ links:
   - [["spine-1", "et6"], ["leaf-3b", "et49"]]
   - [["spine-1", "et49/1"], ["spine-2", "et49/1"]]
   - [["spine-1", "et50/1"], ["spine-2", "et50/1"]]
-  - [["spine-2", "et3"], ["leaf-1b", "et49"]]
+  - [["spine-2", "et3"], ["leaf-1a", "et50"]]
   - [["spine-2", "et4"], ["leaf-2a", "et2/1"]]
   - [["spine-2", "et5"], ["leaf-3a", "et50"]]
   - [["spine-2", "et6"], ["leaf-3b", "et50"]]
@@ -42,55 +42,73 @@ nodes:
   - name: router-1
     mac: 00:1c:73:b0:c6:01
     ip_addr: 192.168.0.10
+    cv_manage: true
   - name: router-2
     mac: 00:1c:73:b1:c6:01
     ip_addr: 192.168.0.11
+    cv_manage: true
   - name: spine-1
     mac: 00:1c:73:b2:c6:01
     ip_addr: 192.168.0.12
+    cv_manage: true
   - name: spine-2
     mac: 00:1c:73:b3:c6:01
     ip_addr: 192.168.0.13
+    cv_manage: true
   - name: leaf-1a
     mac: 00:1c:73:b4:c6:01
     ip_addr: 192.168.0.14
+    cv_manage: true
   - name: leaf-1b
     mac: 00:1c:73:b5:c6:01
     ip_addr: 192.168.0.15
+    cv_manage: true
   - name: leaf-2a
     mac: 00:1c:73:b6:c6:01
     ip_addr: 192.168.0.16
+    cv_manage: true
   - name: leaf-3a
     mac: 00:1c:73:b7:c6:01
     ip_addr: 192.168.0.17
+    cv_manage: true
   - name: leaf-3b
     mac: 00:1c:73:b8:c6:01
     ip_addr: 192.168.0.18
+    cv_manage: true
   - name: member-leaf-3c
     mac: 00:1c:73:b9:c6:01
     ip_addr: 192.168.0.19
+    cv_manage: true
   - name: member-leaf-3d
     mac: 00:1c:73:c0:c6:01
     ip_addr: 192.168.0.20
+    cv_manage: true
   - name: member-leaf-3e
     mac: 00:1c:73:c1:c6:01
     ip_addr: 192.168.0.21
+    cv_manage: true
   - name: host-1
     mac: 00:1c:73:c2:c6:01
     ip_addr: 192.168.0.22
+    cv_manage: false
   - name: host-2
     mac: 00:1c:73:c3:c6:01
     ip_addr: 192.168.0.23
+    cv_manage: false
   - name: host-3
     mac: 00:1c:73:c4:c6:01
     ip_addr: 192.168.0.24
+    cv_manage: false
   - name: host-4
     mac: 00:1c:73:c5:c6:01
     ip_addr: 192.168.0.25
+    cv_manage: false
   - name: host-5
     mac: 00:1c:73:c6:c6:01
     ip_addr: 192.168.0.26
+    cv_manage: false
   - name: host-6
     mac: 00:1c:73:c7:c6:01
     ip_addr: 192.168.0.27
+    cv_manage: false
 additional_ssh_nodes:

@@ -318,35 +318,35 @@ topologies:
     access: standard
     disable_links: []
     labguides: self
-#  campus:
-#    dev:
-#      ceos:
-#        cpu: 32
-#        ram: 54
-#        cvp:
-#          2023.3.0:
-#            schema: 2
-#            resources_eos:
-#              cpu: 22
-#              ram: 48
-#              disk: 50
-#              image: atd-campus-c2023-3-0-ceos-20240201-eos
-#            resources_cvp:
-#              cpu: 28
-#              ram: 36
-#              disk: 300
-#              image: atd-campus-c2023-3-0-ceos-20240201-cvp
-#            branch: nested-release
-#            orderable: true
-#            eos:
-#              - 4.31.1F
-#    desc: 'Campus ATD Topology'
-#    name: 'Campus'
-#    title: 'Campus Lab'
-#    disk_size: 300
-#    access: admin
-#    disable_links: []
-#    labguides: self
+  campus:
+    dev:
+      ceos:
+        cpu: 32
+        ram: 54
+        cvp:
+          2023.3.0:
+            schema: 2
+            resources_eos:
+              cpu: 22
+              ram: 48
+              disk: 50
+              image: atd-alma-campus-c2023-3-0-ceos-20240202-eos
+            resources_cvp:
+              cpu: 28
+              ram: 36
+              disk: 300
+              image: atd-alma-campus-c2023-3-0-ceos-20240202-cvp
+            branch: nested-release
+            orderable: true
+            eos:
+              - 4.31.1F
+    desc: 'Campus ATD Topology'
+    name: 'Campus'
+    title: 'Campus Lab'
+    disk_size: 300
+    access: admin
+    disable_links: []
+    labguides: self
   wan:
     dev:
       veos:

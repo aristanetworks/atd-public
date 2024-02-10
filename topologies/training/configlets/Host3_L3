@@ -1,7 +1,0 @@
-vlan 12,34,101
-!
-interface Ethernet1
-   switchport access vlan 101
-!
-interface Vlan101
-   ip address 192.168.101.2/24

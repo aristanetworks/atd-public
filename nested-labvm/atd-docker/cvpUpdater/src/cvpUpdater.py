@@ -44,7 +44,7 @@ def checkContainer(cnt):
     if cnt not in CVP_CONTAINERS:
         CVP_CONTAINERS.append(cnt)
 
-def getEosDevice(topo,eosYaml,cvpMapper):
+def getEosDevice(topo,eosYaml,cvpMapper,topoType):
     """
     Function that Parses through the YAML file and creates a CVPSWITCH class object for each EOS device in the topo file.
     Parameters:
@@ -54,12 +54,19 @@ def getEosDevice(topo,eosYaml,cvpMapper):
     """
     EOS_DEV = []
     for dev in eosYaml:
-        devn = list(dev.keys())[0]
-        try:
-            EOS_DEV.append(CVPSWITCH(devn,dev[devn]['ip_addr'],cvpMapper[devn]))
-            checkContainer(cvpMapper[dev])
-        except:
-            EOS_DEV.append(CVPSWITCH(devn,dev[devn]['ip_addr']))
+        if topoType == "ceos":
+            try:
+                EOS_DEV.append(CVPSWITCH(dev["name"], dev["ip_addr"], cvpMapper[dev["name"]]))
+                checkContainer(cvpMapper[dev])
+            except:
+                EOS_DEV.append(CVPSWITCH(dev["name"],dev["ip_addr"]))
+        else:
+            devn = list(dev.keys())[0]
+            try:
+                EOS_DEV.append(CVPSWITCH(devn,dev[devn]['ip_addr'],cvpMapper[devn]))
+                checkContainer(cvpMapper[dev])
+            except:
+                EOS_DEV.append(CVPSWITCH(devn,dev[devn]['ip_addr']))
     return(EOS_DEV)
 
 def eosDeviceMapper(eos_type, eos_yaml):
@@ -71,10 +78,11 @@ def eosDeviceMapper(eos_type, eos_yaml):
     """
     EOS_DEV = {}
     for dev in eos_yaml:
-        devn = list(dev.keys())[0]
         if eos_type == "ceos":
-            EOS_DEV[devn] = devn
+            devn = dev["name"]
+            EOS_DEV[devn] = dev
         else:
+            devn = list(dev.keys())[0]
             _ip_addr = dev[devn]['ip_addr']
             EOS_DEV[_ip_addr] = devn
     return(EOS_DEV)
@@ -117,11 +125,11 @@ def checkConnected(cvp_clnt, NODES, eos_type):
     cvp_inventory = cvp_clnt.api.get_inventory()
     tmp_device_count = len(cvp_inventory)
     while len(NODES) > tmp_device_count:
-        pS("INFO", "Only {0} out of {1} nodes have registered to CVP. Sleeping {2} seconds.".format(tmp_device_count, len(NODES), sleep_delay))
+        pS("INFO", f"Only {tmp_device_count} out of {len(NODES)} nodes have registered to CVP. Sleeping {sleep_delay} seconds.")
         sleep(sleep_delay)
         cvp_inventory = cvp_clnt.api.get_inventory()
         tmp_device_count = len(cvp_inventory)
-    pS("OK", "All {0} out of {1} nodes have registered to CVP.".format(tmp_device_count, len(NODES)))
+    pS("OK", f"All {tmp_device_count} out of {len(NODES)} nodes have registered to CVP.")
     return(True)
 
 
@@ -137,11 +145,11 @@ def importConfiglets(cvp_clnt, cfg_dir):
         pro_cfglt = listdir(cfg_dir)
         for tmp_cfg in pro_cfglt:
             if '.py' in tmp_cfg:
-                pS("INFO","Adding/Updating {0} configlet builder.".format(tmp_cfg))
+                pS("INFO",f"Adding/Updating {tmp_cfg} configlet builder.")
                 cbname = tmp_cfg.replace('.py','')
                 # Check for a form file
                 if tmp_cfg.replace('.py', '.form') in pro_cfglt:
-                    pS("INFO", "Form data found for {0}".format(cbname))
+                    pS("INFO", f"Form data found for {cbname}")
                     with open(cfg_dir + tmp_cfg.replace('.py', '.form'), 'r') as configletData:
                         configletForm = configletData.read()
                     configletFormData = YAML().load(configletForm)['FormList']
@@ -150,12 +158,12 @@ def importConfiglets(cvp_clnt, cfg_dir):
                 with open(cfg_dir + tmp_cfg,'r') as cfglt:
                     cfg_data = cfglt.read()
                 res = cvp_clnt.impConfiglet('builder', cbname, cfg_data, configletFormData)
-                pS("OK", "{0} Configlet Builder: {1}".format(res[0],cbname))                
+                pS("OK", f"{res[0]} Configlet Builder: {cbname}")
             elif '.form' in tmp_cfg:
                 # Ignoring .form files here
                 pass
             else:
-                pS("INFO","Adding/Updating {0} static configlet.".format(tmp_cfg))
+                pS("INFO",f"Adding/Updating {tmp_cfg} static configlet.")
                 with open(cfg_dir + tmp_cfg,'r') as cfglt:
                     cvp_clnt.impConfiglet('static',tmp_cfg,cfglt.read())
         pS("INFO", "All configlets imported")
@@ -173,6 +181,7 @@ def main():
     cvp_clnt = ""
     file_counter = 0
     containers = {}
+    NODES = []
     while True:
         if path.exists(topo_file):
             pS("OK", "ACCESS_INFO file is available.")
@@ -182,28 +191,34 @@ def main():
                 exit('Access INFO timer expired')
             else:
                 file_counter += 1
-                pS("ERROR", "ACCESS_INFO file is not available...Waiting for {0} seconds".format(sleep_delay))
+                pS("ERROR", f"ACCESS_INFO file is not available...Waiting for {sleep_delay} seconds")
                 sleep(sleep_delay)
     atd_yaml = getTopoInfo(topo_file)
     cvp_yaml = getTopoInfo(cvp_file)
     file_counter = 0
+    if atd_yaml["eos_type"] == "ceos":
+        topo_filename = "ceos_build.yml"
+    else:
+        topo_filename = "topo_build.yml"
+    pS("INFO", f"Leveraging {topo_filename} build file")
     while True:
-        if path.exists(REPO_TOPO + atd_yaml['topology'] + '/topo_build.yml'):
-            pS("OK", "TOPO_BUILD file is available.")
+        if path.exists(f"{REPO_TOPO}{atd_yaml['topology']}/{topo_filename}"):
+            pS("OK", "BUILD file is available.")
             break
         else:
             if file_counter >= 10:
                 exit('Topo Build timer expired')
             else:
                 file_counter += 1
-                pS("ERROR", "TOPO_BUILD file is not available...Waiting for {0} seconds".format(sleep_delay))
+                pS("ERROR", f"BUILD file is not available...Waiting for {sleep_delay} seconds")
                 sleep(sleep_delay)
 
-    build_yaml = getTopoInfo(REPO_TOPO + atd_yaml['topology'] + '/topo_build.yml')
+    build_yaml = getTopoInfo(f"{REPO_TOPO}{atd_yaml['topology']}/{topo_filename}")
+
     eos_cnt_map = eosContainerMapper(cvp_yaml['cvp_info']['containers'])
-    eos_info = getEosDevice(atd_yaml['topology'],build_yaml['nodes'],eos_cnt_map)
+    eos_info = getEosDevice(atd_yaml['topology'],build_yaml['nodes'],eos_cnt_map, atd_yaml['eos_type'])
     eos_dev_map = eosDeviceMapper(atd_yaml['eos_type'], build_yaml['nodes'])
-    configlet_location = '/opt/atd/topologies/{0}/configlets/'.format(atd_yaml['topology'])
+    configlet_location = f"/opt/atd/topologies/{atd_yaml['topology']}/configlets/"
     cvpUsername = atd_yaml['login_info']['jump_host']['user']
     cvpPassword = atd_yaml['login_info']['jump_host']['pw']
     while not cvp_clnt:
@@ -212,14 +227,20 @@ def main():
             cvprac_clnt.api.request_timeout = 180
             cvprac_clnt.connect([atd_yaml['nodes']['cvp'][0]['ip']], cvpUsername, cvpPassword)
             cvp_clnt = CVPCON(atd_yaml['nodes']['cvp'][0]['ip'], cvpUsername, cvpPassword)
-            pS("OK","Connected to CVP at {0}".format(atd_yaml['nodes']['cvp'][0]['ip']))
+            pS("OK",f"Connected to CVP at {atd_yaml['nodes']['cvp'][0]['ip']}")
         except:
-            pS("ERROR","CVP is currently unavailable....Retrying in {0} seconds.".format(sleep_delay))
+            pS("ERROR",f"CVP is currently unavailable....Retrying in {sleep_delay} seconds.")
             sleep(sleep_delay)
 
-    # Check to see if all nodes have connected to CVP before proceeding
-    FILE_BUILD = YAML().load(open(REPO_TOPO + atd_yaml['topology'] + '/topo_build.yml', 'r'))
-    NODES = FILE_BUILD['nodes']
+    FILE_BUILD = YAML().load(open(f"{REPO_TOPO}{atd_yaml['topology']}/{topo_filename}", 'r'))
+
+    # Perform check and iterate over all nodes that are CV Manage
+    if atd_yaml["eos_type"] == "ceos":
+        for _node in FILE_BUILD["nodes"]:
+            if _node["cv_manage"]:
+                NODES.append(_node)
+    else:
+        NODES = FILE_BUILD['nodes']
     # ==========================================
     # Add Check for configlet import only
     # ==========================================
@@ -267,9 +288,9 @@ def main():
                         _results = cvprac_clnt.api.search_topology("Tenant")
                         containers["Tenant"] = _results['containerList'][0]
                     cvprac_clnt.api.add_container(p_cnt, "Tenant", containers["Tenant"]['key'])
-                pS("OK","Added {0} container".format(p_cnt))
+                pS("OK",f"Added {p_cnt} container")
             else:
-                pS("INFO","{0} container already exists....skipping".format(p_cnt))
+                pS("INFO", f"{p_cnt} container already exists....skipping")
             if p_cnt not in containers:
                 _results = cvprac_clnt.api.search_topology(p_cnt)
                 containers[p_cnt] = _results['containerList'][0]
@@ -292,7 +313,7 @@ def main():
                                 'name': ex_cfg['name'],
                                 'key': ex_cfg['key']
                             })
-                pS("OK","Configlets found for {0} container.  Will apply".format(p_cnt))
+                pS("OK",f"Configlets found for {p_cnt} container.  Will apply")
                 cvprac_clnt.api.remove_configlets_from_container("cvpUpdater", container_info, cfgs_cnt_ignore)
                 cvprac_clnt.api.apply_configlets_to_container("cvpUpdater", container_info, proposed_cfgs)
                 pending_tasks = cvprac_clnt.api.get_tasks_by_status("pending")
@@ -310,13 +331,13 @@ def main():
                             task_info = cvprac_clnt.api.get_task_by_id(task_id)
                             task_status = task_info['workOrderUserDefinedStatus']
                             if task_status == 'Failed':
-                                pS("iBerg", "Task ID: {0} Status: {1}".format(task_id, task_status))
+                                pS("iBerg", f"Task ID: {task_id} Status: {task_status}")
                                 break
                             elif task_status == 'Completed':
-                                pS("INFO", "Task ID: {0} Status: {1}".format(task_id, task_status))
+                                pS("INFO", f"Task ID: {task_id} Status: {task_status}")
                                 break
                             else:
-                                pS("INFO", "Task ID: {0} Status: {1}, Waiting 10 seconds...".format(task_id, task_status))
+                                pS("INFO", f"Task ID: {task_id} Status: {task_status}, Waiting 10 seconds...")
                                 sleep(10)
                 else:
                     pS("INFO", "No pending tasks found")
@@ -332,7 +353,7 @@ def main():
             # Check if this is a cEOS ZTP setup
             if atd_yaml['eos_type'] == "ceos":
                 pS("INFO", f"Adding {_dev['hostname']} with s/n {_dev['serialNumber']}")
-                _device_name = eos_dev_map[_dev['serialNumber']]
+                _device_name = _dev['serialNumber']
                 _target_cnt = eos_cnt_map[_device_name]
             else:
                 pS("INFO", f"Adding {_dev['hostname']}")
@@ -352,38 +373,39 @@ def main():
             task_status = task_info['workOrderUserDefinedStatus']
             previous_status = ''
             if task_status == "Completed":
-                pS("OK", "Task ID: {0} Status: {1}".format(task_id, task_status))
+                pS("OK", f"Task ID: {task_id} Status: {task_status}")
             while task_status != "Completed":
                 task_info = cvprac_clnt.api.get_task_by_id(task_id)
                 task_status = task_info['workOrderUserDefinedStatus']
                 if task_status:
                     if task_status == 'Failed':
-                        pS("iBerg", "Task ID: {0} Status: {1}".format(task_id, task_status))
+                        pS("iBerg", f"Task ID: {task_id} Status: {task_status}")
                         break
                     elif task_status == 'Completed':
-                        pS("OK", "Task ID: {0} Status: {1}".format(task_id, task_status))
+                        pS("OK", f"Task ID: {task_id} Status: {task_status}")
                     else:
-                        pS("INFO", "Task ID: {0} Status: {1}, Waiting 10 seconds...".format(task_id, task_status))
+                        pS("INFO", f"Task ID: {task_id} Status: {task_status}, Waiting 10 seconds...")
                         previous_status = task_status
                         sleep(10)
                 else:
-                    pS("INFO", "Task ID: {0} Status: {1}, Waiting 10 seconds...".format(task_id, previous_status))
+                    pS("INFO", f"Task ID: {task_id} Status: {previous_status}, Waiting 10 seconds...")
                     sleep(10)
 
         # ==========================================
         # Creating Snapshots
         # ==========================================
-        if cvp_yaml['cvp_info']['snapshots']:
-            for p_snap in cvp_yaml['cvp_info']['snapshots']:
-                NEW_SNAP = True
-                for e_snap in cvp_clnt.snapshots:
-                    if p_snap['name'] == e_snap['name']:
-                        NEW_SNAP = False
-                if NEW_SNAP:
-                    cvp_clnt.createSnapshot(p_snap['name'],p_snap['commands'])
-                    pS("OK","Created {0} Snapshot".format(p_snap['name']))
-                else:
-                    pS("OK","Snapshot {0} already exists".format(p_snap['name']))
+        if "snapshots" in cvp_yaml["cvp_info"]:
+            if cvp_yaml['cvp_info']['snapshots']:
+                for p_snap in cvp_yaml['cvp_info']['snapshots']:
+                    NEW_SNAP = True
+                    for e_snap in cvp_clnt.snapshots:
+                        if p_snap['name'] == e_snap['name']:
+                            NEW_SNAP = False
+                    if NEW_SNAP:
+                        cvp_clnt.createSnapshot(p_snap['name'],p_snap['commands'])
+                        pS("OK",f"Created {p_snap['name']} Snapshot")
+                    else:
+                        pS("OK",f"Snapshot {p_snap['name']} already exists")
         # Logout and close session to CVP
         cvp_clnt.execLogout()
         pS("OK","Logged out of CVP")

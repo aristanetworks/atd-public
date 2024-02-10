@@ -1,6 +1,0 @@
-interface Ethernet1
-   ip ospf network point-to-point
-!
-router ospf 300
-   network 0.0.0.0/0 area 0.0.0.0
-   max-lsa 12000

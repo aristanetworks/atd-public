@@ -1,5 +1,0 @@
-router bgp 15
-   router-id 15.15.15.15
-   neighbor 10.8.15.8 remote-as 100
-   neighbor 10.8.15.8 maximum-routes 12000 
-   network 15.15.15.15/32

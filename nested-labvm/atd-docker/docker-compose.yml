@@ -52,7 +52,7 @@ services:
       - /var/lib/libvirt/images/veos:/var/lib/libvirt/images/veos:rw
   cvpupdater:
     container_name: atd-cvpupdater
-    image: us.gcr.io/beta-atds/atddocker_cvpupdater:2.3.1
+    image: us.gcr.io/beta-atds/atddocker_cvpupdater:2.4.2
     user: $ArID:$ArGD
     restart: always
     environment:
@@ -64,7 +64,7 @@ services:
       - cvp_dir:/home/arista/CVP_DATA:rw
   gitconfigletsync:
     container_name: atd-gitconfigletsync
-    image: us.gcr.io/beta-atds/atddocker_gitconfigletsync:2.2.2
+    image: us.gcr.io/beta-atds/atddocker_gitconfigletsync:2.3.3
     user: $ArID:$ArGD
     restart: always
     environment:
@@ -76,7 +76,7 @@ services:
       - cvp_dir:/home/arista/CVP_DATA:rw
   kvmbuilder:
     container_name: atd-kvmbuilder
-    image: us.gcr.io/beta-atds/atddocker_kvmbuilder:2.3.1
+    image: us.gcr.io/beta-atds/atddocker_kvmbuilder:2.3.2
     user: $AtID:$AtGD
     restart: on-failure
     environment:
@@ -183,7 +183,6 @@ services:
       - /home/arista/arista-dir/apps/coder/coder.yaml:/home/coder/.config/code-server/config.yaml:rw
       - /home/arista/.ssh:/home/coder/.ssh:rw
       - /home/arista/GUI_Desktop/persist:/home/coder/project/persist:rw
-      - /home/arista/arista-dir/hosts:/etc/hosts:ro
       - /home/arista/arista-dir/apps/coder/labfiles:/home/coder/project/labfiles:rw
       - /home/arista/arista-dir/.ansible.cfg:/home/coder/.ansible.cfg:rw
       - /opt/sftp/uploads:/opt/sftp:ro
