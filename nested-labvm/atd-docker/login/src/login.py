@@ -22,16 +22,25 @@ f.close()
 topology = access_info['topology']
 login_info = access_info['login_info']
 
-# Open topo_build.yaml and load
+
+EOS_TYPE = access_info["eos_type"]
+
+if EOS_TYPE == "ceos":
+  topo_file = "ceos_build.yml"
+else:
+  topo_file = "topo_build.yml"
+
+# Open the TOPO file and load
 try:
-  f = open('/opt/atd/topologies/{0}/topo_build.yml'.format(topology))
+  f = open(f"/opt/atd/topologies/{topology}/{topo_file}")
   topoinfo = YAML().load(f)
   f.close()
 except:
   sys.exit("topo_build not available")
 
-veos_info = topoinfo['nodes']
-additional_ssh_nodes = topoinfo['additional_ssh_nodes']
+eos_info = topoinfo['nodes']
+if "additional_ssh_nodes" in topoinfo:
+  additional_ssh_nodes = topoinfo['additional_ssh_nodes']
 
 # Set default menu mode
 menu_mode = 'MAIN'
@@ -47,23 +56,29 @@ def text_to_int(text):
 def natural_keys(text):
   return [ text_to_int(char) for char in re.split(r'(\d+)', text) ]
 
-def sort_veos(vd):
+def sort_eos(vd, eos_type):
   tmp_l = []
   tmp_d = {}
   fin_l = []
-  for t_veos in vd:
-        t_veos_name = list(t_veos.keys())[0]
-        tmp_l.append(t_veos_name)
-        tmp_d[t_veos_name] = dict(t_veos[t_veos_name])
-        tmp_d[t_veos_name]['hostname'] = t_veos_name
+  for t_eos in vd:
+    if eos_type == "veos":
+      t_eos_name = list(t_eos.keys())[0]
+    else:
+      t_eos_name = t_eos["name"]
+    tmp_l.append(t_eos_name)
+    if eos_type == "veos":
+      tmp_d[t_eos_name] = dict(t_eos[t_eos_name])
+    else:
+      tmp_d[t_eos_name] = t_eos
+    tmp_d[t_eos_name]['hostname'] = t_eos_name
   tmp_l.sort(key=natural_keys)
   # If cvx in list, move to end
   if 'cvx' in tmp_l[0]:
         tmp_cvx = tmp_l[0]
         tmp_l.pop(0)
         tmp_l.append(tmp_cvx)
-  for t_veos in tmp_l:
-    fin_l.append(tmp_d[t_veos])
+  for t_eos in tmp_l:
+    fin_l.append(tmp_d[t_eos])
   return(fin_l)
 
 def send_to_syslog(mstat,mtype):
@@ -85,7 +100,7 @@ def device_menu():
     device_dict = {}
 
     # Sort veos instances
-    veos_info_sorted = sort_veos(veos_info)
+    eos_info_sorted = sort_eos(eos_info, EOS_TYPE)
     print("\n\n*****************************************")
     print("*****Jump Host for Arista Test Drive*****")
     print("*****************************************")
@@ -100,7 +115,7 @@ def device_menu():
     print("\nPlease select from the following options:")
 
     counter = 1
-    for veos in veos_info_sorted:
+    for veos in eos_info_sorted:
         print("{0}. {1} ({2})".format(str(counter),veos['hostname'],veos['hostname']))
         device_dict[str(counter)] = veos['ip_addr']
         device_dict[veos['hostname']] = veos['ip_addr']

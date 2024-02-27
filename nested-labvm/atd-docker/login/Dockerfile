@@ -1,4 +1,4 @@
-FROM python:3.9
+FROM python:3.11
 
 RUN adduser --disabled-password --shell /usr/local/bin/login.py --home /home/arista --gecos "" arista
 
