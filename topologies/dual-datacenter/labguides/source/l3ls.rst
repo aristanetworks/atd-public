@@ -398,7 +398,7 @@ Layer 3 Leaf-Spine
 
 #. Other BGP features to play with if you have time:
 
-   a. Route Redistribution: For fun do a ``watch 1 diff show ip route | begin
+   a. Route Redistribution: For fun, do a ``watch 1 diff show ip route | begin
       Gateway`` on **s1-leaf1** & **s1-leaf2** and let those run while you execute the
       command ``redistribute connected`` below on **s1-leaf3**. You will see new routes being
       injected into the route tables of **s1-leaf1** & **s1-leaf2**.
@@ -408,7 +408,9 @@ Layer 3 Leaf-Spine
          router bgp 65102
             redistribute connected
 
-   #. Route Maps and Prefix-Lists:
+   #. Route Maps and Prefix-Lists: Below is an example of some basic Prefix-Lists 
+      and Route-Maps that can be used for BGP filtering. Note that this is just an example and 
+      will not impact route advertisement in the lab.
 
       .. code-block:: text
          
@@ -419,24 +421,25 @@ Layer 3 Leaf-Spine
          ip prefix-list BOGON-Prefixes seq 30 permit 192.168.0.0/16
          !
          route-map BOGONS permit 10
-         match ip address prefix-list BOGON-Prefixes
+            match ip address prefix-list BOGON-Prefixes
          !
          route-map BOGONS deny 20
          !
          route-map InboundSP1 deny 10
-         sub-route-map BOGONS
+            sub-route-map BOGONS
          !
          route-map InboundSP1 permit 20
-         set local-preference 200
+            set local-preference 200
          !
-         router bgp 65000
+         router bgp 65102
             neighbor UpstreamSP1 route-map InboundSP1 in
 
    #. BFD: BFD is a low-overhead, protocol-independent mechanism which adjacent
       systems can use instead for faster detection of faults in the path between
       them. BFD is a simple mechanism which detects the liveness of a connection
       between adjacent systems, allowing it to quickly detect failure of any
-      element in the connection.
+      element in the connection. Note that BFD is not running on the other devices 
+      so the BFD neighbor will not come up.
 
       .. code-block:: text
 
