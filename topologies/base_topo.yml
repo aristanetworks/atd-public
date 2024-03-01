@@ -11,7 +11,7 @@ topologies:
             resources_eos:
               cpu: 22
               ram: 42
-              disk: 50
+              disk: 60
               image: atd-dual-datacenter-c2023-2-0-ceos-20231120-eos
             resources_cvp:
               cpu: 28
@@ -30,7 +30,7 @@ topologies:
             resources_eos:
               cpu: 22
               ram: 42
-              disk: 50
+              disk: 60
               image: atd-dual-datacenter-c2023-2-0-bare-ceos-20231120-eos
             resources_cvp:
               cpu: 28
@@ -49,7 +49,7 @@ topologies:
             resources_eos:
               cpu: 22
               ram: 48
-              disk: 50
+              disk: 60
               image: atd-alma-dual-datacenter-c2023-3-0-ceos-20240129-eos
             resources_cvp:
               cpu: 28
@@ -73,7 +73,7 @@ topologies:
             resources_eos:
               cpu: 22
               ram: 42
-              disk: 50
+              disk: 60
               image: atd-dual-datacenter-c2023-1-1-ceos-20231110-eos
             resources_cvp:
               cpu: 28
@@ -93,7 +93,7 @@ topologies:
             resources_eos:
               cpu: 22
               ram: 42
-              disk: 50
+              disk: 60
               image: atd-dual-datacenter-c2023-1-1-bare-ceos-20231110-eos
             resources_cvp:
               cpu: 28
@@ -113,14 +113,14 @@ topologies:
             resources_eos:
               cpu: 22
               ram: 42
-              disk: 50
+              disk: 60
               image: atd-dual-datacenter-c2023-2-0-ceos-20231120-eos
             resources_cvp:
               cpu: 28
               ram: 36
               disk: 300
               image: atd-dual-datacenter-c2023-2-0-ceos-20231120-cvp
-            branch: v2023.2-20240130a
+            branch: v2023.2-20240227a
             orderable: true
             eos:
               - 4.31.1F
@@ -132,14 +132,14 @@ topologies:
             resources_eos:
               cpu: 22
               ram: 42
-              disk: 50
+              disk: 60
               image: atd-dual-datacenter-c2023-2-0-bare-ceos-20231120-eos
             resources_cvp:
               cpu: 28
               ram: 36
               disk: 300
               image: atd-dual-datacenter-c2023-2-0-bare-ceos-20231120-cvp
-            branch: v2023.2-20240130a
+            branch: v2023.2-20240227a
             orderable: true
             eos:
               - 4.31.1F
@@ -164,7 +164,7 @@ topologies:
             resources_eos:
               cpu: 38
               ram: 70
-              disk: 50
+              disk: 60
               image: atd-routing-c2023-2-0-veos-4-31-0f-20231120-eos
             resources_cvp:
               cpu: 28
@@ -180,7 +180,7 @@ topologies:
             resources_eos:
               cpu: 38
               ram: 70
-              disk: 50
+              disk: 60
               image: atd-alma-routing-c2023-3-0-veos-4-31-1f-20240130-eos
             resources_cvp:
               cpu: 28
@@ -200,7 +200,7 @@ topologies:
             resources_eos:
               cpu: 22
               ram: 42
-              disk: 50
+              disk: 60
               image: atd-routing-c2023-2-0-ceos-20231120-eos
             resources_cvp:
               cpu: 28
@@ -219,7 +219,7 @@ topologies:
             resources_eos:
               cpu: 22
               ram: 42
-              disk: 50
+              disk: 60
               image: atd-alma-routing-c2023-3-0-ceos-20240130-eos
             resources_cvp:
               cpu: 28
@@ -243,7 +243,7 @@ topologies:
             resources_eos:
               cpu: 22
               ram: 42
-              disk: 50
+              disk: 60
               image: atd-routing-c2023-1-1-ceos-20231110-eos
             resources_cvp:
               cpu: 28
@@ -261,14 +261,14 @@ topologies:
             resources_eos:
               cpu: 22
               ram: 42
-              disk: 50
+              disk: 60
               image: atd-routing-c2023-2-0-ceos-20231120-eos
             resources_cvp:
               cpu: 28
               ram: 36
               disk: 300
               image: atd-routing-c2023-2-0-ceos-20231120-cvp
-            branch: v2023.2-20240130a
+            branch: v2023.2-20240227a
             orderable: true
             eos:
               - 4.31.1F
@@ -284,7 +284,7 @@ topologies:
             resources_eos:
               cpu: 38
               ram: 70
-              disk: 50
+              disk: 60
               image: atd-routing-c2023-1-1-veos-4-30-1f-20231110-eos
             resources_cvp:
               cpu: 28
@@ -300,14 +300,14 @@ topologies:
             resources_eos:
               cpu: 38
               ram: 70
-              disk: 50
+              disk: 60
               image: atd-routing-c2023-2-0-veos-4-31-0f-20231120-eos
             resources_cvp:
               cpu: 28
               ram: 36
               disk: 300
               image: atd-routing-c2023-2-0-veos-4-31-0f-20231120-cvp
-            branch: v2023.2-20240130a
+            branch: v2023.2-20240227a
             orderable: true
             eos:
               - 4.31.0F
@@ -329,16 +329,17 @@ topologies:
             resources_eos:
               cpu: 22
               ram: 48
-              disk: 50
-              image: atd-alma-campus-c2023-3-0-ceos-20240202-eos
+              disk: 60
+              image: atd-alma-campus-c2023-3-0-ceos-20240212-eos
             resources_cvp:
               cpu: 28
               ram: 36
               disk: 300
-              image: atd-alma-campus-c2023-3-0-ceos-20240202-cvp
+              image: atd-alma-campus-c2023-3-0-ceos-20240212-cvp
             branch: nested-release
             orderable: true
             eos:
+              - 4.31.2F
               - 4.31.1F
     desc: 'Campus ATD Topology'
     name: 'Campus'
