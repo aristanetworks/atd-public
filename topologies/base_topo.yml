@@ -357,11 +357,32 @@ topologies:
             eos:
               - 4.31.2F
               - 4.31.1F
+    prod:
+      ceos:
+        cpu: 32
+        ram: 54
+        cvp:
+          am-demo:
+            schema: 2
+            resources_eos:
+              cpu: 22
+              ram: 48
+              disk: 60
+              image: atd-alma-campus-c2023-3-0-ceos-20240301-eos
+            resources_cvp:
+              cpu: 28
+              ram: 36
+              disk: 300
+              image: atd-alma-campus-c2023-3-0-ceos-20240301-cvp
+            branch: v2023.3-20240301a
+            orderable: true
+            eos:
+              - 4.31.1F
     desc: 'Campus ATD Topology'
     name: 'Campus'
     title: 'Campus Lab'
     disk_size: 300
-    access: admin
+    access: standard
     disable_links: []
     labguides: self
   wan:
