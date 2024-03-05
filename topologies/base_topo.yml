@@ -50,19 +50,17 @@ topologies:
               cpu: 22
               ram: 48
               disk: 60
-              image: atd-alma-dual-datacenter-c2023-3-0-ceos-20240129-eos
+              image: atd-alma-dual-datacenter-c2023-3-0-ceos-20240305-eos
             resources_cvp:
               cpu: 28
               ram: 36
               disk: 300
-              image: atd-alma-dual-datacenter-c2023-3-0-ceos-20240129-cvp
-            branch: nested-release
+              image: atd-alma-dual-datacenter-c2023-3-0-ceos-20240305-cvp
+            branch: nested/2023.3
             orderable: true
             eos:
+              - 4.31.2F
               - 4.31.1F
-              - 4.31.0F
-              - 4.30.2F
-              - 4.30.1F
     prod:
       ceos:
         cpu: 40
@@ -181,16 +179,16 @@ topologies:
               cpu: 38
               ram: 70
               disk: 60
-              image: atd-alma-routing-c2023-3-0-veos-4-31-1f-20240130-eos
+              image: atd-alma-routing-c2023-3-0-veos-4-31-2f-20240305-eos
             resources_cvp:
               cpu: 28
               ram: 36
               disk: 300
-              image: atd-alma-routing-c2023-3-0-veos-4-31-1f-20240130-cvp
-            branch: nested-release
+              image: atd-alma-routing-c2023-3-0-veos-4-31-2f-20240305-cvp
+            branch: nested/2023.3
             orderable: true
             eos:
-              - 4.31.1F
+              - 4.31.2F
       ceos:
         cpu: 32
         ram: 64
@@ -220,19 +218,17 @@ topologies:
               cpu: 22
               ram: 42
               disk: 60
-              image: atd-alma-routing-c2023-3-0-ceos-20240130-eos
+              image: atd-alma-routing-c2023-3-0-ceos-20240305-eos
             resources_cvp:
               cpu: 28
               ram: 36
               disk: 300
-              image: atd-alma-routing-c2023-3-0-ceos-20240130-cvp
-            branch: nested-release
+              image: atd-alma-routing-c2023-3-0-ceos-20240305-cvp
+            branch: nested/2023.3
             orderable: true
             eos:
+              - 4.31.2F
               - 4.31.1F
-              - 4.31.0F
-              - 4.30.2F
-              - 4.30.1F
     prod:
       ceos:
         cpu: 24
@@ -336,7 +332,7 @@ topologies:
               ram: 36
               disk: 300
               image: atd-alma-campus-c2023-3-0-ceos-20240301-cvp
-            branch: nested-release
+            branch: nested/2023.3
             orderable: true
             eos:
               - 4.31.1F
@@ -346,13 +342,13 @@ topologies:
               cpu: 22
               ram: 48
               disk: 60
-              image: atd-alma-campus-c2023-3-0-ceos-20240301-eos
+              image: atd-alma-campus-c2023-3-0-ceos-20240305-eos
             resources_cvp:
               cpu: 28
               ram: 36
               disk: 300
-              image: atd-alma-campus-c2023-3-0-ceos-20240301-cvp
-            branch: nested-release
+              image: atd-alma-campus-c2023-3-0-ceos-20240305-cvp
+            branch: nested/2023.3
             orderable: true
             eos:
               - 4.31.2F
