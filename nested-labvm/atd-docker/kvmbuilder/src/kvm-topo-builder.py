@@ -292,6 +292,10 @@ def main(uargs):
             #     'cpuset': CVP_NODES_CPUS[_cvp]
             # })
             vcpu.text = str(cvp_cpu_count)
+            # Add CPU config for Host Passthrough
+            hcpu = ET.SubElement(root, 'cpu', attrib={
+                'mode': 'host-passthrough'
+            })
             # Add RAM Configuration for CVP
             vmem = ET.SubElement(root, 'memory', attrib={
                 'unit': 'MiB'
