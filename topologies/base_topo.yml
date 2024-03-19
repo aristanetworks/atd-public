@@ -378,7 +378,7 @@ topologies:
     name: 'Campus'
     title: 'Campus Lab'
     disk_size: 300
-    access: standard
+    access: admin
     disable_links: []
     labguides: self
   wan:
