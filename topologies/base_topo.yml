@@ -91,7 +91,7 @@ topologies:
               disk: 300
               image: atd-alma-dual-datacenter-c2024-1-0-ceos-20240422-cvp
             branch: nested-release
-            orderable: true
+            orderable: false
             eos:
               - 4.32.0F
               - 4.31.2F
@@ -252,7 +252,7 @@ topologies:
               disk: 300
               image: atd-alma-routing-c2024-1-0-veos-4-31-2f-20240422-cvp
             branch: nested-release
-            orderable: true
+            orderable: false
             eos:
               - 4.31.2F
       ceos:
@@ -325,7 +325,7 @@ topologies:
               disk: 300
               image: atd-alma-routing-c2024-1-0-ceos-20240422-cvp
             branch: nested-release
-            orderable: true
+            orderable: false
             eos:
               - 4.32.0F
               - 4.31.2F
@@ -483,7 +483,7 @@ topologies:
               disk: 300
               image: atd-alma-campus-c2024-1-0-ceos-20240422-cvp
             branch: nested-release
-            orderable: true
+            orderable: false
             eos:
               - 4.32.0F
               - 4.31.2F
