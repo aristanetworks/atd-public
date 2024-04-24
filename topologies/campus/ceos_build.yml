@@ -25,6 +25,7 @@ links:
   - [["leaf-1a", "et48"], ["leaf-1b", "et48"]]
   - [["leaf-1a", "et1"], ["host-1", "et1"]]
   - [["leaf-1b", "et1"], ["host-2", "et1"]]
+  - [["leaf-1b", "et2"], ["host-1", "et2"]]
   - [["leaf-2a", "et3/1"], ["host-3", "et1"]]
   - [["leaf-3a", "et47"], ["leaf-3b", "et47"]]
   - [["leaf-3a", "et48"], ["leaf-3b", "et48"]]
