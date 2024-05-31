@@ -30,7 +30,15 @@ been defined for AAA and VLANs.
 3. You will come to a login screen for CloudVision Portal. Enter the username ``arista`` and the password ``{REPLACE_PWD}``
 
 
-4. For this lab, select **Provisioning** -> **Configlets** from CloudVision.
+4. For this lab, select **Provisioning** -> **Configlets** from CloudVision. If you do not see **Provisioning**, hover over the Wrench Icon on the Left Navigation Menu.
+
+|
+
+.. thumbnail:: images/cvp_configlet/cvp_configlet_0.gif
+   :align: center
+   :title: Creating the Alias configlet
+
+|
 
 5. Click the **+** in the top right and select **Configlets** to create a new configlet.
 
@@ -113,23 +121,15 @@ Oh no! That Alias wasn't supposed to be deployed to production yet and now we ne
 
 1. If you're still on the Change Control screen, you should see a **Rollback** button on the upper right. If you already navigated away from this screen, you can choose Provisioning at the top of the page, click on Change Control, then select the name of the last run Change Control
 
-|
-
-.. thumbnail:: images/cvp_configlet/cvp_configlet_4.png
-   :align: center
-   :title: location of the Rollback button
-
-|
-
 2. Once you select **Rollback**, the screen that pops up will have you select the switches you would like to rollback. Select all 4 switches, then click **Create Rollback Change Control**
 
+3. Click **Review and Approve**. You will be shown the specific lines that will be removed from the running configuration of the switches. This time, lets select the **Execute Immediately** switch, then select **Approve and Execute**. The changes are being rolled back. Whew!
+
 |
 
-.. thumbnail:: images/cvp_configlet/cvp_configlet_5.png
+.. thumbnail:: images/cvp_configlet/cvp_configlet_4.gif
    :align: center
    :title: This is the rollback confirmation page where you can select the specific tasks you would like to roll back
 |
-
-3. Click **Review and Approve**. You will be shown the specific lines that will be removed from the running configuration of the switches. This time, lets select the **Execute Immediately** switch, then select **Approve and Execute**. The changes are being rolled back. Whew!
 
 **LAB COMPLETE**
