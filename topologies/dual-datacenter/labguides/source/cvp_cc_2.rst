@@ -18,7 +18,7 @@ View Telemetry
 
 |
 
-.. thumbnail:: images/cvp_cc/cvp_cc_4.gif
+.. thumbnail:: images/cvp_cc/cvp_cc_3.gif
    :align: center
    :title: Creating a Dashboard to display telemetry data for multiple devices
 
