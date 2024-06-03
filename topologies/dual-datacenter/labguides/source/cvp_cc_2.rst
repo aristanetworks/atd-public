@@ -18,7 +18,7 @@ View Telemetry
 
 |
 
-.. thumbnail:: images/cvp_cc/cvp_cc_3.gif
+.. thumbnail:: images/cvp_cc/cvp_cc_7.gif
    :align: center
    :title: Creating a Dashboard to display telemetry data for multiple devices
 
@@ -28,39 +28,49 @@ View Telemetry
 
 5. To build a dashboard, select **+ New Dashboard** on the top right to bring up a list of available telemetry metrics to add. Drag the **Horizon Graph** to the middle pane, then click it to configure it.
 
-6. Under the **Metric Data Type** dropdown, select **IPv4 Total Route Count**. In the **Local Devices Query** box type **device: S1-Leaf1, S1-Leaf2, S1-Leaf3, S1-Leaf4** to add them to the dashboard view.
+6. Under the **Metric** dropdown, select **IPv4 Total Route Count**. In the **Dataset** box type **device: S1-Leaf1, S1-Leaf2, S1-Leaf3, S1-Leaf4** to add them to the dashboard view.
 
-.. thumbnail:: images/cvp_cc/cvp_cc_8.png
+|
+
+.. thumbnail:: images/cvp_cc/cvp_cc_8.gif
    :title: Using local devices query to select the devices that will appear on our dashboard
+
+|
 
 7. This will bring up a live rolling view of the selected metric.  In the timeline at the bottom, select 'Show Last: 1h' to view metric data for the last hour.  You will see a graphical representation of the increase in routes for each device. (you may need to click the time near your dashboard name to get the timeline to show up)
 
-8. Using the same process, add a view for 'IPv4 BGP Learned Routes' and 'IP Interfaces' to see other results of the Change Control.  Then hit the **Save** button in the top right.
+8. Using the same process, add a view for 'IPv4 BGP Learned Routes' and 'IP Interfaces' to see other results of the Change Control.  Then select the **Save** button in the top right.
 
-9. Name the dashboard **Leaf Routing Metrics** and hit **Save**.  The dashboard is now saved and can be pulled up by other users of CVP at any time to view the consolidated metrics selected.
+9. Name the dashboard **Leaf Routing Metrics**, select **Save**, then select **Done**.  The dashboard is now saved and can be pulled up by other users of CVP at any time to view the consolidated metrics selected.
+
+|
+
+.. thumbnail:: images/cvp_cc/cvp_cc_9.gif
+   :title: Using local devices query to select the devices that will appear on our dashboard
 
 |
 
 Rollback
 ********
 
+1. Just as we did in the Configlet lab, we can initiate a Network Rollback to revert the changes that were implemented. Go to the **Provisioning** -> **Change Control** page and find the change control we just executed: 'Add_Loopbacks_CC'.
 
-.. thumbnail:: images/cvp_cc/cvp_cc_5.gif
+2. In the top right, select **Rollback Change**.
+
+3. Here we will select the tasks we wish to roll back. Select all of the tasks for the leafs and click **Create Rollback Change Control**.
+
+4. We will now have a rollback change control created. The same change control process can be followed as before. Select **Review and Approve** to see a reflection of the changes that will be executed.  Note that the config lines are now red as they will be removed when the Rollback Change is pushed. Select **Approve** to move to the next step.
+
+5. Select **Execute Change Control** to push the change to rollback the configuration of the devices to the previous state.
+
+6. Navigate back to **Dashboards** then the **Leaf Routing Metrics** dashboard.  Select **Show Last: 5m** in the timeline to see your telemetry reflect in real-time the removal of the IPv4 routes and interfaces.
+
+|
+
+.. thumbnail:: images/cvp_cc/cvp_cc_10.gif
    :align: center
    :title: Rollback in progress for the Add_Loopbacks CC
 
 |
-
-1. Just as we did in the Configlet lab, we can initiate a Network Rollback to revert the changes that were implemented. Go to the 'Provisioning -> Change Control' page and find the change control we just executed: 'Add_Loopbacks_CC'.
-
-2. In the top right, click 'Rollback Change'.
-
-3. Here we will select the tasks we wish to roll back. Select all of the tasks for the leafs and click 'Create Rollback Change Control'.
-
-4. We will now have a rollback change control created. The same change control process can be followed as before. Select 'Review and Approve' to see a reflection of the changes that will be executed.  Note that the config lines are now red as they will be removed when the Rollback Change is pushed. Select 'Approve' to move to the next step.
-
-5. Hit 'Execute Change Control' to push the change to rollback the configuration of the devices to the previous state.
-
-6. Navigate back to 'Metrics' then the 'Leaf Routing Metrics' dashboard.  Select 'Show Last: 5m" in the timeline to see your telemetry reflect in real-time the removal of the IPv4 routes and interfaces.
 
 LAB COMPLETE
