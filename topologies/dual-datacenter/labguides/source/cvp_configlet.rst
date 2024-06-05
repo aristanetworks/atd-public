@@ -8,6 +8,11 @@ configuration.
 All of the switches have a base Configlet. Additional Configlets have
 been defined for AAA and VLANs.
 
+|
+
+Getting Started:
+**************
+
 1. Log into the Arista Test Drive portal with your assigned URL. If you
    don’t have one, please see your ATD staff.
 
@@ -19,7 +24,6 @@ been defined for AAA and VLANs.
 
 2. Click on the link **Click Here To Access Topology** and navigate to the below page. Click the **CVP** link on the left side of the screen.
 
-|
 
 .. thumbnail:: images/cvp_configlet/nested_cvp_landing_1.png
    :align: center
@@ -29,10 +33,12 @@ been defined for AAA and VLANs.
 
 3. You will come to a login screen for CloudVision Portal. Enter the username ``arista`` and the password ``{REPLACE_PWD}``
 
-
-4. For this lab, select **Provisioning** -> **Configlets** from CloudVision. If you do not see **Provisioning**, hover over the Wrench Icon on the Left Navigation Menu.
-
 |
+
+Creating the Change Control:
+**************
+
+1. For this lab, select **Provisioning** -> **Configlets** from CloudVision. If you do not see **Provisioning**, hover over the Wrench Icon on the Left Navigation Menu.
 
 .. thumbnail:: images/cvp_configlet/cvp_configlet_0.gif
    :align: center
@@ -40,9 +46,9 @@ been defined for AAA and VLANs.
 
 |
 
-5. Click the **+** in the top right and select **Configlets** to create a new configlet.
+2. Click the **+** in the top right and select **Configlets** to create a new configlet.
 
-6. In the configuration section enter the command information as shown:
+3. In the configuration section enter the command information as shown:
 
 
     .. code-block:: text
@@ -50,9 +56,11 @@ been defined for AAA and VLANs.
        alias snz show interface counter | nz
 
 
-7. Name the Configlet **Alias**.
+4. Name the Configlet **Alias**.
 
-|
+5. The Configlet can be validated against a device to ensure there isn’t a conflict and the configuration is validated. To validate, click the checkbox in the top right section.
+
+6.  Once the configuration is validated, Click the **Save** button to save the Configlet.
 
 .. thumbnail:: images/cvp_configlet/cvp_configlet_1.gif
    :align: center
@@ -60,11 +68,21 @@ been defined for AAA and VLANs.
 
 |
 
-8. The Configlet can be validated against a device to ensure there isn’t a conflict and the configuration is validated. To validate, click the checkbox in the top right section.
 
-9.  Once the configuration is validated, Click the **Save** button to save the Configlet
+Applying the Configlet with a Change Control:
+**************
 
-|
+1. To apply the Configlet, navigate to **Network Provisioning** expand the **S1** container, right click on the **S1-Leaf** container and select **Manage** -> **Configlet**.
+
+2. Select the **Alias** Configlet and click **Update**. This activity is to simply add a new configlet to the existing configlets applied on the 'Leaf' container. **Do not Remove** existing configlets from the Proposed Configuration section.
+
+
+   *\**Expert Tip - Use search bar to find Configlets faster*
+
+
+3. On the 'Network Provisioning' page, Click the **Save** button to save the changes to the topology.
+
+4. The screen will refresh and a 'T' for task will appear above each device, representing that tasks have been generated that need to run to push the configuration change.
 
 .. thumbnail:: images/cvp_configlet/cvp_configlet_2.gif
    :align: center
@@ -72,49 +90,31 @@ been defined for AAA and VLANs.
 
 |
 
-10. To apply the Configlet, navigate to **Network Provisioning** expand the **S1** container, right click on the **S1-Leaf** container and select **Manage** -> **Configlet**.
+5. Click **Tasks** in the left navigation column.
 
-11. Select the **Alias** Configlet and click **Update**. This activity is to simply add a new configlet to the existing configlets applied on the 'Leaf' container. **Do not Remove** existing configlets from the Proposed Configuration section.
+6. Check each Task in the 'Assignable Tasks' section, then click the **Create Change Control with 4 Tasks** button. Select **Parallel** then **Create Change Control**. 
 
+7. Select **Review and Approve** in the top right. You will see the *Designed Configuration* vs. *Running Configuration*. The Designed Configuration is a combination of all configlets to build a full device configuration. The Running Configuration is the running-config prior to executing the task. Configuration differences are highlighted to show New Lines, Mismatch Lines, and To Reconcile.
 
-    *\**Expert Tip - Use search bar to find Configlets faster*
+8. Select **Approve** in the bottom right to approve the Change Control.
 
+9. Select **Execute Change Control** in the top right and then **Execute** to execute the Change Control tasks.
 
-12. On the 'Network Provisioning' page, Click the **Save** button to save the changes to the topology.
-
-|
+10. When the tasks are completed, navigate into the task by clicking on the task object.
 
 .. thumbnail:: images/cvp_configlet/cvp_configlet_3.gif
    :align: center
    :title: Creating a basic Change Control and running it to push the Alias to the devices.
 
-|
-
-13. The screen will refresh and a 'T' for task will appear above each device, representing that tasks have been generated that need to run to push the configuration change.
-
-14. Click **Tasks** in the left navigation column.
-
-15. Check each Task in the 'Assignable Tasks' section, then click the **Create Change Control with 4 Tasks** button. Select **Parallel** then **Create Change Control**. 
-
 .. note:: 
     Creating a **Parallel** Change Control will run all 4 tasks simultaneously. If we created a **Series** Change Control, the tasks would run one at a time
 
     *\**See the 'CVP Advanced Change Control' lab guide for more information on Change Controls*
-
-
-16. Select **Review and Approve** in the top right, then **Approve** in the bottom right to approve the Change Control.
-
-17. Select **Execute Change Control** in the top right and then **Execute** to execute the Change Control tasks.
-
-18. When the tasks are completed, navigate into the task by clicking on the task object.
-
-19. Select the **View Diff** link on the right side of the screen to review the *Designed Configuration* vs. *Running Configuration*. The Designed Configuration is a combination of all configlets to build a full device configuration. The Running Configuration is the running-config prior to executing the task. Configuration differences are highlighted to show New Lines, Mismatch Lines, and To Reconcile.
-
+    
 |
-Rollback
---------
 
-|
+Rolling Back the Change Control:
+**************
 
 Oh no! That Alias wasn't supposed to be deployed to production yet and now we need to return the leaf switches back to their original state. Not a problem, let's quickly do a Rollback.
 
@@ -125,11 +125,12 @@ Oh no! That Alias wasn't supposed to be deployed to production yet and now we ne
 
 3. Click **Review and Approve**. You will be shown the specific lines that will be removed from the running configuration of the switches. This time, lets select the **Execute Immediately** switch, then select **Approve and Execute**. The changes are being rolled back. Whew!
 
-|
-
 .. thumbnail:: images/cvp_configlet/cvp_configlet_4.gif
    :align: center
    :title: This is the rollback confirmation page where you can select the specific tasks you would like to roll back
+
 |
 
 **LAB COMPLETE**
+
+|
