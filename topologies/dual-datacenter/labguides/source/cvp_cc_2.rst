@@ -4,13 +4,16 @@ CVP Telemetry and Introduction to Dashboards  (Advanced Change Control Lab Pt. 2
 
 |
 
-View Telemetry
+Viewing Telemetry
 **************
+
 .. Note:: Please complete the Advanced Change Control Lab first in order to see the additional IPv4 routes shown below. `<--Click here to go back to part 1 of this lab <cvp_cc.html>`_
 
 |
 
-1. Using Telemetry, we can view the routes that were added as part of this change propagate across the environment. One way to view telemetry information is per device in the Devices tab.  Navigate to the **Devices** tab and select **s1-leaf1** to view detailed information.
+Using Telemetry, we can view the routes that were added as part of this change propagate across the environment. One way to view telemetry information is per device in the Devices tab.
+
+1. Navigate to the **Devices** tab and select **s1-leaf1** to view detailed information.
 
 2. On the left Navigation column, select **IPv4 Routing Table** to see a live view of the device's routing table.  Using the timeline at the bottom of the screen, you can navigate to any point in time to see what the route table was at that exact moment.  You can also see a running list of changes to the routing table on the right.
 
@@ -24,11 +27,16 @@ View Telemetry
 
 |
 
-4. To view Telemetry information for multiple devices in a common dashboard, select the **Dashboard** tab.
+Creating a Dashboard
+**************
 
-5. To build a dashboard, select **+ New Dashboard** on the top right to bring up a list of available telemetry metrics to add. Drag the **Horizon Graph** to the middle pane, then click it to configure it.
+To view Telemetry information for multiple devices we can build a common dashboard.
 
-6. Under the **Metric** dropdown, select **IPv4 Total Route Count**. In the **Dataset** box type **device: S1-Leaf1, S1-Leaf2, S1-Leaf3, S1-Leaf4** to add them to the dashboard view.
+1. Select **Dashboard** from the navigation menu.
+
+2. To build a dashboard, select **+ New Dashboard** on the top right to bring up a list of available telemetry metrics to add. Drag the **Horizon Graph** to the middle pane, then click it to configure it.
+
+3. Under the **Metric** dropdown, select **IPv4 Total Route Count**. In the **Dataset** box type **device: S1-Leaf1, S1-Leaf2, S1-Leaf3, S1-Leaf4** to add them to the dashboard view.
 
 |
 
@@ -37,11 +45,11 @@ View Telemetry
 
 |
 
-7. This will bring up a live rolling view of the selected metric.  In the timeline at the bottom, select 'Show Last: 1h' to view metric data for the last hour.  You will see a graphical representation of the increase in routes for each device. (you may need to click the time near your dashboard name to get the timeline to show up)
+4. This will bring up a live rolling view of the selected metric.  In the timeline at the bottom, select 'Show Last: 1h' to view metric data for the last hour.  You will see a graphical representation of the increase in routes for each device. (you may need to click the time near your dashboard name to get the timeline to show up)
 
-8. Using the same process, add a view for 'IPv4 BGP Learned Routes' and 'IP Interfaces' to see other results of the Change Control.  Then select the **Save** button in the top right.
+5. Using the same process, add a view for 'IPv4 BGP Learned Routes' and 'IP Interfaces' to see other results of the Change Control.  Then select the **Save** button in the top right.
 
-9. Name the dashboard **Leaf Routing Metrics**, select **Save**, then select **Done**.  The dashboard is now saved and can be pulled up by other users of CVP at any time to view the consolidated metrics selected.
+6. Name the dashboard **Leaf Routing Metrics**, select **Save**, then select **Done**.  The dashboard is now saved and can be pulled up by other users of CVP at any time to view the consolidated metrics selected.
 
 |
 
@@ -50,10 +58,12 @@ View Telemetry
 
 |
 
-Rollback
+Monitoring Changes After a Rollback
 ********
 
-1. Just as we did in the Configlet lab, we can initiate a Network Rollback to revert the changes that were implemented. Go to the **Provisioning** -> **Change Control** page and find the change control we just executed: 'Add_Loopbacks_CC'.
+Just as we did in the Configlet lab, we can initiate a Network Rollback to revert the changes that were implemented. We can monitor the changes from our new Dashboard.
+
+1. Go to the **Provisioning** -> **Change Control** page and find the change control we just executed: 'Add_Loopbacks_CC'.
 
 2. In the top right, select **Rollback Change**.
 
