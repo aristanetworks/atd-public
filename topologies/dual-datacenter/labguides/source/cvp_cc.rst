@@ -1,24 +1,48 @@
 CVP Advanced Change Control
 ==========================================
 
-Learn how to use CloudVision’s Change Control. A Change Control (CC) can be associated with one or mores Tasks. CloudVision will take pre and post snapshots when a CC is executed to give us a state to revert back should there be any issues after the change.
+Learn how to use CloudVision’s Change Control. A Change Control can be associated with one or mores Tasks. CloudVision will take pre and post snapshots when a Change Control is executed to give us a state to revert back should there be any issues after the change.
 
 Next, the lab will review Telemetry state-streaming information of the change of adding routes and how the routes propagate across the environment.
 
 Lastly, the lab will initiate a Network Rollback to revert the changes that were implemented. The Network Rollback feature can greatly minimize downtime and gives the user the ability to restore the environment to a previous network state quickly.
 
+|
 
-.. note:: Did you know → the “cvp” script is composed of python code that uses the CloudVision Portal Rest API to automate the provisioning of CVP Configlets.
 
-TASK 1: Apply a Configlet Builder to create a group of Tasks
-************************************************************
-.. note:: The Configlet Builder feature enables you to programatically create device configurations (Configlets) for devices that have relatively dynamic configuration requirements. This helps to prevent you from having to manually code Configlets. 
+Getting Started:
+**************
+
+
+1. Log into the Arista Test Drive portal with your assigned URL. If you
+   don’t have one, please see your ATD staff.
+
+.. thumbnail:: images/cvp_configlet/nested_cvp_overview_1.png
+   :align: center
+   :title: This your lab access page. You can access your topology from here or copy your unique lab address to use with an ssh client.
 
 |
 
-* Log into the LabAccess jumpserver:
+2. Click on the link **Click Here To Access Topology** and navigate to the below page. 
+
+   .. thumbnail:: images/cvp_configlet/nested_cvp_landing_1.png
+      :align: center
+      :title: This is the main landing page for your lab. From here you can browse to CVP, Console Access (in your browser), click the individual icons to SSH to them, and access the Lab Guides. 
+
+|
+
+3. Log into the Console Access Jumpserver:
     .. warning:: If starting from this lab module, type ``cvp`` or ``5`` at the prompt. The script will configure all devices in the lab so you can complete this lab. The configlet builder will fail to generate device configlets if this script hasn't been run.
 
+    .. note:: Did you know → the “cvp” script is composed of python code that uses the CloudVision Portal Rest API to automate the provisioning of CVP Configlets.
+
+4. Click the **CVP** link on the left side of the screen. You will come to a login screen for CloudVision Portal. Enter the username ``arista`` and the password ``{REPLACE_PWD}``
+
+
+
+
+Applying Configlets with a Configlet Builder:
+**************
 
 Now we want to add several Loopbacks to each device using a Configlet Builder at the ``s1/s1-Leaf`` level.
 
@@ -40,15 +64,22 @@ Now we want to add several Loopbacks to each device using a Configlet Builder at
    
 |
 
-6. Navigate to **Change Control** from the Provisioning Tab.
+.. note:: The Configlet Builder feature enables you to programatically create device configurations (Configlets) for devices that have relatively dynamic configuration requirements. This helps to prevent you from having to manually code Configlets. 
 
-7. Create a new Change Control by clicking the **+ Create Change Control** button in the top right.
+|
 
-8. This screen will show pending tasks that will be associated with a Change Control(CC). Select all pending Tasks and click **+ Create Change Control with 4 Tasks**.
+Creating the Change Control:
+**************
 
-9. First, we need to give the Change Control a name. Click the pencil on the top right to edit the CC name. Name it **Add_Loopbacks_CC** and hit Enter.
+1. Navigate to **Change Control** from the Provisioning Tab.
 
-10. Next we will need to change the root stage to Serial execution. To do this, click on the Root stage, then on the right side, change the drop down to **Series**. You can also change between Parallel and Series within the Change Control screen as well. 
+2. Create a new Change Control by clicking the **+ Create Change Control** button in the top right.
+
+3. This screen will show pending tasks that will be associated with a Change Control. Select all pending Tasks and click **+ Create Change Control with 4 Tasks**.
+
+4. First, we need to give the Change Control a name. Click the pencil on the top right to edit the Change Control name. Name it **Add_Loopbacks_CC** and hit Enter.
+
+5. Next we will need to change the root stage to Serial execution. To do this, click on the Root stage, then on the right side, change the drop down to **Series**. You can also change between Parallel and Series within the Change Control screen as well. 
 
 |
 
@@ -57,17 +88,17 @@ Now we want to add several Loopbacks to each device using a Configlet Builder at
 
 |
 
-11.  Then we will create 3 new child stages. Click the **...** on the right side of the root stage to create 3 stage containers.
+6. Then we will create 3 new child stages. Click the **...** on the right side of the root stage to create 3 stage containers.
 
-12. Rename the top and bottom stages to **Before Snapshot** and **After Snapshot** respectively by clicking the Pencil icon. Name the middle stage **Configuration Changes**.
+7. Rename the top and bottom stages to **Before Snapshot** and **After Snapshot** respectively by clicking the Pencil icon. Name the middle stage **Configuration Changes**.
 
-13. Next we can select a Snapshot template that we want to run before and after the change. Select the **Before Snapshot** stage and click **Add Actions** under the right side menu.
+8. Next we can select a Snapshot template that we want to run before and after the change. Select the **Before Snapshot** stage and click **Add Actions** under the right side menu.
 
-14. Under **Select action**, select **Snapshot** -> **Validate_Routing**  and select 'S1-Leaf1', 'S1-Leaf2', 'S1-Leaf3', and 'S1-Leaf4' under 'Select devices to run on', then click **Add to change control**.
+9. Under **Select action**, select **Snapshot** -> **Validate_Routing**  and select 'S1-Leaf1', 'S1-Leaf2', 'S1-Leaf3', and 'S1-Leaf4' under 'Select devices to run on', then click **Add to change control**.
 
-15. Now click and drag each of the four leaf switch tasks to the 'Configuration Changes' task.
+10. Now click and drag each of the four leaf switch tasks to the 'Configuration Changes' task.
    
-16. Repeat step 15, but select 'After Snapshot'.
+11. Repeat step 15, but select 'After Snapshot'.
 
 |
 
@@ -76,7 +107,7 @@ Now we want to add several Loopbacks to each device using a Configlet Builder at
 
 |
 
-17.  We should now have 2 stages that will take a before and after snapshot of the devices being changed and your Change Conrol screen should look like this:
+12.  We should now have 2 stages that will take a before and after snapshot of the devices being changed and your Change Conrol screen should look like this:
 
 |
 
@@ -94,15 +125,20 @@ Now we want to add several Loopbacks to each device using a Configlet Builder at
 
 |
 
-18.  We now want to execute the CC. First a review and approval will need to take place. Select **Review and Approve**.  Here we can view all of the changes for the tasks, snapshots to be taken, and any other information relative to the change control in order to approve it.
+Executing the Change Control:
+**************
 
-19.  Once changes have been reviewed, we can click **Approve** in the bottom right.
+We now want to execute the Change Control.
 
-20.  Once the change has been approved, we should now have a button that says **Execute Change Control** in the top right corner. Click this to execute the changes.
+1.  First a review and approval will need to take place. Select **Review and Approve**.  Here we can view all of the changes for the tasks, snapshots to be taken, and any other information relative to the change control in order to approve it.
 
-21.  We will now be prompted with with a confirmation. Click **Execute** to confirm the CC execution.
+2.  Once changes have been reviewed, we can click **Approve** in the bottom right.
 
-22.  While the CC executes, we can see the progress of each task as it is executed.
+3.  Once the change has been approved, we should now have a button that says **Execute Change Control** in the top right corner. Click this to execute the changes.
+
+4.  We will now be prompted with with a confirmation. Click **Execute** to confirm the Change Control execution.
+
+5.  While the Change Control executes, we can see the progress of each task as it is executed.
 
 |
 
@@ -112,13 +148,18 @@ Now we want to add several Loopbacks to each device using a Configlet Builder at
 
 |
 
-23. Once the Change Control is successfully completed, we can view and compare the snapshots under **Devices** -> **Comparison**
+Comparing Snapshots:
+**************
 
-24. To compare the before and after from our CC, select the **Time Comparison** option to compare two points in time for the same device. Select **S1-Leaf1** from the dropdown menu and click the Quick link for **30 minutes ago**.   Then hit **Compare**.
+Once the Change Control is successfully completed, we can view and compare the snapshots.
 
-25. CVP will bring up a variety of views that allows you to compare the state of the device from 30 minutes ago to the current time.  Select **Snapshots** from the left Navigation column.
+1.  Navigate to **Devices** -> **Comparison**
 
-26. In the 'Compared with...' heading, select the first time to bring up a list of optional times to compare the Snapshot from.  The earlier option represents the 'Before Change' Snapshot taken when the Change Control was executed.  Select that to see a comparison of the command outputs from before and after the change.
+2. To compare the before and after from our Change Control, select the **Time Comparison** option to compare two points in time for the same device. Select **S1-Leaf1** from the dropdown menu and click the Quick link for **30 minutes ago**.   Then hit **Compare**.
+
+3. CVP will bring up a variety of views that allows you to compare the state of the device from 30 minutes ago to the current time.  Select **Snapshots** from the left Navigation column.
+
+4. In the 'Compared with...' heading, select the first time to bring up a list of optional times to compare the Snapshot from.  The earlier option represents the 'Before Change' Snapshot taken when the Change Control was executed.  Select that to see a comparison of the command outputs from before and after the change.
 
 |
 
@@ -137,5 +178,4 @@ Now we want to add several Loopbacks to each device using a Configlet Builder at
 
 |
 
-|
 
