@@ -12,35 +12,33 @@ In this lab we will use the EOS CLI to send log messages that CVP will detect an
 Creating a Custom Event
 **************
 
-1. Start by selecting **Events** from the navigation menu. Then select **Event Generation**.
+#. Start by selecting **Events** from the navigation menu. Then select **Event Generation**.
 
-2. After selecting **Event Generation** choose and select **Custom Syslog Event** from the event types. 
+#. After selecting **Event Generation** choose and select **Custom Syslog Event** from the event types. 
 
-3. Select **Add Rule**. 
+#. Select **Add Rule**. 
 
-4. Under   **Syslog Details** set the fields to the values listed:
+#. Under   **Syslog Details** set the fields to the values listed:
 
-   * In the **Log Message** field add the following Regular Expression:
+#. In the **Log Message** field add the following Regular Expression:
+    
+    .. code-block:: text
 
-      .. code-block:: text
-         
-         CR\d{6}
+        CR\d{6}
 
-   * The **Event Title** field should be set to **Change Control Event Logged**.
+#. The **Event Title** field should be set to **Change Control Event Logged**.
 
-   * The **Description** field should be set to **Change Control Event Logged. See CR number for details**.
+#. The **Description** field should be set to **Change Control Event Logged. See CR number for details**.
 
-   * The **Mute Period** field should  be **10 sec**
+#. The **Mute Period** field should be **10 sec**.
 
-   .. thumbnail:: images/aa-cvp_custom_events/cvp_custom_event_1.png
-      :align: center
+    .. thumbnail:: images/aa-cvp_custom_events/cvp_custom_event_1.png
+        :align: center
 
-| 
+#. Select **Save Changes** to finish creating the Custom Syslog Event.
 
-5. Select **Save Changes** to finish creating the Custom Syslog Event.
-
-.. thumbnail:: images/aa-cvp_custom_events/cvp_custom_event_2.gif
-   :align: center
+    .. thumbnail:: images/aa-cvp_custom_events/cvp_custom_event_2.gif
+        :align: center
 
 .. tip:: 
    This Regular expression will match when the log
@@ -48,36 +46,35 @@ Creating a Custom Event
    by exactly 6 numeric digits. In this example CR means **Change Record**.
    This will give the NOC the change record to review when an event is logged.
 
-|
+
 
 Generating the Syslog Message 
 **************
 
 
-1. log in to the CLI of leaf switch **s1-leaf1**.
+#. Log in to the CLI of leaf switch **s1-leaf1**.
 
-2. Type the following EOS CLI command:
+#. Type the following EOS CLI command:
 
-   .. code-block:: text
+    .. code-block:: text
 
-      s1-leaf1# send log level alerts message CR123456 starting now!
+        s1-leaf1# send log level alerts message CR123456 starting now!
 
-.. thumbnail:: images/aa-cvp_custom_events/cvp_custom_event_3.gif
-   :align: center
-   :title: Generating a custom log event
+    .. thumbnail:: images/aa-cvp_custom_events/cvp_custom_event_3.gif
+        :align: center
+        :title: Generating a custom log event
 
-|
 
 Reviewing the Events in Cloudvision
 **************
 
-1. Select **Events** from the navigation menu.
+#. Select **Events** from the navigation menu.
 
-2. You should see an event similar to the one below:
+#. You should see an event similar to the one below:
 
-.. thumbnail:: images/aa-cvp_custom_events/cvp_custom_event_4.gif
-   :align: center
-   :title: Viewing our custom log event on the CVP Events page
+    .. thumbnail:: images/aa-cvp_custom_events/cvp_custom_event_4.gif
+        :align: center
+        :title: Viewing our custom log event on the CVP Events page
 
 .. tip:: 
    * Experiment by sending messages with different severity levels, and modify the **CR123456** example using only 5 digits, or 7 digits. Does the event still trigger when using 5 or 7 digits?
