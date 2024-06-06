@@ -28,41 +28,34 @@ The hosts are already configured via lab configlets, we will not be involving th
 Getting Started:
 **************
 
-|
-
-1. Log into the Arista Test Drive portal with your assigned URL. If you
+#. Log into the Arista Test Drive portal with your assigned URL. If you
    don’t have one, please see your ATD staff.
 
-.. thumbnail:: images/cvp_configlet/nested_cvp_overview_1.png
-   :align: center
-   :title: This your lab access page. You can access your topology from here or copy your unique lab address to use with an ssh client.
+   .. thumbnail:: images/cvp_configlet/nested_cvp_overview_1.png
+      :align: center
+      :title: This your lab access page. You can access your topology from here or copy your unique lab address to use with an ssh client.
 
-|
+   |
 
-2. Click on the link **Click Here To Access Topology** and navigate to the below page. 
+#. Click on the link **Click Here To Access Topology** and navigate to the below page. 
 
    .. thumbnail:: images/cvp_configlet/nested_cvp_landing_1.png
       :align: center
       :title: This is the main landing page for your lab. From here you can browse to CVP, Console Access (in your browser), click the individual icons to SSH to them, and access the Lab Guides. 
 
-|
+   |
 
-3. First, on the lab topology landing page, click on **Console Access** and provision the lab by running option 6, ``CVP lab for Studios L3LS/EVPN (studiosl3ls)``. Allow the task to complete before moving on to the next step. 
+#. First, on the lab topology landing page, click on **Console Access** and provision the lab by running option 6, ``CVP lab for Studios L3LS/EVPN (studiosl3ls)``. Allow the task to complete before moving on to the next step. 
 
-.. thumbnail:: images/cvp_studios_l3ls_evpn/0jumpbox.png
+   .. thumbnail:: images/cvp_studios_l3ls_evpn/0jumpbox.png
       :align: center
 
-|
+   |
 
-4. Click on **CVP** on the topology landing page to access CloudVision Portal 
-
-|
-
+#. Click on **CVP** on the topology landing page to access CloudVision Portal 
 
 Workspace Creation:
 **************
-
-|
 
 #. Navigate to **Provisioning** from the left Navigation Menu, 
 
@@ -77,15 +70,11 @@ Workspace Creation:
    .. thumbnail:: images/cvp_studios_l3ls_evpn/2WorkspaceIntro.gif
       :align: center
 
-
-
    .. note::
       The term "studio" is used to describe the pre-built configuration sections within CloudVision Studios. These include Connectivity Monitoring, Date and Time, Interface Configuration, Postcard Telemetry, Streaming Telemetry Agent, Campus Fabric, Enterprise Routing, L3 Leaf-Spine Fabric, EVPN Services, and Segment Security.
 
 Inventory studio:
 **************
-
-|
  
 #. Once created, click on **"Inventory and Topology"** to enter the Inventory "studio"  
 
@@ -125,8 +114,6 @@ Once we click review, it will run through the checks and tell us if we are good 
 L3LS Studio:
 **************
 
-|
-
 The L3LS studio is a powerful and flexible tool to get our underlay topology up and running quickly. 
 
 * In this lab we will have the studio "autotag" our devices to assign them. 
@@ -157,7 +144,7 @@ The L3LS studio is a powerful and flexible tool to get our underlay topology up 
    | *(The DC name  can be a name or an integer, but for the lab use the aforementioned value)*
 
    .. thumbnail:: images/cvp_studios_l3ls_evpn/6l3ls.gif 
-      
+
    |
 
 #. Assign devices to the DC by clicking on the **Assigned Devices** field and clicking each individual device. 

@@ -44,7 +44,7 @@ Creating the Change Control:
       :align: center
       :title: Creating the Alias configlet
 
-   |
+|
 
 #. Click the **+** in the top right and select **Configlets** to create a new configlet.
 
@@ -58,13 +58,11 @@ Creating the Change Control:
 
 #. The Configlet can be validated against a device to ensure there isn’t a conflict and the configuration is validated. To validate, click the checkbox in the top right section.
 
-#.  Once the configuration is validated, Click the **Save** button to save the Configlet.
-   
+#. Once the configuration is validated, Click the **Save** button to save the Configlet.
+
    .. thumbnail:: images/cvp_configlet/cvp_configlet_1.gif
       :align: center
-      :title: Creating the Alias configlet
-
-   |   
+   |
 
 Applying the Configlet with a Change Control:
 **************

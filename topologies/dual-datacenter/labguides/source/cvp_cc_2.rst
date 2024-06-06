@@ -8,9 +8,7 @@ Viewing Telemetry:
 **************
 
 .. Note:: 
-    Please complete the Advanced Change Control Lab first in order to see the additional IPv4 routes shown below. `<--Click here to go back to part 1 of this lab <cvp_cc.html>`_
-
-|
+   Please complete the Advanced Change Control Lab first in order to see the additional IPv4 routes shown below. `<--Click here to go back to part 1 of this lab <cvp_cc.html>`_
 
 Using Telemetry, we can view the routes that were added as part of this change propagate across the environment. One way to view telemetry information is per device in the Devices tab.
 
@@ -20,9 +18,11 @@ Using Telemetry, we can view the routes that were added as part of this change p
 
 #. By clicking on the **compare against 30m ago** link, you can navigate back to the Comparison view of the routing table to see all the routes added in green as part of the Change Control pushed earlier.
 
-    .. thumbnail:: images/cvp_cc/cvp_cc_7.gif
-        :align: center
-        :title: Creating a Dashboard to display telemetry data for multiple devices
+   .. thumbnail:: images/cvp_cc/cvp_cc_7.gif
+      :align: center
+      :title: Creating a Dashboard to display telemetry data for multiple devices
+
+   |
 
 Creating a Dashboard:
 **************
@@ -35,8 +35,11 @@ To view Telemetry information for multiple devices we can build a common dashboa
 
 #. Under the **Metric** dropdown, select **IPv4 Total Route Count**. In the **Dataset** box type **device: S1-Leaf1, S1-Leaf2, S1-Leaf3, S1-Leaf4** to add them to the dashboard view.
 
-    .. thumbnail:: images/cvp_cc/cvp_cc_8.gif
-        :title: Using local devices query to select the devices that will appear on our dashboard
+   .. thumbnail:: images/cvp_cc/cvp_cc_8.gif
+      :title: Using local devices query to select the devices that will appear on our dashboard
+      :align: center
+
+   |
 
 #. This will bring up a live rolling view of the selected metric.  In the timeline at the bottom, select 'Show Last: 1h' to view metric data for the last hour.  You will see a graphical representation of the increase in routes for each device. (you may need to click the time near your dashboard name to get the timeline to show up)
 
@@ -44,8 +47,11 @@ To view Telemetry information for multiple devices we can build a common dashboa
 
 #. Name the dashboard **Leaf Routing Metrics**, select **Save**, then select **Done**.  The dashboard is now saved and can be pulled up by other users of CVP at any time to view the consolidated metrics selected.
 
-    .. thumbnail:: images/cvp_cc/cvp_cc_9.gif
-        :title: Using local devices query to select the devices that will appear on our dashboard
+   .. thumbnail:: images/cvp_cc/cvp_cc_9.gif
+      :align: center
+      :title: Using local devices query to select the devices that will appear on our dashboard
+
+   |
 
 Monitoring Changes After a Rollback:
 ********
@@ -64,11 +70,11 @@ Just as we did in the Configlet lab, we can initiate a Network Rollback to rever
 
 #. Navigate back to **Dashboards** then the **Leaf Routing Metrics** dashboard.  Select **Show Last: 5m** in the timeline to see your telemetry reflect in real-time the removal of the IPv4 routes and interfaces.
 
-    .. thumbnail:: images/cvp_cc/cvp_cc_10.gif
-        :align: center
-        :title: Rollback in progress for the Add_Loopbacks CC
+   .. thumbnail:: images/cvp_cc/cvp_cc_10.gif
+      :align: center
+      :title: Rollback in progress for the Add_Loopbacks CC
 
-|
+   |
 
 **LAB COMPLETE**
 
