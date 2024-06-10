@@ -1,10 +1,10 @@
-FROM ghcr.io/coder/code-server:4.17.1-bullseye
+FROM ghcr.io/coder/code-server:4.89.1-bookworm
 
 # set the enviroment correctly first, including path
 USER coder
 ENV HOME=/home/coder
 ENV PATH=$PATH:/home/coder/.local/bin
-ENV AVD_VERSION="4.4.0"
+ENV AVD_VERSION="4.8.0"
 ENV CVP_VERSION="3.8.0"
 
 RUN sudo apt update && \
