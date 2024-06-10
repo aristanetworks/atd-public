@@ -5,7 +5,7 @@ USER coder
 ENV HOME=/home/coder
 ENV PATH=$PATH:/home/coder/.local/bin
 ENV AVD_VERSION="4.8.0"
-ENV CVP_VERSION="3.8.0"
+ENV CVP_VERSION="3.10.1"
 
 RUN sudo apt update && \
     sudo apt install -y python3 git openssh-server vim nano less rsync man-db jq python3-pip wget zsh sshpass libvirt-clients && \
