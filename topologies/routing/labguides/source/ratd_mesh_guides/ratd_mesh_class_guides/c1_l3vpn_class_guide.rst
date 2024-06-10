@@ -34,7 +34,7 @@ Configure Customer-1 CE devices
 Establish PE-CE peering with Customer-1
 =========================================================================
    
-#. Configure EOS11 and EOS12 for BGP AS 123.
+#. Configure EOS11 and EOS13 for BGP AS 123.
   
    - EOS11 and EOS12 should originate the following networks via BGP (any method of network origination is acceptable):
   
