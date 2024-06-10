@@ -68,15 +68,15 @@ Now we want to add several Loopbacks to each device using a Configlet Builder at
 Creating the Change Control:
 **************
 
-#. Navigate to **Change Control** from the Provisioning Tab.
+#. Select **Provisioning** from the Navigation Menu then select **Change Control**.
 
-#. Create a new Change Control by clicking the **+ Create Change Control** button in the top right.
+#. Create a new Change Control by selecting the **+ Create Change Control** button in the top right.
 
-#. This screen will show pending tasks that will be associated with a Change Control. Select all pending Tasks and click **+ Create Change Control with 4 Tasks**.
+#. This screen will show pending tasks that will be associated with a Change Control. Select all pending Tasks and select **+ Create Change Control with 4 Tasks**.
 
-#. First, we need to give the Change Control a name. Click the pencil on the top right to edit the Change Control name. Name it **Add_Loopbacks_CC** and hit Enter.
+#. First, we need to give the Change Control a name. Select the pencil on the top right to edit the Change Control name. Name it **Add_Loopbacks_CC** and hit Enter.
 
-#. Next we will need to change the root stage to Serial execution. To do this, click on the Root stage, then on the right side, change the drop down to **Series**. You can also change between Parallel and Series within the Change Control screen as well. 
+#. Next we will need to change the root stage to Serial execution. To do this, select the Root stage, then on the right side, change the drop down to **Series**. You can also change between Parallel and Series within the Change Control screen. 
 
    .. thumbnail:: images/cvp_cc/cvp_cc_2.gif
       :title: changing our change control root stage to series so they'll run in order
@@ -85,13 +85,13 @@ Creating the Change Control:
 
 #. Then we will create 3 new child stages. Click the **...** on the right side of the root stage to create 3 stage containers.
 
-#. Rename the top and bottom stages to **Before Snapshot** and **After Snapshot** respectively by clicking the Pencil icon. Name the middle stage **Configuration Changes**.
+#. Rename the top and bottom stages to **Before Snapshot** and **After Snapshot** respectively by selecting the Pencil icon. Name the middle stage **Configuration Changes**.
 
-#. Next we can select a Snapshot template that we want to run before and after the change. Select the **Before Snapshot** stage and click **Add Actions** under the right side menu.
+#. Next we can select a Snapshot template that we want to run before and after the change. Select the **Before Snapshot** stage and select **Add Actions** under the right side menu.
 
-#. Under **Select action**, select **Snapshot** -> **Validate_Routing**  and select 'S1-Leaf1', 'S1-Leaf2', 'S1-Leaf3', and 'S1-Leaf4' under 'Select devices to run on', then click **Add to change control**.
+#. Under **Select action**, select **Snapshot** -> **Validate_Routing**  and select 'S1-Leaf1', 'S1-Leaf2', 'S1-Leaf3', and 'S1-Leaf4' under 'Select devices to run on', then select **Add to change control**.
 
-#. Now click and drag each of the four leaf switch tasks to the 'Configuration Changes' task.
+#. Now select and drag each of the four leaf switch tasks to the 'Configuration Changes' task.
    
 #. Repeat step 15, but select 'After Snapshot'.
 
