@@ -44,7 +44,7 @@ Creating the Change Control:
       :align: center
       :title: Creating the Alias configlet
 
-|
+   |
 
 #. Click the **+** in the top right and select **Configlets** to create a new configlet.
 
