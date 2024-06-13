@@ -6,6 +6,7 @@ ENV HOME=/home/coder
 ENV PATH=$PATH:/home/coder/.local/bin
 ENV AVD_VERSION="4.8.0"
 ENV CVP_VERSION="3.10.1"
+ENV ANTA_VERSION="0.14.0"
 
 RUN sudo apt update && \
     sudo apt install -y python3 git openssh-server vim nano less rsync man-db jq python3-pip wget zsh sshpass libvirt-clients && \
@@ -15,7 +16,7 @@ RUN sudo apt update && \
 
 RUN pip3 config set global.disable-pip-version-check true && \
     pip3 install --user --no-cache-dir pyeapi jsonrpclib-pelix shyaml && \
-    pip3 install --user --no-cache-dir "ansible-core>=2.14.0,<2.16.0"
+    pip3 install --user --no-cache-dir "ansible-core>=2.15.0,<2.17.0" --upgrade
 
 # Install arista.avd, community.general and ansible.posix ansible-galaxy collections, Use this for version control of AVD topologies
 RUN ansible-galaxy collection install arista.avd:==${AVD_VERSION} && \
@@ -24,8 +25,7 @@ RUN ansible-galaxy collection install arista.avd:==${AVD_VERSION} && \
     ansible-galaxy collection install ansible.posix --upgrade
 
 # Install Ansible-AVD collection requirements
-RUN wget --quiet https://raw.githubusercontent.com/aristanetworks/ansible-avd/v${AVD_VERSION}/ansible_collections/arista/avd/requirements.txt && \
-    pip3 install --user --no-cache-dir -r requirements.txt
+RUN pip3 install --user --no-cache-dir "pyavd[ansible]==${AVD_VERSION}" "anta==${ANTA_VERSION}" --upgrade
 
 # Install Code extensions
 COPY src/vs-extensions.txt /home/coder/
