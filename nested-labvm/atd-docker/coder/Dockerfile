@@ -15,7 +15,7 @@ RUN sudo apt update && \
 
 RUN pip3 config set global.disable-pip-version-check true && \
     pip3 install --user --no-cache-dir pyeapi jsonrpclib-pelix shyaml && \
-    pip3 install --user --no-cache-dir "ansible-core>=2.14.0,<2.16.0"
+    pip3 install --user --no-cache-dir "ansible-core>=2.15.0,<2.17.0" --upgrade
 
 # Install arista.avd, community.general and ansible.posix ansible-galaxy collections, Use this for version control of AVD topologies
 RUN ansible-galaxy collection install arista.avd:==${AVD_VERSION} && \
