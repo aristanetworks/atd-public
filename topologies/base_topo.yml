@@ -74,7 +74,7 @@ topologies:
               disk: 300
               image: atd-alma-dual-datacenter-c2023-3-1-ceos-20240327-cvp
             branch: nested/2023.3
-            orderable: true
+            orderable: false
             eos:
               - 4.31.2F
               - 4.31.1F
@@ -90,7 +90,7 @@ topologies:
               ram: 36
               disk: 300
               image: atd-alma-dual-datacenter-c2024-1-1-ceos-20240424-cvp
-            branch: nested-release
+            branch: nested/2024.1
             orderable: true
             eos:
               - 4.32.0F
@@ -113,7 +113,7 @@ topologies:
               disk: 300
               image: atd-dual-datacenter-c2023-1-1-ceos-20231110-cvp
             branch: v2023.1-20240115a
-            orderable: true
+            orderable: false
             eos:
               - 4.31.1F
               - 4.30.2F
@@ -133,7 +133,7 @@ topologies:
               disk: 300
               image: atd-dual-datacenter-c2023-1-1-bare-ceos-20231110-cvp
             branch: v2023.1-20240115a
-            orderable: true
+            orderable: false
             eos:
               - 4.31.1F
               - 4.30.2F
@@ -152,7 +152,7 @@ topologies:
               ram: 36
               disk: 300
               image: atd-dual-datacenter-c2023-2-0-ceos-20231120-cvp
-            branch: v2023.2-20240227a
+            branch: v2023.2-20240614a
             orderable: true
             eos:
               - 4.31.1F
@@ -171,13 +171,31 @@ topologies:
               ram: 36
               disk: 300
               image: atd-dual-datacenter-c2023-2-0-bare-ceos-20231120-cvp
-            branch: v2023.2-20240227a
+            branch: v2023.2-20240614a
             orderable: true
             eos:
               - 4.31.1F
               - 4.31.0F
               - 4.30.2F
               - 4.30.1F
+          2024.1.1:
+            schema: 2
+            resources_eos:
+              cpu: 22
+              ram: 48
+              disk: 60
+              image: atd-alma-dual-datacenter-c2024-1-1-ceos-20240424-eos
+            resources_cvp:
+              cpu: 28
+              ram: 36
+              disk: 300
+              image: atd-alma-dual-datacenter-c2024-1-1-ceos-20240424-cvp
+            branch: v2024.1-20240614
+            orderable: true
+            eos:
+              - 4.32.1F
+              - 4.32.0F
+              - 4.31.2F
     desc: 'Dual Data Center ATD Topology'
     name: 'Dual Data Center'
     title: 'Dual Data Center Lab'
@@ -236,7 +254,7 @@ topologies:
               disk: 300
               image: atd-alma-routing-c2023-3-1-veos-4-31-2f-20240327-cvp
             branch: nested/2023.3
-            orderable: true
+            orderable: false
             eos:
               - 4.31.2F
           2024.1.1:
@@ -251,7 +269,7 @@ topologies:
               ram: 36
               disk: 300
               image: atd-alma-routing-c2024-1-1-veos-4-31-2f-20240424-cvp
-            branch: nested-release
+            branch: nested/2024.1
             orderable: true
             eos:
               - 4.31.2F
@@ -308,7 +326,7 @@ topologies:
               disk: 300
               image: atd-alma-routing-c2023-3-1-ceos-20240327-cvp
             branch: nested/2023.3
-            orderable: true
+            orderable: false
             eos:
               - 4.31.2F
               - 4.31.1F
@@ -324,7 +342,7 @@ topologies:
               ram: 36
               disk: 300
               image: atd-alma-routing-c2024-1-1-ceos-20240424-cvp
-            branch: nested-release
+            branch: nested/2024.1
             orderable: true
             eos:
               - 4.32.0F
@@ -347,7 +365,7 @@ topologies:
               disk: 300
               image: atd-routing-c2023-1-1-ceos-20231110-cvp
             branch: v2023.1-20240115a
-            orderable: true
+            orderable: false
             eos:
               - 4.31.1F
               - 4.30.2F
@@ -364,13 +382,31 @@ topologies:
               ram: 36
               disk: 300
               image: atd-routing-c2023-2-0-ceos-20231120-cvp
-            branch: v2023.2-20240227a
+            branch: v2023.2-20240614a
             orderable: true
             eos:
               - 4.31.1F
               - 4.31.0F
               - 4.30.2F
               - 4.30.1F
+          2024.1.1:
+            schema: 2
+            resources_eos:
+              cpu: 22
+              ram: 42
+              disk: 60
+              image: atd-alma-routing-c2024-1-1-ceos-20240424-eos
+            resources_cvp:
+              cpu: 28
+              ram: 36
+              disk: 300
+              image: atd-alma-routing-c2024-1-1-ceos-20240424-cvp
+            branch: v2024.1-20240614
+            orderable: true
+            eos:
+              - 4.32.1F
+              - 4.32.0F
+              - 4.31.2F
       veos:
         cpu: 44
         ram: 90
@@ -388,7 +424,7 @@ topologies:
               disk: 300
               image: atd-routing-c2023-1-1-veos-4-30-1f-20231110-cvp
             branch: v2023.1-20240115a
-            orderable: true
+            orderable: false
             eos:
               - 4.30.1F
           2023.2.0:
@@ -403,10 +439,26 @@ topologies:
               ram: 36
               disk: 300
               image: atd-routing-c2023-2-0-veos-4-31-0f-20231120-cvp
-            branch: v2023.2-20240227a
+            branch: v2023.2-20240614a
             orderable: true
             eos:
               - 4.31.0F
+          2024.1.1:
+            schema: 2
+            resources_eos:
+              cpu: 38
+              ram: 70
+              disk: 60
+              image: atd-alma-routing-c2024-1-1-veos-4-31-2f-20240424-eos
+            resources_cvp:
+              cpu: 28
+              ram: 36
+              disk: 300
+              image: atd-alma-routing-c2024-1-1-veos-4-31-2f-20240424-cvp
+            branch: v2024.1-20240614
+            orderable: true
+            eos:
+              - 4.31.2F
     desc: 'Twenty nodes. Focused on advanced routing, L2VPN and L3VPN topics'
     name: 'Advanced Routing'
     title: 'Advanced Routing Lab'
@@ -433,7 +485,7 @@ topologies:
               disk: 300
               image: atd-alma-campus-c2023-3-0-ceos-20240301-cvp
             branch: nested/2023.3
-            orderable: true
+            orderable: false
             eos:
               - 4.31.1F
           2023.3.0:
@@ -466,7 +518,7 @@ topologies:
               disk: 300
               image: atd-alma-campus-c2023-3-1-ceos-20240327-cvp
             branch: nested/2023.3
-            orderable: true
+            orderable: false
             eos:
               - 4.31.2F
               - 4.31.1F
@@ -482,9 +534,10 @@ topologies:
               ram: 36
               disk: 300
               image: atd-alma-campus-c2024-1-1-ceos-20240424-cvp
-            branch: nested-release
+            branch: nested/2024.1
             orderable: true
             eos:
+              - 4.32.1F
               - 4.32.0F
               - 4.31.2F
     prod:
@@ -505,7 +558,7 @@ topologies:
               disk: 300
               image: atd-alma-campus-c2023-3-0-ceos-20240301-cvp
             branch: v2023.3-20240301a
-            orderable: true
+            orderable: false
             eos:
               - 4.31.1F
     desc: 'Campus ATD Topology'
@@ -534,7 +587,7 @@ topologies:
               disk: 300
               image: atd-wan-c2023-1-1-cloud-veos-4-31-0f-20231103-cvp
             branch: nested/2023.1
-            orderable: true
+            orderable: false
             eos:
               - 4.31.0F
     desc: 'Multi-Site DC and Campus topology with WAN interconnect'
