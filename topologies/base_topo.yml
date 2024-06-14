@@ -193,7 +193,6 @@ topologies:
             branch: v2024.1-20240614
             orderable: true
             eos:
-              - 4.32.1F
               - 4.32.0F
               - 4.31.2F
     desc: 'Dual Data Center ATD Topology'
@@ -404,7 +403,6 @@ topologies:
             branch: v2024.1-20240614
             orderable: true
             eos:
-              - 4.32.1F
               - 4.32.0F
               - 4.31.2F
       veos:
@@ -537,7 +535,6 @@ topologies:
             branch: nested/2024.1
             orderable: true
             eos:
-              - 4.32.1F
               - 4.32.0F
               - 4.31.2F
     prod:
