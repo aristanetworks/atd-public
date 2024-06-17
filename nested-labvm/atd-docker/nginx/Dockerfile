@@ -1,7 +1,5 @@
 FROM nginx:latest
 
-COPY src/atd.conf /etc/nginx/conf.d/
-
 COPY src/atd-certs.sh /docker-entrypoint.d/
 
 RUN mkdir /etc/nginx/certs

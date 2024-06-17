@@ -10,10 +10,11 @@ import psutil
 
 FILE_TOPO = '/etc/atd/ACCESS_INFO.yaml'
 REPO_PATH = '/opt/atd/'
+REPO_KVM = f"{REPO_PATH}nested-labvm/atd-docker/kvmbuilder/kvm_xml"
 REPO_TOPO = REPO_PATH + 'topologies/'
-AVAIL_TOPO = REPO_TOPO + 'available_topo.yaml'
 DATA_OUTPUT = expanduser('~/kvm/')
 BASE_XML_VEOS = expanduser('~/base.xml')
+BASE_XML_CLOUDEOS64 = expanduser('~/base64.xml')
 BASE_XML_CVP = expanduser('~/base_cvp.xml')
 
 OVS_BRIDGES = []
@@ -23,13 +24,14 @@ KOUT_LINES = ['#!/bin/bash','']
 
 
 class vNODE():
-    def __init__(self, node_name, node_ip, node_mac, node_neighbors):
+    def __init__(self, node_name, node_ip, node_mac, node_neighbors, node_type):
         self.name = node_name
         self.name_short = parseNames(node_name)['code']
         self.ip = node_ip
         self.sys_mac = node_mac
         self.intfs = {}
         self.portMappings(node_neighbors)
+        self.type = node_type
 
     def portMappings(self,node_neighbors):
         """
@@ -70,6 +72,8 @@ def parseNames(devName):
     numer = ''
     split_len = 2
     devDC = False
+    devSITE = False
+    devCLOUD = False
     devCORE = False
     tmp_devName = ""
     if '-dc' in devName.lower() and 'dci' != devName.lower():
@@ -77,6 +81,24 @@ def parseNames(devName):
         tmp_devName = _tmp[0]
         if 'dc' in _tmp[1].lower():
             devDC = _tmp[1]
+        for char in tmp_devName:
+            if char.isalpha():
+                alpha += char
+            elif char.isdigit():
+                numer += char
+    elif '-site' in devName.lower():
+        _tmp = devName.split('-')
+        tmp_devName = _tmp[0]
+        devSITE = _tmp[1]
+        for char in tmp_devName:
+            if char.isalpha():
+                alpha += char
+            elif char.isdigit():
+                numer += char
+    elif '-cloud' in devName.lower():
+        _tmp = devName.split('-')
+        tmp_devName = _tmp[0]
+        devCLOUD = _tmp[1]
         for char in tmp_devName:
             if char.isalpha():
                 alpha += char
@@ -103,6 +125,10 @@ def parseNames(devName):
         dev_name = alpha[:split_len]
     if devDC:
         dev_code = devDC.lower().replace('c','')
+    elif devSITE:
+        dev_code = devSITE.lower().replace('ite','')
+    elif devCLOUD:
+        dev_code = devCLOUD.lower().replace('oud','')
     elif devCORE:
         dev_code = devCORE.lower().replace('ore','')
     else:
@@ -158,6 +184,10 @@ def createMac(dev_type, dev_id):
             return('c{0}'.format(dev_id - 10))
         elif dev_id >=20 and dev_id < 30:
             return('d{0}'.format(dev_id - 20))
+        elif dev_id >=30 and dev_id < 40:
+            return('e{0}'.format(dev_id - 30))
+        elif dev_id >=40 and dev_id < 50:
+            return('f{0}'.format(dev_id - 40))
 
 def getCPUs(start_cpu,cpu_total=0):
     """
@@ -229,13 +259,18 @@ def main(uargs):
     NODES = FILE_BUILD['nodes']
     DATA_OUTPUT += TOPO_TAG + "/"
     # Start to build out Node create and Network creation
-    for vdev in NODES:
-        vdevn = list(vdev.keys())[0]
-        if 'sys_mac' in vdev[vdevn]:
-            v_sys_mac = vdev[vdevn]['sys_mac']
-        else:
-            v_sys_mac = False
-        VEOS_NODES[vdevn] = vNODE(vdevn, vdev[vdevn]['ip_addr'], v_sys_mac, vdev[vdevn]['neighbors'])
+    if NODES:
+        for vdev in NODES:
+            vdevn = list(vdev.keys())[0]
+            if 'sys_mac' in vdev[vdevn]:
+                v_sys_mac = vdev[vdevn]['sys_mac']
+            else:
+                v_sys_mac = False
+            if 'type' in vdev[vdevn]:
+                node_type = vdev[vdevn]['type']
+            else:
+                node_type = "veoslab"
+            VEOS_NODES[vdevn] = vNODE(vdevn, vdev[vdevn]['ip_addr'], v_sys_mac, vdev[vdevn]['neighbors'], node_type)
     # Output as script OVS Bridge creation
     createOVS(TOPO_TAG)
     # Output as script OVS Bridge deletion
@@ -257,6 +292,10 @@ def main(uargs):
             #     'cpuset': CVP_NODES_CPUS[_cvp]
             # })
             vcpu.text = str(cvp_cpu_count)
+            # Add CPU config for Host Passthrough
+            hcpu = ET.SubElement(root, 'cpu', attrib={
+                'mode': 'host-passthrough'
+            })
             # Add RAM Configuration for CVP
             vmem = ET.SubElement(root, 'memory', attrib={
                 'unit': 'MiB'
@@ -337,7 +376,10 @@ def main(uargs):
         node_counter = 0
         for vdev in VEOS_NODES:
             # Open base XML file
-            tree = ET.parse(BASE_XML_VEOS)
+            if VEOS_NODES[vdev].type == "cloudeos":
+                tree = ET.parse(BASE_XML_CLOUDEOS64)
+            else:
+                tree = ET.parse(BASE_XML_VEOS)
             root = tree.getroot()
             # Get to the device section and add interfaces
             xdev = root.find('./devices')
@@ -351,6 +393,7 @@ def main(uargs):
             #     'cpuset': VEOS_CPUS
             # })
             vcpu.text = str(veos_cpu_count)
+
             # Add/Create disk location for xml
             tmp_disk = ET.SubElement(xdev, 'disk', attrib={
                 'type': 'file',
@@ -410,7 +453,10 @@ def main(uargs):
                     d_intf_counter += 1
             # Export/write of xml for node
             tree.write(DATA_OUTPUT + '{0}.xml'.format(vdev))
-            KOUT_LINES.append("sudo cp /var/lib/libvirt/images/veos/base/veos.qcow2 /var/lib/libvirt/images/veos/{0}.qcow2".format(vdev))
+            if VEOS_NODES[vdev].type == "veoslab":
+                KOUT_LINES.append("sudo cp /var/lib/libvirt/images/veos/base/veos.qcow2 /var/lib/libvirt/images/veos/{0}.qcow2".format(vdev))
+            elif VEOS_NODES[vdev].type == "cloudeos":
+                KOUT_LINES.append("sudo cp /var/lib/libvirt/images/veos/base/cloudeos64.qcow2 /var/lib/libvirt/images/veos/{0}.qcow2".format(vdev))
             KOUT_LINES.append("sudo virsh define {0}.xml".format(vdev))
             KOUT_LINES.append("sudo virsh start {0}".format(vdev))
             KOUT_LINES.append("sudo virsh autostart {0}".format(vdev))

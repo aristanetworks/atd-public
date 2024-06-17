@@ -1,0 +1,19 @@
+---
+- name: Add a VLAN
+  hosts: 192.168.0.14
+  gather_facts: 'no'
+  vars:
+    ansible_user: arista
+    # make sure that LABPASSPHRASE is defined:
+    #   export LABPASSPHRASE=`cat /home/coder/.config/code-server/config.yaml| grep "password:" | awk '{print $2}'`
+    ansible_password: "{{ lookup('env', 'LABPASSPHRASE') }}"
+    ansible_network_os: arista.eos.eos
+    ansible_connection: httpapi
+    ansible_httpapi_port: 443
+    ansible_httpapi_use_ssl: true
+    ansible_httpapi_validate_certs: false
+  tasks:
+    - eos_config:
+        lines:
+          - name foo
+        parents: vlan 500

@@ -1,0 +1,178 @@
+---
+# DC1 fabric vars
+
+underlay_routing_protocol: EBGP
+overlay_routing_protocol: EBGP
+
+p2p_uplinks_mtu: 9214
+
+evpn_import_pruning: true
+
+bgp_peer_groups:
+  ipv4_underlay_peers:
+    name: IPV4-UNDERLAY-PEERS
+    password: X/OrLne2MxtUwJOXyoEcEw==
+  mlag_ipv4_underlay_peer:
+    name: MLAG-IPV4-UNDERLAY-PEER
+    password: 96Yo/G3L+2RCoAD4Cy/2Ew==
+  evpn_overlay_peers:
+    name: EVPN-OVERLAY-LOCAL-PEERS
+    password: HwsUtvRBaFIOmUOBhrtIfQ==
+  evpn_overlay_core:
+    name: EVPN-OVERLAY-REMOTE-PEERS
+    password: N5U6i+3vPyc1DrMdKl+ljQ==
+
+##################################################
+# DC1 Spines                                     #
+##################################################
+spine:
+  defaults:
+    structured_config:
+      switchport_default:
+        mode: routed
+    platform: ceos
+    bgp_as: 65000
+    loopback_ipv4_pool: 10.1.0.0/24
+    bgp_defaults:
+      - 'no bgp default ipv4-unicast'
+      - 'distance bgp 20 200 200'
+      - 'neighbor default send-community'
+      - 'graceful-restart restart-time 300'
+      - 'graceful-restart'
+  nodes:
+    - name: s1-spine1
+      id: 10
+      mgmt_ip: 192.168.0.10/24
+    - name: s1-spine2
+      id: 12
+      mgmt_ip: 192.168.0.11/24
+
+##################################################
+# DC1 Leaf Pairs                                 #
+##################################################
+l3leaf:
+  defaults:
+    platform: ceos
+    loopback_ipv4_pool: 10.1.0.0/24
+    vtep_loopback_ipv4_pool: 10.1.1.0/24
+    uplink_interfaces: [Ethernet2, Ethernet3]
+    uplink_switches: [s1-spine1, s1-spine2]
+    uplink_ipv4_pool: 10.255.0.0/22
+    mlag_interfaces: [Ethernet1, Ethernet6]
+    mlag_peer_ipv4_pool: 192.0.0.0/24
+    mlag_peer_l3_ipv4_pool: 192.1.1.0/24
+    mlag_port_channel_id: 1000
+    virtual_router_mac_address: 00:1c:73:00:00:01
+    bgp_defaults:
+      - 'no bgp default ipv4-unicast'
+      - 'distance bgp 20 200 200'
+      - 'neighbor default send-community'
+      - 'graceful-restart restart-time 300'
+      - 'graceful-restart'
+    spanning_tree_mode: rapid-pvst
+    spanning_tree_priority: 0
+    # structured_config:
+    #   spanning_tree:
+    #     edge_port:
+    #       bpduguard_default: true
+  node_groups:
+    ####################################################
+    # DC1 Border Leafs                                 #
+    ####################################################
+    # - group: BrdrLeafs
+    #   platform: ceos
+    #   structured_config:
+    #     router_bgp:
+    #       address_family_ipv4:
+    #         networks:
+    #           10.231.0.2/32:
+    #           10.231.0.4/32:
+    #           10.231.1.2/32:
+    #   filter:
+    #     tenants: [ATD_DC]
+    #     tags: ['DC']
+    #   bgp_as: 65099
+    #   evpn_gateway:
+    #     evpn_l2:
+    #       enabled: true
+    #   nodes:
+    #     - name: s1-brdr1
+    #       id: 2
+    #       mgmt_ip: 192.168.0.100/24
+    #       uplink_switch_interfaces: [Ethernet7, Ethernet7]
+    #       uplink_interfaces: [Ethernet2, Ethernet3]
+    #       mlag_interfaces: [Ethernet1, Ethernet6]
+    #     - name: s1-brdr2
+    #       id: 4
+    #       mgmt_ip: 192.168.0.101/24
+    #       uplink_switch_interfaces: [Ethernet8, Ethernet8]
+    #       uplink_interfaces: [Ethernet2, Ethernet3]
+    #       mlag_interfaces: [Ethernet1, Ethernet6]
+
+    ####################################################
+    # DC1 Leaf Pair 1                                  #
+    ####################################################
+    - group: LeafPair1
+      filter:
+        tenants: [ATD_DC]
+        tags: ['DC']
+      bgp_as: 65001
+      nodes:
+        - name: s1-leaf1
+          id: 14
+          mgmt_ip: 192.168.0.12/24
+          uplink_switch_interfaces: [Ethernet2, Ethernet2]
+        - name: s1-leaf2
+          id: 16
+          mgmt_ip: 192.168.0.13/24
+          uplink_switch_interfaces: [Ethernet3, Ethernet3]
+
+    ####################################################
+    # DC1 Leaf Pair 2                                  #
+    ####################################################
+    - group: LeafPair2
+      filter:
+        tenants: [ATD_DC]
+        tags: ['DC']
+      bgp_as: 65002
+      nodes:
+        - name: s1-leaf3
+          id: 15
+          mgmt_ip: 192.168.0.14/24
+          uplink_switch_interfaces: [Ethernet4, Ethernet4]
+        - name: s1-leaf4
+          id: 17
+          mgmt_ip: 192.168.0.15/24
+          uplink_switch_interfaces: [Ethernet5, Ethernet5]
+
+####################################################
+# External Fabric PtP L3 Conncectivity             #
+####################################################
+core_interfaces:
+  p2p_links:
+    ############################################################
+    # s1-brdr1 to s1-cores UNDERLAY (Default VRF) Peerings     #
+    ############################################################
+    # - ip: [ 172.16.255.0/31, 172.16.255.1/31 ]
+    #   nodes: [ s1-brdr1, s1-core1 ]
+    #   interfaces: [ Ethernet4, Ethernet2 ]
+    #   include_in_underlay_protocol: false
+    #   mtu: 9214
+    # - ip: [ 172.16.255.2/31, 172.16.255.3/31 ]
+    #   nodes: [ s1-brdr1, s1-core2 ]
+    #   interfaces: [ Ethernet5, Ethernet2 ]
+    #   include_in_underlay_protocol: false
+    #   mtu: 9214
+    ############################################################
+    # s1-brdr2 to s1-cores UNDERLAY (Default VRF) Peerings     #
+    ############################################################
+    # - ip: [ 172.16.255.4/31, 172.16.255.5/31 ]
+    #   nodes: [ s1-brdr2, s1-core1 ]
+    #   interfaces: [ Ethernet4, Ethernet3 ]
+    #   include_in_underlay_protocol: false
+    #   mtu: 9214
+    # - ip: [  172.16.255.6/31, 172.16.255.7/31 ]
+    #   nodes: [ s1-brdr2, s1-core2 ]
+    #   interfaces: [ Ethernet5, Ethernet3 ]
+    #   include_in_underlay_protocol: false
+    #   mtu: 9214

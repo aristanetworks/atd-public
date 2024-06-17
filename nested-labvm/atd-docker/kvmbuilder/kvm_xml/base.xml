@@ -60,11 +60,6 @@
       <target type='serial' port='0'/>
       <alias name='serial0'/>
     </console>
-    <channel type='spicevmc'>
-      <target type='virtio' name='com.redhat.spice.0'/>
-      <alias name='channel0'/>
-      <address type='virtio-serial' controller='0' bus='0' port='1'/>
-    </channel>
     <input type='mouse' bus='ps2'/>
     <input type='keyboard' bus='ps2'/>
     <graphics type='vnc' port='5900' autoport='yes' listen='127.0.0.1'>

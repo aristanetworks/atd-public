@@ -43,7 +43,7 @@ rsync -av /opt/atd/topologies/$TOPO/atd-topo.png /opt/atd/topologies/$TOPO/files
 
 # Add files to arista home
 rsync -av --update /opt/atd/topologies/$TOPO/files/ /home/arista/arista-dir
-rsync -av /opt/atd/topologies/$TOPO/files/infra /home/arista/
+# rsync -av /opt/atd/topologies/$TOPO/files/infra /home/arista/
 
 # Perform check if there is a scripts directory
 if [ -d "/opt/atd/topologies/$TOPO/files/scripts" ]
@@ -61,6 +61,12 @@ fi
 
 chown -R arista:arista /home/arista
 
+# Copy Static cEOS startup-configs if present
+if [ -d "/opt/atd/topologies/$TOPO/files/ceos" ]
+then
+    rsync -av /opt/atd/topologies/$TOPO/files/ceos/ /opt/ceos/nodes
+fi
+
 # Update ATD containers
 
 cd /opt/atd/nested-labvm/atd-docker
@@ -73,7 +79,7 @@ export ArGD=$(id -g arista)
 export AtID=$(id -u atdadmin)
 export AtGD=$(id -g atdadmin)
 
-/usr/local/bin/docker-compose up -d --remove-orphans --force-recreate
+docker compose up -d --remove-orphans --force-recreate
 
 echo 'y' | docker image prune
 
