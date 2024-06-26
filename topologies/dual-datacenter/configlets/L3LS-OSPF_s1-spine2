@@ -7,7 +7,7 @@ interface Ethernet2
    ip address 10.111.2.0/31
    ip ospf area 0.0.0.0
    ip ospf authentication message-digest
-   ip ospf message-digest-key 1 sha512 7 UnIJI4WaG2JZQQTx/pfvsg==
+   ip ospf message-digest-key 1 sha512 Arista123!
 !
 interface Ethernet3
    description L3 Downlink - s1-leaf2
@@ -15,7 +15,7 @@ interface Ethernet3
    ip address 10.111.2.2/31
    ip ospf area 0.0.0.0
    ip ospf authentication message-digest
-   ip ospf message-digest-key 1 sha512 7 UnIJI4WaG2JZQQTx/pfvsg==
+   ip ospf message-digest-key 1 sha512 Arista123!
 !
 interface Ethernet4
    description L3 Downlink - s1-leaf3
@@ -23,7 +23,7 @@ interface Ethernet4
    ip address 10.111.2.4/31
    ip ospf area 0.0.0.0
    ip ospf authentication message-digest
-   ip ospf message-digest-key 1 sha512 7 UnIJI4WaG2JZQQTx/pfvsg==
+   ip ospf message-digest-key 1 sha512 Arista123!
 !
 interface Ethernet5
    description L3 Downlink - s1-leaf4
@@ -31,7 +31,7 @@ interface Ethernet5
    ip address 10.111.2.6/31
    ip ospf area 0.0.0.0
    ip ospf authentication message-digest
-   ip ospf message-digest-key 1 sha512 7 UnIJI4WaG2JZQQTx/pfvsg==
+   ip ospf message-digest-key 1 sha512 Arista123!
 !
 interface Ethernet6
    shutdown
