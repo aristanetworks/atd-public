@@ -6,6 +6,7 @@ interface Ethernet2
    no switchport
    ip address 10.111.1.0/31
    ip ospf area 0.0.0.0
+   ip ospf network point-to-point
    ip ospf authentication message-digest
    ip ospf message-digest-key 1 sha512 Arista123!
 !
@@ -14,6 +15,7 @@ interface Ethernet3
    no switchport
    ip address 10.111.1.2/31
    ip ospf area 0.0.0.0
+   ip ospf network point-to-point
    ip ospf authentication message-digest
    ip ospf message-digest-key 1 sha512 Arista123!
 !
@@ -22,6 +24,7 @@ interface Ethernet4
    no switchport
    ip address 10.111.1.4/31
    ip ospf area 0.0.0.0
+   ip ospf network point-to-point
    ip ospf authentication message-digest
    ip ospf message-digest-key 1 sha512 Arista123!
 !
@@ -30,6 +33,7 @@ interface Ethernet5
    no switchport
    ip address 10.111.1.6/31
    ip ospf area 0.0.0.0
+   ip ospf network point-to-point
    ip ospf authentication message-digest
    ip ospf message-digest-key 1 sha512 Arista123!
 !
