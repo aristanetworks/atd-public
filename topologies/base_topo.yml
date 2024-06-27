@@ -190,7 +190,7 @@ topologies:
               ram: 36
               disk: 300
               image: atd-alma-dual-datacenter-c2024-1-1-ceos-20240424-cvp
-            branch: v2024.1-20240614
+            branch: v2024.1-20240627a
             orderable: true
             eos:
               - 4.32.0F
@@ -400,7 +400,7 @@ topologies:
               ram: 36
               disk: 300
               image: atd-alma-routing-c2024-1-1-ceos-20240424-cvp
-            branch: v2024.1-20240614
+            branch: v2024.1-20240627a
             orderable: true
             eos:
               - 4.32.0F
@@ -453,7 +453,7 @@ topologies:
               ram: 36
               disk: 300
               image: atd-alma-routing-c2024-1-1-veos-4-31-2f-20240424-cvp
-            branch: v2024.1-20240614
+            branch: v2024.1-20240627a
             orderable: true
             eos:
               - 4.31.2F
