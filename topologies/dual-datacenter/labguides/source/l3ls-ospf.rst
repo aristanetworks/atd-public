@@ -140,7 +140,7 @@ Layer 3 Leaf-Spine with OSPF
    #. Validate the configuration and process status.
 
       .. code-block:: text
-         :emphasize-lines: 1,5,16
+         :emphasize-lines: 1,5,18
 
          s1-leaf4(config-router-ospf)#show active 
          router ospf 100
