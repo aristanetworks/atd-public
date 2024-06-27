@@ -8,6 +8,7 @@ Welcome to the Arista ATD documentation!
    connecting.rst
    l2ls.rst
    l3ls.rst
+   l3ls-ospf.rst
    vxlan.rst
    l2evpn.rst
    l3evpn.rst
