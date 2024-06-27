@@ -1,8 +1,0 @@
----
-# ATD Tenant Networks (VRFs)
-# Documentation of Tenant specific information - Vlans/VRFs
-
-tenants:
-  ATD_RED: "{{ ATD_RED }}"
-  ATD_GREEN: "{{ ATD_GREEN }}"
-  ATD_BLUE: "{{ ATD_BLUE }}"
