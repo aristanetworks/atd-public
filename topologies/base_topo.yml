@@ -29,12 +29,12 @@ topologies:
               cpu: 22
               ram: 48
               disk: 60
-              image: atd-alma-dual-datacenter-c2024-2-0-ceos-20240725-eos
+              image: atd-alma-dual-datacenter-c2024-2-0-ceos-20240730-eos
             resources_cvp:
               cpu: 28
               ram: 36
               disk: 300
-              image: atd-alma-dual-datacenter-c2024-2-0-ceos-20240725-cvp
+              image: atd-alma-dual-datacenter-c2024-2-0-ceos-20240730-cvp
             branch: nested-release
             orderable: true
             eos:
@@ -175,12 +175,12 @@ topologies:
               cpu: 38
               ram: 70
               disk: 60
-              image: atd-alma-routing-c2024-2-0-veos-4-32-1f-20240725-eos
+              image: atd-alma-routing-c2024-2-0-veos-4-31-2f-20240730-eos
             resources_cvp:
               cpu: 28
               ram: 36
               disk: 300
-              image: atd-alma-routing-c2024-2-0-veos-4-32-1f-20240725-cvp
+              image: atd-alma-routing-c2024-2-0-veos-4-31-2f-20240730-cvp
             branch: nested-release
             orderable: true
             eos:
@@ -212,12 +212,12 @@ topologies:
               cpu: 22
               ram: 42
               disk: 60
-              image: atd-alma-routing-c2024-2-0-ceos-20240725-eos
+              image: atd-alma-routing-c2024-2-0-ceos-20240730-eos
             resources_cvp:
               cpu: 28
               ram: 36
               disk: 300
-              image: atd-alma-routing-c2024-2-0-ceos-20240725-cvp
+              image: atd-alma-routing-c2024-2-0-ceos-20240730-cvp
             branch: nested-release
             orderable: true
             eos:
@@ -370,12 +370,12 @@ topologies:
               cpu: 22
               ram: 48
               disk: 60
-              image: atd-alma-campus-c2024-2-0-ceos-20240725-eos
+              image: atd-alma-campus-c2024-2-0-ceos-20240730-eos
             resources_cvp:
               cpu: 28
               ram: 36
               disk: 300
-              image: atd-alma-campus-c2024-2-0-ceos-20240725-cvp
+              image: atd-alma-campus-c2024-2-0-ceos-20240730-cvp
             branch: nested-release
             orderable: true
             eos:
