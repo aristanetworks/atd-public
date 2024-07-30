@@ -1,0 +1,118 @@
+vlan internal order ascending range 1006 1199
+!
+spanning-tree mode mstp
+no spanning-tree vlan-id 4094
+spanning-tree mst 0 priority 16384
+!
+vlan 10
+   name INBAND_MGMT
+!
+vlan 310
+   name IDF3-Data
+!
+vlan 320
+   name IDF3-Voice
+!
+vlan 330
+   name IDF3-Guest
+!
+vlan 4094
+   name MLAG_PEER
+   trunk group MLAG
+!
+interface Port-Channel47
+   description MLAG_PEER_leaf-3a_Po47
+   no shutdown
+   switchport
+   switchport mode trunk
+   switchport trunk group MLAG
+!
+interface Port-Channel49
+   description SPINES_Po5
+   no shutdown
+   switchport
+   switchport trunk allowed vlan 10,310,320,330
+   switchport mode trunk
+   mlag 49
+!
+interface Port-Channel51
+   description MEMBER-LEAF-3C_Po49
+   no shutdown
+   switchport
+   switchport trunk allowed vlan 10,310,320,330
+   switchport mode trunk
+   mlag 51
+!
+interface Port-Channel52
+   description MEMBER-LEAF-3D_Po49
+   no shutdown
+   switchport
+   switchport trunk allowed vlan 10,310,320,330
+   switchport mode trunk
+   mlag 52
+!
+interface Port-Channel531
+   description MEMBER-LEAF-3E_Po49
+   no shutdown
+   switchport
+   switchport trunk allowed vlan 10,310,320,330
+   switchport mode trunk
+   mlag 531
+!
+interface Ethernet47
+   description MLAG_PEER_leaf-3a_Ethernet47
+   no shutdown
+   channel-group 47 mode active
+!
+interface Ethernet48
+   description MLAG_PEER_leaf-3a_Ethernet48
+   no shutdown
+   channel-group 47 mode active
+!
+interface Ethernet49
+   description SPINE-1_Ethernet6
+   no shutdown
+   channel-group 49 mode active
+!
+interface Ethernet50
+   description SPINE-2_Ethernet6
+   no shutdown
+   channel-group 49 mode active
+!
+interface Ethernet51
+   description MEMBER-LEAF-3C_Ethernet50
+   no shutdown
+   channel-group 51 mode active
+!
+interface Ethernet52
+   description MEMBER-LEAF-3D_Ethernet50
+   no shutdown
+   channel-group 52 mode active
+!
+interface Ethernet53/1
+   description MEMBER-LEAF-3E_Ethernet50
+   no shutdown
+   channel-group 531 mode active
+!
+interface Vlan10
+   description Inband Management
+   no shutdown
+   mtu 1500
+   ip address 10.10.10.10/24
+!
+interface Vlan4094
+   description MLAG_PEER
+   no shutdown
+   mtu 1500
+   no autostate
+   ip address 10.1.255.11/31
+!
+mlag configuration
+   domain-id IDF3_AGG
+   local-interface Vlan4094
+   peer-address 10.1.255.10
+   peer-link Port-Channel47
+   reload-delay mlag 300
+   reload-delay non-mlag 330
+!
+end

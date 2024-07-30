@@ -1,0 +1,116 @@
+no spanning-tree vlan-id 4093-4094
+spanning-tree mst 0 priority 4096
+!
+system l1
+   unsupported speed action error
+   unsupported error-correction action error
+!
+vlan 110
+   name IDF1-Data
+!
+vlan 120
+   name IDF1-Voice
+!
+vlan 130
+   name IDF1-Guest
+!
+vlan 4093
+   name LEAF_PEER_L3
+   trunk group LEAF_PEER_L3
+!
+vlan 4094
+   name MLAG_PEER
+   trunk group MLAG
+!
+interface Port-Channel47
+   description MLAG_PEER_leaf-1b_Po47
+   switchport mode trunk
+   switchport trunk group LEAF_PEER_L3
+   switchport trunk group MLAG
+!
+interface Ethernet1
+   description IDF1 Data Standard Port
+   switchport access vlan 110
+   spanning-tree portfast
+!
+interface Ethernet47
+   description MLAG_PEER_leaf-1b_Ethernet47
+   channel-group 47 mode active
+!
+interface Ethernet48
+   description MLAG_PEER_leaf-1b_Ethernet48
+   channel-group 47 mode active
+!
+interface Ethernet49
+   description P2P_LINK_TO_SPINE-1_Ethernet3
+   mtu 1500
+   no switchport
+   ip address 10.0.0.5/31
+!
+interface Loopback0
+   description Management and Router-id
+   ip address 10.255.0.5/32
+!
+interface Vlan110
+   description IDF1-Data
+   no autostate
+   ip address 10.1.10.2/24
+   ip virtual-router address 10.1.10.1
+   ip helper-address 10.100.0.0
+   ip helper-address 10.100.0.2
+!
+interface Vlan120
+   description IDF1-Voice
+   no autostate
+   ip address 10.1.20.2/24
+   ip virtual-router address 10.1.20.1
+   ip helper-address 10.100.0.0
+   ip helper-address 10.100.0.2
+!
+interface Vlan130
+   description IDF1-Guest
+   no autostate
+   ip address 10.1.30.2/24
+   ip virtual-router address 10.1.30.1
+   ip helper-address 10.100.0.0
+   ip helper-address 10.100.0.2
+!
+interface Vlan4093
+   description MLAG_PEER_L3_PEERING
+   mtu 1500
+   ip address 10.255.2.4/31
+!
+interface Vlan4094
+   description MLAG_PEER
+   mtu 1500
+   no autostate
+   ip address 10.255.255.4/31
+!
+ip virtual-router mac-address 00:1c:73:00:00:99
+!
+ip routing
+!
+mlag configuration
+   domain-id IDF1
+   local-interface Vlan4094
+   peer-address 10.255.255.5
+   peer-link Port-Channel47
+   reload-delay mlag 300
+   reload-delay non-mlag 330
+!
+router bfd
+   multihop interval 300 min-rx 300 multiplier 3
+!
+router bgp 65111
+   router-id 10.255.0.5
+   maximum-paths 4 ecmp 4
+   neighbor SPINE peer group
+   neighbor SPINE remote-as 65001
+   neighbor SPINE send-community
+   neighbor 10.0.0.4 peer group SPINE
+   neighbor 10.255.2.5 remote-as 65111
+   neighbor 10.255.2.5 next-hop-self
+   network 10.255.0.5/32
+   network 10.1.10.0/24
+   network 10.1.20.0/24
+   network 10.1.30.0/24

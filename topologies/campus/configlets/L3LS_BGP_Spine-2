@@ -1,0 +1,86 @@
+spanning-tree mode none
+!
+system l1
+   unsupported speed action error
+   unsupported error-correction action error
+!
+interface Ethernet1
+   description P2P_LINK_TO_router-1_Ethernet2
+   mtu 1500
+   no switchport
+   ip address 10.100.0.3/31
+!
+interface Ethernet2
+   description P2P_LINK_TO_router-2_Ethernet2
+   mtu 1500
+   no switchport
+   ip address 10.100.0.7/31
+!
+interface Ethernet3
+   description P2P_LINK_TO_LEAF-1B_Ethernet49
+   mtu 1500
+   no switchport
+   ip address 10.0.0.6/31
+!
+interface Ethernet4
+   description P2P_LINK_TO_LEAF-2A_Ethernet2/1
+   mtu 1500
+   no switchport
+   ip address 10.0.0.18/31
+!
+interface Ethernet5
+   description P2P_LINK_TO_LEAF-3A_Ethernet50
+   mtu 1500
+   no switchport
+   ip address 10.0.0.22/31
+!
+interface Ethernet6
+   description P2P_LINK_TO_LEAF-3B_Ethernet50
+   mtu 1500
+   no switchport
+   ip address 10.0.0.26/31
+!
+interface Ethernet49/1
+!
+interface Ethernet50/1
+!
+interface Loopback0
+   description Management and Router-id
+   ip address 172.16.1.2/32
+!
+ip routing
+!
+router bfd
+   multihop interval 300 min-rx 300 multiplier 3
+!
+router bgp 65001
+   router-id 172.16.1.2
+   maximum-paths 4 ecmp 4
+   neighbor LEAVES peer group
+   neighbor LEAVES send-community
+   neighbor LEAVES maximum-routes 12000
+   neighbor ROUTERS peer group
+   neighbor ROUTERS send-community
+   neighbor ROUTERS maximum-routes 12000
+   neighbor 10.0.0.7 peer group LEAVES
+   neighbor 10.0.0.7 remote-as 65111
+   neighbor 10.0.0.7 description leaf-1b_Ethernet49
+   neighbor 10.0.0.19 peer group LEAVES
+   neighbor 10.0.0.19 remote-as 65112
+   neighbor 10.0.0.19 description leaf-2a_Ethernet2/1
+   neighbor 10.0.0.23 peer group LEAVES
+   neighbor 10.0.0.23 remote-as 65113
+   neighbor 10.0.0.23 description leaf-3a_Ethernet50
+   neighbor 10.0.0.27 peer group LEAVES
+   neighbor 10.0.0.27 remote-as 65113
+   neighbor 10.0.0.27 description leaf-3b_Ethernet50
+   neighbor 10.100.0.2 peer group ROUTERS
+   neighbor 10.100.0.2 remote-as 65000
+   neighbor 10.100.0.2 local-as 65001 no-prepend replace-as
+   neighbor 10.100.0.2 description router-1
+   neighbor 10.100.0.6 peer group ROUTERS
+   neighbor 10.100.0.6 remote-as 65000
+   neighbor 10.100.0.6 local-as 65001 no-prepend replace-as
+   neighbor 10.100.0.6 description router-2
+   network 172.16.1.2/32
+
