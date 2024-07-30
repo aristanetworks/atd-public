@@ -2,6 +2,12 @@
 lab_list:
   reset:
     description: "Reset All Devices to Base ATD (reset)"
+  l2ls:
+    description: "Layer 2 Leaf-Spine Lab (l2ls)"
+  l3ls-bgp:
+    description: "Layer 3 Leaf-Spine Lab with BGP (l3ls-bgp)"
+  l3evpn:
+    description: "Layer 3 EVPN VXLAN Lab (l3evpn)"
 
 labconfiglets:
   reset:
@@ -29,3 +35,113 @@ labconfiglets:
       - "BASE_member-leaf-3d"
     member-leaf-3e:
       - "BASE_member-leaf-3e"
+  l2ls:
+    router-1:
+      - "BASE_router-1"
+      - "L2LS_router-1"
+    router-2:
+      - "BASE_router-2"
+      - "L2LS_router-2"
+    spine-1:
+      - "BASE_spine-1"
+      - "L2LS_spine-1"
+    spine-2:
+      - "BASE_spine-2"
+      - "L2LS_spine-2"
+    leaf-1a:
+      - "BASE_leaf-1a"
+      - "L2LS_leaf-1a"
+    leaf-1b:
+      - "BASE_leaf-1b"
+      - "L2LS_leaf-1b"
+    leaf-2a:
+      - "BASE_leaf-2a"
+      - "L2LS_leaf-2a"
+    leaf-3a:
+      - "BASE_leaf-3a"
+      - "L2LS_leaf-3a"
+    leaf-3b:
+      - "BASE_leaf-3b"
+      - "L2LS_leaf-3b"
+    member-leaf-3c:
+      - "BASE_member-leaf-3c"
+      - "L2LS_member-leaf-3c"
+    member-leaf-3d:
+      - "BASE_member-leaf-3d"
+      - "L2LS_member-leaf-3d"
+    member-leaf-3e:
+      - "BASE_member-leaf-3e"
+      - "L2LS_member-leaf-3e"
+  l3ls-bgp:
+    router-1:
+      - "BASE_router-1"
+      - "L3LS_BGP_router-1"
+    router-2:
+      - "BASE_router-2"
+    spine-1:
+      - "BASE_spine-1"
+      - "L3LS_BGP_spine-1"
+    spine-2:
+      - "BASE_spine-2"
+      - "L3LS_BGP_spine-2"
+    leaf-1a:
+      - "BASE_leaf-1a"
+      - "L3LS_BGP_leaf-1a"
+    leaf-1b:
+      - "BASE_leaf-1b"
+      - "L3LS_BGP_leaf-1b"
+    leaf-2a:
+      - "BASE_leaf-2a"
+      - "L3LS_BGP_leaf-2a"
+    leaf-3a:
+      - "BASE_leaf-3a"
+      - "L3LS_BGP_leaf-3a"
+    leaf-3b:
+      - "BASE_leaf-3b"
+      - "L3LS_BGP_leaf-3b"
+    member-leaf-3c:
+      - "BASE_member-leaf-3c"
+      - "L3LS_BGP_member-leaf-3c"
+    member-leaf-3d:
+      - "BASE_member-leaf-3d"
+      - "L3LS_BGP_member-leaf-3d"
+    member-leaf-3e:
+      - "BASE_member-leaf-3e"
+      - "L3LS_BGP_member-leaf-3e"
+  l3evpn:
+    router-1:
+      - "BASE_router-1"
+      - "L3EVPN_router-1"
+    router-2:
+      - "BASE_router-2"
+      - "L3EVPN_router-2"
+    spine-1:
+      - "BASE_spine-1"
+      - "L3EVPN_spine-1"
+    spine-2:
+      - "BASE_spine-2"
+      - "L3EVPN_spine-2"
+    leaf-1a:
+      - "BASE_leaf-1a"
+      - "L3EVPN_leaf-1a"
+    leaf-1b:
+      - "BASE_leaf-1b"
+      - "L3EVPN_leaf-1b"
+    leaf-2a:
+      - "BASE_leaf-2a"
+      - "L3EVPN_leaf-2a"
+    leaf-3a:
+      - "BASE_leaf-3a"
+      - "L3EVPN_leaf-3a"
+    leaf-3b:
+      - "BASE_leaf-3b"
+      - "L3EVPN_leaf-3b"
+    member-leaf-3c:
+      - "BASE_member-leaf-3c"
+      - "L3EVPN_member-leaf-3c"
+    member-leaf-3d:
+      - "BASE_member-leaf-3d"
+      - "L3EVPN_member-leaf-3d"
+    member-leaf-3e:
+      - "BASE_member-leaf-3e"
+      - "L3EVPN_member-leaf-3e"
