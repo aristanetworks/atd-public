@@ -1,0 +1,61 @@
+vlan internal order ascending range 1006 1199
+!
+spanning-tree mode mstp
+spanning-tree mst 0 priority 16384
+!
+vlan 10
+   name INBAND_MGMT
+!
+vlan 210
+   name IDF2-Data
+!
+vlan 220
+   name IDF2-Voice
+!
+vlan 230
+   name IDF2-Guest
+!
+interface Port-Channel11
+   description SPINES_Po4
+   no shutdown
+   switchport
+   switchport trunk allowed vlan 10,210,220,230
+   switchport mode trunk
+!
+interface Ethernet1/1
+   description SPINE-1_Ethernet4
+   no shutdown
+   channel-group 11 mode active
+!
+interface Ethernet2/1
+   description SPINE-2_Ethernet4
+   no shutdown
+   channel-group 11 mode active
+!
+interface Ethernet3/1
+   description IDF2 Standard Port
+   no shutdown
+   switchport trunk native vlan 210
+   switchport phone vlan 220
+   switchport phone trunk untagged
+   switchport mode trunk phone
+   switchport
+   dot1x pae authenticator
+   dot1x authentication failure action traffic allow vlan 230
+   dot1x reauthentication
+   dot1x port-control auto
+   dot1x host-mode multi-host authenticated
+   dot1x mac based authentication
+   dot1x timeout tx-period 3
+   dot1x timeout reauth-period server
+   dot1x reauthorization request limit 3
+   spanning-tree portfast
+   spanning-tree bpduguard enable
+!
+interface Vlan10
+   description Inband Management
+   no shutdown
+   mtu 1500
+   ip address 10.10.10.8/24
+!
+end

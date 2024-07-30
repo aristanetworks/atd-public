@@ -1,0 +1,87 @@
+vlan internal order ascending range 1006 1199
+!
+spanning-tree mode mstp
+spanning-tree mst 0 priority 16384
+!
+vlan 10
+   name INBAND_MGMT
+!
+vlan 310
+   name IDF3-Data
+!
+vlan 320
+   name IDF3-Voice
+!
+vlan 330
+   name IDF3-Guest
+!
+interface Port-Channel49
+   description SPINES_Po5
+   no shutdown
+   switchport
+   switchport trunk allowed vlan 10,310,320,330
+   switchport mode trunk
+   mlag 49
+!
+interface Port-Channel51
+   description MEMBER-LEAF-3C_Po49
+   no shutdown
+   switchport
+   switchport trunk allowed vlan 10,310,320,330
+   switchport mode trunk
+   mlag 51
+!
+interface Port-Channel52
+   description MEMBER-LEAF-3D_Po49
+   no shutdown
+   switchport
+   switchport trunk allowed vlan 10,310,320,330
+   switchport mode trunk
+   mlag 52
+!
+interface Port-Channel531
+   description MEMBER-LEAF-3E_Po49
+   no shutdown
+   switchport
+   switchport trunk allowed vlan 10,310,320,330
+   switchport mode trunk
+   mlag 531
+!
+interface Ethernet47
+   shutdown
+!
+interface Ethernet48
+   shutdown
+!
+interface Ethernet49
+   description SPINE-1_Ethernet5
+   no shutdown
+   channel-group 49 mode active
+!
+interface Ethernet50
+   description SPINE-2_Ethernet5
+   no shutdown
+   channel-group 49 mode active
+!
+interface Ethernet51
+   description MEMBER-LEAF-3C_Ethernet49
+   no shutdown
+   channel-group 51 mode active
+!
+interface Ethernet52
+   description MEMBER-LEAF-3D_Ethernet49
+   no shutdown
+   channel-group 52 mode active
+!
+interface Ethernet53/1
+   description MEMBER-LEAF-3E_Ethernet49
+   no shutdown
+   channel-group 531 mode active
+!
+interface Vlan10
+   description Inband Management
+   no shutdown
+   mtu 1500
+   ip address 10.10.10.9/24
+!
+end

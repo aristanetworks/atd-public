@@ -1,0 +1,59 @@
+vlan internal order ascending range 1006 1199
+!
+spanning-tree mode mstp
+spanning-tree mst 0 priority 16384
+!
+vlan 10
+   name INBAND_MGMT
+!
+vlan 310
+   name IDF3-Data
+!
+vlan 320
+   name IDF3-Voice
+!
+vlan 330
+   name IDF3-Guest
+!
+interface Port-Channel49
+   description IDF3_AGG_Po52
+   no shutdown
+   switchport
+   switchport trunk allowed vlan 10,310,320,330
+   switchport mode trunk
+!
+interface Ethernet1
+   description IDF3 Standard Port
+   no shutdown
+   switchport trunk native vlan 310
+   switchport phone vlan 320
+   switchport phone trunk untagged
+   switchport mode trunk phone
+   switchport
+   dot1x pae authenticator
+   dot1x authentication failure action traffic allow vlan 330
+   dot1x reauthentication
+   dot1x port-control auto
+   dot1x host-mode multi-host authenticated
+   dot1x mac based authentication
+   dot1x timeout tx-period 3
+   dot1x timeout reauth-period server
+   dot1x reauthorization request limit 3
+   spanning-tree portfast
+   spanning-tree bpduguard enable
+!
+interface Ethernet49
+   description LEAF-3A_Ethernet52
+   no shutdown
+   channel-group 49 mode active
+!
+interface Ethernet50
+   description LEAF-3B_Ethernet52
+   no shutdown
+   channel-group 49 mode active
+!
+interface Vlan10
+   description Inband Management
+   no shutdown
+   mtu 1500
+   ip address 10.10.10.12/24
