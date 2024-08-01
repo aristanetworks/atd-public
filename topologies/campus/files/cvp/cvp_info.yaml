@@ -49,37 +49,25 @@ cvp_info:
     netelements:
       spine-1:
         - BASE_spine-1
-        - L3LS_spine-1
       spine-2:
         - BASE_spine-2
-        - L3LS_spine-2
       router-1:
         - BASE_router-1
-        - L3LS_router-1
       router-2:
         - BASE_router-2
-        - L3LS_router-2
       leaf-1a:
         - BASE_leaf-1a
-        - L3LS_leaf-1a
       leaf-1b:
         - BASE_leaf-1b
-        - L3LS_leaf-1b
       leaf-2a:
         - BASE_leaf-2a
-        - L3LS_leaf-2a
       leaf-3a:
         - BASE_leaf-3a
-        - L3LS_leaf-3a
       leaf-3b:
         - BASE_leaf-3b
-        - L3LS_leaf-3b
       member-leaf-3c:
         - BASE_member-leaf-3c
-        - L3LS_member-leaf-3c
       member-leaf-3d:
         - BASE_member-leaf-3d
-        - L3LS_member-leaf-3d
       member-leaf-3e:
         - BASE_member-leaf-3e
-        - L3LS_member-leaf-3e
