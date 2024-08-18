@@ -98,7 +98,7 @@ then
     # Adding below section to adjust veth pair MTUs to 10000
     # ===============================================
     sleep 5
-    for i in $(ifconfig | grep veth | awk '{print $1}')
+    for i in $(ifconfig | awk '/veth/{print $1}')
     do
         echo $i
         ip link set $i mtu 10000
