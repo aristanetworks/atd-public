@@ -40,6 +40,22 @@ topologies:
             eos:
               - 4.32.0F
               - 4.31.2F
+          2024.2.0-bare:
+            schema: 2
+            resources_eos:
+              cpu: 22
+              ram: 48
+              disk: 60
+              image: atd-alma-dual-datacenter-c2024-2-0-bare-ceos-20240806-eos
+            resources_cvp:
+              cpu: 28
+              ram: 36
+              disk: 300
+              image: atd-alma-dual-datacenter-c2024-2-0-bare-ceos-20240806-cvp
+            branch: nested-release
+            orderable: true
+            eos:
+              - 4.32.0F
     prod:
       ceos:
         cpu: 40
