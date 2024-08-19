@@ -21,6 +21,8 @@ topologies:
             branch: nested/2024.1
             orderable: true
             eos:
+              - 4.32.2F
+              - 4.32.1F
               - 4.32.0F
               - 4.31.2F
           2024.2.0:
@@ -38,6 +40,8 @@ topologies:
             branch: nested-release
             orderable: true
             eos:
+              - 4.32.2F
+              - 4.32.1F
               - 4.32.0F
               - 4.31.2F
           2024.2.0-bare:
@@ -55,6 +59,8 @@ topologies:
             branch: nested-release
             orderable: true
             eos:
+              - 4.32.2F
+              - 4.32.1F
               - 4.32.0F
     prod:
       ceos:
@@ -220,6 +226,8 @@ topologies:
             branch: nested/2024.1
             orderable: true
             eos:
+              - 4.32.2F
+              - 4.32.1F
               - 4.32.0F
               - 4.31.2F
           2024.2.0:
@@ -237,6 +245,8 @@ topologies:
             branch: nested-release
             orderable: true
             eos:
+              - 4.32.2F
+              - 4.32.1F
               - 4.32.0F
               - 4.31.2F
     prod:
@@ -378,6 +388,8 @@ topologies:
             branch: nested/2024.1
             orderable: true
             eos:
+              - 4.32.2F
+              - 4.32.1F
               - 4.32.0F
               - 4.31.2F
           2024.2.0:
@@ -395,6 +407,8 @@ topologies:
             branch: nested-release
             orderable: true
             eos:
+              - 4.32.2F
+              - 4.32.1F
               - 4.32.0F
               - 4.31.2F
     prod:
