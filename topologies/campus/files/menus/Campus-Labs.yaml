@@ -11,10 +11,12 @@ labconfiglets:
   reset:
     router-1:
       - "BASE_router-1"
+      - "DHCP-router1"
     router-2:
       - "BASE_router-2"
     spine-1:
       - "BASE_spine-1"
+      - "DHCP-spine1"
     spine-2:
       - "BASE_spine-2"
     leaf-1a:
@@ -37,12 +39,14 @@ labconfiglets:
     router-1:
       - "BASE_router-1"
       - "L2LS_router-1"
+      - "DHCP-router1"
     router-2:
       - "BASE_router-2"
       - "L2LS_router-2"
     spine-1:
       - "BASE_spine-1"
       - "L2LS_spine-1"
+      - "DHCP-spine1"
     spine-2:
       - "BASE_spine-2"
       - "L2LS_spine-2"
@@ -74,11 +78,13 @@ labconfiglets:
     router-1:
       - "BASE_router-1"
       - "L3LS_BGP_router-1"
+      - "DHCP-router1"
     router-2:
       - "BASE_router-2"
     spine-1:
       - "BASE_spine-1"
       - "L3LS_BGP_spine-1"
+      - "DHCP-spine1"
     spine-2:
       - "BASE_spine-2"
       - "L3LS_BGP_spine-2"
@@ -110,12 +116,14 @@ labconfiglets:
     router-1:
       - "BASE_router-1"
       - "L3EVPN_router-1"
+      - "DHCP-router1"
     router-2:
       - "BASE_router-2"
       - "L3EVPN_router-2"
     spine-1:
       - "BASE_spine-1"
       - "L3EVPN_spine-1"
+      - "DHCP-spine1"
     spine-2:
       - "BASE_spine-2"
       - "L3EVPN_spine-2"

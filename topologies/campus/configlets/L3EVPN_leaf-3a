@@ -8,13 +8,13 @@ vlan 10
    name INBAND_MGMT
 !
 vlan 310
-   name IDF3-Data
+   name Access_Pod3-Data
 !
 vlan 320
-   name IDF3-Voice
+   name Access_Pod3-Voice
 !
 vlan 330
-   name IDF3-Guest
+   name Access_Pod3-Guest
 !
 vlan 4093
    name LEAF_PEER_L3
@@ -114,17 +114,17 @@ interface Vlan10
    ip virtual-router address 10.10.10.1
 !
 interface Vlan310
-   description IDF3-Data
+   description Access_Pod3-Data
    no shutdown
    ip address virtual 10.3.10.1/24
 !
 interface Vlan320
-   description IDF3-Voice
+   description Access_Pod3-Voice
    no shutdown
    ip address virtual 10.3.20.1/24
 !
 interface Vlan330
-   description IDF3-Guest
+   description Access_Pod3-Guest
    no shutdown
    ip address virtual 10.3.30.1/24
 !
@@ -168,7 +168,7 @@ ip prefix-list PL-SVI-VRF-DEFAULT
    seq 30 permit 10.3.30.0/24
 !
 mlag configuration
-   domain-id IDF3_AGG
+   domain-id Access_Pod3_AGG
    local-interface Vlan4094
    peer-address 10.255.255.11
    peer-link Port-Channel47

@@ -7,13 +7,13 @@ vlan 10
    name INBAND_MGMT
 !
 vlan 210
-   name IDF2-Data
+   name Access_Pod2-Data
 !
 vlan 220
-   name IDF2-Voice
+   name Access_Pod2-Voice
 !
 vlan 230
-   name IDF2-Guest
+   name Access_Pod2-Guest
 !
 interface Port-Channel11
    description SPINES_Po4
@@ -33,7 +33,7 @@ interface Ethernet2/1
    channel-group 11 mode active
 !
 interface Ethernet3/1
-   description IDF2 Standard Port
+   description Access_Pod2 Standard Port
    no shutdown
    switchport trunk native vlan 210
    switchport phone vlan 220
