@@ -81,7 +81,7 @@ interface Vlan4094
 ip routing
 !
 mlag configuration
-   domain-id IDF3_AGG
+   domain-id Access_Pod3_AGG
    local-interface Vlan4094
    peer-address 10.255.255.11
    peer-link Port-Channel47

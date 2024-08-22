@@ -8,13 +8,13 @@ vlan 10
    name INBAND_MGMT
 !
 vlan 310
-   name IDF3-Data
+   name Access_Pod3-Data
 !
 vlan 320
-   name IDF3-Voice
+   name Access_Pod3-Voice
 !
 vlan 330
-   name IDF3-Guest
+   name Access_Pod3-Guest
 !
 vlan 4094
    name MLAG_PEER
@@ -108,7 +108,7 @@ interface Vlan4094
    ip address 10.1.255.11/31
 !
 mlag configuration
-   domain-id IDF3_AGG
+   domain-id Access_Pod3_AGG
    local-interface Vlan4094
    peer-address 10.1.255.10
    peer-link Port-Channel47

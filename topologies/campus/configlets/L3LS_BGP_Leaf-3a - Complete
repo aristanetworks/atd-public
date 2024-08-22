@@ -9,13 +9,13 @@ vlan 10
    name INBAND_MGMT
 !
 vlan 310
-   name IDF3-Data
+   name Access_Pod3-Data
 !
 vlan 320
-   name IDF3-Voice
+   name Access_Pod3-Voice
 !
 vlan 330
-   name IDF3-Guest
+   name Access_Pod3-Guest
 !
 vlan 4093
    name LEAF_PEER_L3
@@ -93,7 +93,7 @@ interface Vlan10
    ip virtual-router address 10.10.10.1
 !
 interface Vlan310
-   description IDF3-Data
+   description Access_Pod3-Data
    no autostate
    ip address 10.3.10.2/24
    ip virtual-router address 10.3.10.1
@@ -101,7 +101,7 @@ interface Vlan310
    ip helper-address 10.100.0.2
 !
 interface Vlan320
-   description IDF3-Voice
+   description Access_Pod3-Voice
    no autostate
    ip address 10.3.20.2/24
    ip virtual-router address 10.3.20.1
@@ -109,7 +109,7 @@ interface Vlan320
    ip helper-address 10.100.0.2
 !
 interface Vlan330
-   description IDF3-Guest
+   description Access_Pod3-Guest
    no autostate
    ip address 10.3.30.2/24
    ip virtual-router address 10.3.30.1
@@ -132,7 +132,7 @@ ip virtual-router mac-address 00:1c:73:00:00:99
 ip routing
 !
 mlag configuration
-   domain-id IDF3_AGG
+   domain-id Access_Pod3_AGG
    local-interface Vlan4094
    peer-address 10.255.255.11
    peer-link Port-Channel47

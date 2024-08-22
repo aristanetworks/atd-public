@@ -8,13 +8,13 @@ vlan 10
    name INBAND_MGMT
 !
 vlan 110
-   name IDF1-Data
+   name Access_Pod1-Data
 !
 vlan 120
-   name IDF1-Voice
+   name Access_Pod1-Voice
 !
 vlan 130
-   name IDF1-Guest
+   name Access_Pod1-Guest
 !
 vlan 4094
    name MLAG_PEER
@@ -36,7 +36,7 @@ interface Port-Channel49
    mlag 49
 !
 interface Ethernet1
-   description IDF1 Standard Port
+   description Access_Pod1 Standard Port
    no shutdown
    switchport trunk native vlan 110
    switchport phone vlan 120
@@ -84,7 +84,7 @@ interface Vlan4094
    ip address 10.1.255.4/31
 !
 mlag configuration
-   domain-id IDF1
+   domain-id Access_Pod1
    local-interface Vlan4094
    peer-address 10.1.255.5
    peer-link Port-Channel47
