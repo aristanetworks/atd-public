@@ -7,13 +7,13 @@ vlan 10
    name INBAND_MGMT
 !
 vlan 310
-   name IDF3-Data
+   name Access_Pod3-Data
 !
 vlan 320
-   name IDF3-Voice
+   name Access_Pod3-Voice
 !
 vlan 330
-   name IDF3-Guest
+   name Access_Pod3-Guest
 !
 interface Port-Channel49
    description SPINES_Po5

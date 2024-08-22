@@ -5,13 +5,13 @@ system l1
    unsupported error-correction action error
 !
 vlan 210
-   name IDF2-Data
+   name Access_Pod2-Data
 !
 vlan 220
-   name IDF2-Voice
+   name Access_Pod2-Voice
 !
 vlan 230
-   name IDF2-Guest
+   name Access_Pod2-Guest
 !
 interface Ethernet1/1
    description P2P_LINK_TO_SPINE-1_Ethernet4
@@ -26,7 +26,7 @@ interface Ethernet2/1
    ip address 10.0.0.19/31
 !
 interface Ethernet3/1
-   description IDF2 Standard Guest Port
+   description Access_Pod2 Standard Guest Port
    switchport access vlan 230
    spanning-tree portfast
 !
@@ -35,21 +35,21 @@ interface Loopback0
    ip address 10.255.0.7/32
 !
 interface Vlan210
-   description IDF2-Data
+   description Access_Pod2-Data
    no autostate
    ip address 10.2.10.1/24
    ip helper-address 10.100.0.0
    ip helper-address 10.100.0.2
 !
 interface Vlan220
-   description IDF2-Voice
+   description Access_Pod2-Voice
    no autostate
    ip address 10.2.20.1/24
    ip helper-address 10.100.0.0
    ip helper-address 10.100.0.2
 !
 interface Vlan230
-   description IDF2-Guest
+   description Access_Pod2-Guest
    no autostate
    ip address 10.2.30.1/24
    ip helper-address 10.100.0.0
