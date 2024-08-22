@@ -5,13 +5,13 @@ no spanning-tree vlan-id 4093-4094
 spanning-tree mst 0 priority 4096
 !
 vlan 110
-   name IDF1-Data
+   name Access_Pod1-Data
 !
 vlan 120
-   name IDF1-Voice
+   name Access_Pod1-Voice
 !
 vlan 130
-   name IDF1-Guest
+   name Access_Pod1-Guest
 !
 vlan 4093
    name LEAF_PEER_L3
@@ -30,7 +30,7 @@ interface Port-Channel47
    switchport trunk group MLAG
 !
 interface Ethernet1
-   description IDF1 Standard Port
+   description Access_Pod1 Standard Port
    no shutdown
    switchport trunk native vlan 110
    switchport phone vlan 120
@@ -77,17 +77,17 @@ interface Loopback1
    ip address 10.255.1.5/32
 !
 interface Vlan110
-   description IDF1-Data
+   description Access_Pod1-Data
    no shutdown
    ip address virtual 10.1.10.1/24
 !
 interface Vlan120
-   description IDF1-Voice
+   description Access_Pod1-Voice
    no shutdown
    ip address virtual 10.1.20.1/24
 !
 interface Vlan130
-   description IDF1-Guest
+   description Access_Pod1-Guest
    no shutdown
    ip address virtual 10.1.30.1/24
 !
@@ -128,7 +128,7 @@ ip prefix-list PL-SVI-VRF-DEFAULT
    seq 30 permit 10.1.30.0/24
 !
 mlag configuration
-   domain-id IDF1
+   domain-id Access_Pod1
    local-interface Vlan4094
    peer-address 10.255.255.4
    peer-link Port-Channel47

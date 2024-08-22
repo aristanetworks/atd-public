@@ -8,31 +8,31 @@ vlan 10
    name INBAND_MGMT
 !
 vlan 110
-   name IDF1-Data
+   name Access_Pod1-Data
 !
 vlan 120
-   name IDF1-Voice
+   name Access_Pod1-Voice
 !
 vlan 130
-   name IDF1-Guest
+   name Access_Pod1-Guest
 !
 vlan 210
-   name IDF2-Data
+   name Access_Pod2-Data
 !
 vlan 220
-   name IDF2-Voice
+   name Access_Pod2-Voice
 !
 vlan 230
-   name IDF2-Guest
+   name Access_Pod2-Guest
 !
 vlan 310
-   name IDF3-Data
+   name Access_Pod3-Data
 !
 vlan 320
-   name IDF3-Voice
+   name Access_Pod3-Voice
 !
 vlan 330
-   name IDF3-Guest
+   name Access_Pod3-Guest
 !
 vlan 4093
    name LEAF_PEER_L3
@@ -43,7 +43,7 @@ vlan 4094
    trunk group MLAG
 !
 interface Port-Channel3
-   description IDF1_Po49
+   description Access_Pod1_Po49
    no shutdown
    switchport
    switchport trunk allowed vlan 10,110,120,130
@@ -59,7 +59,7 @@ interface Port-Channel4
    mlag 4
 !
 interface Port-Channel5
-   description IDF3_AGG_Po49
+   description Access_Pod3_AGG_Po49
    no shutdown
    switchport
    switchport trunk allowed vlan 10,310,320,330
@@ -132,55 +132,55 @@ interface Vlan10
    ip virtual-router address 10.10.10.1
 !
 interface Vlan110
-   description IDF1-Data
+   description Access_Pod1-Data
    no shutdown
    ip address 10.1.10.2/23
    ip virtual-router address 10.1.10.1
 !
 interface Vlan120
-   description IDF1-Voice
+   description Access_Pod1-Voice
    no shutdown
    ip address 10.1.20.2/23
    ip virtual-router address 10.1.20.1
 !
 interface Vlan130
-   description IDF1-Guest
+   description Access_Pod1-Guest
    no shutdown
    ip address 10.1.30.2/23
    ip virtual-router address 10.1.30.1
 !
 interface Vlan210
-   description IDF2-Data
+   description Access_Pod2-Data
    no shutdown
    ip address 10.2.10.2/23
    ip virtual-router address 10.2.10.1
 !
 interface Vlan220
-   description IDF2-Voice
+   description Access_Pod2-Voice
    no shutdown
    ip address 10.2.20.2/23
    ip virtual-router address 10.2.20.1
 !
 interface Vlan230
-   description IDF2-Guest
+   description Access_Pod2-Guest
    no shutdown
    ip address 10.2.30.2/23
    ip virtual-router address 10.2.30.1
 !
 interface Vlan310
-   description IDF3-Data
+   description Access_Pod3-Data
    no shutdown
    ip address 10.3.10.2/23
    ip virtual-router address 10.3.10.1
 !
 interface Vlan320
-   description IDF3-Voice
+   description Access_Pod3-Voice
    no shutdown
    ip address 10.3.20.2/23
    ip virtual-router address 10.3.20.1
 !
 interface Vlan330
-   description IDF3-Guest
+   description Access_Pod3-Guest
    no shutdown
    ip address 10.3.30.2/23
    ip virtual-router address 10.3.30.1

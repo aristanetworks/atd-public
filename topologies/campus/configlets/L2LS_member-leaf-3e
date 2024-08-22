@@ -7,23 +7,23 @@ vlan 10
    name INBAND_MGMT
 !
 vlan 310
-   name IDF3-Data
+   name Access_Pod3-Data
 !
 vlan 320
-   name IDF3-Voice
+   name Access_Pod3-Voice
 !
 vlan 330
-   name IDF3-Guest
+   name Access_Pod3-Guest
 !
 interface Port-Channel49
-   description IDF3_AGG_Po531
+   description Access_Pod3_AGG_Po531
    no shutdown
    switchport
    switchport trunk allowed vlan 10,310,320,330
    switchport mode trunk
 !
 interface Ethernet1
-   description IDF3 Standard Port
+   description Access_Pod3 Standard Port
    no shutdown
    switchport trunk native vlan 310
    switchport phone vlan 320
