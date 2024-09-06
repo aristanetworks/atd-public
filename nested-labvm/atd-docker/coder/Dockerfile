@@ -4,9 +4,9 @@ FROM ghcr.io/coder/code-server:4.90.1-bookworm
 USER coder
 ENV HOME=/home/coder
 ENV PATH=$PATH:/home/coder/.local/bin
-ENV AVD_VERSION="4.8.0"
+ENV AVD_VERSION="4.10.2"
 ENV CVP_VERSION="3.10.1"
-ENV ANTA_VERSION="0.14.0"
+ENV ANTA_VERSION="1.0.0"
 # set args to cleanup installs
 ARG PIP_DISABLE_PIP_VERSION_CHECK=1
 ARG PIP_NO_CACHE_DIR=1
