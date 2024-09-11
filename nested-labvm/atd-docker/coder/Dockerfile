@@ -4,9 +4,9 @@ FROM ghcr.io/coder/code-server:4.90.1-bookworm
 USER coder
 ENV HOME=/home/coder
 ENV PATH=$PATH:/home/coder/.local/bin
-ENV AVD_VERSION="4.8.0"
-ENV CVP_VERSION="3.10.1"
-ENV ANTA_VERSION="0.14.0"
+ENV AVD_VER="4.10.2"
+ENV CVP_VER="3.10.1"
+ENV ANTA_VER="1.0.0"
 # set args to cleanup installs
 ARG PIP_DISABLE_PIP_VERSION_CHECK=1
 ARG PIP_NO_CACHE_DIR=1
@@ -22,13 +22,13 @@ RUN pip3 install --user pyeapi jsonrpclib-pelix shyaml && \
     pip3 install --user "ansible-core>=2.15.0,<2.17.0" --upgrade
 
 # Install arista.avd, community.general and ansible.posix ansible-galaxy collections, Use this for version control of AVD topologies
-RUN ansible-galaxy collection install arista.avd:==${AVD_VERSION} && \
-    ansible-galaxy collection install arista.cvp:==${CVP_VERSION} --upgrade && \
+RUN ansible-galaxy collection install arista.avd:==${AVD_VER} && \
+    ansible-galaxy collection install arista.cvp:==${CVP_VER} --upgrade && \
     ansible-galaxy collection install community.general --upgrade && \
     ansible-galaxy collection install ansible.posix --upgrade
 
 # Install Ansible-AVD collection requirements
-RUN pip3 install --user "pyavd[ansible]==${AVD_VERSION}" "anta==${ANTA_VERSION}" --upgrade
+RUN pip3 install --user "pyavd[ansible]==${AVD_VER}" "anta==${ANTA_VER}" --upgrade
 
 # Install Code extensions
 COPY src/vs-extensions.txt /home/coder/
