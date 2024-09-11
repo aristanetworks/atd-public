@@ -60,6 +60,12 @@ if 'title' in host_yaml:
 else:
     TITLE = 'Test Drive Lab'
 
+# Check and try to grab CVP Version for Info File
+try:
+    CVP_VER = host_yaml['cvp']
+    CVP_VER = CVP_VER.rsplit(".", 1)[0]
+except:
+    CVP_VER = "latest"
 class BaseHandler(tornado.web.RequestHandler):
     def get_current_user(self):
         return(self.get_secure_cookie("user"))
@@ -121,6 +127,8 @@ class topoRequestHandler(BaseHandler):
             if 'labguides' in host_yaml:
                 if host_yaml['labguides'] == 'self':
                     labguides = '/labguides/index.html'
+                elif "testdrive" in host_yaml['labguides']:
+                    labguides = f"{host_yaml['labguides']}/{CVP_VER}/"
                 else:
                     labguides = host_yaml['labguides']
             else:
