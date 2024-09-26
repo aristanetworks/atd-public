@@ -60,6 +60,12 @@ if 'title' in host_yaml:
 else:
     TITLE = 'Test Drive Lab'
 
+# Set Project Enviroment
+if "alpha" in PROJECT or "beta" in PROJECT:
+    ATD_ENV = "dev"
+else:
+    ATD_ENV = "prod"
+    
 # Check and try to grab CVP Version for Info File
 try:
     CVP_VER = host_yaml['cvp']
@@ -128,7 +134,13 @@ class topoRequestHandler(BaseHandler):
                 if host_yaml['labguides'] == 'self':
                     labguides = '/labguides/index.html'
                 elif "testdrive" in host_yaml['labguides']:
-                    labguides = f"{host_yaml['labguides']}/{CVP_VER}/"
+                    if ATD_ENV == "dev":
+                        _lab_url = host_yaml['labguides'].split('.')
+                        _lab_url[0] += "-dev"
+                        _labguides = ".".join(_lab_url)
+                    else:
+                        _labguides = host_yaml['labguides']
+                    labguides = f"{_labguides}/{CVP_VER}/"
                 else:
                     labguides = host_yaml['labguides']
             else:

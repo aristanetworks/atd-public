@@ -3,123 +3,145 @@
 
 <head>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="Arista ATD Lab">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Arista ATD Lab">
 
-    <title>Arista {{ topo_title }}</title>
+  <title>Arista {{ topo_title }}</title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <script src="js/atd-ws.js"></script>
+  <!-- Bootstrap core CSS -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <script src="js/atd-ws.js"></script>
 
-    <!-- Custom styles for this template -->
-    <link href="css/simple-sidebar.css" rel="stylesheet">
+  <!-- Custom styles for this template -->
+  <link href="css/simple-sidebar.css" rel="stylesheet">
 </head>
 
 <body>
-    <div id="wrapper" class="toggled">
+  <div id="wrapper" class="toggled">
 
-        <!-- Sidebar -->
-        <div id="sidebar-wrapper">
-            <ul class="sidebar-nav">
-                <br>
-                <img src="images/logotransparent.png" class="arista-logo">
-                <hr class="hr">
-                {% if "labguides" not in disable_links %}
-                <li>
-                    <a href="{{ labguides }}" target="_blank">Lab Guides</a> <a href="/labguides/ATD.pdf" target="_blank">(PDF)</a>
-                </li>
-                {% end %}
-                {% if "console" not in disable_links %}
-                <li>
-                    <a href="/ssh/host/192.168.0.1" target="_blank">Console Access</a>
-                </li>
-                {% end %}
-                {% if "ide" not in disable_links %}
-                <li>
-                    <a href="/coder" target="_blank">Programmability IDE</a>
-                </li>
-                {% end %}
-                {% if "webui" not in disable_links %}
-                <li>
-                    <a href="/firefox" target="_blank">WebUI</a>
-                </li>
-                {% end %}
-                {% if "cvp" not in disable_links %}
-                <li>
-                    <a href="/cv" target="_blank">CVP</a>
-                </li>
-                {% end %}
-                {% if "alertapi" not in disable_links %}
-                <li>
-                    <a href="/alert" target="_blank">Event Alert API</a>
-                </li>
-                {% end %}
-                {% if "jenkins" not in disable_links %}
-                <li>
-                    <a href="/jenkins" target="_blank">Jenkins</a>
-                </li>
-                {% end %}
-                {% if "ipam" not in disable_links %}
-                <li>
-                    <a href="/ipam" target="_blank">IPAM</a>
-                </li>
-                {% end %}
-            </ul>
-        </div>
-        <!-- /#sidebar-wrapper -->
-
-        <!-- Page Content -->
-        <div id="page-content-wrapper">
-            <div class="container-fluid">
-                <h1>Arista {{ topo_title }}</h1>
-                Welcome to the Arista {{ topo_title }}! Please use the links on the left to navigate through the lab.
-                <br><br>
-                <h4>Time Remaining: <span id="countdown_timer">00:00:00</span></h4>
-                <br />
-                <h2>Topology</h2>
-                Click on a device to access CLI.
-                <br />
-                <img src="topo/atd-topo.png" usemap="#image_map">
-                <map name="image_map">
-                    {% for node in NODES %}
-                    {% if node == "CVP" %}
-                        <area alt="{{ escape(node) }}" title="{{ escape(node) }}" href="/cv" target="_blank" coords="{{ escape(NODES[node]['coords']) }}" shape="rect">
-                    {% else %}
-                        <area alt="{{ escape(node) }}" title="{{ escape(node) }}" href="/ssh/host/{{ escape(NODES[node]['ip']) }}" target="_blank" coords="{{ escape(NODES[node]['coords']) }}" shape="rect">
-                    {% end %}
-                    {% end %}
-                </map>
-                <br /><br />
-                {% if topo_cvp %}
-                    <span id="cvp_info"></span>
-                    <br /><br />
-                {% end %}
-                <h2>Usernames and Passwords</h2>
-                Use the following usernames and passwords to access the ATD:
-                <br>
-                <br>
-                <table class="table table-striped">
-                  <thead> <tr> <th>Device</th> <th>Username</th> <th>Password</th> </tr> </thead>
-                  <tbody> 
-                    <tr><td>Lab Credentials</td> <td>arista</td> <td>{{ ARISTA_PWD }}</td> </tr>
-                    <tr><td>Programmability IDE</td> <td></td><td>{{ ARISTA_PWD }}</td></tr>
-                    <tr><td>WebUI</td> <td></td><td>@rista1</td></tr>
-                  </tbody> </table>
-
-                <br>
-            </div>
-        </div>
-        <!-- /#page-content-wrapper -->
-
+    <!-- Sidebar -->
+    <div id="sidebar-wrapper">
+      <ul class="sidebar-nav">
+        <br>
+        <img src="images/logotransparent.png" class="arista-logo">
+        <hr class="hr">
+        {% if "labguides" not in disable_links %}
+        <li>
+          <a href="{{ labguides }}" target="_blank">Lab Guides</a>{% if "pdf" not in disable_links %} <a
+            href="/labguides/ATD.pdf" target="_blank">(PDF)</a>{% end %}
+        </li>
+        {% end %}
+        {% if "console" not in disable_links %}
+        <li>
+          <a href="/ssh/host/192.168.0.1" target="_blank">Console Access</a>
+        </li>
+        {% end %}
+        {% if "ide" not in disable_links %}
+        <li>
+          <a href="/coder" target="_blank">Programmability IDE</a>
+        </li>
+        {% end %}
+        {% if "webui" not in disable_links %}
+        <li>
+          <a href="/firefox" target="_blank">WebUI</a>
+        </li>
+        {% end %}
+        {% if "cvp" not in disable_links %}
+        <li>
+          <a href="/cv" target="_blank">CVP</a>
+        </li>
+        {% end %}
+        {% if "alertapi" not in disable_links %}
+        <li>
+          <a href="/alert" target="_blank">Event Alert API</a>
+        </li>
+        {% end %}
+        {% if "jenkins" not in disable_links %}
+        <li>
+          <a href="/jenkins" target="_blank">Jenkins</a>
+        </li>
+        {% end %}
+        {% if "ipam" not in disable_links %}
+        <li>
+          <a href="/ipam" target="_blank">IPAM</a>
+        </li>
+        {% end %}
+      </ul>
     </div>
-    <!-- /#wrapper -->
+    <!-- /#sidebar-wrapper -->
 
-    <!-- Bootstrap core JavaScript -->
-    <script src="js/jquery.min.js"></script>
-    <script src="js/popper.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+      <div class="container-fluid">
+        <h1>Arista {{ topo_title }}</h1>
+        Welcome to the Arista {{ topo_title }}! Please use the links on the left to navigate through the lab.
+        <br><br>
+        <h4>Time Remaining: <span id="countdown_timer">00:00:00</span></h4>
+        <br />
+        <h2>Topology</h2>
+        Click on a device to access CLI.
+        <br />
+        <img src="topo/atd-topo.png" usemap="#image_map">
+        <map name="image_map">
+          {% for node in NODES %}
+          {% if node == "CVP" %}
+          <area alt="{{ escape(node) }}" title="{{ escape(node) }}" href="/cv" target="_blank"
+            coords="{{ escape(NODES[node]['coords']) }}" shape="rect">
+          {% else %}
+          <area alt="{{ escape(node) }}" title="{{ escape(node) }}" href="/ssh/host/{{ escape(NODES[node]['ip']) }}"
+            target="_blank" coords="{{ escape(NODES[node]['coords']) }}" shape="rect">
+          {% end %}
+          {% end %}
+        </map>
+        <br /><br />
+        {% if topo_cvp %}
+        <span id="cvp_info"></span>
+        <br /><br />
+        {% end %}
+        <h2>Usernames and Passwords</h2>
+        Use the following usernames and passwords to access the ATD:
+        <br>
+        <br>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Device</th>
+              <th>Username</th>
+              <th>Password</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Lab Credentials</td>
+              <td>arista</td>
+              <td>{{ ARISTA_PWD }}</td>
+            </tr>
+            <tr>
+              <td>Programmability IDE</td>
+              <td></td>
+              <td>{{ ARISTA_PWD }}</td>
+            </tr>
+            <tr>
+              <td>WebUI</td>
+              <td></td>
+              <td>@rista1</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <br>
+      </div>
+    </div>
+    <!-- /#page-content-wrapper -->
+
+  </div>
+  <!-- /#wrapper -->
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="js/jquery.min.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
 
 
 </body>
