@@ -468,8 +468,8 @@ topologies:
     title: 'Campus Lab'
     disk_size: 300
     access: admin
-    disable_links: []
-    labguides: self
+    disable_links: ["pdf"]
+    labguides: https://labguides.testdrive.arista.com
   wan:
     dev:
       veos:
