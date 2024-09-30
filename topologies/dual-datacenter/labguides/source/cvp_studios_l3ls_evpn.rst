@@ -42,7 +42,7 @@ Getting Started:
 
    |
 
-#. First, on the lab topology landing page, click on **Console Access** and provision the lab by running option 6, ``CVP lab for Studios L3LS/EVPN (studiosl3ls)``. Allow the task to complete before moving on to the next step. 
+#. First, on the lab topology landing page, click on **Console Access** and provision the lab by running option 7, ``CVP lab for Studios L3LS/EVPN (studiosl3ls)``. Allow the task to complete before moving on to the next step. 
 
    .. thumbnail:: images/cvp_studios_l3ls_evpn/0jumpbox.png
       :align: center
@@ -307,7 +307,7 @@ Let’s take another look at the topology.
 
 * The hosts are already pre configured for PO1 on ports ``E1-2`` in LACP. 
 
-* The hosts are also configured via **console option 6** in vlan 60 and 70 with respective SVIs for testing. 
+* The hosts are also configured via **console option 7** in vlan 60 and 70 with respective SVIs for testing. 
 
 * Let’s navigate to the Interface Studio and start the configuration. 
 
