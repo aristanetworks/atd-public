@@ -50,13 +50,13 @@ topologies:
               cpu: 22
               ram: 48
               disk: 60
-              image: atd-alma-dual-datacenter-c2024-2-0-ceos-20240730-eos
+              image: atd-alma-dual-datacenter-c2024-2-0-ceos-20241018-eos
             resources_cvp:
               cpu: 28
               ram: 36
               disk: 300
-              image: atd-alma-dual-datacenter-c2024-2-0-ceos-20240730-cvp
-            branch: nested-release
+              image: atd-alma-dual-datacenter-c2024-2-0-ceos-20241018-cvp
+            branch: nested/2024.2
             orderable: true
             eos:
               - 4.32.2F
@@ -76,7 +76,7 @@ topologies:
               ram: 36
               disk: 300
               image: atd-alma-dual-datacenter-c2024-2-0-bare-ceos-20241018-cvp
-            branch: nested-release
+            branch: nested/2024.2
             orderable: true
             eos:
               - 4.32.2F
@@ -221,13 +221,13 @@ topologies:
               cpu: 38
               ram: 70
               disk: 60
-              image: atd-alma-routing-c2024-2-0-veos-4-31-2f-20240730-eos
+              image: atd-alma-routing-c2024-2-0-veos-4-31-2f-20241018-eos
             resources_cvp:
               cpu: 28
               ram: 36
               disk: 300
-              image: atd-alma-routing-c2024-2-0-veos-4-31-2f-20240730-cvp
-            branch: nested-release
+              image: atd-alma-routing-c2024-2-0-veos-4-31-2f-20241018-cvp
+            branch: nested/2024.2
             orderable: true
             eos:
               - 4.32.1F
@@ -261,13 +261,13 @@ topologies:
               cpu: 22
               ram: 42
               disk: 60
-              image: atd-alma-routing-c2024-2-0-ceos-20240730-eos
+              image: atd-alma-routing-c2024-2-0-ceos-20241018-eos
             resources_cvp:
               cpu: 28
               ram: 36
               disk: 300
-              image: atd-alma-routing-c2024-2-0-ceos-20240730-cvp
-            branch: nested-release
+              image: atd-alma-routing-c2024-2-0-ceos-20241018-cvp
+            branch: nested/2024.2
             orderable: true
             eos:
               - 4.32.2F
@@ -428,13 +428,13 @@ topologies:
               cpu: 22
               ram: 48
               disk: 60
-              image: atd-alma-campus-c2024-2-0-ceos-20240801-eos
+              image: atd-alma-campus-c2024-2-0-ceos-20241018-eos
             resources_cvp:
               cpu: 28
               ram: 36
               disk: 300
-              image: atd-alma-campus-c2024-2-0-ceos-20240801-cvp
-            branch: nested-release
+              image: atd-alma-campus-c2024-2-0-ceos-20241018-cvp
+            branch: nested/2024.2
             orderable: true
             eos:
               - 4.32.2F
