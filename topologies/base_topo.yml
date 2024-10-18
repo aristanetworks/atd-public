@@ -12,12 +12,12 @@ topologies:
               cpu: 22
               ram: 48
               disk: 60
-              image: atd-alma-dual-datacenter-c2024-1-0-bare-ceos-20240822-eos
+              image: atd-alma-dual-datacenter-c2024-1-0-bare-ceos-20241018-eos
             resources_cvp:
               cpu: 28
               ram: 36
               disk: 300
-              image: atd-alma-dual-datacenter-c2024-1-0-bare-ceos-20240822-cvp
+              image: atd-alma-dual-datacenter-c2024-1-0-bare-ceos-20241018-cvp
             branch: nested-release
             orderable: true
             eos:
@@ -70,12 +70,12 @@ topologies:
               cpu: 22
               ram: 48
               disk: 60
-              image: atd-alma-dual-datacenter-c2024-2-0-bare-ceos-20240806-eos
+              image: atd-alma-dual-datacenter-c2024-2-0-bare-ceos-20241018-eos
             resources_cvp:
               cpu: 28
               ram: 36
               disk: 300
-              image: atd-alma-dual-datacenter-c2024-2-0-bare-ceos-20240806-cvp
+              image: atd-alma-dual-datacenter-c2024-2-0-bare-ceos-20241018-cvp
             branch: nested-release
             orderable: true
             eos:
