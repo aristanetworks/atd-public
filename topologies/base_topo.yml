@@ -18,7 +18,7 @@ topologies:
               ram: 36
               disk: 300
               image: atd-alma-dual-datacenter-c2024-1-0-bare-ceos-20241018-cvp
-            branch: nested-release
+            branch: nested/2024.1
             orderable: true
             eos:
               - 4.32.2F
@@ -141,7 +141,7 @@ topologies:
               disk: 300
               image: atd-dual-datacenter-c2023-2-0-ceos-20231120-cvp
             branch: v2023.2-20240614a
-            orderable: true
+            orderable: false
             eos:
               - 4.31.1F
               - 4.31.0F
@@ -160,12 +160,30 @@ topologies:
               disk: 300
               image: atd-dual-datacenter-c2023-2-0-bare-ceos-20231120-cvp
             branch: v2023.2-20240614a
-            orderable: true
+            orderable: false
             eos:
               - 4.31.1F
               - 4.31.0F
               - 4.30.2F
               - 4.30.1F
+          2024.1.0-bare:
+            schema: 2
+            resources_eos:
+              cpu: 22
+              ram: 48
+              disk: 60
+              image: atd-alma-dual-datacenter-c2024-1-0-bare-ceos-20241018-eos
+            resources_cvp:
+              cpu: 28
+              ram: 36
+              disk: 300
+              image: atd-alma-dual-datacenter-c2024-1-0-bare-ceos-20241018-cvp
+            branch: v2024.1-20241021a
+            orderable: true
+            eos:
+              - 4.32.2F
+              - 4.32.1F
+              - 4.32.0F
           2024.1.1:
             schema: 2
             resources_eos:
@@ -178,7 +196,7 @@ topologies:
               ram: 36
               disk: 300
               image: atd-alma-dual-datacenter-c2024-1-1-ceos-20240424-cvp
-            branch: v2024.1-20240627a
+            branch: v2024.1-20241021a
             orderable: true
             eos:
               - 4.32.2F
@@ -186,13 +204,52 @@ topologies:
               - 4.32.0F
               - 4.31.4M
               - 4.31.2F
+          2024.2.0:
+            schema: 2
+            resources_eos:
+              cpu: 22
+              ram: 48
+              disk: 60
+              image: atd-alma-dual-datacenter-c2024-2-0-ceos-20241018-eos
+            resources_cvp:
+              cpu: 28
+              ram: 36
+              disk: 300
+              image: atd-alma-dual-datacenter-c2024-2-0-ceos-20241018-cvp
+            branch: v2024.2-20241021a
+            orderable: true
+            eos:
+              - 4.32.2F
+              - 4.32.1F
+              - 4.32.0F
+              - 4.31.4M
+              - 4.31.2F
+          2024.2.0-bare:
+            schema: 2
+            resources_eos:
+              cpu: 22
+              ram: 48
+              disk: 60
+              image: atd-alma-dual-datacenter-c2024-2-0-bare-ceos-20241018-eos
+            resources_cvp:
+              cpu: 28
+              ram: 36
+              disk: 300
+              image: atd-alma-dual-datacenter-c2024-2-0-bare-ceos-20241018-cvp
+            branch: v2024.2-20241021a
+            orderable: true
+            eos:
+              - 4.32.2F
+              - 4.32.1F
+              - 4.32.0F
+              - 4.31.4M
     desc: 'Dual Data Center ATD Topology'
     name: 'Dual Data Center'
     title: 'Dual Data Center Lab'
     disk_size: 300
     access: standard
-    disable_links: []
-    labguides: self
+    disable_links: ["pdf"]
+    labguides: https://labguides.testdrive.arista.com
   routing:
     dev:
       veos:
@@ -311,7 +368,7 @@ topologies:
               disk: 300
               image: atd-routing-c2023-2-0-ceos-20231120-cvp
             branch: v2023.2-20240614a
-            orderable: true
+            orderable: false
             eos:
               - 4.31.1F
               - 4.31.0F
@@ -329,7 +386,27 @@ topologies:
               ram: 36
               disk: 300
               image: atd-alma-routing-c2024-1-1-ceos-20240424-cvp
-            branch: v2024.1-20240627a
+            branch: v2024.1-20241021a
+            orderable: true
+            eos:
+              - 4.32.2F
+              - 4.32.1F
+              - 4.32.0F
+              - 4.31.4M
+              - 4.31.2F
+          2024.2.0:
+            schema: 2
+            resources_eos:
+              cpu: 22
+              ram: 42
+              disk: 60
+              image: atd-alma-routing-c2024-2-0-ceos-20241018-eos
+            resources_cvp:
+              cpu: 28
+              ram: 36
+              disk: 300
+              image: atd-alma-routing-c2024-2-0-ceos-20241018-cvp
+            branch: v2024.2-20241021a
             orderable: true
             eos:
               - 4.32.2F
@@ -370,7 +447,7 @@ topologies:
               disk: 300
               image: atd-routing-c2023-2-0-veos-4-31-0f-20231120-cvp
             branch: v2023.2-20240614a
-            orderable: true
+            orderable: false
             eos:
               - 4.31.0F
           2024.1.1:
@@ -385,17 +462,33 @@ topologies:
               ram: 36
               disk: 300
               image: atd-alma-routing-c2024-1-1-veos-4-31-2f-20240424-cvp
-            branch: v2024.1-20240627a
+            branch: v2024.1-20241021a
             orderable: true
             eos:
               - 4.31.2F
+          2024.2.0:
+            schema: 2
+            resources_eos:
+              cpu: 38
+              ram: 70
+              disk: 60
+              image: atd-alma-routing-c2024-2-0-veos-4-31-2f-20241018-eos
+            resources_cvp:
+              cpu: 28
+              ram: 36
+              disk: 300
+              image: atd-alma-routing-c2024-2-0-veos-4-31-2f-20241018-cvp
+            branch: v2024.2-20241021a
+            orderable: true
+            eos:
+              - 4.32.1F
     desc: 'Twenty nodes. Focused on advanced routing, L2VPN and L3VPN topics'
     name: 'Advanced Routing'
     title: 'Advanced Routing Lab'
     disk_size: 300
     access: standard
-    disable_links: []
-    labguides: self
+    disable_links: ["pdf"]
+    labguides: https://labguides.testdrive.arista.com
   campus:
     dev:
       ceos:
@@ -447,27 +540,31 @@ topologies:
         cpu: 32
         ram: 54
         cvp:
-          am-demo:
+          2024.2.0:
             schema: 2
             resources_eos:
               cpu: 22
               ram: 48
               disk: 60
-              image: atd-alma-campus-c2023-3-0-ceos-20240301-eos
+              image: atd-alma-campus-c2024-2-0-ceos-20241018-eos
             resources_cvp:
               cpu: 28
               ram: 36
               disk: 300
-              image: atd-alma-campus-c2023-3-0-ceos-20240301-cvp
-            branch: v2023.3-20240301a
-            orderable: false
+              image: atd-alma-campus-c2024-2-0-ceos-20241018-cvp
+            branch: v2024.2-20241021a
+            orderable: true
             eos:
-              - 4.31.1F
+              - 4.32.2F
+              - 4.32.1F
+              - 4.32.0F
+              - 4.31.4M
+              - 4.31.2F
     desc: 'Campus ATD Topology'
     name: 'Campus'
     title: 'Campus Lab'
     disk_size: 300
-    access: admin
+    access: standard
     disable_links: ["pdf"]
     labguides: https://labguides.testdrive.arista.com
   wan:
