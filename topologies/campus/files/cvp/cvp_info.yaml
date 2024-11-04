@@ -49,10 +49,12 @@ cvp_info:
     netelements:
       spine-1:
         - BASE_spine-1
+        - DHCP-spine1
       spine-2:
         - BASE_spine-2
       router-1:
         - BASE_router-1
+        - DHCP-router1
       router-2:
         - BASE_router-2
       leaf-1a:

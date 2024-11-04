@@ -1,6 +1,6 @@
 interface Port-Channel1
    description MLAG Peer-link - s1-core1
-   no switcport
+   no switchport
    ip address 10.111.99.127/31
 !
 interface Ethernet1
