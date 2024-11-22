@@ -23,14 +23,6 @@ interface Port-Channel49
    switchport mode trunk
    mlag 49
 !
-interface Port-Channel51
-   description MEMBER-LEAF-3C_Po49
-   no shutdown
-   switchport
-   switchport trunk allowed vlan 10,310,320,330
-   switchport mode trunk
-   mlag 51
-!
 interface Port-Channel52
    description MEMBER-LEAF-3D_Po49
    no shutdown
@@ -62,11 +54,6 @@ interface Ethernet50
    description SPINE-2_Ethernet5
    no shutdown
    channel-group 49 mode active
-!
-interface Ethernet51
-   description MEMBER-LEAF-3C_Ethernet49
-   no shutdown
-   channel-group 51 mode active
 !
 interface Ethernet52
    description MEMBER-LEAF-3D_Ethernet49
