@@ -52,7 +52,6 @@ labconfiglets:
       - "L2LS_spine-2"
     leaf-1a:
       - "BASE_leaf-1a"
-      - "L2LS_leaf-1a"
     leaf-1b:
       - "BASE_leaf-1b"
       - "L2LS_leaf-1b"
