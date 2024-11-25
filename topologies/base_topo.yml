@@ -275,7 +275,7 @@ topologies:
           2024.2.0:
             schema: 2
             resources_eos:
-              cpu: 38
+              cpu: 40
               ram: 70
               disk: 60
               image: atd-alma-routing-c2024-2-0-veos-4-31-2f-20241018-eos
@@ -421,7 +421,7 @@ topologies:
           2023.1.1:
             schema: 2
             resources_eos:
-              cpu: 38
+              cpu: 40
               ram: 70
               disk: 60
               image: atd-routing-c2023-1-1-veos-4-30-1f-20231110-eos
