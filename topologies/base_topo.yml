@@ -546,12 +546,12 @@ topologies:
               cpu: 22
               ram: 48
               disk: 60
-              image: atd-alma-campus-c2024-2-0-ceos-20241018-eos
+              image: atd-alma-campus-c2024-2-0-ceos-20241104-eos
             resources_cvp:
               cpu: 28
               ram: 36
               disk: 300
-              image: atd-alma-campus-c2024-2-0-ceos-20241018-cvp
+              image: atd-alma-campus-c2024-2-0-ceos-20241104-cvp
             branch: v2024.2-20241021a
             orderable: true
             eos:
