@@ -1,5 +1,4 @@
-vlan 60
-vlan 70
+vlan 112
 
 
 interface E1-E2 
@@ -9,10 +8,8 @@ channel-group 1 mode active
 interface port-channel 1
 switchport mode trunk
 
-interface vlan 60
-ip address 10.60.60.160/24
 
-interface vlan 70
-ip address 10.70.70.170/24
-
-ip route 0.0.0.0/0 10.60.60.1
+interface Vlan112
+   ip address 10.111.112.201/24
+!
+ip route 0.0.0.0/0 10.111.112.1
