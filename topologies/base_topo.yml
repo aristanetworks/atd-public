@@ -19,7 +19,7 @@ topologies:
               disk: 300
               image: atd-alma-dual-datacenter-c2024-1-0-bare-ceos-20241018-cvp
             branch: nested/2024.1
-            orderable: true
+            orderable: false
             eos:
               - 4.32.2F
               - 4.32.1F
@@ -37,7 +37,7 @@ topologies:
               disk: 300
               image: atd-alma-dual-datacenter-c2024-1-1-ceos-20240424-cvp
             branch: nested/2024.1
-            orderable: true
+            orderable: false
             eos:
               - 4.32.2F
               - 4.32.1F
@@ -59,6 +59,7 @@ topologies:
             branch: nested/2024.2
             orderable: true
             eos:
+              - 4.33.0F
               - 4.32.2F
               - 4.32.1F
               - 4.32.0F
@@ -79,6 +80,7 @@ topologies:
             branch: nested/2024.2
             orderable: true
             eos:
+              - 4.33.0F
               - 4.32.2F
               - 4.32.1F
               - 4.32.0F
@@ -269,7 +271,7 @@ topologies:
               disk: 300
               image: atd-alma-routing-c2024-1-1-veos-4-31-2f-20240424-cvp
             branch: nested/2024.1
-            orderable: true
+            orderable: false
             eos:
               - 4.31.2F
           2024.2.0:
@@ -305,7 +307,7 @@ topologies:
               disk: 300
               image: atd-alma-routing-c2024-1-1-ceos-20240424-cvp
             branch: nested/2024.1
-            orderable: true
+            orderable: false
             eos:
               - 4.32.2F
               - 4.32.1F
@@ -327,6 +329,7 @@ topologies:
             branch: nested/2024.2
             orderable: true
             eos:
+              - 4.33.0F
               - 4.32.2F
               - 4.32.1F
               - 4.32.0F
@@ -508,7 +511,7 @@ topologies:
               disk: 300
               image: atd-alma-campus-c2024-1-1-ceos-20240424-cvp
             branch: nested/2024.1
-            orderable: true
+            orderable: false
             eos:
               - 4.32.2F
               - 4.32.1F
@@ -530,6 +533,7 @@ topologies:
             branch: nested/2024.2
             orderable: true
             eos:
+              - 4.33.0F
               - 4.32.2F
               - 4.32.1F
               - 4.32.0F
