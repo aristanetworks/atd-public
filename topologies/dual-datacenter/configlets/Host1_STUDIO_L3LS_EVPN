@@ -6,7 +6,7 @@ interface E1-E2
 channel-group 1 mode active
 
 interface port-channel 1
-switchport mode trunk
+switchport access vlan 112
 
 
 interface Vlan112
