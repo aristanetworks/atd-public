@@ -32,3 +32,7 @@ ip radius source-interface Management1
 management api http-commands
    no shutdown
 !
+router multicast
+   ipv4
+      routing
+      software-forwarding sfe
