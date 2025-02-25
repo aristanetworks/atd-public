@@ -8,7 +8,6 @@ channel-group 1 mode active
 interface port-channel 1
 switchport access vlan 112
 
-
 interface Vlan112
    ip address 10.111.112.201/24
 !
