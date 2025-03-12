@@ -280,7 +280,7 @@ topologies:
               ram: 36
               disk: 300
               image: atd-alma-dual-datacenter-c2024-2-0-ceos-20241018-cvp
-            branch: v2024.3-20250312
+            branch: v2024.2-20241202
             orderable: true
             eos:
               - 4.32.2F
