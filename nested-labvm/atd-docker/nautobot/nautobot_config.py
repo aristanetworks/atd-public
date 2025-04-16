@@ -18,6 +18,9 @@ ALLOWED_HOSTS = ['*']
 #
 # ALLOWED_HOSTS = os.getenv("NAUTOBOT_ALLOWED_HOSTS", "").split(" ")
 
+# added to bypass CSRF check allowing nautobot to run properly
+CSRF_TRUSTED_ORIGINS = ["https://*.[testdrive-dev.arista.com](http://testdrive-dev.arista.com)"]
+
 # The django-redis cache is used to establish concurrent locks using Redis. The
 # django-rq settings will use the same instance/database by default.
 #
