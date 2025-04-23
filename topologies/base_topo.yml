@@ -159,7 +159,7 @@ topologies:
               ram: 60
               disk: 300
               image: atd-alma-dual-datacenter-c2025-1-0-ceos-20250416-cvp
-            branch: nested-release
+            branch: nested/2025.1
             orderable: true
             eos:
               - 4.33.0F
