@@ -209,7 +209,7 @@ services:
       - atd_nginx
   nautobot:
     container_name: atd-nbot-ui
-    image: "networktocode/nautobot:1.5-py3.9"
+    image: "networktocode/nautobot:2.4.7"
     env_file:
       - ./nautobot/nbot-local.env
     networks:
@@ -222,7 +222,7 @@ services:
       - "/opt/atd:/opt/atd:rw"
   nautobot-worker:
     container_name: atd-nbot-worker
-    image: "networktocode/nautobot:1.5-py3.9"
+    image: "networktocode/nautobot:2.4.7"
     entrypoint: "sh -c 'nautobot-server celery worker'"
     healthcheck:
       interval: "5s"
@@ -250,7 +250,7 @@ services:
     restart: "unless-stopped"
   nautobot-beat:
     container_name: atd-nbot-beat
-    image: "networktocode/nautobot:1.5-py3.9"
+    image: "networktocode/nautobot:2.4.7"
     entrypoint: "sh -c 'nautobot-server celery beat'"
     healthcheck:
       interval: "5s"
@@ -280,7 +280,7 @@ services:
     restart: "unless-stopped"
   postgres:
     container_name: atd-nbot-postgres
-    image: "postgres:10"
+    image: "postgres:12"
     ports:
       - "5432:5432"
     env_file:
