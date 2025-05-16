@@ -362,12 +362,12 @@ topologies:
               cpu: 22
               ram: 42
               disk: 60
-              image: atd-alma-routing-c2024-1-1-ceos-20240424-eos
+              image: atd-alma-routing-c2025-1-1-ceos-20250516-eos
             resources_cvp:
               cpu: 28
               ram: 36
               disk: 300
-              image: atd-alma-routing-c2024-1-1-ceos-20240424-cvp
+              image: atd-alma-routing-c2025-1-1-ceos-20250516-cvp
             branch: nested/2024.1
             orderable: false
             eos:
