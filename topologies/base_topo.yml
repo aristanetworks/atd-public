@@ -654,12 +654,12 @@ topologies:
               cpu: 22
               ram: 48
               disk: 60
-              image: atd-alma-campus-c2025-1-1-ceos-20250523-eos
+              image: atd-alma-campus-c2025-1-1-ceos-20250527-eos
             resources_cvp:
               cpu: 36
               ram: 60
               disk: 300
-              image: atd-alma-campus-c2025-1-1-ceos-20250523-cvp
+              image: atd-alma-campus-c2025-1-1-ceos-20250527-cvp
             branch: nested-release
             orderable: true
             eos:
