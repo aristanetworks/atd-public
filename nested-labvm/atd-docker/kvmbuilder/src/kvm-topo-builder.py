@@ -393,6 +393,10 @@ def main(uargs):
             #     'cpuset': VEOS_CPUS
             # })
             vcpu.text = str(veos_cpu_count)
+            # Add CPU config for Host Passthrough
+            hcpu = ET.SubElement(root, 'cpu', attrib={
+                'mode': 'host-passthrough'
+            })
 
             # Add/Create disk location for xml
             tmp_disk = ET.SubElement(xdev, 'disk', attrib={
