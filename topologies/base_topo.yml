@@ -352,22 +352,23 @@ topologies:
             orderable: true
             eos:
               - 4.32.1F
-          # 2025.1.1:
-          #   schema: 2
-          #   resources_eos:
-          #     cpu: 40
-          #     ram: 70
-          #     disk: 60
-          #     image: atd-alma-routing-c2024-3-1-veos-4-33-0f-20250116-eos
-          #   resources_cvp:
-          #     cpu: 36
-          #     ram: 60
-          #     disk: 300
-          #     image: atd-alma-routing-c2024-3-1-veos-4-33-0f-20250116-cvp
-          #   branch: nested-release
-          #   orderable: true
-          #   eos:
-          #     - 4.32.1F
+          2025.1.1:
+            schema: 2
+            resources_eos:
+              cpu: 40
+              ram: 70
+              disk: 60
+              image: atd-alma-routing-c2025-1-1-veos-4-33-0f-20250528-eos
+            resources_cvp:
+              cpu: 36
+              ram: 60
+              disk: 300
+              image: atd-alma-routing-c2025-1-1-veos-4-33-0f-20250528-cvp
+            branch: nested-release
+            orderable: true
+            eos:
+              - 4.32.1F
+              - 4.33.0F
       ceos:
         cpu: 32
         ram: 64
