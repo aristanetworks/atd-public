@@ -92,10 +92,7 @@ VxLAN
 
       .. note:: The TTL in the ping outputs above. Even though .202 is many
                 switches away, it appears locally connected and has the same
-                TTL as the ping to .1. It's also interesting to realize that
-                due to MLAG hashing of both the ARP requests and ping packet
-                flows that pings to the SVI addresses of .2 & .3 may or may not
-                work. Do you know why?
+                TTL as the ping to .1
 
    2. Host 1 MAC/ARP information
 
