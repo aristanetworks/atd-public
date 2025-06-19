@@ -57,7 +57,7 @@ topologies:
               disk: 300
               image: atd-alma-dual-datacenter-c2024-2-0-ceos-20241018-cvp
             branch: nested/2024.2
-            orderable: true
+            orderable: false
             eos:
               - 4.33.0F
               - 4.32.2F
@@ -224,7 +224,7 @@ topologies:
               disk: 300
               image: atd-alma-dual-datacenter-c2024-2-0-ceos-20241018-cvp
             branch: v2024.2-20250312
-            orderable: true
+            orderable: false
             eos:
               - 4.32.2F
               - 4.32.1F
@@ -291,6 +291,27 @@ topologies:
               - 4.32.1F
               - 4.32.0F
               - 4.31.4M
+          2025.1.1:
+            schema: 2
+            resources_eos:
+              cpu: 22
+              ram: 48
+              disk: 60
+              image: atd-alma-dual-datacenter-c2025-1-1-ceos-20250529-eos
+            resources_cvp:
+              cpu: 36
+              ram: 60
+              disk: 300
+              image: atd-alma-dual-datacenter-c2025-1-1-ceos-20250529-cvp
+            branch: v2025.1-20250618
+            orderable: true
+            eos:
+              - 4.33.0F
+              - 4.32.2F
+              - 4.32.1F
+              - 4.32.0F
+              - 4.31.4M
+              - 4.31.2F
     desc: 'Dual Data Center ATD Topology'
     name: 'Dual Data Center'
     title: 'Dual Data Center Lab'
@@ -333,7 +354,7 @@ topologies:
               disk: 300
               image: atd-alma-routing-c2024-2-0-veos-4-31-2f-20241018-cvp
             branch: nested/2024.2
-            orderable: true
+            orderable: false
             eos:
               - 4.32.1F
           2024.3.1:
@@ -406,7 +427,7 @@ topologies:
               disk: 300
               image: atd-alma-routing-c2024-2-0-ceos-20241018-cvp
             branch: nested/2024.2
-            orderable: true
+            orderable: false
             eos:
               - 4.33.0F
               - 4.32.2F
@@ -494,7 +515,7 @@ topologies:
               disk: 300
               image: atd-alma-routing-c2024-2-0-ceos-20241018-cvp
             branch: v2024.2-20250312
-            orderable: true
+            orderable: false
             eos:
               - 4.32.2F
               - 4.32.1F
@@ -514,6 +535,27 @@ topologies:
               disk: 300
               image: atd-alma-routing-c2024-3-1-ceos-20250116-cvp
             branch: v2024.3-20250312
+            orderable: true
+            eos:
+              - 4.33.0F
+              - 4.32.2F
+              - 4.32.1F
+              - 4.32.0F
+              - 4.31.4M
+              - 4.31.2F
+          2025.1.1:
+            schema: 2
+            resources_eos:
+              cpu: 22
+              ram: 42
+              disk: 60
+              image: atd-alma-routing-c2025-1-1-ceos-20250619-eos
+            resources_cvp:
+              cpu: 36
+              ram: 60
+              disk: 300
+              image: atd-alma-routing-c2025-1-1-ceos-20250619-cvp
+            branch: v2025.1-20250618
             orderable: true
             eos:
               - 4.33.0F
@@ -555,7 +597,7 @@ topologies:
               disk: 300
               image: atd-alma-routing-c2024-2-0-veos-4-31-2f-20241018-cvp
             branch: v2024.2-20250312
-            orderable: true
+            orderable: false
             eos:
               - 4.32.1F
           2024.3.1:
@@ -574,6 +616,23 @@ topologies:
             orderable: true
             eos:
               - 4.32.1F
+          2025.1.1:
+            schema: 2
+            resources_eos:
+              cpu: 40
+              ram: 70
+              disk: 60
+              image: atd-alma-routing-c2025-1-1-veos-4-34-0f-20250619-eos
+            resources_cvp:
+              cpu: 36
+              ram: 60
+              disk: 300
+              image: atd-alma-routing-c2025-1-1-veos-4-34-0f-20250619-cvp
+            branch: v2025.1-20250618
+            orderable: true
+            eos:
+              - 4.32.1F
+              - 4.33.0F
     desc: 'Twenty nodes. Focused on advanced routing, L2VPN and L3VPN topics'
     name: 'Advanced Routing'
     title: 'Advanced Routing Lab'
@@ -620,7 +679,7 @@ topologies:
               disk: 300
               image: atd-alma-campus-c2024-2-0-ceos-20241104-cvp
             branch: nested/2024.2
-            orderable: true
+            orderable: false
             eos:
               - 4.33.0F
               - 4.32.2F
@@ -688,7 +747,7 @@ topologies:
               disk: 300
               image: atd-alma-campus-c2024-2-0-ceos-20241104-cvp
             branch: v2024.2-20250312
-            orderable: true
+            orderable: false
             eos:
               - 4.32.2F
               - 4.32.1F
@@ -708,6 +767,27 @@ topologies:
               disk: 300
               image: atd-alma-campus-c2024-3-1-ceos-20250224-cvp
             branch: v2024.3-20250312
+            orderable: true
+            eos:
+              - 4.33.0F
+              - 4.32.2F
+              - 4.32.1F
+              - 4.32.0F
+              - 4.31.4M
+              - 4.31.2F
+          2025.1.1:
+            schema: 2
+            resources_eos:
+              cpu: 22
+              ram: 48
+              disk: 60
+              image: atd-alma-campus-c2025-1-1-ceos-20250527-eos
+            resources_cvp:
+              cpu: 36
+              ram: 60
+              disk: 300
+              image: atd-alma-campus-c2025-1-1-ceos-20250527-cvp
+            branch: v2025.1-20250618
             orderable: true
             eos:
               - 4.33.0F
