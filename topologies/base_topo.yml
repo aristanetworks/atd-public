@@ -358,12 +358,12 @@ topologies:
               cpu: 40
               ram: 70
               disk: 60
-              image: atd-alma-routing-c2025-1-1-veos-4-34-0f-20250529-eos
+              image: atd-alma-routing-c2025-1-1-veos-4-34-0f-20250619-eos
             resources_cvp:
               cpu: 36
               ram: 60
               disk: 300
-              image: atd-alma-routing-c2025-1-1-veos-4-34-0f-20250529-cvp
+              image: atd-alma-routing-c2025-1-1-veos-4-34-0f-20250619-cvp
             branch: nested-release
             orderable: true
             eos:
@@ -441,12 +441,12 @@ topologies:
               cpu: 22
               ram: 42
               disk: 60
-              image: atd-alma-routing-c2025-1-1-ceos-20250528-eos
+              image: atd-alma-routing-c2025-1-1-ceos-20250619-eos
             resources_cvp:
               cpu: 36
               ram: 60
               disk: 300
-              image: atd-alma-routing-c2025-1-1-ceos-20250528-eos
+              image: atd-alma-routing-c2025-1-1-ceos-20250619-cvp
             branch: nested-release
             orderable: true
             eos:
