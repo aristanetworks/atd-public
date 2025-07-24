@@ -244,7 +244,7 @@ topologies:
               disk: 300
               image: atd-alma-dual-datacenter-c2024-2-0-bare-ceos-20241018-cvp
             branch: v2024.2-20250312
-            orderable: true
+            orderable: false
             eos:
               - 4.32.2F
               - 4.32.1F
