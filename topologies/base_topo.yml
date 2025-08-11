@@ -159,7 +159,7 @@ topologies:
               ram: 60
               disk: 300
               image: atd-alma-dual-datacenter-c2025-1-1-ceos-20250529-cvp
-            branch: nested-release
+            branch: nested/2025.1
             orderable: true
             eos:
               - 4.33.0F
@@ -303,7 +303,7 @@ topologies:
               ram: 60
               disk: 300
               image: atd-alma-dual-datacenter-c2025-1-1-ceos-20250529-cvp
-            branch: v2025.1-20250618
+            branch: v2025.1-20250811
             orderable: true
             eos:
               - 4.33.0F
@@ -385,7 +385,7 @@ topologies:
               ram: 60
               disk: 300
               image: atd-alma-routing-c2025-1-1-veos-4-34-0f-20250619-cvp
-            branch: nested-release
+            branch: nested/2025.1
             orderable: true
             eos:
               - 4.32.1F
@@ -468,7 +468,7 @@ topologies:
               ram: 60
               disk: 300
               image: atd-alma-routing-c2025-1-1-ceos-20250619-cvp
-            branch: nested-release
+            branch: nested/2025.1
             orderable: true
             eos:
               - 4.33.0F
@@ -555,7 +555,7 @@ topologies:
               ram: 60
               disk: 300
               image: atd-alma-routing-c2025-1-1-ceos-20250619-cvp
-            branch: v2025.1-20250618
+            branch: v2025.1-20250811
             orderable: true
             eos:
               - 4.33.0F
@@ -628,7 +628,7 @@ topologies:
               ram: 60
               disk: 300
               image: atd-alma-routing-c2025-1-1-veos-4-34-0f-20250619-cvp
-            branch: v2025.1-20250618
+            branch: v2025.1-20250811
             orderable: true
             eos:
               - 4.32.1F
@@ -720,7 +720,7 @@ topologies:
               ram: 60
               disk: 300
               image: atd-alma-campus-c2025-1-1-ceos-20250527-cvp
-            branch: nested-release
+            branch: nested/2025.1
             orderable: true
             eos:
               - 4.33.0F
@@ -787,7 +787,7 @@ topologies:
               ram: 60
               disk: 300
               image: atd-alma-campus-c2025-1-1-ceos-20250527-cvp
-            branch: v2025.1-20250618
+            branch: v2025.1-20250811
             orderable: true
             eos:
               - 4.33.0F
