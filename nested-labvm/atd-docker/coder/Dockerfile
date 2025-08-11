@@ -18,6 +18,10 @@ RUN sudo apt update && \
     sudo rm -rf /var/lib/apt/lists/* && \
     sudo apt-get clean
 
+# Set global vars to enable installation of different AVD/CVP collection versions for automation workshops
+RUN pip3 config set global.break-system-packages true && \
+    pip3 config set global.disable-pip-version-check true
+
 RUN pip3 install --user pyeapi jsonrpclib-pelix shyaml && \
     pip3 install --user "ansible-core>=2.15.0,<2.17.0" --upgrade
 
