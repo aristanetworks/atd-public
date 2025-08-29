@@ -111,16 +111,13 @@ fi
 # if VTEP file present
 if [ -f "/etc/atd/.provisioned" ]
 then
-    if [ -f "/etc/atd/.init" ]
-    then
-        bash docker_run.sh
-        while : ; do
-            [[ -f "/etc/atd/.vtep.sh" ]] && break
-            echo "Pausing until file exists."
-            sleep 1
-        done
-        bash /etc/atd/.vtep.sh
-    else
-        bash /etc/atd/.vtep.sh
-    fi
+    # Forcing the recreation of the vtep startup script for snapshot restores
+    rm /etc/atd/.vtep.sh
+    bash docker_run.sh
+    while : ; do
+        [[ -f "/etc/atd/.vtep.sh" ]] && break
+        echo "Pausing until file exists."
+        sleep 1
+    done
+    bash /etc/atd/.vtep.sh
 fi
