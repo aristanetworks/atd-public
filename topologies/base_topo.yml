@@ -147,19 +147,19 @@ topologies:
               - 4.32.1F
               - 4.32.0F
               - 4.31.4M
-          2025.1.1:
+          2025.2.1:
             schema: 2
             resources_eos:
               cpu: 22
               ram: 48
               disk: 60
-              image: atd-alma-dual-datacenter-c2025-1-1-ceos-20250529-eos
+              image: atd-alma-dual-datacenter-c2025-2-1-ceos-20250829-eos
             resources_cvp:
               cpu: 36
               ram: 60
               disk: 300
-              image: atd-alma-dual-datacenter-c2025-1-1-ceos-20250529-cvp
-            branch: nested/2025.1
+              image: atd-alma-dual-datacenter-c2025-2-1-ceos-20250829-cvp
+            branch: nested/2025.2
             orderable: true
             eos:
               - 4.33.0F
