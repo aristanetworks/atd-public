@@ -26,6 +26,7 @@ if [ -f "/etc/atd/.provisioned" ]
 then
     # Forcing the recreation of the vtep startup script for snapshot restores
     rm /etc/atd/.vtep.sh
+    touch /etc/atd/.init
     bash docker_run.sh
     while : ; do
         [[ -f "/etc/atd/.vtep.sh" ]] && break
