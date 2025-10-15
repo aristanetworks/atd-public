@@ -6,65 +6,6 @@ topologies:
         cpu: 32
         ram: 54
         cvp:
-          2024.1.0-bare:
-            schema: 2
-            resources_eos:
-              cpu: 22
-              ram: 48
-              disk: 60
-              image: atd-alma-dual-datacenter-c2024-1-0-bare-ceos-20241018-eos
-            resources_cvp:
-              cpu: 28
-              ram: 36
-              disk: 300
-              image: atd-alma-dual-datacenter-c2024-1-0-bare-ceos-20241018-cvp
-            branch: nested/2024.1
-            orderable: false
-            eos:
-              - 4.32.2F
-              - 4.32.1F
-              - 4.32.0F
-          2024.1.1:
-            schema: 2
-            resources_eos:
-              cpu: 22
-              ram: 48
-              disk: 60
-              image: atd-alma-dual-datacenter-c2024-1-1-ceos-20240424-eos
-            resources_cvp:
-              cpu: 28
-              ram: 36
-              disk: 300
-              image: atd-alma-dual-datacenter-c2024-1-1-ceos-20240424-cvp
-            branch: nested/2024.1
-            orderable: false
-            eos:
-              - 4.32.2F
-              - 4.32.1F
-              - 4.32.0F
-              - 4.31.4M
-              - 4.31.2F
-          2024.2.0:
-            schema: 2
-            resources_eos:
-              cpu: 22
-              ram: 48
-              disk: 60
-              image: atd-alma-dual-datacenter-c2024-2-0-ceos-20241018-eos
-            resources_cvp:
-              cpu: 28
-              ram: 36
-              disk: 300
-              image: atd-alma-dual-datacenter-c2024-2-0-ceos-20241018-cvp
-            branch: nested/2024.2
-            orderable: false
-            eos:
-              - 4.33.0F
-              - 4.32.2F
-              - 4.32.1F
-              - 4.32.0F
-              - 4.31.4M
-              - 4.31.2F
           2024.2.0-bare:
             schema: 2
             resources_eos:
@@ -80,11 +21,10 @@ topologies:
             branch: nested/2024.2
             orderable: true
             eos:
+              - 4.35.0F
+              - 4.34.3M
               - 4.33.0F
               - 4.32.2F
-              - 4.32.1F
-              - 4.32.0F
-              - 4.31.4M
           2024.3.0:
             schema: 2
             resources_eos:
@@ -100,12 +40,10 @@ topologies:
             branch: nested/2024.3
             orderable: true
             eos:
+              - 4.35.0F
+              - 4.34.3M
               - 4.33.0F
               - 4.32.2F
-              - 4.32.1F
-              - 4.32.0F
-              - 4.31.4M
-              - 4.31.2F
           2024.3.1:
             schema: 2
             resources_eos:
@@ -121,12 +59,10 @@ topologies:
             branch: nested/2024.3
             orderable: true
             eos:
+              - 4.35.0F
+              - 4.34.3M
               - 4.33.0F
               - 4.32.2F
-              - 4.32.1F
-              - 4.32.0F
-              - 4.31.4M
-              - 4.31.2F
           2024.3.1-bare:
             schema: 2
             resources_eos:
@@ -142,11 +78,10 @@ topologies:
             branch: nested/2024.2
             orderable: true
             eos:
+              - 4.35.0F
+              - 4.34.3M
               - 4.33.0F
               - 4.32.2F
-              - 4.32.1F
-              - 4.32.0F
-              - 4.31.4M
           2025.1.1:
             schema: 2
             resources_eos:
@@ -162,12 +97,10 @@ topologies:
             branch: nested/2025.1
             orderable: true
             eos:
+              - 4.35.0F
+              - 4.34.3M
               - 4.33.0F
               - 4.32.2F
-              - 4.32.1F
-              - 4.32.0F
-              - 4.31.4M
-              - 4.31.2F
           2025.2.1:
             schema: 2
             resources_eos:
@@ -183,95 +116,15 @@ topologies:
             branch: nested/2025.2
             orderable: true
             eos:
-              - 4.34.2F
-              - 4.34.1F
+              - 4.35.0F
+              - 4.34.3M
               - 4.33.4M
-              - 4.33.0F
               - 4.32.2F
-              - 4.32.1F
-              - 4.32.0F
     prod:
       ceos:
         cpu: 40
         ram: 64
         cvp:
-          2024.1.0-bare:
-            schema: 2
-            resources_eos:
-              cpu: 22
-              ram: 48
-              disk: 60
-              image: atd-alma-dual-datacenter-c2024-1-0-bare-ceos-20241018-eos
-            resources_cvp:
-              cpu: 28
-              ram: 36
-              disk: 300
-              image: atd-alma-dual-datacenter-c2024-1-0-bare-ceos-20241018-cvp
-            branch: v2024.1-20241021a
-            orderable: false
-            eos:
-              - 4.32.2F
-              - 4.32.1F
-              - 4.32.0F
-          2024.1.1:
-            schema: 2
-            resources_eos:
-              cpu: 22
-              ram: 48
-              disk: 60
-              image: atd-alma-dual-datacenter-c2024-1-1-ceos-20240424-eos
-            resources_cvp:
-              cpu: 28
-              ram: 36
-              disk: 300
-              image: atd-alma-dual-datacenter-c2024-1-1-ceos-20240424-cvp
-            branch: v2024.1-20241021a
-            orderable: false
-            eos:
-              - 4.32.2F
-              - 4.32.1F
-              - 4.32.0F
-              - 4.31.4M
-              - 4.31.2F
-          2024.2.0:
-            schema: 2
-            resources_eos:
-              cpu: 22
-              ram: 48
-              disk: 60
-              image: atd-alma-dual-datacenter-c2024-2-0-ceos-20241018-eos
-            resources_cvp:
-              cpu: 28
-              ram: 36
-              disk: 300
-              image: atd-alma-dual-datacenter-c2024-2-0-ceos-20241018-cvp
-            branch: v2024.2-20250312
-            orderable: false
-            eos:
-              - 4.32.2F
-              - 4.32.1F
-              - 4.32.0F
-              - 4.31.4M
-              - 4.31.2F
-          2024.2.0-bare:
-            schema: 2
-            resources_eos:
-              cpu: 22
-              ram: 48
-              disk: 60
-              image: atd-alma-dual-datacenter-c2024-2-0-bare-ceos-20241018-eos
-            resources_cvp:
-              cpu: 28
-              ram: 36
-              disk: 300
-              image: atd-alma-dual-datacenter-c2024-2-0-bare-ceos-20241018-cvp
-            branch: v2024.2-20250312
-            orderable: false
-            eos:
-              - 4.32.2F
-              - 4.32.1F
-              - 4.32.0F
-              - 4.31.4M
           2024.3.1:
             schema: 2
             resources_eos:
@@ -287,12 +140,10 @@ topologies:
             branch: v2024.3-20250825
             orderable: true
             eos:
+              - 4.35.0F
+              - 4.34.3M
               - 4.33.0F
               - 4.32.2F
-              - 4.32.1F
-              - 4.32.0F
-              - 4.31.4M
-              - 4.31.2F
           2024.3.1-bare:
             schema: 2
             resources_eos:
@@ -308,11 +159,10 @@ topologies:
             branch: v2024.3-20250825
             orderable: true
             eos:
+              - 4.35.0F
+              - 4.34.3M
               - 4.33.0F
               - 4.32.2F
-              - 4.32.1F
-              - 4.32.0F
-              - 4.31.4M
           2025.1.1:
             schema: 2
             resources_eos:
@@ -328,12 +178,10 @@ topologies:
             branch: v2025.1-20250825
             orderable: true
             eos:
+              - 4.35.0F
+              - 4.34.3M
               - 4.33.0F
               - 4.32.2F
-              - 4.32.1F
-              - 4.32.0F
-              - 4.31.4M
-              - 4.31.2F
     desc: 'Dual Data Center ATD Topology'
     name: 'Dual Data Center'
     title: 'Dual Data Center Lab'
@@ -347,38 +195,6 @@ topologies:
         cpu: 44
         ram: 90
         cvp:
-          2024.1.1:
-            schema: 2
-            resources_eos:
-              cpu: 38
-              ram: 70
-              disk: 60
-              image: atd-alma-routing-c2024-1-1-veos-4-31-2f-20240424-eos
-            resources_cvp:
-              cpu: 28
-              ram: 36
-              disk: 300
-              image: atd-alma-routing-c2024-1-1-veos-4-31-2f-20240424-cvp
-            branch: nested/2024.1
-            orderable: false
-            eos:
-              - 4.31.2F
-          2024.2.0:
-            schema: 2
-            resources_eos:
-              cpu: 40
-              ram: 70
-              disk: 60
-              image: atd-alma-routing-c2024-2-0-veos-4-31-2f-20241018-eos
-            resources_cvp:
-              cpu: 28
-              ram: 36
-              disk: 300
-              image: atd-alma-routing-c2024-2-0-veos-4-31-2f-20241018-cvp
-            branch: nested/2024.2
-            orderable: false
-            eos:
-              - 4.32.1F
           2024.3.1:
             schema: 2
             resources_eos:
@@ -433,47 +249,6 @@ topologies:
         cpu: 32
         ram: 64
         cvp:
-          2024.1.1:
-            schema: 2
-            resources_eos:
-              cpu: 22
-              ram: 42
-              disk: 60
-              image: atd-alma-routing-c2024-1-1-ceos-20240424-eos
-            resources_cvp:
-              cpu: 28
-              ram: 36
-              disk: 300
-              image: atd-alma-routing-c2024-1-1-ceos-20240424-cvp
-            branch: nested/2024.1
-            orderable: false
-            eos:
-              - 4.32.2F
-              - 4.32.1F
-              - 4.32.0F
-              - 4.31.4M
-              - 4.31.2F
-          2024.2.0:
-            schema: 2
-            resources_eos:
-              cpu: 22
-              ram: 42
-              disk: 60
-              image: atd-alma-routing-c2024-2-0-ceos-20241018-eos
-            resources_cvp:
-              cpu: 28
-              ram: 36
-              disk: 300
-              image: atd-alma-routing-c2024-2-0-ceos-20241018-cvp
-            branch: nested/2024.2
-            orderable: false
-            eos:
-              - 4.33.0F
-              - 4.32.2F
-              - 4.32.1F
-              - 4.32.0F
-              - 4.31.4M
-              - 4.31.2F
           2024.3.1:
             schema: 2
             resources_eos:
@@ -489,12 +264,10 @@ topologies:
             branch: nested/2024.3
             orderable: true
             eos:
+              - 4.35.0F
+              - 4.34.3M
               - 4.33.0F
               - 4.32.2F
-              - 4.32.1F
-              - 4.32.0F
-              - 4.31.4M
-              - 4.31.2F
           2025.1.1:
             schema: 2
             resources_eos:
@@ -510,12 +283,10 @@ topologies:
             branch: nested/2025.1
             orderable: true
             eos:
+              - 4.35.0F
+              - 4.34.3M
               - 4.33.0F
               - 4.32.2F
-              - 4.32.1F
-              - 4.32.0F
-              - 4.31.4M
-              - 4.31.2F
           2025.2.1:
             schema: 2
             resources_eos:
@@ -531,57 +302,16 @@ topologies:
             branch: nested/2025.2
             orderable: true
             eos:
+              - 4.35.0F
+              - 4.34.3M
               - 4.34.2F
-              - 4.34.1F
               - 4.33.4M
-              - 4.33.0F
               - 4.32.2F
-              - 4.32.1F
     prod:
       ceos:
         cpu: 24
         ram: 54
         cvp:
-          2024.1.1:
-            schema: 2
-            resources_eos:
-              cpu: 22
-              ram: 42
-              disk: 60
-              image: atd-alma-routing-c2024-1-1-ceos-20240424-eos
-            resources_cvp:
-              cpu: 28
-              ram: 36
-              disk: 300
-              image: atd-alma-routing-c2024-1-1-ceos-20240424-cvp
-            branch: v2024.1-20241021a
-            orderable: false
-            eos:
-              - 4.32.2F
-              - 4.32.1F
-              - 4.32.0F
-              - 4.31.4M
-              - 4.31.2F
-          2024.2.0:
-            schema: 2
-            resources_eos:
-              cpu: 22
-              ram: 42
-              disk: 60
-              image: atd-alma-routing-c2024-2-0-ceos-20241018-eos
-            resources_cvp:
-              cpu: 28
-              ram: 36
-              disk: 300
-              image: atd-alma-routing-c2024-2-0-ceos-20241018-cvp
-            branch: v2024.2-20250312
-            orderable: false
-            eos:
-              - 4.32.2F
-              - 4.32.1F
-              - 4.32.0F
-              - 4.31.4M
-              - 4.31.2F
           2024.3.1:
             schema: 2
             resources_eos:
@@ -597,12 +327,10 @@ topologies:
             branch: v2024.3-20250825
             orderable: true
             eos:
+              - 4.35.0F
+              - 4.34.3M
               - 4.33.0F
               - 4.32.2F
-              - 4.32.1F
-              - 4.32.0F
-              - 4.31.4M
-              - 4.31.2F
           2025.1.1:
             schema: 2
             resources_eos:
@@ -618,48 +346,14 @@ topologies:
             branch: v2025.1-20250825
             orderable: true
             eos:
+              - 4.35.0F
+              - 4.34.3M
               - 4.33.0F
               - 4.32.2F
-              - 4.32.1F
-              - 4.32.0F
-              - 4.31.4M
-              - 4.31.2F
       veos:
         cpu: 44
         ram: 90
         cvp:
-          2024.1.1:
-            schema: 2
-            resources_eos:
-              cpu: 38
-              ram: 70
-              disk: 60
-              image: atd-alma-routing-c2024-1-1-veos-4-31-2f-20240424-eos
-            resources_cvp:
-              cpu: 28
-              ram: 36
-              disk: 300
-              image: atd-alma-routing-c2024-1-1-veos-4-31-2f-20240424-cvp
-            branch: v2024.1-20241021a
-            orderable: false
-            eos:
-              - 4.31.2F
-          2024.2.0:
-            schema: 2
-            resources_eos:
-              cpu: 38
-              ram: 70
-              disk: 60
-              image: atd-alma-routing-c2024-2-0-veos-4-31-2f-20241018-eos
-            resources_cvp:
-              cpu: 28
-              ram: 36
-              disk: 300
-              image: atd-alma-routing-c2024-2-0-veos-4-31-2f-20241018-cvp
-            branch: v2024.2-20250312
-            orderable: false
-            eos:
-              - 4.32.1F
           2024.3.1:
             schema: 2
             resources_eos:
@@ -706,47 +400,6 @@ topologies:
         cpu: 32
         ram: 54
         cvp:
-          2024.1.1:
-            schema: 2
-            resources_eos:
-              cpu: 22
-              ram: 48
-              disk: 60
-              image: atd-alma-campus-c2024-1-1-ceos-20240424-eos
-            resources_cvp:
-              cpu: 28
-              ram: 36
-              disk: 300
-              image: atd-alma-campus-c2024-1-1-ceos-20240424-cvp
-            branch: nested/2024.1
-            orderable: false
-            eos:
-              - 4.32.2F
-              - 4.32.1F
-              - 4.32.0F
-              - 4.31.4M
-              - 4.31.2F
-          2024.2.0:
-            schema: 2
-            resources_eos:
-              cpu: 22
-              ram: 48
-              disk: 60
-              image: atd-alma-campus-c2024-2-0-ceos-20241104-eos
-            resources_cvp:
-              cpu: 28
-              ram: 36
-              disk: 300
-              image: atd-alma-campus-c2024-2-0-ceos-20241104-cvp
-            branch: nested/2024.2
-            orderable: false
-            eos:
-              - 4.33.0F
-              - 4.32.2F
-              - 4.32.1F
-              - 4.32.0F
-              - 4.31.4M
-              - 4.31.2F
           2024.3.1:
             schema: 2
             resources_eos:
@@ -762,12 +415,10 @@ topologies:
             branch: nested/2024.3
             orderable: true
             eos:
+              - 4.35.0F
+              - 4.34.3M
               - 4.33.0F
               - 4.32.2F
-              - 4.32.1F
-              - 4.32.0F
-              - 4.31.4M
-              - 4.31.2F
           2025.1.1:
             schema: 2
             resources_eos:
@@ -783,12 +434,10 @@ topologies:
             branch: nested/2025.1
             orderable: true
             eos:
+              - 4.35.0F
+              - 4.34.3M
               - 4.33.0F
               - 4.32.2F
-              - 4.32.1F
-              - 4.32.0F
-              - 4.31.4M
-              - 4.31.2F
           2025.2.1:
             schema: 2
             resources_eos:
@@ -804,38 +453,18 @@ topologies:
             branch: nested/2025.2
             orderable: true
             eos:
+              - 4.35.0F
+              - 4.34.3M
               - 4.34.2F
               - 4.34.1F
               - 4.33.4M
-              - 4.33.0F
               - 4.32.2F
-              - 4.32.1F
 
     prod:
       ceos:
         cpu: 32
         ram: 54
         cvp:
-          2024.2.0:
-            schema: 2
-            resources_eos:
-              cpu: 22
-              ram: 48
-              disk: 60
-              image: atd-alma-campus-c2024-2-0-ceos-20241104-eos
-            resources_cvp:
-              cpu: 28
-              ram: 36
-              disk: 300
-              image: atd-alma-campus-c2024-2-0-ceos-20241104-cvp
-            branch: v2024.2-20250312
-            orderable: false
-            eos:
-              - 4.32.2F
-              - 4.32.1F
-              - 4.32.0F
-              - 4.31.4M
-              - 4.31.2F
           2024.3.1:
             schema: 2
             resources_eos:
@@ -851,12 +480,10 @@ topologies:
             branch: v2024.3-20250825
             orderable: true
             eos:
+              - 4.35.0F
+              - 4.34.3M
               - 4.33.0F
               - 4.32.2F
-              - 4.32.1F
-              - 4.32.0F
-              - 4.31.4M
-              - 4.31.2F
           2025.1.1:
             schema: 2
             resources_eos:
@@ -872,12 +499,10 @@ topologies:
             branch: v2025.1-20250825
             orderable: true
             eos:
+              - 4.35.0F
+              - 4.34.3M
               - 4.33.0F
               - 4.32.2F
-              - 4.32.1F
-              - 4.32.0F
-              - 4.31.4M
-              - 4.31.2F
     desc: 'Campus ATD Topology'
     name: 'Campus'
     title: 'Campus Lab'
