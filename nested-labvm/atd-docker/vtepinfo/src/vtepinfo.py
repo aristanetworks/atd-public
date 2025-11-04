@@ -100,6 +100,7 @@ def main():
         CMD_OUT.append(f"ip link add vxlan10 type vxlan id 10  local {self_ip} remote {peer_ip}\n")
         CMD_OUT.append("brctl addif vmgmt vxlan10\n")
         CMD_OUT.append("ip link set vxlan10 up\n")
+        CMD_OUT.append("ip link set vxlan10 mtu 1410")
         YAML().dump(access_yaml, open(ATD_ACCESS_PATH, 'w'))
         with open(VTEP_SCRIPT_PATH, 'w') as vout:
             vout.writelines(CMD_OUT)
