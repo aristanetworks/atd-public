@@ -280,6 +280,8 @@ services:
     restart: "unless-stopped"
 networks:
   atd_nginx:
+    driver_opts:
+      com.docker.network.driver.mtu: "1410"
 volumes:
   atd_labguides:
   atd_http:

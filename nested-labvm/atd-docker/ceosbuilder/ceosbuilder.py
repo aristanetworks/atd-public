@@ -353,11 +353,6 @@ def main(args):
             _v1, _v2 = _veth.split("-")
             create_output.append(f"sudo ip link add {_v1} type veth peer name {_v2}\n")
             startup_output.append(f"sudo ip link add {_v1} type veth peer name {_v2}\n")
-            # Set the mgmt interface MTU to specified value
-            create_output.append(f"sudo ip link set {_v1} mtu {MGMT_MTU}\n")
-            create_output.append(f"sudo ip link set {_v2} mtu {MGMT_MTU}\n")
-            startup_output.append(f"sudo ip link set {_v1} mtu {MGMT_MTU}\n")
-            startup_output.append(f"sudo ip link set {_v2} mtu {MGMT_MTU}\n")
             # delete_output.append(f"sudo ip link delete {_v1} type veth peer name {_v2}\n")
         create_output.append("#\n#\n# Creating anchor containers\n#\n")
         # Create initial cEOS anchor containers
@@ -410,17 +405,23 @@ def main(args):
                     startup_output.append(f"sudo ip link set {_tmp_intf['veth'].split('-')[1]} mtu {MTU} netns {CEOS[_node].tag}{CEOS[_node].dev_id} name {_tmp_intf['port']} up\n")
             # Get MGMT VETHS
             create_output.append(f"sudo ip link add {CEOS[_node].tag}{CEOS[_node].dev_id}-eth0 type veth peer name {CEOS[_node].tag}{CEOS[_node].dev_id}-mgmt\n")
+            # Set the mgmt interface MTU to specified value
+            # create_output.append(f"sudo ip link set {CEOS[_node].tag}{CEOS[_node].dev_id}-mgmt mtu {MGMT_MTU}\n")
             create_output.append(f"sudo ip link set {CEOS[_node].tag}{CEOS[_node].dev_id}-eth0 netns {CEOS[_node].tag}{CEOS[_node].dev_id} name eth0 up\n")
             # create_output.append(f"sudo ip netns exec {CEOS[_node].tag}{CEOS[_node].dev_id} ip link set dev eth0 down\n")
             # create_output.append(f"sudo ip netns exec {CEOS[_node].tag}{CEOS[_node].dev_id} ip link set dev eth0 address {CEOS[_node].mgmt_mac}\n")
             create_output.append(f"sudo ip netns exec {CEOS[_node].tag}{CEOS[_node].dev_id} ip link set dev eth0 up\n")
+            # create_output.append(f"sudo ip netns exec {CEOS[_node].tag}{CEOS[_node].dev_id} ip link set eth0 mtu {MGMT_MTU}\n")
             create_output.append(f"sudo ip link set {CEOS[_node].tag}{CEOS[_node].dev_id}-mgmt up\n")
             create_output.append("sleep 1\n")
             startup_output.append(f"sudo ip link add {CEOS[_node].tag}{CEOS[_node].dev_id}-eth0 type veth peer name {CEOS[_node].tag}{CEOS[_node].dev_id}-mgmt\n")
+            # Set the mgmt interface MTU to specified value
+            # startup_output.append(f"sudo ip link set {CEOS[_node].tag}{CEOS[_node].dev_id}-mgmt mtu {MGMT_MTU}\n")
             startup_output.append(f"sudo ip link set {CEOS[_node].tag}{CEOS[_node].dev_id}-eth0 netns {CEOS[_node].tag}{CEOS[_node].dev_id} name eth0 up\n")
             # startup_output.append(f"sudo ip netns exec {CEOS[_node].tag}{CEOS[_node].dev_id} ip link set dev eth0 down\n")
             # startup_output.append(f"sudo ip netns exec {CEOS[_node].tag}{CEOS[_node].dev_id} ip link set dev eth0 address {CEOS[_node].mgmt_mac}\n")
             startup_output.append(f"sudo ip netns exec {CEOS[_node].tag}{CEOS[_node].dev_id} ip link set dev eth0 up\n")
+            # startup_output.append(f"sudo ip netns exec {CEOS[_node].tag}{CEOS[_node].dev_id} ip link set eth0 mtu {MGMT_MTU}\n")
             startup_output.append(f"sudo ip link set {CEOS[_node].tag}{CEOS[_node].dev_id}-mgmt up\n")
             startup_output.append("sleep 1\n")
             # Perform check if mgmt network is available
@@ -448,6 +449,13 @@ def main(args):
                 upgrade_output.append(f"{cnt_cmd} rm {_node}\n")
                 upgrade_output.append(f"{cnt_cmd} run -d --name={CEOS[_node].ceos_name} {cnt_log}1m --net=container:{CEOS[_node].ceos_name}-net --privileged -v /etc/sysctl.d/99-zceoslab.conf:/etc/sysctl.d/99-zceoslab.conf:ro -v {CEOS_NODES}/{_node}:/mnt/flash:Z -e INTFTYPE=et -e MGMT_INTF=eth0 -e ETBA=1 -e CEOS=1 -e EOS_PLATFORM=ceoslab -e container=docker -i -t {registry_cmd}{ceos_build}:$EOS_TYPE /sbin/init systemd.setenv=INTFTYPE=et systemd.setenv=MGMT_INTF=eth0 systemd.setenv=ETBA=1 systemd.setenv=CEOS=1 systemd.setenv=EOS_PLATFORM=ceoslab systemd.setenv=container=docker 1> /dev/null 2> /dev/null\n")
 
+        # Create override for setting the eth0 interface MTU
+        create_output.append("echo Sleeping 90 seconds for nodes to come up before overriding eth0 mtu\n")
+        create_output.append("sleep 90\n")
+        for _node in CEOS:
+            create_output.append(f"echo Updating {CEOS[_node].ceos_name} eth0 MTU\n")
+            create_output.append(f"sudo ip netns exec {CEOS[_node].tag}{CEOS[_node].dev_id} ip link set eth0 mtu {MGMT_MTU}\n")
+            
         create_output.append('touch {0}.ceos.txt'.format(CEOS_SCRIPTS))
         # startup_output.append('rm -- "$0"\n')
 
