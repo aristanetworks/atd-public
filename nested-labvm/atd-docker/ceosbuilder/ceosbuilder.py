@@ -22,6 +22,7 @@ NOTIFY_BASE = 1250
 CEOS_VERSION = '4.30.1F'
 REGIS_PATH = 'us.gcr.io/beta-atds'
 MTU = 10000
+MGMT_MTU = 1410
 VETH_PAIRS = []
 CEOS = {}
 
@@ -352,6 +353,11 @@ def main(args):
             _v1, _v2 = _veth.split("-")
             create_output.append(f"sudo ip link add {_v1} type veth peer name {_v2}\n")
             startup_output.append(f"sudo ip link add {_v1} type veth peer name {_v2}\n")
+            # Set the mgmt interface MTU to specified value
+            create_output.append(f"sudo ip link set {_v1} mtu {MGMT_MTU}\n")
+            create_output.append(f"sudo ip link set {_v2} mtu {MGMT_MTU}\n")
+            startup_output.append(f"sudo ip link set {_v1} mtu {MGMT_MTU}\n")
+            startup_output.append(f"sudo ip link set {_v2} mtu {MGMT_MTU}\n")
             # delete_output.append(f"sudo ip link delete {_v1} type veth peer name {_v2}\n")
         create_output.append("#\n#\n# Creating anchor containers\n#\n")
         # Create initial cEOS anchor containers
