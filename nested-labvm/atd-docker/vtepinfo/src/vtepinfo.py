@@ -101,8 +101,8 @@ def main():
         CMD_OUT.append("brctl addif vmgmt vxlan10\n")
         CMD_OUT.append("ip link set vxlan10 up\n")
         CMD_OUT.append("ip link set vxlan10 mtu 1410\n")
-        CMD_OUT.append("iptables -t mangle -A PREROUTING -p tcp --tcp-flags SYN,RST SYN -i vxlan10 -j TCPMSS --clamp-mss-to-pmtu\n")
-        CMD_OUT.appned("iptables -t mangle -A FORWARD -p tcp --tcp-flags SYN,RST SYN -i vxlan10 -j TCPMSS --clamp-mss-to-pmtu\n")
+        CMD_OUT.append("sudo iptables -t mangle -A FORWARD -p tcp --tcp-flags SYN,RST SYN -s 192.168.0.0/24 -j TCPMSS --set-mss 1370\n")
+        CMD_OUT.append("sudo iptables -t mangle -A FORWARD -p tcp --tcp-flags SYN,RST SYN -d 192.168.0.0/24 -j TCPMSS --set-mss 1370\n")
         YAML().dump(access_yaml, open(ATD_ACCESS_PATH, 'w'))
         with open(VTEP_SCRIPT_PATH, 'w') as vout:
             vout.writelines(CMD_OUT)
