@@ -41,3 +41,11 @@ ip radius source-interface Management0
 !
 management api http-commands
    no shutdown
+   protocol http
+!
+monitor connectivity
+   no shutdown
+   !
+   host host-3
+      ip 10.2.10.10
+      url http://10.2.10.10/explorer.html

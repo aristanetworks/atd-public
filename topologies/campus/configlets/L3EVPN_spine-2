@@ -52,8 +52,14 @@ ip routing
 ip prefix-list PL-LOOPBACKS-EVPN-OVERLAY
    seq 10 permit 172.16.1.0/24 eq 32
 !
+ip prefix-list PL-DHCP-SERVER
+   seq 10 permit 10.100.0.2/31
+!
 route-map RM-CONN-2-BGP permit 10
    match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY
+!
+route-map RM-CONN-2-BGP permit 20
+   match ip address prefix-list PL-DHCP-SERVER
 !
 router bfd
    multihop interval 300 min-rx 300 multiplier 3
@@ -74,11 +80,9 @@ router bgp 65001
    neighbor IPv4-UNDERLAY-PEERS maximum-routes 12000
    neighbor 10.100.0.2 peer group IPv4-UNDERLAY-PEERS
    neighbor 10.100.0.2 remote-as 65000
-   neighbor 10.100.0.2 local-as 65001 no-prepend replace-as
    neighbor 10.100.0.2 description router-1
    neighbor 10.100.0.6 peer group IPv4-UNDERLAY-PEERS
    neighbor 10.100.0.6 remote-as 65000
-   neighbor 10.100.0.6 local-as 65001 no-prepend replace-as
    neighbor 10.100.0.6 description router-2
    neighbor 10.0.0.7 peer group IPv4-UNDERLAY-PEERS
    neighbor 10.0.0.7 remote-as 65111
@@ -92,6 +96,15 @@ router bgp 65001
    neighbor 10.0.0.27 peer group IPv4-UNDERLAY-PEERS
    neighbor 10.0.0.27 remote-as 65113
    neighbor 10.0.0.27 description leaf-3b_Ethernet50
+   neighbor 10.255.0.1 peer group EVPN-OVERLAY-PEERS
+   neighbor 10.255.0.1 remote-as 65000
+   neighbor 10.255.0.1 description router-1
+   neighbor 10.255.0.2 peer group EVPN-OVERLAY-PEERS
+   neighbor 10.255.0.2 remote-as 65000
+   neighbor 10.255.0.2 description router-2
+   neighbor 10.255.0.5 peer group EVPN-OVERLAY-PEERS
+   neighbor 10.255.0.5 remote-as 65111
+   neighbor 10.255.0.5 description leaf-1a
    neighbor 10.255.0.6 peer group EVPN-OVERLAY-PEERS
    neighbor 10.255.0.6 remote-as 65111
    neighbor 10.255.0.6 description leaf-1b
@@ -110,5 +123,4 @@ router bgp 65001
       neighbor EVPN-OVERLAY-PEERS activate
    !
    address-family ipv4
-      no neighbor EVPN-OVERLAY-PEERS activate
       neighbor IPv4-UNDERLAY-PEERS activate

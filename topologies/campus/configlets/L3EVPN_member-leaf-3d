@@ -15,32 +15,19 @@ vlan 320
 vlan 330
    name Access_Pod3-Guest
 !
+vlan 410
+   name Access_Shared-IoT
+!
 interface Port-Channel49
    description Access_Pod3_AGG_Po52
    no shutdown
    switchport
-   switchport trunk allowed vlan 10,310,320,330
+   switchport trunk allowed vlan 10,310,320,330,410
    switchport mode trunk
 !
 interface Ethernet1
    description Access_Pod3 Standard Port
-   no shutdown
-   switchport trunk native vlan 310
-   switchport phone vlan 320
-   switchport phone trunk untagged
-   switchport mode trunk phone
-   switchport
-   dot1x pae authenticator
-   dot1x authentication failure action traffic allow vlan 330
-   dot1x reauthentication
-   dot1x port-control auto
-   dot1x host-mode multi-host authenticated
-   dot1x mac based authentication
-   dot1x timeout tx-period 3
-   dot1x timeout reauth-period server
-   dot1x reauthorization request limit 3
-   spanning-tree portfast
-   spanning-tree bpduguard enable
+   switchport access vlan 320
 !
 interface Ethernet49
    description LEAF-3A_Ethernet52

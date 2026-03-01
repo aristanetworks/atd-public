@@ -13,6 +13,9 @@ vlan 120
 vlan 130
    name Access_Pod1-Guest
 !
+vlan 410
+   name Access_Shared-IoT
+!
 vlan 4093
    name LEAF_PEER_L3
    trunk group LEAF_PEER_L3
@@ -20,6 +23,17 @@ vlan 4093
 vlan 4094
    name MLAG_PEER
    trunk group MLAG
+!
+vrf instance campus
+!
+interface Port-Channel1
+   description Access_Pod1 AP
+   no shutdown
+   switchport trunk native vlan 110
+   switchport mode trunk
+   spanning-tree portfast
+   spanning-tree bpduguard enable
+   mlag 1
 !
 interface Port-Channel47
    description MLAG_PEER_leaf-1b_Po47
@@ -30,24 +44,8 @@ interface Port-Channel47
    switchport trunk group MLAG
 !
 interface Ethernet1
-   description Access_Pod1 Standard Port
-   no shutdown
-   switchport trunk native vlan 110
-   switchport phone vlan 120
-   switchport phone trunk untagged
-   switchport mode trunk phone
-   switchport
-   dot1x pae authenticator
-   dot1x authentication failure action traffic allow vlan 130
-   dot1x reauthentication
-   dot1x port-control auto
-   dot1x host-mode multi-host authenticated
-   dot1x mac based authentication
-   dot1x timeout tx-period 3
-   dot1x timeout reauth-period server
-   dot1x reauthorization request limit 3
-   spanning-tree portfast
-   spanning-tree bpduguard enable
+   description Access_Pod1 AP
+   channel-group 1 mode active
 !
 interface Ethernet47
    description MLAG_PEER_leaf-1b_Ethernet47
@@ -79,17 +77,30 @@ interface Loopback1
 interface Vlan110
    description Access_Pod1-Data
    no shutdown
+   vrf campus
    ip address virtual 10.1.10.1/24
+   ip helper-address 10.100.0.0 vrf default source-interface Loopback0
 !
 interface Vlan120
    description Access_Pod1-Voice
    no shutdown
+   vrf campus
    ip address virtual 10.1.20.1/24
+   ip helper-address 10.100.0.0 vrf default source-interface Loopback0
 !
 interface Vlan130
    description Access_Pod1-Guest
    no shutdown
+   vrf campus
    ip address virtual 10.1.30.1/24
+   ip helper-address 10.100.0.0 vrf default source-interface Loopback0
+!
+interface Vlan410
+   description Access_Shared-IoT
+   no shutdown
+   vrf campus
+   ip address virtual 10.4.10.1/24
+   ip helper-address 10.100.0.0 vrf default source-interface Loopback0
 !
 interface Vlan4093
    description MLAG_PEER_L3_PEERING
@@ -112,20 +123,17 @@ interface Vxlan1
    vxlan vlan 110 vni 10110
    vxlan vlan 120 vni 10120
    vxlan vlan 130 vni 10130
-   vxlan vrf default vni 5001
+   vxlan vlan 410 vni 10410
+   vxlan vrf campus vni 5001
 !
 ip virtual-router mac-address 00:1c:73:00:00:99
 !
 ip routing
+ip routing vrf campus
 !
 ip prefix-list PL-LOOPBACKS-EVPN-OVERLAY
    seq 10 permit 10.255.0.0/24 eq 32
    seq 20 permit 10.255.1.0/24 eq 32
-!
-ip prefix-list PL-SVI-VRF-DEFAULT
-   seq 10 permit 10.1.10.0/24
-   seq 20 permit 10.1.20.0/24
-   seq 30 permit 10.1.30.0/24
 !
 mlag configuration
    domain-id Access_Pod1
@@ -135,19 +143,8 @@ mlag configuration
    reload-delay mlag 300
    reload-delay non-mlag 330
 !
-route-map RM-BGP-UNDERLAY-PEERS-OUT deny 10
-   match ip address prefix-list PL-SVI-VRF-DEFAULT
-!
-route-map RM-BGP-UNDERLAY-PEERS-OUT permit 20
-!
 route-map RM-CONN-2-BGP permit 10
    match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY
-!
-route-map RM-CONN-2-BGP permit 30
-   match ip address prefix-list PL-SVI-VRF-DEFAULT
-!
-route-map RM-EVPN-EXPORT-VRF-DEFAULT permit 10
-   match ip address prefix-list PL-SVI-VRF-DEFAULT
 !
 route-map RM-MLAG-PEER-IN permit 10
    description Make routes learned over MLAG Peer-link less preferred on spines to ensure optimal routing
@@ -169,7 +166,6 @@ router bgp 65111
    neighbor IPv4-UNDERLAY-PEERS peer group
    neighbor IPv4-UNDERLAY-PEERS send-community
    neighbor IPv4-UNDERLAY-PEERS maximum-routes 12000
-   neighbor IPv4-UNDERLAY-PEERS route-map RM-BGP-UNDERLAY-PEERS-OUT out
    neighbor MLAG-IPv4-UNDERLAY-PEER peer group
    neighbor MLAG-IPv4-UNDERLAY-PEER remote-as 65111
    neighbor MLAG-IPv4-UNDERLAY-PEER next-hop-self
@@ -185,6 +181,9 @@ router bgp 65111
    neighbor 172.16.1.1 peer group EVPN-OVERLAY-PEERS
    neighbor 172.16.1.1 remote-as 65001
    neighbor 172.16.1.1 description spine-1
+   neighbor 172.16.1.2 peer group EVPN-OVERLAY-PEERS
+   neighbor 172.16.1.2 remote-as 65001
+   neighbor 172.16.1.2 description spine-2
    redistribute connected route-map RM-CONN-2-BGP
    !
    vlan 110
@@ -202,16 +201,20 @@ router bgp 65111
       route-target both 10130:10130
       redistribute learned
    !
+   vlan 410
+      rd 10.255.0.5:10410
+      route-target both 10410:10410
+      redistribute learned
+   !
    address-family evpn
       neighbor EVPN-OVERLAY-PEERS activate
    !
    address-family ipv4
-      no neighbor EVPN-OVERLAY-PEERS activate
       neighbor IPv4-UNDERLAY-PEERS activate
       neighbor MLAG-IPv4-UNDERLAY-PEER activate
    !
-   vrf default
+   vrf campus
       rd 10.255.0.5:5001
       route-target import evpn 5001:5001
       route-target export evpn 5001:5001
-      route-target export evpn route-map RM-EVPN-EXPORT-VRF-DEFAULT
+      redistribute connected

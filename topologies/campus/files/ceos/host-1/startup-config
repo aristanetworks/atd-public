@@ -1,11 +1,22 @@
 hostname host-1
 !
-interface Ethernet1
-   description Host Simulation Interface
+interface Port-Channel1
+   description Dual-Homed AP - Host Simulation Interface
    no switchport
+!
+interface Port-Channel1.110
+   description Dual-Homed AP - Host Simulation Interface
 ! Placehoder - DHCP still TBD
    ip address dhcp
    dhcp client accept default-route
+!
+interface Ethernet1
+   description Host Simulation Interface
+   channel-group 1 mode active
+!
+interface Ethernet1
+   description Host Simulation Interface
+   channel-group 2 mode active
 !
 interface Management0
    ip address 192.168.0.22/24
@@ -41,3 +52,11 @@ ip radius source-interface Management0
 !
 management api http-commands
    no shutdown
+   protocol http
+!
+monitor connectivity
+   no shutdown
+   !
+   host host-4
+      ip 10.3.10.10
+      url http://10.3.10.10/explorer.html

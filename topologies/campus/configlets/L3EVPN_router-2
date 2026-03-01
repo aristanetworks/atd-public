@@ -1,5 +1,7 @@
 spanning-tree mode none
 !
+vrf instance campus
+!
 interface Ethernet1
    description P2P_LINK_TO_spine-1_Ethernet1
    no shutdown
@@ -17,14 +19,34 @@ interface Ethernet2
 interface Loopback0
    description EVPN_Overlay_Peering
    no shutdown
-   ip address 172.16.20.2/32
+   ip address 10.255.0.2/32
+!
+interface Loopback1
+   description VTEP_VXLAN_Tunnel_Source
+   no shutdown
+   ip address 10.255.1.2/32
+!
+interface Vxlan1
+   description router-2_VTEP
+   vxlan source-interface Loopback1
+   vxlan udp-port 4789
+   vxlan vrf campus vni 5001
 !
 ip routing
+ip routing vrf campus
+!
+ip route vrf campus 0.0.0.0/0 null0
 !
 router bgp 65000
    router-id 172.16.20.2
    maximum-paths 4 ecmp 4
    no bgp default ipv4-unicast
+   neighbor EVPN-OVERLAY-PEERS peer group
+   neighbor EVPN-OVERLAY-PEERS update-source Loopback0
+   neighbor EVPN-OVERLAY-PEERS bfd
+   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3
+   neighbor EVPN-OVERLAY-PEERS send-community
+   neighbor EVPN-OVERLAY-PEERS maximum-routes 0
    neighbor IPv4-UNDERLAY-PEERS peer group
    neighbor IPv4-UNDERLAY-PEERS send-community
    neighbor IPv4-UNDERLAY-PEERS maximum-routes 12000
@@ -34,7 +56,22 @@ router bgp 65000
    neighbor 10.100.0.7 peer group IPv4-UNDERLAY-PEERS
    neighbor 10.100.0.7 remote-as 65001
    neighbor 10.100.0.7 description spine-2
+   neighbor 172.16.1.1 peer group EVPN-OVERLAY-PEERS
+   neighbor 172.16.1.1 remote-as 65001
+   neighbor 172.16.1.1 description spine-1
+   neighbor 172.16.1.2 peer group EVPN-OVERLAY-PEERS
+   neighbor 172.16.1.2 remote-as 65001
+   neighbor 172.16.1.2 description spine-2
    redistribute connected
+   !
+   address-family evpn
+      neighbor EVPN-OVERLAY-PEERS activate
    !
    address-family ipv4
       neighbor IPv4-UNDERLAY-PEERS activate
+   !
+   vrf campus
+      rd 10.255.0.2:5001
+      route-target import evpn 5001:5001
+      route-target export evpn 5001:5001
+      redistribute static

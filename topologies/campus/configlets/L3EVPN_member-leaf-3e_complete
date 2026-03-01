@@ -19,7 +19,7 @@ vlan 410
    name Access_Shared-IoT
 !
 interface Port-Channel49
-   description Access_Pod3_AGG_Po51
+   description Access_Pod3_AGG_Po531
    no shutdown
    switchport
    switchport trunk allowed vlan 10,310,320,330,410
@@ -27,16 +27,15 @@ interface Port-Channel49
 !
 interface Ethernet1
    description Access_Pod3 Standard Port
-   no shutdown
-   switchport access vlan 310
+   switchport access vlan 410
 !
 interface Ethernet49
-   description LEAF-3A_Ethernet51
+   description LEAF-3A_Ethernet53/1
    no shutdown
    channel-group 49 mode active
 !
 interface Ethernet50
-   description LEAF-3B_Ethernet51
+   description LEAF-3B_Ethernet53/1
    no shutdown
    channel-group 49 mode active
 !
@@ -44,4 +43,4 @@ interface Vlan10
    description Inband Management
    no shutdown
    mtu 1500
-   ip address 10.10.10.11/24
+   ip address 10.10.10.13/24
