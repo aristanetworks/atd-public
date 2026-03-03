@@ -236,7 +236,6 @@ router bgp 65113
    neighbor 172.16.1.2 peer group EVPN-OVERLAY-PEERS
    neighbor 172.16.1.2 remote-as 65001
    neighbor 172.16.1.2 description spine-2
-   redistribute attached-host
    redistribute connected route-map RM-CONN-2-BGP
    !
    vlan 310
