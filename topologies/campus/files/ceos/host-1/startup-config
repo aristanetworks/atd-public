@@ -6,6 +6,7 @@ interface Port-Channel1
 !
 interface Port-Channel1.110
    description Dual-Homed AP - Host Simulation Interface
+   encapsulation dot1q vlan 110
 ! Placehoder - DHCP still TBD
    ip address dhcp
    dhcp client accept default-route
@@ -14,7 +15,7 @@ interface Ethernet1
    description Host Simulation Interface
    channel-group 1 mode active
 !
-interface Ethernet1
+interface Ethernet2
    description Host Simulation Interface
    channel-group 1 mode active
 !
