@@ -170,7 +170,7 @@ topologies:
               ram: 60
               disk: 300
               image: atd-alma-dual-datacenter-c2025-3-1-ceos-20251218-cvp
-            branch: v2025.3-20260126
+            branch: v2025.3-20260304
             orderable: true
             eos:
               - 4.35.1F
@@ -354,7 +354,7 @@ topologies:
               ram: 60
               disk: 300
               image: atd-alma-routing-c2025-3-1-ceos-20251230-cvp
-            branch: v2025.3-20260126
+            branch: v2025.3-20260304
             orderable: true
             eos:
               - 4.35.0F
@@ -524,7 +524,7 @@ topologies:
               ram: 60
               disk: 300
               image: atd-alma-campus-c2025-3-1-ceos-20251219-cvp
-            branch: v2025.3-20260126
+            branch: v2025.3-20260304
             orderable: true
             eos:
               - 4.35.1F
