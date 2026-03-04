@@ -192,10 +192,13 @@ def main():
    # Perform check if it is a cEOS based topo and 2022.2 or later CVP
    if _version_major >= 2022.2:
       pS("INFO", "Generating a token for onboarding...")
-      _token_response = cvprac_clnt.api.create_enroll_token("24h")
+      _token_response = cvprac_clnt.api.create_enroll_token("86400s")
       _token_path = path.expanduser(f"~/token")
       with open(f"{_token_path}", 'w') as token_out:
-         token_out.write(_token_response['data'])
+         if 'data' in _token_response:
+            token_out.write(_token_response['data'])
+         else:
+            token_out.write(_token_response['enrollmentToken']['token'])
       # EOS_DEV = []
       for dev in NODES:
          if accessinfo["eos_type"] == "ceos":
