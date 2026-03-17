@@ -6,6 +6,8 @@ lab_list:
     description: "Layer 2 Leaf-Spine Lab (l2ls)"
   l3ls-bgp:
     description: "Layer 3 Leaf-Spine Lab with BGP (l3ls-bgp)"
+  l3evpn:
+    description: "Layer 3 Leaf-Spine Lab with EVPN VXLAN"
 
 labconfiglets:
   reset:
