@@ -6,6 +6,8 @@ lab_list:
     description: "Layer 2 Leaf-Spine Lab (l2ls)"
   l3ls-bgp:
     description: "Layer 3 Leaf-Spine Lab with BGP (l3ls-bgp)"
+  l3ls-evpn:
+    description: "Layer 3 Leaf-Spine Lab with BGP and EVPN (l3ls-evpn)"
 
 labconfiglets:
   reset:
@@ -111,18 +113,16 @@ labconfiglets:
     member-leaf-3e:
       - "BASE_member-leaf-3e"
       - "L3LS_BGP_member-leaf-3e"
-  l3evpn:
+  l3ls-evpn:
     router-1:
       - "BASE_router-1"
       - "L3EVPN_router-1"
-      - "DHCP-router1"
     router-2:
       - "BASE_router-2"
       - "L3EVPN_router-2"
     spine-1:
       - "BASE_spine-1"
       - "L3EVPN_spine-1"
-      - "DHCP-spine1"
     spine-2:
       - "BASE_spine-2"
       - "L3EVPN_spine-2"

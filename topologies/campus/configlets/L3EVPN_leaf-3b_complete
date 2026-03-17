@@ -1,7 +1,5 @@
 vlan internal order ascending range 1006 1199
 !
-ip dhcp relay information option
-!
 spanning-tree mode mstp
 no spanning-tree vlan-id 4093-4094
 spanning-tree mst 0 priority 4096
@@ -32,7 +30,7 @@ vlan 4094
 vrf instance campus
 !
 interface Port-Channel47
-   description MLAG_PEER_leaf-3b_Po47
+   description MLAG_PEER_leaf-3a_Po47
    no shutdown
    switchport
    switchport mode trunk
@@ -64,48 +62,48 @@ interface Port-Channel531
    mlag 531
 !
 interface Ethernet47
-   description MLAG_PEER_leaf-3b_Ethernet47
+   description MLAG_PEER_leaf-3a_Ethernet47
    no shutdown
    channel-group 47 mode active
 !
 interface Ethernet48
-   description MLAG_PEER_leaf-3b_Ethernet48
+   description MLAG_PEER_leaf-3a_Ethernet48
    no shutdown
    channel-group 47 mode active
 !
 interface Ethernet49
-   description P2P_LINK_TO_SPINE-1_Ethernet5
+   description P2P_LINK_TO_SPINE-1_Ethernet6
    no shutdown
    mtu 1500
    no switchport
-   ip address 10.0.0.21/31
+   ip address 10.0.0.25/31
 !
 interface Ethernet50
-   description P2P_LINK_TO_SPINE-2_Ethernet5
+   description P2P_LINK_TO_SPINE-2_Ethernet6
    no shutdown
    mtu 1500
    no switchport
-   ip address 10.0.0.23/31
+   ip address 10.0.0.27/31
 !
 interface Ethernet51
-   description MEMBER-LEAF-3C_Ethernet49
+   description MEMBER-LEAF-3C_Ethernet50
    no shutdown
    channel-group 51 mode active
 !
 interface Ethernet52
-   description MEMBER-LEAF-3D_Ethernet49
+   description MEMBER-LEAF-3D_Ethernet50
    no shutdown
    channel-group 52 mode active
 !
 interface Ethernet53/1
-   description MEMBER-LEAF-3E_Ethernet49
+   description MEMBER-LEAF-3E_Ethernet50
    no shutdown
    channel-group 531 mode active
 !
 interface Loopback0
    description EVPN_Overlay_Peering
    no shutdown
-   ip address 10.255.0.8/32
+   ip address 10.255.0.9/32
 !
 interface Loopback1
    description VTEP_VXLAN_Tunnel_Source
@@ -116,8 +114,7 @@ interface Vlan10
    description Inband Management
    no shutdown
    mtu 1500
-   ip address 10.10.10.2/24
-   ip attached-host route export 19
+   ip address 10.10.10.3/24
    ip virtual-router address 10.10.10.1
 !
 interface Vlan310
@@ -152,17 +149,17 @@ interface Vlan4093
    description MLAG_PEER_L3_PEERING
    no shutdown
    mtu 1500
-   ip address 10.255.2.10/31
+   ip address 10.255.2.11/31
 !
 interface Vlan4094
    description MLAG_PEER
    no shutdown
    mtu 1500
    no autostate
-   ip address 10.255.255.10/31
+   ip address 10.255.255.11/31
 !
 interface Vxlan1
-   description leaf-3a_VTEP
+   description leaf-3b_VTEP
    vxlan source-interface Loopback1
    vxlan virtual-router encapsulation mac-address mlag-system-id
    vxlan udp-port 4789
@@ -187,7 +184,7 @@ ip prefix-list PL-LOOPBACKS-EVPN-OVERLAY
 mlag configuration
    domain-id Access_Pod3_AGG
    local-interface Vlan4094
-   peer-address 10.255.255.11
+   peer-address 10.255.255.10
    peer-link Port-Channel47
    reload-delay mlag 300
    reload-delay non-mlag 330
@@ -206,7 +203,7 @@ router bfd
    multihop interval 300 min-rx 300 multiplier 3
 !
 router bgp 65113
-   router-id 10.255.0.8
+   router-id 10.255.0.9
    maximum-paths 4 ecmp 4
    no bgp default ipv4-unicast
    neighbor EVPN-OVERLAY-PEERS peer group
@@ -221,18 +218,18 @@ router bgp 65113
    neighbor MLAG-IPv4-UNDERLAY-PEER peer group
    neighbor MLAG-IPv4-UNDERLAY-PEER remote-as 65113
    neighbor MLAG-IPv4-UNDERLAY-PEER next-hop-self
-   neighbor MLAG-IPv4-UNDERLAY-PEER description leaf-3b
+   neighbor MLAG-IPv4-UNDERLAY-PEER description leaf-3a
    neighbor MLAG-IPv4-UNDERLAY-PEER send-community
    neighbor MLAG-IPv4-UNDERLAY-PEER maximum-routes 12000
    neighbor MLAG-IPv4-UNDERLAY-PEER route-map RM-MLAG-PEER-IN in
-   neighbor 10.0.0.20 peer group IPv4-UNDERLAY-PEERS
-   neighbor 10.0.0.20 remote-as 65001
-   neighbor 10.0.0.20 description spine-1_Ethernet5
-   neighbor 10.0.0.22 peer group IPv4-UNDERLAY-PEERS
-   neighbor 10.0.0.22 remote-as 65001
-   neighbor 10.0.0.22 description spine-2_Ethernet5
-   neighbor 10.255.2.11 peer group MLAG-IPv4-UNDERLAY-PEER
-   neighbor 10.255.2.11 description leaf-3b
+   neighbor 10.0.0.24 peer group IPv4-UNDERLAY-PEERS
+   neighbor 10.0.0.24 remote-as 65001
+   neighbor 10.0.0.24 description spine-1_Ethernet6
+   neighbor 10.0.0.26 peer group IPv4-UNDERLAY-PEERS
+   neighbor 10.0.0.26 remote-as 65001
+   neighbor 10.0.0.26 description spine-2_Ethernet6
+   neighbor 10.255.2.10 peer group MLAG-IPv4-UNDERLAY-PEER
+   neighbor 10.255.2.10 description leaf-3a
    neighbor 172.16.1.1 peer group EVPN-OVERLAY-PEERS
    neighbor 172.16.1.1 remote-as 65001
    neighbor 172.16.1.1 description spine-1
@@ -242,22 +239,22 @@ router bgp 65113
    redistribute connected route-map RM-CONN-2-BGP
    !
    vlan 310
-      rd 10.255.0.8:10310
+      rd 10.255.0.9:10310
       route-target both 10310:10310
       redistribute learned
    !
    vlan 320
-      rd 10.255.0.8:10320
+      rd 10.255.0.9:10320
       route-target both 10320:10320
       redistribute learned
    !
    vlan 330
-      rd 10.255.0.8:10330
+      rd 10.255.0.9:10330
       route-target both 10330:10330
       redistribute learned
    !
    vlan 410
-      rd 10.255.0.8:10410
+      rd 10.255.0.9:10410
       route-target both 10410:10410
       redistribute learned
    !
@@ -269,7 +266,7 @@ router bgp 65113
       neighbor MLAG-IPv4-UNDERLAY-PEER activate
    !
    vrf campus
-      rd 10.255.0.8:5001
+      rd 10.255.0.9:5001
       route-target import evpn 5001:5001
       route-target export evpn 5001:5001
       redistribute connected
