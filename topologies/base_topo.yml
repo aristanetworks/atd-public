@@ -348,12 +348,12 @@ topologies:
               cpu: 22
               ram: 48
               disk: 60
-              image: atd-alma-routing-c2025-3-1-ceos-20251230-eos
+              image: atd-alma-routing-c2025-3-1-ceos-20260323-eos
             resources_cvp:
               cpu: 36
               ram: 60
               disk: 300
-              image: atd-alma-routing-c2025-3-1-ceos-20251230-cvp
+              image: atd-alma-routing-c2025-3-1-ceos-20260323-cvp
             branch: v2025.3-20260304
             orderable: true
             eos:
