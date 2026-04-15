@@ -198,6 +198,26 @@ topologies:
               - 4.34.3M
               - 4.33.4M
               - 4.32.2F
+          2025.3.2:
+            schema: 2
+            resources_eos:
+              cpu: 22
+              ram: 48
+              disk: 60
+              image: atd-alma-dual-datacenter-c2025-3-2-ceos-20260327-eos
+            resources_cvp:
+              cpu: 36
+              ram: 60
+              disk: 300
+              image: atd-alma-dual-datacenter-c2025-3-2-ceos-20260327-cvp
+            branch: v2025.3-20260327
+            orderable: true
+            eos:
+              - 4.35.1F
+              - 4.35.0F
+              - 4.34.3M
+              - 4.33.4M
+              - 4.32.2F
     desc: 'Dual Data Center ATD Topology'
     name: 'Dual Data Center'
     title: 'Dual Data Center Lab'
@@ -402,6 +422,26 @@ topologies:
               - 4.34.2F
               - 4.33.4M
               - 4.32.2F
+          2025.3.2:
+            schema: 2
+            resources_eos:
+              cpu: 22
+              ram: 48
+              disk: 60
+              image: atd-alma-routing-c2025-3-2-ceos-20260403-eos
+            resources_cvp:
+              cpu: 36
+              ram: 60
+              disk: 300
+              image: atd-alma-routing-c2025-3-2-ceos-20260403-cvp
+            branch: v2025.3-20260327
+            orderable: true
+            eos:
+              - 4.35.0F
+              - 4.34.3M
+              - 4.34.2F
+              - 4.33.4M
+              - 4.32.2F
       veos:
         cpu: 44
         ram: 90
@@ -586,6 +626,28 @@ topologies:
               ram: 60
               disk: 300
               image: atd-alma-campus-c2025-3-1-ceos-20260320-cvp
+            branch: v2025.3-20260327
+            orderable: true
+            eos:
+              - 4.35.1F
+              - 4.35.0F
+              - 4.34.3M
+              - 4.34.2F
+              - 4.34.1F
+              - 4.33.4M
+              - 4.32.2F
+          2025.3.2:
+            schema: 2
+            resources_eos:
+              cpu: 22
+              ram: 48
+              disk: 60
+              image: atd-alma-campus-c2025-3-2-ceos-20260414-eos
+            resources_cvp:
+              cpu: 36
+              ram: 60
+              disk: 300
+              image: atd-alma-campus-c2025-3-2-ceos-20260414-cvp
             branch: v2025.3-20260327
             orderable: true
             eos:
