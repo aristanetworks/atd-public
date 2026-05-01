@@ -122,6 +122,26 @@ topologies:
               - 4.34.3M
               - 4.33.4M
               - 4.32.2F
+          2026.1.0:
+            schema: 2
+            resources_eos:
+              cpu: 22
+              ram: 48
+              disk: 60
+              image: atd-alma-dual-datacenter-c2026-1-0-ceos-20260430-eos
+            resources_cvp:
+              cpu: 36
+              ram: 60
+              disk: 300
+              image: atd-alma-dual-datacenter-c2026-1-0-ceos-20260430-cvp
+            branch: nested/2026.1
+            orderable: true
+            eos:
+              - 4.36.0.1F
+              - 4.35.4M
+              - 4.35.1F
+              - 4.35.0F
+              - 4.34.3M
     prod:
       ceos:
         cpu: 40
@@ -363,6 +383,26 @@ topologies:
               - 4.34.2F
               - 4.33.4M
               - 4.32.2F
+          2026.1.0:
+            schema: 2
+            resources_eos:
+              cpu: 22
+              ram: 48
+              disk: 60
+              image: atd-alma-routing-c2026-1-0-ceos-20260430-eos
+            resources_cvp:
+              cpu: 36
+              ram: 60
+              disk: 300
+              image: atd-alma-routing-c2026-1-0-ceos-20260430-cvp
+            branch: nested/2026.1
+            orderable: true
+            eos:
+              - 4.36.0.1F
+              - 4.35.4M
+              - 4.35.1F
+              - 4.35.0F
+              - 4.34.3M
     prod:
       ceos:
         cpu: 24
@@ -574,6 +614,26 @@ topologies:
               - 4.34.1F
               - 4.33.4M
               - 4.32.2F
+          2026.1.0:
+            schema: 2
+            resources_eos:
+              cpu: 22
+              ram: 48
+              disk: 60
+              image: atd-alma-campus-c2026-1-0-ceos-20260501-eos
+            resources_cvp:
+              cpu: 36
+              ram: 60
+              disk: 300
+              image: atd-alma-campus-c2026-1-0-ceos-20260501-cvp
+            branch: nested/2026.1
+            orderable: true
+            eos:
+              - 4.36.0.1F
+              - 4.35.4M
+              - 4.35.1F
+              - 4.35.0F
+              - 4.34.3M
 
     prod:
       ceos:
