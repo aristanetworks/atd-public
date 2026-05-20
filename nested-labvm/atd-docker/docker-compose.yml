@@ -97,17 +97,17 @@ services:
       - /home/arista/arista-dir/apps/uilanding:/opt/modules:ro
     networks:
       - atd_nginx
-  labguides:
-    container_name: atd-labguides
-    image: us.gcr.io/beta-atds/atddocker_labguides:2.1.1
-    restart: always
-    environment:
-      - PYTHONUNBUFFERED=1
-    volumes:
-      - /etc/atd:/etc/atd:ro
-      - /opt/atd:/opt/atd:ro
-    networks:
-      - atd_nginx
+  # labguides:
+  #   container_name: atd-labguides
+  #   image: us.gcr.io/beta-atds/atddocker_labguides:2.1.1
+  #   restart: always
+  #   environment:
+  #     - PYTHONUNBUFFERED=1
+  #   volumes:
+  #     - /etc/atd:/etc/atd:ro
+  #     - /opt/atd:/opt/atd:ro
+  #   networks:
+  #     - atd_nginx
   freerad:
     container_name: atd-freeradius
     image: us.gcr.io/beta-atds/atddocker_freerad:2.0
@@ -281,7 +281,7 @@ services:
 networks:
   atd_nginx:
 volumes:
-  atd_labguides:
+  # atd_labguides:
   atd_http:
   jenkins_home:
   cvp_dir:
