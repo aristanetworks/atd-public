@@ -1,137 +1,67 @@
 #!/usr/bin/env python
 
-from rcvpapi.rcvpapi import *
-import syslog, time
-from ruamel.yaml import YAML
-import paramiko
-from scp import SCPClient
 import os
+import syslog
 import urllib3
+
+from cvprac.cvp_client import CvpClient
+import paramiko
+from ruamel.yaml import YAML
+from scp import SCPClient
+
+from .cv_studio import CVStudiosClient
+
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
 DEBUG = False
 
-# Cmds to copy bare startup to running
 cp_run_start = """enable
 copy running-config startup-config
 """
 cp_start_run = """enable
 copy startup-config running-config
 """
-# Cmds to grab ZTP status
 ztp_cmds = """enable
 show zerotouch | grep ZeroTouch
 """
-# Cancel ZTP
 ztp_cancel = """enable
 zerotouch cancel
 """
 
-# Create class to handle configuring the topology
+
 class ConfigureTopology():
 
-    def __init__(self,selected_menu,selected_lab,public_module_flag=False):
+    def __init__(self, selected_menu, selected_lab, public_module_flag=False):
         self.selected_menu = selected_menu
         self.selected_lab = selected_lab
         self.public_module_flag = public_module_flag
         self.deploy_lab()
 
-    def connect_to_cvp(self,access_info):
-        # Adding new connection to CVP via rcvpapi
-        cvp_clnt = ''
-        cvpUsername = access_info['login_info']['jump_host']['user']
-        cvpPassword = access_info['login_info']['jump_host']['pw']
-        while not cvp_clnt:
-            try:
-                cvp_clnt = CVPCON(access_info['nodes']['cvp'][0]['ip'], cvpUsername, cvpPassword)
-                self.send_to_syslog("OK","Connected to CVP at {0}".format(access_info['nodes']['cvp'][0]['ip']))
-                return cvp_clnt
-            except:
-                self.send_to_syslog("ERROR", "CVP is currently unavailable....Retrying in 30 seconds.")
-                time.sleep(30)
-
-    def remove_configlets(self,device,lab_configlets):
-        """
-        Removes all configlets except the ones defined as 'base'
-        Define base configlets that are to be untouched
-        """
-        base_configlets = ['ATD-INFRA']
-        
-        configlets_to_remove = []
-        configlets_to_remain = base_configlets
-
-        configlets = self.client.getConfigletsByNetElementId(device)
-        for configlet in configlets['configletList']:
-            if configlet['name'] in base_configlets:
-                configlets_to_remain.append(configlet['name'])
-                self.send_to_syslog("INFO", "Configlet {0} is part of the base on {1} - Configlet will remain.".format(configlet['name'], device.hostname))
-            elif configlet['name'] not in lab_configlets:
-                configlets_to_remove.append(configlet['name'])
-                self.send_to_syslog("INFO", "Configlet {0} not part of lab configlets on {1} - Removing from device".format(configlet['name'], device.hostname))
-            else:
-                pass
-        if len(configlets_to_remain) > 0:
-            device.removeConfiglets(self.client,configlets_to_remove)
-            self.client.addDeviceConfiglets(device, configlets_to_remain)
-            self.client.applyConfiglets(device)
-        else:
-            pass
-
-    def get_device_info(self):
-        eos_devices = []
-        for dev in self.client.inventory:
-            tmp_eos = self.client.inventory[dev]
-            tmp_eos_sw = CVPSWITCH(dev, tmp_eos['ipAddress'])
-            tmp_eos_sw.updateDevice(self.client)
-            eos_devices.append(tmp_eos_sw)
-        return(eos_devices)
-
-
-    def update_topology(self,configlets):
-        # Get all the devices in CVP
-        devices = self.get_device_info()
-        # Loop through all devices
-        
-        for device in devices:
-            # Get the actual name of the device
-            device_name = device.hostname
-            
-            # Define a list of configlets built off of the lab yaml file
-            lab_configlets = []
-            for configlet_name in configlets[self.selected_lab][device_name]:
-                lab_configlets.append(configlet_name)
-
-            # Remove unnecessary configlets
-            self.remove_configlets(device, lab_configlets)
-
-            # Apply the configlets to the device
-            self.client.addDeviceConfiglets(device, lab_configlets)
-            self.client.applyConfiglets(device)
-
-        # Perform a single Save Topology by default
-        self.client.saveTopology()
-
-    def send_to_syslog(self,mstat,mtype):
-        """
-        Function to send output from service file to Syslog
-        Parameters:
-        mstat = Message Status, ie "OK", "INFO" (required)
-        mtype = Message to be sent/displayed (required)
-        """
+    def send_to_syslog(self, mstat, mtype):
         mmes = "\t" + mtype
-        syslog.syslog("[{0}] {1}".format(mstat,mmes.expandtabs(7 - len(mstat))))
+        syslog.syslog("[{0}] {1}".format(mstat, mmes.expandtabs(7 - len(mstat))))
         if DEBUG:
-            print("[{0}] {1}".format(mstat,mmes.expandtabs(7 - len(mstat))))
+            print("[{0}] {1}".format(mstat, mmes.expandtabs(7 - len(mstat))))
 
+    def _hostname_to_device_id(self, host, user, pw):
+        """Resolve hostname -> CVP device identifier (serial, fallback systemMacAddress)
+        used by Static Configuration Studio 'device:<id>' queries.
+        """
+        clnt = CvpClient()
+        clnt.api.request_timeout = 180
+        clnt.connect([host], user, pw)
+        mapping = {}
+        for dev in clnt.api.get_inventory():
+            dev_id = dev.get('serialNumber') or dev.get('systemMacAddress')
+            if dev_id:
+                mapping[dev['hostname']] = dev_id
+        return mapping
 
-    def push_bare_config(self,veos_host, veos_ip, veos_config):
-        """
-        Pushes a bare config to the EOS device.
-        """
-        # Write config to tmp file
+    def push_bare_config(self, veos_host, veos_ip, veos_config):
+        """Pushes a bare config to the EOS device (no-CVP path)."""
         device_config = "/tmp/" + veos_host + ".cfg"
-        with open(device_config,"a") as tmp_config:
+        with open(device_config, "a") as tmp_config:
             tmp_config.write(veos_config)
 
         DEVREBOOT = False
@@ -139,7 +69,7 @@ class ConfigureTopology():
         veos_ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         veos_ssh.connect(hostname=veos_ip, username="root", password="", port="50001")
         scp = SCPClient(veos_ssh.get_transport())
-        scp.put(device_config,remote_path="/mnt/flash/startup-config")
+        scp.put(device_config, remote_path="/mnt/flash/startup-config")
         scp.close()
         veos_ssh.exec_command('FastCli -c "{0}"'.format(cp_start_run))
         veos_ssh.exec_command('FastCli -c "{0}"'.format(cp_run_start))
@@ -148,115 +78,62 @@ class ConfigureTopology():
         if 'Active' in ztp_out[0]:
             DEVREBOOT = True
             self.send_to_syslog("INFO", "Rebooting {0}...This will take a couple minutes to come back up".format(veos_host))
-            #veos_ssh.exec_command("/sbin/reboot -f > /dev/null 2>&1 &")
             veos_ssh.exec_command('FastCli -c "{0}"'.format(ztp_cancel))
         veos_ssh.close()
-        return(DEVREBOOT)
-
-    def check_for_tasks(self):
-        self.client.getRecentTasks(50)
-        tasks_in_progress = False
-        for task in self.client.tasks['recent']:
-            if 'in progress' in task['workOrderUserDefinedStatus'].lower():
-                self.send_to_syslog('INFO', 'Task Check: Task {0} status: {1}'.format(task['workOrderId'],task['workOrderUserDefinedStatus']))
-                tasks_in_progress = True
-            else:
-                pass
-        
-        if tasks_in_progress:
-            self.send_to_syslog('INFO', 'Tasks in progress. Waiting for 10 seconds.')
-            print('Tasks are currently executing. Waiting 10 seconds...')
-            time.sleep(10)
-            self.check_for_tasks()
-
-        else:
-            return
-
+        return DEVREBOOT
 
     def deploy_lab(self):
+        with open('/home/arista/menus/{0}'.format(self.selected_menu + '.yaml')) as lab_file:
+            lab_info = YAML().load(lab_file)
 
+        additional_commands = lab_info['lab_list'][self.selected_lab].get('additional_commands', [])
 
-        # Check for additional commands in lab yaml file
-        lab_file = open('/home/arista/menus/{0}'.format(self.selected_menu + '.yaml'))
-        lab_info = YAML().load(lab_file)
-        lab_file.close()
+        with open('/etc/atd/ACCESS_INFO.yaml') as f:
+            access_info = YAML().load(f)
 
-        additional_commands = []
-        if 'additional_commands' in lab_info['lab_list'][self.selected_lab]:
-            additional_commands = lab_info['lab_list'][self.selected_lab]['additional_commands']
-
-        # Get access info for the topology
-        f = open('/etc/atd/ACCESS_INFO.yaml')
-        access_info = YAML().load(f)
-        f.close()
-
-        # List of configlets
         lab_configlets = lab_info['labconfiglets']
 
-        # Send message that deployment is beginning
-        self.send_to_syslog('INFO', 'Starting deployment for {0} - {1} lab...'.format(self.selected_menu,self.selected_lab))
-        print("Starting deployment for {0} - {1} lab...".format(self.selected_menu,self.selected_lab))
+        self.send_to_syslog('INFO', 'Starting deployment for {0} - {1} lab...'.format(self.selected_menu, self.selected_lab))
+        print("Starting deployment for {0} - {1} lab...".format(self.selected_menu, self.selected_lab))
 
-        # Check if the topo has CVP, and if it does, create CVP connection
         if 'cvp' in access_info['nodes']:
-            self.client = self.connect_to_cvp(access_info)
+            cvp_host = access_info['nodes']['cvp'][0]['ip']
+            cvp_user = access_info['login_info']['jump_host']['user']
+            cvp_pw = access_info['login_info']['jump_host']['pw']
 
-            self.check_for_tasks()
+            hostname_to_dev = self._hostname_to_device_id(cvp_host, cvp_user, cvp_pw)
 
-            # Config the topology
-            self.update_topology(lab_configlets)
-            # Wait time for CVP to generate tasks
-            time.sleep(15)
-            
-            # Execute all tasks generated from reset_devices()
-            print('Gathering task information...')
-            self.send_to_syslog("INFO", 'Gathering task information')
-            self.client.getAllTasks("pending")
-            tasks_to_check = self.client.tasks['pending']
-            self.send_to_syslog('INFO', 'Relevant tasks: {0}'.format([task['workOrderId'] for task in tasks_to_check]))
-            self.client.execAllTasks("pending")
-            self.send_to_syslog("OK", 'Completed setting devices to topology: {}'.format(self.selected_lab))
+            dry_run = os.environ.get('ATD_CV_DRY_RUN', '').lower() in ('1', 'true', 'yes')
+            cv = CVStudiosClient(host=cvp_host, username=cvp_user, password=cvp_pw, dry_run=dry_run)
+            try:
+                cv.connect()
+                self.send_to_syslog("OK", "Connected to CVP at {0}".format(cvp_host))
+                cv.apply_lab(
+                    per_device_configlets=lab_configlets[self.selected_lab],
+                    hostname_to_device_id=hostname_to_dev,
+                    label="{0}/{1}".format(self.selected_menu, self.selected_lab),
+                )
+                self.send_to_syslog("OK", 'Completed setting devices to topology: {}'.format(self.selected_lab))
 
-            print('Waiting on change control to finish executing...')
-            all_tasks_completed = False
-            while not all_tasks_completed:
-                tasks_running = []
-                for task in tasks_to_check:
-                    if self.client.getTaskStatus(task['workOrderId'])['taskStatus'] != 'Completed':
-                        tasks_running.append(task)
-                    elif self.client.getTaskStatus(task['workOrderId'])['taskStatus'] == 'Failed':
-                        print('Task {0} failed.'.format(task['workOrderId']))
-                    else:
-                        pass
-                
-                if len(tasks_running) == 0:
+                if additional_commands:
+                    print('Running additional setup commands...')
+                    self.send_to_syslog('INFO', 'Running additional setup commands.')
+                    for command in additional_commands:
+                        os.system(command)
 
-                    # Execute additional commands in linux if needed
-                    if len(additional_commands) > 0:
-                        print('Running additional setup commands...')
-                        self.send_to_syslog('INFO', 'Running additional setup commands.')
-
-                        for command in additional_commands:
-                            os.system(command)
-
-                    if not self.public_module_flag:
-                        input('Lab Setup Completed. Please press Enter to continue...')
-                        self.send_to_syslog("OK", 'Lab Setup Completed.')
-                    else:
-                        self.send_to_syslog("OK", 'Lab Setup Completed.')
-                    all_tasks_completed = True
-                else:
-                    pass
+                if not self.public_module_flag:
+                    input('Lab Setup Completed. Please press Enter to continue...')
+                self.send_to_syslog("OK", 'Lab Setup Completed.')
+            finally:
+                cv.close()
         else:
-            # Open up defaults
-            f = open('/home/arista/cvp/cvp_info.yaml')
-            cvp_info = YAML().load(f)
-            f.close()
+            with open('/home/arista/cvp/cvp_info.yaml') as f:
+                cvp_info = YAML().load(f)
 
             cvp_configs = cvp_info["cvp_info"]["configlets"]
             infra_configs = cvp_configs["containers"]["Tenant"]
 
-            self.send_to_syslog("INFO","Setting up {0} lab".format(self.selected_lab))
+            self.send_to_syslog("INFO", "Setting up {0} lab".format(self.selected_lab))
             for node in access_info["nodes"]["veos"]:
                 device_config = ""
                 hostname = node["hostname"]
@@ -264,19 +141,15 @@ class ConfigureTopology():
                 configs = base_configs[hostname] + infra_configs + lab_configlets[self.selected_lab][hostname]
                 configs = list(dict.fromkeys(configs))
                 for config in configs:
-                    with open('/opt/atd/topologies/{0}/configlets/{1}'.format(access_info['topology'], config), 'r') as configlet:
-                        device_config += configlet.read()
-                self.send_to_syslog("INFO","Pushing {0} config for {1} on IP {2} with configlets: {3}".format(self.selected_lab,hostname,node["ip"],configs))
+                    with open('/opt/atd/topologies/{0}/configlets/{1}'.format(access_info['topology'], config), 'r') as configlet_f:
+                        device_config += configlet_f.read()
+                self.send_to_syslog("INFO", "Pushing {0} config for {1} on IP {2} with configlets: {3}".format(self.selected_lab, hostname, node["ip"], configs))
                 self.push_bare_config(hostname, node["ip"], device_config)
 
-                # Execute additional commands in linux if needed
-                if len(additional_commands) > 0:
+                if additional_commands:
                     print('Running additional setup commands...')
-
                     for command in additional_commands:
                         os.system(command)
             if not self.public_module_flag:
                 input('Lab Setup Completed. Please press Enter to continue...')
-                self.send_to_syslog("OK", 'Lab Setup Completed.')
-            else:
-                self.send_to_syslog("OK", 'Lab Setup Completed.')
+            self.send_to_syslog("OK", 'Lab Setup Completed.')

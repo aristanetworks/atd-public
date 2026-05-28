@@ -1,4 +1,4 @@
-FROM python:3.11
+FROM python:3.12
 
 RUN adduser --disabled-password --home /home/arista --gecos "" arista
 
@@ -10,13 +10,14 @@ RUN curl -SsL https://github.com/boxboat/fixuid/releases/download/v0.5/fixuid-0.
 
 RUN pip install rcvpapi \
     ruamel.yaml \
-    cvprac paramiko scp
+    cvprac cloudvision paramiko scp
 
 RUN mkdir -p /home/arista/CVP_DATA
 
 WORKDIR /home/arista
 
 COPY src/cvpUpdater.py .
+COPY src/cv_studio.py .
 
 RUN chown -R arista:arista .
 

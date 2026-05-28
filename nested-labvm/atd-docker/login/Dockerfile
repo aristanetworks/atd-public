@@ -1,4 +1,4 @@
-FROM python:3.11
+FROM python:3.12
 
 RUN adduser --disabled-password --shell /usr/local/bin/login.py --home /home/arista --gecos "" arista
 
@@ -11,7 +11,7 @@ RUN curl -SsL https://github.com/boxboat/fixuid/releases/download/v0.5/fixuid-0.
 RUN apt update && \
     apt install -y openssh-server vim sudo screen libvirt-clients libvirt-dev
 
-RUN pip install ruamel.yaml rcvpapi cvprac pyaml paramiko scp urllib3 libvirt-python jsonrpclib
+RUN pip install ruamel.yaml cvprac cloudvision pyaml paramiko scp urllib3 libvirt-python jsonrpclib
 
 RUN mkdir /var/run/sshd
 
@@ -44,8 +44,6 @@ COPY src/ConfigureTopology/* /usr/local/bin/ConfigureTopology/
 RUN echo 'login.py' >> .profile
 
 RUN chown -R arista:arista .
-
-RUN pip install --upgrade rcvpapi
 
 COPY src/entrypoint.sh /usr/local/bin/
 

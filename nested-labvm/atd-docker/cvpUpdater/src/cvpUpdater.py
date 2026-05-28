@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+import os
+
 from cvprac.cvp_client import CvpClient
 from ruamel.yaml import YAML
 from rcvpapi.rcvpapi import *
@@ -11,6 +13,8 @@ from sys import exit
 from time import sleep
 import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
+from cv_studio import CVStudiosClient
 
 topo_file = '/etc/atd/ACCESS_INFO.yaml'
 CVP_CONFIG_FIILE = path.expanduser('~/CVP_DATA/.cvpState.txt')
@@ -133,44 +137,26 @@ def checkConnected(cvp_clnt, NODES, eos_type):
     return(True)
 
 
-def importConfiglets(cvp_clnt, cfg_dir):
+def loadStaticConfiglets(cfg_dir):
     """
-    Function to import configlets into CVP
-    Parameters:
-    cvp_clnt = CVP rCVPAPI client (object)
-    cfg_dir = Configlet directory (str)
+    Load all static configlet files from cfg_dir into a {name: body} dict
+    for push into the Static Configuration Studio via CVStudiosClient.
+    .py (configlet builders) and .form files are no longer supported under
+    Studios and are skipped.
     """
-    if path.exists(cfg_dir):
-        pS("OK","Configlet directory exists")
-        pro_cfglt = listdir(cfg_dir)
-        for tmp_cfg in pro_cfglt:
-            if '.py' in tmp_cfg:
-                pS("INFO",f"Adding/Updating {tmp_cfg} configlet builder.")
-                cbname = tmp_cfg.replace('.py','')
-                # Check for a form file
-                if tmp_cfg.replace('.py', '.form') in pro_cfglt:
-                    pS("INFO", f"Form data found for {cbname}")
-                    with open(cfg_dir + tmp_cfg.replace('.py', '.form'), 'r') as configletData:
-                        configletForm = configletData.read()
-                    configletFormData = YAML().load(configletForm)['FormList']
-                else:
-                    configletFormData = []
-                with open(cfg_dir + tmp_cfg,'r') as cfglt:
-                    cfg_data = cfglt.read()
-                res = cvp_clnt.impConfiglet('builder', cbname, cfg_data, configletFormData)
-                pS("OK", f"{res[0]} Configlet Builder: {cbname}")
-            elif '.form' in tmp_cfg:
-                # Ignoring .form files here
-                pass
-            else:
-                pS("INFO",f"Adding/Updating {tmp_cfg} static configlet.")
-                with open(cfg_dir + tmp_cfg,'r') as cfglt:
-                    cvp_clnt.impConfiglet('static',tmp_cfg,cfglt.read())
-        pS("INFO", "All configlets imported")
-        return(True)
-    else:
-        pS("INFO","No Configlet directory found")
-        return(False)
+    if not path.exists(cfg_dir):
+        pS("INFO", "No Configlet directory found")
+        return {}
+    pS("OK", "Configlet directory exists")
+    out = {}
+    for name in listdir(cfg_dir):
+        if name.endswith(".py") or name.endswith(".form"):
+            continue
+        with open(cfg_dir + name, "r") as f:
+            out[name] = f.read()
+        pS("INFO", f"Loaded static configlet: {name}")
+    pS("INFO", f"Loaded {len(out)} static configlets from {cfg_dir}")
+    return out
 
 
 
@@ -244,10 +230,17 @@ def main():
     # ==========================================
     # Add Check for configlet import only
     # ==========================================
+    cvpUsername = atd_yaml['login_info']['jump_host']['user']
+    cvpPassword = atd_yaml['login_info']['jump_host']['pw']
+    cvp_host = atd_yaml['nodes']['cvp'][0]['ip']
+    dry_run = os.environ.get('ATD_CV_DRY_RUN', '').lower() in ('1', 'true', 'yes')
+    cv_studios = CVStudiosClient(host=cvp_host, username=cvpUsername, password=cvpPassword, dry_run=dry_run)
+    cv_studios.connect()
+
     if 'cvp_mode' in atd_yaml:
         if atd_yaml['cvp_mode'] == 'configlets':
             pS("INFO", "CVP Configlet import only mode")
-            importConfiglets(cvp_clnt, configlet_location)
+            cv_studios.push_configlets(loadStaticConfiglets(configlet_location), label='atd-bootstrap-configlets-only')
             pS("OK", "Import of configlets complete.")
             return(True)
         elif atd_yaml['cvp_mode'] == 'bare':
@@ -268,12 +261,15 @@ def main():
         checkConnected(cvprac_clnt, NODES, atd_yaml['eos_type'])
 
         # ==========================================
-        # Add configlets into CVP
+        # Push static configlets into CVP via Static Configuration Studio
         # ==========================================
-        importConfiglets(cvp_clnt, configlet_location)
+        configlet_bodies = loadStaticConfiglets(configlet_location)
+        if configlet_bodies:
+            cv_studios.push_configlets(configlet_bodies, label='atd-bootstrap')
+            pS("OK", "Configlets pushed via Static Configuration Studio")
 
         # ==========================================
-        # Add new containers into CVP
+        # Add new containers into CVP (inventory hierarchy — unchanged from legacy)
         # ==========================================
         for p_cnt in cvp_yaml['cvp_info']['containers'].keys():
             if p_cnt not in cvp_clnt.containers.keys():
@@ -288,108 +284,50 @@ def main():
                         _results = cvprac_clnt.api.search_topology("Tenant")
                         containers["Tenant"] = _results['containerList'][0]
                     cvprac_clnt.api.add_container(p_cnt, "Tenant", containers["Tenant"]['key'])
-                pS("OK",f"Added {p_cnt} container")
+                pS("OK", f"Added {p_cnt} container")
             else:
                 pS("INFO", f"{p_cnt} container already exists....skipping")
             if p_cnt not in containers:
                 _results = cvprac_clnt.api.search_topology(p_cnt)
                 containers[p_cnt] = _results['containerList'][0]
-            # Check and add configlets to containers
-            if p_cnt in cvp_yaml['cvp_info']['configlets']['containers'].keys():
-                cfgs_cnt_ignore = []
-                proposed_cfgs = []
-                proposed_cnt_cfgs = cvp_yaml['cvp_info']['configlets']['containers'][p_cnt]
-                # Get Proposed configlet info
-                for _cfg in proposed_cnt_cfgs:
-                    _cfg_result = cvprac_clnt.api.get_configlet_by_name(_cfg)
-                    proposed_cfgs.append(_cfg_result)
-                container_info = cvprac_clnt.api.get_container_by_name(p_cnt)
-                p_cnt_id = container_info['key']
-                existing_cnt_cfgs = cvprac_clnt.api.get_configlets_by_container_id(p_cnt_id)
-                if existing_cnt_cfgs:
-                    for ex_cfg in existing_cnt_cfgs['configletList']:
-                        if ex_cfg['name'] not in proposed_cnt_cfgs:
-                            cfgs_cnt_ignore.append({
-                                'name': ex_cfg['name'],
-                                'key': ex_cfg['key']
-                            })
-                pS("OK",f"Configlets found for {p_cnt} container.  Will apply")
-                cvprac_clnt.api.remove_configlets_from_container("cvpUpdater", container_info, cfgs_cnt_ignore)
-                cvprac_clnt.api.apply_configlets_to_container("cvpUpdater", container_info, proposed_cfgs)
-                pending_tasks = cvprac_clnt.api.get_tasks_by_status("pending")
-                # Execute all Tasks
-                for _task in pending_tasks:
-                    cvprac_clnt.api.execute_task(_task['workOrderId'])
-                # Perform check to see if there are any existing tasks to be executed
-                if pending_tasks:
-                    pS("OK", "All pending tasks are executing")
-                    for task in pending_tasks:
-                        task_id = task['workOrderId']
-                        task_info = cvprac_clnt.api.get_task_by_id(task_id)
-                        task_status = task_info['workOrderUserDefinedStatus']
-                        while task_status != "Completed":
-                            task_info = cvprac_clnt.api.get_task_by_id(task_id)
-                            task_status = task_info['workOrderUserDefinedStatus']
-                            if task_status == 'Failed':
-                                pS("iBerg", f"Task ID: {task_id} Status: {task_status}")
-                                break
-                            elif task_status == 'Completed':
-                                pS("INFO", f"Task ID: {task_id} Status: {task_status}")
-                                break
-                            else:
-                                pS("INFO", f"Task ID: {task_id} Status: {task_status}, Waiting 10 seconds...")
-                                sleep(10)
-                else:
-                    pS("INFO", "No pending tasks found")
+
         # ==========================================
-        # Add devices to Inventory/Provisioning
+        # Deploy devices into their containers (no configlets yet — Studio handles those)
         # ==========================================
-        # Perform initial check and do a group add of devices
-        tmp_eos_add = []
+        per_device_configlets = {}
+        hostname_to_device_id = {}
         cvp_inventory = cvprac_clnt.api.get_inventory()
+        container_cfg_map = cvp_yaml['cvp_info']['configlets'].get('containers', {})
+        netelement_cfg_map = cvp_yaml['cvp_info']['configlets'].get('netelements', {})
         for _dev in cvp_inventory:
-            _tmp_eos_cfg = []
-            _device_name = ''
-            # Check if this is a cEOS ZTP setup
             if atd_yaml['eos_type'] == "ceos":
                 pS("INFO", f"Adding {_dev['hostname']} with s/n {_dev['serialNumber']}")
                 _device_name = _dev['serialNumber']
-                _target_cnt = eos_cnt_map[_device_name]
             else:
                 pS("INFO", f"Adding {_dev['hostname']}")
                 _device_name = eos_dev_map[_dev['ipAddress']]
-                _target_cnt = eos_cnt_map[_device_name]
-            if _device_name in cvp_yaml['cvp_info']['configlets']['netelements']:
-                for _cfg in cvp_yaml['cvp_info']['configlets']['netelements'][_device_name]:
-                    _tmp_eos_cfg.append(cvprac_clnt.api.get_configlet_by_name(_cfg))
-            cvprac_clnt.api.deploy_device(_dev, _target_cnt, configlets=_tmp_eos_cfg)
-        pending_tasks = cvprac_clnt.api.get_tasks_by_status("pending")
-        for _task in pending_tasks:
-            cvprac_clnt.api.execute_task(_task['workOrderId'])
-        pS("OK", "All pending tasks are executing")
-        for task in pending_tasks:
-            task_id = task['workOrderId']
-            task_info = cvprac_clnt.api.get_task_by_id(task_id)
-            task_status = task_info['workOrderUserDefinedStatus']
-            previous_status = ''
-            if task_status == "Completed":
-                pS("OK", f"Task ID: {task_id} Status: {task_status}")
-            while task_status != "Completed":
-                task_info = cvprac_clnt.api.get_task_by_id(task_id)
-                task_status = task_info['workOrderUserDefinedStatus']
-                if task_status:
-                    if task_status == 'Failed':
-                        pS("iBerg", f"Task ID: {task_id} Status: {task_status}")
-                        break
-                    elif task_status == 'Completed':
-                        pS("OK", f"Task ID: {task_id} Status: {task_status}")
-                    else:
-                        pS("INFO", f"Task ID: {task_id} Status: {task_status}, Waiting 10 seconds...")
-                        previous_status = task_status
-                        sleep(10)
-                else:
-                    pS("INFO", f"Task ID: {task_id} Status: {previous_status}, Waiting 10 seconds...")
-                    sleep(10)
+            _target_cnt = eos_cnt_map[_device_name]
+            cvprac_clnt.api.deploy_device(_dev, _target_cnt)
+
+            # Build per-device bootstrap configlet list: container configlets + per-device configlets.
+            container_cfgs = container_cfg_map.get(_target_cnt, []) or []
+            device_cfgs = netelement_cfg_map.get(_device_name, []) or []
+            combined = list(dict.fromkeys(list(container_cfgs) + list(device_cfgs)))
+            per_device_configlets[_dev['hostname']] = combined
+            dev_id = _dev.get('serialNumber') or _dev.get('systemMacAddress')
+            if dev_id:
+                hostname_to_device_id[_dev['hostname']] = dev_id
+
+        # ==========================================
+        # Apply per-device ConfigletAssignments via Static Configuration Studio
+        # ==========================================
+        if per_device_configlets:
+            cv_studios.apply_lab(
+                per_device_configlets=per_device_configlets,
+                hostname_to_device_id=hostname_to_device_id,
+                label='bootstrap',
+            )
+            pS("OK", "Bootstrap ConfigletAssignments applied via Static Configuration Studio")
 
         # ==========================================
         # Creating Snapshots
@@ -406,11 +344,11 @@ def main():
                         pS("OK",f"Created {p_snap['name']} Snapshot")
                     else:
                         pS("OK",f"Snapshot {p_snap['name']} already exists")
-        # Logout and close session to CVP
-        cvp_clnt.execLogout()
-        pS("OK","Logged out of CVP")
+        # Close the Studios client (session times out on its own; rcvpapi session is left alone).
+        cv_studios.close()
+        pS("OK", "Closed Static Configuration Studio session")
     else:
-        pS("ERROR","Couldn't connect to CVP")
+        pS("ERROR", "Couldn't connect to CVP")
 
 if __name__ == '__main__':
     # Open Syslog
