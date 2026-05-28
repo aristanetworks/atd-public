@@ -626,7 +626,7 @@ topologies:
               ram: 60
               disk: 300
               image: atd-alma-campus-c2026-1-0-ceos-20260501-cvp
-            branch: nested/2026.1
+            branch: netprov_to_scs
             orderable: true
             eos:
               - 4.36.0.1F
