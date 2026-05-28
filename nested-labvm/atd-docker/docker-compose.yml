@@ -42,6 +42,11 @@ services:
       - atd_nginx
     environment:
       - PYTHONUNBUFFERED=1
+      # Uncomment to dry-run the Static Configuration Studio path when a user picks
+      # a lab from the TTY menu: creates the workspace, writes per-device
+      # ConfigletAssignments, builds, then stops. No SUBMIT, no change control,
+      # no device config applied. Inspect under Provisioning > Workspaces in CVP.
+      # - ATD_CV_DRY_RUN=1
     volumes:
       - /etc/atd:/etc/atd:rw
       - /opt/atd/topologies:/opt/atd/topologies:ro
@@ -57,6 +62,11 @@ services:
     restart: always
     environment:
       - PYTHONUNBUFFERED=1
+      # Uncomment to dry-run the Static Configuration Studio path on first boot:
+      # pushes configlets and per-device ConfigletAssignments into a workspace
+      # and builds, then stops. No SUBMIT, no change control, no device config
+      # applied. Inspect under Provisioning > Workspaces in CVP.
+      # - ATD_CV_DRY_RUN=1
     volumes:
       - /etc/atd:/etc/atd:ro
       - /home/arista/arista-dir/cvp:/home/arista/cvp:ro
