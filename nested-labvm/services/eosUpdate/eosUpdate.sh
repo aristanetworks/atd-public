@@ -20,20 +20,12 @@ then
 fi
 
 # Fetch updates from the remote repo
-git fetch
+git fetch origin
 
-# Perform check on the current branch/tag to the targeted
-if [[ "$(git branch --show-current)" = "$BRANCH" ]]
-then
-    echo "Target branch matches current branch"
-    git checkout .
-    git pull
-else
-    echo "Branches do not match, updating to branch $BRANCH"
-    git checkout .
-    git checkout $BRANCH
-    git pull
-fi
+# Reset local state to match the remote branch exactly
+git checkout .
+git checkout $BRANCH
+git reset --hard origin/$BRANCH
 
 # Update eosUpdate script
 
