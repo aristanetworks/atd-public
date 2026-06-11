@@ -499,7 +499,7 @@ topologies:
               disk: 300
               image: atd-alma-routing-c2024-3-1-veos-4-33-0f-20250116-cvp
             branch: v2024.3-20251110
-            orderable: true
+            orderable: false
             eos:
               - 4.32.1F
           2025.1.1:
@@ -515,7 +515,7 @@ topologies:
               disk: 300
               image: atd-alma-routing-c2025-1-1-veos-4-34-0f-20250619-cvp
             branch: v2025.1-20251110
-            orderable: true
+            orderable: false
             eos:
               - 4.32.1F
               - 4.33.0F
