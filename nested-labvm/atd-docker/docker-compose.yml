@@ -10,18 +10,33 @@ services:
       - /etc/atd:/etc/atd:ro
     networks:
       - atd_nginx
-  conftopo:
-    container_name: atd-conftopo
-    image: us.gcr.io/beta-atds/atddocker_conftopo:0.2
+  cvp-proxy:
+    container_name: atd-cvp-proxy
+    image: us.gcr.io/beta-atds/atddocker_cvp-proxy:0.1
     restart: always
     networks:
       - atd_nginx
     environment:
       - PYTHONUNBUFFERED=1
     volumes:
-      - /etc/atd:/etc/atd:rw
-      - /opt/atd/topologies:/opt/atd/topologies:ro
-      - /home/arista/arista-dir:/home/arista:rw
+      - /etc/atd:/etc/atd:ro
+  cvp-manager:
+    container_name: atd-cvp-manager
+    image: us.gcr.io/beta-atds/atddocker_cvp-manager:0.1
+    user: $ArID:$ArGD
+    restart: always
+    depends_on:
+      - cvp-proxy
+    environment:
+      - PYTHONUNBUFFERED=1
+      - CVP_PROXY_URL=http://atd-cvp-proxy:8880
+    networks:
+      - atd_nginx
+    volumes:
+      - /etc/atd:/etc/atd:ro
+      - /home/arista/arista-dir/cvp:/home/arista/cvp:ro
+      - /opt/atd:/opt/atd:ro
+      - cvp_dir:/home/arista/CVP_DATA:rw
   alertapi:
     container_name: atd-alert
     image: us.gcr.io/beta-atds/atddocker_alertapi:1.0.1
@@ -38,10 +53,13 @@ services:
     user: $ArID:$ArGD
     restart: always
     hostname: devbox
+    depends_on:
+      - cvp-proxy
     networks:
       - atd_nginx
     environment:
       - PYTHONUNBUFFERED=1
+      - CVP_PROXY_URL=http://atd-cvp-proxy:8880
     volumes:
       - /etc/atd:/etc/atd:rw
       - /opt/atd/topologies:/opt/atd/topologies:ro
@@ -50,30 +68,7 @@ services:
       - /opt/sftp/uploads:/opt/sftp:ro
       - /var/run/libvirt/libvirt-sock:/var/run/libvirt/libvirt-sock:ro
       - /var/lib/libvirt/images/veos:/var/lib/libvirt/images/veos:rw
-  cvpupdater:
-    container_name: atd-cvpupdater
-    image: us.gcr.io/beta-atds/atddocker_cvpupdater:2.4.2
-    user: $ArID:$ArGD
-    restart: always
-    environment:
-      - PYTHONUNBUFFERED=1
-    volumes:
-      - /etc/atd:/etc/atd:ro
-      - /home/arista/arista-dir/cvp:/home/arista/cvp:ro
-      - /opt/atd:/opt/atd:ro
-      - cvp_dir:/home/arista/CVP_DATA:rw
-  gitconfigletsync:
-    container_name: atd-gitconfigletsync
-    image: us.gcr.io/beta-atds/atddocker_gitconfigletsync:2.4.2
-    user: $ArID:$ArGD
-    restart: always
-    environment:
-      - PYTHONUNBUFFERED=1
-    volumes:
-      - /etc/atd:/etc/atd:ro
-      - /home/arista/arista-dir/cvp:/home/arista/cvp:ro
-      - /opt/atd:/opt/atd:ro
-      - cvp_dir:/home/arista/CVP_DATA:rw
+  # cvpupdater and gitconfigletsync replaced by cvp-proxy + cvp-manager
   kvmbuilder:
     container_name: atd-kvmbuilder
     image: us.gcr.io/beta-atds/atddocker_kvmbuilder:2.5.1
@@ -89,8 +84,11 @@ services:
     container_name: atd-uilanding
     image: us.gcr.io/beta-atds/atddocker_uilanding:2.3.1
     restart: always
+    depends_on:
+      - cvp-proxy
     environment:
       - PYTHONUNBUFFERED=1
+      - CVP_PROXY_URL=http://atd-cvp-proxy:8880
     volumes:
       - /etc/atd:/etc/atd:ro
       - /opt/atd:/opt/atd:ro

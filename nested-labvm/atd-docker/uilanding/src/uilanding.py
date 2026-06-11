@@ -3,7 +3,7 @@
 from datetime import datetime, timedelta
 from ruamel.yaml import YAML
 from time import sleep
-from base64 import b64decode, b64encode
+from base64 import b64decode
 import tornado.ioloop
 import tornado.web
 import tornado.websocket
@@ -11,15 +11,15 @@ import requests
 import secrets
 import hashlib, uuid
 import json
+import os
 import urllib3
 import traceback
 
-# Disable any TLS Warnings when getting instance Uptime
 urllib3.disable_warnings()
 
 
 PORT = 80
-TOPO_API = 'atd-conftopo'
+CVP_PROXY = os.environ.get('CVP_PROXY_URL', 'http://atd-cvp-proxy:8880')
 BASE_PATH = '/opt/topo/html/'
 ATD_ACCESS_PATH = '/etc/atd/ACCESS_INFO.yaml'
 
@@ -29,7 +29,6 @@ MODULE_FILE = ArBASE_PATH + 'modules.yaml'
 with open(MODULE_FILE, 'r') as mf:
     MOD_YAML = YAML().load(mf)
 
-# Add in check to make sure arista password has been updated
 while True:
     host_yaml = YAML().load(open(ATD_ACCESS_PATH, 'r'))
     if host_yaml['login_info']['jump_host']['pw'] == 'REPLACE_PWD':
@@ -43,7 +42,6 @@ accounts = {
     hashlib.sha512((host_yaml['login_info']['jump_host']['user'] + salt).encode('utf-8')).hexdigest(): hashlib.sha512((host_yaml['login_info']['jump_host']['pw'] + salt).encode('utf-8')).hexdigest()
 }
 
-# Get the topo project and update function
 PROJECT = host_yaml['project']
 FUNC_STATE = 'https://us-central1-{0}.cloudfunctions.net/atd-state'.format(PROJECT)
 NAME = host_yaml['name']
@@ -54,24 +52,23 @@ if 'schema' in host_yaml:
 else:
     SCHEMA = 1
 
-# Add a check for the title parameter for legacy deployment catches
 if 'title' in host_yaml:
     TITLE = host_yaml['title']
 else:
     TITLE = 'Test Drive Lab'
 
-# Set Project Enviroment
 if "alpha" in PROJECT or "beta" in PROJECT:
     ATD_ENV = "dev"
 else:
     ATD_ENV = "prod"
-    
-# Check and try to grab CVP Version for Info File
+
 try:
     CVP_VER = host_yaml['cvp']
     CVP_VER = CVP_VER.rsplit(".", 1)[0]
 except:
     CVP_VER = "latest"
+
+
 class BaseHandler(tornado.web.RequestHandler):
     def get_current_user(self):
         return(self.get_secure_cookie("user"))
@@ -157,26 +154,23 @@ class topoRequestHandler(BaseHandler):
                 labguides = labguides,
                 topo_cvp = _topo_cvp
             )
-    
+
 class topoDataHandler(tornado.websocket.WebSocketHandler):
     def open(self):
         self.cvp_status = ''
         self.cvp_tasks = ''
         self.uptime = {}
         pS("New backend websocket connection")
-    
-    def on_message(self,message):
+
+    def on_message(self, message):
         pS("Message Received")
         try:
             recv = json.loads(message)
-            cdata = recv['data']
             if recv['type'] == 'hello':
-                # Grab current uptime of topology
                 self.uptime = getUptime('192.168.0.1')
-                # Get initial topology status
-                self.cvp_status = getAPI("cvp_status")
-                if self.cvp_status['status'] == 'UP':
-                    self.cvp_tasks = getAPI("cvp_tasks")
+                self.cvp_status = get_cvp_status()
+                if self.cvp_status.get('status') == 'UP':
+                    self.cvp_tasks = get_cvp_tasks()
                 else:
                     self.cvp_tasks = ''
                 self.sendData('status')
@@ -186,16 +180,16 @@ class topoDataHandler(tornado.websocket.WebSocketHandler):
 
     def schedule_update(self):
         try:
-            self.timeout = tornado.ioloop.IOLoop.instance().add_timeout(timedelta(seconds=30),self.keepalive)
+            self.timeout = tornado.ioloop.IOLoop.instance().add_timeout(timedelta(seconds=30), self.keepalive)
         except:
             pS("Error with timeout call")
-        
+
     def keepalive(self):
         try:
             self.uptime = getUptime('192.168.0.1')
-            self.cvp_status = getAPI("cvp_status")
-            if self.cvp_status['status'] == 'UP':
-                self.cvp_tasks = getAPI("cvp_tasks")
+            self.cvp_status = get_cvp_status()
+            if self.cvp_status.get('status') == 'UP':
+                self.cvp_tasks = get_cvp_tasks()
             else:
                 self.cvp_tasks = ''
             self.sendData('status')
@@ -210,10 +204,10 @@ class topoDataHandler(tornado.websocket.WebSocketHandler):
             pS('connection closed')
         except:
             pS('connection already closed')
- 
+
     def check_origin(self, origin):
         return(True)
-    
+
     def sendData(self, mtype):
         instance_data = {
             'cvp': self.cvp_status,
@@ -230,23 +224,21 @@ class topoDataHandler(tornado.websocket.WebSocketHandler):
 # Utility Functions
 # ===============================
 
-def getAPI(action):
+def get_cvp_status():
     try:
-        _action = encodeID(action)
-        response = requests.get(f"http://{TOPO_API}:50010/td-api/conftopo?action={_action}")
-        return(json.loads(response.text))
-    except Exception as e:
-        pS("Error calling backend API.")
-        traceback.print_exc()
-        print("Message: {err}".format(
-            err = str(e),
-        ))
+        resp = requests.get(f"{CVP_PROXY}/api/v1/cvp/status", timeout=5)
+        return resp.json()
+    except Exception:
+        return {"status": "DOWN", "version": ""}
 
 
-def encodeID(tmp_data):
-    tmp_str = json.dumps(tmp_data).encode()
-    enc_str = b64encode(tmp_str).decode()
-    return(enc_str)
+def get_cvp_tasks():
+    try:
+        resp = requests.get(f"{CVP_PROXY}/api/v1/changecontrols", timeout=5)
+        return resp.json()
+    except Exception:
+        return {}
+
 
 def decodeID(tmp_data):
     decrypt_str = b64decode(tmp_data.encode()).decode()
@@ -254,16 +246,9 @@ def decodeID(tmp_data):
     return(tmp_json)
 
 def genCookieSecret():
-    """
-    Function to generate a cookie_secret
-    """
     return(secrets.token_hex(16))
 
 def getUptime(instanceIP):
-    """
-    Function to get response from instances /uptime.
-    instanceIP = IP/URL for instance (str)
-    """
     try:
         response = requests.get(f"https://{instanceIP}/uptime", verify=False, timeout=0.5)
         instance_data = json.loads(response.text)
@@ -272,8 +257,7 @@ def getUptime(instanceIP):
         else:
             instance_data['runtime'] = 8
         return(instance_data)
-    except Exception as e:
-        traceback.print_exc()
+    except Exception:
         return({
             'boottime': 0,
             'uptime': 0,
@@ -282,9 +266,6 @@ def getUptime(instanceIP):
         })
 
 def getEventStatus(instanceName, instanceZone):
-    """
-    Function to get the currnet status of an instance.
-    """
     try:
         if SCHEMA == 2:
             response = requests.get(FUNC_STATE + "?function=state&instance={0}-eos&zone={1}".format(instanceName, instanceZone))
@@ -303,9 +284,6 @@ def getEventStatus(instanceName, instanceZone):
 
 
 def pS(mtype):
-    """
-    Function to send output from service file to Syslog
-    """
     cur_dt = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     mmes = "\t" + mtype
     print("[{0}] {1}".format(cur_dt, mmes.expandtabs(7 - len(cur_dt))))
@@ -317,9 +295,9 @@ if __name__ == "__main__":
         'login_url': "/login"
     }
     app = tornado.web.Application([
-        (r'/js/(.*)', tornado.web.StaticFileHandler, {'path': BASE_PATH +  "js/"}),
-        (r'/css/(.*)', tornado.web.StaticFileHandler, {'path': BASE_PATH +  "css/"}),
-        (r'/images/(.*)', tornado.web.StaticFileHandler, {'path': BASE_PATH +  "images/"}),
+        (r'/js/(.*)', tornado.web.StaticFileHandler, {'path': BASE_PATH + "js/"}),
+        (r'/css/(.*)', tornado.web.StaticFileHandler, {'path': BASE_PATH + "css/"}),
+        (r'/images/(.*)', tornado.web.StaticFileHandler, {'path': BASE_PATH + "images/"}),
         (r'/topo/(.*)', tornado.web.StaticFileHandler, {'path': ArBASE_PATH}),
         (r'/', topoRequestHandler),
         (r'/td-ws', topoDataHandler),
