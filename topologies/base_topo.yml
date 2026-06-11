@@ -135,7 +135,7 @@ topologies:
               disk: 300
               image: atd-alma-dual-datacenter-c2026-1-0-ceos-20260430-cvp
             branch: nested/2026.1
-            orderable: true
+            orderable: false
             eos:
               - 4.36.0.1F
               - 4.35.4M
@@ -396,7 +396,7 @@ topologies:
               disk: 300
               image: atd-alma-routing-c2026-1-0-ceos-20260430-cvp
             branch: nested/2026.1
-            orderable: true
+            orderable: false
             eos:
               - 4.36.0.1F
               - 4.35.4M
@@ -627,7 +627,7 @@ topologies:
               disk: 300
               image: atd-alma-campus-c2026-1-0-ceos-20260501-cvp
             branch: netprov_to_scs
-            orderable: true
+            orderable: false
             eos:
               - 4.36.0.1F
               - 4.35.4M
@@ -647,7 +647,7 @@ topologies:
               disk: 300
               image: atd-alma-campus-c2026-1-0-ceos-20260501-cvp
             branch: nested/2026.1
-            orderable: true
+            orderable: false
             eos:
               - 4.36.0.1F
               - 4.35.4M
