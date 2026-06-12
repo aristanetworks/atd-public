@@ -142,6 +142,22 @@ topologies:
               - 4.35.1F
               - 4.35.0F
               - 4.34.3M
+          2026.1.1-robdev:
+            schema: 2
+            resources_eos:
+              cpu: 22
+              ram: 48
+              disk: 60
+              image: atd-alma-dual-datacenter-c2026-1-1-ceos-20260611-eos
+            resources_cvp:
+              cpu: 36
+              ram: 60
+              disk: 300
+              image: atd-alma-dual-datacenter-c2026-1-1-ceos-20260611-cvp
+            branch: cv-proxy-refactor
+            orderable: true
+            eos:
+              - 4.36.0.1F
     prod:
       ceos:
         cpu: 40
