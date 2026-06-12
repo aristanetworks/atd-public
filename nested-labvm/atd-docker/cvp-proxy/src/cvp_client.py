@@ -313,6 +313,27 @@ class CVPClient:
             except Exception as e:
                 logger.error("Failed to execute CC %s: %s", cc_id, e)
 
+    @staticmethod
+    def _count_cc_stages(cc) -> dict[str, int]:
+        counts = {"not_started": 0, "running": 0, "completed": 0, "total": 0}
+        change = getattr(cc, "change", None)
+        if not change:
+            return counts
+        stages = getattr(change, "stages", None)
+        if not stages:
+            return counts
+        stage_items = stages.items() if hasattr(stages, "items") else []
+        for _sid, stage in stage_items:
+            counts["total"] += 1
+            st = str(getattr(stage, "status", "")).lower()
+            if "running" in st:
+                counts["running"] += 1
+            elif "completed" in st:
+                counts["completed"] += 1
+            else:
+                counts["not_started"] += 1
+        return counts
+
     async def _execute_single_cc(self, cc_id: str):
         stub = changecontrol.ChangeControlServiceStub(self.channel)
         get_req = changecontrol.ChangeControlRequest(
@@ -332,6 +353,7 @@ class CVPClient:
             )
         )
         await approve_stub.set(approve_req, timeout=RPC_TIMEOUT)
+        logger.info("CC %s approved", cc_id)
 
         config_stub = changecontrol.ChangeControlConfigServiceStub(self.channel)
         start_req = changecontrol.ChangeControlConfigSetRequest(
@@ -341,18 +363,32 @@ class CVPClient:
             )
         )
         await config_stub.set(start_req, timeout=RPC_TIMEOUT)
+        logger.info("CC %s started", cc_id)
 
         stream_req = changecontrol.ChangeControlStreamRequest(
             partial_eq_filter=[
                 changecontrol.ChangeControl(key=changecontrol.ChangeControlKey(id=cc_id))
             ]
         )
+        prev_counts = {}
         async for res in stub.subscribe(stream_req, timeout=CC_TIMEOUT):
-            status = res.value.status if hasattr(res.value, 'status') else None
-            if status and status == changecontrol.ChangeControlStatus.CHANGE_CONTROL_STATUS_COMPLETED:
+            cc = res.value
+            status = getattr(cc, "status", None)
+            counts = self._count_cc_stages(cc)
+            if counts != prev_counts and counts["total"] > 0:
+                logger.info(
+                    "CC %s progress: %d/%d stages complete, %d running, %d not started",
+                    cc_id, counts["completed"], counts["total"],
+                    counts["running"], counts["not_started"],
+                )
+                prev_counts = counts
+            status_str = str(status).lower()
+            if "completed" in status_str:
+                logger.info("CC %s completed successfully", cc_id)
                 return
-            if status and status == changecontrol.ChangeControlStatus.CHANGE_CONTROL_STATUS_ERROR:
-                raise RuntimeError(f"Change control {cc_id} failed")
+            if "error" in status_str:
+                err = _val(getattr(cc, "error", None), "")
+                raise RuntimeError(f"Change control {cc_id} failed: {err}")
 
     # ------------------------------------------------------------------
     # Configlets
@@ -743,14 +779,14 @@ class CVPClient:
                 elif "running" in status_val:
                     status_str = "running"
                     result["running"] += 1
-                elif "pending" in status_val:
+                elif "pending" in status_val or "not_started" in status_val:
                     status_str = "pending"
                     result["pending"] += 1
 
-                result["recent"].append({
-                    "id": cc_id,
-                    "status": status_str,
-                })
+                entry = {"id": cc_id, "status": status_str}
+                if status_str in ("running", "pending"):
+                    entry["stages"] = self._count_cc_stages(cc)
+                result["recent"].append(entry)
             result["recent"] = result["recent"][-20:]
         except Exception as e:
             logger.warning("Failed to get change controls: %s", e)

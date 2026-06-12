@@ -3,6 +3,7 @@
 import os
 import time
 import logging
+import threading
 from os import path, listdir
 
 from ruamel.yaml import YAML
@@ -178,6 +179,39 @@ def read_configlets(configlet_dir):
     return configlets
 
 
+def poll_cc_progress(proxy, stop_event, interval=10):
+    time.sleep(interval)
+    while not stop_event.is_set():
+        try:
+            ccs = proxy.get_change_controls()
+            running = ccs.get("running", 0)
+            pending = ccs.get("pending", 0)
+            if running > 0 or pending > 0:
+                msg = f"Change controls: {running} running, {pending} pending, {ccs.get('completed', 0)} completed"
+                for cc in ccs.get("recent", []):
+                    if cc.get("status") == "running" and cc.get("stages"):
+                        s = cc["stages"]
+                        msg += f" | CC {cc['id'][:12]}: {s.get('completed',0)}/{s.get('total',0)} stages"
+                pS("INFO", msg)
+        except Exception:
+            pass
+        stop_event.wait(interval)
+
+
+def apply_assignments_with_progress(proxy, device_assignments, global_configlets):
+    stop_event = threading.Event()
+    poller = threading.Thread(
+        target=poll_cc_progress, args=(proxy, stop_event), daemon=True,
+    )
+    poller.start()
+    try:
+        result = proxy.apply_assignments(device_assignments, global_configlets)
+    finally:
+        stop_event.set()
+        poller.join(timeout=5)
+    return result
+
+
 def build_initial_assignments(cvp_yaml):
     device_assignments = {}
     global_configlets = []
@@ -295,7 +329,7 @@ def main():
             device_assignments, global_configlets = build_initial_assignments(cvp_yaml)
             if device_assignments:
                 pS("INFO", f"Applying initial assignments for {len(device_assignments)} devices, global configlets: {global_configlets}")
-                result = proxy.apply_assignments(device_assignments, global_configlets)
+                result = apply_assignments_with_progress(proxy, device_assignments, global_configlets)
                 pS("OK", f"Assignments applied: {result.get('devices_updated', 0)} devices")
 
         os.makedirs(path.dirname(CVP_CONFIG_FILE), exist_ok=True)

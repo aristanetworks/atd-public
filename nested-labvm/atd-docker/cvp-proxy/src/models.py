@@ -114,6 +114,7 @@ class ChangeControlInfo(BaseModel):
     id: str
     status: str
     created: str = ""
+    stages: dict[str, int] = {}
 
 
 class ChangeControlsResponse(BaseModel):

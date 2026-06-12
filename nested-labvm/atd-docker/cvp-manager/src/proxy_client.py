@@ -115,6 +115,11 @@ class ProxyClient:
         resp.raise_for_status()
         return resp.json()
 
+    def get_change_controls(self) -> dict:
+        resp = self.session.get(self._url("/changecontrols"), timeout=10)
+        resp.raise_for_status()
+        return resp.json()
+
     def init_tags(self, hostnames: list = None, hostname_map: dict = None) -> dict:
         payload = {}
         if hostnames:

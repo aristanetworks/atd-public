@@ -235,7 +235,29 @@ def get_cvp_status():
 def get_cvp_tasks():
     try:
         resp = requests.get(f"{CVP_PROXY}/api/v1/changecontrols", timeout=5)
-        return resp.json()
+        data = resp.json()
+        tasks = {}
+        running = data.get('running', 0)
+        pending = data.get('pending', 0)
+        if running > 0:
+            tasks['Executing'] = running
+        if pending > 0:
+            tasks['Pending'] = pending
+        for cc in data.get('recent', []):
+            if cc.get('status') == 'running' and cc.get('stages'):
+                s = cc['stages']
+                total = s.get('total', 0)
+                completed = s.get('completed', 0)
+                running_stages = s.get('running', 0)
+                if total > 0:
+                    tasks[f'Executing ({completed}/{total} stages done, {running_stages} running)'] = running
+                break
+        total_active = running + pending
+        return {
+            'status': 'Active' if total_active > 0 else 'Complete',
+            'total': total_active,
+            'tasks': tasks,
+        }
     except Exception:
         return {}
 
