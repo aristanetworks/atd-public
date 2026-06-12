@@ -636,14 +636,14 @@ topologies:
               cpu: 22
               ram: 48
               disk: 60
-              image: atd-alma-campus-c2026-1-0-ceos-20260501-eos
+              image: atd-alma-campus-c2026-1-1-ceos-20260612-eos
             resources_cvp:
               cpu: 36
               ram: 60
               disk: 300
-              image: atd-alma-campus-c2026-1-0-ceos-20260501-cvp
+              image: atd-alma-campus-c2026-1-1-ceos-20260612-cvp
             branch: netprov_to_scs
-            orderable: false
+            orderable: true
             eos:
               - 4.36.0.1F
               - 4.35.4M
@@ -656,14 +656,14 @@ topologies:
               cpu: 22
               ram: 48
               disk: 60
-              image: atd-alma-campus-c2026-1-0-ceos-20260501-eos
+              image: atd-alma-campus-c2026-1-1-ceos-20260612-eos
             resources_cvp:
               cpu: 36
               ram: 60
               disk: 300
-              image: atd-alma-campus-c2026-1-0-ceos-20260501-cvp
+              image: atd-alma-campus-c2026-1-1-ceos-20260612-cvp
             branch: nested/2026.1
-            orderable: false
+            orderable: true
             eos:
               - 4.36.0.1F
               - 4.35.4M
