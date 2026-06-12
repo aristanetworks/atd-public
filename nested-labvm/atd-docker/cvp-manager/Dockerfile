@@ -1,5 +1,13 @@
 FROM python:3.13
 
+RUN adduser --disabled-password --home /home/arista --gecos "" arista
+
+RUN curl -SsL https://github.com/boxboat/fixuid/releases/download/v0.5/fixuid-0.5-linux-amd64.tar.gz | tar -C /usr/local/bin -xzf - && \
+    chown root:root /usr/local/bin/fixuid && \
+    chmod 4755 /usr/local/bin/fixuid && \
+    mkdir -p /etc/fixuid && \
+    printf "user: arista\ngroup: arista\npaths:\n   - /home/arista\n   - /home/arista/CVP_DATA\n" > /etc/fixuid/config.yml
+
 RUN pip install --upgrade pip && \
     pip install requests \
                ruamel.yaml \
@@ -7,14 +15,19 @@ RUN pip install --upgrade pip && \
                scp \
                pyyaml
 
-RUN adduser --disabled-password --gecos "" arista
+RUN mkdir -p /home/arista/CVP_DATA
 
 WORKDIR /home/arista
 
-COPY src/ .
+COPY src/cvp_manager.py .
+COPY src/proxy_client.py .
 
-RUN chmod +x entrypoint.sh
+COPY src/entrypoint.sh /usr/local/bin/
+
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
+RUN chown -R arista:arista .
 
 USER arista
 
-ENTRYPOINT ["/home/arista/entrypoint.sh"]
+CMD ["/usr/local/bin/entrypoint.sh"]

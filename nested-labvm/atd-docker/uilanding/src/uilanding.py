@@ -120,7 +120,7 @@ class topoRequestHandler(BaseHandler):
                 self.redirect('/login?auth={0}'.format(self.get_argument('auth')))
             else:
                 self.redirect('/login')
-            return()
+            return
         else:
             _topo_cvp = False
             if 'disabled_links' in host_yaml:

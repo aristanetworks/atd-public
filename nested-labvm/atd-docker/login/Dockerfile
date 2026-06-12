@@ -11,9 +11,9 @@ RUN curl -SsL https://github.com/boxboat/fixuid/releases/download/v0.5/fixuid-0.
 RUN apt update && \
     apt install -y openssh-server vim sudo screen libvirt-clients libvirt-dev
 
-RUN pip install ruamel.yaml rcvpapi cvprac pyaml paramiko scp urllib3 libvirt-python jsonrpclib
+RUN pip install ruamel.yaml pyaml paramiko scp urllib3 requests libvirt-python jsonrpclib
 
-RUN mkdir /var/run/sshd
+RUN mkdir -p /var/run/sshd
 
 RUN sed -i 's/#PubkeyAuthentication yes/PubkeyAuthentication yes/g' /etc/ssh/sshd_config
 
@@ -44,8 +44,6 @@ COPY src/ConfigureTopology/* /usr/local/bin/ConfigureTopology/
 RUN echo 'login.py' >> .profile
 
 RUN chown -R arista:arista .
-
-RUN pip install --upgrade rcvpapi
 
 COPY src/entrypoint.sh /usr/local/bin/
 

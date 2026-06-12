@@ -12,7 +12,7 @@ services:
       - atd_nginx
   cvp-proxy:
     container_name: atd-cvp-proxy
-    image: us.gcr.io/beta-atds/atddocker_cvp-proxy:0.1
+    image: us.gcr.io/beta-atds/atddocker_cvp-proxy:1.0.1
     restart: always
     networks:
       - atd_nginx
@@ -22,7 +22,7 @@ services:
       - /etc/atd:/etc/atd:ro
   cvp-manager:
     container_name: atd-cvp-manager
-    image: us.gcr.io/beta-atds/atddocker_cvp-manager:0.1
+    image: us.gcr.io/beta-atds/atddocker_cvp-manager:1.0.1
     user: $ArID:$ArGD
     restart: always
     depends_on:
@@ -82,7 +82,7 @@ services:
       - /home/atdadmin/KVM_scripts:/home/atdadmin/kvm:rw
   uilanding:
     container_name: atd-uilanding
-    image: us.gcr.io/beta-atds/atddocker_uilanding:2.4.0
+    image: us.gcr.io/beta-atds/atddocker_uilanding:2.4.1
     restart: always
     depends_on:
       - cvp-proxy
