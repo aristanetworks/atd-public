@@ -47,8 +47,8 @@ class CVPClient:
         try:
             token = self._login(host, username, password)
             self._token = token
-            self._cv_client = cv_client.AsyncCVClient(
-                host=host, port=443, token=token, insecure=True
+            self._cv_client = cv_client.AsyncCVClient.from_token(
+                token=token, host=host, port=443, insecure=True
             )
             self.channel = self._cv_client.__enter__()
             await self._probe()
