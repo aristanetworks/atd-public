@@ -1,23 +1,17 @@
 import asyncio
-import json
+import hashlib
 import ssl
 import uuid
 import logging
-from typing import Optional, AsyncIterator
+from typing import Optional
 
-import grpc
 import requests
 
 from cloudvision.api import client as cv_client
 from cloudvision.api.arista.configlet import v1 as configlet
 from cloudvision.api.arista.workspace import v1 as workspace
 from cloudvision.api.arista.inventory import v1 as inventory
-from cloudvision.api.arista.tag import v1 as tag_v1
-
-try:
-    from cloudvision.api.arista.tag import v2 as tag
-except ImportError:
-    tag = tag_v1
+from cloudvision.api.arista.tag import v2 as tag
 
 try:
     from cloudvision.api.arista.changecontrol import v1 as changecontrol
@@ -45,6 +39,7 @@ class CVPClient:
         self.cvp_version: Optional[str] = None
         self._host: Optional[str] = None
         self._token: Optional[str] = None
+        self._cv_client = None
 
     async def connect(self, host: str, username: str, password: str):
         self._host = host
@@ -52,17 +47,23 @@ class CVPClient:
         try:
             token = self._login(host, username, password)
             self._token = token
-            cert = ssl.get_server_certificate((host, 443)).encode()
-            call_creds = grpc.access_token_call_credentials(token)
-            channel_creds = grpc.ssl_channel_credentials(cert)
-            combined = grpc.composite_channel_credentials(channel_creds, call_creds)
-            self.channel = grpc.aio.secure_channel(f"{host}:443", combined)
+            self._cv_client = cv_client.AsyncCVClient(
+                host=host, port=443, token=token, insecure=True
+            )
+            self.channel = self._cv_client.__enter__()
             await self._probe()
             self.status = CvpStatus.READY
             logger.info("Connected to CVP at %s", host)
         except Exception as e:
             logger.warning("Failed to connect to CVP: %s", e)
             self.status = CvpStatus.WAITING
+            if self._cv_client:
+                try:
+                    self._cv_client.__exit__(None, None, None)
+                except Exception:
+                    pass
+                self._cv_client = None
+            self.channel = None
             raise
 
     def _login(self, host: str, username: str, password: str) -> str:
@@ -323,7 +324,6 @@ class CVPClient:
             name = cfg["name"]
             body = cfg["body"]
 
-            import hashlib
             new_digest = hashlib.sha256(body.encode()).hexdigest()
             if name in existing and existing[name] == new_digest:
                 counts["unchanged"] += 1
