@@ -85,11 +85,6 @@ class ProxyClient:
         resp.raise_for_status()
         return resp.json()
 
-    def init_tags(self) -> dict:
-        resp = self.session.post(self._url("/tags/init"), timeout=120)
-        resp.raise_for_status()
-        return resp.json()
-
     def create_enrollment_token(self, duration: str = "86400s") -> dict:
         resp = self.session.post(
             self._url("/enrollment/token"),

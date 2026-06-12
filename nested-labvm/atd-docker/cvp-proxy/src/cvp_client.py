@@ -320,9 +320,9 @@ class CVPClient:
         async for resp in stub.get_all(req, timeout=RPC_TIMEOUT):
             c = resp.value
             results.append({
-                "id": c.key.configlet_id.value if c.key and c.key.configlet_id else "",
-                "name": c.display_name.value if c.display_name else "",
-                "size": c.size.value if c.size else 0,
+                "id": _val(c.key.configlet_id) if c.key else "",
+                "name": _val(c.display_name),
+                "size": _val(c.size, 0),
             })
         return results
 
@@ -339,9 +339,9 @@ class CVPClient:
             resp = await stub.get_one(req, timeout=RPC_TIMEOUT)
             c = resp.value
             return {
-                "name": c.display_name.value if c.display_name else "",
-                "body": c.body.value if c.body else "",
-                "size": c.size.value if c.size else 0,
+                "name": _val(c.display_name),
+                "body": _val(c.body),
+                "size": _val(c.size, 0),
             }
         except grpc.aio.AioRpcError:
             return None
@@ -357,8 +357,8 @@ class CVPClient:
             req = configlet.ConfigletStreamRequest()
             async for resp in read_stub.get_all(req, timeout=RPC_TIMEOUT):
                 c = resp.value
-                cid = c.key.configlet_id.value if c.key and c.key.configlet_id else ""
-                digest = c.digest.value if c.digest else ""
+                cid = _val(c.key.configlet_id) if c.key else ""
+                digest = _val(c.digest)
                 existing[cid] = digest
         except Exception:
             pass
@@ -442,11 +442,11 @@ class CVPClient:
         results = {}
         async for resp in stub.get_all(req, timeout=RPC_TIMEOUT):
             a = resp.value
-            aid = a.key.configlet_assignment_id.value if a.key and a.key.configlet_assignment_id else ""
+            aid = _val(a.key.configlet_assignment_id) if a.key else ""
             results[aid] = {
-                "display_name": a.display_name.value if a.display_name else "",
+                "display_name": _val(a.display_name),
                 "configlet_ids": list(a.configlet_ids.values) if a.configlet_ids else [],
-                "query": a.query.value if a.query else "",
+                "query": _val(a.query),
             }
         return results
 
@@ -467,7 +467,7 @@ class CVPClient:
                 value=tag.TagConfig(
                     key=tag.TagKey(
                         workspace_id=ws_id,
-                        element_type=tag.ElementType.ELEMENT_TYPE_DEVICE,
+                        element_type=getattr(tag.ElementType, "ELEMENT_TYPE_DEVICE", getattr(tag.ElementType, "DEVICE", 1)),
                         label="hostname",
                         value=hostname,
                     )
@@ -479,7 +479,7 @@ class CVPClient:
                 value=tag.TagAssignmentConfig(
                     key=tag.TagAssignmentKey(
                         workspace_id=ws_id,
-                        element_type=tag.ElementType.ELEMENT_TYPE_DEVICE,
+                        element_type=getattr(tag.ElementType, "ELEMENT_TYPE_DEVICE", getattr(tag.ElementType, "DEVICE", 1)),
                         label="hostname",
                         value=hostname,
                         device_id=device_id,

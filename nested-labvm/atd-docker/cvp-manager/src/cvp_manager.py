@@ -217,7 +217,10 @@ def main():
 
     if is_first_boot:
         pS("OK", "Initial ATD topology boot")
-        distribute_enrollment_token(proxy, nodes, eos_type, username, password)
+        try:
+            distribute_enrollment_token(proxy, nodes, eos_type, username, password)
+        except Exception as e:
+            pS("WARNING", f"Failed to distribute enrollment tokens: {e}")
 
         pS("INFO", f"Waiting for {len(nodes)} devices to register...")
         proxy.wait_for_devices(len(nodes), timeout=600)
@@ -245,10 +248,6 @@ def main():
         pS("INFO", "No configlets to sync")
 
     if is_first_boot:
-        pS("INFO", "Initializing device tags...")
-        tag_result = proxy.init_tags()
-        pS("OK", f"Created {tag_result.get('tags_created', 0)} device tags")
-
         if path.exists(CVP_INFO_FILE):
             cvp_yaml = load_yaml(CVP_INFO_FILE)
             device_assignments, global_configlets = build_initial_assignments(cvp_yaml)
