@@ -223,6 +223,13 @@ def main():
         proxy.wait_for_devices(len(nodes), timeout=600)
         pS("OK", f"All {len(nodes)} devices registered")
 
+        pS("INFO", "Accepting devices into Studios...")
+        try:
+            accept_result = proxy.accept_inventory()
+            pS("OK", "Devices accepted into Studios")
+        except Exception as e:
+            pS("WARNING", f"Failed to accept devices into Studios: {e}")
+
     pS("INFO", "Reading configlets from disk...")
     configlets = read_configlets(configlet_dir)
     if configlets:

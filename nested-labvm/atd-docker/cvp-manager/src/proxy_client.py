@@ -103,3 +103,8 @@ class ProxyClient:
         resp = self.session.get(self._url("/enrollment/status"), timeout=30)
         resp.raise_for_status()
         return resp.json()
+
+    def accept_inventory(self) -> dict:
+        resp = self.session.post(self._url("/inventory/accept"), timeout=600)
+        resp.raise_for_status()
+        return resp.json()

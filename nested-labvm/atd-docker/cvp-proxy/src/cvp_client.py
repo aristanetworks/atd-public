@@ -24,7 +24,13 @@ try:
 except ImportError:
     studio_topology = None
 
-from fmp import wrappers_pb2 as fmp
+try:
+    from cloudvision.api.fmp import RepeatedString as _RepeatedString
+except ImportError:
+    try:
+        from fmp.wrappers import RepeatedString as _RepeatedString
+    except ImportError:
+        from fmp.wrappers_pb2 import RepeatedString as _RepeatedString
 
 from models import CvpStatus
 
@@ -69,13 +75,14 @@ class CVPClient:
         try:
             token = self._login(host, username, password)
             self._token = token
+            self.cvp_version = self._get_version(host, token)
             self._cv_client = cv_client.AsyncCVClient.from_token(
                 token=token, host=host, port=443, insecure=True
             )
             self.channel = self._cv_client.__enter__()
             await self._probe()
             self.status = CvpStatus.READY
-            logger.info("Connected to CVP at %s", host)
+            logger.info("Connected to CVP at %s (v%s)", host, self.cvp_version or "unknown")
         except Exception as e:
             logger.warning("Failed to connect to CVP: %s", e)
             self.status = CvpStatus.WAITING
@@ -97,6 +104,19 @@ class CVPClient:
         )
         resp.raise_for_status()
         return resp.json()["sessionId"]
+
+    def _get_version(self, host: str, token: str) -> Optional[str]:
+        try:
+            resp = requests.get(
+                f"https://{host}/cvpservice/cvpInfo/getCvpInfo.do",
+                cookies={"access_token": token},
+                verify=False,
+                timeout=10,
+            )
+            resp.raise_for_status()
+            return resp.json().get("version")
+        except Exception:
+            return None
 
     async def _probe(self):
         stub = inventory.DeviceServiceStub(self.channel)
@@ -391,9 +411,9 @@ class CVPClient:
                         configlet_assignment_id="atd-global",
                     ),
                     display_name="ATD Global Configlets",
-                    configlet_ids=fmp.RepeatedString(values=global_configlets),
-                    match_policy=configlet.MatchPolicy.MATCH_POLICY_MATCH_ALL,
-                    child_assignment_ids=fmp.RepeatedString(
+                    configlet_ids=_RepeatedString(values=global_configlets),
+                    match_policy=getattr(configlet.MatchPolicy, "MATCH_POLICY_MATCH_ALL", 1),
+                    child_assignment_ids=_RepeatedString(
                         values=[f"atd-{hostname}" for hostname in device_assignments]
                     ),
                 )
@@ -408,8 +428,9 @@ class CVPClient:
                         configlet_assignment_id=f"atd-{hostname}",
                     ),
                     display_name=f"ATD {hostname}",
-                    configlet_ids=fmp.RepeatedString(values=configlet_ids),
+                    configlet_ids=_RepeatedString(values=configlet_ids),
                     query=f"hostname:{hostname}",
+                    match_policy=getattr(configlet.MatchPolicy, "MATCH_POLICY_MATCH_ALL", 1),
                 )
             )
             await stub.set(req, timeout=RPC_TIMEOUT)
@@ -555,7 +576,17 @@ class CVPClient:
                     sync_time=datetime.now(timezone.utc),
                 )
             )
-            await sync_stub.set(req, timeout=RPC_TIMEOUT)
+            for attempt in range(15):
+                try:
+                    await sync_stub.set(req, timeout=RPC_TIMEOUT)
+                    logger.info("Accepted all inventory updates in workspace %s", ws_id)
+                    return
+                except Exception as e:
+                    if attempt < 14:
+                        logger.info("Waiting for workspace to initialize in Studios... (%ds)", attempt + 1)
+                        await asyncio.sleep(1)
+                    else:
+                        raise
 
         cc_ids = await self.workspace_flow(
             "ATD Accept Inventory Updates", apply_fn, execute_cc=False
