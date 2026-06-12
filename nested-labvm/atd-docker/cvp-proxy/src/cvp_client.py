@@ -3,6 +3,7 @@ import hashlib
 import ssl
 import uuid
 import logging
+from datetime import datetime, timezone
 from typing import Optional
 
 import requests
@@ -17,6 +18,11 @@ try:
     from cloudvision.api.arista.changecontrol import v1 as changecontrol
 except ImportError:
     changecontrol = None
+
+try:
+    from cloudvision.api.arista.studio_topology import v1 as studio_topology
+except ImportError:
+    studio_topology = None
 
 from fmp import wrappers_pb2 as fmp
 
@@ -531,6 +537,30 @@ class CVPClient:
             logger.warning("Failed to get change controls: %s", e)
 
         return result
+
+    # ------------------------------------------------------------------
+    # Studios Onboarding
+    # ------------------------------------------------------------------
+
+    async def accept_inventory_updates(self) -> dict:
+        self._require_ready()
+        if not studio_topology:
+            raise RuntimeError("studio_topology module not available")
+
+        async def apply_fn(ws_id):
+            sync_stub = studio_topology.UpdateSyncConfigServiceStub(self.channel)
+            req = studio_topology.UpdateSyncConfigSetRequest(
+                value=studio_topology.UpdateSyncConfig(
+                    key=workspace.WorkspaceKey(workspace_id=ws_id),
+                    sync_time=datetime.now(timezone.utc),
+                )
+            )
+            await sync_stub.set(req, timeout=RPC_TIMEOUT)
+
+        cc_ids = await self.workspace_flow(
+            "ATD Accept Inventory Updates", apply_fn, execute_cc=False
+        )
+        return {"status": "accepted", "cc_ids": cc_ids}
 
     # ------------------------------------------------------------------
     # Full workspace flow helpers

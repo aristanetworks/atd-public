@@ -39,3 +39,14 @@ async def wait_for_devices(req: InventoryWaitRequest):
     raw = await state.cvp_client.wait_for_devices(req.count, req.timeout)
     devices = {name: DeviceInfo(**info) for name, info in raw.items()}
     return InventoryResponse(devices=devices)
+
+
+@router.post("/accept")
+async def accept_inventory_updates():
+    _require_ready()
+    state = _get_state()
+    try:
+        result = await state.cvp_client.accept_inventory_updates()
+        return result
+    except RuntimeError as e:
+        raise HTTPException(status_code=500, detail=str(e))
