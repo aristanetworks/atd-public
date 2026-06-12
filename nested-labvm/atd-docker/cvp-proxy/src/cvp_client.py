@@ -320,21 +320,24 @@ class CVPClient:
         )
         cc_resp = await stub.get_one(get_req, timeout=RPC_TIMEOUT)
 
-        config_stub = changecontrol.ChangeControlConfigServiceStub(self.channel)
+        cc_key = changecontrol.ChangeControlKey(id=cc_id)
+        flag_true = changecontrol.FlagConfig(value=True)
 
-        approve_req = changecontrol.ChangeControlConfigSetRequest(
-            value=changecontrol.ChangeControlConfig(
-                key=changecontrol.ChangeControlKey(id=cc_id),
-                approve=True,
-                version=cc_resp.value.change.time if hasattr(cc_resp.value, 'change') else None,
+        approve_stub = changecontrol.ApproveConfigServiceStub(self.channel)
+        approve_req = changecontrol.ApproveConfigSetRequest(
+            value=changecontrol.ApproveConfig(
+                key=cc_key,
+                approve=flag_true,
+                version=cc_resp.time if hasattr(cc_resp, 'time') else None,
             )
         )
-        await config_stub.set(approve_req, timeout=RPC_TIMEOUT)
+        await approve_stub.set(approve_req, timeout=RPC_TIMEOUT)
 
+        config_stub = changecontrol.ChangeControlConfigServiceStub(self.channel)
         start_req = changecontrol.ChangeControlConfigSetRequest(
             value=changecontrol.ChangeControlConfig(
-                key=changecontrol.ChangeControlKey(id=cc_id),
-                start=True,
+                key=cc_key,
+                start=flag_true,
             )
         )
         await config_stub.set(start_req, timeout=RPC_TIMEOUT)
@@ -519,23 +522,83 @@ class CVPClient:
 
         return parent_id
 
+    @staticmethod
+    def _pb_varint(value):
+        result = bytearray()
+        while value > 0x7f:
+            result.append((value & 0x7f) | 0x80)
+            value >>= 7
+        result.append(value & 0x7f)
+        return bytes(result)
+
+    @classmethod
+    def _pb_field(cls, field_num, data):
+        tag = cls._pb_varint((field_num << 3) | 2)
+        return tag + cls._pb_varint(len(data)) + data
+
+    @classmethod
+    def _pb_string(cls, field_num, value):
+        return cls._pb_field(field_num, value.encode("utf-8"))
+
+    @classmethod
+    def _pb_wrapped_string(cls, field_num, value):
+        return cls._pb_field(field_num, cls._pb_string(1, value))
+
+    @staticmethod
+    def _parse_grpc_web_trailers(body: bytes) -> tuple[str | None, str]:
+        trailer_text = ""
+        offset = 0
+        while offset + 5 <= len(body):
+            flag = body[offset]
+            length = int.from_bytes(body[offset+1:offset+5], "big")
+            if offset + 5 + length > len(body):
+                break
+            if flag & 0x80:
+                trailer_text = body[offset+5:offset+5+length].decode("utf-8", errors="replace")
+            offset += 5 + length
+        grpc_status = None
+        grpc_message = ""
+        for line in trailer_text.split("\r\n"):
+            if line.startswith("grpc-status:"):
+                grpc_status = line.split(":", 1)[1].strip()
+            elif line.startswith("grpc-message:"):
+                grpc_message = line.split(":", 1)[1].strip()
+        return grpc_status, grpc_message
+
     async def _set_studio_assignment_roots(self, ws_id: str, root_ids: list[str]):
-        if not studio:
-            logger.warning("studio.v1 module not available, cannot set assignment roots")
-            return
-        stub = studio.InputsConfigServiceStub(self.channel)
         roots_json = json.dumps(root_ids)
-        req = studio.InputsConfigSetRequest(
-            value=studio.InputsConfig(
-                key=studio.InputsKey(
-                    studio_id="studio-static-configlet",
-                    workspace_id=ws_id,
-                    path="configletAssignmentRoots",
-                ),
-                inputs=roots_json.encode("utf-8"),
-            )
+        inputs_key = (
+            self._pb_wrapped_string(1, "studio-static-configlet")
+            + self._pb_wrapped_string(2, ws_id)
+            + self._pb_wrapped_string(3, "configletAssignmentRoots")
         )
-        await self._ws_set_with_retry(stub, req)
+        inputs_config = (
+            self._pb_field(1, inputs_key)
+            + self._pb_wrapped_string(3, roots_json)
+        )
+        request_bytes = self._pb_field(1, inputs_config)
+
+        frame = b'\x00' + len(request_bytes).to_bytes(4, 'big') + request_bytes
+        for attempt in range(15):
+            resp = requests.post(
+                f"https://{self._host}/grpc-web/arista.studio.v1.InputsConfigService/Set",
+                data=frame,
+                headers={"content-type": "application/grpc-web+proto", "x-grpc-web": "1"},
+                cookies={"access_token": self._token},
+                verify=False,
+                timeout=30,
+            )
+            body = resp.content
+            grpc_status, grpc_message = self._parse_grpc_web_trailers(body)
+            if resp.status_code == 200 and grpc_status == "0":
+                break
+            if "workspace status is not available" in grpc_message and attempt < 14:
+                logger.info("Workspace not ready, retrying... (%ds)", attempt + 1)
+                await asyncio.sleep(1)
+                continue
+            detail = grpc_message or f"status={resp.status_code} grpc-status={grpc_status}"
+            logger.error("InputsConfig set failed: %s", detail)
+            raise RuntimeError(f"InputsConfig set failed: {detail}")
         logger.info("Set studio configletAssignmentRoots=%s in workspace %s", roots_json, ws_id)
 
     async def get_assignments(self) -> dict:
