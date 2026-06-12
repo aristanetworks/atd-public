@@ -1,3 +1,5 @@
+import logging
+
 from fastapi import APIRouter, HTTPException
 
 from models import (
@@ -9,6 +11,7 @@ from models import (
 )
 
 router = APIRouter(prefix="/configlets")
+logger = logging.getLogger("configlets")
 
 
 def _get_state():
@@ -37,19 +40,22 @@ async def sync_configlets(req: ConfigletSyncRequest):
 
     configlets_data = [{"name": c.name, "body": c.body} for c in req.configlets]
 
-    async def apply_fn(ws_id):
-        return await client.sync_configlets(ws_id, configlets_data)
-
     ws_id = await client.create_workspace("ATD Configlet Sync")
     counts = await client.sync_configlets(ws_id, configlets_data)
 
     if counts["created"] == 0 and counts["updated"] == 0:
+        try:
+            await client.abandon_workspace(ws_id)
+        except Exception:
+            pass
         return ConfigletSyncResponse(status="success", **counts)
 
+    logger.info("Building configlet sync workspace %s (%d created, %d updated)", ws_id, counts["created"], counts["updated"])
     if not await client.build_workspace(ws_id):
         raise HTTPException(status_code=500, detail="Workspace build failed")
 
     cc_ids, submitted = await client.submit_workspace(ws_id)
+    logger.info("Configlet sync submitted=%s, cc_ids=%s", submitted, cc_ids)
     if not submitted:
         raise HTTPException(status_code=500, detail="Workspace submit failed")
 

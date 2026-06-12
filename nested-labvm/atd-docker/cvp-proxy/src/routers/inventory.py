@@ -41,6 +41,14 @@ async def wait_for_devices(req: InventoryWaitRequest):
     return InventoryResponse(devices=devices)
 
 
+@router.get("/tags")
+async def get_device_tags(device_id: str = None):
+    _require_ready()
+    state = _get_state()
+    tags = await state.cvp_client.get_device_tags(device_id)
+    return {"tags": tags}
+
+
 @router.post("/accept")
 async def accept_inventory_updates():
     _require_ready()

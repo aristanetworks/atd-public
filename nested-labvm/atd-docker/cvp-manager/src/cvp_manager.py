@@ -81,16 +81,30 @@ def scp_token_to_device(device_ip, token_path, username, password):
 
 
 def check_and_fix_streaming(proxy, nodes, eos_type, username, password):
+    expected_count = len(nodes)
     status = proxy.get_enrollment_status()
 
+    if status["active"] >= expected_count:
+        pS("OK", f"All {status['active']} devices actively streaming to CVP")
+        return
+
+    if status["total"] == 0:
+        pS("INFO", f"No devices in inventory yet (expecting {expected_count}) — skipping re-enrollment")
+        return
+
     if not status["inactive_devices"]:
-        pS("OK", "All devices actively streaming to CVP")
+        pS("INFO", f"Only {status['active']}/{expected_count} devices in inventory, none inactive — waiting for remaining to register")
         return
 
     inactive_count = len(status["inactive_devices"])
-    pS("INFO", f"{inactive_count} devices not streaming — re-enrolling")
+    pS("INFO", f"{inactive_count} devices not streaming — attempting re-enrollment")
 
-    token_data = proxy.create_enrollment_token(duration="86400s")
+    try:
+        token_data = proxy.create_enrollment_token(duration="86400s")
+    except Exception as e:
+        pS("WARNING", f"Could not create enrollment token: {e}")
+        pS("INFO", "Skipping re-enrollment — devices may be in ZTP mode and will self-register")
+        return
 
     token_path = path.expanduser("~/token")
     with open(token_path, "w") as f:
@@ -215,6 +229,12 @@ def main():
 
     is_first_boot = not path.exists(CVP_CONFIG_FILE)
 
+    if not is_first_boot:
+        status = proxy.get_enrollment_status()
+        if status["total"] == 0:
+            pS("WARNING", "State file exists but no devices in inventory — treating as first boot")
+            is_first_boot = True
+
     if is_first_boot:
         pS("OK", "Initial ATD topology boot")
         try:
@@ -222,9 +242,29 @@ def main():
         except Exception as e:
             pS("WARNING", f"Failed to distribute enrollment tokens: {e}")
 
-        pS("INFO", f"Waiting for {len(nodes)} devices to register...")
-        proxy.wait_for_devices(len(nodes), timeout=600)
-        pS("OK", f"All {len(nodes)} devices registered")
+        pS("INFO", f"Waiting for {len(nodes)} devices to stream...")
+        devices = proxy.wait_for_devices(len(nodes), timeout=600)
+
+        active = [k for k, v in devices.items() if v.get("streaming_status") == "active"]
+        not_streaming = [k for k, v in devices.items() if v.get("streaming_status") != "active"]
+
+        if not_streaming:
+            pS("WARNING", f"{len(not_streaming)} devices not yet streaming: {not_streaming}")
+            pS("INFO", "Waiting additional time for remaining devices to stream...")
+            max_extra_wait = 300
+            elapsed = 0
+            while elapsed < max_extra_wait and not_streaming:
+                time.sleep(15)
+                elapsed += 15
+                status = proxy.get_enrollment_status()
+                not_streaming = status.get("inactive_devices", [])
+                pS("INFO", f"Streaming: {status.get('active', 0)}/{status.get('total', 0)} ({elapsed}s)")
+            if not_streaming:
+                pS("WARNING", f"Proceeding with {len(not_streaming)} devices still not streaming: {not_streaming}")
+            else:
+                pS("OK", "All devices now actively streaming")
+        else:
+            pS("OK", f"All {len(active)} devices actively streaming")
 
         pS("INFO", "Accepting devices into Studios...")
         try:
@@ -232,6 +272,8 @@ def main():
             pS("OK", "Devices accepted into Studios")
         except Exception as e:
             pS("WARNING", f"Failed to accept devices into Studios: {e}")
+
+
 
     pS("INFO", "Reading configlets from disk...")
     configlets = read_configlets(configlet_dir)
@@ -252,7 +294,7 @@ def main():
             cvp_yaml = load_yaml(CVP_INFO_FILE)
             device_assignments, global_configlets = build_initial_assignments(cvp_yaml)
             if device_assignments:
-                pS("INFO", f"Applying initial assignments for {len(device_assignments)} devices...")
+                pS("INFO", f"Applying initial assignments for {len(device_assignments)} devices, global configlets: {global_configlets}")
                 result = proxy.apply_assignments(device_assignments, global_configlets)
                 pS("OK", f"Assignments applied: {result.get('devices_updated', 0)} devices")
 

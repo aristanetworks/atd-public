@@ -41,17 +41,26 @@ async def _apply_blocking(req: AssignmentApplyRequest) -> AssignmentApplyRespons
     client = state.cvp_client
 
     ws_id = await client.create_workspace("ATD Assignment Apply")
+    logger.info("Created assignment workspace %s", ws_id)
+
     await client.apply_assignments(ws_id, req.device_assignments, req.global_configlets)
+    logger.info("Assignments written to workspace, building...")
 
     if not await client.build_workspace(ws_id):
         raise HTTPException(status_code=500, detail="Workspace build failed")
+    logger.info("Workspace built, submitting...")
 
     cc_ids, submitted = await client.submit_workspace(ws_id)
+    logger.info("Workspace submitted=%s, cc_ids=%s", submitted, cc_ids)
     if not submitted:
         raise HTTPException(status_code=500, detail="Workspace submit failed")
 
     if cc_ids:
+        logger.info("Executing %d change controls: %s", len(cc_ids), cc_ids)
         await client.execute_change_controls(cc_ids)
+        logger.info("Change controls executed")
+    else:
+        logger.warning("No change controls generated from assignment workspace")
 
     return AssignmentApplyResponse(
         status="success",
@@ -65,6 +74,7 @@ async def _assignment_stream(req: AssignmentApplyRequest):
     client = state.cvp_client
 
     yield {"data": json.dumps({"phase": "WORKSPACE", "message": "Creating workspace..."})}
+
     ws_id = await client.create_workspace("ATD Assignment Apply")
 
     device_count = len(req.device_assignments)

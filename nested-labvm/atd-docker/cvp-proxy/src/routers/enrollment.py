@@ -1,14 +1,18 @@
+import logging
+
 from fastapi import APIRouter, HTTPException
 
 from models import (
     EnrollmentTokenRequest,
     EnrollmentTokenResponse,
     EnrollmentStatusResponse,
+    TagsInitRequest,
     TagsInitResponse,
     CvpStatus,
 )
 
 router = APIRouter()
+logger = logging.getLogger("enrollment")
 
 
 def _get_state():
@@ -46,20 +50,65 @@ async def get_enrollment_status():
 
 
 @router.post("/tags/init", response_model=TagsInitResponse)
-async def init_tags():
+async def init_tags(req: TagsInitRequest = TagsInitRequest()):
     _require_ready()
     state = _get_state()
     client = state.cvp_client
 
     devices = await client.get_inventory()
-    ws_id = await client.create_workspace("ATD Tag Init")
-    count = await client.init_device_tags(ws_id, devices)
 
-    if count > 0:
-        if not await client.build_workspace(ws_id):
-            raise HTTPException(status_code=500, detail="Tag workspace build failed")
-        cc_ids, submitted = await client.submit_workspace(ws_id)
-        if not submitted:
-            raise HTTPException(status_code=500, detail="Tag workspace submit failed")
+    if req.hostnames:
+        serial_to_device = {}
+        for name, info in devices.items():
+            did = info.get("device_id", "")
+            if did:
+                serial_to_device[did] = info
 
-    return TagsInitResponse(status="success", tags_created=count)
+        tagged_devices = {}
+        for intended_hostname in req.hostnames:
+            dev = serial_to_device.get(intended_hostname)
+            if dev:
+                tagged_devices[intended_hostname] = dev
+                logger.info(
+                    "Matched %s to device serial %s (current hostname: %s)",
+                    intended_hostname, dev["device_id"], dev.get("hostname", "?"),
+                )
+            else:
+                logger.warning(
+                    "No device with serial %s found in inventory", intended_hostname,
+                )
+    elif req.hostname_map:
+        ip_to_device = {}
+        for name, info in devices.items():
+            ip = info.get("ip", "")
+            if ip:
+                ip_to_device[ip] = info
+
+        tagged_devices = {}
+        for intended_hostname, device_ip in req.hostname_map.items():
+            dev = ip_to_device.get(device_ip)
+            if dev:
+                tagged_devices[intended_hostname] = dev
+            else:
+                logger.warning(
+                    "No device found for %s at IP %s", intended_hostname, device_ip,
+                )
+    else:
+        tagged_devices = devices
+
+    if not tagged_devices:
+        logger.warning("No devices matched for tagging")
+        return TagsInitResponse(status="no_matches", tags_created=0)
+
+    logger.info("Tagging %d devices: %s", len(tagged_devices), list(tagged_devices.keys()))
+
+    async def apply_fn(ws_id):
+        return await client.init_device_tags(ws_id, tagged_devices)
+
+    try:
+        cc_ids = await client.workspace_flow("ATD Tag Init", apply_fn)
+    except Exception as e:
+        logger.error("Tag init workspace flow failed: %s", e)
+        raise HTTPException(status_code=500, detail=f"Tag init failed: {e}")
+
+    return TagsInitResponse(status="success", tags_created=len(tagged_devices))

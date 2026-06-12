@@ -1,5 +1,6 @@
 import asyncio
 import hashlib
+import json
 import ssl
 import uuid
 import logging
@@ -23,6 +24,11 @@ try:
     from cloudvision.api.arista.studio_topology import v1 as studio_topology
 except ImportError:
     studio_topology = None
+
+try:
+    from cloudvision.api.arista.studio import v1 as studio
+except ImportError:
+    studio = None
 
 try:
     from cloudvision.api.fmp import RepeatedString as _RepeatedString
@@ -157,14 +163,16 @@ class CVPClient:
             device_id = _val(dev.key.device_id) if dev.key else ""
             streaming = "active"
             if hasattr(dev, "streaming_status"):
-                s = _val(dev.streaming_status)
-                s_lower = str(s).lower()
-                if "active" in s_lower and "inactive" not in s_lower:
+                raw = dev.streaming_status
+                name = getattr(raw, "name", str(raw)).lower()
+                if "active" in name and "inactive" not in name:
                     streaming = "active"
-                elif "inactive" in s_lower:
+                elif "inactive" in name:
                     streaming = "inactive"
                 else:
                     streaming = "unknown"
+                if not devices:
+                    logger.info("streaming_status: raw=%r, name=%s -> %s", raw, name, streaming)
             ip_addr = _val(dev.fqdn)
             model = _val(dev.model_name)
             devices[hostname or device_id] = {
@@ -181,11 +189,26 @@ class CVPClient:
         elapsed = 0
         while elapsed < timeout:
             devices = await self.get_inventory()
-            if len(devices) >= count:
+            active = {k: v for k, v in devices.items() if v["streaming_status"] == "active"}
+            total = len(devices)
+            streaming = len(active)
+            if streaming >= count:
+                logger.info("All %d devices actively streaming", streaming)
                 return devices
+            logger.info(
+                "Waiting for devices: %d/%d streaming, %d in inventory (%ds/%ds)",
+                streaming, count, total, elapsed, timeout,
+            )
             await asyncio.sleep(15)
             elapsed += 15
-        return await self.get_inventory()
+        devices = await self.get_inventory()
+        active = {k: v for k, v in devices.items() if v["streaming_status"] == "active"}
+        not_streaming = [k for k, v in devices.items() if v["streaming_status"] != "active"]
+        logger.warning(
+            "Timed out waiting for devices: %d/%d streaming. Not streaming: %s",
+            len(active), count, not_streaming,
+        )
+        return devices
 
     # ------------------------------------------------------------------
     # Workspace lifecycle
@@ -203,6 +226,17 @@ class CVPClient:
         )
         await stub.set(req, timeout=RPC_TIMEOUT)
         return ws_id
+
+    async def abandon_workspace(self, ws_id: str):
+        stub = workspace.WorkspaceConfigServiceStub(self.channel)
+        req = workspace.WorkspaceConfigSetRequest(
+            value=workspace.WorkspaceConfig(
+                key=workspace.WorkspaceKey(workspace_id=ws_id),
+                request=workspace.Request.ABANDON,
+            )
+        )
+        await stub.set(req, timeout=RPC_TIMEOUT)
+        logger.info("Abandoned workspace %s", ws_id)
 
     async def build_workspace(self, ws_id: str) -> bool:
         build_id = str(uuid.uuid4())
@@ -225,10 +259,19 @@ class CVPClient:
         async for res in state_stub.subscribe(stream_req, timeout=BUILD_TIMEOUT):
             if res.value.responses and build_id in res.value.responses.values:
                 build_res = res.value.responses.values[build_id]
+                msg = _val(build_res.message, "")
+                logger.info(
+                    "Build response: status=%s message=%r",
+                    build_res.status, msg[:500] if msg else "",
+                )
+                ws = res.value
+                for attr in ("state", "last_build_state", "needs_build"):
+                    if hasattr(ws, attr):
+                        logger.info("  workspace.%s = %r", attr, getattr(ws, attr))
                 if build_res.status == workspace.ResponseStatus.SUCCESS:
                     return True
                 elif build_res.status == workspace.ResponseStatus.FAIL:
-                    logger.error("Build failed: %s", build_res.message.value if build_res.message else "unknown")
+                    logger.error("Build failed: %s", msg)
                     return False
         return False
 
@@ -382,7 +425,7 @@ class CVPClient:
                     body=body,
                 )
             )
-            await stub.set(req, timeout=RPC_TIMEOUT)
+            await self._ws_set_with_retry(stub, req)
             if name in existing:
                 counts["updated"] += 1
             else:
@@ -394,46 +437,106 @@ class CVPClient:
     # Assignments
     # ------------------------------------------------------------------
 
+    async def _ws_set_with_retry(self, stub, req, max_attempts=15):
+        for attempt in range(max_attempts):
+            try:
+                await stub.set(req, timeout=RPC_TIMEOUT)
+                return
+            except Exception as e:
+                if "workspace status is not available" in str(e) and attempt < max_attempts - 1:
+                    logger.info("Workspace not ready, retrying... (%ds)", attempt + 1)
+                    await asyncio.sleep(1)
+                else:
+                    raise
+
     async def apply_assignments(
         self,
         ws_id: str,
         device_assignments: dict[str, list[str]],
         global_configlets: list[str],
-    ):
+    ) -> str:
         self._require_ready()
         stub = configlet.ConfigletAssignmentConfigServiceStub(self.channel)
 
-        if global_configlets:
-            req = configlet.ConfigletAssignmentConfigSetRequest(
-                value=configlet.ConfigletAssignmentConfig(
-                    key=configlet.ConfigletAssignmentKey(
-                        workspace_id=ws_id,
-                        configlet_assignment_id="atd-global",
-                    ),
-                    display_name="ATD Global Configlets",
-                    configlet_ids=_RepeatedString(values=global_configlets),
-                    match_policy=getattr(configlet.MatchPolicy, "MATCH_POLICY_MATCH_ALL", 1),
-                    child_assignment_ids=_RepeatedString(
-                        values=[f"atd-{hostname}" for hostname in device_assignments]
-                    ),
-                )
-            )
-            await stub.set(req, timeout=RPC_TIMEOUT)
+        try:
+            existing = await self.get_assignments()
+            for aid, info in existing.items():
+                display = info.get("display_name", "")
+                if aid.startswith("atd-") or display.startswith("ATD "):
+                    logger.info("Removing stale assignment %s (%s)", aid, display)
+                    del_req = configlet.ConfigletAssignmentConfigDeleteRequest(
+                        key=configlet.ConfigletAssignmentKey(
+                            workspace_id=ws_id,
+                            configlet_assignment_id=aid,
+                        )
+                    )
+                    try:
+                        await stub.delete(del_req, timeout=RPC_TIMEOUT)
+                    except Exception as e:
+                        logger.warning("Failed to delete assignment %s: %s", aid, e)
+        except Exception as e:
+            logger.warning("Failed to clean existing assignments: %s", e)
+
+        parent_id = str(uuid.uuid4())
+        child_ids = []
 
         for hostname, configlet_ids in device_assignments.items():
+            aid = str(uuid.uuid4())
+            child_ids.append(aid)
+            query = f"device:{hostname}"
+            logger.info("Assignment %s -> query=%s, configlets=%s", hostname, query, configlet_ids)
             req = configlet.ConfigletAssignmentConfigSetRequest(
                 value=configlet.ConfigletAssignmentConfig(
                     key=configlet.ConfigletAssignmentKey(
                         workspace_id=ws_id,
-                        configlet_assignment_id=f"atd-{hostname}",
+                        configlet_assignment_id=aid,
                     ),
                     display_name=f"ATD {hostname}",
                     configlet_ids=_RepeatedString(values=configlet_ids),
-                    query=f"hostname:{hostname}",
-                    match_policy=getattr(configlet.MatchPolicy, "MATCH_POLICY_MATCH_ALL", 1),
+                    query=query,
+                    match_policy=configlet.MatchPolicy.MATCH_FIRST,
                 )
             )
-            await stub.set(req, timeout=RPC_TIMEOUT)
+            await self._ws_set_with_retry(stub, req)
+
+        parent_req = configlet.ConfigletAssignmentConfigSetRequest(
+            value=configlet.ConfigletAssignmentConfig(
+                key=configlet.ConfigletAssignmentKey(
+                    workspace_id=ws_id,
+                    configlet_assignment_id=parent_id,
+                ),
+                display_name="ATD Assignments",
+                configlet_ids=_RepeatedString(values=global_configlets) if global_configlets else _RepeatedString(values=[]),
+                query="device:*",
+                match_policy=configlet.MatchPolicy.MATCH_FIRST,
+                child_assignment_ids=_RepeatedString(values=child_ids),
+            )
+        )
+        await self._ws_set_with_retry(stub, parent_req)
+        logger.info("Created root assignment %s with %d children", parent_id, len(child_ids))
+
+        await self._set_studio_assignment_roots(ws_id, [parent_id])
+
+        return parent_id
+
+    async def _set_studio_assignment_roots(self, ws_id: str, root_ids: list[str]):
+        if not studio:
+            logger.warning("studio.v1 module not available, cannot set assignment roots")
+            return
+        stub = studio.InputsConfigServiceStub(self.channel)
+        roots_json = json.dumps(root_ids)
+        req = studio.InputsConfigSetRequest(
+            value=studio.InputsConfig(
+                key=studio.InputsKey(
+                    studio_id="studio-static-configlet",
+                    workspace_id=ws_id,
+                    path="configletAssignmentRoots",
+                ),
+                inputs=roots_json.encode("utf-8"),
+            )
+        )
+        await self._ws_set_with_retry(stub, req)
+        logger.info("Set studio configletAssignmentRoots=%s in workspace %s", roots_json, ws_id)
 
     async def get_assignments(self) -> dict:
         self._require_ready()
@@ -443,10 +546,15 @@ class CVPClient:
         async for resp in stub.get_all(req, timeout=RPC_TIMEOUT):
             a = resp.value
             aid = _val(a.key.configlet_assignment_id) if a.key else ""
+            child_ids = list(a.child_assignment_ids.values) if a.child_assignment_ids else []
+            mp = getattr(a, "match_policy", None)
+            mp_str = str(mp) if mp is not None else "unset"
             results[aid] = {
                 "display_name": _val(a.display_name),
                 "configlet_ids": list(a.configlet_ids.values) if a.configlet_ids else [],
                 "query": _val(a.query),
+                "child_assignment_ids": child_ids,
+                "match_policy": mp_str,
             }
         return results
 
@@ -473,7 +581,7 @@ class CVPClient:
                     )
                 )
             )
-            await tag_config_stub.set(tag_req, timeout=RPC_TIMEOUT)
+            await self._ws_set_with_retry(tag_config_stub, tag_req)
 
             assign_req = tag.TagAssignmentConfigSetRequest(
                 value=tag.TagAssignmentConfig(
@@ -486,10 +594,28 @@ class CVPClient:
                     )
                 )
             )
-            await tag_assign_stub.set(assign_req, timeout=RPC_TIMEOUT)
+            await self._ws_set_with_retry(tag_assign_stub, assign_req)
             count += 1
 
         return count
+
+    async def get_device_tags(self, device_id: str = None) -> dict:
+        self._require_ready()
+        stub = tag.TagAssignmentServiceStub(self.channel)
+        req = tag.TagAssignmentStreamRequest()
+        tags = {}
+        async for resp in stub.get_all(req, timeout=RPC_TIMEOUT):
+            a = resp.value
+            if a.key:
+                did = _val(a.key.device_id)
+                if device_id and did != device_id:
+                    continue
+                label = _val(a.key.label)
+                value = _val(a.key.value)
+                if did not in tags:
+                    tags[did] = {}
+                tags[did][label] = value
+        return tags
 
     # ------------------------------------------------------------------
     # Enrollment
@@ -497,14 +623,23 @@ class CVPClient:
 
     async def create_enrollment_token(self, duration: str = "86400s") -> str:
         self._require_ready()
-        resp = requests.post(
-            f"https://{self._host}/api/v1/services/admin/Enrollment/AddEnrollmentToken",
-            json={"enrollmentToken": {"duration": duration}},
-            headers={"Authorization": f"Bearer {self._token}"},
-            verify=False,
-            timeout=30,
-        )
-        resp.raise_for_status()
+        url = f"https://{self._host}/api/v1/services/admin/Enrollment/AddEnrollmentToken"
+        payload = {"enrollmentToken": {"duration": duration}}
+        try:
+            resp = requests.post(
+                url,
+                json=payload,
+                cookies={"access_token": self._token},
+                verify=False,
+                timeout=30,
+            )
+            resp.raise_for_status()
+        except requests.HTTPError as e:
+            logger.error(
+                "Enrollment token request failed (%s): %s",
+                resp.status_code, resp.text[:500],
+            )
+            raise
         data = resp.json()
         if "data" in data:
             return data["data"]
@@ -589,7 +724,7 @@ class CVPClient:
                         raise
 
         cc_ids = await self.workspace_flow(
-            "ATD Accept Inventory Updates", apply_fn, execute_cc=False
+            "ATD Accept Inventory Updates", apply_fn, execute_cc=True
         )
         return {"status": "accepted", "cc_ids": cc_ids}
 
@@ -599,16 +734,23 @@ class CVPClient:
 
     async def workspace_flow(self, display_name: str, apply_fn, *, execute_cc: bool = True):
         ws_id = await self.create_workspace(display_name)
+        logger.info("[%s] Created workspace %s", display_name, ws_id)
         await apply_fn(ws_id)
 
         for attempt in range(MAX_SYNC_RETRIES):
             if not await self.build_workspace(ws_id):
                 raise RuntimeError("Workspace build failed")
+            logger.info("[%s] Workspace built", display_name)
 
             cc_ids, submitted = await self.submit_workspace(ws_id)
+            logger.info("[%s] submitted=%s, cc_ids=%s", display_name, submitted, cc_ids)
             if submitted:
                 if execute_cc and cc_ids:
+                    logger.info("[%s] Executing %d change controls", display_name, len(cc_ids))
                     await self.execute_change_controls(cc_ids)
+                    logger.info("[%s] Change controls executed", display_name)
+                elif not cc_ids:
+                    logger.warning("[%s] No change controls generated", display_name)
                 return cc_ids
             if attempt < MAX_SYNC_RETRIES - 1:
                 logger.info("Submit requires sync, retrying (attempt %d)", attempt + 1)

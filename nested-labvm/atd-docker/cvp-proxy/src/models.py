@@ -80,6 +80,11 @@ class InventoryWaitRequest(BaseModel):
     timeout: int = 300
 
 
+class TagsInitRequest(BaseModel):
+    hostname_map: dict[str, str] = {}
+    hostnames: list[str] = []
+
+
 class TagsInitResponse(BaseModel):
     status: str
     tags_created: int = 0

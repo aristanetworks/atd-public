@@ -60,7 +60,18 @@ class ProxyClient:
             timeout=timeout + 30,
         )
         resp.raise_for_status()
-        return resp.json()["devices"]
+        devices = resp.json()["devices"]
+        active = {k: v for k, v in devices.items() if v.get("streaming_status") == "active"}
+        not_streaming = [k for k, v in devices.items() if v.get("streaming_status") != "active"]
+        if not_streaming:
+            logger.warning(
+                "Devices returned but not streaming: %s", not_streaming,
+            )
+        logger.info(
+            "wait_for_devices: %d/%d actively streaming",
+            len(active), len(devices),
+        )
+        return devices
 
     def sync_configlets(self, configlets: list[dict]) -> dict:
         resp = self.session.post(
@@ -101,5 +112,17 @@ class ProxyClient:
 
     def accept_inventory(self) -> dict:
         resp = self.session.post(self._url("/inventory/accept"), timeout=600)
+        resp.raise_for_status()
+        return resp.json()
+
+    def init_tags(self, hostnames: list = None, hostname_map: dict = None) -> dict:
+        payload = {}
+        if hostnames:
+            payload["hostnames"] = hostnames
+        elif hostname_map:
+            payload["hostname_map"] = hostname_map
+        resp = self.session.post(
+            self._url("/tags/init"), json=payload, timeout=600,
+        )
         resp.raise_for_status()
         return resp.json()
