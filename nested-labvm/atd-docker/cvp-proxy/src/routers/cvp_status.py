@@ -2,15 +2,15 @@ from fastapi import APIRouter
 
 from models import CvpStatusResponse, ChangeControlsResponse, ChangeControlInfo, CvpStatus
 
-router = APIRouter(prefix="/cvp")
+router = APIRouter()
 
 
 def _get_state():
-    from main import app_state
+    from state import app_state
     return app_state
 
 
-@router.get("/status", response_model=CvpStatusResponse)
+@router.get("/cvp/status", response_model=CvpStatusResponse)
 async def get_cvp_status():
     state = _get_state()
     if state.cvp_client.status == CvpStatus.READY:

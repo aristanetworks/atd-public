@@ -5,8 +5,8 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from ruamel.yaml import YAML
 
-from cvp_client import CVPClient
 from models import CvpStatus
+from state import app_state
 
 logging.basicConfig(
     level=logging.INFO,
@@ -18,14 +18,6 @@ logger = logging.getLogger("cvp_proxy")
 ATD_ACCESS_PATH = "/etc/atd/ACCESS_INFO.yaml"
 PROBE_INTERVAL = 30
 RETRY_INTERVAL = 15
-
-
-class AppState:
-    def __init__(self):
-        self.cvp_client = CVPClient()
-
-
-app_state = AppState()
 
 
 def load_access_info() -> dict:

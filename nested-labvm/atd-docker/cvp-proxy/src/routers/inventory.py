@@ -6,7 +6,7 @@ router = APIRouter(prefix="/inventory")
 
 
 def _get_state():
-    from main import app_state
+    from state import app_state
     return app_state
 
 

@@ -24,6 +24,11 @@ from models import CvpStatus
 
 logger = logging.getLogger("cvp_client")
 
+def _val(field, default=""):
+    if field is None:
+        return default
+    return field.value if hasattr(field, "value") else field
+
 RPC_TIMEOUT = 30
 BUILD_TIMEOUT = 600
 SUBMIT_TIMEOUT = 300
@@ -34,12 +39,23 @@ MAINLINE_ID = ""
 
 class CVPClient:
     def __init__(self):
-        self.status: CvpStatus = CvpStatus.STARTING
+        self._status: CvpStatus = CvpStatus.STARTING
         self.channel = None
         self.cvp_version: Optional[str] = None
         self._host: Optional[str] = None
         self._token: Optional[str] = None
         self._cv_client = None
+        logger.info("CVP client status: %s", self._status.value)
+
+    @property
+    def status(self) -> CvpStatus:
+        return self._status
+
+    @status.setter
+    def status(self, new_status: CvpStatus):
+        if new_status != self._status:
+            logger.info("CVP status changed: %s -> %s", self._status.value, new_status.value)
+            self._status = new_status
 
     async def connect(self, host: str, username: str, password: str):
         self._host = host
@@ -111,19 +127,20 @@ class CVPClient:
         devices = {}
         async for resp in stub.get_all(req, timeout=RPC_TIMEOUT):
             dev = resp.value
-            hostname = dev.hostname.value if dev.hostname else ""
-            device_id = dev.key.device_id.value if dev.key and dev.key.device_id else ""
+            hostname = _val(dev.hostname)
+            device_id = _val(dev.key.device_id) if dev.key else ""
             streaming = "active"
             if hasattr(dev, "streaming_status"):
-                s = dev.streaming_status
-                if s == inventory.StreamingStatus.STREAMING_STATUS_ACTIVE:
+                s = _val(dev.streaming_status)
+                s_lower = str(s).lower()
+                if "active" in s_lower and "inactive" not in s_lower:
                     streaming = "active"
-                elif s == inventory.StreamingStatus.STREAMING_STATUS_INACTIVE:
+                elif "inactive" in s_lower:
                     streaming = "inactive"
                 else:
                     streaming = "unknown"
-            ip_addr = dev.fqdn.value if dev.fqdn else ""
-            model = dev.model_name.value if dev.model_name else ""
+            ip_addr = _val(dev.fqdn)
+            model = _val(dev.model_name)
             devices[hostname or device_id] = {
                 "device_id": device_id,
                 "hostname": hostname,
@@ -492,16 +509,16 @@ class CVPClient:
             req = changecontrol.ChangeControlStreamRequest()
             async for resp in stub.get_all(req, timeout=RPC_TIMEOUT):
                 cc = resp.value
-                cc_id = cc.key.id.value if cc.key and cc.key.id else ""
-                status_val = cc.status if hasattr(cc, 'status') else None
+                cc_id = _val(cc.key.id) if cc.key else ""
+                status_val = str(_val(cc.status)).lower() if hasattr(cc, 'status') else ""
                 status_str = "unknown"
-                if status_val == changecontrol.ChangeControlStatus.CHANGE_CONTROL_STATUS_COMPLETED:
+                if "completed" in status_val:
                     status_str = "completed"
                     result["completed"] += 1
-                elif status_val == changecontrol.ChangeControlStatus.CHANGE_CONTROL_STATUS_RUNNING:
+                elif "running" in status_val:
                     status_str = "running"
                     result["running"] += 1
-                elif status_val == changecontrol.ChangeControlStatus.CHANGE_CONTROL_STATUS_PENDING_APPROVAL:
+                elif "pending" in status_val:
                     status_str = "pending"
                     result["pending"] += 1
 

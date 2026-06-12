@@ -12,7 +12,7 @@ services:
       - atd_nginx
   cvp-proxy:
     container_name: atd-cvp-proxy
-    image: us.gcr.io/beta-atds/atddocker_cvp-proxy:1.0.4
+    image: us.gcr.io/beta-atds/atddocker_cvp-proxy:1.0.9
     restart: always
     networks:
       - atd_nginx
