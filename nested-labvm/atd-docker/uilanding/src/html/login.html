@@ -1,59 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="Arista ATD Lab">
-
-    <title>Arista ATD</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="css/simple-sidebar.css" rel="stylesheet">
-
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Arista ATD Lab">
+  <title>Arista ATD</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
+<body class="bg-gray-900 min-h-screen flex items-center justify-center">
 
-<body>
-    <div id="wrapper" class="toggled">
-
-        <!-- Sidebar -->
-        <div id="sidebar-wrapper">
-            <ul class="sidebar-nav">
-                <br>
-                <img src="images/logotransparent.png" class="arista-logo">
-                <hr class="hr">
-            </ul>
-        </div>
-        <!-- /#sidebar-wrapper -->
-
-        <!-- Page Content -->
-        <div id="page-content-wrapper">
-            <div class="container-fluid">
-                <h1>Arista Test Drive Lab</h1>
-                Please login to access your lab.
-                <form action="/login" method="post">
-                Username: <input type="text" name="name"><br />
-                Password: <input type="password" name="pwd"><br />
-                <input type="submit" value="Sign In">
-                </form>
-                {{LOGIN_MESSAGE}}
-            </div>
-        </div>
-        <!-- /#page-content-wrapper -->
-
+  <div class="w-full max-w-sm px-4">
+    <div class="text-center mb-8">
+      <img src="images/logotransparent.png" class="h-12 w-auto mx-auto mb-4">
+      <h1 class="text-xl font-semibold text-white">Arista Test Drive</h1>
+      <p class="text-sm text-gray-400 mt-1">Sign in to access your lab</p>
     </div>
-    <!-- /#wrapper -->
 
-    <!-- Bootstrap core JavaScript -->
-    <script src="js/jquery.min.js"></script>
-    <script src="js/popper.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-
+    <div class="bg-gray-800 border border-gray-700 rounded-xl p-6 shadow-xl">
+      <form action="/login" method="post" class="space-y-4">
+        <div>
+          <label class="block text-xs font-medium text-gray-400 mb-1.5" for="name">Username</label>
+          <input id="name" type="text" name="name" required autofocus
+                 class="w-full bg-gray-900 border border-gray-700 text-gray-100 text-sm rounded-lg px-3 py-2.5 outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 transition-colors placeholder-gray-600"
+                 placeholder="arista">
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-gray-400 mb-1.5" for="pwd">Password</label>
+          <input id="pwd" type="password" name="pwd" required
+                 class="w-full bg-gray-900 border border-gray-700 text-gray-100 text-sm rounded-lg px-3 py-2.5 outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 transition-colors">
+        </div>
+        {% if LOGIN_MESSAGE %}
+        <div class="flex items-center gap-2 text-xs text-red-400 bg-red-900/30 border border-red-800/50 rounded-lg px-3 py-2">
+          <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z"/>
+          </svg>
+          {{ LOGIN_MESSAGE }}
+        </div>
+        {% end %}
+        <button type="submit"
+                class="w-full bg-sky-600 hover:bg-sky-500 text-white text-sm font-medium py-2.5 rounded-lg transition-colors mt-2">
+          Sign In
+        </button>
+      </form>
+    </div>
+  </div>
 
 </body>
-
 </html>
