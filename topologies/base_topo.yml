@@ -643,7 +643,7 @@ topologies:
               disk: 300
               image: atd-alma-campus-c2026-1-1-ceos-20260612-cvp
             branch: netprov_to_scs
-            orderable: true
+            orderable: false
             eos:
               - 4.36.0.1F
               - 4.35.4M
