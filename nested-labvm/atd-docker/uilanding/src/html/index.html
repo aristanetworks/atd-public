@@ -1,149 +1,253 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Arista ATD Lab">
-
   <title>Arista {{ topo_title }}</title>
-
-  <!-- Bootstrap core CSS -->
-  <link href="css/bootstrap.min.css" rel="stylesheet">
-  <script src="js/atd-ws.js"></script>
-
-  <!-- Custom styles for this template -->
-  <link href="css/simple-sidebar.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js"></script>
+  <style>
+    [x-cloak] { display: none !important; }
+    #countdown_timer { color: #38bdf8 !important; }
+    #countdown_timer.timer-warning { color: #f87171 !important; }
+  </style>
+  <script src="js/atd-ws.js?v=3"></script>
 </head>
+<body class="bg-slate-100 min-h-screen" x-data>
 
-<body>
-  <div id="wrapper" class="toggled">
+  <!-- Sticky Header -->
+  <header class="sticky top-0 z-50 bg-gray-900 text-white px-6 flex items-center justify-between h-14">
 
-    <!-- Sidebar -->
-    <div id="sidebar-wrapper">
-      <ul class="sidebar-nav">
-        <br>
-        <img src="images/logotransparent.png" class="arista-logo">
-        <hr class="hr">
-        {% if "labguides" not in disable_links %}
-        <li>
-          <a href="{{ labguides }}" target="_blank">Lab Guides</a>{% if "pdf" not in disable_links %} <a
-            href="/labguides/ATD.pdf" target="_blank">(PDF)</a>{% end %}
-        </li>
-        {% end %}
-        {% if "console" not in disable_links %}
-        <li>
-          <a href="/ssh/host/192.168.0.1" target="_blank">Console Access</a>
-        </li>
-        {% end %}
-        {% if "ide" not in disable_links %}
-        <li>
-          <a href="/coder" target="_blank">Programmability IDE</a>
-        </li>
-        {% end %}
-        {% if "webui" not in disable_links %}
-        <li>
-          <a href="/firefox" target="_blank">WebUI</a>
-        </li>
-        {% end %}
-        {% if "cvp" not in disable_links %}
-        <li>
-          <a href="/cv" target="_blank">CVP</a>
-        </li>
-        {% end %}
-        {% if "alertapi" not in disable_links %}
-        <li>
-          <a href="/alert" target="_blank">Event Alert API</a>
-        </li>
-        {% end %}
-        {% if "jenkins" not in disable_links %}
-        <li>
-          <a href="/jenkins" target="_blank">Jenkins</a>
-        </li>
-        {% end %}
-        {% if "ipam" not in disable_links %}
-        <li>
-          <a href="/ipam" target="_blank">IPAM</a>
-        </li>
-        {% end %}
-      </ul>
-    </div>
-    <!-- /#sidebar-wrapper -->
-
-    <!-- Page Content -->
-    <div id="page-content-wrapper">
-      <div class="container-fluid">
-        <h1>Arista {{ topo_title }}</h1>
-        Welcome to the Arista {{ topo_title }}! Please use the links on the left to navigate through the lab.
-        <br><br>
-        <h4>Time Remaining: <span id="countdown_timer">00:00:00</span></h4>
-        <br />
-        <h2>Topology</h2>
-        Click on a device to access CLI.
-        <br />
-        <img src="topo/atd-topo.png" usemap="#image_map">
-        <map name="image_map">
-          {% for node in NODES %}
-          {% if node == "CVP" %}
-          <area alt="{{ escape(node) }}" title="{{ escape(node) }}" href="/cv" target="_blank"
-            coords="{{ escape(NODES[node]['coords']) }}" shape="rect">
-          {% else %}
-          <area alt="{{ escape(node) }}" title="{{ escape(node) }}" href="/ssh/host/{{ escape(NODES[node]['ip']) }}"
-            target="_blank" coords="{{ escape(NODES[node]['coords']) }}" shape="rect">
-          {% end %}
-          {% end %}
-        </map>
-        <br /><br />
-        {% if topo_cvp %}
-        <span id="cvp_info"></span>
-        <br /><br />
-        {% end %}
-        <h2>Usernames and Passwords</h2>
-        Use the following usernames and passwords to access the ATD:
-        <br>
-        <br>
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th>Device</th>
-              <th>Username</th>
-              <th>Password</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Lab Credentials</td>
-              <td>arista</td>
-              <td>{{ ARISTA_PWD }}</td>
-            </tr>
-            <tr>
-              <td>Programmability IDE</td>
-              <td></td>
-              <td>{{ ARISTA_PWD }}</td>
-            </tr>
-            <tr>
-              <td>WebUI</td>
-              <td></td>
-              <td>@rista1</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <br>
+    <!-- Left: Logo + Lab Title -->
+    <div class="flex items-center gap-3 shrink-0">
+      <img src="images/logotransparent.png" class="h-7 w-auto">
+      <div>
+        <div class="text-xs text-gray-500 uppercase tracking-widest leading-none mb-0.5">Lab Environment</div>
+        <div class="text-sm font-semibold text-white leading-none">{{ topo_title }}</div>
       </div>
     </div>
-    <!-- /#page-content-wrapper -->
 
-  </div>
-  <!-- /#wrapper -->
+    <!-- Center: Credentials -->
+    <div class="flex items-center">
+      <div class="w-px h-8 bg-gray-700 mx-4"></div>
+      <span class="text-xs font-medium text-gray-500 uppercase tracking-widest mr-4">Credentials</span>
+      <div class="w-px h-8 bg-gray-700 mx-4"></div>
+      <div class="flex items-center gap-2">
+        <span class="text-xs text-gray-500">user</span>
+        <code class="text-xs font-mono bg-gray-800 text-gray-200 px-2 py-0.5 rounded border border-gray-700">arista</code>
+        <span class="text-xs text-gray-500">pass</span>
+        <div class="flex items-center gap-1" x-data="{ copied: false }">
+          <code class="text-xs font-mono bg-gray-800 text-gray-200 px-2 py-0.5 rounded border border-gray-700">{{ ARISTA_PWD }}</code>
+          <button @click="navigator.clipboard.writeText($el.previousElementSibling.textContent.trim()); copied = true; setTimeout(() => copied = false, 1500)"
+                  class="p-1 rounded text-gray-600 hover:text-gray-300 transition-colors" title="Copy password">
+            <svg x-show="!copied" class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15.666 3.888A2.25 2.25 0 0 0 13.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 0 1-.75.75H9a.75.75 0 0 1-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 0 1-2.25 2.25H6.75A2.25 2.25 0 0 1 4.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 0 1 1.927-.184"/>
+            </svg>
+            <svg x-show="copied" x-cloak class="w-3 h-3 text-emerald-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="w-px h-8 bg-gray-700 mx-4"></div>
+      <div class="flex items-center gap-2">
+        <span class="text-xs text-gray-500">WebUI pass</span>
+        <div class="flex items-center gap-1" x-data="{ copied: false }">
+          <code class="text-xs font-mono bg-gray-800 text-gray-200 px-2 py-0.5 rounded border border-gray-700">@rista1</code>
+          <button @click="navigator.clipboard.writeText($el.previousElementSibling.textContent.trim()); copied = true; setTimeout(() => copied = false, 1500)"
+                  class="p-1 rounded text-gray-600 hover:text-gray-300 transition-colors" title="Copy password">
+            <svg x-show="!copied" class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15.666 3.888A2.25 2.25 0 0 0 13.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 0 1-.75.75H9a.75.75 0 0 1-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 0 1-2.25 2.25H6.75A2.25 2.25 0 0 1 4.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 0 1 1.927-.184"/>
+            </svg>
+            <svg x-show="copied" x-cloak class="w-3 h-3 text-emerald-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="w-px h-8 bg-gray-700 mx-4"></div>
+    </div>
 
-  <!-- Bootstrap core JavaScript -->
-  <script src="js/jquery.min.js"></script>
-  <script src="js/popper.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
+    <!-- Right: Countdown Timer -->
+    <div class="text-right shrink-0">
+      <div class="text-xs text-gray-500 uppercase tracking-widest leading-none mb-0.5">Time Remaining</div>
+      <div id="countdown_timer" class="text-xl font-mono font-bold leading-none">00:00:00</div>
+    </div>
 
+  </header>
+
+  <!-- Main Content -->
+  <main class="p-6 max-w-7xl mx-auto">
+
+    <!-- Service Tiles -->
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 mb-6">
+
+      <!-- CVP tile (dynamic via Alpine store) -->
+      {% if topo_cvp and "cvp" not in disable_links %}
+      <a href="/cv" target="_blank"
+         class="group relative bg-white rounded-xl border border-gray-200 p-5 transition-all hover:-translate-y-0.5 hover:border-sky-400 hover:shadow-md">
+        <span x-show="$store.atd.cvp.status !== ''"
+              x-cloak
+              class="absolute top-4 right-4 text-xs font-semibold px-2 py-0.5 rounded-full"
+              :class="$store.atd.cvp.status === 'UP' ? 'bg-emerald-100 text-emerald-700' : 'bg-red-100 text-red-700'"
+              x-text="$store.atd.cvp.status"></span>
+        <div class="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center mb-3">
+          <svg class="w-5 h-5 text-gray-500 transition-colors group-hover:text-sky-500" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15a4.5 4.5 0 0 0 4.5 4.5H18a3.75 3.75 0 0 0 1.332-7.257 3 3 0 0 0-3.758-3.848 5.25 5.25 0 0 0-10.233 2.33A4.502 4.502 0 0 0 2.25 15Z"/>
+          </svg>
+        </div>
+        <div class="font-semibold text-gray-800 text-sm mb-1">CVP</div>
+        <template x-if="$store.atd.cvp.status === ''">
+          <p class="text-xs text-gray-400">Connecting&hellip;</p>
+        </template>
+        <template x-if="$store.atd.cvp.status !== ''">
+          <div>
+            <p class="text-xs text-gray-400" x-text="$store.atd.cvp.version"></p>
+            <p class="text-xs text-gray-400 mt-0.5" x-text="$store.atd.taskSummary"></p>
+          </div>
+        </template>
+      </a>
+      {% end %}
+
+      <!-- Lab Guides tile (PDF sub-link uses @click.stop) -->
+      {% if "labguides" not in disable_links %}
+      <div class="group relative bg-white rounded-xl border border-gray-200 p-5 cursor-pointer transition-all hover:-translate-y-0.5 hover:border-sky-400 hover:shadow-md"
+           @click="window.open('{{ labguides }}', '_blank')">
+        <div class="absolute top-4 right-4 flex items-center gap-2">
+          {% if "pdf" not in disable_links %}
+          <a href="/labguides/ATD.pdf" target="_blank" @click.stop
+             class="relative z-10 text-xs text-sky-500 hover:underline font-medium">PDF</a>
+          {% end %}
+          <svg class="w-4 h-4 text-gray-300 group-hover:text-sky-400 transition-colors" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/>
+          </svg>
+        </div>
+        <div class="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center mb-3">
+          <svg class="w-5 h-5 text-gray-500 transition-colors group-hover:text-sky-500" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.966 8.966 0 0 0-6 2.292m0-14.25v14.25"/>
+          </svg>
+        </div>
+        <div class="font-semibold text-gray-800 text-sm">Lab Guides</div>
+      </div>
+      {% end %}
+
+      {% if "console" not in disable_links %}
+      <a href="/ssh/host/192.168.0.1" target="_blank"
+         class="group relative bg-white rounded-xl border border-gray-200 p-5 transition-all hover:-translate-y-0.5 hover:border-sky-400 hover:shadow-md">
+        <svg class="absolute top-4 right-4 w-4 h-4 text-gray-300 group-hover:text-sky-400 transition-colors" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/>
+        </svg>
+        <div class="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center mb-3">
+          <svg class="w-5 h-5 text-gray-500 transition-colors group-hover:text-sky-500" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="m6.75 7.5 3 2.25-3 2.25m4.5 0h3m-9 8.25h13.5A2.25 2.25 0 0 0 21 18V6a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 6v12a2.25 2.25 0 0 0 2.25 2.25Z"/>
+          </svg>
+        </div>
+        <div class="font-semibold text-gray-800 text-sm">Console Access</div>
+      </a>
+      {% end %}
+
+      {% if "ide" not in disable_links %}
+      <a href="/coder" target="_blank"
+         class="group relative bg-white rounded-xl border border-gray-200 p-5 transition-all hover:-translate-y-0.5 hover:border-sky-400 hover:shadow-md">
+        <svg class="absolute top-4 right-4 w-4 h-4 text-gray-300 group-hover:text-sky-400 transition-colors" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/>
+        </svg>
+        <div class="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center mb-3">
+          <svg class="w-5 h-5 text-gray-500 transition-colors group-hover:text-sky-500" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75 22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3-4.5 16.5"/>
+          </svg>
+        </div>
+        <div class="font-semibold text-gray-800 text-sm">Programmability IDE</div>
+      </a>
+      {% end %}
+
+      {% if "webui" not in disable_links %}
+      <a href="/firefox" target="_blank"
+         class="group relative bg-white rounded-xl border border-gray-200 p-5 transition-all hover:-translate-y-0.5 hover:border-sky-400 hover:shadow-md">
+        <svg class="absolute top-4 right-4 w-4 h-4 text-gray-300 group-hover:text-sky-400 transition-colors" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/>
+        </svg>
+        <div class="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center mb-3">
+          <svg class="w-5 h-5 text-gray-500 transition-colors group-hover:text-sky-500" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 0 1 7.843 4.582M12 3a8.997 8.997 0 0 0-7.843 4.582m15.686 0A11.953 11.953 0 0 1 12 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0 1 21 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0 1 12 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 0 1 3 12c0-1.605.42-3.113 1.157-4.418"/>
+          </svg>
+        </div>
+        <div class="font-semibold text-gray-800 text-sm">WebUI</div>
+      </a>
+      {% end %}
+
+      {% if "alertapi" not in disable_links %}
+      <a href="/alert" target="_blank"
+         class="group relative bg-white rounded-xl border border-gray-200 p-5 transition-all hover:-translate-y-0.5 hover:border-sky-400 hover:shadow-md">
+        <svg class="absolute top-4 right-4 w-4 h-4 text-gray-300 group-hover:text-sky-400 transition-colors" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/>
+        </svg>
+        <div class="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center mb-3">
+          <svg class="w-5 h-5 text-gray-500 transition-colors group-hover:text-sky-500" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0"/>
+          </svg>
+        </div>
+        <div class="font-semibold text-gray-800 text-sm">Event Alert API</div>
+      </a>
+      {% end %}
+
+      {% if "jenkins" not in disable_links %}
+      <a href="/jenkins" target="_blank"
+         class="group relative bg-white rounded-xl border border-gray-200 p-5 transition-all hover:-translate-y-0.5 hover:border-sky-400 hover:shadow-md">
+        <svg class="absolute top-4 right-4 w-4 h-4 text-gray-300 group-hover:text-sky-400 transition-colors" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/>
+        </svg>
+        <div class="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center mb-3">
+          <svg class="w-5 h-5 text-gray-500 transition-colors group-hover:text-sky-500" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75a4.5 4.5 0 0 1-4.884 4.484c-1.076-.091-2.264.071-2.95.904l-7.152 8.684a2.548 2.548 0 1 1-3.586-3.586l8.684-7.152c.833-.686.995-1.874.904-2.95a4.5 4.5 0 0 1 6.336-4.486l-3.276 3.276a3.004 3.004 0 0 0 2.25 2.25l3.276-3.276c.256.565.398 1.192.398 1.852Z"/>
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4.867 19.125h.008v.008h-.008v-.008Z"/>
+          </svg>
+        </div>
+        <div class="font-semibold text-gray-800 text-sm">Jenkins</div>
+      </a>
+      {% end %}
+
+      {% if "ipam" not in disable_links %}
+      <a href="/ipam" target="_blank"
+         class="group relative bg-white rounded-xl border border-gray-200 p-5 transition-all hover:-translate-y-0.5 hover:border-sky-400 hover:shadow-md">
+        <svg class="absolute top-4 right-4 w-4 h-4 text-gray-300 group-hover:text-sky-400 transition-colors" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/>
+        </svg>
+        <div class="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center mb-3">
+          <svg class="w-5 h-5 text-gray-500 transition-colors group-hover:text-sky-500" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9"/>
+          </svg>
+        </div>
+        <div class="font-semibold text-gray-800 text-sm">IPAM</div>
+      </a>
+      {% end %}
+
+    </div>
+
+    <!-- Topology Card -->
+    <div class="bg-white rounded-xl border border-gray-200 p-6">
+      <h2 class="text-base font-semibold text-gray-800 mb-1">Network Topology</h2>
+      <p class="text-sm text-gray-400 mb-5">Click a device to open a console session in a new tab.</p>
+      <div class="flex justify-center">
+        <div class="border border-gray-200 rounded-lg overflow-hidden inline-block">
+          <img src="topo/atd-topo.png" usemap="#image_map" class="block max-w-full">
+        </div>
+      </div>
+      <map name="image_map">
+        {% for node in NODES %}
+        {% if node == "CVP" %}
+        <area alt="{{ escape(node) }}" title="{{ escape(node) }}" href="/cv" target="_blank"
+          coords="{{ escape(NODES[node]['coords']) }}" shape="rect">
+        {% else %}
+        <area alt="{{ escape(node) }}" title="{{ escape(node) }}" href="/ssh/host/{{ escape(NODES[node]['ip']) }}"
+          target="_blank" coords="{{ escape(NODES[node]['coords']) }}" shape="rect">
+        {% end %}
+        {% end %}
+      </map>
+    </div>
+
+  </main>
 
 </body>
-
 </html>
