@@ -108,12 +108,12 @@ topologies:
               cpu: 22
               ram: 48
               disk: 60
-              image: atd-alma-dual-datacenter-c2025-3-2-ceos-20260327-eos
+              image: atd-alma-dual-datacenter-c2025-3-2-ceos-20260702-eos
             resources_cvp:
               cpu: 36
               ram: 60
               disk: 300
-              image: atd-alma-dual-datacenter-c2025-3-2-ceos-20260327-cvp
+              image: atd-alma-dual-datacenter-c2025-3-2-ceos-20260702-cvp
             branch: nested/2025.3
             orderable: true
             eos:
@@ -240,12 +240,12 @@ topologies:
               cpu: 22
               ram: 48
               disk: 60
-              image: atd-alma-dual-datacenter-c2025-3-2-ceos-20260327-eos
+              image: atd-alma-dual-datacenter-c2025-3-2-ceos-20260702-eos
             resources_cvp:
               cpu: 36
               ram: 60
               disk: 300
-              image: atd-alma-dual-datacenter-c2025-3-2-ceos-20260327-cvp
+              image: atd-alma-dual-datacenter-c2025-3-2-ceos-20260702-cvp
             branch: v2025.3-20260327
             orderable: true
             eos:
@@ -385,12 +385,12 @@ topologies:
               cpu: 22
               ram: 48
               disk: 60
-              image: atd-alma-routing-c2025-3-2-ceos-20260403-eos
+              image: atd-alma-routing-c2025-3-2-ceos-20260702-eos
             resources_cvp:
               cpu: 36
               ram: 60
               disk: 300
-              image: atd-alma-routing-c2025-3-2-ceos-20260403-cvp
+              image: atd-alma-routing-c2025-3-2-ceos-20260702-cvp
             branch: nested/2025.3
             orderable: true
             eos:
@@ -484,12 +484,12 @@ topologies:
               cpu: 22
               ram: 48
               disk: 60
-              image: atd-alma-routing-c2025-3-2-ceos-20260403-eos
+              image: atd-alma-routing-c2025-3-2-ceos-20260702-eos
             resources_cvp:
               cpu: 36
               ram: 60
               disk: 300
-              image: atd-alma-routing-c2025-3-2-ceos-20260403-cvp
+              image: atd-alma-routing-c2025-3-2-ceos-20260702-cvp
             branch: v2025.3-20260327
             orderable: true
             eos:
@@ -614,12 +614,12 @@ topologies:
               cpu: 22
               ram: 48
               disk: 60
-              image: atd-alma-campus-c2025-3-2-ceos-20260414-eos
+              image: atd-alma-campus-c2025-3-2-ceos-20260702-eos
             resources_cvp:
               cpu: 36
               ram: 60
               disk: 300
-              image: atd-alma-campus-c2025-3-2-ceos-20260414-cvp
+              image: atd-alma-campus-c2025-3-2-ceos-20260702-cvp
             branch: nested/2025.3
             orderable: true
             eos:
@@ -738,12 +738,12 @@ topologies:
               cpu: 22
               ram: 48
               disk: 60
-              image: atd-alma-campus-c2025-3-2-ceos-20260414-eos
+              image: atd-alma-campus-c2025-3-2-ceos-20260702-eos
             resources_cvp:
               cpu: 36
               ram: 60
               disk: 300
-              image: atd-alma-campus-c2025-3-2-ceos-20260414-cvp
+              image: atd-alma-campus-c2025-3-2-ceos-20260702-cvp
             branch: v2025.3-20260327
             orderable: true
             eos:
