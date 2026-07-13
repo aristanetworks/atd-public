@@ -17,50 +17,50 @@
 <body class="bg-slate-100 min-h-screen" x-data>
 
   <!-- Sticky Header -->
-  <header class="sticky top-0 z-50 bg-gray-900 text-white px-6 flex items-center justify-between h-14">
+  <header class="sticky top-0 z-50 bg-gray-900 text-white px-8 flex items-center justify-between h-16">
 
     <!-- Left: Logo + Lab Title -->
-    <div class="flex items-center gap-3 shrink-0">
-      <img src="images/logotransparent.png" class="h-7 w-auto">
+    <div class="flex items-center gap-4 shrink-0">
+      <img src="images/logotransparent.png" class="h-9 w-auto">
       <div>
-        <div class="text-xs text-gray-500 uppercase tracking-widest leading-none mb-0.5">Lab Environment</div>
-        <div class="text-sm font-semibold text-white leading-none">{{ topo_title }}</div>
+        <div class="text-xs text-gray-500 uppercase tracking-widest leading-none mb-1">Lab Environment</div>
+        <div class="text-base font-semibold text-white leading-none">{{ topo_title }}</div>
       </div>
     </div>
 
     <!-- Center: Credentials -->
     <div class="flex items-center">
       <div class="w-px h-8 bg-gray-700 mx-4"></div>
-      <span class="text-xs font-medium text-gray-500 uppercase tracking-widest mr-4">Credentials</span>
+      <span class="text-sm font-medium text-gray-500 uppercase tracking-widest mr-4">Credentials</span>
       <div class="w-px h-8 bg-gray-700 mx-4"></div>
-      <div class="flex items-center gap-2">
-        <span class="text-xs text-gray-500">user</span>
-        <code class="text-xs font-mono bg-gray-800 text-gray-200 px-2 py-0.5 rounded border border-gray-700">arista</code>
-        <span class="text-xs text-gray-500">pass</span>
-        <div class="flex items-center gap-1" x-data="{ copied: false }">
-          <code class="text-xs font-mono bg-gray-800 text-gray-200 px-2 py-0.5 rounded border border-gray-700">{{ ARISTA_PWD }}</code>
+      <div class="flex items-center gap-3">
+        <span class="text-sm text-gray-500">user</span>
+        <code class="text-sm font-mono bg-gray-800 text-gray-200 px-2.5 py-1 rounded border border-gray-700">arista</code>
+        <span class="text-sm text-gray-500">pass</span>
+        <div class="flex items-center gap-1.5" x-data="{ copied: false }">
+          <code class="text-sm font-mono bg-gray-800 text-gray-200 px-2.5 py-1 rounded border border-gray-700">{{ ARISTA_PWD }}</code>
           <button @click="navigator.clipboard.writeText($el.previousElementSibling.textContent.trim()); copied = true; setTimeout(() => copied = false, 1500)"
                   class="p-1 rounded text-gray-600 hover:text-gray-300 transition-colors" title="Copy password">
-            <svg x-show="!copied" class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+            <svg x-show="!copied" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" d="M15.666 3.888A2.25 2.25 0 0 0 13.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 0 1-.75.75H9a.75.75 0 0 1-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 0 1-2.25 2.25H6.75A2.25 2.25 0 0 1 4.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 0 1 1.927-.184"/>
             </svg>
-            <svg x-show="copied" x-cloak class="w-3 h-3 text-emerald-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <svg x-show="copied" x-cloak class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/>
             </svg>
           </button>
         </div>
       </div>
       <div class="w-px h-8 bg-gray-700 mx-4"></div>
-      <div class="flex items-center gap-2">
-        <span class="text-xs text-gray-500">WebUI pass</span>
-        <div class="flex items-center gap-1" x-data="{ copied: false }">
-          <code class="text-xs font-mono bg-gray-800 text-gray-200 px-2 py-0.5 rounded border border-gray-700">@rista1</code>
+      <div class="flex items-center gap-3">
+        <span class="text-sm text-gray-500">WebUI pass</span>
+        <div class="flex items-center gap-1.5" x-data="{ copied: false }">
+          <code class="text-sm font-mono bg-gray-800 text-gray-200 px-2.5 py-1 rounded border border-gray-700">@rista1</code>
           <button @click="navigator.clipboard.writeText($el.previousElementSibling.textContent.trim()); copied = true; setTimeout(() => copied = false, 1500)"
                   class="p-1 rounded text-gray-600 hover:text-gray-300 transition-colors" title="Copy password">
-            <svg x-show="!copied" class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+            <svg x-show="!copied" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" d="M15.666 3.888A2.25 2.25 0 0 0 13.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 0 1-.75.75H9a.75.75 0 0 1-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 0 1-2.25 2.25H6.75A2.25 2.25 0 0 1 4.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 0 1 1.927-.184"/>
             </svg>
-            <svg x-show="copied" x-cloak class="w-3 h-3 text-emerald-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <svg x-show="copied" x-cloak class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/>
             </svg>
           </button>
@@ -71,8 +71,8 @@
 
     <!-- Right: Countdown Timer -->
     <div class="text-right shrink-0">
-      <div class="text-xs text-gray-500 uppercase tracking-widest leading-none mb-0.5">Time Remaining</div>
-      <div id="countdown_timer" class="text-xl font-mono font-bold leading-none">00:00:00</div>
+      <div class="text-xs text-gray-500 uppercase tracking-widest leading-none mb-1">Time Remaining</div>
+      <div id="countdown_timer" class="text-2xl font-mono font-bold leading-none">00:00:00</div>
     </div>
 
   </header>
