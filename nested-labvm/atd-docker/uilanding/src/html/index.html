@@ -78,10 +78,10 @@
   </header>
 
   <!-- Main Content -->
-  <main class="p-6 max-w-7xl mx-auto">
+  <main class="px-8 py-6">
 
     <!-- Service Tiles -->
-    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 mb-6">
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4 mb-6">
 
       <!-- CVP tile (dynamic via Alpine store) -->
       {% if topo_cvp and "cvp" not in disable_links %}
@@ -229,10 +229,8 @@
     <div class="bg-white rounded-xl border border-gray-200 p-6">
       <h2 class="text-base font-semibold text-gray-800 mb-1">Network Topology</h2>
       <p class="text-sm text-gray-400 mb-5">Click a device to open a console session in a new tab.</p>
-      <div class="flex justify-center">
-        <div class="border border-gray-200 rounded-lg overflow-hidden inline-block">
-          <img src="topo/atd-topo.png" usemap="#image_map" class="block max-w-full">
-        </div>
+      <div class="border border-gray-200 rounded-lg overflow-hidden">
+        <img src="topo/atd-topo.png" usemap="#image_map" class="block w-full h-auto">
       </div>
       <map name="image_map">
         {% for node in NODES %}
