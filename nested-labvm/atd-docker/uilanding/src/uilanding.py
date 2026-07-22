@@ -4,6 +4,7 @@ from datetime import datetime, timedelta
 from ruamel.yaml import YAML
 from time import sleep
 from base64 import b64decode, b64encode
+import struct
 import tornado.ioloop
 import tornado.web
 import tornado.websocket
@@ -28,6 +29,24 @@ MODULE_FILE = ArBASE_PATH + 'modules.yaml'
 
 with open(MODULE_FILE, 'r') as mf:
     MOD_YAML = YAML().load(mf)
+
+def get_png_dimensions(filepath):
+    with open(filepath, 'rb') as f:
+        f.read(16)
+        width, height = struct.unpack('>II', f.read(8))
+    return width, height
+
+topo_image = ArBASE_PATH + MOD_YAML['topology']['image']
+img_w, img_h = get_png_dimensions(topo_image)
+for node in MOD_YAML['topology']['nodes']:
+    coords = MOD_YAML['topology']['nodes'][node]['coords'].split(',')
+    x1, y1, x2, y2 = [int(c) for c in coords]
+    MOD_YAML['topology']['nodes'][node]['pct'] = {
+        'left': round(x1 / img_w * 100, 2),
+        'top': round(y1 / img_h * 100, 2),
+        'width': round((x2 - x1) / img_w * 100, 2),
+        'height': round((y2 - y1) / img_h * 100, 2),
+    }
 
 # Add in check to make sure arista password has been updated
 while True:

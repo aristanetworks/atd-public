@@ -76,45 +76,6 @@ function createWS(SOCK_URL) {
     };
 }
 
-function initImageMapResize() {
-    var img = document.querySelector('img[usemap="#image_map"]');
-    if (!img) return;
-    var areas = document.querySelectorAll('map[name="image_map"] area');
-    var originalCoords = [];
-
-    function storeOriginalCoords() {
-        for (var i = 0; i < areas.length; i++) {
-            originalCoords.push(areas[i].getAttribute('coords').split(',').map(Number));
-        }
-    }
-
-    function scaleCoords() {
-        if (!originalCoords.length || !img.naturalWidth) return;
-        var scaleX = img.clientWidth / img.naturalWidth;
-        var scaleY = img.clientHeight / img.naturalHeight;
-        for (var i = 0; i < areas.length; i++) {
-            var scaled = originalCoords[i].map(function(val, idx) {
-                return Math.round(val * (idx % 2 === 0 ? scaleX : scaleY));
-            });
-            areas[i].setAttribute('coords', scaled.join(','));
-        }
-    }
-
-    if (img.naturalWidth) {
-        storeOriginalCoords();
-        scaleCoords();
-    } else {
-        img.addEventListener('load', function() {
-            storeOriginalCoords();
-            scaleCoords();
-        });
-    }
-
-    window.addEventListener('resize', scaleCoords);
-}
-
-document.addEventListener('DOMContentLoaded', initImageMapResize);
-
 function instanceCountdown(element, boot_time, runtime) {
     var el = document.getElementById(element);
     if (!el) return;

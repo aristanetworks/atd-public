@@ -229,20 +229,22 @@
     <div class="bg-white rounded-xl border border-gray-200 p-6">
       <h2 class="text-base font-semibold text-gray-800 mb-1">Network Topology</h2>
       <p class="text-sm text-gray-400 mb-5">Click a device to open a console session in a new tab.</p>
-      <div class="border border-gray-200 rounded-lg overflow-hidden">
-        <img src="topo/atd-topo.png" usemap="#image_map" class="block w-full h-auto">
-      </div>
-      <map name="image_map">
+      <div class="relative border border-gray-200 rounded-lg overflow-hidden">
+        <img src="topo/atd-topo.png" class="block w-full h-auto">
         {% for node in NODES %}
         {% if node == "CVP" %}
-        <area alt="{{ escape(node) }}" title="{{ escape(node) }}" href="/cv" target="_blank"
-          coords="{{ escape(NODES[node]['coords']) }}" shape="rect">
+        <a href="/cv" target="_blank" title="{{ escape(node) }}"
+           class="absolute hover:bg-sky-400/20 hover:ring-2 hover:ring-sky-400 rounded transition-colors"
+           style="left:{{ NODES[node]['pct']['left'] }}%; top:{{ NODES[node]['pct']['top'] }}%; width:{{ NODES[node]['pct']['width'] }}%; height:{{ NODES[node]['pct']['height'] }}%;">
+        </a>
         {% else %}
-        <area alt="{{ escape(node) }}" title="{{ escape(node) }}" href="/ssh/host/{{ escape(NODES[node]['ip']) }}"
-          target="_blank" coords="{{ escape(NODES[node]['coords']) }}" shape="rect">
+        <a href="/ssh/host/{{ escape(NODES[node]['ip']) }}" target="_blank" title="{{ escape(node) }}"
+           class="absolute hover:bg-sky-400/20 hover:ring-2 hover:ring-sky-400 rounded transition-colors"
+           style="left:{{ NODES[node]['pct']['left'] }}%; top:{{ NODES[node]['pct']['top'] }}%; width:{{ NODES[node]['pct']['width'] }}%; height:{{ NODES[node]['pct']['height'] }}%;">
+        </a>
         {% end %}
         {% end %}
-      </map>
+      </div>
     </div>
 
   </main>
