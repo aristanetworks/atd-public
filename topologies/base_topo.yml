@@ -95,7 +95,7 @@ topologies:
               disk: 300
               image: atd-alma-dual-datacenter-c2025-3-1-ceos-20260320-cvp
             branch: nested/2025.3
-            orderable: true
+            orderable: false
             eos:
               - 4.35.1F
               - 4.35.0F
@@ -115,7 +115,7 @@ topologies:
               disk: 300
               image: atd-alma-dual-datacenter-c2025-3-2-ceos-20260702-cvp
             branch: nested/2025.3
-            orderable: true
+            orderable: false
             eos:
               - 4.35.1F
               - 4.35.0F
@@ -210,7 +210,7 @@ topologies:
               disk: 300
               image: atd-alma-dual-datacenter-c2025-1-1-ceos-20250529-cvp
             branch: v2025.1-20251110
-            orderable: true
+            orderable: false
             eos:
               - 4.33.0F
               - 4.32.2F
@@ -227,7 +227,7 @@ topologies:
               disk: 300
               image: atd-alma-dual-datacenter-c2025-3-1-ceos-20260320-cvp
             branch: v2025.3-20260327
-            orderable: true
+            orderable: false
             eos:
               - 4.35.1F
               - 4.35.0F
@@ -247,7 +247,7 @@ topologies:
               disk: 300
               image: atd-alma-dual-datacenter-c2025-3-2-ceos-20260702-cvp
             branch: v2025.3-20260327
-            orderable: true
+            orderable: false
             eos:
               - 4.35.1F
               - 4.35.0F
@@ -333,7 +333,7 @@ topologies:
               disk: 300
               image: atd-alma-routing-c2025-2-1-veos-4-34-2-1f-20251006-cvp
             branch: nested/2025.2
-            orderable: true
+            orderable: false
             eos:
               - 4.34.2.1F
               - 4.34.0F
@@ -373,7 +373,7 @@ topologies:
               disk: 300
               image: atd-alma-routing-c2025-1-1-ceos-20250619-cvp
             branch: nested/2025.1
-            orderable: true
+            orderable: false
             eos:
               - 4.35.0F
               - 4.34.3M
@@ -392,7 +392,7 @@ topologies:
               disk: 300
               image: atd-alma-routing-c2025-3-1-ceos-20260323-cvp
             branch: nested/2025.3
-            orderable: true
+            orderable: false
             eos:
               - 4.35.0F
               - 4.34.3M
@@ -412,7 +412,7 @@ topologies:
               disk: 300
               image: atd-alma-routing-c2025-3-2-ceos-20260702-cvp
             branch: nested/2025.3
-            orderable: true
+            orderable: false
             eos:
               - 4.35.0F
               - 4.34.3M
@@ -474,7 +474,7 @@ topologies:
               disk: 300
               image: atd-alma-routing-c2025-1-1-ceos-20250619-cvp
             branch: v2025.1-20251110
-            orderable: true
+            orderable: false
             eos:
               - 4.33.0F
               - 4.32.2F
@@ -491,7 +491,7 @@ topologies:
               disk: 300
               image: atd-alma-routing-c2025-3-1-ceos-20260323-cvp
             branch: v2025.3-20260327
-            orderable: true
+            orderable: false
             eos:
               - 4.35.0F
               - 4.34.3M
@@ -511,7 +511,7 @@ topologies:
               disk: 300
               image: atd-alma-routing-c2025-3-2-ceos-20260702-cvp
             branch: v2025.3-20260327
-            orderable: true
+            orderable: false
             eos:
               - 4.35.0F
               - 4.34.3M
@@ -639,7 +639,7 @@ topologies:
               disk: 300
               image: atd-alma-campus-c2025-3-1-ceos-20260320-cvp
             branch: nested/2025.3
-            orderable: true
+            orderable: false
             eos:
               - 4.35.1F
               - 4.35.0F
@@ -661,7 +661,7 @@ topologies:
               disk: 300
               image: atd-alma-campus-c2025-3-2-ceos-20260702-cvp
             branch: nested/2025.3
-            orderable: true
+            orderable: false
             eos:
               - 4.35.1F
               - 4.35.0F
@@ -726,7 +726,7 @@ topologies:
               disk: 300
               image: atd-alma-campus-c2025-1-1-ceos-20250527-cvp
             branch: v2025.1-20251110
-            orderable: true
+            orderable: false
             eos:
               - 4.33.0F
               - 4.32.2F
@@ -743,7 +743,7 @@ topologies:
               disk: 300
               image: atd-alma-campus-c2025-3-1-ceos-20260320-cvp
             branch: v2025.3-20260327
-            orderable: true
+            orderable: false
             eos:
               - 4.35.1F
               - 4.35.0F
@@ -765,7 +765,7 @@ topologies:
               disk: 300
               image: atd-alma-campus-c2025-3-2-ceos-20260702-cvp
             branch: v2025.3-20260327
-            orderable: true
+            orderable: false
             eos:
               - 4.35.1F
               - 4.35.0F
