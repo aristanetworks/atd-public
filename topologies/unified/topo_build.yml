@@ -1,0 +1,6 @@
+host_cpu: 8
+cvp_cpu: 32
+cvp_ram: 52
+cvp_nodes: 1
+veos_cpu: 1
+additional_ssh_nodes:

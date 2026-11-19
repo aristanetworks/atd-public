@@ -1,0 +1,407 @@
+---
+lab_list:
+  reset:
+    additional_commands: 
+      - "bash /home/arista/Broadcaster/pushhostDefaultConfig.sh"
+    description: "Reset All Devices to Base ATD (reset)"
+  l2evpn:
+    description: "Layer 2 EVPN VXLAN Lab (l2evpn) - Site 1 Only with MLAG"
+  l3evpn:
+    description: "Layer 3 EVPN VXLAN Lab (l3evpn) - Site 1 Only with MLAG"
+  l2l3evpn:
+    description: "Layer 2 and 3 EVPN VXLAN Lab (l2l3evpn) - Site 1 Only with MLAG"
+  l2l3evpn-aa:
+    description: "Layer 2 and 3 EVPN VXLAN Lab (l2l3evpn-aa) - Site 1 Only with EVPN A-A"
+labconfiglets:
+  reset:
+    s1-spine1:
+      - "BASE_s1-spine1"
+    s1-spine2:
+      - "BASE_s1-spine2"
+    s1-leaf1:
+      - "BASE_s1-leaf1"
+    s1-leaf2:
+      - "BASE_s1-leaf2"
+    s1-leaf3:
+      - "BASE_s1-leaf3"
+    s1-leaf4:
+      - "BASE_s1-leaf4"
+    s1-brdr1:
+      - "BASE_s1-brdr1"
+    s1-brdr2:
+      - "BASE_s1-brdr2"
+    core-1:
+      - "BASE_core-1"
+    core-2:
+      - "BASE_core-2"
+
+    s1-host1:
+      - "BASE_s1-host1"
+    s1-host2:
+      - "BASE_s1-host2"
+    s2-spine1:
+      - "BASE_s2-spine1"
+    s2-spine2:
+      - "BASE_s2-spine2"
+    s2-leaf1:
+      - "BASE_s2-leaf1"
+    s2-leaf2:
+      - "BASE_s2-leaf2"
+    s2-leaf3:
+      - "BASE_s2-leaf3"
+    s2-leaf4:
+      - "BASE_s2-leaf4"
+    s2-brdr1:
+      - "BASE_s2-brdr1"
+    s2-brdr2:
+      - "BASE_s2-brdr2"
+    s2-host1:
+      - "BASE_s2-host1"
+    s2-host2:
+      - "BASE_s2-host2"
+    router-1:
+      - "BASE_router-1"
+      - "DHCP-router1"
+    router-2:
+      - "BASE_router-2"
+    spine-1:
+      - "BASE_spine-1"
+      - "DHCP-spine1"
+    spine-2:
+      - "BASE_spine-2"
+    leaf-1a:
+      - "BASE_leaf-1a"
+    leaf-1b:
+      - "BASE_leaf-1b"
+    leaf-2a:
+      - "BASE_leaf-2a"
+    leaf-3a:
+      - "BASE_leaf-3a"
+    leaf-3b:
+      - "BASE_leaf-3b"
+    member-leaf-3c:
+      - "BASE_member-leaf-3c"
+    member-leaf-3d:
+      - "BASE_member-leaf-3d"
+    member-leaf-3e:
+      - "BASE_member-leaf-3e"
+  l2evpn:
+    s1-spine1:
+      - "BASE_s1-spine1"
+      - "L2EVPN_s1-spine1"
+    s1-spine2:
+      - "BASE_s1-spine2"
+      - "L2EVPN_s1-spine2"
+    s1-leaf1:
+      - "BASE_s1-leaf1"
+      - "L2EVPN_s1-leaf1"
+    s1-leaf2:
+      - "BASE_s1-leaf2"
+      - "L2EVPN_s1-leaf2"
+    s1-leaf3:
+      - "BASE_s1-leaf3"
+      - "L2EVPN_s1-leaf3"
+    s1-leaf4:
+      - "BASE_s1-leaf4"
+      - "L2EVPN_s1-leaf4"
+    s1-brdr1:
+      - "BASE_s1-brdr1"
+    s1-brdr2:
+      - "BASE_s1-brdr2"
+    core-1:
+      - "BASE_core-1"
+    core-2:
+      - "BASE_core-2"
+
+    s1-host1:
+      - "BASE_s1-host1"
+      - "L2EVPN_s1-host1"
+    s1-host2:
+      - "BASE_s1-host2"
+      - "L2EVPN_s1-host2"
+    s2-spine1:
+      - "BASE_s2-spine1"
+    s2-spine2:
+      - "BASE_s2-spine2"
+    s2-leaf1:
+      - "BASE_s2-leaf1"
+    s2-leaf2:
+      - "BASE_s2-leaf2"
+    s2-leaf3:
+      - "BASE_s2-leaf3"
+    s2-leaf4:
+      - "BASE_s2-leaf4"
+    s2-brdr1:
+      - "BASE_s2-brdr1"
+    s2-brdr2:
+      - "BASE_s2-brdr2"
+    s2-host1:
+      - "BASE_s2-host1"
+    s2-host2:
+      - "BASE_s2-host2"
+    router-1:
+      - "BASE_router-1"
+      - "DHCP-router1"
+    router-2:
+      - "BASE_router-2"
+    spine-1:
+      - "BASE_spine-1"
+      - "DHCP-spine1"
+    spine-2:
+      - "BASE_spine-2"
+    leaf-1a:
+      - "BASE_leaf-1a"
+    leaf-1b:
+      - "BASE_leaf-1b"
+    leaf-2a:
+      - "BASE_leaf-2a"
+    leaf-3a:
+      - "BASE_leaf-3a"
+    leaf-3b:
+      - "BASE_leaf-3b"
+    member-leaf-3c:
+      - "BASE_member-leaf-3c"
+    member-leaf-3d:
+      - "BASE_member-leaf-3d"
+    member-leaf-3e:
+      - "BASE_member-leaf-3e"
+  l3evpn:
+    s1-spine1:
+      - "BASE_s1-spine1"
+      - "L3EVPN_s1-spine1"
+    s1-spine2:
+      - "BASE_s1-spine2"
+      - "L3EVPN_s1-spine2"
+    s1-leaf1:
+      - "BASE_s1-leaf1"
+      - "L3EVPN_s1-leaf1"
+    s1-leaf2:
+      - "BASE_s1-leaf2"
+      - "L3EVPN_s1-leaf2"
+    s1-leaf3:
+      - "BASE_s1-leaf3"
+      - "L3EVPN_s1-leaf3"
+    s1-leaf4:
+      - "BASE_s1-leaf4"
+      - "L3EVPN_s1-leaf4"
+    s1-brdr1:
+      - "BASE_s1-brdr1"
+    s1-brdr2:
+      - "BASE_s1-brdr2"
+    core-1:
+      - "BASE_core-1"
+    core-2:
+      - "BASE_core-2"
+
+    s1-host1:
+      - "BASE_s1-host1"
+      - "L3EVPN_s1-host1"
+    s1-host2:
+      - "BASE_s1-host2"
+      - "L3EVPN_s1-host2"
+    s2-spine1:
+      - "BASE_s2-spine1"
+    s2-spine2:
+      - "BASE_s2-spine2"
+    s2-leaf1:
+      - "BASE_s2-leaf1"
+    s2-leaf2:
+      - "BASE_s2-leaf2"
+    s2-leaf3:
+      - "BASE_s2-leaf3"
+    s2-leaf4:
+      - "BASE_s2-leaf4"
+    s2-brdr1:
+      - "BASE_s2-brdr1"
+    s2-brdr2:
+      - "BASE_s2-brdr2"
+    s2-host1:
+      - "BASE_s2-host1"
+    s2-host2:
+      - "BASE_s2-host2"
+    router-1:
+      - "BASE_router-1"
+      - "DHCP-router1"
+    router-2:
+      - "BASE_router-2"
+    spine-1:
+      - "BASE_spine-1"
+      - "DHCP-spine1"
+    spine-2:
+      - "BASE_spine-2"
+    leaf-1a:
+      - "BASE_leaf-1a"
+    leaf-1b:
+      - "BASE_leaf-1b"
+    leaf-2a:
+      - "BASE_leaf-2a"
+    leaf-3a:
+      - "BASE_leaf-3a"
+    leaf-3b:
+      - "BASE_leaf-3b"
+    member-leaf-3c:
+      - "BASE_member-leaf-3c"
+    member-leaf-3d:
+      - "BASE_member-leaf-3d"
+    member-leaf-3e:
+      - "BASE_member-leaf-3e"
+  l2l3evpn:
+    s1-spine1:
+      - "BASE_s1-spine1"
+      - "L2L3EVPN_s1-spine1"
+    s1-spine2:
+      - "BASE_s1-spine2"
+      - "L2L3EVPN_s1-spine2"
+    s1-leaf1:
+      - "BASE_s1-leaf1"
+      - "L2L3EVPN_s1-leaf1"
+    s1-leaf2:
+      - "BASE_s1-leaf2"
+      - "L2L3EVPN_s1-leaf2"
+    s1-leaf3:
+      - "BASE_s1-leaf3"
+      - "L2L3EVPN_s1-leaf3"
+    s1-leaf4:
+      - "BASE_s1-leaf4"
+      - "L2L3EVPN_s1-leaf4"
+    s1-brdr1:
+      - "BASE_s1-brdr1"
+    s1-brdr2:
+      - "BASE_s1-brdr2"
+    core-1:
+      - "BASE_core-1"
+    core-2:
+      - "BASE_core-2"
+
+    s1-host1:
+      - "BASE_s1-host1"
+      - "L2L3EVPN_s1-host1"
+    s1-host2:
+      - "BASE_s1-host2"
+      - "L2L3EVPN_s1-host2"
+    s2-spine1:
+      - "BASE_s2-spine1"
+    s2-spine2:
+      - "BASE_s2-spine2"
+    s2-leaf1:
+      - "BASE_s2-leaf1"
+    s2-leaf2:
+      - "BASE_s2-leaf2"
+    s2-leaf3:
+      - "BASE_s2-leaf3"
+    s2-leaf4:
+      - "BASE_s2-leaf4"
+    s2-brdr1:
+      - "BASE_s2-brdr1"
+    s2-brdr2:
+      - "BASE_s2-brdr2"
+    s2-host1:
+      - "BASE_s2-host1"
+    s2-host2:
+      - "BASE_s2-host2"
+    router-1:
+      - "BASE_router-1"
+      - "DHCP-router1"
+    router-2:
+      - "BASE_router-2"
+    spine-1:
+      - "BASE_spine-1"
+      - "DHCP-spine1"
+    spine-2:
+      - "BASE_spine-2"
+    leaf-1a:
+      - "BASE_leaf-1a"
+    leaf-1b:
+      - "BASE_leaf-1b"
+    leaf-2a:
+      - "BASE_leaf-2a"
+    leaf-3a:
+      - "BASE_leaf-3a"
+    leaf-3b:
+      - "BASE_leaf-3b"
+    member-leaf-3c:
+      - "BASE_member-leaf-3c"
+    member-leaf-3d:
+      - "BASE_member-leaf-3d"
+    member-leaf-3e:
+      - "BASE_member-leaf-3e"
+  l2l3evpn-aa:
+    s1-spine1:
+      - "BASE_s1-spine1"
+      - "L2L3EVPN-AA_s1-spine1"
+    s1-spine2:
+      - "BASE_s1-spine2"
+      - "L2L3EVPN-AA_s1-spine2"
+    s1-leaf1:
+      - "BASE_s1-leaf1"
+      - "L2L3EVPN-AA_s1-leaf1"
+    s1-leaf2:
+      - "BASE_s1-leaf2"
+      - "L2L3EVPN-AA_s1-leaf2"
+    s1-leaf3:
+      - "BASE_s1-leaf3"
+      - "L2L3EVPN-AA_s1-leaf3"
+    s1-leaf4:
+      - "BASE_s1-leaf4"
+      - "L2L3EVPN-AA_s1-leaf4"
+    s1-brdr1:
+      - "BASE_s1-brdr1"
+    s1-brdr2:
+      - "BASE_s1-brdr2"
+    core-1:
+      - "BASE_core-1"
+    core-2:
+      - "BASE_core-2"
+
+    s1-host1:
+      - "BASE_s1-host1"
+      - "L2L3EVPN-AA_s1-host1"
+    s1-host2:
+      - "BASE_s1-host2"
+      - "L2L3EVPN-AA_s1-host2"
+    s2-spine1:
+      - "BASE_s2-spine1"
+    s2-spine2:
+      - "BASE_s2-spine2"
+    s2-leaf1:
+      - "BASE_s2-leaf1"
+    s2-leaf2:
+      - "BASE_s2-leaf2"
+    s2-leaf3:
+      - "BASE_s2-leaf3"
+    s2-leaf4:
+      - "BASE_s2-leaf4"
+    s2-brdr1:
+      - "BASE_s2-brdr1"
+    s2-brdr2:
+      - "BASE_s2-brdr2"
+    s2-host1:
+      - "BASE_s2-host1"
+    s2-host2:
+      - "BASE_s2-host2"
+    router-1:
+      - "BASE_router-1"
+      - "DHCP-router1"
+    router-2:
+      - "BASE_router-2"
+    spine-1:
+      - "BASE_spine-1"
+      - "DHCP-spine1"
+    spine-2:
+      - "BASE_spine-2"
+    leaf-1a:
+      - "BASE_leaf-1a"
+    leaf-1b:
+      - "BASE_leaf-1b"
+    leaf-2a:
+      - "BASE_leaf-2a"
+    leaf-3a:
+      - "BASE_leaf-3a"
+    leaf-3b:
+      - "BASE_leaf-3b"
+    member-leaf-3c:
+      - "BASE_member-leaf-3c"
+    member-leaf-3d:
+      - "BASE_member-leaf-3d"
+    member-leaf-3e:
+      - "BASE_member-leaf-3e"

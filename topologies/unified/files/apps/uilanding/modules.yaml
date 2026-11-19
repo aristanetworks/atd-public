@@ -1,0 +1,126 @@
+topology:
+  image: "atd-topo.png"
+  nodes:
+    s1-Spine1:
+      coords: "0,0,0,0"
+      ip: "192.168.0.10"
+    s1-Spine2:
+      coords: "0,0,0,0"
+      ip: "192.168.0.11"
+    s1-Leaf1:
+      coords: "0,0,0,0"
+      ip: "192.168.0.12"
+    s1-Leaf2:
+      coords: "0,0,0,0"
+      ip: "192.168.0.13"
+    s1-Leaf3:
+      coords: "0,0,0,0"
+      ip: "192.168.0.14"
+    s1-Leaf4:
+      coords: "0,0,0,0"
+      ip: "192.168.0.15"
+    s1-Host1:
+      coords: "0,0,0,0"
+      ip: "192.168.0.16"
+    s1-Host2:
+      coords: "0,0,0,0"
+      ip: "192.168.0.17"
+    s1-brdr1:
+      coords: "0,0,0,0"
+      ip: "192.168.0.100"
+    s1-brdr2:
+      coords: "0,0,0,0"
+      ip: "192.168.0.101"
+    s2-Spine1:
+      coords: "0,0,0,0"
+      ip: "192.168.0.20"
+    s2-Spine2:
+      coords: "0,0,0,0"
+      ip: "192.168.0.21"
+    s2-Leaf1:
+      coords: "0,0,0,0"
+      ip: "192.168.0.22"
+    s2-Leaf2:
+      coords: "0,0,0,0"
+      ip: "192.168.0.23"
+    s2-Leaf3:
+      coords: "0,0,0,0"
+      ip: "192.168.0.24"
+    s2-Leaf4:
+      coords: "0,0,0,0"
+      ip: "192.168.0.25"
+    s2-Host1:
+      coords: "0,0,0,0"
+      ip: "192.168.0.26"
+    s2-Host2:
+      coords: "0,0,0,0"
+      ip: "192.168.0.27"
+    s2-brdr1:
+      coords: "0,0,0,0"
+      ip: "192.168.0.200"
+    s2-brdr2:
+      coords: "0,0,0,0"
+      ip: "192.168.0.201"
+    core-1:
+      coords: "0,0,0,0"
+      ip: "192.168.0.102"
+    core-2:
+      coords: "0,0,0,0"
+      ip: "192.168.0.103"
+    router-1:
+      coords: "0,0,0,0"
+      ip: "192.168.0.30"
+    router-2:
+      coords: "0,0,0,0"
+      ip: "192.168.0.31"
+    spine-1:
+      coords: "0,0,0,0"
+      ip: "192.168.0.32"
+    spine-2:
+      coords: "0,0,0,0"
+      ip: "192.168.0.33"
+    leaf-1a:
+      coords: "0,0,0,0"
+      ip: "192.168.0.34"
+    leaf-1b:
+      coords: "0,0,0,0"
+      ip: "192.168.0.35"
+    leaf-2a:
+      coords: "0,0,0,0"
+      ip: "192.168.0.36"
+    leaf-3a:
+      coords: "0,0,0,0"
+      ip: "192.168.0.37"
+    leaf-3b:
+      coords: "0,0,0,0"
+      ip: "192.168.0.38"
+    member-leaf-3c:
+      coords: "0,0,0,0"
+      ip: "192.168.0.39"
+    member-leaf-3d:
+      coords: "0,0,0,0"
+      ip: "192.168.0.40"
+    member-leaf-3e:
+      coords: "0,0,0,0"
+      ip: "192.168.0.41"
+    host-1:
+      coords: "0,0,0,0"
+      ip: "192.168.0.42"
+    host-2:
+      coords: "0,0,0,0"
+      ip: "192.168.0.43"
+    host-3:
+      coords: "0,0,0,0"
+      ip: "192.168.0.44"
+    host-4:
+      coords: "0,0,0,0"
+      ip: "192.168.0.45"
+    host-5:
+      coords: "0,0,0,0"
+      ip: "192.168.0.46"
+    host-6:
+      coords: "0,0,0,0"
+      ip: "192.168.0.47"
+    CVP:
+      coords: "0,0,0,0"
+      ip: "192.168.0.5"

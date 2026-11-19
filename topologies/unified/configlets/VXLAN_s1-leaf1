@@ -1,0 +1,94 @@
+no spanning-tree vlan-id 4094
+!
+vlan 112
+   name Host_Network_112
+!
+vlan 134
+   name Host_Network_134
+!
+vlan 4094
+   name MLAG_VLAN
+   trunk group MLAGPEER
+!
+interface Port-Channel1
+   description MLAG Peer-link - s1-leaf2
+   switchport mode trunk
+   switchport trunk group MLAGPEER
+!
+interface Port-Channel5
+   description MLAG Downlink - s1-host1
+   switchport access vlan 112
+   mlag 5
+!
+interface Ethernet1
+   description MLAG Peer-link - s1-leaf2
+   switchport mode trunk
+   channel-group 1 mode active
+!
+interface Ethernet2
+   description L3 Uplink - s1-spine1
+   no switchport
+   ip address 10.111.1.1/31
+!
+interface Ethernet3
+   description L3 Uplink - s1-spine2
+   no switchport
+   ip address 10.111.2.1/31
+!
+interface Ethernet4
+   description MLAG Downlink - s1-host1
+   channel-group 5 mode active
+!
+interface Ethernet6
+   description MLAG Peer-link - s1-leaf2
+   switchport mode trunk
+   channel-group 1 mode active
+!
+interface Loopback0
+   description Management and Router-id
+   ip address 10.111.254.1/32
+!
+interface Loopback1
+   description VTEP
+   ip address 10.111.253.1/32
+!
+interface Vlan112
+   description Host Network
+   ip address virtual 10.111.112.1/24
+!
+interface Vlan134
+   description Host Network
+   ip address virtual 10.111.134.1/24
+!
+interface Vlan4094
+   description MLAG Peer Network
+   ip address 10.255.255.1/30
+!
+interface Vxlan1
+   vxlan source-interface Loopback1
+   vxlan udp-port 4789
+   vxlan vlan 112 vni 112
+   vxlan flood vtep 10.111.253.3
+!
+ip virtual-router mac-address 00:1C:73:00:00:01
+!
+mlag configuration
+   domain-id MLAG
+   local-interface Vlan4094
+   peer-address 10.255.255.2
+   peer-link Port-Channel1
+!
+router bgp 65101
+   router-id 10.111.254.1
+   maximum-paths 2
+   neighbor SPINE peer group
+   neighbor SPINE remote-as 65100
+   neighbor SPINE send-community standard extended
+   neighbor 10.111.1.0 peer group SPINE
+   neighbor 10.111.2.0 peer group SPINE
+   neighbor 10.255.255.2 remote-as 65101
+   neighbor 10.255.255.2 next-hop-self
+   network 10.111.254.1/32
+   network 10.111.253.1/32
+   network 10.111.112.0/24
+   network 10.111.134.0/24

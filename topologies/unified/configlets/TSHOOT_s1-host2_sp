@@ -1,0 +1,18 @@
+!
+spanning-tree mode mstp
+!
+no aaa root
+!
+interface Ethernet1
+shut
+!
+interface Ethernet2
+   no switchport
+   ip address 10.127.200.2/24
+!
+!
+ip routing
+!
+ip route 10.127.0.0/16 10.127.200.1
+!
+end

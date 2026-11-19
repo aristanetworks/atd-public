@@ -1,0 +1,88 @@
+vrf instance Prod
+!
+ip routing vrf Prod
+!
+
+
+!
+interface Ethernet1
+!
+interface Ethernet2
+   description to leaf1:Ethernet2
+   no switchport
+   ip address 10.255.0.0/31
+!
+interface Ethernet3
+   description to leaf2:Ethernet2
+   no switchport
+   ip address 10.255.0.4/31
+!
+interface Ethernet4
+   description to leaf3:Ethernet2
+   no switchport
+   ip address 10.255.0.8/31
+!
+interface Ethernet5
+   description to leaf4:Ethernet2
+   no switchport
+   ip address 10.255.0.12/31
+!
+interface Ethernet6
+!
+interface Loopback0
+   description BGP Router ID
+   ip address 10.255.1.1/32
+!
+ip routing
+!
+ip prefix-list PL_LOOPBACKS
+   seq 10 permit 10.255.1.0/24 eq 32
+!
+ip prefix-list PL_P2P_UNDERLAY
+   seq 10 permit 10.255.0.0/24 le 31
+!
+ntp server 192.168.0.1 iburst source Management0
+!
+ip radius source-interface Management0
+!
+route-map RM-CONN-2-BGP permit 10
+   match ip address prefix-list PL_P2P_UNDERLAY
+!
+route-map RM-CONN-2-BGP permit 20
+   match ip address prefix-list PL_LOOPBACKS
+!
+peer-filter LEAF-AS-Range
+   10 match as-range 65001-65099 result accept
+!
+router bfd
+   multihop interval 1200 min-rx 1200 multiplier 3
+!
+router bgp 65000
+   router-id 10.255.1.1
+   no bgp default ipv4-unicast
+   distance bgp 20 200 200
+   graceful-restart restart-time 300
+   graceful-restart
+   maximum-paths 4 ecmp 4
+   bgp listen range 10.255.1.0/24 peer-group EVPN_OVERLAY_PEERS peer-filter LEAF-AS-Range
+   bgp listen range 10.255.0.0/24 peer-group IPv4_UNDERLAY_PEERS peer-filter LEAF-AS-Range
+   neighbor EVPN_OVERLAY_PEERS peer group
+   neighbor EVPN_OVERLAY_PEERS next-hop-unchanged
+   neighbor EVPN_OVERLAY_PEERS update-source Loopback0
+   neighbor EVPN_OVERLAY_PEERS bfd
+   neighbor EVPN_OVERLAY_PEERS description evpn overlay peering
+   neighbor EVPN_OVERLAY_PEERS ebgp-multihop 3
+   neighbor EVPN_OVERLAY_PEERS send-community
+   neighbor EVPN_OVERLAY_PEERS maximum-routes 0 warning-limit 12000
+   neighbor IPv4_UNDERLAY_PEERS peer group
+   neighbor IPv4_UNDERLAY_PEERS description ipv4 peering
+   neighbor IPv4_UNDERLAY_PEERS send-community
+   neighbor IPv4_UNDERLAY_PEERS maximum-routes 12000
+   redistribute connected route-map RM-CONN-2-BGP
+   !
+   address-family evpn
+      neighbor EVPN_OVERLAY_PEERS activate
+   !
+   address-family ipv4
+      neighbor IPv4_UNDERLAY_PEERS activate
+!

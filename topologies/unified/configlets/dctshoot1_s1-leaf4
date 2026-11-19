@@ -1,0 +1,183 @@
+vrf instance Prod
+!
+ip routing vrf Prod
+!
+
+
+spanning-tree mode rapid-pvst
+no spanning-tree vlan-id 4094
+!
+vlan 10
+   name Prod
+!
+vlan 20
+   name Compute
+!
+vlan 4093
+   name IBGP-Prod
+   trunk group IBGP-VRF-Prod
+!
+vlan 4094
+   name MLAG-PEER-VLAN
+   trunk group MLAG-PEER
+   
+Int po1100   
+!
+interface Port-Channel1000
+   description MLAG Peer Link
+   switchport mode trunk
+   switchport trunk group IBGP-VRF-Prod
+   switchport trunk group MLAG-PEER
+!
+interface Ethernet1
+   description MLAG peer link member interface
+   channel-group 1000 mode active
+!
+interface Ethernet2
+   description to spine1:Ethernet5
+   no switchport
+   ip address 10.255.0.13/31
+!
+interface Ethernet3
+   description to spine2:Ethernet5
+   no switchport
+   ip address 10.255.0.15/31
+!
+interface Ethernet4
+   description Compute
+   speed auto
+   switchport access vlan 20
+   spanning-tree portfast
+!
+interface Ethernet5
+!
+interface Ethernet6
+   description MLAG peer link member interface
+   channel-group 1000 mode active
+!
+interface Loopback0
+   description BGP Router ID
+   ip address 10.255.1.6/32
+!
+interface Loopback1
+   description VXLAN Tunnel Source
+   ip address 10.255.2.2/32
+!
+interface Vlan10
+   mtu 9214
+   vrf Prod
+   ip address virtual 172.16.10.1/24
+!
+interface Vlan20
+   mtu 9214
+   vrf Prod
+   ip address virtual 172.16.20.1/24
+!
+interface Vlan4093
+   mtu 9214
+   vrf Prod
+   ip address 169.254.0.1/31
+!
+interface Vlan4094
+   description MLAG peering source
+   no autostate
+   ip address 169.254.0.1/31
+!
+interface Vxlan1
+   vxlan source-interface Loopback1
+   vxlan virtual-router encapsulation mac-address mlag-system-id
+   vxlan udp-port 4789
+   vxlan vlan 10 vni 10010
+   vxlan vlan 20 vni 10020
+   vxlan vrf Prod vni 50010
+!
+ip virtual-router mac-address 00:1c:73:00:00:99
+!
+ip prefix-list PL_LOOPBACKS
+   seq 10 permit 10.255.1.0/24 eq 32
+   seq 20 permit 10.255.2.0/24 eq 32
+!
+ip prefix-list PL_P2P_UNDERLAY
+   seq 10 permit 10.255.0.0/24 le 31
+!
+mlag configuration
+   domain-id MLAG
+   local-interface Vlan4094
+   peer-address 169.254.0.0
+   peer-link Port-Channel1100
+   reload-delay mlag 300
+   reload-delay non-mlag 330
+!
+route-map RM-CONN-2-BGP permit 10
+   match ip address prefix-list PL_P2P_UNDERLAY
+!
+route-map RM-CONN-2-BGP permit 20
+   match ip address prefix-list PL_LOOPBACKS
+!
+router bfd
+   multihop interval 1200 min-rx 1200 multiplier 3
+!
+router bgp 65002
+   router-id 10.255.1.6
+   no bgp log-neighbor-changes
+   no bgp default ipv4-unicast
+   distance bgp 20 200 200
+   graceful-restart restart-time 300
+   graceful-restart
+   maximum-paths 4 ecmp 4
+   neighbor EVPN_OVERLAY_PEERS peer group
+   neighbor EVPN_OVERLAY_PEERS remote-as 650000
+   No bgp log-neighbor-changes
+   neighbor EVPN_OVERLAY_PEERS update-source Loopback0
+   neighbor EVPN_OVERLAY_PEERS bfd
+   neighbor EVPN_OVERLAY_PEERS description evpn overlay peering
+   neighbor EVPN_OVERLAY_PEERS ebgp-multihop 3
+   neighbor EVPN_OVERLAY_PEERS send-community
+   neighbor EVPN_OVERLAY_PEERS maximum-routes 1 warning-limit 0
+   neighbor IPv4_UNDERLAY_PEERS peer group
+   neighbor IPv4_UNDERLAY_PEERS remote-as 65000
+   neighbor IPv4_UNDERLAY_PEERS description ipv4 peering
+   neighbor IPv4_UNDERLAY_PEERS send-community
+   neighbor IPv4_UNDERLAY_PEERS maximum-routes 12000
+   neighbor MLAG_IPv4_UNDERLAY_PEER peer group
+   neighbor MLAG_IPv4_UNDERLAY_PEER remote-as 65002
+   neighbor MLAG_IPv4_UNDERLAY_PEER next-hop-self
+   neighbor MLAG_IPv4_UNDERLAY_PEER description ipv4 with mlag neighbor
+   neighbor MLAG_IPv4_UNDERLAY_PEER send-community
+   neighbor MLAG_IPv4_UNDERLAY_PEER maximum-routes 12000
+   neighbor 10.255.0.12 peer group IPv4_UNDERLAY_PEERS
+   neighbor 10.255.0.14 peer group IPv4_UNDERLAY_PEERS
+   neighbor 10.255.1.1 peer group EVPN_OVERLAY_PEERS
+   neighbor 10.255.1.2 peer group EVPN_OVERLAY_PEERS
+   neighbor 169.254.0.0 peer group MLAG_IPv4_UNDERLAY_PEER
+   redistribute connected route-map RM-CONN-2-BGP
+   !
+   vlan 10
+      rd 10.255.1.6:10010
+      route-target both 10010:10010
+      redistribute learned
+   !
+   vlan 20
+      rd 10.255.1.6:10020
+      route-target both 10020:10020
+      redistribute learned
+   !
+   address-family evpn
+      neighbor EVPN_OVERLAY_PEERS activate
+   !
+   address-family ipv4
+      neighbor IPv4_UNDERLAY_PEERS activate
+      neighbor MLAG_IPv4_UNDERLAY_PEER activate
+   !
+   vrf Prod
+      rd 10.255.1.6:50010
+      route-target import evpn 50010:50010
+      route-target export evpn 50010:50010
+      router-id 10.255.1.6
+      no bgp log-neighbor-changes
+      neighbor 169.254.0.0 remote-as 65002
+      redistribute connected
+      !
+      address-family ipv4
+         neighbor 169.254.0.0 activate
+!

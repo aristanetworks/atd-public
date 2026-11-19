@@ -1,0 +1,50 @@
+vlan 112
+   name Host_Network_112
+!
+vlan 134
+   name Host_Network_134
+!
+interface Ethernet1
+   description Unused
+   shutdown
+!
+interface Ethernet2
+   description L3 Uplink - s1-spine1
+   no switchport
+   ip address 10.111.1.7/31
+!
+interface Ethernet3
+   description L3 Uplink - s1-spine2
+   no switchport
+   ip address 10.111.2.7/31
+!
+interface Ethernet4
+!
+interface Ethernet6
+   description Unused
+   shutdown
+!
+interface Loopback0
+   description Management and Router-id
+   ip address 10.111.254.4/32
+!
+ip prefix-list LOOPBACKS
+   seq 100 permit 10.111.253.0/24 eq 32
+   seq 110 permit 10.111.254.0/24 eq 32
+!
+route-map LOOPBACKS permit 100
+   match ip address prefix-list LOOPBACKS
+!
+router bgp 65104
+   router-id 10.111.254.4
+   maximum-paths 2
+   no bgp default ipv4-unicast
+   neighbor SPINE peer group
+   neighbor SPINE remote-as 65100
+   neighbor SPINE send-community standard extended
+   neighbor 10.111.1.6 peer group SPINE
+   neighbor 10.111.2.6 peer group SPINE
+   !
+   address-family ipv4
+      neighbor SPINE activate
+      redistribute connected route-map LOOPBACKS

@@ -1,0 +1,11 @@
+# cEOS Configs
+If you wish to have certain cEOS nodes boot up with a startup-config and NOT stream to CVP, you will need to create a directory for each node and a startup-config file:
+
+### Example:
+```
+ceos
+    |
+    --> eos1
+        |
+        --> startup-config
+```

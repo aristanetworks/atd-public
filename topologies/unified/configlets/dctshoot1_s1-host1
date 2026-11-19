@@ -1,0 +1,22 @@
+Int e2
+Shut
+!
+No int po1
+No int po2
+!
+Vlan 10
+!
+Vlan 100
+!
+Int eth1
+Switchport
+Switchport access vlan 100
+Spanning-tree portfast
+!
+Int vlan 10 
+Ip add 172.16.10.50/24
+!
+Ip add 172.16.10.50/24
+! 
+Ip route 0.0.0.0/0 172.16.10.1
+

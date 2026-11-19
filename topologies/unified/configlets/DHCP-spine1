@@ -1,0 +1,5 @@
+interface Ethernet1
+   description P2P_LINK_TO_router-1_Ethernet1
+   mtu 1500
+   no switchport
+   ip address 10.100.0.1/31
